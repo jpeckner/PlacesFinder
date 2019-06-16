@@ -9,17 +9,17 @@ lane :create_release_branch do |options|
   UI.user_error!("Invalid format for version arg: " + version) unless version =~ VERSION_NUM_REGEX
 
   # Fetch from remotes first, so that branch creation will fail if someone else already created it
-#   run_script("git fetch --all")
+  run_script("git fetch --all")
   releaseBranchName = RELEASE_BRANCH_TEMPLATE % {version_num: version}
   run_script("git checkout -b " + releaseBranchName)
   
-#   push_to_git_remote
+  push_to_git_remote
 end
 
 desc "Tags the current release branch commit as a candidate for Testflight build, if CI tests pass. Should be run locally."
 lane :tag_current_commit_for_release do
-#   run_script("git fetch --tags")
-#   verify_no_commits_to_pull(git_branch)
+  run_script("git fetch --tags")
+  verify_no_commits_to_pull(git_branch)
   verify_commit_tags("HEAD", "")
   version = current_branch_version_number()
 
@@ -42,12 +42,12 @@ lane :tag_current_commit_for_release do
   add_git_tag(
     tag: version + "-" + incrementedBuildNumber
   )
-#   run_script("git push origin <tag_name>")
+  run_script("git push origin <tag_name>")
 end
 
 desc "Builds and uploads commit to Testflight. Should be run by CI when it sees a tagged commit on a release branch."
 lane :upload_build_to_testflight do
-#   verify_no_commits_to_pull(git_branch)
+  verify_no_commits_to_pull(git_branch)
 
   branchVersion = current_branch_version_number()
   tagVersion, tagBuild = current_tag_version_info()
