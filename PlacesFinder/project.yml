@@ -61,7 +61,7 @@ targets:
         name: Carthage - Verify
     postCompileScripts:
       - script: |
-                cd "$SRCROOT/.."
+                cd "$PROJECT_DIR/.."
                 mint run realm/SwiftLint swiftlint
         name: SwiftLint
       
@@ -115,7 +115,8 @@ schemes:
         PlacesFinder: all
         PlacesFinderTests: [test]
       postActions:
-        - script: "$SRCROOT/BuildScripts/carthage_outdated_post_action.sh"
+        - script: |
+                  "$PROJECT_DIR/BuildScripts/carthage_outdated_post_action.sh"
           name: Carthage - Outdated Frameworks
           settingsTarget: PlacesFinder
     test:

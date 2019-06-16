@@ -23,6 +23,10 @@ def verify_commit_tags(committish, expectedTags)
   ) unless commitTags == expectedTags
 end
 
+def verify_current_commit_has_no_tags()
+  verify_commit_tags("HEAD", "")
+end
+
 ### Shell functions ###
 
 def run_script(script)

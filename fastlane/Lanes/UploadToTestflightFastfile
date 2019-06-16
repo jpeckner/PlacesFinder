@@ -2,25 +2,28 @@
 desc "Creates a new release branch with the indicated version number. Should be run locally."
 lane :create_release_branch do |options|
   ensure_git_branch(
-    branch: 'master'
+    branch: 'develop'
   )
   
   version = options[:version]
   UI.user_error!("Invalid format for version arg: " + version) unless version =~ VERSION_NUM_REGEX
 
-  # Fetch from remotes first, so that branch creation will fail if someone else already created it
-#   run_script("git fetch --all")
+  run_script("git fetch --all")
   releaseBranchName = RELEASE_BRANCH_TEMPLATE % {version_num: version}
   run_script("git checkout -b " + releaseBranchName)
   
-#   push_to_git_remote
+  push_to_git_remote(
+    set_upstream: true,
+    tags: false
+  )
 end
 
 desc "Tags the current release branch commit as a candidate for Testflight build, if CI tests pass. Should be run locally."
 lane :tag_current_commit_for_release do
-#   run_script("git fetch --tags")
-#   verify_no_commits_to_pull(git_branch)
-  verify_commit_tags("HEAD", "")
+  ensure_git_status_clean
+
+  verify_no_commits_to_pull(branch: git_branch)
+  verify_current_commit_has_no_tags
   version = current_branch_version_number()
 
   commitHashAtStart = last_git_commit[:commit_hash]
@@ -32,31 +35,35 @@ lane :tag_current_commit_for_release do
     version: version,
     initial_build_number: 0
   )
-  incrementedBuildNumber = (latestBuildNumber + 1).to_s
+
+  tag = build_version_tag(version, latestBuildNumber + 1)
+  UI.user_error!(
+    "Tag " + tag + " already exists on origin!"
+  ) unless !git_tag_exists(tag: tag, remote: true)
 
   commitHashNow = last_git_commit[:commit_hash]
   UI.user_error!(
     "Git commit changed during running of lane!"
   ) unless commitHashAtStart == commitHashNow
-
   add_git_tag(
-    tag: version + "-" + incrementedBuildNumber
+    tag: tag
   )
-#   run_script("git push origin <tag_name>")
+
+  run_script("git push origin " + tag)
 end
 
 desc "Builds and uploads commit to Testflight. Should be run by CI when it sees a tagged commit on a release branch."
 lane :upload_build_to_testflight do
-#   verify_no_commits_to_pull(git_branch)
+  verify_no_commits_to_pull(branch: git_branch)
 
   branchVersion = current_branch_version_number()
-  tagVersion, tagBuild = current_tag_version_info()
+  tagVersion, tagBuild = current_commit_tag_components()
   UI.user_error!(
     "Branch and tag version numbers must be the same"
   ) unless branchVersion == tagVersion
   
   regenerate_all_artifacts(PLACE_LOOKUP_BASE_URL, ENV["PLACE_LOOKUP_KEY"])
-  generate_settings(ENV["PUBLIC_REPO_TOKEN"], tagVersion, tagBuild)
+  generate_settings(tagVersion, tagBuild)
   increment_version_number(
     version_number: tagVersion,
     xcodeproj: PLACESFINDER_PROJECT_PATH
@@ -98,7 +105,7 @@ def current_branch_version_number()
   return version
 end
 
-def current_tag_version_info()
+def current_commit_tag_components()
   currentTag = tags_for_commit(committish: "HEAD")
 
   if !currentTag.empty? && matches = currentTag.match(TAG_REGEX)

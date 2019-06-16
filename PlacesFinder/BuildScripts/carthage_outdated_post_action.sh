@@ -13,10 +13,10 @@
 
 set -e
 
-OUTPUT_PATH="$SRCROOT/PlacesFinder/OutdatedDependencies.swift"
+OUTPUT_PATH="$PROJECT_DIR/PlacesFinder/OutdatedDependencies.swift"
 echo "" > "$OUTPUT_PATH"
 
-cd "$SRCROOT"
+cd "$PROJECT_DIR"
 WARNING_LINES="$(carthage outdated --xcode-warnings)"
 
 swift_code() {
