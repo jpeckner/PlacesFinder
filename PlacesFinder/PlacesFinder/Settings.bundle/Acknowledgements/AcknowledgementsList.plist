@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Chanut-is-Industries</string>
+			<key>FooterText</key>
+			<string>"Space Flat - Galaxy radio Set" (https://www.iconfinder.com/iconsets/space-flat-galaxy-radio) by "Chanut-is-Industries" (https://www.iconfinder.com/Chanut-is) is licensed under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)
+			
+Assets used:
+https://www.iconfinder.com/icons/3285302/alien_android_artificial_robot_robotic_space_icon
+https://www.iconfinder.com/icons/3285299/orbit_orbital_satellite_shuttle_space_spaceship_icon
+https://www.iconfinder.com/icons/3285300/launch_rocket_space_spacecraft_spaceship_starship_startup_icon
+https://www.iconfinder.com/icons/3285297/andromeda_astronomy_cosmos_galaxy_space_spiral_universe_icon
+https://www.iconfinder.com/icons/3285301/abduction_alien_saucer_space_spaceship_stars_ufo_icon</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Finee Icons</string>
+			<key>FooterText</key>
+			<string>"Digital marketing Line art FREE" (https://www.iconfinder.com/iconsets/digital-marketing-line-art) by "Finee Icons" (https://www.iconfinder.com/fineeicons) is licensed as free for commercial use
+			
+Assets used: 
+https://www.iconfinder.com/icons/1872629/magnifying_glass_screen_search_smartphone_icon</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Google</string>
+			<key>FooterText</key>
+			<string>"Google Material Design icons" (https://www.iconfinder.com/iconsets/google-material-design-icons) by "Google" (https://design.google/) is licensed under CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)
+			
+Assets used:
+https://www.iconfinder.com/icons/352091/search_icon
+https://www.iconfinder.com/icons/352095/settings_icon
+https://www.iconfinder.com/icons/352510/local_phone_icon</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Sergey Ershov</string>
+			<key>FooterText</key>
+			<string>"Multimedia icons" (https://www.iconfinder.com/iconsets/multimedia-75) by "Sergey Ershov" (https://www.iconfinder.com/Fishmoby) is licensed under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)
+			
+Assets used:
+https://www.iconfinder.com/icons/2849832/arrow_arrows_back_interface_left_multimedia_navigation_icon
+https://www.iconfinder.com/icons/2849833/arrow_arrows_forward_interface_multimedia_navigation_right_icon</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+	</array>
+</dict>
+</plist>
