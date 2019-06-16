@@ -15,4 +15,8 @@ RELEASE_BRANCH_PREFIX = "release/"
 RELEASE_BRANCH_TEMPLATE = RELEASE_BRANCH_PREFIX + "%{version_num}"
 VERSION_NUM_REGEX = /(\d+\.\d+\.\d+)/
 BUILD_NUM_REGEX = /(\d+)/
-TAG_REGEX = Regexp.new("#{VERSION_NUM_REGEX.source}-#{BUILD_NUM_REGEX.source}")
+TAG_REGEX = Regexp.new("#{VERSION_NUM_REGEX.source}/#{BUILD_NUM_REGEX.source}")
+
+def build_version_tag(version, buildNumber)
+  return version + "/" + (buildNumber.to_s)
+end

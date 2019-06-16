@@ -1,8 +1,8 @@
 
 def regenerate_all_artifacts(baseURL, apiKey)
   ensure_fresh_workspace()
-  generate_placesfinder(baseURL, apiKey)
   run_carthage_bootstrap()
+  generate_placesfinder(baseURL, apiKey)
 end
 
 def ensure_fresh_workspace()
@@ -28,7 +28,7 @@ def run_carthage_bootstrap()
   )
 end
 
-def generate_settings(githubToken, tagVersion, tagBuild)
+def generate_settings(tagVersion, tagBuild)
   version = "%{tagVersion} \(%{tagBuild}\)" % {tagVersion: tagVersion, tagBuild: tagBuild}
 
   run_script(
@@ -36,7 +36,7 @@ def generate_settings(githubToken, tagVersion, tagBuild)
       "cd Lanes/Workspace",
       "chmod u+x generate_settings_placesfinder.sh",
       "./generate_settings_placesfinder.sh -g '%{githubToken}' -v '%{version}'" \
-        % {githubToken: githubToken, version: version}
+        % {githubToken: ENV["PUBLIC_REPO_TOKEN"], version: version}
     ].join("\n")
   )
 end
