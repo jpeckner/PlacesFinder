@@ -1,0 +1,7 @@
+import Foundation
+
+struct AppColorings: Decodable, Equatable {
+{% for type in types.structs where type.based.AppColoringProtocol %}
+    let {{ type.annotations.fieldName }}: {{ type.name }}
+{% endfor %}
+}

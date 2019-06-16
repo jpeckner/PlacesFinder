@@ -1,0 +1,111 @@
+
+desc "Creates a new release branch with the indicated version number. Should be run locally."
+lane :create_release_branch do |options|
+  ensure_git_branch(
+    branch: 'master'
+  )
+  
+  version = options[:version]
+  UI.user_error!("Invalid format for version arg: " + version) unless version =~ VERSION_NUM_REGEX
+
+  # Fetch from remotes first, so that branch creation will fail if someone else already created it
+#   run_script("git fetch --all")
+  releaseBranchName = RELEASE_BRANCH_TEMPLATE % {version_num: version}
+  run_script("git checkout -b " + releaseBranchName)
+  
+#   push_to_git_remote
+end
+
+desc "Tags the current release branch commit as a candidate for Testflight build, if CI tests pass. Should be run locally."
+lane :tag_current_commit_for_release do
+#   run_script("git fetch --tags")
+#   verify_no_commits_to_pull(git_branch)
+  verify_commit_tags("HEAD", "")
+  version = current_branch_version_number()
+
+  commitHashAtStart = last_git_commit[:commit_hash]
+  ci_tests
+
+  latestBuildNumber = latest_testflight_build_number(
+    app_identifier: PLACESFINDER_APP_ID,
+    username: ENV["APPLE_ID_USERNAME"],
+    version: version,
+    initial_build_number: 0
+  )
+  incrementedBuildNumber = (latestBuildNumber + 1).to_s
+
+  commitHashNow = last_git_commit[:commit_hash]
+  UI.user_error!(
+    "Git commit changed during running of lane!"
+  ) unless commitHashAtStart == commitHashNow
+
+  add_git_tag(
+    tag: version + "-" + incrementedBuildNumber
+  )
+#   run_script("git push origin <tag_name>")
+end
+
+desc "Builds and uploads commit to Testflight. Should be run by CI when it sees a tagged commit on a release branch."
+lane :upload_build_to_testflight do
+#   verify_no_commits_to_pull(git_branch)
+
+  branchVersion = current_branch_version_number()
+  tagVersion, tagBuild = current_tag_version_info()
+  UI.user_error!(
+    "Branch and tag version numbers must be the same"
+  ) unless branchVersion == tagVersion
+  
+  regenerate_all_artifacts(PLACE_LOOKUP_BASE_URL, ENV["PLACE_LOOKUP_KEY"])
+  generate_settings(ENV["PUBLIC_REPO_TOKEN"], tagVersion, tagBuild)
+  increment_version_number(
+    version_number: tagVersion,
+    xcodeproj: PLACESFINDER_PROJECT_PATH
+  )
+  increment_build_number(
+    build_number: tagBuild,
+    xcodeproj: PLACESFINDER_PROJECT_PATH
+  )
+  
+  build_ios_app(
+    workspace: PLACESFINDER_WORKSPACE,
+    scheme: PLACESFINDER_RELEASE_SCHEME,
+    include_bitcode: true,
+    output_directory: GYM_FOLDER_PATH,
+    output_name: "PlacesFinder.ipa",
+    export_options: {
+      method: "app-store",
+      provisioningProfiles: {
+        PLACESFINDER_APP_ID => PLACESFINDER_PROFILE_NAME
+      }
+    }
+  )
+  
+  upload_to_app_store(
+    app_identifier: PLACESFINDER_APP_ID,
+    username: ENV["APPLE_ID_USERNAME"],
+    ipa: GYM_FOLDER_PATH + "/PlacesFinder.ipa",
+    force: true
+  )
+end
+
+def current_branch_version_number()
+  currentBranch = git_branch
+  version = currentBranch.delete_prefix(RELEASE_BRANCH_PREFIX)
+  UI.user_error!(
+    "Invalid current branch '" + currentBranch + "'; must be on a release branch"
+  ) unless version =~ VERSION_NUM_REGEX
+  
+  return version
+end
+
+def current_tag_version_info()
+  currentTag = tags_for_commit(committish: "HEAD")
+
+  if !currentTag.empty? && matches = currentTag.match(TAG_REGEX)
+    return matches.captures
+  end
+  
+  UI.user_error!(
+    "Invalid current tag '" + currentTag + "'; must be on a commit tagged by :tag_current_commit_for_release"
+  )
+end

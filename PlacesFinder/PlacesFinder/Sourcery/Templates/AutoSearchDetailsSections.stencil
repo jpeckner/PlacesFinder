@@ -1,0 +1,6 @@
+
+let allDetailsSectionTypes: [SearchDetailsSectionProtocol.Type] = [
+    {% for type in types.enums where type.based.SearchDetailsSectionProtocol %}
+    {{ type.name }}.self,
+    {% endfor %}
+]

@@ -1,0 +1,8 @@
+github "onevcat/Kingfisher"
+github "ashleymills/Reachability.swift"
+github "Juanpe/SkeletonView"
+github "SnapKit/SnapKit"
+github "jpeckner/SwiftDux"
+github "httpswift/swifter"
+github "Quick/Nimble"
+github "Quick/Quick"
