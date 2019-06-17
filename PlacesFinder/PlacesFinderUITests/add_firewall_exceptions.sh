@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Source: https://tomsoderling.github.io/Disable-iOS-simulator-connections-popup/
+
 # Script to disable the iOS Simulator app from showing the "Do you want the application xxxx to accept incoming network connections?" pop-up every time the app is run
 
 echo "> Enter password to temporarily shut firewall off"

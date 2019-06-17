@@ -14,7 +14,6 @@ import Shared
 import SwiftDux
 import UIKit
 
-// TODO (pre-release): enable fetch/pull/push in UploadToTestflightFastfile (once origin is live), and do a test upload
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
