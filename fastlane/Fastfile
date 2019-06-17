@@ -1,0 +1,13 @@
+
+import './Lanes/constants.rb'
+import './Lanes/paths.rb'
+import './Lanes/utils.rb'
+
+import './Lanes/PlacesFinder/build_placesfinder.rb'
+import './Lanes/PlacesFinder/PlacesFinderFastfile'
+
+import './Lanes/Workspace/build_workspace.rb'
+import './Lanes/Workspace/WorkspaceFastfile'
+
+import './Lanes/CITestsFastfile'
+import './Lanes/UploadToTestflightFastfile'

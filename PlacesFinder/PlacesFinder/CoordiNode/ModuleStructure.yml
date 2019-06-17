@@ -1,0 +1,13 @@
+AppCoordinator:
+    enumCaseName: app
+    children:
+        - LaunchCoordinator:
+            enumCaseName: launch
+            isDestinationNode: false
+        - HomeCoordinator:
+            enumCaseName: home
+            children:
+                - SearchCoordinator:
+                    enumCaseName: search
+                - SettingsCoordinator:
+                    enumCaseName: settings

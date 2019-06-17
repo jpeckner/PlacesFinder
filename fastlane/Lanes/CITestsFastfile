@@ -1,0 +1,56 @@
+
+lane :ci_tests do
+  regenerate_all_artifacts(TEST_PLACE_LOOKUP_BASE_URL, "None")
+
+  shared_ci
+  coordinode_ci
+  placesfinder_ci
+end
+
+private_lane :shared_ci do
+  ENV["PLACE_LOOKUP_BASE_URL"] = PLACE_LOOKUP_BASE_URL
+
+  run_tests(
+    project: SHARED_PROJECT_PATH,
+    scheme: SHARED_RELEASE_SCHEME,
+    clean: true
+  )
+end
+
+private_lane :coordinode_ci do
+  run_tests(
+    project: COORDINODE_PROJECT_PATH,
+    scheme: COORDINODE_RELEASE_SCHEME,
+    clean: true
+  )
+end
+
+private_lane :placesfinder_ci do
+  add_localhost_ATS_exception
+
+  run_tests(
+    workspace: PLACESFINDER_WORKSPACE,
+    scheme: PLACESFINDER_RELEASE_SCHEME,
+    clean: true
+  )
+end
+
+private_lane :add_localhost_ATS_exception do
+  infoPlistPath = path_relative_to_root(PLACESFINDER_INFOPLIST_PATH)
+  set_info_plist_value(
+    path: infoPlistPath, 
+    key: "NSAppTransportSecurity", 
+    subkey: "NSExceptionDomains", 
+    value: {},
+    output_file_name: infoPlistPath
+  )
+  
+  update_info_plist(
+    xcodeproj: PLACESFINDER_PROJECT_PATH,
+    plist_path: PLACESFINDER_INFOPLIST_PATH,
+    block: proc do |plist|
+      placeLookupEntry = plist["NSAppTransportSecurity"]["NSExceptionDomains"]
+      placeLookupEntry[:localhost] = { "NSExceptionAllowsInsecureHTTPLoads": true }
+    end
+  )
+end

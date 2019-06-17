@@ -1,0 +1,8 @@
+github "Juanpe/SkeletonView" "1.6"
+github "Quick/Nimble" "v8.0.2"
+github "Quick/Quick" "v2.1.0"
+github "SnapKit/SnapKit" "5.0.0"
+github "ashleymills/Reachability.swift" "v4.3.1"
+github "httpswift/swifter" "1.4.7"
+github "jpeckner/SwiftDux" "v1.0.0"
+github "onevcat/Kingfisher" "5.6.0"

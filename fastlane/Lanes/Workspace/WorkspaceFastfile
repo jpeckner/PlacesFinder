@@ -1,0 +1,11 @@
+
+lane :run_carthage_bootstrap do |options|
+  run_carthage_bootstrap()
+end
+
+lane :generate_settings do |options|
+  tagVersion = options[:tagVersion]
+  tagBuild = options[:tagBuild]
+
+  generate_settings(tagVersion, tagBuild)
+end
