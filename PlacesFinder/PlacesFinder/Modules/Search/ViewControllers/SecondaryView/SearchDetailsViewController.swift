@@ -149,6 +149,13 @@ extension SearchDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        switch tableView.cellForRow(at: indexPath) {
+        case let phoneCell as SearchDetailsPhoneNumberCell:
+            phoneCell.executeTapCallback()
+        default:
+            break
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
