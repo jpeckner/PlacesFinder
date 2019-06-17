@@ -70,8 +70,18 @@ class PlacesFinderLinkTests: XCTestCase {
 private extension PlacesFinderLinkTests {
 
     func startServer() {
+        guard let portString = ProcessInfo().environment["TEST_PLACE_LOOKUP_PORT"] else {
+            XCTFail("TEST_PLACE_LOOKUP_PORT environment variable must be set")
+            return
+        }
+
+        guard let port = UInt16(portString) else {
+            XCTFail("Invalid UInt16 value: \(portString)")
+            return
+        }
+
         do {
-            try server.start(8080, forceIPv4: true)
+            try server.start(port, forceIPv4: true)
         } catch {
             XCTFail("\(error)")
         }
@@ -81,7 +91,7 @@ private extension PlacesFinderLinkTests {
         try? springboardHandler.deleteApp(app, displayName: PlacesFinderLinkTests.appDisplayName)
 
         // Call app.launch() to install the latest build of the app, but then immediately terminate it, since we want to
-        // test that the app can be launched via a link
+        // test that the app can be launched via deep link
         app.launch()
         app.terminate()
 

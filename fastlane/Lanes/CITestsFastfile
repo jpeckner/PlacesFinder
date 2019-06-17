@@ -1,6 +1,8 @@
 
 lane :ci_tests do
-  regenerate_all_artifacts(TEST_PLACE_LOOKUP_BASE_URL, "None")
+  ENV["TEST_PLACE_LOOKUP_PORT"] = ENV["TEST_PLACE_LOOKUP_PORT"] || "8080"
+  baseURL = "http://localhost:" + ENV["TEST_PLACE_LOOKUP_PORT"]
+  regenerate_all_artifacts(baseURL, "None")
 
   shared_ci
   coordinode_ci
