@@ -1,6 +1,12 @@
+//
+//  FakeSearchRequest+FastCasual.swift
+//  PlacesFinderUITests
+//
+//  Created by Justin Peckner.
+//  Copyright © 2019 Justin Peckner. All rights reserved.
+//
 
-
-let fakeResponse: String = """
+let fastCasualResponse: String = """
 {
   "region": {
     "center": {

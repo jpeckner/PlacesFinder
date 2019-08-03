@@ -51,14 +51,15 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 
 ### Deep Linking
 
-PlacesFinder supports the following custome URL schemes for deep linking:
-* `placesFinder://com.justinpeckner.placesfinder/search?keywords=your_search_string_here`: opens PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
-   * `placesFinder://com.justinpeckner.placesfinder/search?keywords=Thai`
-   * `placesFinder://com.justinpeckner.placesfinder/search?keywords=Greek%20food`
-* `placesFinder://com.justinpeckner.placesfinder/settings`: opens PlacesFinder to the Settings tab
+PlacesFinder supports the following custom URL schemes for deep linking:
+* `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=your_search_string_here`: opens PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
+   * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Thai`
+   * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Greek%20food`
+* `placesFinder://com.justinpeckner.PlacesFinder/settings`: opens PlacesFinder to the Settings tab
 
-To use either deep link scheme:
-1. Install PlacesFinder on an iOS simulator or device. Note that both schemes work even if PlacesFinder isn't currently launched, so force-quit PlacesFinder first if you'd like to try this out.
+To use a deep link scheme:
+1. Install PlacesFinder-Release scheme app on an iOS simulator or device. (Note: to use PlacesFinder-Debug scheme instead, replace the link's `placesFinder://` prefix with `placesFinder-dev://`).
+1. Optional: both URL schemes work even if PlacesFinder isn't currently launched, so kill the running instance of PlacesFinder if you'd like to try this out.
 1. Enter one of the URLs in Safari, and tap Go.
 1. Tap Open in Safari's confirmation dialog.
 1. PlacesFinder will open to the content specified by the link.
