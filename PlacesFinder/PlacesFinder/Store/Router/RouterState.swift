@@ -56,8 +56,11 @@ enum RouterReducer<TLinkType: RouterLinkType> {
             return RouterState(loadState: .navigatingToDestination(destinationNodeBox, payload: payload),
                                currentNode: currentState.currentNode)
         case let .requestLink(linkType):
-            return RouterState(loadState: .payloadRequested(linkType),
-                               currentNode: currentState.currentNode)
+            let isLinkForCurrentNode = currentState.currentNode == linkType.destinationNodeBox.storedType.nodeBox
+            return RouterState(
+                loadState: isLinkForCurrentNode ? .waitingForPayloadToBeCleared(linkType) : .payloadRequested(linkType),
+                currentNode: currentState.currentNode
+            )
         case .clearLink:
             return RouterState(loadState: .idle,
                                currentNode: currentState.currentNode)

@@ -51,9 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appCoordinator.handleURL(url)
     }
 
-    // Sample linking URLs to use in Safari in iOS Simulator:
-    //   placesFinder://com.justinpeckner.placesfinder/search?keywords=Chinese%20Food
-    //   placesFinder://com.justinpeckner.placesfinder/settings
+    // Sample linking URLs to use in Safari in iOS Simulator. Use placesFinder:// as the scheme for Release builds, and
+    // placesFinder-dev:// for Debug.
+    //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=Chinese%20Food
+    //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/settings
     func application(
         _ app: UIApplication,
         open url: URL,
