@@ -154,6 +154,12 @@ schemes:
         - variable: TEST_PLACE_LOOKUP_PORT
           value: $(TEST_PLACE_LOOKUP_PORT)
           isEnabled: true
+        - variable: PLACE_LOOKUP_BASE_URL
+          value: $(PLACE_LOOKUP_BASE_URL)
+          isEnabled: true
+        - variable: PLACE_LOOKUP_KEY
+          value: $(PLACE_LOOKUP_KEY)
+          isEnabled: true
     profile:
       config: Release
     analyze:
