@@ -14,7 +14,7 @@ enum EntityError: Error, Equatable {
     case loadError(underlyingError: IgnoredEquatable<Error>)
 }
 
-enum EntityLoadBlock<T, E: Error> {
+enum EntityLoadBlock<T: Equatable, E: Error> {
     case nonThrowing((@escaping (Result<T, E>) -> Void) -> Void)
     case throwing((@escaping (Result<T, E>) -> Void) throws -> Void)
 }

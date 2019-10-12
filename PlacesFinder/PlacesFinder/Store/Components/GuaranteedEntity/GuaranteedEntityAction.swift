@@ -25,12 +25,12 @@ extension GuaranteedEntityActionCreator {
             dispatch(GuaranteedEntityAction<T>.inProgress)
 
             switch loadBlock {
-            case .nonThrowing(let block):
+            case let .nonThrowing(block):
                 block { result in
                     dispatchResult(result,
                                    dispatch: dispatch)
                 }
-            case .throwing(let block):
+            case let .throwing(block):
                 do {
                     try block { result in
                         dispatchResult(result,
@@ -47,9 +47,9 @@ extension GuaranteedEntityActionCreator {
     private static func dispatchResult<T: Equatable, E: Error>(_ result: Result<T, E>,
                                                                dispatch: DispatchFunction) {
         switch result {
-        case .success(let entity):
+        case let .success(entity):
             dispatch(GuaranteedEntityAction<T>.success(entity))
-        case .failure(let error):
+        case let .failure(error):
             let entityError = EntityError.loadError(underlyingError: IgnoredEquatable(error))
             dispatch(GuaranteedEntityAction<T>.failure(entityError))
         }

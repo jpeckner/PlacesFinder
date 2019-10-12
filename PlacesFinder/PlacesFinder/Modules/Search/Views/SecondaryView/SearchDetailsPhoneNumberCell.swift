@@ -26,7 +26,6 @@ class SearchDetailsPhoneNumberCell: UITableViewCell {
 
         setupSubviews()
         setupConstraints()
-        setupTapHandler()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -67,20 +66,8 @@ class SearchDetailsPhoneNumberCell: UITableViewCell {
             make.centerY.equalTo(contentView)
             make.top.greaterThanOrEqualTo(contentView.snp.topMargin)
             make.bottom.lessThanOrEqualTo(contentView.snp.bottomMargin)
-            make.height.equalTo(28.0)
+            make.height.equalTo(24.0)
         }
-    }
-
-    private func setupTapHandler() {
-        let tapRecognizer = UITapGestureRecognizer(target: self,
-                                                   action: #selector(viewWasTapped))
-        addGestureRecognizer(tapRecognizer)
-    }
-
-    @objc
-    private func viewWasTapped(sender: UITapGestureRecognizer) {
-        guard sender.state == UITapGestureRecognizer.State.ended else { return }
-        tapCallback?()
     }
 
 }
@@ -97,6 +84,10 @@ extension SearchDetailsPhoneNumberCell {
         tapCallback = viewModel.makeCallBlock?.value
         disclosureImageView.isHidden = tapCallback == nil
         disclosureImageView.tintColor = colorings.disclosureArrowTint.color
+    }
+
+    func executeTapCallback() {
+        tapCallback?()
     }
 
 }

@@ -25,8 +25,8 @@ targets:
         CFBundleShortVersionString: None
         CFBundleURLTypes:
           - CFBundleTypeRole: Editor
-            CFBundleURLName: com.justinpeckner.placesfinder
-            CFBundleURLSchemes: [placesFinder]
+            CFBundleURLName: com.justinpeckner.PlacesFinder
+            CFBundleURLSchemes: [$(URL_SCHEME)]
         ITSAppUsesNonExemptEncryption: false
         LSRequiresIPhoneOS: true
         NSLocationWhenInUseUsageDescription: >-
@@ -150,6 +150,16 @@ schemes:
           randomExecutionOrder: true
         - name: PlacesFinderUITests
           randomExecutionOrder: true
+      environmentVariables:
+        - variable: TEST_PLACE_LOOKUP_PORT
+          value: $(TEST_PLACE_LOOKUP_PORT)
+          isEnabled: true
+        - variable: PLACE_LOOKUP_BASE_URL
+          value: $(PLACE_LOOKUP_BASE_URL)
+          isEnabled: true
+        - variable: PLACE_LOOKUP_KEY
+          value: $(PLACE_LOOKUP_KEY)
+          isEnabled: true
     profile:
       config: Release
     analyze:

@@ -10,3 +10,4 @@
 
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
 PRODUCT_BUNDLE_IDENTIFIER = com.justinpeckner.PlacesFinder
+URL_SCHEME = placesFinder

@@ -45,7 +45,7 @@ class GuaranteedEntityActionCreatorTests: QuickSpec {
                     mockService = MockEntityService(returnedResult: returnedResult)
                     let loadBlock = EntityLoadBlock.nonThrowing(mockService.fetchStubEntity)
 
-                    self.waitFor(mockStore, toReachNonAsyncActionCount: actionWaitCount) {
+                    waitFor(mockStore, toReachNonAsyncActionCount: actionWaitCount) {
                         mockStore.dispatch(TestGuaranteedEntityActionCreator.loadGuaranteedEntity(loadBlock))
                     }
                 }
@@ -94,7 +94,7 @@ class GuaranteedEntityActionCreatorTests: QuickSpec {
                     mockService = MockThrowingEntityService(courseOfAction: courseOfAction)
                     let loadBlock = EntityLoadBlock.throwing(mockService.fetchStubEntity)
 
-                    self.waitFor(mockStore, toReachNonAsyncActionCount: actionWaitCount) {
+                    waitFor(mockStore, toReachNonAsyncActionCount: actionWaitCount) {
                         mockStore.dispatch(TestGuaranteedEntityActionCreator.loadGuaranteedEntity(loadBlock))
                     }
                 }
@@ -120,7 +120,7 @@ class GuaranteedEntityActionCreatorTests: QuickSpec {
                                     actionWaitCount: 2)
                     }
 
-                    it("dispatches EntityAction.failure(.preloadError)") {
+                    it("dispatches GuaranteedEntityAction.failure(.preloadError)") {
                         verifyPreloadError()
                     }
                 }
