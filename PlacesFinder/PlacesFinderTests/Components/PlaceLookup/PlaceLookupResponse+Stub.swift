@@ -6,11 +6,14 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
+#if DEBUG
+@testable import PlacesFinder
+#endif
 import Shared
 
 // swiftlint:disable force_unwrapping
 
-public extension PlaceLookupParams {
+extension PlaceLookupParams {
 
     static func stubValue(keywords: NonEmptyString = NonEmptyString.stubValue("Thai food"),
                           coordinate: PlaceLookupCoordinate = .init(latitude: 10.0, longitude: 10.0),
@@ -24,7 +27,7 @@ public extension PlaceLookupParams {
 
 }
 
-public extension PlaceLookupRatingFields {
+extension PlaceLookupRatingFields {
 
     static func stubValue(averageRating: Percentage = .init(decimalOf: 0.7),
                           numRatings: Int = 123) -> PlaceLookupRatingFields {
@@ -34,7 +37,7 @@ public extension PlaceLookupRatingFields {
 
 }
 
-public extension PlaceLookupAddressLines {
+extension PlaceLookupAddressLines {
 
     static func stubValue() -> PlaceLookupAddressLines {
         return NonEmptyArray([
@@ -45,7 +48,7 @@ public extension PlaceLookupAddressLines {
 
 }
 
-public extension PlaceLookupPricing {
+extension PlaceLookupPricing {
 
     static func stubValue(count: Int = 5,
                           maximum: Int = 10) -> PlaceLookupPricing {
@@ -55,7 +58,7 @@ public extension PlaceLookupPricing {
 
 }
 
-public extension PlaceLookupCoordinate {
+extension PlaceLookupCoordinate {
 
     static func stubValue(latitude: Double = 45.0,
                           longitude: Double = 90.0) -> PlaceLookupCoordinate {
@@ -65,7 +68,7 @@ public extension PlaceLookupCoordinate {
 
 }
 
-public extension PlaceLookupEntity {
+extension PlaceLookupEntity {
 
     static func stubValue(name: NonEmptyString = .stubValue("stubEntityName"),
                           addressLines: PlaceLookupAddressLines? = .stubValue(),
@@ -91,7 +94,7 @@ public extension PlaceLookupEntity {
 
 }
 
-public extension PlaceLookupPage {
+extension PlaceLookupPage {
 
     static func stubValue(entities: [PlaceLookupEntity] = []) -> PlaceLookupPage {
         return PlaceLookupPage(entities: entities)
@@ -99,7 +102,7 @@ public extension PlaceLookupPage {
 
 }
 
-public extension PlaceLookupPageRequestToken {
+extension PlaceLookupPageRequestToken {
 
     static func stubValue(placeLookupParams: PlaceLookupParams = .stubValue(),
                           urlRequest: URLRequest = .stubValue(),
@@ -113,7 +116,7 @@ public extension PlaceLookupPageRequestToken {
 
 }
 
-public extension PlaceLookupTokenAttemptsContainer {
+extension PlaceLookupTokenAttemptsContainer {
 
     static func stubValue(token: PlaceLookupPageRequestToken = .stubValue(),
                           maxAttempts: Int = 10,
@@ -125,7 +128,7 @@ public extension PlaceLookupTokenAttemptsContainer {
 
 }
 
-public extension PlaceLookupResponse {
+extension PlaceLookupResponse {
 
     static func stubValue(page: PlaceLookupPage = .stubValue(),
                           nextRequestTokenResult: PlaceLookupPageRequestTokenResult? = nil) -> PlaceLookupResponse {
