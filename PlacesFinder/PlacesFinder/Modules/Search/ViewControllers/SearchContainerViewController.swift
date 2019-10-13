@@ -18,7 +18,7 @@ class SearchContainerViewController: UIViewController {
     }
     private let searchSplitViewController: UISplitViewController
     private let masterPaneNavController: SearchMasterPaneNavigationController
-    private var lastHorizontalSpecifiedClass: SpecifiedSizeClass
+    private var lastHorizontalSpecifiedClass: SpecifiedSizeClass?
 
     private var collapseSecondaryController: Bool {
         return splitControllers.secondaryController == nil
@@ -29,7 +29,6 @@ class SearchContainerViewController: UIViewController {
                                                                 secondaryController: nil)
         self.searchSplitViewController = UISplitViewController()
         self.masterPaneNavController = SearchMasterPaneNavigationController()
-        self.lastHorizontalSpecifiedClass = .compact
 
         super.init(nibName: nil, bundle: nil)
 
@@ -60,6 +59,19 @@ extension SearchContainerViewController {
         }
     }
 
+    // Needed for iOS 13, because traitCollectionDidChange() is no longer called on initial load.
+    // See https://developer.apple.com/documentation/ios_ipados_release_notes/ios_13_release_notes
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard lastHorizontalSpecifiedClass == nil,
+            let newHorizontalSpecifiedClass = horizontalSpecifiedClass
+        else { return }
+
+        lastHorizontalSpecifiedClass = newHorizontalSpecifiedClass
+        configureSplitController()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -67,7 +79,7 @@ extension SearchContainerViewController {
             newHorizontalSpecifiedClass != lastHorizontalSpecifiedClass
         else { return }
 
-        self.lastHorizontalSpecifiedClass = newHorizontalSpecifiedClass
+        lastHorizontalSpecifiedClass = newHorizontalSpecifiedClass
         configureSplitController()
     }
 
@@ -86,9 +98,30 @@ extension SearchContainerViewController: UISplitViewControllerDelegate {
 private extension SearchContainerViewController {
 
     func configureSplitController() {
-        configureSecondaryViewVisibility()
+        guard let specifiedClass = lastHorizontalSpecifiedClass else { return }
 
-        switch lastHorizontalSpecifiedClass {
+        configureSecondaryViewVisibility(specifiedClass)
+        assignViewControllers(specifiedClass)
+    }
+
+    private func configureSecondaryViewVisibility(_ specifiedClass: SpecifiedSizeClass) {
+        switch specifiedClass {
+        case .compact:
+            break
+        case .regular:
+            // Overriding the split controller's horizontal size class (as well as returning true from the
+            // collapseSecondary: delegate method) appears to be the only way to hide the secondary controller here.
+            // Setting other properties, such as preferredPrimaryColumnWidthFraction, doesn't work. More details:
+            // https://stackoverflow.com/a/35718555/1342984
+            setOverrideTraitCollection(
+                UITraitCollection(horizontalSizeClass: collapseSecondaryController ? .compact : .regular),
+                forChild: searchSplitViewController
+            )
+        }
+    }
+
+    private func assignViewControllers(_ specifiedClass: SpecifiedSizeClass) {
+        switch specifiedClass {
         case .compact:
             let updatedViewControllers: [UIViewController] = [
                 splitControllers.primaryController,
@@ -120,22 +153,6 @@ private extension SearchContainerViewController {
             case let .regularOnly(controller):
                 return lastHorizontalSpecifiedClass == .regular ? controller : nil
             }
-        }
-    }
-
-    private func configureSecondaryViewVisibility() {
-        switch lastHorizontalSpecifiedClass {
-        case .compact:
-            break
-        case .regular:
-            // Overriding the split controller's horizontal size class (as well as returning true from the
-            // collapseSecondary: delegate method) appears to be the only way to hide the secondary controller here.
-            // Setting other properties, such as preferredPrimaryColumnWidthFraction, doesn't work. More details:
-            // https://stackoverflow.com/a/35718555/1342984
-            setOverrideTraitCollection(
-                UITraitCollection(horizontalSizeClass: collapseSecondaryController ? .compact : .regular),
-                forChild: searchSplitViewController
-            )
         }
     }
 
