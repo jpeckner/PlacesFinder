@@ -8,6 +8,7 @@
 
 import Shared
 import SnapKit
+import SwiftUI
 import UIKit
 
 struct StaticInfoViewModel {
@@ -28,6 +29,26 @@ extension StaticInfoCopyProtocol {
         return StaticInfoViewModel(image: iconImage,
                                    title: title,
                                    description: description)
+    }
+
+}
+
+@available(iOS 13.0, *)
+struct StaticInfoViewSUI: View {
+
+    @Binding var viewModel: StaticInfoViewModel
+
+    var body: some View {
+        VStack {
+            Image(uiImage: viewModel.image)
+                .resizable()
+                .frame(height: 240.0)
+                .padding()
+
+            StyledLabelSUI(text: viewModel.title, styleClass: .title)
+
+            StyledLabelSUI(text: viewModel.description, styleClass: .body)
+        }
     }
 
 }

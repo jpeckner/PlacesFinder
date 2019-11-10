@@ -7,6 +7,7 @@
 //
 
 import Shared
+import SwiftUI
 import UIKit
 
 extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
@@ -23,8 +24,15 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
          ctaType: CTAType) {
         switch ctaType {
         case .noCTA:
-            let contentView = SearchMessageView(viewModel: appCopyContent.searchLocationDisabled.messageViewModel,
+            let contentView: UIView
+            if #available(iOS 13.0, *) {
+                let infoViewModel = appCopyContent.searchLocationDisabled.messageViewModel.infoViewModel
+                let messageView = SearchMessageViewSUI(viewModel: infoViewModel)
+                contentView = UIHostingController(rootView: messageView).view
+            } else {
+                contentView = SearchMessageView(viewModel: appCopyContent.searchLocationDisabled.messageViewModel,
                                                 colorings: appSkin.colorings.standard)
+            }
 
             super.init(contentView: contentView,
                        viewColoring: appSkin.colorings.standard.viewColoring)

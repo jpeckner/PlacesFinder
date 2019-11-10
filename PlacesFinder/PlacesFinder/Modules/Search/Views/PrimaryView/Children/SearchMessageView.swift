@@ -8,6 +8,7 @@
 
 import Shared
 import SnapKit
+import SwiftUI
 import UIKit
 
 class SearchMessageView: UIView {
@@ -45,6 +46,19 @@ class SearchMessageView: UIView {
             make.top.equalTo(snp.topMargin)
             make.bottom.lessThanOrEqualTo(snp.bottomMargin)
         }
+    }
+
+}
+
+// MARK: SearchMessageViewSUI
+
+@available(iOS 13.0, *)
+struct SearchMessageViewSUI: View {
+
+    @State var viewModel: StaticInfoViewModel
+
+    var body: some View {
+        StaticInfoViewSUI(viewModel: $viewModel)
     }
 
 }

@@ -7,6 +7,7 @@
 //
 
 import Shared
+import SwiftUI
 import UIKit
 
 extension StyledLabel {
@@ -17,6 +18,34 @@ extension StyledLabel {
         self.init(textLayout: textStyleClass.textLayout,
                   textColoring: textColoring,
                   numberOfLines: numberOfLines)
+    }
+
+}
+
+@available(iOS 13.0, *)
+extension StyledLabelSUI {
+
+    init(text: String,
+         styleClass: AppTextStyleClass,
+         textColoring: TextColoring = .init(textColor: .label),
+         numberOfLines: Int? = nil) {
+        self.init(text: text,
+                  font: Font(styleClass.textLayout.font.ctFont),
+                  alignment: styleClass.textLayout.alignment.textAlignment,
+                  textColoring: textColoring,
+                  numberOfLines: numberOfLines)
+    }
+
+}
+
+@available(iOS 13.0, *)
+extension Text {
+
+    func configure(_ textStyleClass: AppTextStyleClass,
+                   textColoring: TextColoring) -> some View {
+        var configuredText = self
+        configuredText = configuredText.applyTextColoring(textColoring)
+        return applyTextLayout(textStyleClass.textLayout)
     }
 
 }
