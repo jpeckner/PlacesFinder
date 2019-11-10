@@ -126,8 +126,12 @@ private extension ListenerContainer {
         // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
         // rather than a less specific error), but the app still functions correctly on the off-chance that
         // Reachability.init() returns nil.
-        self.reachabilityListener = Reachability().map {
-            ReachabilityListener(store: store, reachability: $0)
+        do {
+            let reachability = try Reachability()
+            self.reachabilityListener = ReachabilityListener(store: store,
+                                                             reachability: reachability)
+        } catch {
+            self.reachabilityListener = nil
         }
 
         self.userDefaultsListener = UserDefaultsListener(store: store,
