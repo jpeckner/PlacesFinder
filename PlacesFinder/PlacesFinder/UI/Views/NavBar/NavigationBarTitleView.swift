@@ -8,6 +8,7 @@
 
 import Shared
 import SnapKit
+import SwiftUI
 import UIKit
 
 class NavigationBarTitleView: UIView {
@@ -56,12 +57,27 @@ class NavigationBarTitleView: UIView {
 
 }
 
-extension UIViewController {
+// MARK: NavigationBarTitleViewSUI
 
-    func configureTitleView(_ appSkin: AppSkin,
-                            appCopyContent: AppCopyContent) {
-        navigationItem.titleView = NavigationBarTitleView(appCopyContent: appCopyContent,
-                                                          colorings: appSkin.colorings.navBar)
+@available(iOS 13.0, *)
+struct NavigationBarTitleViewSUI: View {
+
+    @State var title: String
+
+    var body: some View {
+        HStack {
+            Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))
+
+            StyledLabelSUI(text: title,
+                           styleClass: .navBarTitle)
+        }
     }
 
+}
+
+@available(iOS 13.0, *)
+struct NavigationBarTitleViewSUI_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationBarTitleViewSUI(title: "Placeholder")
+    }
 }

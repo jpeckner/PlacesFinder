@@ -50,8 +50,8 @@ private extension SettingsPresenter {
         let controller = SettingsViewController(store: store,
                                                 formatter: formatter,
                                                 appSkin: state.appSkinState.currentValue)
-        controller.configureTitleView(state.appSkinState.currentValue,
-                                      appCopyContent: state.appCopyContentState.copyContent)
+//        controller.configureTitleView(state.appSkinState.currentValue,
+//                                      appCopyContent: state.appCopyContentState.copyContent)
         return controller
     }
 
