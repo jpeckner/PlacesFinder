@@ -32,7 +32,8 @@ extension Reachability: ReachabilityProtocol {
     func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void) {
         whenReachable = {
             switch $0.connection {
-            case .none:
+            case .none,
+                 .unavailable:
                 callback(.unreachable)
             case .cellular:
                 callback(.reachable(.cellular))

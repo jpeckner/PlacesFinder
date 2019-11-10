@@ -14,7 +14,6 @@ extension AppColorings {
     static let launchViewColorings = LaunchViewColorings(viewColoring: ViewColoring(backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)),
                                                          spinnerColor: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
 
-    // swiftlint:disable number_separator
     static let defaultColorings = AppColorings(
         standard: AppStandardColorings(
             viewColoring: ViewColoring(backgroundColor: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1)),

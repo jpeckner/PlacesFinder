@@ -1,6 +1,6 @@
-Carthage/Carthage@0.33.0
-mono0926/LicensePlist@2.5.0
-yonaskolb/Mint@0.12.0
+Carthage/Carthage@0.34.0
+mono0926/LicensePlist@2.9.0
+yonaskolb/Mint@0.13.0
 krzysztofzablocki/Sourcery@0.17.0
-realm/SwiftLint@0.35.0
-yonaskolb/XcodeGen@2.8.0
+realm/SwiftLint@0.37.0
+yonaskolb/XcodeGen@2.10.1
