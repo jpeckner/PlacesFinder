@@ -16,7 +16,7 @@ class SearchRetryViewController: SingleContentViewController {
     init(colorings: SearchCTAViewColorings,
          copyContent: SearchRetryCopyContent,
          retryBlock: @escaping () -> Void) {
-        let ctaView = SearchCTAView(viewModel: copyContent.retryViewModel,
+        let ctaView = SearchCTAView(viewModel: copyContent.ctaViewModel,
                                     colorings: colorings,
                                     retryBlock: retryBlock)
 

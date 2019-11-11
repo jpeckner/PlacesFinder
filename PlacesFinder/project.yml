@@ -46,6 +46,8 @@ targets:
     - path: PlacesFinder
       excludes:
         - "Sourcery/Output/AutoMockable.generated.swift"
+    settings:
+      OTHER_LDFLAGS: -weak_framework SwiftUI
     dependencies:
       - framework: Shared.framework
         implicit: true
