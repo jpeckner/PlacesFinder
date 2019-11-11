@@ -22,6 +22,18 @@ extension StyledLabel {
 
 }
 
+extension UILabel {
+
+    func configure(_ textStyleClass: AppTextStyleClass,
+                   textColoring: TextColoring) {
+        applyTextLayout(textStyleClass.textLayout)
+        applyTextColoring(textColoring)
+    }
+
+}
+
+// MARK: StyledLabelSUI
+
 @available(iOS 13.0, *)
 extension StyledLabelSUI {
 
@@ -44,18 +56,8 @@ extension Text {
     func configure(_ textStyleClass: AppTextStyleClass,
                    textColoring: TextColoring) -> some View {
         var configuredText = self
-        configuredText = configuredText.applyTextColoring(textColoring)
-        return applyTextLayout(textStyleClass.textLayout)
-    }
-
-}
-
-extension UILabel {
-
-    func configure(_ textStyleClass: AppTextStyleClass,
-                   textColoring: TextColoring) {
-        applyTextLayout(textStyleClass.textLayout)
-        applyTextColoring(textColoring)
+        configuredText = configuredText.foregroundColor(textColoring.color)
+        return configuredText.applyTextLayout(textStyleClass.textLayout)
     }
 
 }

@@ -8,6 +8,7 @@
 
 import Shared
 import SnapKit
+import SwiftUI
 import UIKit
 
 protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
@@ -16,21 +17,23 @@ protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
 
 extension SearchCTACopyProtocol {
 
-    var retryViewModel: SearchRetryViewModel {
-        return SearchRetryViewModel(infoViewModel: staticInfoViewModel,
-                                    ctaTitle: ctaTitle)
+    var ctaViewModel: SearchCTAViewModel {
+        return SearchCTAViewModel(infoViewModel: staticInfoViewModel,
+                                  ctaTitle: ctaTitle)
     }
 
 }
+
+typealias SearchCTARetryBlock = () -> Void
 
 class SearchCTAView: UIView {
 
     private let staticInfoView: StaticInfoView
     private let ctaButton: ActionableButton
 
-    init(viewModel: SearchRetryViewModel,
+    init(viewModel: SearchCTAViewModel,
          colorings: SearchCTAViewColorings,
-         retryBlock: @escaping () -> Void) {
+         retryBlock: @escaping SearchCTARetryBlock) {
         self.staticInfoView = StaticInfoView(viewModel: viewModel.infoViewModel,
                                              colorings: colorings)
         self.ctaButton = ActionableButton(touchUpInsideCallback: retryBlock)
@@ -73,13 +76,36 @@ class SearchCTAView: UIView {
         }
     }
 
-    private func setupContent(_ viewModel: SearchRetryViewModel) {
+    private func setupContent(_ viewModel: SearchCTAViewModel) {
         ctaButton.setTitle(viewModel.ctaTitle, for: .normal)
     }
 
     private func setupStyling(_ colorings: SearchCTAViewColorings) {
         ctaButton.configure(.ctaButton,
                             textColoring: colorings.ctaTextColoring)
+    }
+
+}
+
+// MARK: SearchCTAViewSUI
+
+@available(iOS 13.0, *)
+struct SearchCTAViewSUI: View {
+
+    @State var viewModel: SearchCTAViewModelSUI
+    let colorings: SearchCTAViewColorings
+    let retryBlock: SearchCTARetryBlock
+
+    var body: some View {
+        VStack {
+            StaticInfoViewSUI(viewModel: $viewModel.infoViewModel)
+                .padding(.bottom)
+
+            Button(action: retryBlock) {
+                Text(viewModel.ctaTitle)
+            }
+            .configure(.ctaButton, textColoring: colorings.ctaTextColoring)
+        }.padding()
     }
 
 }

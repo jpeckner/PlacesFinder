@@ -37,9 +37,21 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
             super.init(contentView: contentView,
                        viewColoring: appSkin.colorings.standard.viewColoring)
         case let .cta(openSettingsBlock):
-            let contentView = SearchCTAView(viewModel: appCopyContent.searchLocationDisabled.retryViewModel,
+            let contentView: UIView
+
+            if #available(iOS 13.0, *) {
+                let retryModel = appCopyContent.searchLocationDisabled.ctaViewModel
+                let viewModel = SearchCTAViewModelSUI(infoViewModel: retryModel.infoViewModel,
+                                                      ctaTitle: retryModel.ctaTitle)
+                let retryView = SearchCTAViewSUI(viewModel: viewModel,
+                                                 colorings: appSkin.colorings.searchCTA,
+                                                 retryBlock: openSettingsBlock)
+                contentView = UIHostingController(rootView: retryView).view
+            } else {
+                contentView = SearchCTAView(viewModel: appCopyContent.searchLocationDisabled.ctaViewModel,
                                             colorings: appSkin.colorings.searchCTA,
                                             retryBlock: openSettingsBlock)
+            }
 
             super.init(contentView: contentView,
                        viewColoring: appSkin.colorings.searchCTA.viewColoring)

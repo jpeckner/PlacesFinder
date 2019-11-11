@@ -58,7 +58,7 @@ struct SearchMessageViewSUI: View {
     @State var viewModel: StaticInfoViewModel
 
     var body: some View {
-        StaticInfoViewSUI(viewModel: $viewModel)
+        StaticInfoViewSUI(viewModel: $viewModel).padding()
     }
 
 }
