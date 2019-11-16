@@ -28,6 +28,8 @@ struct StaticInfoViewSUI: View {
                 .aspectRatio(contentMode: .fit)
 
             StyledLabelSUI(text: viewModel.title, styleClass: .title)
+                .lineLimit(1)
+                .allowsTightening(true)
 
             StyledLabelSUI(text: viewModel.description, styleClass: .body)
         }

@@ -24,31 +24,33 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
          ctaType: CTAType) {
         switch ctaType {
         case .noCTA:
+            let messageViewModel = appCopyContent.searchLocationDisabled.messageViewModel
             let contentView: UIView
+
             if #available(iOS 13.0, *) {
-                let infoViewModel = appCopyContent.searchLocationDisabled.messageViewModel.infoViewModel
+                let infoViewModel = messageViewModel.infoViewModel
                 let messageView = SearchMessageViewSUI(viewModel: infoViewModel)
                 contentView = UIHostingController(rootView: messageView).view
             } else {
-                contentView = SearchMessageView(viewModel: appCopyContent.searchLocationDisabled.messageViewModel,
+                contentView = SearchMessageView(viewModel: messageViewModel,
                                                 colorings: appSkin.colorings.standard)
             }
 
             super.init(contentView: contentView,
                        viewColoring: appSkin.colorings.standard.viewColoring)
         case let .cta(openSettingsBlock):
+            let ctaViewModel = appCopyContent.searchLocationDisabled.ctaViewModel
             let contentView: UIView
 
             if #available(iOS 13.0, *) {
-                let retryModel = appCopyContent.searchLocationDisabled.ctaViewModel
-                let viewModel = SearchCTAViewModelSUI(infoViewModel: retryModel.infoViewModel,
-                                                      ctaTitle: retryModel.ctaTitle)
+                let viewModel = SearchCTAViewModelSUI(infoViewModel: ctaViewModel.infoViewModel,
+                                                      ctaTitle: ctaViewModel.ctaTitle)
                 let retryView = SearchCTAViewSUI(viewModel: viewModel,
                                                  colorings: appSkin.colorings.searchCTA,
                                                  retryBlock: openSettingsBlock)
                 contentView = UIHostingController(rootView: retryView).view
             } else {
-                contentView = SearchCTAView(viewModel: appCopyContent.searchLocationDisabled.ctaViewModel,
+                contentView = SearchCTAView(viewModel: ctaViewModel,
                                             colorings: appSkin.colorings.searchCTA,
                                             retryBlock: openSettingsBlock)
             }
