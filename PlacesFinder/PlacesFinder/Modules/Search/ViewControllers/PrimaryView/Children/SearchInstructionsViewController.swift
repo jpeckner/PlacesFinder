@@ -7,6 +7,7 @@
 //
 
 import Shared
+import SwiftUI
 import UIKit
 
 extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
@@ -15,12 +16,22 @@ class SearchInstructionsViewController: SingleContentViewController {
 
     init(colorings: AppStandardColorings,
          copyContent: SearchInstructionsCopyContent) {
-        let viewModel = SearchInstructionsViewModel(infoViewModel: copyContent.staticInfoViewModel,
-                                                    resultsSourceCopy: copyContent.resultsSource)
-        let messageView = SearchInstructionsView(viewModel: viewModel,
-                                                 colorings: colorings)
+        let contentView: UIView
 
-        super.init(contentView: messageView,
+        if #available(iOS 13.0, *) {
+            let viewModel = SearchInstructionsViewModelSUI(infoViewModel: copyContent.staticInfoViewModel,
+                                                           resultsSourceCopy: copyContent.resultsSource)
+            let messageView = SearchInstructionsViewSUI(viewModel: viewModel,
+                                                        colorings: colorings)
+            contentView = UIHostingController(rootView: messageView).view
+        } else {
+            let viewModel = SearchInstructionsViewModel(infoViewModel: copyContent.staticInfoViewModel,
+                                                        resultsSourceCopy: copyContent.resultsSource)
+            contentView = SearchInstructionsView(viewModel: viewModel,
+                                                 colorings: colorings)
+        }
+
+        super.init(contentView: contentView,
                    viewColoring: colorings.viewColoring)
     }
 
