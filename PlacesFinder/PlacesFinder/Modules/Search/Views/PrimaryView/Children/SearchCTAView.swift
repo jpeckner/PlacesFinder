@@ -8,7 +8,6 @@
 
 import Shared
 import SnapKit
-import SwiftUI
 import UIKit
 
 protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
@@ -83,29 +82,6 @@ class SearchCTAView: UIView {
     private func setupStyling(_ colorings: SearchCTAViewColorings) {
         ctaButton.configure(.ctaButton,
                             textColoring: colorings.ctaTextColoring)
-    }
-
-}
-
-// MARK: SearchCTAViewSUI
-
-@available(iOS 13.0, *)
-struct SearchCTAViewSUI: View {
-
-    @State var viewModel: SearchCTAViewModelSUI
-    let colorings: SearchCTAViewColorings
-    let retryBlock: SearchCTARetryBlock
-
-    var body: some View {
-        VStack {
-            StaticInfoViewSUI(viewModel: $viewModel.infoViewModel)
-                .padding(.bottom)
-
-            Button(action: retryBlock) {
-                Text(viewModel.ctaTitle)
-            }
-            .configure(.ctaButton, textColoring: colorings.ctaTextColoring)
-        }.padding()
     }
 
 }
