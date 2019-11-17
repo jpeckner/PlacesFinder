@@ -7,6 +7,7 @@
 //
 
 import Shared
+import SwiftUI
 import UIKit
 
 class LaunchViewController: SingleContentViewController {
@@ -15,12 +16,22 @@ class LaunchViewController: SingleContentViewController {
         static let viewColoring = ViewColoring(backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
     }
 
-    private let launchView: LaunchView
+    private let launchView: LaunchViewProtocol
 
     init(colorings: LaunchViewColorings) {
-        self.launchView = LaunchView(colorings: colorings)
+        let contentView: UIView
 
-        super.init(contentView: launchView,
+        if #available(iOS 13.0, *) {
+            let launchView = LaunchViewSUI(colorings: colorings)
+            self.launchView = launchView
+            contentView = UIHostingController(rootView: launchView).view
+        } else {
+            let launchView = LaunchView(colorings: colorings)
+            self.launchView = launchView
+            contentView = launchView
+        }
+
+        super.init(contentView: contentView,
                    viewColoring: StyleContent.viewColoring)
     }
 
