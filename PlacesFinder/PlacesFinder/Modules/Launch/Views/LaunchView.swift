@@ -80,7 +80,7 @@ class LaunchView: UIView {
 
 }
 
-extension LaunchView {
+extension LaunchView: LaunchViewProtocol {
 
     func startSpinner() {
         activityIndicator.startAnimating()
