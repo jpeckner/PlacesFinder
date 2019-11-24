@@ -6,13 +6,8 @@ cd ../../..
 APPCONFIG_PATH=$(pwd)/PlacesFinder/PlacesFinder/Config/AppConfig.plist
 baseURL=$1
 apiKey=$2
-skinURL=$3
 
 rm -rf "$APPCONFIG_PATH"
-
-/usr/libexec/PlistBuddy -c "Add :appSkin dict" "$APPCONFIG_PATH"
-/usr/libexec/PlistBuddy -c "Add :appSkin:url dict" "$APPCONFIG_PATH"
-/usr/libexec/PlistBuddy -c "Add :appSkin:url:relative string "$skinURL "$APPCONFIG_PATH"
 
 /usr/libexec/PlistBuddy -c "Add :placeLookup dict" "$APPCONFIG_PATH"
 /usr/libexec/PlistBuddy -c "Add :placeLookup:baseURL dict" "$APPCONFIG_PATH"

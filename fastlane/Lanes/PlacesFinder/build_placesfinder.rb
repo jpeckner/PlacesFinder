@@ -1,18 +1,18 @@
 
 def generate_placesfinder(baseURL, apiKey, config = "Release")
-  generate_config(baseURL, apiKey, APP_SKIN_URL)
+  generate_config(baseURL, apiKey)
   generate_coordinode_files()
   generate_sourcery_files()
   generate_project_files(config)
 end
 
-def generate_config(baseURL, apiKey, appSkinURL)
+def generate_config(baseURL, apiKey)
   run_script(
     [
       "cd Lanes/PlacesFinder",
       "chmod u+x generate_config.sh",
-      "./generate_config.sh '%{baseURL}' '%{apiKey}' '%{APP_SKIN_URL}'" \
-        % {baseURL: baseURL, apiKey: apiKey, APP_SKIN_URL: APP_SKIN_URL}
+      "./generate_config.sh '%{baseURL}' '%{apiKey}'" \
+        % {baseURL: baseURL, apiKey: apiKey}
     ].join("\n")
   )
 end

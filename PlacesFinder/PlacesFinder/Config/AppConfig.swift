@@ -16,7 +16,6 @@ enum AppConfigError: Error {
 
 struct AppConfig {
     let displayName: NonEmptyString
-    let appSkinConfig: AppSkinConfig
     let yelpRequestConfig: YelpRequestConfig
 }
 
@@ -29,7 +28,6 @@ extension AppConfig {
         self.displayName = try NonEmptyString(displayNameValue)
 
         let decodableConfig = try bundle.decodeAppConfig()
-        self.appSkinConfig = decodableConfig.appSkin
         self.yelpRequestConfig = try YelpRequestConfig(apiKey: decodableConfig.placeLookup.apiKey,
                                                        baseURL: decodableConfig.placeLookup.baseURL)
     }
@@ -37,7 +35,6 @@ extension AppConfig {
 }
 
 private struct DecodableAppConfig: Decodable {
-    let appSkin: AppSkinConfig
     let placeLookup: SearchConfig
 }
 

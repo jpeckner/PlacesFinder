@@ -27,30 +27,12 @@ class AppSkinService: AppSkinServiceProtocol {
 
     private typealias AppColoringsCompletion = DecodableServiceCompletion<DecodableAppSkin, AppSkinServiceErrorPayload>
 
-    private let url: URL
-    private let decodableService: DecodableServiceProtocol
-
-    init(url: URL,
-         decodableService: DecodableServiceProtocol) {
-        self.url = url
-        self.decodableService = decodableService
-    }
-
     func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
-        fetchAppColorings { result in
-            switch result {
-            case let .success(decodableSkin):
-                let appSkin = AppSkin(colorings: decodableSkin.colorings)
-                completion(.success(appSkin))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    private func fetchAppColorings(completion: @escaping AppColoringsCompletion) {
-        let urlRequest = URLRequest(url: url, type: .GET)
-        decodableService.performRequest(urlRequest, completion: completion)
+        // This previously fetched the skin from an API, but the introduction of Dark Mode in iOS 13 has mostly obviated
+        // the desire for custom skins in an app. However, the previous infrastructure remains in place as an example of
+        // how to build a modular, multi-layered app architecture.
+        let appSkin = AppSkin(colorings: AppColorings.defaultColorings)
+        completion(.success(appSkin))
     }
 
 }
