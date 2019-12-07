@@ -30,7 +30,8 @@ class SearchInputView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(viewModel)
+        setupContent(viewModel,
+                     colorings: colorings)
         setupStyling(colorings)
         setupTextFieldViewTapRecognizer()
     }
@@ -68,13 +69,19 @@ class SearchInputView: UIView {
         cancelButtonLeadingConstraint.isActive = true
     }
 
-    private func setupContent(_ viewModel: SearchInputViewModel) {
-        textFieldView.textField.placeholder = viewModel.placeholder
+    private func setupContent(_ viewModel: SearchInputViewModel,
+                              colorings: SearchInputViewColorings) {
+        textFieldView.textField.attributedPlaceholder = NSAttributedString(
+            string: viewModel.placeholder,
+            attributes: [.foregroundColor: colorings.placeholderColoring.textColor]
+        )
+
         cancelButton.setTitle(viewModel.cancelButtonTitle, for: .normal)
     }
 
     private func setupStyling(_ colorings: SearchInputViewColorings) {
         backgroundColor = colorings.viewColoring.backgroundColor
+
         cancelButton.configure(.ctaButton, textColoring: colorings.cancelButtonTextColoring)
     }
 
@@ -175,6 +182,8 @@ private class TextFieldView: UIControl {
     }
 
     private func setupStyling(_ colorings: SearchInputViewColorings) {
+        iconImageView.tintColor = colorings.iconTintColoring.color
+
         textField.backgroundColor = .clear
         textField.configure(.textInput,
                             textColoring: colorings.inputTextColoring)

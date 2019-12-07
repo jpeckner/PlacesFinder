@@ -69,7 +69,8 @@ class AppCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == Ap
 extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
 
     func buildLaunchCoordinator() -> AppCoordinatorChildProtocol {
-        let presenter = LaunchPresenter()
+        let appSkin = AppSkin(colorings: AppColorings.defaultColorings)
+        let presenter = LaunchPresenter(appSkin: appSkin)
         let stylingsHandler = AppGlobalStylingsHandler()
 
         return LaunchCoordinator(store: store,

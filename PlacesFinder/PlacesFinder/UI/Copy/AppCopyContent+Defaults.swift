@@ -27,7 +27,7 @@ extension AppCopyContent {
         self.searchLocationDisabled = SearchLocationDisabledCopyContent(
             iconImage: #imageLiteral(resourceName: "location_disabled"),
             title: "Where Am I?",
-            description: "Please enable location services in Settings.",
+            description: "To show you the best nearby places, please enable location services in Settings.",
             ctaTitle: "Go to Settings"
         )
         self.searchNoInternet = SearchNoInternetCopyContent(

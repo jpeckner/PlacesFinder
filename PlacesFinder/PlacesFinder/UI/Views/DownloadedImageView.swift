@@ -7,6 +7,7 @@
 //
 
 import Kingfisher
+import Shared
 import UIKit
 
 class DownloadedImageView: UIImageView {
@@ -21,6 +22,7 @@ class DownloadedImageView: UIImageView {
         super.init(image: placeholderImage)
 
         self.contentMode = contentMode
+        tintColor = .label(alternative: .black)
     }
 
     required init?(coder aDecoder: NSCoder) {

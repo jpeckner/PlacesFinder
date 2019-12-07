@@ -74,7 +74,7 @@ class LaunchView: UIView {
     private func setupStyling(_ colorings: LaunchViewColorings) {
         imageView.contentMode = .scaleAspectFit
 
-        activityIndicator.color = colorings.spinnerColor
+        activityIndicator.color = colorings.spinnerColor.color
         activityIndicator.hidesWhenStopped = true
     }
 
