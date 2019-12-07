@@ -65,7 +65,8 @@ class SearchCellBase: UITableViewCell {
         }
 
         detailsContainerView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(nameLabel)
+            make.leading.equalTo(nameLabel)
+            make.trailing.equalTo(nameLabel).priority(999)
             make.top.greaterThanOrEqualTo(nameLabel.snp.bottom).offset(8.0)
             make.bottom.equalTo(thumbnailContainerView)
         }
