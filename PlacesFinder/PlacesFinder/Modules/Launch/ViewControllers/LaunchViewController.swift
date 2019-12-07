@@ -16,19 +16,10 @@ class LaunchViewController: SingleContentViewController {
 
     init(appSkin: AppSkin) {
         let colorings = appSkin.colorings.launch
-        let contentView: UIView
+        let launchView = LaunchView(colorings: colorings)
+        self.launchView = launchView
 
-        if #available(iOS 13.0, *) {
-            let launchView = LaunchViewSUI(colorings: colorings)
-            self.launchView = launchView
-            contentView = UIHostingController(rootView: launchView).view
-        } else {
-            let launchView = LaunchView(colorings: colorings)
-            self.launchView = launchView
-            contentView = launchView
-        }
-
-        super.init(contentView: contentView,
+        super.init(contentView: launchView,
                    viewColoring: colorings.viewColoring)
     }
 

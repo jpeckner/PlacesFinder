@@ -9,6 +9,7 @@
 import Shared
 import SwiftUI
 
+// NOTE: this view is unused until SwiftUI supports chained animations (see LaunchView.swift for desired animations).
 @available(iOS 13.0.0, *)
 struct LaunchViewSUI: View {
 
