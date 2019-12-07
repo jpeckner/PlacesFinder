@@ -34,7 +34,7 @@ struct LaunchViewSUI: View {
 
                 ActivityIndicator(_isAnimating: self.$viewModel.isAnimating,
                                   style: .whiteLarge,
-                                  color: self.colorings.spinnerColor)
+                                  color: self.colorings.spinnerColor.color)
             }
 
             Spacer()

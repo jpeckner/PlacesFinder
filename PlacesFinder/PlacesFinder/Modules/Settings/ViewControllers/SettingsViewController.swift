@@ -14,7 +14,6 @@ import UIKit
 struct SettingsViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
     let activeButtonTextColoring: TextColoring
-    let cellBackgroundColoring: ViewColoring
     let cellTextColoring: TextColoring
     let cellCheckmarkTint: FillColoring
     let headerTextColoring: TextColoring
@@ -62,9 +61,9 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.textLabel?.configure(.cellText, textColoring: colorings.cellTextColoring)
 
-        cell.backgroundColor = colorings.cellBackgroundColoring.backgroundColor
-        cell.tintColor = colorings.cellCheckmarkTint.color
         cell.makeSeparatorFullWidth()
+        cell.makeTransparent()
+        cell.tintColor = colorings.cellCheckmarkTint.color
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

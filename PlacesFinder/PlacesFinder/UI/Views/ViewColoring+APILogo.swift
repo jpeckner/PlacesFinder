@@ -12,6 +12,10 @@ import UIKit
 extension ViewColoring {
 
     var apiLogo: UIImage {
+        if #available(iOS 13.0.0, *) {
+            return #imageLiteral(resourceName: "Yelp_trademark_RGB_dynamic")
+        }
+
         // Per https://www.yelp.com/brand#content - "If you need to display the Yelp logo on a white background be sure
         // to use the version with the grey stroke."
         let colorComponents = backgroundColor.colorComponents

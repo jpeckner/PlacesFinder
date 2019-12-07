@@ -12,13 +12,10 @@ import UIKit
 
 class LaunchViewController: SingleContentViewController {
 
-    private enum StyleContent {
-        static let viewColoring = ViewColoring(backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
-    }
-
     private let launchView: LaunchViewProtocol
 
-    init(colorings: LaunchViewColorings) {
+    init(appSkin: AppSkin) {
+        let colorings = appSkin.colorings.launch
         let contentView: UIView
 
         if #available(iOS 13.0, *) {
@@ -32,7 +29,7 @@ class LaunchViewController: SingleContentViewController {
         }
 
         super.init(contentView: contentView,
-                   viewColoring: StyleContent.viewColoring)
+                   viewColoring: colorings.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {

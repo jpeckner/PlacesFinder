@@ -18,6 +18,7 @@ class HomeViewController: UITabBarController {
 
     weak var homeViewControllerDelegate: HomeViewControllerDelegate?
     private var previousIndex = 0
+    private var hasAdjustedTabBarInsets = false
 
     override var selectedViewController: UIViewController? {
         willSet {
@@ -41,13 +42,20 @@ class HomeViewController: UITabBarController {
 
 extension HomeViewController {
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    // Using traitCollectionDidChange() would be preferrable, but iOS 13 no longer calls that method when the view
+    // controller initially loads: https://useyourloaf.com/blog/predicting-size-classes-in-ios-13/
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-        guard previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass,
+        adjustTabImageInsets()
+    }
+
+    private func adjustTabImageInsets() {
+        guard !hasAdjustedTabBarInsets,
             let horizontalSizeClass = horizontalSpecifiedClass
         else { return }
 
+        hasAdjustedTabBarInsets = true
         adjustTabImageInsets(horizontalSizeClass)
     }
 

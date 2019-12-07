@@ -14,7 +14,8 @@ protocol LaunchViewProtocol {
     func animateOut(_ completion: (() -> Void)?)
 }
 
-struct LaunchViewColorings {
+// sourcery: fieldName = "launch"
+struct LaunchViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
-    let spinnerColor: UIColor
+    let spinnerColor: FillColoring
 }

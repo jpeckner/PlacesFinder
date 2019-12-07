@@ -35,6 +35,7 @@ struct AppStandardColorings: AppColoringProtocol, AppStandardColoringsProtocol {
 // sourcery: fieldName = "navBar"
 struct NavBarColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
+    let iconTintColoring: FillColoring
     let backArrowTint: FillColoring
     let titleTextColoring: TextColoring
 }
@@ -42,5 +43,6 @@ struct NavBarColorings: AppColoringProtocol {
 // sourcery: fieldName = "tabBar"
 struct TabBarColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
-    let itemTint: FillColoring
+    let selectedItemTint: FillColoring
+    let unselectedItemTint: FillColoring
 }

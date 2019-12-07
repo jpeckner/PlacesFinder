@@ -24,8 +24,8 @@ class LaunchPresenter: LaunchPresenterProtocol {
         return launchViewController
     }
 
-    init() {
-        self.launchViewController = LaunchViewController(colorings: AppColorings.launchViewColorings)
+    init(appSkin: AppSkin) {
+        self.launchViewController = LaunchViewController(appSkin: appSkin)
     }
 
     func startSpinner() {

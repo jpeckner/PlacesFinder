@@ -76,6 +76,8 @@ extension SearchDetailsPhoneNumberCell {
 
     func configure(_ viewModel: SearchDetailsPhoneNumberViewModel,
                    colorings: SearchDetailsViewColorings) {
+        iconImageView.tintColor = colorings.phoneIconTint.color
+
         phoneNumberLabel.text = viewModel.phoneLabelText
         phoneNumberLabel.configure(.body,
                                    textColoring: colorings.bodyTextColoring)

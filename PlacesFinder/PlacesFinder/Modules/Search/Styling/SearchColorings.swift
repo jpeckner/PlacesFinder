@@ -21,13 +21,16 @@ struct SearchCTAViewColorings: AppColoringProtocol, AppStandardColoringsProtocol
 struct SearchDetailsViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
     let bodyTextColoring: TextColoring
+    let phoneIconTint: FillColoring
     let disclosureArrowTint: FillColoring
 }
 
 // sourcery: fieldName = "searchInput"
 struct SearchInputViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
+    let iconTintColoring: FillColoring
     let textFieldViewColoring: ViewColoring
+    let placeholderColoring: TextColoring
     let inputTextColoring: TextColoring
     let cancelButtonTextColoring: TextColoring
 }

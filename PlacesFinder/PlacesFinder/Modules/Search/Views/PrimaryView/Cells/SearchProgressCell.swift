@@ -22,7 +22,14 @@ class SearchProgressCell: SearchCellBase {
     }
 
     private func setupSkeleton() {
+        nameLabel.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
+
+        detailsContainerView.trailingAnchor.constraint(
+            equalTo: nameLabel.trailingAnchor,
+            constant: -16.0
+        ).isActive = true
         detailsContainerView.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
+
         disclosureImageView.isHidden = true
 
         makeSkeletonable()

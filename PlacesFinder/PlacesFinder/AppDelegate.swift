@@ -148,10 +148,7 @@ private extension ServiceContainer {
          store: DispatchingStoreProtocol) {
         let decodableServices = DecodableServices()
 
-        self.appSkinService = AppSkinService(
-            url: appConfig.appSkinConfig.url,
-            decodableService: decodableServices.quickTimeoutDecodableService
-        )
+        self.appSkinService = AppSkinService()
 
         let locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
