@@ -9,7 +9,8 @@
 import Shared
 import UIKit
 
-struct LaunchViewColorings {
+// sourcery: fieldName = "launch"
+struct LaunchViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
-    let spinnerColor: UIColor
+    let spinnerColor: FillColoring
 }

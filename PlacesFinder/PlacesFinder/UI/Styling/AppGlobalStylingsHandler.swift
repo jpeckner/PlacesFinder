@@ -19,7 +19,8 @@ class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
         navBarAppearance.barTintColor = appSkin.colorings.navBar.viewColoring.backgroundColor
 
         let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.tintColor = appSkin.colorings.tabBar.itemTint.color
+        tabBarAppearance.tintColor = appSkin.colorings.tabBar.selectedItemTint.color
+        tabBarAppearance.unselectedItemTintColor = appSkin.colorings.tabBar.unselectedItemTint.color
         tabBarAppearance.barTintColor = appSkin.colorings.tabBar.viewColoring.backgroundColor
     }
 

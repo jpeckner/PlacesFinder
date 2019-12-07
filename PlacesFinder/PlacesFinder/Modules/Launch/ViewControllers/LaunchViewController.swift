@@ -11,17 +11,13 @@ import UIKit
 
 class LaunchViewController: SingleContentViewController {
 
-    private enum StyleContent {
-        static let viewColoring = ViewColoring(backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
-    }
-
     private let launchView: LaunchView
 
-    init(colorings: LaunchViewColorings) {
-        self.launchView = LaunchView(colorings: colorings)
+    init(appSkin: AppSkin) {
+        self.launchView = LaunchView(colorings: appSkin.colorings.launch)
 
         super.init(contentView: launchView,
-                   viewColoring: StyleContent.viewColoring)
+                   viewColoring: appSkin.colorings.launch.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {

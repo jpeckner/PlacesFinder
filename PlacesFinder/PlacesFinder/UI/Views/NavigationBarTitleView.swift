@@ -26,6 +26,7 @@ class NavigationBarTitleView: UIView {
         setupSubviews()
         setupConstraints()
         setupContent(appCopyContent)
+        setupStyling(colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +53,10 @@ class NavigationBarTitleView: UIView {
 
     private func setupContent(_ appCopyContent: AppCopyContent) {
         titleLabel.text = appCopyContent.displayName.value
+    }
+
+    private func setupStyling(_ colorings: NavBarColorings) {
+        iconImageView.tintColor = colorings.iconTintColoring.color
     }
 
 }
