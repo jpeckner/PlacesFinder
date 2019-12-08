@@ -10,15 +10,6 @@ import Shared
 import SwiftDux
 import UIKit
 
-// sourcery: fieldName = "settings"
-struct SettingsViewColorings: AppColoringProtocol {
-    let viewColoring: ViewColoring
-    let activeButtonTextColoring: TextColoring
-    let cellTextColoring: TextColoring
-    let cellCheckmarkTint: FillColoring
-    let headerTextColoring: TextColoring
-}
-
 class SettingsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
