@@ -21,11 +21,11 @@ class SettingsMeasurementSystemHeaderView: UIView {
          copyContent: SettingsMeasurementSystemCopyContent,
          currentSystemInState: MeasurementSystem,
          title: String,
-         colorings: SettingsViewColorings) {
+         colorings: SettingsHeaderViewColorings) {
         self.store = store
         self.copyContent = copyContent
         self.sectionNameLabel = StyledLabel(textStyleClass: .tableHeader,
-                                            textColoring: colorings.headerTextColoring)
+                                            textColoring: colorings.textColoring)
         self.systemsStackView = UIStackView()
 
         super.init(frame: .zero)
@@ -72,7 +72,7 @@ class SettingsMeasurementSystemHeaderView: UIView {
     }
 
     private func setupStackView(_ currentSystemInState: MeasurementSystem,
-                                colorings: SettingsViewColorings) {
+                                colorings: SettingsHeaderViewColorings) {
         systemsStackView.axis = .horizontal
         systemsStackView.spacing = 8.0
         systemsStackView.alignment = .bottom
@@ -91,16 +91,16 @@ class SettingsMeasurementSystemHeaderView: UIView {
     }
 
     private func label(for system: MeasurementSystem,
-                       colorings: SettingsViewColorings) -> StyledLabel {
+                       colorings: SettingsHeaderViewColorings) -> StyledLabel {
         let label = StyledLabel(textStyleClass: .tableHeaderSelectedButton,
-                                textColoring: colorings.headerTextColoring,
+                                textColoring: colorings.textColoring,
                                 numberOfLines: 1)
         label.text = copyContent.title(system)
         return label
     }
 
     private func button(for system: MeasurementSystem,
-                        colorings: SettingsViewColorings) -> ActionableButton {
+                        colorings: SettingsHeaderViewColorings) -> ActionableButton {
         let button = ActionableButton { [weak self] in
             self?.store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
         }
@@ -113,9 +113,9 @@ class SettingsMeasurementSystemHeaderView: UIView {
         return button
     }
 
-    private func delimeterLabel(_ colorings: SettingsViewColorings) -> StyledLabel {
+    private func delimeterLabel(_ colorings: SettingsHeaderViewColorings) -> StyledLabel {
         let label = StyledLabel(textStyleClass: .tableHeaderButton,
-                                textColoring: colorings.headerTextColoring,
+                                textColoring: colorings.textColoring,
                                 numberOfLines: 1)
         label.text = copyContent.delimeter
         return label

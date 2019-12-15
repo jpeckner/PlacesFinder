@@ -11,6 +11,11 @@ import UIKit
 
 extension UIViewController {
 
+    func configureTitleView(_ state: AppState) {
+        configureTitleView(state.appSkinState.currentValue,
+                           appCopyContent: state.appCopyContentState.copyContent)
+    }
+
     func configureTitleView(_ appSkin: AppSkin,
                             appCopyContent: AppCopyContent) {
         let colorings = appSkin.colorings.navBar

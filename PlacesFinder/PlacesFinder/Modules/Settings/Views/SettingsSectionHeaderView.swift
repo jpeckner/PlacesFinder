@@ -14,9 +14,9 @@ class SettingsSectionHeaderView: UIView {
     private let label: StyledLabel
 
     init(title: String,
-         colorings: SettingsViewColorings) {
+         colorings: SettingsHeaderViewColorings) {
         self.label = StyledLabel(textStyleClass: .tableHeader,
-                                 textColoring: colorings.headerTextColoring)
+                                 textColoring: colorings.textColoring)
 
         super.init(frame: .zero)
 

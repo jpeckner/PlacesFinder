@@ -10,33 +10,21 @@ import Shared
 import SwiftDux
 import UIKit
 
-// sourcery: fieldName = "settings"
-struct SettingsViewColorings: AppColoringProtocol {
-    let viewColoring: ViewColoring
-    let activeButtonTextColoring: TextColoring
-    let cellTextColoring: TextColoring
-    let cellCheckmarkTint: FillColoring
-    let headerTextColoring: TextColoring
-}
-
 class SettingsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
-    private let formatter: MeasurementFormatter
     private let colorings: SettingsViewColorings
     private let tableView: GroupedTableView
 
-    private var viewModel = SettingsViewModel(sections: []) {
+    var viewModel = SettingsViewModel(sections: []) {
         didSet {
             tableView.configure(viewModel.tableModel)
         }
     }
 
     init(store: DispatchingStoreProtocol,
-         formatter: MeasurementFormatter,
          appSkin: AppSkin) {
         self.store = store
-        self.formatter = formatter
         self.colorings = appSkin.colorings.settings
         self.tableView = GroupedTableView(tableModel: viewModel.tableModel)
 
@@ -59,11 +47,11 @@ extension SettingsViewController: UITableViewDelegate {
     // MARK: Configure cells
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.textLabel?.configure(.cellText, textColoring: colorings.cellTextColoring)
+        cell.textLabel?.configure(.cellText, textColoring: colorings.cellColorings.textColoring)
 
         cell.makeSeparatorFullWidth()
         cell.makeTransparent()
-        cell.tintColor = colorings.cellCheckmarkTint.color
+        cell.tintColor = colorings.cellColorings.checkmarkTint.color
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -82,13 +70,13 @@ extension SettingsViewController: UITableViewDelegate {
         switch sectionViewModel.headerType {
         case .plain:
             return SettingsSectionHeaderView(title: title,
-                                             colorings: colorings)
+                                             colorings: colorings.headerColorings)
         case let .measurementSystem(currentSystemInState, copyContent):
             return SettingsMeasurementSystemHeaderView(store: store,
                                                        copyContent: copyContent,
                                                        currentSystemInState: currentSystemInState,
                                                        title: title,
-                                                       colorings: colorings)
+                                                       colorings: colorings.headerColorings)
         }
     }
 
@@ -98,16 +86,6 @@ extension SettingsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
-    }
-
-}
-
-extension SettingsViewController {
-
-    func configure(state: AppState) {
-        viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
-                                      formatter: formatter,
-                                      appCopyContent: state.appCopyContentState.copyContent)
     }
 
 }

@@ -51,8 +51,14 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
                                      statePrism: statePrism,
                                      actionPrism: actionPrism)
         case .settings:
-            let presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties,
+            let presenter: SettingsPresenterProtocol
+            if #available(iOS 13.0, *) {
+                presenter = SettingsPresenterSUI(tabItemProperties: immediateDescendent.tabItemProperties,
+                                                 store: store)
+            } else {
+                presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties,
                                               store: store)
+            }
 
             return SettingsCoordinator(store: store,
                                        presenter: presenter)

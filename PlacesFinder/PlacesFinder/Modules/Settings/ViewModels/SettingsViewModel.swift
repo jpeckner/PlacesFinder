@@ -8,26 +8,14 @@
 
 import Foundation
 import Shared
-import SwiftDux
 
-struct SettingsCellViewModel {
-    let cellModel: GroupedTableViewCellModel
-    let action: Action
-}
+@available(iOS 13.0, *)
+class SettingsViewModelObservable: ObservableObject {
+    @Published var viewModel: SettingsViewModel
 
-struct SettingsSectionViewModel {
-    enum HeaderType {
-        case plain
-
-        case measurementSystem(
-            currentSystemInState: MeasurementSystem,
-            copyContent: SettingsMeasurementSystemCopyContent
-        )
+    init(viewModel: SettingsViewModel) {
+        self._viewModel = Published(initialValue: viewModel)
     }
-
-    let title: String
-    let headerType: HeaderType
-    let cells: [SettingsCellViewModel]
 }
 
 struct SettingsViewModel {
@@ -41,12 +29,14 @@ extension SettingsViewModel {
          appCopyContent: AppCopyContent) {
         self.sections = [
             SettingsSectionViewModel(
+                id: 0,
                 title: appCopyContent.settingsHeaders.distanceSectionTitle,
                 headerType: .measurementSystem(currentSystemInState: searchPreferencesState.distance.system,
                                                copyContent: appCopyContent.settingsMeasurementSystem),
                 cells: searchPreferencesState.distanceCellModels(formatter)
             ),
             SettingsSectionViewModel(
+                id: 1,
                 title: appCopyContent.settingsHeaders.sortSectionTitle,
                 headerType: .plain,
                 cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
@@ -58,7 +48,13 @@ extension SettingsViewModel {
         return GroupedTableViewModel(sectionModels: sections.map {
             GroupedTableViewSectionModel(
                 title: $0.title,
-                cellModels: $0.cells.map { $0.cellModel }
+                cellModels: $0.cells.map {
+                    .basic(GroupedTableBasicCellViewModel(
+                        title: $0.title,
+                        image: nil,
+                        accessoryType: $0.hasCheckmark ? .checkmark : .none
+                    ))
+                }
             )
         })
     }

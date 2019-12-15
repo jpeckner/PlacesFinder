@@ -58,10 +58,14 @@ extension AppColorings {
         ),
         settings: SettingsViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            activeButtonTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1)),
-            cellTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            cellCheckmarkTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            headerTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            cellColorings: SettingsCellColorings(
+                textColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+                checkmarkTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            ),
+            headerColorings: SettingsHeaderViewColorings(
+                textColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+                activeButtonTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
+            )
         ),
         tabBar: TabBarColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGray5(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),

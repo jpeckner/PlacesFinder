@@ -25,15 +25,13 @@ extension SearchPreferencesState {
     private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
                                                     formatter: MeasurementFormatter,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
-        return T.allCases.map {
-            let viewModel = GroupedTableBasicCellViewModel(
-                title: formatter.string(from: $0.measurement),
-                image: nil,
-                accessoryType: currentlySelectedDistance == $0 ? .checkmark : .none
+        return T.allCases.enumerated().map {
+            SettingsCellViewModel(
+                id: $0.offset,
+                title: formatter.string(from: $0.element.measurement),
+                hasCheckmark: currentlySelectedDistance == $0.element,
+                action: SearchPreferencesAction.setDistance(distanceBlock($0.element))
             )
-
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
-                                         action: SearchPreferencesAction.setDistance(distanceBlock($0)))
         }
     }
 
@@ -42,15 +40,13 @@ extension SearchPreferencesState {
 extension SearchPreferencesState {
 
     func sortingCellModels(_ copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        return PlaceLookupSorting.allCases.map {
-            let viewModel = GroupedTableBasicCellViewModel(
-                title: copyContent.title($0),
-                image: nil,
-                accessoryType: sorting == $0 ? .checkmark : .none
+        return PlaceLookupSorting.allCases.enumerated().map {
+            SettingsCellViewModel(
+                id: $0.offset,
+                title: copyContent.title($0.element),
+                hasCheckmark: sorting == $0.element,
+                action: SearchPreferencesAction.setSorting($0.element)
             )
-
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
-                                         action: SearchPreferencesAction.setSorting($0))
         }
     }
 
