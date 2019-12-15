@@ -43,8 +43,8 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
             let contentView: UIView
 
             if #available(iOS 13.0, *) {
-                let viewModel = SearchCTAViewModelSUI(infoViewModel: ctaViewModel.infoViewModel,
-                                                      ctaTitle: ctaViewModel.ctaTitle)
+                let viewModel = SearchCTAViewModel(infoViewModel: ctaViewModel.infoViewModel,
+                                                   ctaTitle: ctaViewModel.ctaTitle)
                 let retryView = SearchCTAViewSUI(viewModel: viewModel,
                                                  colorings: appSkin.colorings.searchCTA,
                                                  retryBlock: openSettingsBlock)

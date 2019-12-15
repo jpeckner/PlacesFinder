@@ -12,7 +12,11 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct NavigationBarTitleViewSUI: View {
 
-    @State var title: String
+    private let title: String
+
+    init(title: String) {
+        self.title = title
+    }
 
     var body: some View {
         HStack {
@@ -23,11 +27,4 @@ struct NavigationBarTitleViewSUI: View {
         }
     }
 
-}
-
-@available(iOS 13.0, *)
-struct NavigationBarTitleViewSUI_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationBarTitleViewSUI(title: "Placeholder")
-    }
 }

@@ -12,15 +12,20 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 struct SearchInstructionsViewSUI: View {
 
-    @State var viewModel: SearchInstructionsViewModelSUI
-    @State var colorings: AppStandardColorings
+    private let viewModel: SearchInstructionsViewModel
+    private let colorings: AppStandardColorings
+
+    init(viewModel: SearchInstructionsViewModel, colorings: AppStandardColorings) {
+        self.viewModel = viewModel
+        self.colorings = colorings
+    }
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: $viewModel.infoViewModel)
+            StaticInfoViewSUI(viewModel: viewModel.infoViewModel)
                 .padding()
 
-            ResultsSourceViewSUI(viewModel: $viewModel, colorings: $colorings)
+            ResultsSourceViewSUI(viewModel: viewModel, colorings: colorings)
                 .padding()
         }
     }
@@ -34,8 +39,8 @@ private struct ResultsSourceViewSUI: View {
         static let imageWidth: CGFloat = 64.0
     }
 
-    @Binding var viewModel: SearchInstructionsViewModelSUI
-    @Binding var colorings: AppStandardColorings
+    let viewModel: SearchInstructionsViewModel
+    let colorings: AppStandardColorings
 
     var body: some View {
         HStack(spacing: 0.0) {

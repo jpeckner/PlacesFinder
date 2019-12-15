@@ -16,7 +16,11 @@ struct StaticInfoViewSUI: View {
         static let imageHeight: CGFloat = 240.0
     }
 
-    @Binding var viewModel: StaticInfoViewModel
+    private let viewModel: StaticInfoViewModel
+
+    init(viewModel: StaticInfoViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         VStack {
