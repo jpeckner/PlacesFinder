@@ -25,11 +25,12 @@ extension SearchPreferencesState {
     private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
                                                     formatter: MeasurementFormatter,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
-        return T.allCases.map {
+        return T.allCases.enumerated().map {
             SettingsCellViewModel(
-                title: formatter.string(from: $0.measurement),
-                hasCheckmark: currentlySelectedDistance == $0,
-                action: IgnoredHashable(SearchPreferencesAction.setDistance(distanceBlock($0)))
+                id: $0.offset,
+                title: formatter.string(from: $0.element.measurement),
+                hasCheckmark: currentlySelectedDistance == $0.element,
+                action: SearchPreferencesAction.setDistance(distanceBlock($0.element))
             )
         }
     }
@@ -39,11 +40,12 @@ extension SearchPreferencesState {
 extension SearchPreferencesState {
 
     func sortingCellModels(_ copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        return PlaceLookupSorting.allCases.map {
+        return PlaceLookupSorting.allCases.enumerated().map {
             SettingsCellViewModel(
-                title: copyContent.title($0),
-                hasCheckmark: sorting == $0,
-                action: IgnoredHashable(SearchPreferencesAction.setSorting($0))
+                id: $0.offset,
+                title: copyContent.title($0.element),
+                hasCheckmark: sorting == $0.element,
+                action: SearchPreferencesAction.setSorting($0.element)
             )
         }
     }

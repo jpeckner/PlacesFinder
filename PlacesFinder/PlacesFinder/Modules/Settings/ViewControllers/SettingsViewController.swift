@@ -58,7 +58,7 @@ extension SettingsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let action = viewModel.sections[indexPath.section].cells[indexPath.row].action
-        store.dispatch(action.value)
+        store.dispatch(action)
     }
 
     // MARK: Configure headers/footers

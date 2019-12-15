@@ -26,11 +26,11 @@ struct SettingsViewSUI: View {
         List {
             ForEach(viewModel.viewModel.sections) { section in
                 Section(header: Text(section.title)) {
-                    ForEach(section.cells, id: \.self) { cellViewModel in
+                    ForEach(section.cells) { cellViewModel in
                         SettingsCell(viewModel: cellViewModel)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                self.store.dispatch(cellViewModel.action.value)
+                                self.store.dispatch(cellViewModel.action)
                             }
                     }
                 }
