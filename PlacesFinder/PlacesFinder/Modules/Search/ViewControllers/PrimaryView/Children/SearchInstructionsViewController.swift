@@ -19,8 +19,8 @@ class SearchInstructionsViewController: SingleContentViewController {
         let contentView: UIView
 
         if #available(iOS 13.0, *) {
-            let viewModel = SearchInstructionsViewModelSUI(infoViewModel: copyContent.staticInfoViewModel,
-                                                           resultsSourceCopy: copyContent.resultsSource)
+            let viewModel = SearchInstructionsViewModel(infoViewModel: copyContent.staticInfoViewModel,
+                                                        resultsSourceCopy: copyContent.resultsSource)
             let messageView = SearchInstructionsViewSUI(viewModel: viewModel,
                                                         colorings: colorings)
             contentView = UIHostingController(rootView: messageView).view

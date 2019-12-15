@@ -11,13 +11,21 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct SearchCTAViewSUI: View {
 
-    @State var viewModel: SearchCTAViewModelSUI
-    let colorings: SearchCTAViewColorings
-    let retryBlock: SearchCTARetryBlock
+    private let viewModel: SearchCTAViewModel
+    private let colorings: SearchCTAViewColorings
+    private let retryBlock: SearchCTARetryBlock
+
+    init(viewModel: SearchCTAViewModel,
+         colorings: SearchCTAViewColorings,
+         retryBlock: @escaping SearchCTARetryBlock) {
+        self.viewModel = viewModel
+        self.colorings = colorings
+        self.retryBlock = retryBlock
+    }
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: $viewModel.infoViewModel)
+            StaticInfoViewSUI(viewModel: viewModel.infoViewModel)
                 .padding(.bottom)
 
             Button(action: retryBlock) {
