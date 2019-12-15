@@ -26,14 +26,11 @@ extension SearchPreferencesState {
                                                     formatter: MeasurementFormatter,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
         return T.allCases.map {
-            let viewModel = GroupedTableBasicCellViewModel(
+            SettingsCellViewModel(
                 title: formatter.string(from: $0.measurement),
-                image: nil,
-                accessoryType: currentlySelectedDistance == $0 ? .checkmark : .none
+                hasCheckmark: currentlySelectedDistance == $0,
+                action: IgnoredHashable(SearchPreferencesAction.setDistance(distanceBlock($0)))
             )
-
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
-                                         action: SearchPreferencesAction.setDistance(distanceBlock($0)))
         }
     }
 
@@ -43,14 +40,11 @@ extension SearchPreferencesState {
 
     func sortingCellModels(_ copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
         return PlaceLookupSorting.allCases.map {
-            let viewModel = GroupedTableBasicCellViewModel(
+            SettingsCellViewModel(
                 title: copyContent.title($0),
-                image: nil,
-                accessoryType: sorting == $0 ? .checkmark : .none
+                hasCheckmark: sorting == $0,
+                action: IgnoredHashable(SearchPreferencesAction.setSorting($0))
             )
-
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
-                                         action: SearchPreferencesAction.setSorting($0))
         }
     }
 

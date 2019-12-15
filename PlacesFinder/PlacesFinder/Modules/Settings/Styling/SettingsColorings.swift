@@ -12,8 +12,16 @@ import Shared
 // sourcery: fieldName = "settings"
 struct SettingsViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
+    let cellColorings: SettingsCellColorings
+    let headerColorings: SettingsHeaderViewColorings
+}
+
+struct SettingsCellColorings: Decodable, Equatable {
+    let textColoring: TextColoring
+    let checkmarkTint: FillColoring
+}
+
+struct SettingsHeaderViewColorings: Decodable, Equatable {
+    let textColoring: TextColoring
     let activeButtonTextColoring: TextColoring
-    let cellTextColoring: TextColoring
-    let cellCheckmarkTint: FillColoring
-    let headerTextColoring: TextColoring
 }
