@@ -145,13 +145,6 @@ extension SearchLookupParentController {
                                     nextRequestAction: nextRequestAction)
     }
 
-    @discardableResult
-    private func setChildIfNotPresent<T: UIViewController>(_ type: T.Type, initBlock: () -> T) -> T {
-        return setSingleChildIfNotPresent(type, initBlock: initBlock) {
-            searchView.setChildView($0)
-        }
-    }
-
     private func resultViewModels(_ allEntities: NonEmptyArray<SearchEntityModel>,
                                   copyFormatter: SearchCopyFormatterProtocol) -> NonEmptyArray<SearchResultViewModel> {
         return allEntities.withTransformation {
@@ -161,6 +154,13 @@ extension SearchLookupParentController {
 
             return SearchResultViewModel(cellModel: cellModel,
                                          detailEntityAction: detailEntityAction)
+        }
+    }
+
+    @discardableResult
+    private func setChildIfNotPresent<T: UIViewController>(_ type: T.Type, initBlock: () -> T) -> T {
+        return setSingleChildIfNotPresent(type, initBlock: initBlock) {
+            searchView.setChildView($0)
         }
     }
 
