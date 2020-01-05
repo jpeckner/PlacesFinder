@@ -18,38 +18,33 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 class SearchResultsViewController: SingleContentViewController {
 
     private weak var delegate: SearchResultsViewControllerDelegate?
+
     private let store: DispatchingStoreProtocol
-    private let detailsActionPrism: SearchDetailsActionPrismProtocol
+    private let refreshAction: Action
+    private let colorings: SearchResultsViewColorings
+
     private var nextRequestAction: Action?
-    private var allEntities: NonEmptyArray<SearchEntityModel> {
+    private var resultViewModels: NonEmptyArray<SearchResultViewModel> {
         didSet {
-            guard allEntities != oldValue else { return }
             tableView.reloadData()
         }
     }
-    private let colorings: SearchResultsViewColorings
-    private let copyFormatter: SearchCopyFormatterProtocol
-    private let refreshBlock: () -> Void
 
     private let tableView: UITableView
     private var previousContentOffsetY: CGFloat = 0.0
 
     init(delegate: SearchResultsViewControllerDelegate,
          store: DispatchingStoreProtocol,
-         detailsActionPrism: SearchDetailsActionPrismProtocol,
-         nextRequestAction: Action?,
-         allEntities: NonEmptyArray<SearchEntityModel>,
+         refreshAction: Action,
          colorings: SearchResultsViewColorings,
-         copyFormatter: SearchCopyFormatterProtocol,
-         refreshBlock: @escaping () -> Void) {
+         nextRequestAction: Action?,
+         resultViewModels: NonEmptyArray<SearchResultViewModel>) {
         self.delegate = delegate
         self.store = store
-        self.detailsActionPrism = detailsActionPrism
+        self.refreshAction = refreshAction
         self.nextRequestAction = nextRequestAction
-        self.allEntities = allEntities
+        self.resultViewModels = resultViewModels
         self.colorings = colorings
-        self.copyFormatter = copyFormatter
-        self.refreshBlock = refreshBlock
         self.tableView = UITableView()
 
         super.init(contentView: tableView,
@@ -86,14 +81,14 @@ class SearchResultsViewController: SingleContentViewController {
 
 extension SearchResultsViewController {
 
-    func configure(_ allEntities: NonEmptyArray<SearchEntityModel>,
+    func configure(_ resultViewModels: NonEmptyArray<SearchResultViewModel>,
                    nextRequestAction: Action?) {
-        self.allEntities = allEntities
+        self.resultViewModels = resultViewModels
         self.nextRequestAction = nextRequestAction
     }
 
-    private func entityModels(for indexPath: IndexPath) -> SearchEntityModel {
-        return allEntities.value[indexPath.row]
+    private func resultViewModel(for indexPath: IndexPath) -> SearchResultViewModel {
+        return resultViewModels.value[indexPath.row]
     }
 
 }
@@ -101,7 +96,7 @@ extension SearchResultsViewController {
 extension SearchResultsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allEntities.value.count
+        return resultViewModels.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,11 +104,8 @@ extension SearchResultsViewController: UITableViewDataSource {
 
         AssertionHandler.assertIfErrorThrown {
             let resultCell: SearchResultCell = try CastingFunctions.cast(cell)
-            let fields = entityModels(for: indexPath)
-            let cellModel = SearchResultCellModel(model: fields.summaryModel,
-                                                  copyFormatter: copyFormatter)
-
-            resultCell.configure(cellModel,
+            let viewModel = resultViewModel(for: indexPath)
+            resultCell.configure(viewModel.cellModel,
                                  colorings: colorings)
         }
 
@@ -136,7 +128,7 @@ extension SearchResultsViewController: UITableViewDataSourcePrefetching {
     }
 
     private func isCloseEnoughToBottomForNextRequest(_ indexPaths: [IndexPath]) -> Bool {
-        return indexPaths.contains { $0.row >= allEntities.value.count - 30 }
+        return indexPaths.contains { $0.row >= resultViewModels.value.count - 30 }
     }
 
 }
@@ -147,9 +139,8 @@ extension SearchResultsViewController: UITableViewDelegate {
                    didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let fields = entityModels(for: indexPath)
-        let detailEntityAction = detailsActionPrism.detailEntityAction(fields.detailsModel)
-        store.dispatch(detailEntityAction)
+        let viewModel = resultViewModel(for: indexPath)
+        store.dispatch(viewModel.detailEntityAction)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -167,7 +158,7 @@ extension SearchResultsViewController: UITableViewDelegate {
 
         tableView.setContentOffset(.zero, animated: true)
         tableView.refreshControl?.endRefreshing()
-        refreshBlock()
+        store.dispatch(refreshAction)
     }
 
 }
