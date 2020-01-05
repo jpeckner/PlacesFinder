@@ -20,6 +20,7 @@ class SearchResultsViewController: SingleContentViewController {
     private weak var delegate: SearchResultsViewControllerDelegate?
     private let store: DispatchingStoreProtocol
     private let detailsActionPrism: SearchDetailsActionPrismProtocol
+    private let refreshAction: Action
     private var nextRequestAction: Action?
     private var allEntities: NonEmptyArray<SearchEntityModel> {
         didSet {
@@ -29,7 +30,6 @@ class SearchResultsViewController: SingleContentViewController {
     }
     private let colorings: SearchResultsViewColorings
     private let copyFormatter: SearchCopyFormatterProtocol
-    private let refreshBlock: () -> Void
 
     private let tableView: UITableView
     private var previousContentOffsetY: CGFloat = 0.0
@@ -37,19 +37,19 @@ class SearchResultsViewController: SingleContentViewController {
     init(delegate: SearchResultsViewControllerDelegate,
          store: DispatchingStoreProtocol,
          detailsActionPrism: SearchDetailsActionPrismProtocol,
+         refreshAction: Action,
          nextRequestAction: Action?,
          allEntities: NonEmptyArray<SearchEntityModel>,
          colorings: SearchResultsViewColorings,
-         copyFormatter: SearchCopyFormatterProtocol,
-         refreshBlock: @escaping () -> Void) {
+         copyFormatter: SearchCopyFormatterProtocol) {
         self.delegate = delegate
         self.store = store
         self.detailsActionPrism = detailsActionPrism
+        self.refreshAction = refreshAction
         self.nextRequestAction = nextRequestAction
         self.allEntities = allEntities
         self.colorings = colorings
         self.copyFormatter = copyFormatter
-        self.refreshBlock = refreshBlock
         self.tableView = UITableView()
 
         super.init(contentView: tableView,
@@ -167,7 +167,7 @@ extension SearchResultsViewController: UITableViewDelegate {
 
         tableView.setContentOffset(.zero, animated: true)
         tableView.refreshControl?.endRefreshing()
-        refreshBlock()
+        store.dispatch(refreshAction)
     }
 
 }

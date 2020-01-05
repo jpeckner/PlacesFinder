@@ -43,8 +43,12 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 extension SearchLookupParentController {
 
     func submitSearchRequest(_ keywords: NonEmptyString) {
-        store.dispatch(actionPrism.initialRequestAction(SearchSubmittedParams(keywords: keywords),
-                                                        locationUpdateRequestBlock: locationRequestBlock))
+        store.dispatch(searchRequestAction(keywords))
+    }
+
+    private func searchRequestAction(_ keywords: NonEmptyString) -> Action {
+        return actionPrism.initialRequestAction(SearchSubmittedParams(keywords: keywords),
+                                                locationUpdateRequestBlock: locationRequestBlock)
     }
 
 }
@@ -68,13 +72,12 @@ extension SearchLookupParentController: SearchLookupViewDelegate {
 extension SearchLookupParentController {
 
     func configure(_ state: AppState,
-                   appCopyContent: AppCopyContent,
                    resultsCopyFormatter: SearchCopyFormatterProtocol) {
         searchView.configure(state.searchState.submittedParams?.keywords)
 
         activateChildView(state.searchState.loadState,
                           appSkin: state.appSkinState.currentValue,
-                          appCopyContent: appCopyContent,
+                          appCopyContent: state.appCopyContentState.copyContent,
                           resultsCopyFormatter: resultsCopyFormatter)
     }
 
@@ -131,12 +134,11 @@ extension SearchLookupParentController {
             SearchResultsViewController(delegate: self,
                                         store: store,
                                         detailsActionPrism: actionPrism,
+                                        refreshAction: searchRequestAction(submittedParams.keywords),
                                         nextRequestAction: nextRequestAction,
                                         allEntities: allEntities,
                                         colorings: colorings,
-                                        copyFormatter: resultsCopyFormatter) { [weak self] in
-                self?.submitSearchRequest(submittedParams.keywords)
-            }
+                                        copyFormatter: resultsCopyFormatter)
         }
 
         resultsController.configure(allEntities,
