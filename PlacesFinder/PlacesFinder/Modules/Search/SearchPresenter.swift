@@ -84,7 +84,7 @@ class SearchPresenter: SearchPresenterProtocol {
                                                appCopyContent: appCopyContent,
                                                locationRequestBlock: locationRequestBlock)
         searchParentController.configure(state,
-                                         resultsCopyFormatter: copyFormatter)
+                                         copyFormatter: copyFormatter)
 
         let secondaryController: SearchContainerSplitControllers.SecondaryController? =
             state.searchState.detailedEntity.map {
