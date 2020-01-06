@@ -24,6 +24,7 @@ class SearchPresenter: SearchPresenterProtocol {
 
     private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActionPrismProtocol
+    private let copyFormatter: SearchCopyFormatterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let searchContainerViewController: SearchContainerViewController
 
@@ -33,12 +34,15 @@ class SearchPresenter: SearchPresenterProtocol {
 
     init(store: DispatchingStoreProtocol,
          actionPrism: SearchActionPrismProtocol,
+         copyFormatter: SearchCopyFormatterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          tabItemProperties: TabItemProperties) {
         self.store = store
         self.actionPrism = actionPrism
+        self.copyFormatter = copyFormatter
         self.urlOpenerService = urlOpenerService
         self.searchContainerViewController = SearchContainerViewController()
+
         searchContainerViewController.configure(tabItemProperties)
     }
 
@@ -76,26 +80,24 @@ class SearchPresenter: SearchPresenterProtocol {
                          locationRequestBlock: @escaping LocationUpdateRequestBlock) {
         let appSkin = state.appSkinState.currentValue
         let appCopyContent = state.appCopyContentState.copyContent
-        let copyFormatter = SearchCopyFormatter(resultsCopyContent: appCopyContent.searchResults)
 
         let searchParentController: SearchLookupParentController =
             (searchContainerViewController.splitControllers.primaryController as? SearchLookupParentController)
             ?? buildSearchParentViewController(appSkin,
                                                appCopyContent: appCopyContent,
                                                locationRequestBlock: locationRequestBlock)
-        searchParentController.configure(state,
-                                         copyFormatter: copyFormatter)
+        searchParentController.configure(state)
 
         let secondaryController: SearchContainerSplitControllers.SecondaryController? =
             state.searchState.detailedEntity.map {
                 .anySizeClass(loadOrBuildDetailsController($0,
                                                            appSkin: appSkin,
-                                                           copyFormatter: copyFormatter))
+                                                           resultsCopyContent: appCopyContent.searchResults))
             }
             ?? state.searchState.entities?.value.first.map {
                 .regularOnly(loadOrBuildDetailsController($0.detailsModel,
                                                           appSkin: appSkin,
-                                                          copyFormatter: copyFormatter))
+                                                          resultsCopyContent: appCopyContent.searchResults))
             }
 
         searchContainerViewController.splitControllers = SearchContainerSplitControllers(
@@ -107,12 +109,15 @@ class SearchPresenter: SearchPresenterProtocol {
     private func loadOrBuildDetailsController(
         _ detailsModel: SearchDetailsModel,
         appSkin: AppSkin,
-        copyFormatter: SearchCopyFormatterProtocol
+        resultsCopyContent: SearchResultsCopyContent
     ) -> SearchDetailsViewController {
         let controller =
             searchContainerViewController.splitControllers.secondaryController?.detailsController
-            ?? buildSearchDetailsViewController(appSkin, copyFormatter: copyFormatter)
-        controller.configure(detailsModel)
+            ?? buildSearchDetailsViewController(appSkin)
+        controller.viewModel = SearchDetailsViewModel(searchDetailsModel: detailsModel,
+                                                      urlOpenerService: urlOpenerService,
+                                                      copyFormatter: copyFormatter,
+                                                      resultsCopyContent: resultsCopyContent)
         return controller
     }
 
@@ -159,6 +164,7 @@ extension SearchPresenter {
     ) -> SearchLookupParentController {
         let controller = SearchLookupParentController(store: store,
                                                       actionPrism: actionPrism,
+                                                      copyFormatter: copyFormatter,
                                                       appSkin: appSkin,
                                                       appCopyContent: appCopyContent,
                                                       locationRequestBlock: locationRequestBlock)
@@ -169,8 +175,7 @@ extension SearchPresenter {
     }
 
     func buildSearchDetailsViewController(
-        _ appSkin: AppSkin,
-        copyFormatter: SearchCopyFormatterProtocol
+        _ appSkin: AppSkin
     ) -> SearchDetailsViewController {
         return SearchDetailsViewController(store: store,
                                            actionPrism: actionPrism,

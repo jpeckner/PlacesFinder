@@ -20,7 +20,7 @@ class SearchDetailsViewController: SingleContentViewController {
     private let tableView: UITableView
     private let titleLabel: StyledLabel
 
-    private var viewModel: SearchDetailsViewModel = .init(placeName: "", sections: []) {
+    var viewModel: SearchDetailsViewModel = .init(placeName: "", sections: []) {
         didSet {
             guard viewModel != oldValue else { return }
 
@@ -92,16 +92,6 @@ extension SearchDetailsViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         tableView.scrollToTop(animated: false)
-    }
-
-}
-
-extension SearchDetailsViewController {
-
-    func configure(_ detailsModel: SearchDetailsModel) {
-        viewModel = SearchDetailsViewModel(searchDetailsModel: detailsModel,
-                                           urlOpenerService: urlOpenerService,
-                                           copyFormatter: copyFormatter)
     }
 
 }

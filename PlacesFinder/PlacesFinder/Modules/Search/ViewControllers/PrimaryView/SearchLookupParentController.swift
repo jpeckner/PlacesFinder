@@ -14,16 +14,20 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
     private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActionPrismProtocol
+    private let copyFormatter: SearchCopyFormatterProtocol
     private let locationRequestBlock: LocationUpdateRequestBlock
+
     private let searchView: SearchLookupView
 
     init(store: DispatchingStoreProtocol,
          actionPrism: SearchActionPrismProtocol,
+         copyFormatter: SearchCopyFormatterProtocol,
          appSkin: AppSkin,
          appCopyContent: AppCopyContent,
          locationRequestBlock: @escaping LocationUpdateRequestBlock) {
         self.store = store
         self.actionPrism = actionPrism
+        self.copyFormatter = copyFormatter
         self.locationRequestBlock = locationRequestBlock
         self.searchView = SearchLookupView(searchInputViewModel: appCopyContent.searchInput.inputViewModel,
                                            searchInputColorings: appSkin.colorings.searchInput)
@@ -71,20 +75,17 @@ extension SearchLookupParentController: SearchLookupViewDelegate {
 
 extension SearchLookupParentController {
 
-    func configure(_ state: AppState,
-                   copyFormatter: SearchCopyFormatterProtocol) {
+    func configure(_ state: AppState) {
         searchView.configure(state.searchState.submittedParams?.keywords)
 
         activateChildView(state.searchState.loadState,
                           appSkin: state.appSkinState.currentValue,
-                          appCopyContent: state.appCopyContentState.copyContent,
-                          copyFormatter: copyFormatter)
+                          appCopyContent: state.appCopyContentState.copyContent)
     }
 
     private func activateChildView(_ loadState: SearchLoadState,
                                    appSkin: AppSkin,
-                                   appCopyContent: AppCopyContent,
-                                   copyFormatter: SearchCopyFormatterProtocol) {
+                                   appCopyContent: AppCopyContent) {
         switch loadState {
         case .idle:
             setChildIfNotPresent(SearchInstructionsViewController.self) {
@@ -102,7 +103,7 @@ extension SearchLookupParentController {
                 allEntities: allEntities,
                 tokenContainer: tokenContainer,
                 colorings: appSkin.colorings.searchResults,
-                copyFormatter: copyFormatter
+                resultsCopyContent: appCopyContent.searchResults
             )
         case .noResultsFound:
             setChildIfNotPresent(SearchNoResultsFoundViewController.self) {
@@ -123,14 +124,14 @@ extension SearchLookupParentController {
                                                 allEntities: NonEmptyArray<SearchEntityModel>,
                                                 tokenContainer: PlaceLookupTokenAttemptsContainer?,
                                                 colorings: SearchResultsViewColorings,
-                                                copyFormatter: SearchCopyFormatterProtocol) {
+                                                resultsCopyContent: SearchResultsCopyContent) {
         let nextRequestAction = tokenContainer.flatMap {
             try? actionPrism.subsequentRequestAction(submittedParams,
                                                      allEntities: allEntities,
                                                      tokenContainer: $0)
         }
         let viewModels = resultViewModels(allEntities,
-                                          copyFormatter: copyFormatter)
+                                          resultsCopyContent: resultsCopyContent)
 
         let resultsController = setChildIfNotPresent(SearchResultsViewController.self) {
             SearchResultsViewController(delegate: self,
@@ -146,10 +147,11 @@ extension SearchLookupParentController {
     }
 
     private func resultViewModels(_ allEntities: NonEmptyArray<SearchEntityModel>,
-                                  copyFormatter: SearchCopyFormatterProtocol) -> NonEmptyArray<SearchResultViewModel> {
+                                  resultsCopyContent: SearchResultsCopyContent) -> NonEmptyArray<SearchResultViewModel> {
         return allEntities.withTransformation {
             let cellModel = SearchResultCellModel(model: $0.summaryModel,
-                                                  copyFormatter: copyFormatter)
+                                                  copyFormatter: copyFormatter,
+                                                  resultsCopyContent: resultsCopyContent)
             let detailEntityAction = actionPrism.detailEntityAction($0.detailsModel)
 
             return SearchResultViewModel(cellModel: cellModel,
