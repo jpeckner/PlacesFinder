@@ -17,7 +17,7 @@ protocol SearchPresenterProtocol: AutoMockable {
     func loadLocationServicesDisabledViews(_ state: AppState)
     func loadSearchBackgroundView(_ state: AppState)
     func loadSearchViews(_ state: AppState,
-                         locationRequestBlock: @escaping LocationUpdateRequestBlock)
+                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock)
 }
 
 class SearchPresenter: SearchPresenterProtocol {
@@ -77,7 +77,7 @@ class SearchPresenter: SearchPresenterProtocol {
     }
 
     func loadSearchViews(_ state: AppState,
-                         locationRequestBlock: @escaping LocationUpdateRequestBlock) {
+                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
         let appSkin = state.appSkinState.currentValue
         let appCopyContent = state.appCopyContentState.copyContent
 
@@ -85,7 +85,7 @@ class SearchPresenter: SearchPresenterProtocol {
             (searchContainerViewController.splitControllers.primaryController as? SearchLookupParentController)
             ?? buildSearchParentViewController(appSkin,
                                                appCopyContent: appCopyContent,
-                                               locationRequestBlock: locationRequestBlock)
+                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
         searchParentController.configure(state)
 
         let secondaryController: SearchContainerSplitControllers.SecondaryController? =
@@ -160,14 +160,14 @@ extension SearchPresenter {
     func buildSearchParentViewController(
         _ appSkin: AppSkin,
         appCopyContent: AppCopyContent,
-        locationRequestBlock: @escaping LocationUpdateRequestBlock
+        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
     ) -> SearchLookupParentController {
         let controller = SearchLookupParentController(store: store,
                                                       actionPrism: actionPrism,
                                                       copyFormatter: copyFormatter,
                                                       appSkin: appSkin,
                                                       appCopyContent: appCopyContent,
-                                                      locationRequestBlock: locationRequestBlock)
+                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
         controller.configureTitleView(appSkin,
                                       appCopyContent: appCopyContent)
         controller.navigationItem.backBarButtonItem = appSkin.backButtonItem

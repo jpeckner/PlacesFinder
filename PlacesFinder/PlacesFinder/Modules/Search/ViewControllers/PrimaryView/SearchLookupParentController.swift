@@ -15,7 +15,7 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
     private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActionPrismProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
-    private let locationRequestBlock: LocationUpdateRequestBlock
+    private let locationUpdateRequestBlock: LocationUpdateRequestBlock
 
     private let searchView: SearchLookupView
 
@@ -24,11 +24,11 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
          copyFormatter: SearchCopyFormatterProtocol,
          appSkin: AppSkin,
          appCopyContent: AppCopyContent,
-         locationRequestBlock: @escaping LocationUpdateRequestBlock) {
+         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
         self.store = store
         self.actionPrism = actionPrism
         self.copyFormatter = copyFormatter
-        self.locationRequestBlock = locationRequestBlock
+        self.locationUpdateRequestBlock = locationUpdateRequestBlock
         self.searchView = SearchLookupView(searchInputViewModel: appCopyContent.searchInput.inputViewModel,
                                            searchInputColorings: appSkin.colorings.searchInput)
 
@@ -52,7 +52,7 @@ extension SearchLookupParentController {
 
     private func searchRequestAction(_ keywords: NonEmptyString) -> Action {
         return actionPrism.initialRequestAction(SearchSubmittedParams(keywords: keywords),
-                                                locationUpdateRequestBlock: locationRequestBlock)
+                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 
 }
