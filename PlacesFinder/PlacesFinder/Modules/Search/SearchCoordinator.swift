@@ -71,9 +71,9 @@ extension SearchCoordinator: SubstatesSubscriber {
             switch authType.value {
             case .locationServicesNotDetermined:
                 presenter.loadSearchBackgroundView(state)
-            case let .locationServicesEnabled(locationRequestBlock):
+            case let .locationServicesEnabled(locationUpdateRequestBlock):
                 presenter.loadSearchViews(state,
-                                          locationRequestBlock: locationRequestBlock)
+                                          locationUpdateRequestBlock: locationUpdateRequestBlock)
             }
         }
     }

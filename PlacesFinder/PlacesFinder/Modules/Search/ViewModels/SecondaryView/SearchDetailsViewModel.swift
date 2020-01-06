@@ -22,11 +22,13 @@ extension SearchDetailsViewModel {
 
     init(searchDetailsModel: SearchDetailsModel,
          urlOpenerService: URLOpenerServiceProtocol,
-         copyFormatter: SearchCopyFormatterProtocol) {
+         copyFormatter: SearchCopyFormatterProtocol,
+         resultsCopyContent: SearchResultsCopyContent) {
         self.placeName = searchDetailsModel.name.value
         self.sections = [
             searchDetailsModel.buildInfoSection(urlOpenerService,
-                                                copyFormatter: copyFormatter),
+                                                copyFormatter: copyFormatter,
+                                                resultsCopyContent: resultsCopyContent),
             searchDetailsModel.buildLocationSection(copyFormatter)
         ].compactMap { $0 }
     }
@@ -36,39 +38,45 @@ extension SearchDetailsViewModel {
 private extension SearchDetailsModel {
 
     func buildInfoSection(_ urlOpenerService: URLOpenerServiceProtocol,
-                          copyFormatter: SearchCopyFormatterProtocol) -> SearchDetailsViewModel.Section {
+                          copyFormatter: SearchCopyFormatterProtocol,
+                          resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel.Section {
         return .info([
             placeDetailsCellModel(urlOpenerService,
-                                  copyFormatter: copyFormatter),
+                                  copyFormatter: copyFormatter,
+                                  resultsCopyContent: resultsCopyContent),
             phoneNumberCellModel(urlOpenerService,
-                                 copyFormatter: copyFormatter)
+                                 copyFormatter: copyFormatter,
+                                 resultsCopyContent: resultsCopyContent)
         ].compactMap { $0 })
     }
 
     private func placeDetailsCellModel(
         _ urlOpenerService: URLOpenerServiceProtocol,
-        copyFormatter: SearchCopyFormatterProtocol
+        copyFormatter: SearchCopyFormatterProtocol,
+        resultsCopyContent: SearchResultsCopyContent
     ) -> SearchDetailsInfoSectionViewModel {
         return .basicInfo(SearchDetailsBasicInfoViewModel(
             image: image,
             name: name,
             address: addressLines.map { copyFormatter.formatAddress($0) },
             ratingsAverage: ratings.average,
-            numRatingsMessage: copyFormatter.formatRatings(ratings.numRatings),
-            pricing: pricing.map { copyFormatter.formatPricing($0) },
+            numRatingsMessage: copyFormatter.formatRatings(resultsCopyContent,
+                                                           numRatings: ratings.numRatings),
+            pricing: pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
             apiLinkCallback: urlOpenerService.buildOpenURLBlock(url).map { IgnoredEquatable($0) }
         ))
     }
 
     private func phoneNumberCellModel(
         _ urlOpenerService: URLOpenerServiceProtocol,
-        copyFormatter: SearchCopyFormatterProtocol
+        copyFormatter: SearchCopyFormatterProtocol,
+        resultsCopyContent: SearchResultsCopyContent
     ) -> SearchDetailsInfoSectionViewModel? {
         guard let displayPhone = displayPhone else { return nil }
 
         let makeCallBlock = dialablePhone.flatMap { urlOpenerService.buildPhoneCallBlock($0) }
         let phoneLabelText = makeCallBlock != nil ?
-            copyFormatter.formatCallablePhoneNumber(displayPhone)
+            copyFormatter.formatCallablePhoneNumber(resultsCopyContent, displayPhone: displayPhone)
             : copyFormatter.formatNonCallablePhoneNumber(displayPhone)
 
         return .phoneNumber(SearchDetailsPhoneNumberViewModel(

@@ -19,10 +19,11 @@ struct SearchResultCellModel {
 extension SearchResultCellModel {
 
     init(model: SearchSummaryModel,
-         copyFormatter: SearchCopyFormatterProtocol) {
+         copyFormatter: SearchCopyFormatterProtocol,
+         resultsCopyContent: SearchResultsCopyContent) {
         self.name = model.name
         self.ratingsAverage = model.ratings.average
-        self.pricing = model.pricing.map { copyFormatter.formatPricing($0) }
+        self.pricing = model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) }
         self.image = model.image
     }
 

@@ -312,7 +312,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsLocationRequestBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsLocationUpdateRequestBlockCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
@@ -338,7 +338,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsLocationRequestBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsLocationUpdateRequestBlockCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {

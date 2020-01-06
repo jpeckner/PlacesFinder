@@ -19,17 +19,12 @@ class SearchCopyFormatterTests: QuickSpec {
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
-        let stubCopyContent = SearchResultsCopyContent(
-            currencySymbol: "+",
-            callNumberFormatString: "callNumberFormatString - %@",
-            numRatingsSingularFormatString: "numRatingsSingularFormatString - %d",
-            numRatingsPluralFormatString: "numRatingsPluralFormatString - %d"
-        )
+        let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var formatter: SearchCopyFormatter!
 
         beforeEach {
-            formatter = SearchCopyFormatter(resultsCopyContent: stubCopyContent)
+            formatter = SearchCopyFormatter()
         }
 
         describe("formatAddress") {
@@ -50,7 +45,8 @@ class SearchCopyFormatterTests: QuickSpec {
             var result: String!
 
             beforeEach {
-                result = formatter.formatCallablePhoneNumber(.stubValue("stubPhoneNumber"))
+                result = formatter.formatCallablePhoneNumber(stubCopyContent,
+                                                             displayPhone: .stubValue("stubPhoneNumber"))
             }
 
             it("returns the phone number formatted into the format string") {
@@ -75,7 +71,7 @@ class SearchCopyFormatterTests: QuickSpec {
 
             context("when the arg value is 1") {
                 beforeEach {
-                    result = formatter.formatRatings(1)
+                    result = formatter.formatRatings(stubCopyContent, numRatings: 1)
                 }
 
                 it("returns the number of ratings formatted into numRatingsSingularFormatString") {
@@ -85,7 +81,7 @@ class SearchCopyFormatterTests: QuickSpec {
 
             context("else") {
                 beforeEach {
-                    result = formatter.formatRatings(2)
+                    result = formatter.formatRatings(stubCopyContent, numRatings: 2)
                 }
 
                 it("returns the number of ratings formatted into numRatingsPluralFormatString") {
@@ -98,7 +94,8 @@ class SearchCopyFormatterTests: QuickSpec {
             var result: String!
 
             beforeEach {
-                result = formatter.formatPricing(PlaceLookupPricing(count: 5, maximum: 10))
+                result = formatter.formatPricing(stubCopyContent,
+                                                 pricing: PlaceLookupPricing(count: 5, maximum: 10))
             }
 
             it("returns the currency symbol in copyContent, repeated count times") {
