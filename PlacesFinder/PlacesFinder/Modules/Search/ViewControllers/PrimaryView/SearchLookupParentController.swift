@@ -146,8 +146,10 @@ extension SearchLookupParentController {
                                     nextRequestAction: nextRequestAction)
     }
 
-    private func resultViewModels(_ allEntities: NonEmptyArray<SearchEntityModel>,
-                                  resultsCopyContent: SearchResultsCopyContent) -> NonEmptyArray<SearchResultViewModel> {
+    private func resultViewModels(
+        _ allEntities: NonEmptyArray<SearchEntityModel>,
+        resultsCopyContent: SearchResultsCopyContent
+    ) -> NonEmptyArray<SearchResultViewModel> {
         return allEntities.withTransformation {
             let cellModel = SearchResultCellModel(model: $0.summaryModel,
                                                   copyFormatter: copyFormatter,
