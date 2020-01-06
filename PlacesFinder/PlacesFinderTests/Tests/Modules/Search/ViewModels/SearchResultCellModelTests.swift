@@ -23,15 +23,18 @@ class SearchResultCellModelTests: QuickSpec {
 
         beforeEach {
             mockFormatter = SearchCopyFormatterProtocolMock()
-            mockFormatter.formatPricingReturnValue = "formatPricingReturnValue"
+            mockFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
         }
 
         describe("init(summaryModel:formatter:)") {
             let stubSummaryModel = SearchSummaryModel.stubValue()
+            let stubCopyContent = SearchResultsCopyContent.stubValue()
 
             beforeEach {
                 result = SearchResultCellModel(model: stubSummaryModel,
-                                               copyFormatter: mockFormatter)
+                                               copyFormatter: mockFormatter,
+
+                                               resultsCopyContent: stubCopyContent)
             }
 
             it("inits a viewmodel with the model's name...") {
@@ -43,7 +46,7 @@ class SearchResultCellModelTests: QuickSpec {
             }
 
             it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
-                expect(result.pricing) == "formatPricingReturnValue"
+                expect(result.pricing) == "formatPricingPricingReturnValue"
             }
 
             it("...and with the model's image") {

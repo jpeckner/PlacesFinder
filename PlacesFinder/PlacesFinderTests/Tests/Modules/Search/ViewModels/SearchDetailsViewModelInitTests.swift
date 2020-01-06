@@ -21,27 +21,32 @@ class SearchDetailsViewModelInitTests: QuickSpec {
     override func spec() {
 
         let stubModel = SearchDetailsModel.stubValue()
+        let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
         var mockCopyFormatter: SearchCopyFormatterProtocolMock!
 
         var result: SearchDetailsViewModel!
 
+        // swiftlint:disable line_length
         beforeEach {
             mockURLOpenerService = URLOpenerServiceProtocolMock()
 
             mockCopyFormatter = SearchCopyFormatterProtocolMock()
             mockCopyFormatter.formatAddressReturnValue = .stubValue("formatAddressReturnValue")
-            mockCopyFormatter.formatCallablePhoneNumberReturnValue = "formatCallablePhoneNumberReturnValue"
+            mockCopyFormatter.formatCallablePhoneNumberDisplayPhoneReturnValue = "formatCallablePhoneNumberDisplayPhoneReturnValue"
             mockCopyFormatter.formatNonCallablePhoneNumberReturnValue = "formatNonCallablePhoneNumberReturnValue"
-            mockCopyFormatter.formatRatingsReturnValue = "formatRatingsReturnValue"
-            mockCopyFormatter.formatPricingReturnValue = "formatPricingReturnValue"
+            mockCopyFormatter.formatRatingsNumRatingsReturnValue = "formatRatingsNumRatingsReturnValue"
+            mockCopyFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
         }
+        // swiftlint:enable line_length
 
         func performTest(searchDetailsModel: SearchDetailsModel) {
             result = SearchDetailsViewModel(searchDetailsModel: searchDetailsModel,
                                             urlOpenerService: mockURLOpenerService,
-                                            copyFormatter: mockCopyFormatter)
+                                            copyFormatter: mockCopyFormatter,
+
+                                            resultsCopyContent: stubCopyContent)
         }
 
         describe("placeName") {
@@ -96,12 +101,14 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     expect(returnedViewModel()?.infoViewModel?.ratingsAverage) == stubModel.ratings.average
                 }
 
+                // swiftlint:disable line_length
                 it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
-                    expect(returnedViewModel()?.infoViewModel?.numRatingsMessage) == "formatRatingsReturnValue"
+                    expect(returnedViewModel()?.infoViewModel?.numRatingsMessage) == "formatRatingsNumRatingsReturnValue"
                 }
+                // swiftlint:enable line_length
 
                 it("...and with the pricing returned by mockCopyFormatter.formatPricing()...") {
-                    expect(returnedViewModel()?.infoViewModel?.pricing) == "formatPricingReturnValue"
+                    expect(returnedViewModel()?.infoViewModel?.pricing) == "formatPricingPricingReturnValue"
                 }
 
                 it("...and the block returned from buildOpenURLBlock()") {
@@ -132,7 +139,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
 
                     it("contains .phoneNumber, with the value from copyFormatter.formatCallablePhoneNumber()") {
                         let returnedPhoneNumber = returnedViewModel()?.phoneNumberViewModel?.phoneLabelText
-                        expect(returnedPhoneNumber) == "formatCallablePhoneNumberReturnValue"
+                        expect(returnedPhoneNumber) == "formatCallablePhoneNumberDisplayPhoneReturnValue"
                     }
 
                     it("...and the block returned from buildPhoneCallBlock()") {

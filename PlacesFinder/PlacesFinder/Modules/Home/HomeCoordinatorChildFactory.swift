@@ -37,9 +37,11 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
             )
             let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
                                                 actionCreator: SearchActionCreator.self)
+            let copyFormatter = SearchCopyFormatter()
 
             let presenter = SearchPresenter(store: store,
                                             actionPrism: actionPrism,
+                                            copyFormatter: copyFormatter,
                                             urlOpenerService: serviceContainer.urlOpenerService,
                                             tabItemProperties: immediateDescendent.tabItemProperties)
 
