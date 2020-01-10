@@ -15,7 +15,7 @@ class NavigationBarTitleView: UIView {
     private let iconImageView: UIImageView
     private let titleLabel: StyledLabel
 
-    init(appCopyContent: AppCopyContent,
+    init(viewModel: NavigationBarTitleViewModel,
          colorings: NavBarColorings) {
         self.iconImageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "magnifying_glass"))
         self.titleLabel = StyledLabel(textStyleClass: .navBarTitle,
@@ -25,7 +25,7 @@ class NavigationBarTitleView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(appCopyContent.displayName)
+        setupContent(viewModel)
         setupStyling(colorings)
     }
 
@@ -51,8 +51,8 @@ class NavigationBarTitleView: UIView {
         }
     }
 
-    private func setupContent(_ copyContent: DisplayNameCopyContent) {
-        titleLabel.text = copyContent.name.value
+    private func setupContent(_ viewModel: NavigationBarTitleViewModel) {
+        titleLabel.text = viewModel.displayName
     }
 
     private func setupStyling(_ colorings: NavBarColorings) {
@@ -63,9 +63,9 @@ class NavigationBarTitleView: UIView {
 
 extension UIViewController {
 
-    func configureTitleView(_ appSkin: AppSkin,
-                            appCopyContent: AppCopyContent) {
-        navigationItem.titleView = NavigationBarTitleView(appCopyContent: appCopyContent,
+    func configureTitleView(_ viewModel: NavigationBarTitleViewModel,
+                            appSkin: AppSkin) {
+        navigationItem.titleView = NavigationBarTitleView(viewModel: viewModel,
                                                           colorings: appSkin.colorings.navBar)
     }
 

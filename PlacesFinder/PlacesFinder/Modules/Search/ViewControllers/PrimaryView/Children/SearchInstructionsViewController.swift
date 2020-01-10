@@ -9,23 +9,29 @@
 import Shared
 import UIKit
 
-extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
-
 class SearchInstructionsViewController: SingleContentViewController {
 
-    init(colorings: AppStandardColorings,
-         copyContent: SearchInstructionsCopyContent) {
-        let viewModel = SearchInstructionsViewModel(infoViewModel: copyContent.staticInfoViewModel,
-                                                    resultsSourceCopy: copyContent.resultsSource)
-        let messageView = SearchInstructionsView(viewModel: viewModel,
-                                                 colorings: colorings)
+    private let contentView: SearchInstructionsView
 
-        super.init(contentView: messageView,
+    init(viewModel: SearchInstructionsViewModel,
+         colorings: AppStandardColorings) {
+        self.contentView = SearchInstructionsView(viewModel: viewModel,
+                                                  colorings: colorings)
+
+        super.init(contentView: contentView,
                    viewColoring: colorings.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchInstructionsViewController {
+
+    func configure(_ viewModel: SearchInstructionsViewModel) {
+        contentView.configure(viewModel)
     }
 
 }

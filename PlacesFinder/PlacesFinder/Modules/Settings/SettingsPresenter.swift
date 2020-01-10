@@ -14,8 +14,8 @@ protocol SettingsPresenterProtocol: AutoMockable {
     var rootNavController: UINavigationController { get }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,
-                          appSkin: AppSkin,
-                          appCopyContent: AppCopyContent)
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin)
 }
 
 class SettingsPresenter: SettingsPresenterProtocol {
@@ -32,19 +32,17 @@ class SettingsPresenter: SettingsPresenterProtocol {
     }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,
-                          appSkin: AppSkin,
-                          appCopyContent: AppCopyContent) {
-        let controller: SettingsViewController
-        if let existingController = rootNavController.viewControllers.first as? SettingsViewController {
-            controller = existingController
-            controller.configure(viewModel)
-        } else {
-            controller = buildSettingsViewController(viewModel,
-                                                     appSkin: appSkin,
-                                                     appCopyContent: appCopyContent)
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin) {
+        guard let existingController = rootNavController.viewControllers.first as? SettingsViewController else {
+            let controller = buildSettingsViewController(viewModel,
+                                                         titleViewModel: titleViewModel,
+                                                         appSkin: appSkin)
+            rootNavController.setViewControllers([controller], animated: true)
+            return
         }
 
-        rootNavController.setViewControllers([controller], animated: true)
+        existingController.configure(viewModel)
     }
 
 }
@@ -52,13 +50,13 @@ class SettingsPresenter: SettingsPresenterProtocol {
 private extension SettingsPresenter {
 
     func buildSettingsViewController(_ viewModel: SettingsViewModel,
-                                     appSkin: AppSkin,
-                                     appCopyContent: AppCopyContent) -> SettingsViewController {
+                                     titleViewModel: NavigationBarTitleViewModel,
+                                     appSkin: AppSkin) -> SettingsViewController {
         let controller = SettingsViewController(viewModel: viewModel,
                                                 store: store,
                                                 appSkin: appSkin)
-        controller.configureTitleView(appSkin,
-                                      appCopyContent: appCopyContent)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
         return controller
     }
 

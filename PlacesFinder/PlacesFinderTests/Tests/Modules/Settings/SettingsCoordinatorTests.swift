@@ -79,9 +79,9 @@ class SettingsCoordinatorTests: QuickSpec {
                 }
 
                 it("calls presenter.loadSettingsView()") {
-                    expect(mockSettingsPresenter.loadSettingsViewAppSkinAppCopyContentCalled) == false
+                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == false
                     performTest(linkType: nil)
-                    expect(mockSettingsPresenter.loadSettingsViewAppSkinAppCopyContentCalled) == true
+                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == true
                 }
 
                 context("when the state has a pending linkType of type SettingsLinkPayload") {

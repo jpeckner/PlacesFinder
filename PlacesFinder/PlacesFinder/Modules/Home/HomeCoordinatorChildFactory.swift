@@ -41,8 +41,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
 
             let presenter = SearchPresenter(store: store,
                                             actionPrism: actionPrism,
-                                            copyFormatter: copyFormatter,
-                                            urlOpenerService: serviceContainer.urlOpenerService,
                                             tabItemProperties: immediateDescendent.tabItemProperties)
 
             let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
@@ -50,6 +48,8 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
 
             return SearchCoordinator(store: store,
                                      presenter: presenter,
+                                     urlOpenerService: serviceContainer.urlOpenerService,
+                                     copyFormatter: copyFormatter,
                                      statePrism: statePrism,
                                      actionPrism: actionPrism)
         case .settings:

@@ -9,6 +9,18 @@
 import Foundation
 
 struct SearchRetryViewModel {
-    let infoViewModel: StaticInfoViewModel
-    let ctaTitle: String
+    let ctaViewModel: SearchCTAViewModel
+}
+
+extension SearchRetryCopyContent: SearchCTACopyProtocol {}
+
+extension SearchRetryViewModel {
+
+    init(copyContent: SearchRetryCopyContent,
+         ctaBlock: @escaping SearchCTABlock) {
+        self.ctaViewModel = SearchCTAViewModel(infoViewModel: copyContent.staticInfoViewModel,
+                                               ctaTitle: copyContent.ctaTitle,
+                                               ctaBlock: ctaBlock)
+    }
+
 }

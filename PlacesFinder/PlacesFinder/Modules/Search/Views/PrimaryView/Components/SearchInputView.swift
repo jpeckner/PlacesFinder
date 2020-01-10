@@ -11,6 +11,7 @@ import UIKit
 
 class SearchInputView: UIView {
 
+    private let colorings: SearchInputViewColorings
     private let textFieldView: TextFieldView
     private let cancelButton: ActionableButton
     private let cancelButtonLeadingConstraint: NSLayoutConstraint
@@ -18,6 +19,8 @@ class SearchInputView: UIView {
 
     init(viewModel: SearchInputViewModel,
          colorings: SearchInputViewColorings) {
+        self.colorings = colorings
+
         let textFieldView = TextFieldView(colorings: colorings)
         self.textFieldView = textFieldView
 
@@ -30,8 +33,7 @@ class SearchInputView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(viewModel,
-                     colorings: colorings)
+        configure(viewModel)
         setupStyling(colorings)
         setupTextFieldViewTapRecognizer()
     }
@@ -69,16 +71,6 @@ class SearchInputView: UIView {
         cancelButtonLeadingConstraint.isActive = true
     }
 
-    private func setupContent(_ viewModel: SearchInputViewModel,
-                              colorings: SearchInputViewColorings) {
-        textFieldView.textField.attributedPlaceholder = NSAttributedString(
-            string: viewModel.placeholder,
-            attributes: [.foregroundColor: colorings.placeholderColoring.textColor]
-        )
-
-        cancelButton.setTitle(viewModel.cancelButtonTitle, for: .normal)
-    }
-
     private func setupStyling(_ colorings: SearchInputViewColorings) {
         backgroundColor = colorings.viewColoring.backgroundColor
 
@@ -102,8 +94,14 @@ class SearchInputView: UIView {
 
 extension SearchInputView {
 
-    func configure(_ keywords: NonEmptyString?) {
-        textFieldView.textField.text = keywords?.value
+    func configure(_ viewModel: SearchInputViewModel) {
+        textFieldView.textField.text = viewModel.inputKeywords?.value
+        textFieldView.textField.attributedPlaceholder = NSAttributedString(
+            string: viewModel.placeholder,
+            attributes: [.foregroundColor: colorings.placeholderColoring.textColor]
+        )
+
+        cancelButton.setTitle(viewModel.cancelButtonTitle, for: .normal)
     }
 
     func setTextFieldDelegate(_ delegate: UITextFieldDelegate) {

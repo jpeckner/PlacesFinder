@@ -53,6 +53,8 @@ class SearchCoordinatorTests: QuickSpec {
 
             coordinator = SearchCoordinator(store: mockStore,
                                             presenter: mockSearchPresenter,
+                                            urlOpenerService: mockServiceContainer.urlOpenerService,
+                                            copyFormatter: SearchCopyFormatterProtocolMock(),
                                             statePrism: statePrism,
                                             actionPrism: mockSearchActionPrism)
         }
@@ -135,7 +137,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     it("calls presenter.loadNoInternetViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadNoInternetViewsCalled) == true
+                        expect(mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled) == true
                     }
 
                     context("when the state has a pending .search linkType") {
@@ -198,7 +200,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     it("calls presenter.loadLocationServicesDisabledViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadLocationServicesDisabledViewsCalled) == true
+                        expect(mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled) == true
                     }
 
                     context("when the state has a pending .search linkType") {
@@ -265,7 +267,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewCalled) == true
+                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled) == true
                         }
 
                         it("invokes the provided authorization block") {
@@ -279,7 +281,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewCalled) == true
+                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled) == true
                         }
 
                         it("does not invoke the provided authorization block") {
@@ -312,7 +314,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsLocationUpdateRequestBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinSearchInputBlockCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
@@ -338,7 +340,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsLocationUpdateRequestBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinSearchInputBlockCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
