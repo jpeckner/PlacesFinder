@@ -13,13 +13,14 @@ import UIKit
 protocol SettingsPresenterProtocol: AutoMockable {
     var rootNavController: UINavigationController { get }
 
-    func loadSettingsView(_ state: AppState)
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          appSkin: AppSkin,
+                          appCopyContent: AppCopyContent)
 }
 
 class SettingsPresenter: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController
-    private let formatter: MeasurementFormatter
     private let store: DispatchingStoreProtocol
 
     init(tabItemProperties: TabItemProperties,
@@ -27,18 +28,22 @@ class SettingsPresenter: SettingsPresenterProtocol {
         self.rootNavController = UINavigationController()
         rootNavController.configure(tabItemProperties)
 
-        self.formatter = MeasurementFormatter()
-        formatter.unitOptions = .providedUnit
-
         self.store = store
     }
 
-    func loadSettingsView(_ state: AppState) {
-        let controller: SettingsViewController =
-            (rootNavController.viewControllers.first as? SettingsViewController)
-            ?? buildSettingsViewController(state)
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          appSkin: AppSkin,
+                          appCopyContent: AppCopyContent) {
+        let controller: SettingsViewController
+        if let existingController = rootNavController.viewControllers.first as? SettingsViewController {
+            controller = existingController
+            controller.configure(viewModel)
+        } else {
+            controller = buildSettingsViewController(viewModel,
+                                                     appSkin: appSkin,
+                                                     appCopyContent: appCopyContent)
+        }
 
-        controller.configure(state: state)
         rootNavController.setViewControllers([controller], animated: true)
     }
 
@@ -46,12 +51,14 @@ class SettingsPresenter: SettingsPresenterProtocol {
 
 private extension SettingsPresenter {
 
-    func buildSettingsViewController(_ state: AppState) -> SettingsViewController {
-        let controller = SettingsViewController(store: store,
-                                                formatter: formatter,
-                                                appSkin: state.appSkinState.currentValue)
-        controller.configureTitleView(state.appSkinState.currentValue,
-                                      appCopyContent: state.appCopyContentState.copyContent)
+    func buildSettingsViewController(_ viewModel: SettingsViewModel,
+                                     appSkin: AppSkin,
+                                     appCopyContent: AppCopyContent) -> SettingsViewController {
+        let controller = SettingsViewController(viewModel: viewModel,
+                                                store: store,
+                                                appSkin: appSkin)
+        controller.configureTitleView(appSkin,
+                                      appCopyContent: appCopyContent)
         return controller
     }
 

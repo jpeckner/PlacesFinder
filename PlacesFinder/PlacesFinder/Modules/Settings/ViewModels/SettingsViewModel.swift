@@ -20,7 +20,7 @@ struct SettingsSectionViewModel {
         case plain
 
         case measurementSystem(
-            currentSystemInState: MeasurementSystem,
+            currentlyActiveSystem: MeasurementSystem,
             copyContent: SettingsMeasurementSystemCopyContent
         )
     }
@@ -31,7 +31,7 @@ struct SettingsSectionViewModel {
 }
 
 struct SettingsViewModel {
-    let sections: [SettingsSectionViewModel]
+    let sections: NonEmptyArray<SettingsSectionViewModel>
 }
 
 extension SettingsViewModel {
@@ -39,23 +39,25 @@ extension SettingsViewModel {
     init(searchPreferencesState: SearchPreferencesState,
          formatter: MeasurementFormatter,
          appCopyContent: AppCopyContent) {
-        self.sections = [
-            SettingsSectionViewModel(
-                title: appCopyContent.settingsHeaders.distanceSectionTitle,
-                headerType: .measurementSystem(currentSystemInState: searchPreferencesState.distance.system,
-                                               copyContent: appCopyContent.settingsMeasurementSystem),
-                cells: searchPreferencesState.distanceCellModels(formatter)
-            ),
-            SettingsSectionViewModel(
-                title: appCopyContent.settingsHeaders.sortSectionTitle,
-                headerType: .plain,
-                cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
-            ),
-        ]
+        self.sections =
+            NonEmptyArray(with:
+                SettingsSectionViewModel(
+                    title: appCopyContent.settingsHeaders.distanceSectionTitle,
+                    headerType: .measurementSystem(currentlyActiveSystem: searchPreferencesState.distance.system,
+                                                   copyContent: appCopyContent.settingsMeasurementSystem),
+                    cells: searchPreferencesState.distanceCellModels(formatter)
+                )
+            ).appendedWith([
+                SettingsSectionViewModel(
+                    title: appCopyContent.settingsHeaders.sortSectionTitle,
+                    headerType: .plain,
+                    cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
+                ),
+            ])
     }
 
     var tableModel: GroupedTableViewModel {
-        return GroupedTableViewModel(sectionModels: sections.map {
+        return GroupedTableViewModel(sectionModels: sections.value.map {
             GroupedTableViewSectionModel(
                 title: $0.title,
                 cellModels: $0.cells.map { $0.cellModel }

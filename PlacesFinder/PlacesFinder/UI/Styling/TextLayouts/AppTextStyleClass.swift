@@ -18,8 +18,8 @@ enum AppTextStyleClass {
     case sourceAPILabel
     case subtitle
     case tableHeader
-    case tableHeaderButton
-    case tableHeaderSelectedButton
+    case tableHeaderNonSelectableOption
+    case tableHeaderSelectableOption
     case textInput
     case title
 }
@@ -77,12 +77,12 @@ extension AppTextStyleClass {
                 font: UIFont(descriptor: FontDescriptorPalette.black, size: 12.0),
                 alignment: .left
             )
-        case .tableHeaderButton:
+        case .tableHeaderNonSelectableOption:
             return TextLayout(
                 font: UIFont(descriptor: FontDescriptorPalette.black, size: 12.0),
                 alignment: .center
             )
-        case .tableHeaderSelectedButton:
+        case .tableHeaderSelectableOption:
             return TextLayout(
                 font: UIFont(descriptor: FontDescriptorPalette.light, size: 12.0),
                 alignment: .center

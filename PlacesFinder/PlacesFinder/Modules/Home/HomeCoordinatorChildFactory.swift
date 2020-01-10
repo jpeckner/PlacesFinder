@@ -56,8 +56,12 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
             let presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties,
                                               store: store)
 
+            let measurementFormatter = MeasurementFormatter()
+            measurementFormatter.unitOptions = .providedUnit
+
             return SettingsCoordinator(store: store,
-                                       presenter: presenter)
+                                       presenter: presenter,
+                                       measurementFormatter: measurementFormatter)
         }
     }
 
