@@ -12,7 +12,7 @@ extension AppCopyContent {
 
     // swiftlint:disable function_body_length
     init(displayName: NonEmptyString) {
-        self.displayName = displayName
+        self.displayName = DisplayNameCopyContent(name: displayName)
 
         self.searchInput = SearchInputCopyContent(
             placeholder: "Search nearby",

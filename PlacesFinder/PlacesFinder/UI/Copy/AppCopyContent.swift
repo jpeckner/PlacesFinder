@@ -9,7 +9,7 @@
 import Shared
 
 struct AppCopyContent {
-    let displayName: NonEmptyString
+    let displayName: DisplayNameCopyContent
     let searchInput: SearchInputCopyContent
     let searchInstructions: SearchInstructionsCopyContent
     let searchLocationDisabled: SearchLocationDisabledCopyContent
@@ -20,6 +20,10 @@ struct AppCopyContent {
     let settingsHeaders: SettingsHeadersCopyContent
     let settingsSortPreference: SettingsSortPreferenceCopyContent
     let settingsMeasurementSystem: SettingsMeasurementSystemCopyContent
+}
+
+struct DisplayNameCopyContent {
+    let name: NonEmptyString
 }
 
 struct SearchInputCopyContent {
