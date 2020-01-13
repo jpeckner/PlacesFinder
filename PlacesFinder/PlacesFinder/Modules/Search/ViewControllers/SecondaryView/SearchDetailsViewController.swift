@@ -96,9 +96,9 @@ extension SearchDetailsViewController {
 
 }
 
-extension SearchDetailsViewController {
+extension SearchDetailsViewController: PopCallbackViewController {
 
-    func viewWasPopped() {
+    func viewControllerWasPopped() {
         store.dispatch(actionPrism.removeDetailedEntityAction)
     }
 
