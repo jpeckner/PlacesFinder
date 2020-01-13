@@ -37,7 +37,7 @@ struct SettingsViewModel {
 extension SettingsViewModel {
 
     init(searchPreferencesState: SearchPreferencesState,
-         formatter: MeasurementFormatter,
+         measurementFormatter: MeasurementFormatterProtocol,
          appCopyContent: AppCopyContent) {
         self.sections =
             NonEmptyArray(with:
@@ -45,7 +45,7 @@ extension SettingsViewModel {
                     title: appCopyContent.settingsHeaders.distanceSectionTitle,
                     headerType: .measurementSystem(currentlyActiveSystem: searchPreferencesState.distance.system,
                                                    copyContent: appCopyContent.settingsMeasurementSystem),
-                    cells: searchPreferencesState.distanceCellModels(formatter)
+                    cells: searchPreferencesState.distanceCellModels(measurementFormatter)
                 )
             ).appendedWith([
                 SettingsSectionViewModel(

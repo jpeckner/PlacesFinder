@@ -15,11 +15,11 @@ class SettingsCoordinator<TStore: StoreProtocol> where TStore.State == AppState 
 
     private let store: TStore
     private let presenter: SettingsPresenterProtocol
-    private let measurementFormatter: MeasurementFormatter
+    private let measurementFormatter: MeasurementFormatterProtocol
 
     init(store: TStore,
          presenter: SettingsPresenterProtocol,
-         measurementFormatter: MeasurementFormatter) {
+         measurementFormatter: MeasurementFormatterProtocol) {
         self.store = store
         self.presenter = presenter
         self.measurementFormatter = measurementFormatter
@@ -49,7 +49,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
     private func presentViews(_ state: AppState) {
         let appCopyContent = state.appCopyContentState.copyContent
         let viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
-                                          formatter: measurementFormatter,
+                                          measurementFormatter: measurementFormatter,
                                           appCopyContent: appCopyContent)
         presenter.loadSettingsView(viewModel,
                                    appSkin: state.appSkinState.currentValue,

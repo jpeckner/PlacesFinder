@@ -13,21 +13,23 @@ extension SearchPreferencesState {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    func distanceCellModels(_ formatter: MeasurementFormatter) -> [SettingsCellViewModel] {
+    func distanceCellModels(_ measurementFormatter: MeasurementFormatterProtocol) -> [SettingsCellViewModel] {
         switch distance {
         case let .imperial(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance, formatter: formatter) { .imperial($0) }
+            return buildModels(currentlySelectedDistance,
+                               measurementFormatter: measurementFormatter) { .imperial($0) }
         case let .metric(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance, formatter: formatter) { .metric($0) }
+            return buildModels(currentlySelectedDistance,
+                               measurementFormatter: measurementFormatter) { .metric($0) }
         }
     }
 
     private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
-                                                    formatter: MeasurementFormatter,
+                                                    measurementFormatter: MeasurementFormatterProtocol,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
         return T.allCases.map {
             let viewModel = GroupedTableBasicCellViewModel(
-                title: formatter.string(from: $0.measurement),
+                title: measurementFormatter.string(from: $0.measurement),
                 image: nil,
                 accessoryType: currentlySelectedDistance == $0 ? .checkmark : .none
             )
