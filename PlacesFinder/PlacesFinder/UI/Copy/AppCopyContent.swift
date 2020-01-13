@@ -86,5 +86,4 @@ struct SettingsSortPreferenceCopyContent {
 struct SettingsMeasurementSystemCopyContent {
     let imperial: String
     let metric: String
-    let delimeter: String
 }

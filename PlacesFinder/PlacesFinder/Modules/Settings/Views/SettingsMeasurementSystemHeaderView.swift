@@ -12,18 +12,17 @@ import UIKit
 
 class SettingsMeasurementSystemHeaderView: UIView {
 
+    private let viewModel: SettingsMeasurementSystemHeaderViewModel
     private let store: DispatchingStoreProtocol
-    private let copyContent: SettingsMeasurementSystemCopyContent
     private let sectionNameLabel: StyledLabel
     private let systemsStackView: UIStackView
 
-    init(store: DispatchingStoreProtocol,
-         copyContent: SettingsMeasurementSystemCopyContent,
-         currentSystemInState: MeasurementSystem,
-         title: String,
+    init(viewModel: SettingsMeasurementSystemHeaderViewModel,
+         store: DispatchingStoreProtocol,
          colorings: SettingsViewColorings) {
+        self.viewModel = viewModel
         self.store = store
-        self.copyContent = copyContent
+
         self.sectionNameLabel = StyledLabel(textStyleClass: .tableHeader,
                                             textColoring: colorings.headerTextColoring)
         self.systemsStackView = UIStackView()
@@ -32,8 +31,8 @@ class SettingsMeasurementSystemHeaderView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupTitleLabel(title)
-        setupStackView(currentSystemInState,
+        setupTitleLabel(viewModel.title)
+        setupStackView(viewModel.systemOptions,
                        colorings: colorings)
     }
 
@@ -71,42 +70,48 @@ class SettingsMeasurementSystemHeaderView: UIView {
         sectionNameLabel.text = title
     }
 
-    private func setupStackView(_ currentSystemInState: MeasurementSystem,
+    private func setupStackView(_ systemOptions: [SettingsMeasurementSystemHeaderViewModel.SystemOption],
                                 colorings: SettingsViewColorings) {
         systemsStackView.axis = .horizontal
         systemsStackView.spacing = 8.0
         systemsStackView.alignment = .bottom
         systemsStackView.distribution = .fill
 
-        for system in MeasurementSystem.allCases {
-            if system != MeasurementSystem.allCases[0] {
+        for idx in 0..<systemOptions.count {
+            if idx != 0 {
                 systemsStackView.addArrangedSubview(delimeterLabel(colorings))
             }
 
-            let subview = system == currentSystemInState ?
-                label(for: system, colorings: colorings)
-                : button(for: system, colorings: colorings)
-            systemsStackView.addArrangedSubview(subview)
+            switch systemOptions[idx] {
+            case let .selectable(title, selectionAction):
+                systemsStackView.addArrangedSubview(button(title,
+                                                           selectionAction: selectionAction,
+                                                           colorings: colorings))
+            case let .nonSelectable(title):
+                systemsStackView.addArrangedSubview(label(title,
+                                                          colorings: colorings))
+            }
         }
     }
 
-    private func label(for system: MeasurementSystem,
+    private func label(_ title: String,
                        colorings: SettingsViewColorings) -> StyledLabel {
-        let label = StyledLabel(textStyleClass: .tableHeaderSelectedButton,
+        let label = StyledLabel(textStyleClass: .tableHeaderSelectableOption,
                                 textColoring: colorings.headerTextColoring,
                                 numberOfLines: 1)
-        label.text = copyContent.title(system)
+        label.text = title
         return label
     }
 
-    private func button(for system: MeasurementSystem,
+    private func button(_ title: String,
+                        selectionAction: Action,
                         colorings: SettingsViewColorings) -> ActionableButton {
         let button = ActionableButton { [weak self] in
-            self?.store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
+            self?.store.dispatch(selectionAction)
         }
 
-        button.setTitle(copyContent.title(system), for: .normal)
-        button.applyTextStyle(.tableHeaderButton)
+        button.setTitle(title, for: .normal)
+        button.applyTextStyle(.tableHeaderNonSelectableOption)
         button.applyTextColoring(colorings.activeButtonTextColoring, for: .normal)
         button.constrainHeightToTitleLabel()
 
@@ -114,24 +119,11 @@ class SettingsMeasurementSystemHeaderView: UIView {
     }
 
     private func delimeterLabel(_ colorings: SettingsViewColorings) -> StyledLabel {
-        let label = StyledLabel(textStyleClass: .tableHeaderButton,
+        let label = StyledLabel(textStyleClass: .tableHeaderNonSelectableOption,
                                 textColoring: colorings.headerTextColoring,
                                 numberOfLines: 1)
-        label.text = copyContent.delimeter
+        label.text = "|"
         return label
-    }
-
-}
-
-private extension SettingsMeasurementSystemCopyContent {
-
-    func title(_ measurementSystem: MeasurementSystem) -> String {
-        switch measurementSystem {
-        case .imperial:
-            return imperial
-        case .metric:
-            return metric
-        }
     }
 
 }
