@@ -51,9 +51,11 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
                                           measurementFormatter: measurementFormatter,
                                           appCopyContent: appCopyContent)
+        let titleViewModel = NavigationBarTitleViewModel(copyContent: appCopyContent.displayName)
+
         presenter.loadSettingsView(viewModel,
-                                   appSkin: state.appSkinState.currentValue,
-                                   appCopyContent: appCopyContent)
+                                   titleViewModel: titleViewModel,
+                                   appSkin: state.appSkinState.currentValue)
     }
 
     private func processLinkPayload(_ state: AppState) {

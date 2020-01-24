@@ -13,19 +13,29 @@ import UIKit
 protocol SearchPresenterProtocol: AutoMockable {
     var rootViewController: UIViewController { get }
 
-    func loadNoInternetViews(_ state: AppState)
-    func loadLocationServicesDisabledViews(_ state: AppState)
-    func loadSearchBackgroundView(_ state: AppState)
-    func loadSearchViews(_ state: AppState,
-                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock)
+    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
+                             titleViewModel: NavigationBarTitleViewModel,
+                             appSkin: AppSkin)
+
+    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
+                                           titleViewModel: NavigationBarTitleViewModel,
+                                           appSkin: AppSkin)
+
+    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
+                                  titleViewModel: NavigationBarTitleViewModel,
+                                  appSkin: AppSkin)
+
+    func loadSearchViews(_ viewModel: SearchLookupViewModel,
+                         detailsViewContext: SearchDetailsViewContext?,
+                         titleViewModel: NavigationBarTitleViewModel,
+                         appSkin: AppSkin,
+                         searchInputBlock: @escaping SearchInputBlock)
 }
 
 class SearchPresenter: SearchPresenterProtocol {
 
     private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActionPrismProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
-    private let urlOpenerService: URLOpenerServiceProtocol
     private let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
@@ -34,154 +44,201 @@ class SearchPresenter: SearchPresenterProtocol {
 
     init(store: DispatchingStoreProtocol,
          actionPrism: SearchActionPrismProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
-         urlOpenerService: URLOpenerServiceProtocol,
          tabItemProperties: TabItemProperties) {
         self.store = store
         self.actionPrism = actionPrism
-        self.copyFormatter = copyFormatter
-        self.urlOpenerService = urlOpenerService
         self.searchContainerViewController = SearchContainerViewController()
 
         searchContainerViewController.configure(tabItemProperties)
     }
 
-    func loadNoInternetViews(_ state: AppState) {
-        let controller: SearchNoInternetViewController =
-            (searchContainerViewController.splitControllers.primaryController as? SearchNoInternetViewController)
-            ?? buildNoInternetViewController(state.appSkinState.currentValue,
-                                             appCopyContent: state.appCopyContentState.copyContent)
+    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
+                             titleViewModel: NavigationBarTitleViewModel,
+                             appSkin: AppSkin) {
+        guard let existingController = existingPrimaryController(ofType: SearchNoInternetViewController.self) else {
+            let controller = buildNoInternetViewController(viewModel,
+                                                           titleViewModel: titleViewModel,
+                                                           appSkin: appSkin)
+            searchContainerViewController.splitControllers = SearchContainerSplitControllers(
+                primaryController: controller,
+                secondaryController: nil
+            )
+            return
+        }
 
-        searchContainerViewController.splitControllers = SearchContainerSplitControllers(primaryController: controller,
-                                                                                         secondaryController: nil)
+        existingController.configure(viewModel)
     }
 
-    func loadLocationServicesDisabledViews(_ state: AppState) {
-        let controller: SearchLocationDisabledViewController =
-            (searchContainerViewController.splitControllers.primaryController as? SearchLocationDisabledViewController)
-            ?? buildLocationServicesDisabledViewController(state.appSkinState.currentValue,
-                                                           appCopyContent: state.appCopyContentState.copyContent)
+    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
+                                           titleViewModel: NavigationBarTitleViewModel,
+                                           appSkin: AppSkin) {
+        guard let existingController = existingPrimaryController(ofType: SearchLocationDisabledViewController.self)
+        else {
+            let controller = buildLocationServicesDisabledViewController(viewModel,
+                                                                         titleViewModel: titleViewModel,
+                                                                         appSkin: appSkin)
+            searchContainerViewController.splitControllers = SearchContainerSplitControllers(
+                primaryController: controller,
+                secondaryController: nil
+            )
+            return
+        }
 
-        searchContainerViewController.splitControllers = SearchContainerSplitControllers(primaryController: controller,
-                                                                                         secondaryController: nil)
+        existingController.configure(viewModel)
     }
 
-    func loadSearchBackgroundView(_ state: AppState) {
-        let controller: SearchBackgroundViewController =
-            (searchContainerViewController.splitControllers.primaryController as? SearchBackgroundViewController)
-            ?? buildSearchBackgroundViewController(state.appSkinState.currentValue,
-                                                   appCopyContent: state.appCopyContentState.copyContent)
+    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
+                                  titleViewModel: NavigationBarTitleViewModel,
+                                  appSkin: AppSkin) {
+        guard let existingController = existingPrimaryController(ofType: SearchBackgroundViewController.self) else {
+            let controller = buildSearchBackgroundViewController(viewModel,
+                                                                 titleViewModel: titleViewModel,
+                                                                 appSkin: appSkin)
+            searchContainerViewController.splitControllers = SearchContainerSplitControllers(
+                primaryController: controller,
+                secondaryController: nil
+            )
+            return
+        }
 
-        searchContainerViewController.splitControllers = SearchContainerSplitControllers(primaryController: controller,
-                                                                                         secondaryController: nil)
+        existingController.configure(viewModel)
     }
 
-    func loadSearchViews(_ state: AppState,
-                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        let appSkin = state.appSkinState.currentValue
-        let appCopyContent = state.appCopyContentState.copyContent
-
-        let searchParentController: SearchLookupParentController =
-            (searchContainerViewController.splitControllers.primaryController as? SearchLookupParentController)
-            ?? buildSearchParentViewController(appSkin,
-                                               appCopyContent: appCopyContent,
-                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
-        searchParentController.configure(state)
-
-        let secondaryController: SearchContainerSplitControllers.SecondaryController? =
-            state.searchState.detailedEntity.map {
-                .anySizeClass(loadOrBuildDetailsController($0,
+    func loadSearchViews(_ viewModel: SearchLookupViewModel,
+                         detailsViewContext: SearchDetailsViewContext?,
+                         titleViewModel: NavigationBarTitleViewModel,
+                         appSkin: AppSkin,
+                         searchInputBlock: @escaping SearchInputBlock) {
+        let lookupController = loadOrBuildLookupController(viewModel,
+                                                           titleViewModel: titleViewModel,
                                                            appSkin: appSkin,
-                                                           resultsCopyContent: appCopyContent.searchResults))
-            }
-            ?? state.searchState.entities?.value.first.map {
-                .regularOnly(loadOrBuildDetailsController($0.detailsModel,
-                                                          appSkin: appSkin,
-                                                          resultsCopyContent: appCopyContent.searchResults))
-            }
+                                                           searchInputBlock: searchInputBlock)
+        let secondaryController = loadOrBuildSecondaryController(detailsViewContext,
+                                                                 appSkin: appSkin)
 
         searchContainerViewController.splitControllers = SearchContainerSplitControllers(
-            primaryController: searchParentController,
+            primaryController: lookupController,
             secondaryController: secondaryController
         )
     }
 
-    private func loadOrBuildDetailsController(
-        _ detailsModel: SearchDetailsModel,
+    private func loadOrBuildLookupController(
+        _ viewModel: SearchLookupViewModel,
+        titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin,
-        resultsCopyContent: SearchResultsCopyContent
-    ) -> SearchDetailsViewController {
-        let controller =
-            searchContainerViewController.splitControllers.secondaryController?.detailsController
-            ?? buildSearchDetailsViewController(appSkin)
-        controller.viewModel = SearchDetailsViewModel(searchDetailsModel: detailsModel,
-                                                      urlOpenerService: urlOpenerService,
-                                                      copyFormatter: copyFormatter,
-                                                      resultsCopyContent: resultsCopyContent)
+        searchInputBlock: @escaping SearchInputBlock
+    ) -> SearchLookupParentController {
+        guard let existingController = existingPrimaryController(ofType: SearchLookupParentController.self) else {
+            return buildSearchParentViewController(viewModel,
+                                                   titleViewModel: titleViewModel,
+                                                   appSkin: appSkin,
+                                                   searchInputBlock: searchInputBlock)
+        }
+
+        existingController.configure(viewModel,
+                                     appSkin: appSkin)
+        return existingController
+    }
+
+    private func loadOrBuildSecondaryController(
+        _ detailsViewContext: SearchDetailsViewContext?,
+        appSkin: AppSkin
+    ) -> SearchContainerSplitControllers.SecondaryController? {
+        switch detailsViewContext {
+        case let .detailedEntity(viewModel):
+            return .anySizeClass(loadOrBuildDetailsController(viewModel,
+                                                              appSkin: appSkin))
+        case let .firstListedEntity(viewModel):
+            return .regularOnly(loadOrBuildDetailsController(viewModel,
+                                                             appSkin: appSkin))
+        case .none:
+            return nil
+        }
+    }
+
+    private func loadOrBuildDetailsController(_ viewModel: SearchDetailsViewModel,
+                                              appSkin: AppSkin) -> SearchDetailsViewController {
+        guard let controller = existingDetailsController else {
+            return buildSearchDetailsViewController(viewModel,
+                                                    appSkin: appSkin)
+        }
+
+        controller.configure(viewModel)
         return controller
     }
 
 }
 
-extension SearchPresenter {
+private extension SearchPresenter {
 
-    func buildNoInternetViewController(_ appSkin: AppSkin,
-                                       appCopyContent: AppCopyContent) -> SearchNoInternetViewController {
-        let controller = SearchNoInternetViewController(appSkin: appSkin,
-                                                        appCopyContent: appCopyContent)
-        controller.configureTitleView(appSkin,
-                                      appCopyContent: appCopyContent)
+    func existingPrimaryController<T: SearchPrimaryViewController>(ofType: T.Type) -> T? {
+        return searchContainerViewController.splitControllers.primaryController as? T
+    }
+
+    var existingDetailsController: SearchDetailsViewController? {
+        return searchContainerViewController.splitControllers.secondaryController?.detailsController
+    }
+
+}
+
+private extension SearchPresenter {
+
+    func buildNoInternetViewController(_ viewModel: SearchNoInternetViewModel,
+                                       titleViewModel: NavigationBarTitleViewModel,
+                                       appSkin: AppSkin) -> SearchNoInternetViewController {
+        let controller = SearchNoInternetViewController(viewModel: viewModel,
+                                                        appSkin: appSkin)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
         return controller
     }
 
     func buildLocationServicesDisabledViewController(
-        _ appSkin: AppSkin,
-        appCopyContent: AppCopyContent
+        _ viewModel: SearchLocationDisabledViewModel,
+        titleViewModel: NavigationBarTitleViewModel,
+        appSkin: AppSkin
     ) -> SearchLocationDisabledViewController {
-        let controller = SearchLocationDisabledViewController(
-            appSkin: appSkin,
-            appCopyContent: appCopyContent,
-            ctaType: urlOpenerService.openSettingsBlock.map { .cta(openSettingsBlock: $0) } ?? .noCTA
-        )
-        controller.configureTitleView(appSkin,
-                                      appCopyContent: appCopyContent)
+        let controller = SearchLocationDisabledViewController(viewModel: viewModel,
+                                                              colorings: appSkin.colorings.searchCTA)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
         return controller
     }
 
-    func buildSearchBackgroundViewController(_ appSkin: AppSkin,
-                                             appCopyContent: AppCopyContent) -> SearchBackgroundViewController {
-        let controller = SearchBackgroundViewController(appSkin: appSkin,
-                                                        appCopyContent: appCopyContent)
-        controller.configureTitleView(appSkin,
-                                      appCopyContent: appCopyContent)
+    func buildSearchBackgroundViewController(_ viewModel: SearchBackgroundViewModel,
+                                             titleViewModel: NavigationBarTitleViewModel,
+                                             appSkin: AppSkin) -> SearchBackgroundViewController {
+        let controller = SearchBackgroundViewController(viewModel: viewModel,
+                                                        appSkin: appSkin)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
         return controller
     }
 
     func buildSearchParentViewController(
-        _ appSkin: AppSkin,
-        appCopyContent: AppCopyContent,
-        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
+        _ viewModel: SearchLookupViewModel,
+        titleViewModel: NavigationBarTitleViewModel,
+        appSkin: AppSkin,
+        searchInputBlock: @escaping SearchInputBlock
     ) -> SearchLookupParentController {
         let controller = SearchLookupParentController(store: store,
-                                                      actionPrism: actionPrism,
-                                                      copyFormatter: copyFormatter,
                                                       appSkin: appSkin,
-                                                      appCopyContent: appCopyContent,
-                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
-        controller.configureTitleView(appSkin,
-                                      appCopyContent: appCopyContent)
+                                                      viewModel: viewModel,
+                                                      searchInputBlock: searchInputBlock)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
         controller.navigationItem.backBarButtonItem = appSkin.backButtonItem
         return controller
     }
 
     func buildSearchDetailsViewController(
-        _ appSkin: AppSkin
+        _ viewModel: SearchDetailsViewModel,
+        appSkin: AppSkin
     ) -> SearchDetailsViewController {
         return SearchDetailsViewController(store: store,
-                                           actionPrism: actionPrism,
-                                           urlOpenerService: urlOpenerService,
-                                           copyFormatter: copyFormatter,
-                                           appSkin: appSkin)
+                                           removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
+                                           appSkin: appSkin,
+                                           viewModel: viewModel)
     }
 
 }

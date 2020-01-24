@@ -10,49 +10,34 @@ import Shared
 import SwiftDux
 import UIKit
 
+typealias SearchInputBlock = (NonEmptyString) -> Void
+
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
-    private let locationUpdateRequestBlock: LocationUpdateRequestBlock
-
+    private let searchInputBlock: SearchInputBlock
     private let searchView: SearchLookupView
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
          appSkin: AppSkin,
-         appCopyContent: AppCopyContent,
-         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
+         viewModel: SearchLookupViewModel,
+         searchInputBlock: @escaping SearchInputBlock) {
         self.store = store
-        self.actionPrism = actionPrism
-        self.copyFormatter = copyFormatter
-        self.locationUpdateRequestBlock = locationUpdateRequestBlock
-        self.searchView = SearchLookupView(searchInputViewModel: appCopyContent.searchInput.inputViewModel,
+        self.searchInputBlock = searchInputBlock
+
+        self.searchView = SearchLookupView(searchInputViewModel: viewModel.searchInputViewModel,
                                            searchInputColorings: appSkin.colorings.searchInput)
 
         super.init(contentView: searchView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
         searchView.delegate = self
+        configure(viewModel,
+                  appSkin: appSkin)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchLookupParentController {
-
-    func submitSearchRequest(_ keywords: NonEmptyString) {
-        store.dispatch(searchRequestAction(keywords))
-    }
-
-    private func searchRequestAction(_ keywords: NonEmptyString) -> Action {
-        return actionPrism.initialRequestAction(SearchSubmittedParams(keywords: keywords),
-                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 
 }
@@ -68,96 +53,55 @@ extension SearchLookupParentController: SearchResultsViewControllerDelegate {
 extension SearchLookupParentController: SearchLookupViewDelegate {
 
     func searchView(_ searchView: SearchLookupView, didInputText text: NonEmptyString) {
-        submitSearchRequest(text)
+        searchInputBlock(text)
     }
 
 }
 
 extension SearchLookupParentController {
 
-    func configure(_ state: AppState) {
-        searchView.configure(state.searchState.submittedParams?.keywords)
+    func configure(_ viewModel: SearchLookupViewModel,
+                   appSkin: AppSkin) {
+        searchView.configure(viewModel.searchInputViewModel)
 
-        activateChildView(state.searchState.loadState,
-                          appSkin: state.appSkinState.currentValue,
-                          appCopyContent: state.appCopyContentState.copyContent)
+        activateChildView(viewModel,
+                          appSkin: appSkin)
     }
 
-    private func activateChildView(_ loadState: SearchLoadState,
-                                   appSkin: AppSkin,
-                                   appCopyContent: AppCopyContent) {
-        switch loadState {
-        case .idle:
+    private func activateChildView(_ lookupViewModel: SearchLookupViewModel,
+                                   appSkin: AppSkin) {
+        switch lookupViewModel.child {
+        case let .instructions(viewModel):
             setChildIfNotPresent(SearchInstructionsViewController.self) {
-                SearchInstructionsViewController(colorings: appSkin.colorings.standard,
-                                                 copyContent: appCopyContent.searchInstructions)
+                SearchInstructionsViewController(viewModel: viewModel,
+                                                 colorings: appSkin.colorings.standard)
             }
-        case .locationRequested,
-             .initialPageRequested:
+        case .progress:
             setChildIfNotPresent(SearchProgressViewController.self) {
                 SearchProgressViewController(colorings: appSkin.colorings.searchProgress)
             }
-        case let .pagesReceived(submittedParams, _, allEntities, tokenContainer):
-            setSearchResultsViewController(
-                submittedParams,
-                allEntities: allEntities,
-                tokenContainer: tokenContainer,
-                colorings: appSkin.colorings.searchResults,
-                resultsCopyContent: appCopyContent.searchResults
-            )
-        case .noResultsFound:
+        case let .results(viewModel, refreshAction, nextRequestAction):
+            let resultsController = setChildIfNotPresent(SearchResultsViewController.self) {
+                SearchResultsViewController(delegate: self,
+                                            store: store,
+                                            refreshAction: refreshAction,
+                                            colorings: appSkin.colorings.searchResults,
+                                            viewModel: viewModel,
+                                            nextRequestAction: nextRequestAction)
+            }
+
+            resultsController.configure(viewModel,
+                                        nextRequestAction: nextRequestAction)
+        case let .noResults(viewModel):
             setChildIfNotPresent(SearchNoResultsFoundViewController.self) {
-                SearchNoResultsFoundViewController(colorings: appSkin.colorings.standard,
-                                                   copyContent: appCopyContent.searchNoResults)
+                SearchNoResultsFoundViewController(viewModel: viewModel,
+                                                   colorings: appSkin.colorings.standard)
             }
-        case let .failure(submittedParams, _):
+        case let .failure(viewModel):
             setChildIfNotPresent(SearchRetryViewController.self) {
-                SearchRetryViewController(colorings: appSkin.colorings.searchCTA,
-                                          copyContent: appCopyContent.searchRetry) { [weak self] in
-                    self?.submitSearchRequest(submittedParams.keywords)
-                }
+                SearchRetryViewController(viewModel: viewModel,
+                                          colorings: appSkin.colorings.searchCTA)
             }
-        }
-    }
-
-    private func setSearchResultsViewController(_ submittedParams: SearchSubmittedParams,
-                                                allEntities: NonEmptyArray<SearchEntityModel>,
-                                                tokenContainer: PlaceLookupTokenAttemptsContainer?,
-                                                colorings: SearchResultsViewColorings,
-                                                resultsCopyContent: SearchResultsCopyContent) {
-        let nextRequestAction = tokenContainer.flatMap {
-            try? actionPrism.subsequentRequestAction(submittedParams,
-                                                     allEntities: allEntities,
-                                                     tokenContainer: $0)
-        }
-        let viewModels = resultViewModels(allEntities,
-                                          resultsCopyContent: resultsCopyContent)
-
-        let resultsController = setChildIfNotPresent(SearchResultsViewController.self) {
-            SearchResultsViewController(delegate: self,
-                                        store: store,
-                                        refreshAction: searchRequestAction(submittedParams.keywords),
-                                        colorings: colorings,
-                                        nextRequestAction: nextRequestAction,
-                                        resultViewModels: viewModels)
-        }
-
-        resultsController.configure(viewModels,
-                                    nextRequestAction: nextRequestAction)
-    }
-
-    private func resultViewModels(
-        _ allEntities: NonEmptyArray<SearchEntityModel>,
-        resultsCopyContent: SearchResultsCopyContent
-    ) -> NonEmptyArray<SearchResultViewModel> {
-        return allEntities.withTransformation {
-            let cellModel = SearchResultCellModel(model: $0.summaryModel,
-                                                  copyFormatter: copyFormatter,
-                                                  resultsCopyContent: resultsCopyContent)
-            let detailEntityAction = actionPrism.detailEntityAction($0.detailsModel)
-
-            return SearchResultViewModel(cellModel: cellModel,
-                                         detailEntityAction: detailEntityAction)
         }
     }
 

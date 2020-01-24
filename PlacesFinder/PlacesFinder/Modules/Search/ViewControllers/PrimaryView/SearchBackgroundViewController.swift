@@ -11,25 +11,35 @@ import UIKit
 
 class SearchBackgroundViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    private let searchView: SearchLookupView
+    private let contentView: SearchLookupView
+    private let childController: SearchInstructionsViewController
 
-    init(appSkin: AppSkin,
-         appCopyContent: AppCopyContent) {
-        self.searchView = SearchLookupView(searchInputViewModel: appCopyContent.searchInput.inputViewModel,
-                                           searchInputColorings: appSkin.colorings.searchInput)
+    init(viewModel: SearchBackgroundViewModel,
+         appSkin: AppSkin) {
+        self.contentView = SearchLookupView(searchInputViewModel: viewModel.inputViewModel,
+                                            searchInputColorings: appSkin.colorings.searchInput)
+        self.childController = SearchInstructionsViewController(viewModel: viewModel.instructionsViewModel,
+                                                                colorings: appSkin.colorings.standard)
 
-        super.init(contentView: searchView,
+        super.init(contentView: contentView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
-        let childController = SearchInstructionsViewController(colorings: appSkin.colorings.standard,
-                                                               copyContent: appCopyContent.searchInstructions)
         setSingleChildController(childController) {
-            searchView.setChildView($0)
+            contentView.setChildView($0)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchBackgroundViewController {
+
+    func configure(_ viewModel: SearchBackgroundViewModel) {
+        contentView.configure(viewModel.inputViewModel)
+        childController.configure(viewModel.instructionsViewModel)
     }
 
 }

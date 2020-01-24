@@ -23,13 +23,13 @@ class SettingsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
     private let colorings: SettingsViewColorings
-    private let tableView: GroupedTableView
-
     private var viewModel: SettingsViewModel {
         didSet {
             tableView.configure(viewModel.tableModel)
         }
     }
+
+    private let tableView: GroupedTableView
 
     init(viewModel: SettingsViewModel,
          store: DispatchingStoreProtocol,
@@ -37,6 +37,7 @@ class SettingsViewController: SingleContentViewController {
         self.viewModel = viewModel
         self.store = store
         self.colorings = appSkin.colorings.settings
+
         self.tableView = GroupedTableView(tableModel: viewModel.tableModel)
 
         super.init(contentView: tableView,

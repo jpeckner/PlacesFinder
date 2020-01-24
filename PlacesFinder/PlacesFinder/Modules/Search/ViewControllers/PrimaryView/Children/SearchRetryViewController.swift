@@ -9,18 +9,14 @@
 import Shared
 import UIKit
 
-extension SearchRetryCopyContent: SearchCTACopyProtocol {}
-
 class SearchRetryViewController: SingleContentViewController {
 
-    init(colorings: SearchCTAViewColorings,
-         copyContent: SearchRetryCopyContent,
-         retryBlock: @escaping () -> Void) {
-        let ctaView = SearchCTAView(viewModel: copyContent.retryViewModel,
-                                    colorings: colorings,
-                                    retryBlock: retryBlock)
+    init(viewModel: SearchRetryViewModel,
+         colorings: SearchCTAViewColorings) {
+        let contentView = SearchCTAView(viewModel: viewModel.ctaViewModel,
+                                        colorings: colorings)
 
-        super.init(contentView: ctaView,
+        super.init(contentView: contentView,
                    viewColoring: colorings.viewColoring)
     }
 

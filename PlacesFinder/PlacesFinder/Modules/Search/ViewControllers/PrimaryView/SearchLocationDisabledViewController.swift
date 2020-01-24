@@ -7,39 +7,30 @@
 //
 
 import Shared
-import UIKit
-
-extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
 
 class SearchLocationDisabledViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    enum CTAType {
-        case noCTA
-        case cta(openSettingsBlock: () -> Void)
-    }
+    private let ctaView: SearchCTAView
 
-    init(appSkin: AppSkin,
-         appCopyContent: AppCopyContent,
-         ctaType: CTAType) {
-        switch ctaType {
-        case .noCTA:
-            let contentView = SearchMessageView(viewModel: appCopyContent.searchLocationDisabled.messageViewModel,
-                                                colorings: appSkin.colorings.standard)
+    init(viewModel: SearchLocationDisabledViewModel,
+         colorings: SearchCTAViewColorings) {
+        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel,
+                                     colorings: colorings)
 
-            super.init(contentView: contentView,
-                       viewColoring: appSkin.colorings.standard.viewColoring)
-        case let .cta(openSettingsBlock):
-            let contentView = SearchCTAView(viewModel: appCopyContent.searchLocationDisabled.retryViewModel,
-                                            colorings: appSkin.colorings.searchCTA,
-                                            retryBlock: openSettingsBlock)
-
-            super.init(contentView: contentView,
-                       viewColoring: appSkin.colorings.searchCTA.viewColoring)
-        }
+        super.init(contentView: ctaView,
+                   viewColoring: colorings.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchLocationDisabledViewController {
+
+    func configure(_ viewModel: SearchLocationDisabledViewModel) {
+        ctaView.configure(viewModel.ctaViewModel)
     }
 
 }

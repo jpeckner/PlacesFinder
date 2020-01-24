@@ -18,17 +18,16 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 class SearchResultsViewController: SingleContentViewController {
 
     private weak var delegate: SearchResultsViewControllerDelegate?
-
     private let store: DispatchingStoreProtocol
     private let refreshAction: Action
     private let colorings: SearchResultsViewColorings
 
-    private var nextRequestAction: Action?
-    private var resultViewModels: NonEmptyArray<SearchResultViewModel> {
+    private var viewModel: SearchResultsViewModel {
         didSet {
             tableView.reloadData()
         }
     }
+    private var nextRequestAction: Action?
 
     private let tableView: UITableView
     private var previousContentOffsetY: CGFloat = 0.0
@@ -37,14 +36,14 @@ class SearchResultsViewController: SingleContentViewController {
          store: DispatchingStoreProtocol,
          refreshAction: Action,
          colorings: SearchResultsViewColorings,
-         nextRequestAction: Action?,
-         resultViewModels: NonEmptyArray<SearchResultViewModel>) {
+         viewModel: SearchResultsViewModel,
+         nextRequestAction: Action?) {
         self.delegate = delegate
         self.store = store
         self.refreshAction = refreshAction
-        self.nextRequestAction = nextRequestAction
-        self.resultViewModels = resultViewModels
         self.colorings = colorings
+        self.viewModel = viewModel
+        self.nextRequestAction = nextRequestAction
         self.tableView = UITableView()
 
         super.init(contentView: tableView,
@@ -52,6 +51,8 @@ class SearchResultsViewController: SingleContentViewController {
 
         setupTableView()
         setupRefreshControl(colorings)
+        configure(viewModel,
+                  nextRequestAction: nextRequestAction)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -81,14 +82,10 @@ class SearchResultsViewController: SingleContentViewController {
 
 extension SearchResultsViewController {
 
-    func configure(_ resultViewModels: NonEmptyArray<SearchResultViewModel>,
+    func configure(_ viewModel: SearchResultsViewModel,
                    nextRequestAction: Action?) {
-        self.resultViewModels = resultViewModels
+        self.viewModel = viewModel
         self.nextRequestAction = nextRequestAction
-    }
-
-    private func resultViewModel(for indexPath: IndexPath) -> SearchResultViewModel {
-        return resultViewModels.value[indexPath.row]
     }
 
 }
@@ -96,7 +93,7 @@ extension SearchResultsViewController {
 extension SearchResultsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultViewModels.value.count
+        return resultViewModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,7 +125,7 @@ extension SearchResultsViewController: UITableViewDataSourcePrefetching {
     }
 
     private func isCloseEnoughToBottomForNextRequest(_ indexPaths: [IndexPath]) -> Bool {
-        return indexPaths.contains { $0.row >= resultViewModels.value.count - 30 }
+        return indexPaths.contains { $0.row >= resultViewModels.count - 30 }
     }
 
 }
@@ -159,6 +156,18 @@ extension SearchResultsViewController: UITableViewDelegate {
         tableView.setContentOffset(.zero, animated: true)
         tableView.refreshControl?.endRefreshing()
         store.dispatch(refreshAction)
+    }
+
+}
+
+private extension SearchResultsViewController {
+
+    var resultViewModels: [SearchResultViewModel] {
+        return viewModel.resultViewModels.value
+    }
+
+    func resultViewModel(for indexPath: IndexPath) -> SearchResultViewModel {
+        return resultViewModels[indexPath.row]
     }
 
 }

@@ -12,10 +12,10 @@ struct SearchMessageViewModel {
     let infoViewModel: StaticInfoViewModel
 }
 
-extension StaticInfoCopyProtocol {
+extension SearchMessageViewModel {
 
-    var messageViewModel: SearchMessageViewModel {
-        return SearchMessageViewModel(infoViewModel: staticInfoViewModel)
+    init(copyContent: StaticInfoCopyProtocol) {
+        self.infoViewModel = copyContent.staticInfoViewModel
     }
 
 }

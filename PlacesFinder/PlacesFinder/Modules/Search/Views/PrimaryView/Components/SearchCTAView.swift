@@ -10,36 +10,22 @@ import Shared
 import SnapKit
 import UIKit
 
-protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
-    var ctaTitle: String { get }
-}
-
-extension SearchCTACopyProtocol {
-
-    var retryViewModel: SearchRetryViewModel {
-        return SearchRetryViewModel(infoViewModel: staticInfoViewModel,
-                                    ctaTitle: ctaTitle)
-    }
-
-}
-
 class SearchCTAView: UIView {
 
-    private let staticInfoView: StaticInfoView
-    private let ctaButton: ActionableButton
+    let staticInfoView: StaticInfoView
+    let ctaButton: ActionableButton
 
-    init(viewModel: SearchRetryViewModel,
-         colorings: SearchCTAViewColorings,
-         retryBlock: @escaping () -> Void) {
+    init(viewModel: SearchCTAViewModel,
+         colorings: SearchCTAViewColorings) {
         self.staticInfoView = StaticInfoView(viewModel: viewModel.infoViewModel,
                                              colorings: colorings)
-        self.ctaButton = ActionableButton(touchUpInsideCallback: retryBlock)
+        self.ctaButton = ActionableButton(touchUpInsideCallback: viewModel.ctaBlock ?? {})
 
         super.init(frame: .zero)
 
         setupSubviews()
         setupConstraints()
-        setupContent(viewModel)
+        configure(viewModel)
         setupStyling(colorings)
     }
 
@@ -73,13 +59,25 @@ class SearchCTAView: UIView {
         }
     }
 
-    private func setupContent(_ viewModel: SearchRetryViewModel) {
-        ctaButton.setTitle(viewModel.ctaTitle, for: .normal)
-    }
-
     private func setupStyling(_ colorings: SearchCTAViewColorings) {
         ctaButton.configure(.ctaButton,
                             textColoring: colorings.ctaTextColoring)
+    }
+
+}
+
+extension SearchCTAView {
+
+    func configure(_ viewModel: SearchCTAViewModel) {
+        staticInfoView.configure(viewModel.infoViewModel)
+
+        if let ctaBlock = viewModel.ctaBlock {
+            ctaButton.touchUpInsideCallback = ctaBlock
+            ctaButton.setTitle(viewModel.ctaTitle, for: .normal)
+            ctaButton.isHidden = false
+        } else {
+            ctaButton.isHidden = true
+        }
     }
 
 }

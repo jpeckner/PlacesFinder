@@ -48,3 +48,11 @@ class SearchMessageView: UIView {
     }
 
 }
+
+extension SearchMessageView {
+
+    func configure(_ viewModel: SearchMessageViewModel) {
+        staticInfoView.configure(viewModel.infoViewModel)
+    }
+
+}

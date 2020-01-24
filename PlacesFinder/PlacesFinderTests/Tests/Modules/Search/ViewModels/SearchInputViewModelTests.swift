@@ -11,23 +11,28 @@ import Nimble
 @testable import PlacesFinder
 #endif
 import Quick
+import Shared
+import SharedTestComponents
 
 class SearchInputViewModelTests: QuickSpec {
 
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
+        let stubInputKeywords = NonEmptyString.stubValue("stubInputKeywords")
         var result: SearchInputViewModel!
 
         describe("inputViewModel") {
             beforeEach {
                 let copyContent = SearchInputCopyContent(placeholder: "stubPlaceholder",
                                                          cancelButtonTitle: "stubCancelButtonTitle")
-                result = copyContent.inputViewModel
+                result = SearchInputViewModel(inputKeywords: stubInputKeywords,
+                                              copyContent: copyContent)
             }
 
             it("returns its expected value") {
-                expect(result) == SearchInputViewModel(placeholder: "stubPlaceholder",
+                expect(result) == SearchInputViewModel(inputKeywords: stubInputKeywords,
+                                                       placeholder: "stubPlaceholder",
                                                        cancelButtonTitle: "stubCancelButtonTitle")
             }
 
