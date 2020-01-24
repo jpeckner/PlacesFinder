@@ -34,7 +34,7 @@ extension SearchPreferencesState {
                 accessoryType: currentlySelectedDistance == $0 ? .checkmark : .none
             )
 
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
+            return SettingsCellViewModel(cellModel: .basic(viewModel),
                                          action: SearchPreferencesAction.setDistance(distanceBlock($0)))
         }
     }
@@ -51,7 +51,7 @@ extension SearchPreferencesState {
                 accessoryType: sorting == $0 ? .checkmark : .none
             )
 
-            return SettingsCellViewModel(cellModel: GroupedTableViewCellModel(cellStyle: .basic(viewModel)),
+            return SettingsCellViewModel(cellModel: .basic(viewModel),
                                          action: SearchPreferencesAction.setSorting($0))
         }
     }
