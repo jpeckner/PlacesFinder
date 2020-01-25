@@ -1,5 +1,5 @@
 //
-//  LaunchViewModel.swift
+//  LaunchViewModelObservable.swift
 //  PlacesFinder
 //
 //  Created by Justin Peckner.
@@ -9,6 +9,6 @@
 import Foundation
 
 @available(iOS 13.0, *)
-class LaunchViewModel: ObservableObject {
+class LaunchViewModelObservable: ObservableObject {
     @Published var isAnimating = false
 }
