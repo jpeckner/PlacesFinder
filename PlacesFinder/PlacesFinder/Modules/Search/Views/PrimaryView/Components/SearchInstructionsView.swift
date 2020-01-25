@@ -59,6 +59,15 @@ class SearchInstructionsView: UIView {
 
 }
 
+extension SearchInstructionsView {
+
+    func configure(_ viewModel: SearchInstructionsViewModel) {
+        staticInfoView.configure(viewModel.infoViewModel)
+        resultsSourceView.configure(viewModel)
+    }
+
+}
+
 private class ResultsSourceView: UIView {
 
     private let label: StyledLabel
@@ -74,7 +83,7 @@ private class ResultsSourceView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(viewModel)
+        configure(viewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -102,8 +111,12 @@ private class ResultsSourceView: UIView {
         }
     }
 
-    private func setupContent(_ viewModel: SearchInstructionsViewModel) {
-        label.text = viewModel.resultsSourceCopy
+}
+
+private extension ResultsSourceView {
+
+    func configure(_ viewModel: SearchInstructionsViewModel) {
+        label.text = viewModel.resultsSource
     }
 
 }

@@ -13,14 +13,14 @@ struct SearchCTAViewSUI: View {
 
     private let viewModel: SearchCTAViewModel
     private let colorings: SearchCTAViewColorings
-    private let retryBlock: SearchCTARetryBlock
+    private let ctaBlock: SearchCTABlock
 
     init(viewModel: SearchCTAViewModel,
          colorings: SearchCTAViewColorings,
-         retryBlock: @escaping SearchCTARetryBlock) {
+         ctaBlock: @escaping SearchCTABlock) {
         self.viewModel = viewModel
         self.colorings = colorings
-        self.retryBlock = retryBlock
+        self.ctaBlock = ctaBlock
     }
 
     var body: some View {
@@ -28,7 +28,7 @@ struct SearchCTAViewSUI: View {
             StaticInfoViewSUI(viewModel: viewModel.infoViewModel)
                 .padding(.bottom)
 
-            Button(action: retryBlock) {
+            Button(action: ctaBlock) {
                 Text(viewModel.ctaTitle)
             }
             .configure(.ctaButton, textColoring: colorings.ctaTextColoring)

@@ -12,5 +12,7 @@ import UIKit
 protocol SettingsPresenterProtocol: AutoMockable {
     var rootNavController: UINavigationController { get }
 
-    func loadSettingsView(_ state: AppState)
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin)
 }

@@ -11,23 +11,19 @@ import UIKit
 
 extension UIViewController {
 
-    func configureTitleView(_ state: AppState) {
-        configureTitleView(state.appSkinState.currentValue,
-                           appCopyContent: state.appCopyContentState.copyContent)
-    }
-
-    func configureTitleView(_ appSkin: AppSkin,
-                            appCopyContent: AppCopyContent) {
+    func configureTitleView(_ viewModel: NavigationBarTitleViewModel,
+                            appSkin: AppSkin) {
         let colorings = appSkin.colorings.navBar
 
         if #available(iOS 13, *) {
-            let titleView = NavigationBarTitleViewSUI(title: appCopyContent.displayName.name.value)
+            let titleView = NavigationBarTitleViewSUI(viewModel: viewModel,
+                                                      colorings: colorings)
 
             let hostingView = UIHostingController(rootView: titleView).view
             hostingView?.backgroundColor = .clear
             navigationItem.titleView = hostingView
         } else {
-            navigationItem.titleView = NavigationBarTitleView(appCopyContent: appCopyContent,
+            navigationItem.titleView = NavigationBarTitleView(viewModel: viewModel,
                                                               colorings: colorings)
         }
     }

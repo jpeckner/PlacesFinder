@@ -12,18 +12,22 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct NavigationBarTitleViewSUI: View {
 
-    private let title: String
+    private let viewModel: NavigationBarTitleViewModel
+    private let colorings: NavBarColorings
 
-    init(title: String) {
-        self.title = title
+    init(viewModel: NavigationBarTitleViewModel,
+         colorings: NavBarColorings) {
+        self.viewModel = viewModel
+        self.colorings = colorings
     }
 
     var body: some View {
         HStack {
             Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))
 
-            StyledLabelSUI(text: title,
-                           styleClass: .navBarTitle)
+            StyledLabelSUI(text: viewModel.displayName,
+                           styleClass: .navBarTitle,
+                           textColoring: colorings.titleTextColoring)
         }
     }
 

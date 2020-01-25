@@ -28,7 +28,7 @@ class StaticInfoView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(viewModel)
+        configure(viewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,7 +70,11 @@ class StaticInfoView: UIView {
         }
     }
 
-    private func setupContent(_ viewModel: StaticInfoViewModel) {
+}
+
+extension StaticInfoView {
+
+    func configure(_ viewModel: StaticInfoViewModel) {
         imageView.image = viewModel.image
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description

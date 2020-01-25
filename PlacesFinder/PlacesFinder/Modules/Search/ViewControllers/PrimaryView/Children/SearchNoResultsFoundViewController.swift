@@ -9,13 +9,11 @@
 import Shared
 import UIKit
 
-extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
-
 class SearchNoResultsFoundViewController: SingleContentViewController {
 
-    init(colorings: AppStandardColorings,
-         copyContent: SearchNoResultsCopyContent) {
-        let messageView = SearchMessageView(viewModel: copyContent.messageViewModel,
+    init(viewModel: SearchNoResultsFoundViewModel,
+         colorings: AppStandardColorings) {
+        let messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
                                             colorings: colorings)
 
         super.init(contentView: messageView,

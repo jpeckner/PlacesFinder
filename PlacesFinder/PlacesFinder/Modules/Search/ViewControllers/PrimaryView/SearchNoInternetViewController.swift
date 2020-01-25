@@ -9,21 +9,29 @@
 import Shared
 import UIKit
 
-extension SearchNoInternetCopyContent: StaticInfoCopyProtocol {}
-
 class SearchNoInternetViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    init(appSkin: AppSkin,
-         appCopyContent: AppCopyContent) {
-        let messageView = SearchMessageView(viewModel: appCopyContent.searchNoInternet.messageViewModel,
-                                            colorings: appSkin.colorings.standard)
+    private let contentView: SearchMessageView
 
-        super.init(contentView: messageView,
+    init(viewModel: SearchNoInternetViewModel,
+         appSkin: AppSkin) {
+        self.contentView = SearchMessageView(viewModel: viewModel.messageViewModel,
+                                             colorings: appSkin.colorings.standard)
+
+        super.init(contentView: contentView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchNoInternetViewController {
+
+    func configure(_ viewModel: SearchNoInternetViewModel) {
+        contentView.configure(viewModel.messageViewModel)
     }
 
 }

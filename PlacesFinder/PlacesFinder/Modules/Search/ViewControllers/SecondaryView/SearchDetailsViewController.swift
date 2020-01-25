@@ -13,17 +13,10 @@ import UIKit
 class SearchDetailsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchSubsequentActionPrismProtocol & SearchDetailsActionPrismProtocol
-    private let urlOpenerService: URLOpenerServiceProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
+    private let removeDetailedEntityAction: Action
     private let colorings: SearchDetailsViewColorings
-    private let tableView: UITableView
-    private let titleLabel: StyledLabel
-
-    var viewModel: SearchDetailsViewModel = .init(placeName: "", sections: []) {
+    private var viewModel: SearchDetailsViewModel {
         didSet {
-            guard viewModel != oldValue else { return }
-
             titleLabel.text = viewModel.placeName
             titleLabel.sizeToFit()
 
@@ -38,16 +31,18 @@ class SearchDetailsViewController: SingleContentViewController {
         }
     }
 
+    private let tableView: UITableView
+    private let titleLabel: StyledLabel
+
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchSubsequentActionPrismProtocol & SearchDetailsActionPrismProtocol,
-         urlOpenerService: URLOpenerServiceProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
-         appSkin: AppSkin) {
+         removeDetailedEntityAction: Action,
+         appSkin: AppSkin,
+         viewModel: SearchDetailsViewModel) {
         self.store = store
-        self.actionPrism = actionPrism
-        self.urlOpenerService = urlOpenerService
-        self.copyFormatter = copyFormatter
+        self.removeDetailedEntityAction = removeDetailedEntityAction
         self.colorings = appSkin.colorings.searchDetails
+        self.viewModel = viewModel
+
         self.tableView = UITableView()
         self.titleLabel = StyledLabel(textStyleClass: .navBarTitle,
                                       textColoring: appSkin.colorings.navBar.titleTextColoring,
@@ -58,6 +53,7 @@ class SearchDetailsViewController: SingleContentViewController {
 
         setupTitleView()
         setupTableView()
+        configure(viewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -98,8 +94,16 @@ extension SearchDetailsViewController {
 
 extension SearchDetailsViewController {
 
-    func viewWasPopped() {
-        store.dispatch(actionPrism.removeDetailedEntityAction)
+    func configure(_ viewModel: SearchDetailsViewModel) {
+        self.viewModel = viewModel
+    }
+
+}
+
+extension SearchDetailsViewController: PopCallbackViewController {
+
+    func viewControllerWasPopped() {
+        store.dispatch(removeDetailedEntityAction)
     }
 
 }

@@ -64,8 +64,7 @@ extension AppCopyContent {
         )
         self.settingsMeasurementSystem = SettingsMeasurementSystemCopyContent(
             imperial: "U.S",
-            metric: "Metric",
-            delimeter: "/"
+            metric: "Metric"
         )
     }
 

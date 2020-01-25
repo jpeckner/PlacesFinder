@@ -165,17 +165,34 @@ private class SearchPlaceholderViewController: UIViewController, SearchPrimaryVi
 
 private class SearchMasterPaneNavigationController: UINavigationController {
 
-    override func popViewController(animated: Bool) -> UIViewController? {
-        let poppedController = super.popViewController(animated: animated)
+    private var previousViewControllers: [UIViewController] = []
 
-        switch poppedController {
-        case let detailsController as SearchDetailsViewController:
-            detailsController.viewWasPopped()
-        default:
-            break
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
+        delegate = self
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchMasterPaneNavigationController: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController,
+                              didShow viewController: UIViewController,
+                              animated: Bool) {
+        defer {
+            previousViewControllers = viewControllers
         }
 
-        return poppedController
+        guard previousViewControllers.count > viewControllers.count,
+            let previousTopController = previousViewControllers.last as? PopCallbackViewController
+        else { return }
+
+        previousTopController.viewControllerWasPopped()
     }
 
 }

@@ -8,13 +8,11 @@
 
 import Shared
 import SwiftDux
-import SwiftUI
 import UIKit
 
 class SettingsPresenter: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController
-    private let formatter: MeasurementFormatter
     private let store: DispatchingStoreProtocol
 
     init(tabItemProperties: TabItemProperties,
@@ -22,24 +20,36 @@ class SettingsPresenter: SettingsPresenterProtocol {
         self.rootNavController = UINavigationController()
         rootNavController.configure(tabItemProperties)
 
-        self.formatter = MeasurementFormatter()
-        formatter.unitOptions = .providedUnit
-
         self.store = store
     }
 
-    func loadSettingsView(_ state: AppState) {
-        let viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
-                                          formatter: formatter,
-                                          appCopyContent: state.appCopyContentState.copyContent)
-        let settingsController: SettingsViewController =
-            rootNavController.viewControllers.first as? SettingsViewController
-            ?? SettingsViewController(store: store,
-                                      appSkin: state.appSkinState.currentValue)
-        settingsController.viewModel = viewModel
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin) {
+        guard let existingController = rootNavController.viewControllers.first as? SettingsViewController else {
+            let controller = buildSettingsViewController(viewModel,
+                                                         titleViewModel: titleViewModel,
+                                                         appSkin: appSkin)
+            rootNavController.setViewControllers([controller], animated: true)
+            return
+        }
 
-        settingsController.configureTitleView(state)
-        rootNavController.setViewControllers([settingsController], animated: true)
+        existingController.configure(viewModel)
+    }
+
+}
+
+private extension SettingsPresenter {
+
+    func buildSettingsViewController(_ viewModel: SettingsViewModel,
+                                     titleViewModel: NavigationBarTitleViewModel,
+                                     appSkin: AppSkin) -> SettingsViewController {
+        let controller = SettingsViewController(viewModel: viewModel,
+                                                store: store,
+                                                appSkin: appSkin)
+        controller.configureTitleView(titleViewModel,
+                                      appSkin: appSkin)
+        return controller
     }
 
 }

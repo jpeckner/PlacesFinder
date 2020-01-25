@@ -33,8 +33,12 @@ class SettingsCoordinatorTests: QuickSpec {
             mockSettingsPresenter = SettingsPresenterProtocolMock()
             mockSettingsPresenter.rootNavController = stubNavController
 
+            let measurementFormatterMock = MeasurementFormatterProtocolMock()
+            measurementFormatterMock.stringFromReturnValue = "stringFromReturnValue"
+
             coordinator = SettingsCoordinator(store: mockStore,
-                                              presenter: mockSettingsPresenter)
+                                              presenter: mockSettingsPresenter,
+                                              measurementFormatter: measurementFormatterMock)
         }
 
         describe("init") {
@@ -75,9 +79,9 @@ class SettingsCoordinatorTests: QuickSpec {
                 }
 
                 it("calls presenter.loadSettingsView()") {
-                    expect(mockSettingsPresenter.loadSettingsViewCalled) == false
+                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == false
                     performTest(linkType: nil)
-                    expect(mockSettingsPresenter.loadSettingsViewCalled) == true
+                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == true
                 }
 
                 context("when the state has a pending linkType of type SettingsLinkPayload") {

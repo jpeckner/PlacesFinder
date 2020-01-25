@@ -7,61 +7,30 @@
 //
 
 import Shared
-import SwiftUI
-import UIKit
-
-extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
 
 class SearchLocationDisabledViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    enum CTAType {
-        case noCTA
-        case cta(openSettingsBlock: () -> Void)
-    }
+    private let ctaView: SearchCTAView
 
-    init(appSkin: AppSkin,
-         appCopyContent: AppCopyContent,
-         ctaType: CTAType) {
-        switch ctaType {
-        case .noCTA:
-            let messageViewModel = appCopyContent.searchLocationDisabled.messageViewModel
-            let contentView: UIView
+    init(viewModel: SearchLocationDisabledViewModel,
+         colorings: SearchCTAViewColorings) {
+        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel,
+                                     colorings: colorings)
 
-            if #available(iOS 13.0, *) {
-                let infoViewModel = messageViewModel.infoViewModel
-                let messageView = SearchMessageViewSUI(viewModel: infoViewModel)
-                contentView = UIHostingController(rootView: messageView).view
-            } else {
-                contentView = SearchMessageView(viewModel: messageViewModel,
-                                                colorings: appSkin.colorings.standard)
-            }
-
-            super.init(contentView: contentView,
-                       viewColoring: appSkin.colorings.standard.viewColoring)
-        case let .cta(openSettingsBlock):
-            let ctaViewModel = appCopyContent.searchLocationDisabled.ctaViewModel
-            let contentView: UIView
-
-            if #available(iOS 13.0, *) {
-                let viewModel = SearchCTAViewModel(infoViewModel: ctaViewModel.infoViewModel,
-                                                   ctaTitle: ctaViewModel.ctaTitle)
-                let retryView = SearchCTAViewSUI(viewModel: viewModel,
-                                                 colorings: appSkin.colorings.searchCTA,
-                                                 retryBlock: openSettingsBlock)
-                contentView = UIHostingController(rootView: retryView).view
-            } else {
-                contentView = SearchCTAView(viewModel: ctaViewModel,
-                                            colorings: appSkin.colorings.searchCTA,
-                                            retryBlock: openSettingsBlock)
-            }
-
-            super.init(contentView: contentView,
-                       viewColoring: appSkin.colorings.searchCTA.viewColoring)
-        }
+        super.init(contentView: ctaView,
+                   viewColoring: colorings.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchLocationDisabledViewController {
+
+    func configure(_ viewModel: SearchLocationDisabledViewModel) {
+        ctaView.configure(viewModel.ctaViewModel)
     }
 
 }

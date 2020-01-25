@@ -24,7 +24,7 @@ struct SettingsViewSUI: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.viewModel.sections) { section in
+            ForEach(viewModel.viewModel.sections.value) { section in
                 Section(header: Text(section.title)) {
                     ForEach(section.cells) { cellViewModel in
                         SettingsCell(viewModel: cellViewModel)

@@ -10,33 +10,38 @@ import Foundation
 import Shared
 
 struct SettingsViewModel {
-    let sections: [SettingsSectionViewModel]
+    let sections: NonEmptyArray<SettingsSectionViewModel>
 }
 
 extension SettingsViewModel {
 
     init(searchPreferencesState: SearchPreferencesState,
-         formatter: MeasurementFormatter,
+         measurementFormatter: MeasurementFormatterProtocol,
          appCopyContent: AppCopyContent) {
-        self.sections = [
+        self.sections = NonEmptyArray(with:
             SettingsSectionViewModel(
                 id: 0,
                 title: appCopyContent.settingsHeaders.distanceSectionTitle,
                 headerType: .measurementSystem(currentSystemInState: searchPreferencesState.distance.system,
                                                copyContent: appCopyContent.settingsMeasurementSystem),
-                cells: searchPreferencesState.distanceCellModels(formatter)
-            ),
+                cells: searchPreferencesState.distanceCellModels(measurementFormatter)
+            )
+        ).appendedWith([
             SettingsSectionViewModel(
                 id: 1,
                 title: appCopyContent.settingsHeaders.sortSectionTitle,
                 headerType: .plain,
                 cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
             ),
-        ]
+        ])
     }
 
+}
+
+extension SettingsViewModel {
+
     var tableModel: GroupedTableViewModel {
-        return GroupedTableViewModel(sectionModels: sections.map {
+        return GroupedTableViewModel(sectionModels: sections.value.map {
             GroupedTableViewSectionModel(
                 title: $0.title,
                 cellModels: $0.cells.map {

@@ -44,7 +44,7 @@ private struct ResultsSourceViewSUI: View {
 
     var body: some View {
         HStack(spacing: 0.0) {
-            StyledLabelSUI(text: viewModel.resultsSourceCopy,
+            StyledLabelSUI(text: viewModel.resultsSource,
                            styleClass: .sourceAPILabel,
                            textColoring: colorings.bodyTextColoring)
                 .padding(.top, 3.0)

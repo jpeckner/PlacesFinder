@@ -7,6 +7,12 @@
 //
 
 import Shared
+import SwiftDux
+
+enum SearchDetailsViewContext {
+    case detailedEntity(SearchDetailsViewModel)
+    case firstListedEntity(SearchDetailsViewModel)
+}
 
 struct SearchDetailsViewModel: Equatable {
     enum Section: Equatable {

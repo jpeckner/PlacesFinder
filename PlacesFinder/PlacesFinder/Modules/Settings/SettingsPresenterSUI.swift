@@ -29,11 +29,9 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
         self.store = store
     }
 
-    func loadSettingsView(_ state: AppState) {
-        let viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
-                                          formatter: formatter,
-                                          appCopyContent: state.appCopyContentState.copyContent)
-
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin) {
         if let observableViewModel = observableViewModel {
             observableViewModel.viewModel = viewModel
             return
@@ -45,7 +43,8 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
         let settingsView = SettingsViewSUI(viewModel: observable,
                                            store: store)
         let hostingController = UIHostingController(rootView: settingsView)
-        hostingController.configureTitleView(state)
+        hostingController.configureTitleView(titleViewModel,
+                                             appSkin: appSkin)
         rootNavController.setViewControllers([hostingController], animated: true)
     }
 

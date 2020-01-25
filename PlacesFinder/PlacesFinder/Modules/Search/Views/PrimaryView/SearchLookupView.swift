@@ -105,12 +105,12 @@ extension SearchLookupView: SearchChildContainerViewDelegate {
 
 extension SearchLookupView {
 
-    func setChildView(_ childView: UIView) {
-        childContainerView.setChildView(childView)
+    func configure(_ viewModel: SearchInputViewModel) {
+        searchInputView.configure(viewModel)
     }
 
-    func configure(_ keywords: NonEmptyString?) {
-        searchInputView.configure(keywords)
+    func setChildView(_ childView: UIView) {
+        childContainerView.setChildView(childView)
     }
 
 }
