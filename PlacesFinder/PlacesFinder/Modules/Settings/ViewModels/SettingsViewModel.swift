@@ -9,15 +9,6 @@
 import Foundation
 import Shared
 
-@available(iOS 13.0, *)
-class SettingsViewModelObservable: ObservableObject {
-    @Published var viewModel: SettingsViewModel
-
-    init(viewModel: SettingsViewModel) {
-        self._viewModel = Published(initialValue: viewModel)
-    }
-}
-
 struct SettingsViewModel {
     let sections: [SettingsSectionViewModel]
 }
