@@ -25,7 +25,7 @@ class NavigationBarTitleView: UIView {
 
         setupSubviews()
         setupConstraints()
-        setupContent(appCopyContent)
+        setupContent(appCopyContent.displayName)
         setupStyling(colorings)
     }
 
@@ -51,8 +51,8 @@ class NavigationBarTitleView: UIView {
         }
     }
 
-    private func setupContent(_ appCopyContent: AppCopyContent) {
-        titleLabel.text = appCopyContent.displayName.value
+    private func setupContent(_ copyContent: DisplayNameCopyContent) {
+        titleLabel.text = copyContent.name.value
     }
 
     private func setupStyling(_ colorings: NavBarColorings) {

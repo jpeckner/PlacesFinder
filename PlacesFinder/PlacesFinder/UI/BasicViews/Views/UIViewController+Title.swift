@@ -21,7 +21,7 @@ extension UIViewController {
         let colorings = appSkin.colorings.navBar
 
         if #available(iOS 13, *) {
-            let titleView = NavigationBarTitleViewSUI(title: appCopyContent.displayName.value)
+            let titleView = NavigationBarTitleViewSUI(title: appCopyContent.displayName.name.value)
 
             let hostingView = UIHostingController(rootView: titleView).view
             hostingView?.backgroundColor = .clear
