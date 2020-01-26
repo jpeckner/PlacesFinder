@@ -13,7 +13,7 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 struct SettingsViewSUI: View {
 
-    @ObservedObject private var viewModel: SettingsViewModelObservable
+    @ObservedObject var viewModel: SettingsViewModelObservable
     private let store: DispatchingStoreProtocol
 
     init(viewModel: SettingsViewModelObservable,
@@ -24,7 +24,7 @@ struct SettingsViewSUI: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.viewModel.sections.value) { sectionViewModel in
+            ForEach(viewModel.value.sections.value) { sectionViewModel in
                 Section(header: self.header(sectionViewModel)) {
                     ForEach(sectionViewModel.cells) { cellViewModel in
                         SettingsCell(viewModel: cellViewModel)

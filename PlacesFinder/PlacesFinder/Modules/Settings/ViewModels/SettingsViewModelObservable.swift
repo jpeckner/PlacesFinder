@@ -10,9 +10,9 @@ import Foundation
 
 @available(iOS 13.0, *)
 class SettingsViewModelObservable: ObservableObject {
-    @Published var viewModel: SettingsViewModel
+    @Published var value: SettingsViewModel
 
     init(viewModel: SettingsViewModel) {
-        self._viewModel = Published(initialValue: viewModel)
+        self._value = Published(initialValue: viewModel)
     }
 }
