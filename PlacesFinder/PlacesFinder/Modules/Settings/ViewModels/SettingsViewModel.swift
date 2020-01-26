@@ -10,26 +10,6 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SettingsCellViewModel {
-    let cellModel: GroupedTableViewCellModel
-    let action: Action
-}
-
-struct SettingsSectionViewModel {
-    enum HeaderType {
-        case plain
-
-        case measurementSystem(
-            currentlyActiveSystem: MeasurementSystem,
-            copyContent: SettingsMeasurementSystemCopyContent
-        )
-    }
-
-    let title: String
-    let headerType: HeaderType
-    let cells: [SettingsCellViewModel]
-}
-
 struct SettingsViewModel {
     let sections: NonEmptyArray<SettingsSectionViewModel>
 }
@@ -42,15 +22,20 @@ extension SettingsViewModel {
         self.sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
-                    title: appCopyContent.settingsHeaders.distanceSectionTitle,
-                    headerType: .measurementSystem(currentlyActiveSystem: searchPreferencesState.distance.system,
-                                                   copyContent: appCopyContent.settingsMeasurementSystem),
+                    headerType: .measurementSystem(
+                        SettingsMeasurementSystemHeaderViewModel(
+                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
+                            currentlyActiveSystem: searchPreferencesState.distance.system,
+                            copyContent: appCopyContent.settingsMeasurementSystem
+                        )
+                    ),
                     cells: searchPreferencesState.distanceCellModels(measurementFormatter)
                 )
             ).appendedWith([
                 SettingsSectionViewModel(
-                    title: appCopyContent.settingsHeaders.sortSectionTitle,
-                    headerType: .plain,
+                    headerType: .plain(
+                        SettingsSectionHeaderViewModel(title: appCopyContent.settingsHeaders.sortSectionTitle)
+                    ),
                     cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
                 ),
             ])
