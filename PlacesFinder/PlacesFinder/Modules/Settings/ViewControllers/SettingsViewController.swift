@@ -90,17 +90,12 @@ extension SettingsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionViewModel = viewModel.sections.value[section]
-        let title = sectionViewModel.title
 
         switch sectionViewModel.headerType {
-        case .plain:
-            let viewModel = SettingsSectionHeaderViewModel(title: title)
+        case let .plain(viewModel):
             return SettingsSectionHeaderView(viewModel: viewModel,
                                              colorings: colorings)
-        case let .measurementSystem(currentlyActiveSystem, copyContent):
-            let viewModel = SettingsMeasurementSystemHeaderViewModel(title: title,
-                                                                     currentlyActiveSystem: currentlyActiveSystem,
-                                                                     copyContent: copyContent)
+        case let .measurementSystem(viewModel):
             return SettingsMeasurementSystemHeaderView(viewModel: viewModel,
                                                        store: store,
                                                        colorings: colorings)
