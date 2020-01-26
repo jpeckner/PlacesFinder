@@ -24,9 +24,9 @@ struct SettingsViewSUI: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.viewModel.sections.value) { section in
-                Section(header: Text(section.title)) {
-                    ForEach(section.cells) { cellViewModel in
+            ForEach(viewModel.viewModel.sections.value) { sectionViewModel in
+                Section(header: self.header(sectionViewModel)) {
+                    ForEach(sectionViewModel.cells) { cellViewModel in
                         SettingsCell(viewModel: cellViewModel)
                             .contentShape(Rectangle())
                             .onTapGesture {
@@ -37,6 +37,66 @@ struct SettingsViewSUI: View {
             }
         }
         .listStyle(GroupedListStyle())
+        .padding(.top, 20.0)
+    }
+
+    private func header(_ sectionViewModel: SettingsSectionViewModel) -> some View {
+        switch sectionViewModel.headerType {
+        case let .plain(viewModel):
+            return AnyView(Text(viewModel.title))
+        case let .measurementSystem(viewModel):
+            return AnyView(SettingsMeasurementSystemHeaderViewSUI(viewModel: viewModel,
+                                                                  store: store))
+        }
+    }
+
+}
+
+@available(iOS 13.0.0, *)
+private struct SettingsMeasurementSystemHeaderViewSUI: View {
+
+    let viewModel: SettingsMeasurementSystemHeaderViewModel
+    let store: DispatchingStoreProtocol
+
+    var body: some View {
+        HStack {
+            Text(viewModel.title)
+
+            Spacer()
+
+            measurementSystemStack
+        }
+    }
+
+    private var measurementSystemStack: some View {
+        HStack {
+            ForEach(0..<viewModel.systemOptions.count) { idx -> AnyView in
+                switch self.viewModel.systemOptions[idx] {
+                case let .selectable(title, selectionAction):
+                    return AnyView(Group {
+                        if idx > 0 {
+                            self.delimeter
+                        }
+
+                        AnyView(Button(title) {
+                            self.store.dispatch(selectionAction)
+                        })
+                    })
+                case let .nonSelectable(title):
+                    return AnyView(Group {
+                        if idx > 0 {
+                            self.delimeter
+                        }
+
+                        AnyView(Text(title))
+                    })
+                }
+            }
+        }
+    }
+
+    private var delimeter: AnyView {
+        return AnyView(Text("|"))
     }
 
 }
@@ -49,7 +109,7 @@ private struct SettingsCell: View {
         static let imageHeight: CGFloat = 24.0
     }
 
-    var viewModel: SettingsCellViewModel
+    let viewModel: SettingsCellViewModel
 
     var body: some View {
         HStack {
