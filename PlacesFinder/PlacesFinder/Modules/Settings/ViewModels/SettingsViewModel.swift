@@ -18,22 +18,28 @@ extension SettingsViewModel {
     init(searchPreferencesState: SearchPreferencesState,
          measurementFormatter: MeasurementFormatterProtocol,
          appCopyContent: AppCopyContent) {
-        self.sections = NonEmptyArray(with:
-            SettingsSectionViewModel(
-                id: 0,
-                title: appCopyContent.settingsHeaders.distanceSectionTitle,
-                headerType: .measurementSystem(currentSystemInState: searchPreferencesState.distance.system,
-                                               copyContent: appCopyContent.settingsMeasurementSystem),
-                cells: searchPreferencesState.distanceCellModels(measurementFormatter)
-            )
-        ).appendedWith([
-            SettingsSectionViewModel(
-                id: 1,
-                title: appCopyContent.settingsHeaders.sortSectionTitle,
-                headerType: .plain,
-                cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
-            ),
-        ])
+        self.sections =
+            NonEmptyArray(with:
+                SettingsSectionViewModel(
+                    id: 0,
+                    headerType: .measurementSystem(
+                        SettingsMeasurementSystemHeaderViewModel(
+                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
+                            currentlyActiveSystem: searchPreferencesState.distance.system,
+                            copyContent: appCopyContent.settingsMeasurementSystem
+                        )
+                    ),
+                    cells: searchPreferencesState.distanceCellModels(measurementFormatter)
+                )
+            ).appendedWith([
+                SettingsSectionViewModel(
+                    id: 1,
+                    headerType: .plain(
+                        SettingsSectionHeaderViewModel(title: appCopyContent.settingsHeaders.sortSectionTitle)
+                    ),
+                    cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
+                ),
+            ])
     }
 
 }
