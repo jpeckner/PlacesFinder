@@ -16,7 +16,6 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
     let rootNavController: UINavigationController
     private let formatter: MeasurementFormatter
     private let store: DispatchingStoreProtocol
-    private var observableViewModel: SettingsViewModelObservable?
 
     init(tabItemProperties: TabItemProperties,
          store: DispatchingStoreProtocol) {
@@ -32,17 +31,31 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
     func loadSettingsView(_ viewModel: SettingsViewModel,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
-        if let observableViewModel = observableViewModel {
-            observableViewModel.viewModel = viewModel
+        if let existingSettingsView: SettingsViewSUI = rootControllerView() {
+            existingSettingsView.viewModel.value = viewModel
             return
         }
 
-        let observable = SettingsViewModelObservable(viewModel: viewModel)
-        observableViewModel = observable
-
-        let settingsView = SettingsViewSUI(viewModel: observable,
+        let settingsView = SettingsViewSUI(viewModel: SettingsViewModelObservable(viewModel: viewModel),
                                            store: store)
-        let hostingController = UIHostingController(rootView: settingsView)
+        setRootController(settingsView,
+                          titleViewModel: titleViewModel,
+                          appSkin: appSkin)
+    }
+
+}
+
+@available(iOS 13.0, *)
+private extension SettingsPresenterSUI {
+
+    func rootControllerView<T: View>() -> T? {
+        return (rootNavController.viewControllers.first as? UIHostingController<T>)?.rootView
+    }
+
+    func setRootController<T: View>(_ view: T,
+                                    titleViewModel: NavigationBarTitleViewModel,
+                                    appSkin: AppSkin) {
+        let hostingController = UIHostingController(rootView: view)
         hostingController.configureTitleView(titleViewModel,
                                              appSkin: appSkin)
         rootNavController.setViewControllers([hostingController], animated: true)
