@@ -6,31 +6,8 @@
 //  Copyright © 2018 Justin Peckner. All rights reserved.
 //
 
-import Shared
 import SwiftDux
 import UIKit
-
-protocol SearchPresenterProtocol: AutoMockable {
-    var rootViewController: UIViewController { get }
-
-    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
-                             titleViewModel: NavigationBarTitleViewModel,
-                             appSkin: AppSkin)
-
-    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
-                                           titleViewModel: NavigationBarTitleViewModel,
-                                           appSkin: AppSkin)
-
-    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
-                                  titleViewModel: NavigationBarTitleViewModel,
-                                  appSkin: AppSkin)
-
-    func loadSearchViews(_ viewModel: SearchLookupViewModel,
-                         detailsViewContext: SearchDetailsViewContext?,
-                         titleViewModel: NavigationBarTitleViewModel,
-                         appSkin: AppSkin,
-                         searchInputBlock: @escaping SearchInputBlock)
-}
 
 class SearchPresenter: SearchPresenterProtocol {
 
@@ -55,7 +32,7 @@ class SearchPresenter: SearchPresenterProtocol {
     func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
                              titleViewModel: NavigationBarTitleViewModel,
                              appSkin: AppSkin) {
-        guard let existingController = existingPrimaryController(ofType: SearchNoInternetViewController.self) else {
+        guard let existingController: SearchNoInternetViewController = existingPrimaryController() else {
             let controller = buildNoInternetViewController(viewModel,
                                                            titleViewModel: titleViewModel,
                                                            appSkin: appSkin)
@@ -72,8 +49,7 @@ class SearchPresenter: SearchPresenterProtocol {
     func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
                                            titleViewModel: NavigationBarTitleViewModel,
                                            appSkin: AppSkin) {
-        guard let existingController = existingPrimaryController(ofType: SearchLocationDisabledViewController.self)
-        else {
+        guard let existingController: SearchLocationDisabledViewController = existingPrimaryController() else {
             let controller = buildLocationServicesDisabledViewController(viewModel,
                                                                          titleViewModel: titleViewModel,
                                                                          appSkin: appSkin)
@@ -90,7 +66,7 @@ class SearchPresenter: SearchPresenterProtocol {
     func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
                                   titleViewModel: NavigationBarTitleViewModel,
                                   appSkin: AppSkin) {
-        guard let existingController = existingPrimaryController(ofType: SearchBackgroundViewController.self) else {
+        guard let existingController: SearchBackgroundViewController = existingPrimaryController() else {
             let controller = buildSearchBackgroundViewController(viewModel,
                                                                  titleViewModel: titleViewModel,
                                                                  appSkin: appSkin)
@@ -128,7 +104,7 @@ class SearchPresenter: SearchPresenterProtocol {
         appSkin: AppSkin,
         searchInputBlock: @escaping SearchInputBlock
     ) -> SearchLookupParentController {
-        guard let existingController = existingPrimaryController(ofType: SearchLookupParentController.self) else {
+        guard let existingController: SearchLookupParentController = existingPrimaryController() else {
             return buildSearchParentViewController(viewModel,
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin,
@@ -171,7 +147,7 @@ class SearchPresenter: SearchPresenterProtocol {
 
 private extension SearchPresenter {
 
-    func existingPrimaryController<T: SearchPrimaryViewController>(ofType: T.Type) -> T? {
+    func existingPrimaryController<T: SearchPrimaryViewController>() -> T? {
         return searchContainerViewController.splitControllers.primaryController as? T
     }
 
