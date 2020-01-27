@@ -29,8 +29,12 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
 
 extension SearchLocationDisabledViewController {
 
-    func configure(_ viewModel: SearchLocationDisabledViewModel) {
-        ctaView.configure(viewModel.ctaViewModel)
+    func configure(_ viewModel: SearchLocationDisabledViewModel,
+                   colorings: SearchCTAViewColorings) {
+        viewColoring = colorings.viewColoring
+
+        ctaView.configure(viewModel.ctaViewModel,
+                          colorings: colorings)
     }
 
 }

@@ -34,7 +34,7 @@ class SettingsPresenter: SettingsPresenterProtocol {
     func loadSettingsView(_ viewModel: SettingsViewModel,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
-        guard let existingController = rootNavController.viewControllers.first as? SettingsViewController else {
+        guard let existingController: SettingsViewController = existingRootController() else {
             let controller = buildSettingsViewController(viewModel,
                                                          titleViewModel: titleViewModel,
                                                          appSkin: appSkin)
@@ -42,7 +42,16 @@ class SettingsPresenter: SettingsPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel)
+        existingController.configure(viewModel,
+                                     colorings: appSkin.colorings.settings)
+    }
+
+}
+
+private extension SettingsPresenter {
+
+    func existingRootController<T: UIViewController>() -> T? {
+        return rootNavController.viewControllers.first as? T
     }
 
 }
@@ -52,9 +61,9 @@ private extension SettingsPresenter {
     func buildSettingsViewController(_ viewModel: SettingsViewModel,
                                      titleViewModel: NavigationBarTitleViewModel,
                                      appSkin: AppSkin) -> SettingsViewController {
-        let controller = SettingsViewController(viewModel: viewModel,
-                                                store: store,
-                                                appSkin: appSkin)
+        let controller = SettingsViewController(store: store,
+                                                viewModel: viewModel,
+                                                colorings: appSkin.colorings.settings)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller
