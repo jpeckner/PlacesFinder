@@ -13,7 +13,7 @@ import UIKit
 class SearchProgressViewController: SingleContentViewController {
 
     private let tableView: UITableView
-    private let gradient: SkeletonGradient
+    private var gradient: SkeletonGradient
 
     init(colorings: SearchProgressViewColorings) {
         self.tableView = UITableView()
@@ -23,6 +23,7 @@ class SearchProgressViewController: SingleContentViewController {
                    viewColoring: colorings.viewColoring)
 
         setupTableView()
+        configure(colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,6 +49,16 @@ class SearchProgressViewController: SingleContentViewController {
 
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
+    }
+
+}
+
+extension SearchProgressViewController {
+
+    func configure(_ colorings: SearchProgressViewColorings) {
+        self.gradient = SkeletonGradient(baseColor: colorings.gradientFill.color)
+
+        tableView.reloadData()
     }
 
 }

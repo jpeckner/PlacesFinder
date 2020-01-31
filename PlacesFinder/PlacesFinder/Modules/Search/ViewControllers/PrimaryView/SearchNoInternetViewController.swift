@@ -11,14 +11,14 @@ import UIKit
 
 class SearchNoInternetViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    private let contentView: SearchMessageView
+    private let messageView: SearchMessageView
 
     init(viewModel: SearchNoInternetViewModel,
          colorings: AppStandardColorings) {
-        self.contentView = SearchMessageView(viewModel: viewModel.messageViewModel,
+        self.messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
                                              colorings: colorings)
 
-        super.init(contentView: contentView,
+        super.init(contentView: messageView,
                    viewColoring: colorings.viewColoring)
     }
 
@@ -34,7 +34,7 @@ extension SearchNoInternetViewController {
                    colorings: AppStandardColorings) {
         viewColoring = colorings.viewColoring
 
-        contentView.configure(viewModel.messageViewModel,
+        messageView.configure(viewModel.messageViewModel,
                               colorings: colorings)
     }
 

@@ -20,7 +20,7 @@ class SearchResultsViewController: SingleContentViewController {
     private weak var delegate: SearchResultsViewControllerDelegate?
     private let store: DispatchingStoreProtocol
     private let refreshAction: Action
-    private let colorings: SearchResultsViewColorings
+    private var colorings: SearchResultsViewColorings
 
     private var viewModel: SearchResultsViewModel {
         didSet {
@@ -50,9 +50,9 @@ class SearchResultsViewController: SingleContentViewController {
                    viewColoring: colorings.viewColoring)
 
         setupTableView()
-        setupRefreshControl(colorings)
         configure(viewModel,
-                  nextRequestAction: nextRequestAction)
+                  nextRequestAction: nextRequestAction,
+                  colorings: colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,12 +70,7 @@ class SearchResultsViewController: SingleContentViewController {
 
         tableView.prefetchDataSource = self
         tableView.allowsSelection = true
-    }
-
-    private func setupRefreshControl(_ colorings: SearchResultsViewColorings) {
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = colorings.refreshControlTint.color
-        tableView.refreshControl = refreshControl
+        tableView.refreshControl = UIRefreshControl()
     }
 
 }
@@ -83,9 +78,13 @@ class SearchResultsViewController: SingleContentViewController {
 extension SearchResultsViewController {
 
     func configure(_ viewModel: SearchResultsViewModel,
-                   nextRequestAction: Action?) {
+                   nextRequestAction: Action?,
+                   colorings: SearchResultsViewColorings) {
         self.viewModel = viewModel
         self.nextRequestAction = nextRequestAction
+        self.colorings = colorings
+
+        tableView.refreshControl?.tintColor = colorings.refreshControlTint.color
     }
 
 }
