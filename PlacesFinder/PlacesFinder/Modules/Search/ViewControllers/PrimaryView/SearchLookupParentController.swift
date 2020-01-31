@@ -10,21 +10,17 @@ import Shared
 import SwiftDux
 import UIKit
 
-typealias SearchInputBlock = (NonEmptyString) -> Void
-
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let searchInputBlock: SearchInputBlock
     private let searchView: SearchLookupView
+    private var viewModel: SearchLookupViewModel
 
     init(store: DispatchingStoreProtocol,
-         appSkin: AppSkin,
          viewModel: SearchLookupViewModel,
-         searchInputBlock: @escaping SearchInputBlock) {
+         appSkin: AppSkin) {
         self.store = store
-        self.searchInputBlock = searchInputBlock
-
+        self.viewModel = viewModel
         self.searchView = SearchLookupView(searchInputViewModel: viewModel.searchInputViewModel,
                                            searchInputColorings: appSkin.colorings.searchInput)
 
@@ -53,7 +49,7 @@ extension SearchLookupParentController: SearchResultsViewControllerDelegate {
 extension SearchLookupParentController: SearchLookupViewDelegate {
 
     func searchView(_ searchView: SearchLookupView, didInputText text: NonEmptyString) {
-        searchInputBlock(text)
+        viewModel.lookupBlock(text)
     }
 
 }
@@ -62,7 +58,8 @@ extension SearchLookupParentController {
 
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
-        viewColoring = appSkin.colorings.standard.viewColoring
+        self.viewColoring = appSkin.colorings.standard.viewColoring
+        self.viewModel = viewModel
 
         searchView.configure(viewModel.searchInputViewModel,
                              colorings: appSkin.colorings.searchInput)

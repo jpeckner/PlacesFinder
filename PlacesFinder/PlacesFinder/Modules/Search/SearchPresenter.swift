@@ -92,12 +92,10 @@ class SearchPresenter: SearchPresenterProtocol {
     func loadSearchViews(_ viewModel: SearchLookupViewModel,
                          detailsViewContext: SearchDetailsViewContext?,
                          titleViewModel: NavigationBarTitleViewModel,
-                         appSkin: AppSkin,
-                         searchInputBlock: @escaping SearchInputBlock) {
+                         appSkin: AppSkin) {
         let lookupController = loadOrBuildLookupController(viewModel,
                                                            titleViewModel: titleViewModel,
-                                                           appSkin: appSkin,
-                                                           searchInputBlock: searchInputBlock)
+                                                           appSkin: appSkin)
         let secondaryController = loadOrBuildSecondaryController(detailsViewContext,
                                                                  appSkin: appSkin)
 
@@ -110,14 +108,12 @@ class SearchPresenter: SearchPresenterProtocol {
     private func loadOrBuildLookupController(
         _ viewModel: SearchLookupViewModel,
         titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin,
-        searchInputBlock: @escaping SearchInputBlock
+        appSkin: AppSkin
     ) -> SearchLookupParentController {
         guard let existingController: SearchLookupParentController = existingPrimaryController() else {
             return buildSearchParentViewController(viewModel,
                                                    titleViewModel: titleViewModel,
-                                                   appSkin: appSkin,
-                                                   searchInputBlock: searchInputBlock)
+                                                   appSkin: appSkin)
         }
 
         existingController.configure(viewModel,
@@ -206,13 +202,11 @@ private extension SearchPresenter {
     func buildSearchParentViewController(
         _ viewModel: SearchLookupViewModel,
         titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin,
-        searchInputBlock: @escaping SearchInputBlock
+        appSkin: AppSkin
     ) -> SearchLookupParentController {
         let controller = SearchLookupParentController(store: store,
-                                                      appSkin: appSkin,
                                                       viewModel: viewModel,
-                                                      searchInputBlock: searchInputBlock)
+                                                      appSkin: appSkin)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         controller.navigationItem.backBarButtonItem = appSkin.backButtonItem
