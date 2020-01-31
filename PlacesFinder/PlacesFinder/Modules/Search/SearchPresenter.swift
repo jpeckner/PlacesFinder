@@ -43,7 +43,10 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel)
+        existingController.configure(viewModel,
+                                     colorings: appSkin.colorings.standard)
+        existingController.configureTitleView(titleViewModel,
+                                              appSkin: appSkin)
     }
 
     func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
@@ -60,7 +63,10 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel)
+        existingController.configure(viewModel,
+                                     colorings: appSkin.colorings.searchCTA)
+        existingController.configureTitleView(titleViewModel,
+                                              appSkin: appSkin)
     }
 
     func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
@@ -77,7 +83,10 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel)
+        existingController.configure(viewModel,
+                                     appSkin: appSkin)
+        existingController.configureTitleView(titleViewModel,
+                                              appSkin: appSkin)
     }
 
     func loadSearchViews(_ viewModel: SearchLookupViewModel,
@@ -113,6 +122,8 @@ class SearchPresenter: SearchPresenterProtocol {
 
         existingController.configure(viewModel,
                                      appSkin: appSkin)
+        existingController.configureTitleView(titleViewModel,
+                                              appSkin: appSkin)
         return existingController
     }
 
@@ -139,7 +150,8 @@ class SearchPresenter: SearchPresenterProtocol {
                                                     appSkin: appSkin)
         }
 
-        controller.configure(viewModel)
+        controller.configure(viewModel,
+                             appSkin: appSkin)
         return controller
     }
 
@@ -163,7 +175,7 @@ private extension SearchPresenter {
                                        titleViewModel: NavigationBarTitleViewModel,
                                        appSkin: AppSkin) -> SearchNoInternetViewController {
         let controller = SearchNoInternetViewController(viewModel: viewModel,
-                                                        appSkin: appSkin)
+                                                        colorings: appSkin.colorings.standard)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller
@@ -213,8 +225,8 @@ private extension SearchPresenter {
     ) -> SearchDetailsViewController {
         return SearchDetailsViewController(store: store,
                                            removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
-                                           appSkin: appSkin,
-                                           viewModel: viewModel)
+                                           viewModel: viewModel,
+                                           appSkin: appSkin)
     }
 
 }

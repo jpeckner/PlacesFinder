@@ -61,8 +61,10 @@ class SearchInstructionsView: UIView {
 
 extension SearchInstructionsView {
 
-    func configure(_ viewModel: SearchInstructionsViewModel) {
-        staticInfoView.configure(viewModel.infoViewModel)
+    func configure(_ viewModel: SearchInstructionsViewModel,
+                   colorings: AppStandardColorings) {
+        staticInfoView.configure(viewModel.infoViewModel,
+                                 colorings: colorings)
         resultsSourceView.configure(viewModel)
     }
 

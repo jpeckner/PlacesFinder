@@ -105,8 +105,10 @@ extension SearchLookupView: SearchChildContainerViewDelegate {
 
 extension SearchLookupView {
 
-    func configure(_ viewModel: SearchInputViewModel) {
-        searchInputView.configure(viewModel)
+    func configure(_ viewModel: SearchInputViewModel,
+                   colorings: SearchInputViewColorings) {
+        searchInputView.configure(viewModel,
+                                  colorings: colorings)
     }
 
     func setChildView(_ childView: UIView) {

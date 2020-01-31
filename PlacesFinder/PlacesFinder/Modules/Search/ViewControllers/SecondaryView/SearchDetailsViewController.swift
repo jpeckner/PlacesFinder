@@ -14,46 +14,31 @@ class SearchDetailsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
     private let removeDetailedEntityAction: Action
-    private let colorings: SearchDetailsViewColorings
-    private var viewModel: SearchDetailsViewModel {
-        didSet {
-            titleLabel.text = viewModel.placeName
-            titleLabel.sizeToFit()
-
-            UIView.animate(
-                withDuration: 0,
-                animations: {
-                    self.tableView.reloadData()
-                }, completion: { _ in
-                    self.tableView.scrollToTop(animated: true)
-                }
-            )
-        }
-    }
+    private var viewModel: SearchDetailsViewModel
+    private var colorings: SearchDetailsViewColorings
 
     private let tableView: UITableView
     private let titleLabel: StyledLabel
 
     init(store: DispatchingStoreProtocol,
          removeDetailedEntityAction: Action,
-         appSkin: AppSkin,
-         viewModel: SearchDetailsViewModel) {
+         viewModel: SearchDetailsViewModel,
+         appSkin: AppSkin) {
         self.store = store
         self.removeDetailedEntityAction = removeDetailedEntityAction
-        self.colorings = appSkin.colorings.searchDetails
         self.viewModel = viewModel
+        self.colorings = appSkin.colorings.searchDetails
 
         self.tableView = UITableView()
-        self.titleLabel = StyledLabel(textStyleClass: .navBarTitle,
-                                      textColoring: appSkin.colorings.navBar.titleTextColoring,
-                                      numberOfLines: 1)
+        self.titleLabel = StyledLabel(numberOfLines: 1)
 
         super.init(contentView: tableView,
                    viewColoring: colorings.viewColoring)
 
         setupTitleView()
         setupTableView()
-        configure(viewModel)
+        configure(viewModel,
+                  appSkin: appSkin)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -94,8 +79,26 @@ extension SearchDetailsViewController {
 
 extension SearchDetailsViewController {
 
-    func configure(_ viewModel: SearchDetailsViewModel) {
+    func configure(_ viewModel: SearchDetailsViewModel,
+                   appSkin: AppSkin) {
+        self.colorings = appSkin.colorings.searchDetails
         self.viewModel = viewModel
+
+        viewColoring = colorings.viewColoring
+
+        titleLabel.configure(.navBarTitle,
+                             textColoring: appSkin.colorings.navBar.titleTextColoring)
+        titleLabel.text = viewModel.placeName
+        titleLabel.sizeToFit()
+
+        UIView.animate(
+            withDuration: 0,
+            animations: {
+                self.tableView.reloadData()
+            }, completion: { _ in
+                self.tableView.scrollToTop(animated: true)
+            }
+        )
     }
 
 }

@@ -25,8 +25,8 @@ class SearchCTAView: UIView {
 
         setupSubviews()
         setupConstraints()
-        configure(viewModel)
-        setupStyling(colorings)
+        configure(viewModel,
+                  colorings: colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,21 +59,20 @@ class SearchCTAView: UIView {
         }
     }
 
-    private func setupStyling(_ colorings: SearchCTAViewColorings) {
-        ctaButton.configure(.ctaButton,
-                            textColoring: colorings.ctaTextColoring)
-    }
-
 }
 
 extension SearchCTAView {
 
-    func configure(_ viewModel: SearchCTAViewModel) {
-        staticInfoView.configure(viewModel.infoViewModel)
+    func configure(_ viewModel: SearchCTAViewModel,
+                   colorings: SearchCTAViewColorings) {
+        staticInfoView.configure(viewModel.infoViewModel,
+                                 colorings: colorings)
 
         if let ctaBlock = viewModel.ctaBlock {
             ctaButton.touchUpInsideCallback = ctaBlock
             ctaButton.setTitle(viewModel.ctaTitle, for: .normal)
+            ctaButton.configure(.ctaButton,
+                                textColoring: colorings.ctaTextColoring)
             ctaButton.isHidden = false
         } else {
             ctaButton.isHidden = true

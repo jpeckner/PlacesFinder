@@ -13,29 +13,26 @@ import UIKit
 class SettingsViewController: SingleContentViewController {
 
     private let store: DispatchingStoreProtocol
-    private let colorings: SettingsViewColorings
+    private var viewModel: SettingsViewModel
+    private var colorings: SettingsViewColorings
+
     private let tableView: GroupedTableView
 
-    private var viewModel: SettingsViewModel {
-        didSet {
-            tableView.configure(viewModel.tableModel)
-        }
-    }
-
-    init(viewModel: SettingsViewModel,
-         store: DispatchingStoreProtocol,
-         appSkin: AppSkin) {
+    init(store: DispatchingStoreProtocol,
+         viewModel: SettingsViewModel,
+         colorings: SettingsViewColorings) {
         self.viewModel = viewModel
         self.store = store
-        self.colorings = appSkin.colorings.settings
+        self.colorings = colorings
 
         self.tableView = GroupedTableView(tableModel: viewModel.tableModel)
 
         super.init(contentView: tableView,
-                   viewColoring: appSkin.colorings.settings.viewColoring)
+                   viewColoring: colorings.viewColoring)
 
         setupTableView()
-        configure(viewModel)
+        configure(viewModel,
+                  colorings: colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,8 +49,14 @@ class SettingsViewController: SingleContentViewController {
 
 extension SettingsViewController {
 
-    func configure(_ viewModel: SettingsViewModel) {
+    func configure(_ viewModel: SettingsViewModel,
+                   colorings: SettingsViewColorings) {
+        self.colorings = colorings
         self.viewModel = viewModel
+
+        viewColoring = colorings.viewColoring
+
+        tableView.configure(viewModel.tableModel)
     }
 
 }
@@ -63,7 +66,8 @@ extension SettingsViewController: UITableViewDelegate {
     // MARK: Configure cells
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.textLabel?.configure(.cellText, textColoring: colorings.cellColorings.textColoring)
+        cell.textLabel?.configure(.cellText,
+                                  textColoring: colorings.cellColorings.textColoring)
 
         cell.makeSeparatorFullWidth()
         cell.makeTransparent()
