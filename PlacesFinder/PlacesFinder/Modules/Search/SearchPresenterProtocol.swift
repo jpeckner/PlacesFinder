@@ -27,6 +27,5 @@ protocol SearchPresenterProtocol: AutoMockable {
     func loadSearchViews(_ viewModel: SearchLookupViewModel,
                          detailsViewContext: SearchDetailsViewContext?,
                          titleViewModel: NavigationBarTitleViewModel,
-                         appSkin: AppSkin,
-                         searchInputBlock: @escaping SearchInputBlock)
+                         appSkin: AppSkin)
 }

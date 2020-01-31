@@ -101,17 +101,17 @@ private extension SearchCoordinator {
                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 let viewModel = SearchLookupViewModel(searchState: state.searchState,
                                                       copyContent: appCopyContent.searchInput,
-                                                      child: child)
+                                                      child: child) { [weak self] in
+                    self?.submitInitalSearchRequest($0,
+                                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
+                }
                 let detailsContext = detailsViewContext(state,
                                                         appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,
                                           detailsViewContext: detailsContext,
                                           titleViewModel: titleViewModel,
-                                          appSkin: appSkin) { [weak self] in
-                    self?.submitInitalSearchRequest($0,
-                                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
-                }
+                                          appSkin: appSkin)
             }
         }
     }

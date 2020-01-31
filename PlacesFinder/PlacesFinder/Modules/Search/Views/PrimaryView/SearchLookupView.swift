@@ -15,11 +15,18 @@ protocol SearchLookupViewDelegate: AnyObject {
 
 class SearchLookupView: UIView {
 
+    private enum TextEditState {
+        case notEditing
+        case editing(previous: String?)
+        case exitedWithReturn
+    }
+
     weak var delegate: SearchLookupViewDelegate?
     private let searchInputView: SearchInputView
     private let inputViewFullHeight: CGFloat
     private let inputViewHeightConstraint: NSLayoutConstraint
     private let childContainerView: SearchChildContainerView
+    private var editState: TextEditState
 
     init(searchInputViewModel: SearchInputViewModel,
          searchInputColorings: SearchInputViewColorings) {
@@ -30,6 +37,8 @@ class SearchLookupView: UIView {
         inputViewHeightConstraint.isActive = true
 
         self.childContainerView = SearchChildContainerView()
+
+        self.editState = .notEditing
 
         super.init(frame: .zero)
 
@@ -64,14 +73,26 @@ class SearchLookupView: UIView {
 extension SearchLookupView: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        editState = .editing(previous: textField.text)
         handleTextFieldEditingState(true)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        switch editState {
+        case let .editing(previous):
+            textField.text = previous
+        case .exitedWithReturn:
+            break
+        case .notEditing:
+            AssertionHandler.performAssertionFailure { "Unexpected editState value: \(editState)" }
+        }
+
+        editState = .notEditing
         handleTextFieldEditingState(false)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        editState = .exitedWithReturn
         textField.resignFirstResponder()
 
         if let text = textField.text,
