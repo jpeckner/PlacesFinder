@@ -11,14 +11,14 @@ import UIKit
 
 class SearchInstructionsViewController: SingleContentViewController {
 
-    private let contentView: SearchInstructionsView
+    private let instructionsView: SearchInstructionsView
 
     init(viewModel: SearchInstructionsViewModel,
          colorings: AppStandardColorings) {
-        self.contentView = SearchInstructionsView(viewModel: viewModel,
-                                                  colorings: colorings)
+        self.instructionsView = SearchInstructionsView(viewModel: viewModel,
+                                                       colorings: colorings)
 
-        super.init(contentView: contentView,
+        super.init(contentView: instructionsView,
                    viewColoring: colorings.viewColoring)
     }
 
@@ -34,8 +34,8 @@ extension SearchInstructionsViewController {
                    colorings: AppStandardColorings) {
         viewColoring = colorings.viewColoring
 
-        contentView.configure(viewModel,
-                              colorings: colorings)
+        instructionsView.configure(viewModel,
+                                   colorings: colorings)
     }
 
 }

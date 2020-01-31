@@ -11,10 +11,12 @@ import UIKit
 
 class SearchNoResultsFoundViewController: SingleContentViewController {
 
+    private let messageView: SearchMessageView
+
     init(viewModel: SearchNoResultsFoundViewModel,
          colorings: AppStandardColorings) {
-        let messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
-                                            colorings: colorings)
+        self.messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
+                                             colorings: colorings)
 
         super.init(contentView: messageView,
                    viewColoring: colorings.viewColoring)
@@ -22,6 +24,16 @@ class SearchNoResultsFoundViewController: SingleContentViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchNoResultsFoundViewController {
+
+    func configure(_ viewModel: SearchNoResultsFoundViewModel,
+                   colorings: AppStandardColorings) {
+        messageView.configure(viewModel.messageViewModel,
+                              colorings: colorings)
     }
 
 }
