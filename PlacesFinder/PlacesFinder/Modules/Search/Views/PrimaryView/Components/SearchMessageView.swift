@@ -51,8 +51,10 @@ class SearchMessageView: UIView {
 
 extension SearchMessageView {
 
-    func configure(_ viewModel: SearchMessageViewModel) {
-        staticInfoView.configure(viewModel.infoViewModel)
+    func configure(_ viewModel: SearchMessageViewModel,
+                   colorings: AppStandardColorings) {
+        staticInfoView.configure(viewModel.infoViewModel,
+                                 colorings: colorings)
     }
 
 }

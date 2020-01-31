@@ -14,12 +14,12 @@ class SearchNoInternetViewController: SingleContentViewController, SearchPrimary
     private let contentView: SearchMessageView
 
     init(viewModel: SearchNoInternetViewModel,
-         appSkin: AppSkin) {
+         colorings: AppStandardColorings) {
         self.contentView = SearchMessageView(viewModel: viewModel.messageViewModel,
-                                             colorings: appSkin.colorings.standard)
+                                             colorings: colorings)
 
         super.init(contentView: contentView,
-                   viewColoring: appSkin.colorings.standard.viewColoring)
+                   viewColoring: colorings.viewColoring)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,8 +30,12 @@ class SearchNoInternetViewController: SingleContentViewController, SearchPrimary
 
 extension SearchNoInternetViewController {
 
-    func configure(_ viewModel: SearchNoInternetViewModel) {
-        contentView.configure(viewModel.messageViewModel)
+    func configure(_ viewModel: SearchNoInternetViewModel,
+                   colorings: AppStandardColorings) {
+        viewColoring = colorings.viewColoring
+
+        contentView.configure(viewModel.messageViewModel,
+                              colorings: colorings)
     }
 
 }

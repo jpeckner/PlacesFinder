@@ -62,7 +62,10 @@ extension SearchLookupParentController {
 
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
-        searchView.configure(viewModel.searchInputViewModel)
+        viewColoring = appSkin.colorings.standard.viewColoring
+
+        searchView.configure(viewModel.searchInputViewModel,
+                             colorings: appSkin.colorings.searchInput)
 
         activateChildView(viewModel,
                           appSkin: appSkin)

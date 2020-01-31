@@ -37,9 +37,15 @@ class SearchBackgroundViewController: SingleContentViewController, SearchPrimary
 
 extension SearchBackgroundViewController {
 
-    func configure(_ viewModel: SearchBackgroundViewModel) {
-        contentView.configure(viewModel.inputViewModel)
-        childController.configure(viewModel.instructionsViewModel)
+    func configure(_ viewModel: SearchBackgroundViewModel,
+                   appSkin: AppSkin) {
+        viewColoring = appSkin.colorings.standard.viewColoring
+
+        contentView.configure(viewModel.inputViewModel,
+                              colorings: appSkin.colorings.searchInput)
+
+        childController.configure(viewModel.instructionsViewModel,
+                                  colorings: appSkin.colorings.standard)
     }
 
 }

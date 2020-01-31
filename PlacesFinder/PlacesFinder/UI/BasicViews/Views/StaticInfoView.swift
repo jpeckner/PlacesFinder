@@ -19,16 +19,15 @@ class StaticInfoView: UIView {
     init(viewModel: StaticInfoViewModel,
          colorings: AppStandardColoringsProtocol) {
         self.imageView = UIImageView()
-        self.titleLabel = StyledLabel(textStyleClass: .title,
-                                      textColoring: colorings.titleTextColoring)
-        self.descriptionLabel = StyledLabel(textStyleClass: .body,
-                                            textColoring: colorings.bodyTextColoring)
+        self.titleLabel = StyledLabel()
+        self.descriptionLabel = StyledLabel()
 
         super.init(frame: .zero)
 
         setupSubviews()
         setupConstraints()
-        configure(viewModel)
+        configure(viewModel,
+                  colorings: colorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -74,10 +73,17 @@ class StaticInfoView: UIView {
 
 extension StaticInfoView {
 
-    func configure(_ viewModel: StaticInfoViewModel) {
+    func configure(_ viewModel: StaticInfoViewModel,
+                   colorings: AppStandardColoringsProtocol) {
         imageView.image = viewModel.image
+
         titleLabel.text = viewModel.title
+        titleLabel.configure(.title,
+                             textColoring: colorings.titleTextColoring)
+
         descriptionLabel.text = viewModel.description
+        descriptionLabel.configure(.body,
+                                   textColoring: colorings.bodyTextColoring)
     }
 
 }

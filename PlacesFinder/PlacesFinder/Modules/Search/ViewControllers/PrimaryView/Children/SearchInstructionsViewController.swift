@@ -30,8 +30,12 @@ class SearchInstructionsViewController: SingleContentViewController {
 
 extension SearchInstructionsViewController {
 
-    func configure(_ viewModel: SearchInstructionsViewModel) {
-        contentView.configure(viewModel)
+    func configure(_ viewModel: SearchInstructionsViewModel,
+                   colorings: AppStandardColorings) {
+        viewColoring = colorings.viewColoring
+
+        contentView.configure(viewModel,
+                              colorings: colorings)
     }
 
 }
