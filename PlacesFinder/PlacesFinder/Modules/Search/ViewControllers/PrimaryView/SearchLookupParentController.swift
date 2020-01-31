@@ -68,46 +68,83 @@ extension SearchLookupParentController {
                           appSkin: appSkin)
     }
 
+    // swiftlint:disable function_body_length
     private func activateChildView(_ lookupViewModel: SearchLookupViewModel,
                                    appSkin: AppSkin) {
         switch lookupViewModel.child {
         case let .instructions(viewModel):
-            setChildIfNotPresent(SearchInstructionsViewController.self) {
-                SearchInstructionsViewController(viewModel: viewModel,
-                                                 colorings: appSkin.colorings.standard)
-            }
-        case .progress:
-            setChildIfNotPresent(SearchProgressViewController.self) {
-                SearchProgressViewController(colorings: appSkin.colorings.searchProgress)
-            }
-        case let .results(viewModel, refreshAction, nextRequestAction):
-            let resultsController = setChildIfNotPresent(SearchResultsViewController.self) {
-                SearchResultsViewController(delegate: self,
-                                            store: store,
-                                            refreshAction: refreshAction,
-                                            colorings: appSkin.colorings.searchResults,
-                                            viewModel: viewModel,
-                                            nextRequestAction: nextRequestAction)
+            let colorings = appSkin.colorings.standard
+            guard let existingController: SearchInstructionsViewController = existingChildController() else {
+                setSingleChildController(
+                    SearchInstructionsViewController(viewModel: viewModel,
+                                                     colorings: colorings)
+                )
+                return
             }
 
-            resultsController.configure(viewModel,
-                                        nextRequestAction: nextRequestAction)
+            existingController.configure(viewModel,
+                                         colorings: colorings)
+        case .progress:
+            let colorings = appSkin.colorings.searchProgress
+            guard let existingController: SearchProgressViewController = existingChildController() else {
+                setSingleChildController(
+                    SearchProgressViewController(colorings: colorings)
+                )
+                return
+            }
+
+            existingController.configure(colorings)
+        case let .results(viewModel, refreshAction, nextRequestAction):
+            let colorings = appSkin.colorings.searchResults
+            guard let existingController: SearchResultsViewController = existingChildController() else {
+                setSingleChildController(
+                    SearchResultsViewController(delegate: self,
+                                                store: store,
+                                                refreshAction: refreshAction,
+                                                colorings: colorings,
+                                                viewModel: viewModel,
+                                                nextRequestAction: nextRequestAction)
+                )
+                return
+            }
+
+            existingController.configure(viewModel,
+                                         nextRequestAction: nextRequestAction,
+                                         colorings: colorings)
         case let .noResults(viewModel):
-            setChildIfNotPresent(SearchNoResultsFoundViewController.self) {
-                SearchNoResultsFoundViewController(viewModel: viewModel,
-                                                   colorings: appSkin.colorings.standard)
+            let colorings = appSkin.colorings.standard
+            guard let existingController: SearchNoResultsFoundViewController = existingChildController() else {
+                setSingleChildController(
+                    SearchNoResultsFoundViewController(viewModel: viewModel,
+                                                       colorings: colorings)
+                )
+                return
             }
+
+            existingController.configure(viewModel,
+                                         colorings: colorings)
         case let .failure(viewModel):
-            setChildIfNotPresent(SearchRetryViewController.self) {
-                SearchRetryViewController(viewModel: viewModel,
-                                          colorings: appSkin.colorings.searchCTA)
+            let colorings = appSkin.colorings.searchCTA
+            guard let existingController: SearchRetryViewController = existingChildController() else {
+                setSingleChildController(
+                    SearchRetryViewController(viewModel: viewModel,
+                                              colorings: colorings)
+                )
+                return
             }
+
+            existingController.configure(viewModel,
+                                         colorings: colorings)
         }
     }
+    // swiftlint:enable function_body_length
 
-    @discardableResult
-    private func setChildIfNotPresent<T: UIViewController>(_ type: T.Type, initBlock: () -> T) -> T {
-        return setSingleChildIfNotPresent(type, initBlock: initBlock) {
+    private func existingChildController<T: UIViewController>() -> T? {
+        return firstChild as? T
+    }
+
+    private func setSingleChildController(_ controller: UIViewController) {
+        setSingleChildController(controller) {
             searchView.setChildView($0)
         }
     }

@@ -11,21 +11,21 @@ import UIKit
 
 class SearchBackgroundViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    private let contentView: SearchLookupView
+    private let lookupView: SearchLookupView
     private let childController: SearchInstructionsViewController
 
     init(viewModel: SearchBackgroundViewModel,
          appSkin: AppSkin) {
-        self.contentView = SearchLookupView(searchInputViewModel: viewModel.inputViewModel,
-                                            searchInputColorings: appSkin.colorings.searchInput)
+        self.lookupView = SearchLookupView(searchInputViewModel: viewModel.inputViewModel,
+                                           searchInputColorings: appSkin.colorings.searchInput)
         self.childController = SearchInstructionsViewController(viewModel: viewModel.instructionsViewModel,
                                                                 colorings: appSkin.colorings.standard)
 
-        super.init(contentView: contentView,
+        super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
         setSingleChildController(childController) {
-            contentView.setChildView($0)
+            lookupView.setChildView($0)
         }
     }
 
@@ -41,8 +41,8 @@ extension SearchBackgroundViewController {
                    appSkin: AppSkin) {
         viewColoring = appSkin.colorings.standard.viewColoring
 
-        contentView.configure(viewModel.inputViewModel,
-                              colorings: appSkin.colorings.searchInput)
+        lookupView.configure(viewModel.inputViewModel,
+                             colorings: appSkin.colorings.searchInput)
 
         childController.configure(viewModel.instructionsViewModel,
                                   colorings: appSkin.colorings.standard)
