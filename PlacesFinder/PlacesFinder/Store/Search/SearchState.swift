@@ -41,7 +41,7 @@ enum SearchLoadState: Equatable {
 
 struct SearchState: Equatable {
     let loadState: SearchLoadState
-    let detailedEntity: SearchDetailsModel?
+    let detailedEntity: SearchEntityModel?
 }
 
 extension SearchState {
@@ -116,9 +116,9 @@ enum SearchReducer {
 
             return SearchState(loadState: loadState,
                                detailedEntity: currentState.detailedEntity)
-        case let .detailedEntity(detailsModel):
+        case let .detailedEntity(entity):
             return SearchState(loadState: currentState.loadState,
-                               detailedEntity: detailsModel)
+                               detailedEntity: entity)
         case .removeDetailedEntity:
             return SearchState(loadState: currentState.loadState,
                                detailedEntity: nil)

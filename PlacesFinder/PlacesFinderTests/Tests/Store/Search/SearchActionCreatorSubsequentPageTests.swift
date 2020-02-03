@@ -25,8 +25,8 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
 
         let stubParams = PlaceLookupParams.stubValue()
         let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
-        let stubDetailsViewModel = SearchDetailsModel.stubValue()
-        let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(named: "previousResult"))
+        let stubDetailsViewModel = SearchEntityModel.stubValue()
+        let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
@@ -184,9 +184,9 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                     context("and search results were found") {
 
                         let stubReceivedEntityModels = [
-                            SearchEntityModel.stubValue(named: "stubEntityA"),
-                            SearchEntityModel.stubValue(named: "stubEntityB"),
-                            SearchEntityModel.stubValue(named: "stubEntityC"),
+                            SearchEntityModel.stubValue(name: "stubEntityA"),
+                            SearchEntityModel.stubValue(name: "stubEntityB"),
+                            SearchEntityModel.stubValue(name: "stubEntityC"),
                         ]
 
                         beforeEach {

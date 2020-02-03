@@ -314,7 +314,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinSearchInputBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
@@ -340,7 +340,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinSearchInputBlockCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled) == true
                         }
 
                         it("dispatches AppRouterAction.clearLink") {

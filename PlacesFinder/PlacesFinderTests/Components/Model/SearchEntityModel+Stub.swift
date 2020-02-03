@@ -23,54 +23,26 @@ extension SearchRatings {
 
 }
 
-extension SearchSummaryModel {
-
-    static func stubValue(name: NonEmptyString = NonEmptyString.stubValue("Entity Name"),
-                          ratings: SearchRatings = .stubValue(),
-                          pricing: PlaceLookupPricing? = .stubValue(),
-                          image: URL = .stubValue()) -> SearchSummaryModel {
-        return SearchSummaryModel(name: name,
-                                  ratings: ratings,
-                                  pricing: pricing,
-                                  image: image)
-    }
-
-}
-
-extension SearchDetailsModel {
-
-    static func stubValue(name: NonEmptyString = .stubValue("stubDetailsModelName"),
-                          addressLines: PlaceLookupAddressLines = .stubValue(),
-                          displayPhone: NonEmptyString? = .stubValue("stubDisplayPhone"),
-                          dialablePhone: NonEmptyString? = .stubValue("stubDialablePhone"),
-                          url: URL = .stubValue(),
-                          ratings: SearchRatings = .stubValue(),
-                          pricing: PlaceLookupPricing? = .stubValue(),
-                          coordinate: PlaceLookupCoordinate? = .stubValue(),
-                          image: URL = .stubValue()) -> SearchDetailsModel {
-        return SearchDetailsModel(name: name,
-                                  addressLines: addressLines,
-                                  displayPhone: displayPhone,
-                                  dialablePhone: dialablePhone,
-                                  url: url,
-                                  ratings: ratings,
-                                  pricing: pricing,
-                                  coordinate: coordinate,
-                                  image: image)
-    }
-
-}
-
 extension SearchEntityModel {
 
-    static func stubValue(summaryModel: SearchSummaryModel = .stubValue(),
-                          detailsModel: SearchDetailsModel = .stubValue()) -> SearchEntityModel {
-        return SearchEntityModel(summaryModel: summaryModel,
-                                 detailsModel: detailsModel)
-    }
-
-    static func stubValue(named name: String) -> SearchEntityModel {
-        return SearchEntityModel.stubValue(summaryModel: .stubValue(name: .stubValue(name)))
+    static func stubValue(name: String = "stubName",
+                          url: URL = .stubValue(),
+                          ratings: SearchRatings = .stubValue(),
+                          image: URL = .stubValue(),
+                          addressLines: PlaceLookupAddressLines = .stubValue(),
+                          displayPhone: String? = "stubDisplayPhone",
+                          dialablePhone: String? = "stubDialablePhone",
+                          pricing: PlaceLookupPricing? = .stubValue(),
+                          coordinate: PlaceLookupCoordinate? = .stubValue()) -> SearchEntityModel {
+        return SearchEntityModel(name: NonEmptyString.stubValue(name),
+                                 url: url,
+                                 ratings: ratings,
+                                 image: image,
+                                 addressLines: addressLines,
+                                 displayPhone: displayPhone.map { NonEmptyString.stubValue($0) },
+                                 dialablePhone: dialablePhone.map { NonEmptyString.stubValue($0) },
+                                 pricing: pricing,
+                                 coordinate: coordinate)
     }
 
 }

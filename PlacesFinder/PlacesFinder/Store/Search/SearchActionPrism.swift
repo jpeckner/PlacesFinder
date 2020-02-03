@@ -26,7 +26,7 @@ protocol SearchSubsequentActionPrismProtocol {
 }
 
 protocol SearchDetailsActionPrismProtocol {
-    func detailEntityAction(_ detailsModel: SearchDetailsModel) -> Action
+    func detailEntityAction(_ entity: SearchEntityModel) -> Action
     var removeDetailedEntityAction: Action { get }
 }
 
@@ -82,8 +82,8 @@ extension SearchActionPrism: SearchSubsequentActionPrismProtocol {
 
 extension SearchActionPrism: SearchDetailsActionPrismProtocol {
 
-    func detailEntityAction(_ detailsModel: SearchDetailsModel) -> Action {
-        return SearchAction.detailedEntity(detailsModel)
+    func detailEntityAction(_ entity: SearchEntityModel) -> Action {
+        return SearchAction.detailedEntity(entity)
     }
 
     var removeDetailedEntityAction: Action {

@@ -29,7 +29,7 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
             sorting: stubState.searchPreferencesState.sorting
         )
         let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
-        let stubDetailsViewModel = SearchDetailsModel.stubValue()
+        let stubDetailsViewModel = SearchEntityModel.stubValue()
 
         var mockLocationRequestBlockCalled: Bool!
         var mockLocationRequestReturnValue: LocationRequestResult!
@@ -220,9 +220,9 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                         context("and search results were found") {
 
                             let stubEntityModels = [
-                                SearchEntityModel.stubValue(named: "stubEntityA"),
-                                SearchEntityModel.stubValue(named: "stubEntityB"),
-                                SearchEntityModel.stubValue(named: "stubEntityC"),
+                                SearchEntityModel.stubValue(name: "stubEntityA"),
+                                SearchEntityModel.stubValue(name: "stubEntityB"),
+                                SearchEntityModel.stubValue(name: "stubEntityC"),
                             ]
 
                             beforeEach {

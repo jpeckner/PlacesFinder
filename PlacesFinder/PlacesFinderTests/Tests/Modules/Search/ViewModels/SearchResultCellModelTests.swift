@@ -27,7 +27,7 @@ class SearchResultCellModelTests: QuickSpec {
         }
 
         describe("init(summaryModel:formatter:)") {
-            let stubSummaryModel = SearchSummaryModel.stubValue()
+            let stubSummaryModel = SearchEntityModel.stubValue()
             let stubCopyContent = SearchResultsCopyContent.stubValue()
 
             beforeEach {
