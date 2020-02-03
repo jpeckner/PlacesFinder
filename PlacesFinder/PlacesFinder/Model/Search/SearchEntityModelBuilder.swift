@@ -43,6 +43,7 @@ private extension SearchEntityModel {
             let image = entity.image
         else { return nil }
 
+        self.id = entity.id
         self.name = entity.name
         self.url = entity.url
         self.ratings = ratings

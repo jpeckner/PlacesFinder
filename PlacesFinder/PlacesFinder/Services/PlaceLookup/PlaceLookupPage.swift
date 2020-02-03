@@ -33,7 +33,9 @@ public struct PlaceLookupPricing: Hashable {
     }
 }
 
+// swiftlint:disable identifier_name
 public struct PlaceLookupEntity: Hashable {
+    public let id: NonEmptyString
     public let name: NonEmptyString
     public let addressLines: PlaceLookupAddressLines?
     public let displayPhone: NonEmptyString?
@@ -45,7 +47,8 @@ public struct PlaceLookupEntity: Hashable {
     public let isPermanentlyClosed: Bool?
     public let image: URL?
 
-    public init(name: NonEmptyString,
+    public init(id: NonEmptyString,
+                name: NonEmptyString,
                 addressLines: PlaceLookupAddressLines?,
                 displayPhone: NonEmptyString?,
                 dialablePhone: NonEmptyString?,
@@ -55,6 +58,7 @@ public struct PlaceLookupEntity: Hashable {
                 coordinate: PlaceLookupCoordinate?,
                 isPermanentlyClosed: Bool?,
                 image: URL?) {
+        self.id = id
         self.name = name
         self.addressLines = addressLines
         self.displayPhone = displayPhone
@@ -67,6 +71,7 @@ public struct PlaceLookupEntity: Hashable {
         self.image = image
     }
 }
+// swiftlint:enable identifier_name
 
 public struct PlaceLookupPage: Hashable {
     public let entities: [PlaceLookupEntity]
