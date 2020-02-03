@@ -26,7 +26,7 @@ class SearchReducerTests: QuickSpec {
 
             let stubParams = PlaceLookupParams.stubValue()
             let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
-            let stubDetailsViewModel = SearchDetailsModel.stubValue()
+            let stubDetailsViewModel = SearchEntityModel.stubValue()
             let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
             let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 

@@ -28,48 +28,31 @@ class SearchEntityModelBuilder: SearchEntityModelBuilderProtocol {
 
     func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel? {
         guard let isPermanentlyClosed = entity.isPermanentlyClosed,
-            !isPermanentlyClosed,
-            let summaryModel = SearchSummaryModel(entity: entity)
+            !isPermanentlyClosed
         else { return nil }
 
-        let detailsModel = SearchDetailsModel(summaryModel: summaryModel,
-                                              entity: entity)
-        return SearchEntityModel(
-            summaryModel: summaryModel,
-            detailsModel: detailsModel
-        )
+        return SearchEntityModel(entity: entity)
     }
 
 }
 
-private extension SearchSummaryModel {
+private extension SearchEntityModel {
 
     init?(entity: PlaceLookupEntity) {
         guard let ratings = entity.ratingFields?.searchRatings,
             let image = entity.image
         else { return nil }
 
+        self.id = entity.id
         self.name = entity.name
+        self.url = entity.url
         self.ratings = ratings
-        self.pricing = entity.pricing
         self.image = image
-    }
-
-}
-
-private extension SearchDetailsModel {
-
-    init(summaryModel: SearchSummaryModel,
-         entity: PlaceLookupEntity) {
-        self.name = summaryModel.name
         self.addressLines = entity.addressLines
         self.displayPhone = entity.displayPhone
         self.dialablePhone = entity.dialablePhone
-        self.url = entity.url
-        self.ratings = summaryModel.ratings
-        self.pricing = summaryModel.pricing
+        self.pricing = entity.pricing
         self.coordinate = entity.coordinate
-        self.image = summaryModel.image
     }
 
 }

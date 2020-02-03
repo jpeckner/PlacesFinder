@@ -70,7 +70,9 @@ extension PlaceLookupCoordinate {
 
 extension PlaceLookupEntity {
 
-    static func stubValue(name: NonEmptyString = .stubValue("stubEntityName"),
+    // swiftlint:disable identifier_name
+    static func stubValue(id: NonEmptyString = .stubValue("stubID"),
+                          name: NonEmptyString = .stubValue("stubEntityName"),
                           addressLines: PlaceLookupAddressLines? = .stubValue(),
                           displayPhone: NonEmptyString? = .stubValue("stubDisplayPhone"),
                           dialablePhone: NonEmptyString? = .stubValue("stubDialablePhone"),
@@ -80,7 +82,8 @@ extension PlaceLookupEntity {
                           coordinate: PlaceLookupCoordinate? = .stubValue(),
                           isPermanentlyClosed: Bool? = false,
                           image: URL? = .stubValue()) -> PlaceLookupEntity {
-        return PlaceLookupEntity(name: name,
+        return PlaceLookupEntity(id: id,
+                                 name: name,
                                  addressLines: addressLines,
                                  displayPhone: displayPhone,
                                  dialablePhone: dialablePhone,
@@ -91,6 +94,7 @@ extension PlaceLookupEntity {
                                  isPermanentlyClosed: isPermanentlyClosed,
                                  image: image)
     }
+    // swiftlint:enable identifier_name
 
 }
 

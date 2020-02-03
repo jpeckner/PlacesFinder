@@ -29,7 +29,7 @@ enum SearchAction: Action, Equatable {
         nextRequestToken: PlaceLookupTokenAttemptsContainer?
     )
 
-    case detailedEntity(SearchDetailsModel)
+    case detailedEntity(SearchEntityModel)
 
     case removeDetailedEntity
 

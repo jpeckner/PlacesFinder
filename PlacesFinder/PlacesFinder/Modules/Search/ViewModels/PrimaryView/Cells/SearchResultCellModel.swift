@@ -18,7 +18,7 @@ struct SearchResultCellModel {
 
 extension SearchResultCellModel {
 
-    init(model: SearchSummaryModel,
+    init(model: SearchEntityModel,
          copyFormatter: SearchCopyFormatterProtocol,
          resultsCopyContent: SearchResultsCopyContent) {
         self.name = model.name

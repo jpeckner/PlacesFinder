@@ -104,6 +104,7 @@ extension YelpPageResponse {
             guard let business = $0.value else { return nil }
 
             return PlaceLookupEntity(
+                id: business.id,
                 name: business.name,
                 addressLines: business.location?.value?.placeLookupAddressLines,
                 displayPhone: business.display_phone?.value,
@@ -125,6 +126,7 @@ extension YelpPageResponse {
 // swiftlint:disable identifier_name
 
 private struct YelpBusiness: Decodable {
+    let id: NonEmptyString
     let name: NonEmptyString
     let location: FailableDecodable<YelpLocation>?
     let phone: FailableDecodable<NonEmptyString>?

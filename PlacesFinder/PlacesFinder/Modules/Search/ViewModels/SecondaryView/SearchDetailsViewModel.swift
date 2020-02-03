@@ -26,22 +26,22 @@ struct SearchDetailsViewModel: Equatable {
 
 extension SearchDetailsViewModel {
 
-    init(searchDetailsModel: SearchDetailsModel,
+    init(entity: SearchEntityModel,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          resultsCopyContent: SearchResultsCopyContent) {
-        self.placeName = searchDetailsModel.name.value
+        self.placeName = entity.name.value
         self.sections = [
-            searchDetailsModel.buildInfoSection(urlOpenerService,
-                                                copyFormatter: copyFormatter,
-                                                resultsCopyContent: resultsCopyContent),
-            searchDetailsModel.buildLocationSection(copyFormatter)
+            entity.buildInfoSection(urlOpenerService,
+                                    copyFormatter: copyFormatter,
+                                    resultsCopyContent: resultsCopyContent),
+            entity.buildLocationSection(copyFormatter)
         ].compactMap { $0 }
     }
 
 }
 
-private extension SearchDetailsModel {
+private extension SearchEntityModel {
 
     func buildInfoSection(_ urlOpenerService: URLOpenerServiceProtocol,
                           copyFormatter: SearchCopyFormatterProtocol,
@@ -93,7 +93,7 @@ private extension SearchDetailsModel {
 
 }
 
-private extension SearchDetailsModel {
+private extension SearchEntityModel {
 
     func buildLocationSection(_ copyFormatter: SearchCopyFormatterProtocol) -> SearchDetailsViewModel.Section? {
         guard let coordinate = coordinate else { return nil }

@@ -9,7 +9,7 @@
 import Foundation
 import Shared
 
-struct SearchInputViewModel {
+struct SearchInputViewModel: Equatable {
     let inputKeywords: NonEmptyString?
     let placeholder: String
     let cancelButtonTitle: String
