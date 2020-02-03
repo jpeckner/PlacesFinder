@@ -154,10 +154,10 @@ private extension SearchCoordinator {
     func resultViewModels(_ allEntities: NonEmptyArray<SearchEntityModel>,
                           resultsCopyContent: SearchResultsCopyContent) -> SearchResultsViewModel {
         let resultViewModels: NonEmptyArray<SearchResultViewModel> = allEntities.withTransformation {
-            let cellModel = SearchResultCellModel(model: $0.summaryModel,
+            let cellModel = SearchResultCellModel(model: $0,
                                                   copyFormatter: copyFormatter,
                                                   resultsCopyContent: resultsCopyContent)
-            let detailEntityAction = actionPrism.detailEntityAction($0.detailsModel)
+            let detailEntityAction = actionPrism.detailEntityAction($0)
 
             return SearchResultViewModel(cellModel: cellModel,
                                          detailEntityAction: detailEntityAction)
@@ -169,13 +169,13 @@ private extension SearchCoordinator {
     func detailsViewContext(_ state: AppState,
                             appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
         return state.searchState.detailedEntity.map {
-            .detailedEntity(SearchDetailsViewModel(searchDetailsModel: $0,
+            .detailedEntity(SearchDetailsViewModel(entity: $0,
                                                    urlOpenerService: urlOpenerService,
                                                    copyFormatter: copyFormatter,
                                                    resultsCopyContent: appCopyContent.searchResults))
         }
         ?? state.searchState.entities?.value.first.map {
-            .firstListedEntity(SearchDetailsViewModel(searchDetailsModel: $0.detailsModel,
+            .firstListedEntity(SearchDetailsViewModel(entity: $0,
                                                       urlOpenerService: urlOpenerService,
                                                       copyFormatter: copyFormatter,
                                                       resultsCopyContent: appCopyContent.searchResults))

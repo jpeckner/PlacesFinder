@@ -98,25 +98,17 @@ class SearchEntityModelBuilderTests: QuickSpec {
                     result = builder.buildEntityModel(stubEntity)
                 }
 
-                it("returns the entity's values in SearchSummaryModel") {
-                    expect(result?.summaryModel) == SearchSummaryModel(name: .stubValue("stubEntityName"),
-                                                                       ratings: .stubValue(average: .five,
-                                                                                           numRatings: 123),
-                                                                       pricing: .stubValue(),
-                                                                       image: .stubValue())
-                }
-
-                it("returns the entity's values in SearchDetailsModel") {
-                    expect(result?.detailsModel) == SearchDetailsModel(name: .stubValue("stubEntityName"),
-                                                                       addressLines: .stubValue(),
-                                                                       displayPhone: .stubValue("stubDisplayPhone"),
-                                                                       dialablePhone: .stubValue("stubDialablePhone"),
-                                                                       url: .stubValue(),
-                                                                       ratings: .stubValue(average: .five,
-                                                                                           numRatings: 123),
-                                                                       pricing: .stubValue(),
-                                                                       coordinate: .stubValue(),
-                                                                       image: .stubValue())
+                it("returns the entity's values in SearchEntityModel") {
+                    expect(result) == SearchEntityModel(id: .stubValue("stubID"),
+                                                        name: .stubValue("stubEntityName"),
+                                                        url: .stubValue(),
+                                                        ratings: .stubValue(average: .five, numRatings: 123),
+                                                        image: .stubValue(),
+                                                        addressLines: .stubValue(),
+                                                        displayPhone: .stubValue("stubDisplayPhone"),
+                                                        dialablePhone: .stubValue("stubDialablePhone"),
+                                                        pricing: .stubValue(),
+                                                        coordinate: .stubValue())
                 }
             }
 

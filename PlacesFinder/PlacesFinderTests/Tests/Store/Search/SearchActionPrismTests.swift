@@ -135,14 +135,14 @@ class SearchActionPrismTests: QuickSpec {
         }
 
         describe("detailEntityAction") {
-            let stubDetailsModel = SearchDetailsModel.stubValue()
+            let stubEntity = SearchEntityModel.stubValue()
 
             beforeEach {
-                result = prism.detailEntityAction(stubDetailsModel)
+                result = prism.detailEntityAction(stubEntity)
             }
 
-            it("returns SearchAction.detailedEntity(detailsModel:)") {
-                expect(result as? SearchAction) == .detailedEntity(stubDetailsModel)
+            it("returns SearchAction.detailedEntity(entity:)") {
+                expect(result as? SearchAction) == .detailedEntity(stubEntity)
             }
         }
 
@@ -151,7 +151,7 @@ class SearchActionPrismTests: QuickSpec {
                 result = prism.removeDetailedEntityAction
             }
 
-            it("returns SearchAction.detailedEntity(detailsModel:)") {
+            it("returns SearchAction.detailedEntity(entity:)") {
                 expect(result as? SearchAction) == .removeDetailedEntity
             }
         }

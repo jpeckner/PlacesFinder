@@ -20,7 +20,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        let stubModel = SearchDetailsModel.stubValue()
+        let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
@@ -41,8 +41,8 @@ class SearchDetailsViewModelInitTests: QuickSpec {
         }
         // swiftlint:enable line_length
 
-        func performTest(searchDetailsModel: SearchDetailsModel) {
-            result = SearchDetailsViewModel(searchDetailsModel: searchDetailsModel,
+        func performTest(entity: SearchEntityModel) {
+            result = SearchDetailsViewModel(entity: entity,
                                             urlOpenerService: mockURLOpenerService,
                                             copyFormatter: mockCopyFormatter,
 
@@ -51,7 +51,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
 
         describe("placeName") {
             beforeEach {
-                performTest(searchDetailsModel: stubModel)
+                performTest(entity: stubModel)
             }
 
             it("has the same place name as the passed-in model") {
@@ -73,7 +73,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     blockCalled = true
                 }
 
-                performTest(searchDetailsModel: stubModel)
+                performTest(entity: stubModel)
             }
 
             it("includes SearchDetailsViewModel.Section.info") {
@@ -134,7 +134,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                             blockCalled = true
                         }
 
-                        performTest(searchDetailsModel: stubModel)
+                        performTest(entity: stubModel)
                     }
 
                     it("contains .phoneNumber, with the value from copyFormatter.formatCallablePhoneNumber()") {
@@ -153,7 +153,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     beforeEach {
                         mockURLOpenerService.buildPhoneCallBlockReturnValue = nil
 
-                        performTest(searchDetailsModel: stubModel)
+                        performTest(entity: stubModel)
                     }
 
                     it("contains .phoneNumber, with the value from copyFormatter.formatNonCallablePhoneNumber()") {
@@ -181,7 +181,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                 }
 
                 beforeEach {
-                    performTest(searchDetailsModel: SearchDetailsModel.stubValue(coordinate: stubCoordinate))
+                    performTest(entity: SearchEntityModel.stubValue(coordinate: stubCoordinate))
                 }
 
                 it("includes SearchDetailsViewModel.Section.location") {
@@ -208,7 +208,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
 
             context("else when the model has a nil coordinate") {
                 beforeEach {
-                    performTest(searchDetailsModel: SearchDetailsModel.stubValue(coordinate: nil))
+                    performTest(entity: SearchEntityModel.stubValue(coordinate: nil))
                 }
 
                 it("does not include SearchDetailsViewModel.Section.location") {
