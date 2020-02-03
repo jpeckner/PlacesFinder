@@ -20,8 +20,8 @@ struct LaunchViewSUI: View {
         static let maxImageHeight: CGFloat = maxImageWidth
     }
 
-    @ObservedObject var viewModel = LaunchViewModelObservable()
-    let colorings: LaunchViewColorings
+    @ObservedObject private var viewModel: LaunchViewModelObservable
+    private let colorings: LaunchViewColorings
 
     var body: some View {
         return GeometryReader { metrics in

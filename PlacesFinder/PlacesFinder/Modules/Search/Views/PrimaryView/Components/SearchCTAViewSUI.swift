@@ -13,26 +13,26 @@ struct SearchCTAViewSUI: View {
 
     private let viewModel: SearchCTAViewModel
     private let colorings: SearchCTAViewColorings
-    private let ctaBlock: SearchCTABlock
 
     init(viewModel: SearchCTAViewModel,
-         colorings: SearchCTAViewColorings,
-         ctaBlock: @escaping SearchCTABlock) {
+         colorings: SearchCTAViewColorings) {
         self.viewModel = viewModel
         self.colorings = colorings
-        self.ctaBlock = ctaBlock
     }
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: viewModel.infoViewModel)
+            StaticInfoViewSUI(viewModel: viewModel.infoViewModel, colorings: colorings.standard)
                 .padding(.bottom)
 
-            Button(action: ctaBlock) {
-                Text(viewModel.ctaTitle)
+            viewModel.ctaBlock.map {
+                Button(action: $0) {
+                    Text(viewModel.ctaTitle)
+                }
+                .configure(.ctaButton, textColoring: colorings.ctaTextColoring)
             }
-            .configure(.ctaButton, textColoring: colorings.ctaTextColoring)
-        }.padding()
+        }
+        .padding()
     }
 
 }
