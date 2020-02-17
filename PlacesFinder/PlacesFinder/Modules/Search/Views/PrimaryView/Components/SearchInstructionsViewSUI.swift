@@ -12,20 +12,23 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 struct SearchInstructionsViewSUI: View {
 
-    private let viewModel: SearchInstructionsViewModel
-    private let colorings: AppStandardColorings
+    @ObservedObject var viewModel: ValueObservable<SearchInstructionsViewModel>
+    @ObservedObject var colorings: ValueObservable<AppStandardColorings>
 
-    init(viewModel: SearchInstructionsViewModel, colorings: AppStandardColorings) {
-        self.viewModel = viewModel
-        self.colorings = colorings
+    init(viewModel: SearchInstructionsViewModel,
+         colorings: AppStandardColorings) {
+        self.viewModel = ValueObservable(value: viewModel)
+        self.colorings = ValueObservable(value: colorings)
     }
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: viewModel.infoViewModel)
+            StaticInfoViewSUI(viewModel: viewModel.value.infoViewModel,
+                              colorings: colorings.value)
                 .padding()
 
-            ResultsSourceViewSUI(viewModel: viewModel, colorings: colorings)
+            ResultsSourceViewSUI(viewModel: viewModel.value,
+                                 colorings: colorings.value)
                 .padding()
         }
     }

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Justin Peckner. All rights reserved.
 //
 
+import Shared
 import SwiftDux
 import SwiftUI
 import UIKit
@@ -31,16 +32,16 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
     func loadSettingsView(_ viewModel: SettingsViewModel,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
-        if let existingSettingsView: SettingsViewSUI = rootControllerView() {
-            existingSettingsView.viewModel.value = viewModel
+        guard let existingSettingsView: SettingsViewSUI = rootControllerView() else {
+            let settingsView = SettingsViewSUI(viewModel: viewModel,
+                                               store: store)
+            setRootController(settingsView,
+                              titleViewModel: titleViewModel,
+                              appSkin: appSkin)
             return
         }
 
-        let settingsView = SettingsViewSUI(viewModel: SettingsViewModelObservable(viewModel: viewModel),
-                                           store: store)
-        setRootController(settingsView,
-                          titleViewModel: titleViewModel,
-                          appSkin: appSkin)
+        existingSettingsView.viewModel.value = viewModel
     }
 
 }

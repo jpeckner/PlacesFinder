@@ -25,8 +25,18 @@ protocol AppStandardColoringsProtocol {
     var bodyTextColoring: TextColoring { get }
 }
 
+extension AppStandardColoringsProtocol {
+
+    var standard: AppStandardColorings {
+        return AppStandardColorings(viewColoring: viewColoring,
+                                    titleTextColoring: titleTextColoring,
+                                    bodyTextColoring: bodyTextColoring)
+    }
+
+}
+
 // sourcery: fieldName = "standard"
-struct AppStandardColorings: AppColoringProtocol, AppStandardColoringsProtocol {
+struct AppStandardColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
     let titleTextColoring: TextColoring
     let bodyTextColoring: TextColoring

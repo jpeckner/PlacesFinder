@@ -17,9 +17,12 @@ struct StaticInfoViewSUI: View {
     }
 
     private let viewModel: StaticInfoViewModel
+    private let colorings: AppStandardColorings
 
-    init(viewModel: StaticInfoViewModel) {
+    init(viewModel: StaticInfoViewModel,
+         colorings: AppStandardColorings) {
         self.viewModel = viewModel
+        self.colorings = colorings
     }
 
     var body: some View {
@@ -31,11 +34,15 @@ struct StaticInfoViewSUI: View {
                        alignment: .center)
                 .aspectRatio(contentMode: .fit)
 
-            StyledLabelSUI(text: viewModel.title, styleClass: .title)
+            StyledLabelSUI(text: viewModel.title,
+                           styleClass: .title,
+                           textColoring: colorings.titleTextColoring)
                 .lineLimit(1)
                 .allowsTightening(true)
 
-            StyledLabelSUI(text: viewModel.description, styleClass: .body)
+            StyledLabelSUI(text: viewModel.description,
+                           styleClass: .body,
+                           textColoring: colorings.bodyTextColoring)
         }
     }
 

@@ -7,6 +7,7 @@
 //
 
 import Shared
+import SwiftDux
 import UIKit
 
 protocol SearchPresenterProtocol: AutoMockable {

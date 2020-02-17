@@ -17,7 +17,7 @@ class StaticInfoView: UIView {
     let descriptionLabel: StyledLabel
 
     init(viewModel: StaticInfoViewModel,
-         colorings: AppStandardColoringsProtocol) {
+         colorings: AppStandardColorings) {
         self.imageView = UIImageView()
         self.titleLabel = StyledLabel()
         self.descriptionLabel = StyledLabel()
@@ -74,7 +74,7 @@ class StaticInfoView: UIView {
 extension StaticInfoView {
 
     func configure(_ viewModel: StaticInfoViewModel,
-                   colorings: AppStandardColoringsProtocol) {
+                   colorings: AppStandardColorings) {
         imageView.image = viewModel.image
 
         titleLabel.text = viewModel.title

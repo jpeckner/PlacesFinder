@@ -13,12 +13,12 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 struct SettingsViewSUI: View {
 
-    @ObservedObject var viewModel: SettingsViewModelObservable
+    @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
     private let store: DispatchingStoreProtocol
 
-    init(viewModel: SettingsViewModelObservable,
+    init(viewModel: SettingsViewModel,
          store: DispatchingStoreProtocol) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self.viewModel = ValueObservable(value: viewModel)
         self.store = store
     }
 

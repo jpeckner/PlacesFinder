@@ -18,7 +18,7 @@ class SearchCTAView: UIView {
     init(viewModel: SearchCTAViewModel,
          colorings: SearchCTAViewColorings) {
         self.staticInfoView = StaticInfoView(viewModel: viewModel.infoViewModel,
-                                             colorings: colorings)
+                                             colorings: colorings.standard)
         self.ctaButton = ActionableButton(touchUpInsideCallback: viewModel.ctaBlock ?? {})
 
         super.init(frame: .zero)
@@ -66,7 +66,7 @@ extension SearchCTAView {
     func configure(_ viewModel: SearchCTAViewModel,
                    colorings: SearchCTAViewColorings) {
         staticInfoView.configure(viewModel.infoViewModel,
-                                 colorings: colorings)
+                                 colorings: colorings.standard)
 
         if let ctaBlock = viewModel.ctaBlock {
             ctaButton.touchUpInsideCallback = ctaBlock
