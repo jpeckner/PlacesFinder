@@ -12,11 +12,11 @@ import SwiftUI
 import UIKit
 
 @available(iOS 13.0, *)
-class SearchPresenterSUI: SearchPresenterProtocol {
+class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProtocol {
 
-    private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
-    private let searchContainerViewController: SearchContainerViewController
+    let store: DispatchingStoreProtocol
+    let actionPrism: SearchActionPrismProtocol
+    let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
         return searchContainerViewController
@@ -90,7 +90,16 @@ class SearchPresenterSUI: SearchPresenterProtocol {
                          detailsViewContext: SearchDetailsViewContext?,
                          titleViewModel: NavigationBarTitleViewModel,
                          appSkin: AppSkin) {
-        // TODO: fill this out
+        let lookupController = loadOrBuildLookupController(viewModel,
+                                                           titleViewModel: titleViewModel,
+                                                           appSkin: appSkin)
+        let secondaryController = loadOrBuildSecondaryController(detailsViewContext,
+                                                                 appSkin: appSkin)
+
+        searchContainerViewController.splitControllers = SearchContainerSplitControllers(
+            primaryController: lookupController,
+            secondaryController: secondaryController
+        )
     }
 
 }

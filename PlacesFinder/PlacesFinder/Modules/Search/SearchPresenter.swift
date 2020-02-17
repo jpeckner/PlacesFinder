@@ -9,11 +9,11 @@
 import SwiftDux
 import UIKit
 
-class SearchPresenter: SearchPresenterProtocol {
+class SearchPresenter: SearchPresenterProtocol, SearchContainerPresenterProtocol {
 
-    private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
-    private let searchContainerViewController: SearchContainerViewController
+    let store: DispatchingStoreProtocol
+    let actionPrism: SearchActionPrismProtocol
+    let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
         return searchContainerViewController
@@ -22,9 +22,9 @@ class SearchPresenter: SearchPresenterProtocol {
     init(store: DispatchingStoreProtocol,
          actionPrism: SearchActionPrismProtocol,
          tabItemProperties: TabItemProperties) {
+        self.searchContainerViewController = SearchContainerViewController()
         self.store = store
         self.actionPrism = actionPrism
-        self.searchContainerViewController = SearchContainerViewController()
 
         searchContainerViewController.configure(tabItemProperties)
     }
@@ -105,64 +105,6 @@ class SearchPresenter: SearchPresenterProtocol {
         )
     }
 
-    private func loadOrBuildLookupController(
-        _ viewModel: SearchLookupViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin
-    ) -> SearchLookupParentController {
-        guard let existingController: SearchLookupParentController = existingPrimaryController() else {
-            return buildSearchParentViewController(viewModel,
-                                                   titleViewModel: titleViewModel,
-                                                   appSkin: appSkin)
-        }
-
-        existingController.configure(viewModel,
-                                     appSkin: appSkin)
-        existingController.configureTitleView(titleViewModel,
-                                              appSkin: appSkin)
-        return existingController
-    }
-
-    private func loadOrBuildSecondaryController(
-        _ detailsViewContext: SearchDetailsViewContext?,
-        appSkin: AppSkin
-    ) -> SearchContainerSplitControllers.SecondaryController? {
-        switch detailsViewContext {
-        case let .detailedEntity(viewModel):
-            return .anySizeClass(loadOrBuildDetailsController(viewModel,
-                                                              appSkin: appSkin))
-        case let .firstListedEntity(viewModel):
-            return .regularOnly(loadOrBuildDetailsController(viewModel,
-                                                             appSkin: appSkin))
-        case .none:
-            return nil
-        }
-    }
-
-    private func loadOrBuildDetailsController(_ viewModel: SearchDetailsViewModel,
-                                              appSkin: AppSkin) -> SearchDetailsViewController {
-        guard let controller = existingDetailsController else {
-            return buildSearchDetailsViewController(viewModel,
-                                                    appSkin: appSkin)
-        }
-
-        controller.configure(viewModel,
-                             appSkin: appSkin)
-        return controller
-    }
-
-}
-
-private extension SearchPresenter {
-
-    func existingPrimaryController<T: SearchPrimaryViewController>() -> T? {
-        return searchContainerViewController.splitControllers.primaryController as? T
-    }
-
-    var existingDetailsController: SearchDetailsViewController? {
-        return searchContainerViewController.splitControllers.secondaryController?.detailsController
-    }
-
 }
 
 private extension SearchPresenter {
@@ -197,30 +139,6 @@ private extension SearchPresenter {
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller
-    }
-
-    func buildSearchParentViewController(
-        _ viewModel: SearchLookupViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin
-    ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(store: store,
-                                                      viewModel: viewModel,
-                                                      appSkin: appSkin)
-        controller.configureTitleView(titleViewModel,
-                                      appSkin: appSkin)
-        controller.navigationItem.backBarButtonItem = appSkin.backButtonItem
-        return controller
-    }
-
-    func buildSearchDetailsViewController(
-        _ viewModel: SearchDetailsViewModel,
-        appSkin: AppSkin
-    ) -> SearchDetailsViewController {
-        return SearchDetailsViewController(store: store,
-                                           removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
-                                           viewModel: viewModel,
-                                           appSkin: appSkin)
     }
 
 }
