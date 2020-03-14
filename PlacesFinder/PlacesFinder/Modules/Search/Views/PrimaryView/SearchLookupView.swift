@@ -22,7 +22,7 @@ class SearchLookupView: UIView {
     }
 
     weak var delegate: SearchLookupViewDelegate?
-    private let searchInputView: SearchInputView
+    private let searchBar: UISearchBar
     private let inputViewFullHeight: CGFloat
     private let inputViewHeightConstraint: NSLayoutConstraint
     private let childContainerView: SearchChildContainerView
@@ -30,10 +30,12 @@ class SearchLookupView: UIView {
 
     init(searchInputViewModel: SearchInputViewModel,
          searchInputColorings: SearchInputViewColorings) {
-        self.searchInputView = SearchInputView(viewModel: searchInputViewModel,
-                                               colorings: searchInputColorings)
-        self.inputViewFullHeight = searchInputView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        self.inputViewHeightConstraint = searchInputView.heightAnchor.constraint(equalToConstant: inputViewFullHeight)
+        self.searchBar = UISearchBar()
+        searchBar.returnKeyType = .go
+        searchBar.enablesReturnKeyAutomatically = true
+
+        self.inputViewFullHeight = searchBar.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        self.inputViewHeightConstraint = searchBar.heightAnchor.constraint(equalToConstant: inputViewFullHeight)
         inputViewHeightConstraint.isActive = true
 
         self.childContainerView = SearchChildContainerView()
@@ -42,10 +44,11 @@ class SearchLookupView: UIView {
 
         super.init(frame: .zero)
 
-        searchInputView.setTextFieldDelegate(self)
+        searchBar.delegate = self
         childContainerView.delegate = self
         setupSubviews()
         setupConstraints()
+        setupStyling(searchInputColorings)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,34 +56,41 @@ class SearchLookupView: UIView {
     }
 
     private func setupSubviews() {
-        addSubview(searchInputView)
+        addSubview(searchBar)
         addSubview(childContainerView)
     }
 
     private func setupConstraints() {
-        searchInputView.snp.makeConstraints { make in
+        searchBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(self)
         }
 
         childContainerView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
-            make.top.equalTo(searchInputView.snp.bottom)
+            make.top.equalTo(searchBar.snp.bottom)
         }
+    }
+
+    private func setupStyling(_ colorings: SearchInputViewColorings) {
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
+            AppTextStyleClass.textInput.textLayout.font,
+            forKey: .font
+        )
     }
 
 }
 
-extension SearchLookupView: UITextFieldDelegate {
+extension SearchLookupView: UISearchBarDelegate {
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        editState = .editing(previous: textField.text)
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        editState = .editing(previous: searchBar.text)
         handleTextFieldEditingState(true)
     }
 
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         switch editState {
         case let .editing(previous):
-            textField.text = previous
+            searchBar.text = previous
         case .exitedWithReturn:
             break
         case .notEditing:
@@ -91,22 +101,19 @@ extension SearchLookupView: UITextFieldDelegate {
         handleTextFieldEditingState(false)
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         editState = .exitedWithReturn
-        textField.resignFirstResponder()
+        searchBar.resignFirstResponder()
 
-        if let text = textField.text,
+        if let text = searchBar.text,
             let nonEmptyText = try? NonEmptyString(text) {
             delegate?.searchView(self, didInputText: nonEmptyText)
         } else {
-            AssertionHandler.performAssertionFailure { "UITextField should be configured to not return empty text" }
+            AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return empty text" }
         }
-
-        return true
     }
 
     private func handleTextFieldEditingState(_ isEditing: Bool) {
-        searchInputView.handleTextFieldEditingState(isEditing)
         childContainerView.configureCoverView(isEditing)
 
         if isEditing {
@@ -119,7 +126,7 @@ extension SearchLookupView: UITextFieldDelegate {
 extension SearchLookupView: SearchChildContainerViewDelegate {
 
     func containerViewCoverWasTapped(_ containerView: SearchChildContainerView) {
-        searchInputView.resignTextFieldAsFirstResponder()
+        searchBar.resignFirstResponder()
     }
 
 }
@@ -128,8 +135,8 @@ extension SearchLookupView {
 
     func configure(_ viewModel: SearchInputViewModel,
                    colorings: SearchInputViewColorings) {
-        searchInputView.configure(viewModel,
-                                  colorings: colorings)
+        searchBar.text = viewModel.inputKeywords?.value
+        searchBar.placeholder = viewModel.placeholder
     }
 
     func setChildView(_ childView: UIView) {
