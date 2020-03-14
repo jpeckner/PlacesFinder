@@ -25,7 +25,7 @@ class SearchReducerTests: QuickSpec {
         describe("reduce") {
 
             let stubParams = PlaceLookupParams.stubValue()
-            let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
+            let stubSearchParams = SearchParams(keywords: stubParams.keywords)
             let stubDetailsViewModel = SearchEntityModel.stubValue()
             let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
             let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
@@ -51,12 +51,12 @@ class SearchReducerTests: QuickSpec {
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.locationRequested(stubSubmittedParams),
+                    result = SearchReducer.reduce(action: SearchAction.locationRequested(stubSearchParams),
                                                   currentState: currentState)
                 }
 
                 it("returns a state with loadState == .locationRequested, detailedEntity == nil, and all other fields unchanged") {
-                    expect(result) == SearchState(loadState: .locationRequested(stubSubmittedParams),
+                    expect(result) == SearchState(loadState: .locationRequested(stubSearchParams),
                                                   detailedEntity: nil)
                 }
             }
@@ -66,12 +66,12 @@ class SearchReducerTests: QuickSpec {
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.initialPageRequested(stubSubmittedParams),
+                    result = SearchReducer.reduce(action: SearchAction.initialPageRequested(stubSearchParams),
                                                   currentState: currentState)
                 }
 
                 it("returns a state with loadState == .initialPageRequested, detailedEntity == nil, and all other fields unchanged") {
-                    expect(result) == SearchState(loadState: .initialPageRequested(stubSubmittedParams),
+                    expect(result) == SearchState(loadState: .initialPageRequested(stubSearchParams),
                                                   detailedEntity: nil)
                 }
             }
@@ -81,12 +81,12 @@ class SearchReducerTests: QuickSpec {
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.noResultsFound(stubSubmittedParams),
+                    result = SearchReducer.reduce(action: SearchAction.noResultsFound(stubSearchParams),
                                                   currentState: currentState)
                 }
 
                 it("returns a state with loadState == .noResultsFound, detailedEntity == nil, and all other fields unchanged") {
-                    expect(result) == SearchState(loadState: .noResultsFound(stubSubmittedParams),
+                    expect(result) == SearchState(loadState: .noResultsFound(stubSearchParams),
                                                   detailedEntity: nil)
                 }
             }
@@ -105,7 +105,7 @@ class SearchReducerTests: QuickSpec {
                         return
                     }
 
-                    expect(submittedParams) == stubSubmittedParams
+                    expect(submittedParams) == stubSearchParams
                     expect(pageState) == expectedPageState
                     expect(entities) == expectedEntities
                     expect(nextRequestToken) == expectedToken
@@ -118,7 +118,7 @@ class SearchReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchAction.subsequentRequest(
-                            stubSubmittedParams,
+                            stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -136,7 +136,7 @@ class SearchReducerTests: QuickSpec {
 
                 context("else and the pageAction is .inProgress") {
                     let currentLoadState = SearchLoadState.pagesReceived(
-                        stubSubmittedParams,
+                        stubSearchParams,
                         pageState: .success,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
@@ -146,7 +146,7 @@ class SearchReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchAction.subsequentRequest(
-                            stubSubmittedParams,
+                            stubSearchParams,
                             pageAction: .inProgress,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -164,7 +164,7 @@ class SearchReducerTests: QuickSpec {
 
                 context("and the pageAction is .success") {
                     let currentLoadState = SearchLoadState.pagesReceived(
-                        stubSubmittedParams,
+                        stubSearchParams,
                         pageState: .success,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
@@ -174,7 +174,7 @@ class SearchReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchAction.subsequentRequest(
-                            stubSubmittedParams,
+                            stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -192,7 +192,7 @@ class SearchReducerTests: QuickSpec {
 
                 context("and the pageAction is .failure") {
                     let currentLoadState = SearchLoadState.pagesReceived(
-                        stubSubmittedParams,
+                        stubSearchParams,
                         pageState: .success,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
@@ -204,7 +204,7 @@ class SearchReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchAction.subsequentRequest(
-                            stubSubmittedParams,
+                            stubSearchParams,
                             pageAction: .failure(pageError),
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -256,7 +256,7 @@ class SearchReducerTests: QuickSpec {
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    let action = SearchAction.failure(stubSubmittedParams,
+                    let action = SearchAction.failure(stubSearchParams,
                                                       underlyingError: IgnoredEquatable(StubError.plainError))
                     result = SearchReducer.reduce(action: action,
                                                   currentState: currentState)
@@ -264,7 +264,7 @@ class SearchReducerTests: QuickSpec {
 
                 it("returns a state with loadState == .failure, detailedEntity == nil, and all other fields unchanged") {
                     expect(result) == SearchState(
-                        loadState: .failure(stubSubmittedParams,
+                        loadState: .failure(stubSearchParams,
                                             underlyingError: IgnoredEquatable(StubError.plainError)),
                         detailedEntity: nil
                     )

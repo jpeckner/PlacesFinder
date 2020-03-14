@@ -23,7 +23,7 @@ class SearchActionPrismTests: QuickSpec {
     override func spec() {
 
         let stubParams = PlaceLookupParams.stubValue()
-        let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
+        let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
         let stubRequestToken = PlaceLookupPageRequestToken.stubValue()
 
@@ -53,7 +53,7 @@ class SearchActionPrismTests: QuickSpec {
         describe("initialRequestAction()") {
 
             beforeEach {
-                result = prism.initialRequestAction(stubSubmittedParams) { _ in }
+                result = prism.initialRequestAction(stubSearchParams) { _ in }
             }
 
             it("calls actionCreator.requestInitialPage() with the args for the next page request") {
@@ -61,7 +61,7 @@ class SearchActionPrismTests: QuickSpec {
                                                                                maxAttempts: 5,
                                                                                numAttemptsSoFar: 5)
                 SearchActionCreatorProtocolMock.verifyRequestInitialPageCalled(
-                    with: stubSubmittedParams,
+                    with: stubSearchParams,
                     placeLookupService: mockPlaceLookupService,
                     actionCreator: SearchActionCreatorProtocolMock.self
                 )
@@ -84,7 +84,7 @@ class SearchActionPrismTests: QuickSpec {
                                                                        maxAttempts: maxAttempts,
                                                                        numAttemptsSoFar: numAttemptsSoFar)
                 errorThrown = errorThrownBy {
-                    result = try prism.subsequentRequestAction(stubSubmittedParams,
+                    result = try prism.subsequentRequestAction(stubSearchParams,
                                                                allEntities: stubEntities,
                                                                tokenContainer: tokenContainer)
                 }

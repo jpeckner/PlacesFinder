@@ -1,5 +1,5 @@
 //
-//  SearchSubmittedParams.swift
+//  SearchParams.swift
 //  PlacesFinder
 //
 //  Created by Justin Peckner.
@@ -9,6 +9,6 @@
 import Foundation
 import Shared
 
-struct SearchSubmittedParams: Equatable {
+struct SearchParams: Equatable {
     let keywords: NonEmptyString
 }

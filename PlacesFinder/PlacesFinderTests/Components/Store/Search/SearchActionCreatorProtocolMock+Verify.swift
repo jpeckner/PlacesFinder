@@ -25,30 +25,30 @@ extension SearchActionCreatorProtocolMock {
     static func setup() {
         resetAll()
 
-        SearchActionCreatorProtocolMock.requestInitialPageSubmittedParamsLocationUpdateRequestBlockClosure = { _, _, _ in
+        SearchActionCreatorProtocolMock.requestInitialPageSearchParamsLocationUpdateRequestBlockClosure = { _, _, _ in
             StubSearchAction.requestInitialPage
         }
 
-        SearchActionCreatorProtocolMock.requestSubsequentPageSubmittedParamsPreviousResultsTokenContainerClosure = { _, _, _, _ in
+        SearchActionCreatorProtocolMock.requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure = { _, _, _, _ in
             StubSearchAction.requestSubsequentPage
         }
     }
     // swiftlint:enable line_length
 
     static func verifyRequestInitialPageCalled(
-        with submittedParams: SearchSubmittedParams,
+        with submittedParams: SearchParams,
         placeLookupService: PlaceLookupServiceProtocol,
         actionCreator: SearchActionCreatorProtocol.Type
     ) {
         expect(
             SearchActionCreatorProtocolMock
-            .requestInitialPageSubmittedParamsLocationUpdateRequestBlockReceivedArguments?
-            .submittedParams
+            .requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments?
+            .searchParams
         ) == submittedParams
 
         expect(
             SearchActionCreatorProtocolMock
-            .requestInitialPageSubmittedParamsLocationUpdateRequestBlockReceivedArguments?
+            .requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments?
             .dependencies
             .placeLookupService
         ) === placeLookupService
@@ -62,27 +62,27 @@ extension SearchActionCreatorProtocolMock {
     ) {
         expect(
             SearchActionCreatorProtocolMock
-            .requestSubsequentPageSubmittedParamsPreviousResultsTokenContainerReceivedArguments?
+            .requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments?
             .previousResults.value
         ) == entities
 
         expect(
             SearchActionCreatorProtocolMock
-            .requestSubsequentPageSubmittedParamsPreviousResultsTokenContainerReceivedArguments?
+            .requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments?
             .tokenContainer
         ) == nextRequestToken
 
         expect(
             SearchActionCreatorProtocolMock
-            .requestSubsequentPageSubmittedParamsPreviousResultsTokenContainerReceivedArguments?
+            .requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments?
             .dependencies
             .placeLookupService
         ) === placeLookupService
     }
 
     static func resetAll() {
-        SearchActionCreatorProtocolMock.requestInitialPageSubmittedParamsLocationUpdateRequestBlockReset()
-        SearchActionCreatorProtocolMock.requestSubsequentPageSubmittedParamsPreviousResultsTokenContainerReset()
+        SearchActionCreatorProtocolMock.requestInitialPageSearchParamsLocationUpdateRequestBlockReset()
+        SearchActionCreatorProtocolMock.requestSubsequentPageSearchParamsPreviousResultsTokenContainerReset()
     }
 
 }
