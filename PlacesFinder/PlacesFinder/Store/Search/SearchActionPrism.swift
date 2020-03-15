@@ -15,12 +15,12 @@ enum SearchActionPrismError: Error {
 }
 
 protocol SearchInitialActionPrismProtocol {
-    func initialRequestAction(_ submittedParams: SearchSubmittedParams,
+    func initialRequestAction(_ searchParams: SearchParams,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action
 }
 
 protocol SearchSubsequentActionPrismProtocol {
-    func subsequentRequestAction(_ submittedParams: SearchSubmittedParams,
+    func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action
 }
@@ -50,17 +50,17 @@ class SearchActionPrism: SearchActionPrismProtocol {
 
 extension SearchActionPrism: SearchInitialActionPrismProtocol {
 
-    func initialRequestAction(_ submittedParams: SearchSubmittedParams,
+    func initialRequestAction(_ searchParams: SearchParams,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
         return actionCreator.requestInitialPage(dependencies,
-                                                submittedParams: submittedParams,
+                                                searchParams: searchParams,
                                                 locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 }
 
 extension SearchActionPrism: SearchSubsequentActionPrismProtocol {
 
-    func subsequentRequestAction(_ submittedParams: SearchSubmittedParams,
+    func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action {
         let incrementedAttemptsCount = tokenContainer.numAttemptsSoFar + 1
@@ -73,7 +73,7 @@ extension SearchActionPrism: SearchSubsequentActionPrismProtocol {
                                                                       numAttemptsSoFar: incrementedAttemptsCount)
 
         return actionCreator.requestSubsequentPage(dependencies,
-                                                   submittedParams: submittedParams,
+                                                   searchParams: searchParams,
                                                    previousResults: allEntities,
                                                    tokenContainer: updatedTokenContainer)
     }

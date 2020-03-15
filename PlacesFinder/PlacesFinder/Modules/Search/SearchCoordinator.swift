@@ -228,7 +228,7 @@ private extension SearchCoordinator {
 
     func initialRequestAction(_ keywords: NonEmptyString,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        return actionPrism.initialRequestAction(SearchSubmittedParams(keywords: keywords),
+        return actionPrism.initialRequestAction(SearchParams(keywords: keywords),
                                                 locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 

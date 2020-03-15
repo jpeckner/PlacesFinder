@@ -20,21 +20,21 @@ typealias SearchPageReducer = IntermediateStepLoadReducer<SearchPageRequestError
 enum SearchLoadState: Equatable {
     case idle
 
-    case locationRequested(SearchSubmittedParams)
+    case locationRequested(SearchParams)
 
-    case initialPageRequested(SearchSubmittedParams)
+    case initialPageRequested(SearchParams)
 
-    case noResultsFound(SearchSubmittedParams)
+    case noResultsFound(SearchParams)
 
     case pagesReceived(
-        SearchSubmittedParams,
+        SearchParams,
         pageState: SearchPageState,
         allEntities: NonEmptyArray<SearchEntityModel>,
         nextRequestToken: PlaceLookupTokenAttemptsContainer?
     )
 
     case failure(
-        SearchSubmittedParams,
+        SearchParams,
         underlyingError: IgnoredEquatable<Error>
     )
 }
@@ -51,7 +51,7 @@ extension SearchState {
         self.detailedEntity = nil
     }
 
-    var submittedParams: SearchSubmittedParams? {
+    var submittedParams: SearchParams? {
         switch loadState {
         case .idle:
             return nil

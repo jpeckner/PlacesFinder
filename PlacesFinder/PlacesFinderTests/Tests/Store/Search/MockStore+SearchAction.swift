@@ -15,7 +15,7 @@ import SwiftDuxTestComponents
 
 extension MockStore {
 
-    var dispatchedSubmittedParams: SearchSubmittedParams? {
+    var dispatchedSubmittedParams: SearchParams? {
         let dispatchedAction = dispatchedNonAsyncActions.last as? SearchAction
         guard case let .subsequentRequest(submittedParams, _, _, _)? = dispatchedAction else {
             fail("Unexpected value: \(String(describing: dispatchedAction))")
