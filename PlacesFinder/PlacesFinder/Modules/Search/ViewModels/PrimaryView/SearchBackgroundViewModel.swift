@@ -16,7 +16,7 @@ struct SearchBackgroundViewModel {
 extension SearchBackgroundViewModel {
 
     init(appCopyContent: AppCopyContent) {
-        self.inputViewModel = SearchInputViewModel(inputKeywords: nil,
+        self.inputViewModel = SearchInputViewModel(searchParams: nil,
                                                    copyContent: appCopyContent.searchInput)
         self.instructionsViewModel = SearchInstructionsViewModel(copyContent: appCopyContent.searchInstructions)
     }

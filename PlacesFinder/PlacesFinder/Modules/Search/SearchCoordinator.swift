@@ -130,7 +130,7 @@ private extension SearchCoordinator {
         case let .pagesReceived(submittedParams, _, allEntities, tokenContainer):
             let viewModel = resultViewModels(allEntities,
                                              resultsCopyContent: appCopyContent.searchResults)
-            let refreshAction = initialRequestAction(submittedParams.keywords,
+            let refreshAction = initialRequestAction(submittedParams,
                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
             let nextRequestAction = tokenContainer.flatMap {
                 try? actionPrism.subsequentRequestAction(submittedParams,
@@ -145,7 +145,7 @@ private extension SearchCoordinator {
             return .noResults(SearchNoResultsFoundViewModel(copyContent: appCopyContent.searchNoResults))
         case let .failure(submittedParams, _):
             return .failure(SearchRetryViewModel(copyContent: appCopyContent.searchRetry) { [weak self] in
-                self?.submitInitalSearchRequest(submittedParams.keywords,
+                self?.submitInitalSearchRequest(submittedParams,
                                                 locationUpdateRequestBlock: locationUpdateRequestBlock)
             })
         }
@@ -204,7 +204,8 @@ private extension SearchCoordinator {
                     return
                 }
 
-                submitInitalSearchRequest(keywords,
+                let params = SearchParams(keywords: keywords)
+                submitInitalSearchRequest(params,
                                           locationUpdateRequestBlock: requestBlock)
             }
         }
@@ -220,15 +221,15 @@ private extension SearchCoordinator {
 
 private extension SearchCoordinator {
 
-    func submitInitalSearchRequest(_ keywords: NonEmptyString,
+    func submitInitalSearchRequest(_ params: SearchParams,
                                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        store.dispatch(initialRequestAction(keywords,
+        store.dispatch(initialRequestAction(params,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock))
     }
 
-    func initialRequestAction(_ keywords: NonEmptyString,
+    func initialRequestAction(_ params: SearchParams,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        return actionPrism.initialRequestAction(SearchParams(keywords: keywords),
+        return actionPrism.initialRequestAction(params,
                                                 locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 

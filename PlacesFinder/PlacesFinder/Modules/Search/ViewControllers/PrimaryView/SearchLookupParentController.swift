@@ -49,7 +49,8 @@ extension SearchLookupParentController: SearchResultsViewControllerDelegate {
 extension SearchLookupParentController: SearchLookupViewDelegate {
 
     func searchView(_ searchView: SearchLookupView, didInputText text: NonEmptyString) {
-        viewModel.lookupBlock(text)
+        let params = SearchParams(keywords: text)
+        viewModel.lookupBlock(params)
     }
 
 }

@@ -135,7 +135,7 @@ extension SearchLookupView {
 
     func configure(_ viewModel: SearchInputViewModel,
                    colorings: SearchInputViewColorings) {
-        searchBar.text = viewModel.inputKeywords?.value
+        searchBar.text = viewModel.searchParams?.keywords.value
         searchBar.placeholder = viewModel.placeholder
     }
 
