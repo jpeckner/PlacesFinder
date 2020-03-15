@@ -13,8 +13,8 @@ import UIKit
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let searchViewWrapper: SearchLookupViewWrapper
     private var viewModel: SearchLookupViewModel
+    private let searchViewWrapper: SearchLookupViewWrapper
 
     init(store: DispatchingStoreProtocol,
          viewModel: SearchLookupViewModel,
@@ -33,14 +33,6 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchLookupParentController: SearchResultsViewControllerDelegate {
-
-    func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
-        searchViewWrapper.childTableDidScroll(deltaY)
     }
 
 }
@@ -89,7 +81,7 @@ extension SearchLookupParentController {
             let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
                 setSingleChildController(
-                    SearchResultsViewController(delegate: self,
+                    SearchResultsViewController(delegate: searchViewWrapper,
                                                 store: store,
                                                 refreshAction: refreshAction,
                                                 colorings: colorings,
@@ -235,9 +227,9 @@ extension SearchLookupViewWrapper: SearchChildContainerViewDelegate {
 
 }
 
-extension SearchLookupViewWrapper {
+extension SearchLookupViewWrapper: SearchResultsViewControllerDelegate {
 
-    func childTableDidScroll(_ deltaY: CGFloat) {
+    func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
         let updatedHeight = deltaY > 0 ?
             // Prevent setting constant < 0
             max(0.0, inputViewHeightConstraint.constant - deltaY)
