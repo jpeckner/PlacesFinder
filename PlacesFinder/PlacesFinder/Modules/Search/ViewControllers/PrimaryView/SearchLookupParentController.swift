@@ -13,14 +13,12 @@ import UIKit
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
     private let store: DispatchingStoreProtocol
-    private var viewModel: SearchLookupViewModel
     private let searchViewWrapper: SearchLookupViewWrapper
 
     init(store: DispatchingStoreProtocol,
          viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
         self.store = store
-        self.viewModel = viewModel
         self.searchViewWrapper = SearchLookupViewWrapper(viewModel: viewModel,
                                                          searchInputColorings: appSkin.colorings.searchInput)
 
@@ -42,10 +40,9 @@ extension SearchLookupParentController {
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
         self.viewColoring = appSkin.colorings.standard.viewColoring
-        self.viewModel = viewModel
 
-        searchViewWrapper.view.configure(viewModel.searchInputViewModel,
-                                         colorings: appSkin.colorings.searchInput)
+        searchViewWrapper.configure(viewModel,
+                                    appSkin: appSkin)
 
         activateChildView(viewModel,
                           appSkin: appSkin)
@@ -145,8 +142,8 @@ private class SearchLookupViewWrapper: NSObject {
     }
 
     let view: SearchLookupView
-    private let inputViewFullHeight: CGFloat
-    private let inputViewHeightConstraint: NSLayoutConstraint
+    private let searchBarFullHeight: CGFloat
+    private let searchBarHeightConstraint: NSLayoutConstraint
     private var viewModel: SearchLookupViewModel
     private var editState: TextEditState
 
@@ -155,10 +152,10 @@ private class SearchLookupViewWrapper: NSObject {
         self.view = SearchLookupView(searchInputViewModel: viewModel.searchInputViewModel,
                                      searchInputColorings: searchInputColorings)
 
-        self.inputViewFullHeight = view.searchBar.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        self.searchBarFullHeight = view.searchBar.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
 
-        self.inputViewHeightConstraint = view.searchBar.heightAnchor.constraint(equalToConstant: inputViewFullHeight)
-        inputViewHeightConstraint.isActive = true
+        self.searchBarHeightConstraint = view.searchBar.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
+        searchBarHeightConstraint.isActive = true
 
         self.viewModel = viewModel
         self.editState = .notEditing
@@ -171,6 +168,18 @@ private class SearchLookupViewWrapper: NSObject {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SearchLookupViewWrapper {
+
+    func configure(_ viewModel: SearchLookupViewModel,
+                   appSkin: AppSkin) {
+        self.viewModel = viewModel
+
+        view.configure(viewModel.searchInputViewModel,
+                       colorings: appSkin.colorings.searchInput)
     }
 
 }
@@ -213,7 +222,7 @@ extension SearchLookupViewWrapper: UISearchBarDelegate {
         view.childContainerView.configureCoverView(isEditing)
 
         if isEditing {
-            inputViewHeightConstraint.constant = inputViewFullHeight
+            searchBarHeightConstraint.constant = searchBarFullHeight
         }
     }
 
@@ -232,11 +241,11 @@ extension SearchLookupViewWrapper: SearchResultsViewControllerDelegate {
     func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
         let updatedHeight = deltaY > 0 ?
             // Prevent setting constant < 0
-            max(0.0, inputViewHeightConstraint.constant - deltaY)
+            max(0.0, searchBarHeightConstraint.constant - deltaY)
             // Prevent setting constant > inputViewOriginalHeight
-            : min(inputViewFullHeight, inputViewHeightConstraint.constant - deltaY)
+            : min(searchBarFullHeight, searchBarHeightConstraint.constant - deltaY)
 
-        inputViewHeightConstraint.constant = updatedHeight
+        searchBarHeightConstraint.constant = updatedHeight
     }
 
 }
