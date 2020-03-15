@@ -19,19 +19,19 @@ class SearchInputViewModelTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        let stubInputKeywords = NonEmptyString.stubValue("stubInputKeywords")
+        let stubSearchParams = SearchParams(keywords: NonEmptyString.stubValue("stubInputKeywords"))
         var result: SearchInputViewModel!
 
         describe("inputViewModel") {
             beforeEach {
                 let copyContent = SearchInputCopyContent(placeholder: "stubPlaceholder",
                                                          cancelButtonTitle: "stubCancelButtonTitle")
-                result = SearchInputViewModel(inputKeywords: stubInputKeywords,
+                result = SearchInputViewModel(searchParams: stubSearchParams,
                                               copyContent: copyContent)
             }
 
             it("returns its expected value") {
-                expect(result) == SearchInputViewModel(inputKeywords: stubInputKeywords,
+                expect(result) == SearchInputViewModel(searchParams: stubSearchParams,
                                                        placeholder: "stubPlaceholder",
                                                        cancelButtonTitle: "stubCancelButtonTitle")
             }

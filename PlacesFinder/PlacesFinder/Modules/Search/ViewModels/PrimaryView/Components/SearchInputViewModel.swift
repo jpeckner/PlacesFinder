@@ -10,16 +10,16 @@ import Foundation
 import Shared
 
 struct SearchInputViewModel: Equatable {
-    let inputKeywords: NonEmptyString?
+    let searchParams: SearchParams?
     let placeholder: String
     let cancelButtonTitle: String
 }
 
 extension SearchInputViewModel {
 
-    init(inputKeywords: NonEmptyString?,
+    init(searchParams: SearchParams?,
          copyContent: SearchInputCopyContent) {
-        self.inputKeywords = inputKeywords
+        self.searchParams = searchParams
         self.placeholder = copyContent.placeholder
         self.cancelButtonTitle = copyContent.cancelButtonTitle
     }
