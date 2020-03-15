@@ -12,7 +12,6 @@ import Shared
 struct SearchInputViewModel: Equatable {
     let searchParams: SearchParams?
     let placeholder: String
-    let cancelButtonTitle: String
 }
 
 extension SearchInputViewModel {
@@ -21,7 +20,6 @@ extension SearchInputViewModel {
          copyContent: SearchInputCopyContent) {
         self.searchParams = searchParams
         self.placeholder = copyContent.placeholder
-        self.cancelButtonTitle = copyContent.cancelButtonTitle
     }
 
 }

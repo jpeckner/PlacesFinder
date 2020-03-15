@@ -28,7 +28,6 @@ struct DisplayNameCopyContent {
 
 struct SearchInputCopyContent {
     let placeholder: String
-    let cancelButtonTitle: String
 }
 
 struct SearchInstructionsCopyContent {

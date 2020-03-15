@@ -15,8 +15,7 @@ extension AppCopyContent {
         self.displayName = DisplayNameCopyContent(name: displayName)
 
         self.searchInput = SearchInputCopyContent(
-            placeholder: "Search nearby",
-            cancelButtonTitle: "Cancel"
+            placeholder: "Search nearby"
         )
         self.searchInstructions = SearchInstructionsCopyContent(
             iconImage: #imageLiteral(resourceName: "search_home"),
