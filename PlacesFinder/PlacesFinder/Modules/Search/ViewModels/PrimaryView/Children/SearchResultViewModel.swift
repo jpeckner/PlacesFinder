@@ -17,3 +17,22 @@ struct SearchResultViewModel {
 struct SearchResultsViewModel {
     let resultViewModels: NonEmptyArray<SearchResultViewModel>
 }
+
+extension SearchResultsViewModel {
+
+    init(allEntities: NonEmptyArray<SearchEntityModel>,
+         actionPrism: SearchDetailsActionPrismProtocol,
+         copyFormatter: SearchCopyFormatterProtocol,
+         resultsCopyContent: SearchResultsCopyContent) {
+        self.resultViewModels = allEntities.withTransformation {
+            let cellModel = SearchResultCellModel(model: $0,
+                                                  copyFormatter: copyFormatter,
+                                                  resultsCopyContent: resultsCopyContent)
+            let detailEntityAction = actionPrism.detailEntityAction($0)
+
+            return SearchResultViewModel(cellModel: cellModel,
+                                         detailEntityAction: detailEntityAction)
+        }
+    }
+
+}
