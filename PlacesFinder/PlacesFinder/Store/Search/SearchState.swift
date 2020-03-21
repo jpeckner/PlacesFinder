@@ -41,6 +41,7 @@ enum SearchLoadState: Equatable {
 
 struct SearchState: Equatable {
     let loadState: SearchLoadState
+    let inputParams: SearchInputParams
     let detailedEntity: SearchEntityModel?
 }
 
@@ -48,20 +49,9 @@ extension SearchState {
 
     init() {
         self.loadState = .idle
+        self.inputParams = SearchInputParams(params: nil,
+                                             isEditing: false)
         self.detailedEntity = nil
-    }
-
-    var submittedParams: SearchParams? {
-        switch loadState {
-        case .idle:
-            return nil
-        case let .locationRequested(params),
-             let .initialPageRequested(params),
-             let .noResultsFound(params),
-             let .pagesReceived(params, _, _, _),
-             let .failure(params, _):
-            return params
-        }
     }
 
     var entities: NonEmptyArray<SearchEntityModel>? {
@@ -81,9 +71,30 @@ extension SearchState {
 
 private extension SearchState {
 
+    var submittedParams: SearchParams? {
+        switch loadState {
+        case let .locationRequested(params),
+             let .initialPageRequested(params),
+             let .noResultsFound(params),
+             let .pagesReceived(params, _, _, _),
+             let .failure(params, _):
+            return params
+        case .idle:
+            return nil
+        }
+    }
+
     var pageState: SearchPageState? {
-        guard case let .pagesReceived(_, pageState, _, _) = loadState else { return nil }
-        return pageState
+        switch loadState {
+        case let .pagesReceived(_, pageState, _, _):
+            return pageState
+        case .idle,
+             .locationRequested,
+             .initialPageRequested,
+             .noResultsFound,
+             .failure:
+            return nil
+        }
     }
 
 }
@@ -92,6 +103,7 @@ private extension SearchState {
 
 enum SearchReducer {
 
+    // swiftlint:disable function_body_length
     static func reduce(action: Action,
                        currentState: SearchState) -> SearchState {
         guard let searchAction = action as? SearchAction else { return currentState }
@@ -99,12 +111,16 @@ enum SearchReducer {
         switch searchAction {
         case let .locationRequested(submittedParams):
             return SearchState(loadState: .locationRequested(submittedParams),
+                               inputParams: SearchInputParams(params: submittedParams,
+                                                              isEditing: false),
                                detailedEntity: nil)
         case let .initialPageRequested(submittedParams):
             return SearchState(loadState: .initialPageRequested(submittedParams),
+                               inputParams: currentState.inputParams,
                                detailedEntity: nil)
         case let .noResultsFound(submittedParams):
             return SearchState(loadState: .noResultsFound(submittedParams),
+                               inputParams: currentState.inputParams,
                                detailedEntity: nil)
         case let .subsequentRequest(submittedParams, pageAction, allEntities, nextRequestToken):
             let newPageState = SearchPageReducer.reduce(action: pageAction,
@@ -115,16 +131,41 @@ enum SearchReducer {
                                                             nextRequestToken: nextRequestToken)
 
             return SearchState(loadState: loadState,
+                               inputParams: currentState.inputParams,
+                               detailedEntity: currentState.detailedEntity)
+        case let .failure(submittedParams, searchError):
+            return SearchState(loadState: .failure(submittedParams, underlyingError: searchError),
+                               inputParams: currentState.inputParams,
+                               detailedEntity: nil)
+        case let .updateInputEditing(action):
+            return SearchState(loadState: currentState.loadState,
+                               inputParams: buildInputParams(currentState, action: action),
                                detailedEntity: currentState.detailedEntity)
         case let .detailedEntity(entity):
             return SearchState(loadState: currentState.loadState,
+                               inputParams: currentState.inputParams,
                                detailedEntity: entity)
         case .removeDetailedEntity:
             return SearchState(loadState: currentState.loadState,
+                               inputParams: currentState.inputParams,
                                detailedEntity: nil)
-        case let .failure(submittedParams, searchError):
-            return SearchState(loadState: .failure(submittedParams, underlyingError: searchError),
-                               detailedEntity: nil)
+
+        }
+    }
+    // swiftlint:enable function_body_length
+
+    private static func buildInputParams(_ currentState: SearchState,
+                                         action: SearchBarEditAction) -> SearchInputParams {
+        switch action {
+        case .beganEditing:
+            return SearchInputParams(params: currentState.inputParams.params,
+                                     isEditing: true)
+        case .clearedInput:
+            return SearchInputParams(params: nil,
+                                     isEditing: true)
+        case .endedEditing:
+            return SearchInputParams(params: currentState.submittedParams,
+                                     isEditing: false)
         }
     }
 

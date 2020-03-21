@@ -10,15 +10,18 @@ import Foundation
 import Shared
 
 struct SearchInputContentViewModel: Equatable {
-    let inputParams: SearchInputParams
+    let keywords: NonEmptyString?
+    let isEditing: Bool
     let placeholder: String
 }
 
 extension SearchInputContentViewModel {
 
-    init(inputParams: SearchInputParams,
+    init(keywords: NonEmptyString?,
+         isEditing: Bool,
          copyContent: SearchInputCopyContent) {
-        self.inputParams = inputParams
+        self.keywords = keywords
+        self.isEditing = isEditing
         self.placeholder = copyContent.placeholder
     }
 
@@ -26,6 +29,7 @@ extension SearchInputContentViewModel {
 
 struct SearchInputViewModel {
     struct Callbacks {
+        let isEditing: (SearchBarEditAction) -> Void
         let lookup: (SearchParams) -> Void
     }
 

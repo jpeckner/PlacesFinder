@@ -134,6 +134,18 @@ class SearchActionPrismTests: QuickSpec {
 
         }
 
+        describe("updateEditingAction") {
+            let editAction: SearchBarEditAction = .beganEditing
+
+            beforeEach {
+                result = prism.updateEditingAction(editAction)
+            }
+
+            it("returns SearchAction.updateInputEditing(editAction:)") {
+                expect(result as? SearchAction) == .updateInputEditing(editAction)
+            }
+        }
+
         describe("detailEntityAction") {
             let stubEntity = SearchEntityModel.stubValue()
 

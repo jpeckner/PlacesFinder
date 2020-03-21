@@ -25,6 +25,10 @@ protocol SearchSubsequentActionPrismProtocol {
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action
 }
 
+protocol SearchUpdateEditingActionPrismProtocol {
+    func updateEditingAction(_ editAction: SearchBarEditAction) -> Action
+}
+
 protocol SearchDetailsActionPrismProtocol {
     func detailEntityAction(_ entity: SearchEntityModel) -> Action
     var removeDetailedEntityAction: Action { get }
@@ -32,6 +36,7 @@ protocol SearchDetailsActionPrismProtocol {
 
 protocol SearchActionPrismProtocol: SearchInitialActionPrismProtocol,
                                     SearchSubsequentActionPrismProtocol,
+                                    SearchUpdateEditingActionPrismProtocol,
                                     SearchDetailsActionPrismProtocol,
                                     AutoMockable {}
 
@@ -76,6 +81,14 @@ extension SearchActionPrism: SearchSubsequentActionPrismProtocol {
                                                    searchParams: searchParams,
                                                    previousResults: allEntities,
                                                    tokenContainer: updatedTokenContainer)
+    }
+
+}
+
+extension SearchActionPrism: SearchUpdateEditingActionPrismProtocol {
+
+    func updateEditingAction(_ editAction: SearchBarEditAction) -> Action {
+        return SearchAction.updateInputEditing(editAction)
     }
 
 }
