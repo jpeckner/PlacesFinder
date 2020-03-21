@@ -204,8 +204,7 @@ private extension SearchPresenter {
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(store: store,
-                                                      viewModel: viewModel,
+        let controller = SearchLookupParentController(viewModel: viewModel,
                                                       appSkin: appSkin)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)

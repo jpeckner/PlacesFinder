@@ -7,7 +7,6 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject {
@@ -18,32 +17,22 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 class SearchResultsViewController: SingleContentViewController {
 
     private weak var delegate: SearchResultsViewControllerDelegate?
-    private let store: DispatchingStoreProtocol
-    private let refreshAction: Action
     private var colorings: SearchResultsViewColorings
-
     private var viewModel: SearchResultsViewModel {
         didSet {
             tableView.reloadData()
         }
     }
-    private var nextRequestAction: Action?
 
     private let tableView: UITableView
     private var previousContentOffsetY: CGFloat = 0.0
 
     init(delegate: SearchResultsViewControllerDelegate,
-         store: DispatchingStoreProtocol,
-         refreshAction: Action,
          colorings: SearchResultsViewColorings,
-         viewModel: SearchResultsViewModel,
-         nextRequestAction: Action?) {
+         viewModel: SearchResultsViewModel) {
         self.delegate = delegate
-        self.store = store
-        self.refreshAction = refreshAction
         self.colorings = colorings
         self.viewModel = viewModel
-        self.nextRequestAction = nextRequestAction
         self.tableView = UITableView()
 
         super.init(contentView: tableView,
@@ -51,7 +40,6 @@ class SearchResultsViewController: SingleContentViewController {
 
         setupTableView()
         configure(viewModel,
-                  nextRequestAction: nextRequestAction,
                   colorings: colorings)
     }
 
@@ -78,10 +66,8 @@ class SearchResultsViewController: SingleContentViewController {
 extension SearchResultsViewController {
 
     func configure(_ viewModel: SearchResultsViewModel,
-                   nextRequestAction: Action?,
                    colorings: SearchResultsViewColorings) {
         self.viewModel = viewModel
-        self.nextRequestAction = nextRequestAction
         self.colorings = colorings
 
         tableView.refreshControl?.tintColor = colorings.refreshControlTint.color
@@ -92,7 +78,7 @@ extension SearchResultsViewController {
 extension SearchResultsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultViewModels.count
+        return viewModel.cellViewModelCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,8 +86,8 @@ extension SearchResultsViewController: UITableViewDataSource {
 
         AssertionHandler.assertIfErrorThrown {
             let resultCell: SearchResultCell = try CastingFunctions.cast(cell)
-            let viewModel = resultViewModel(for: indexPath)
-            resultCell.configure(viewModel.cellModel,
+            let cellViewModel = viewModel.cellViewModel(rowIndex: indexPath.row)
+            resultCell.configure(cellViewModel,
                                  colorings: colorings)
         }
 
@@ -115,16 +101,15 @@ extension SearchResultsViewController: UITableViewDataSource {
 extension SearchResultsViewController: UITableViewDataSourcePrefetching {
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard let nextRequestAction = nextRequestAction,
+        guard viewModel.hasNextRequestAction,
             isCloseEnoughToBottomForNextRequest(indexPaths)
         else { return }
 
-        self.nextRequestAction = nil
-        store.dispatch(nextRequestAction)
+        viewModel.dispatchNextRequestAction()
     }
 
     private func isCloseEnoughToBottomForNextRequest(_ indexPaths: [IndexPath]) -> Bool {
-        return indexPaths.contains { $0.row >= resultViewModels.count - 30 }
+        return indexPaths.contains { $0.row >= viewModel.cellViewModelCount - 30 }
     }
 
 }
@@ -135,8 +120,7 @@ extension SearchResultsViewController: UITableViewDelegate {
                    didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let viewModel = resultViewModel(for: indexPath)
-        store.dispatch(viewModel.detailEntityAction)
+        viewModel.dispatchDetailsAction(rowIndex: indexPath.row)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -154,19 +138,8 @@ extension SearchResultsViewController: UITableViewDelegate {
 
         tableView.setContentOffset(.zero, animated: true)
         tableView.refreshControl?.endRefreshing()
-        store.dispatch(refreshAction)
-    }
 
-}
-
-private extension SearchResultsViewController {
-
-    var resultViewModels: [SearchResultViewModel] {
-        return viewModel.resultViewModels.value
-    }
-
-    func resultViewModel(for indexPath: IndexPath) -> SearchResultViewModel {
-        return resultViewModels[indexPath.row]
+        viewModel.dispatchRefreshAction()
     }
 
 }
