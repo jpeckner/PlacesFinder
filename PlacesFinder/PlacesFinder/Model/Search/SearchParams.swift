@@ -12,3 +12,7 @@ import Shared
 struct SearchParams: Equatable {
     let keywords: NonEmptyString
 }
+
+struct SearchInputParams: Equatable {
+    let params: SearchParams?
+}

@@ -142,23 +142,23 @@ private class SearchLookupViewWrapper: NSObject {
     }
 
     let view: SearchLookupView
-    private let searchBarFullHeight: CGFloat
-    private let searchBarHeightConstraint: NSLayoutConstraint
     private var viewModel: SearchLookupViewModel
     private var editState: TextEditState
+    private let searchBarFullHeight: CGFloat
+    private let searchBarHeightConstraint: NSLayoutConstraint
 
     init(viewModel: SearchLookupViewModel,
          searchInputColorings: SearchInputViewColorings) {
-        self.view = SearchLookupView(searchInputViewModel: viewModel.searchInputViewModel,
+        self.view = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
                                      searchInputColorings: searchInputColorings)
+
+        self.viewModel = viewModel
+        self.editState = .notEditing
 
         self.searchBarFullHeight = view.searchBar.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
 
         self.searchBarHeightConstraint = view.searchBar.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
         searchBarHeightConstraint.isActive = true
-
-        self.viewModel = viewModel
-        self.editState = .notEditing
 
         super.init()
 
@@ -178,7 +178,7 @@ extension SearchLookupViewWrapper {
                    appSkin: AppSkin) {
         self.viewModel = viewModel
 
-        view.configure(viewModel.searchInputViewModel,
+        view.configure(viewModel.searchInputViewModel.content,
                        colorings: appSkin.colorings.searchInput)
     }
 
@@ -212,7 +212,7 @@ extension SearchLookupViewWrapper: UISearchBarDelegate {
         if let text = searchBar.text,
             let keywords = try? NonEmptyString(text) {
             let params = SearchParams(keywords: keywords)
-            viewModel.lookupBlock(params)
+            viewModel.searchInputViewModel.callbacks.lookup(params)
         } else {
             AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return empty text" }
         }

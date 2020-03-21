@@ -9,17 +9,26 @@
 import Foundation
 import Shared
 
-struct SearchInputViewModel: Equatable {
-    let searchParams: SearchParams?
+struct SearchInputContentViewModel {
+    let inputParams: SearchInputParams
     let placeholder: String
 }
 
-extension SearchInputViewModel {
+extension SearchInputContentViewModel {
 
-    init(searchParams: SearchParams?,
+    init(inputParams: SearchInputParams,
          copyContent: SearchInputCopyContent) {
-        self.searchParams = searchParams
+        self.inputParams = inputParams
         self.placeholder = copyContent.placeholder
     }
 
+}
+
+struct SearchInputViewModel {
+    struct Callbacks {
+        let lookup: (SearchParams) -> Void
+    }
+
+    let content: SearchInputContentViewModel
+    let callbacks: Callbacks
 }

@@ -96,15 +96,23 @@ private extension SearchCoordinator {
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
             case let .locationServicesEnabled(locationUpdateRequestBlock):
+                let inputParams = SearchInputParams(params: state.searchState.submittedParams)
+                let contentViewModel = SearchInputContentViewModel(inputParams: inputParams,
+                                                                   copyContent: appCopyContent.searchInput)
+                let callbacks = SearchInputViewModel.Callbacks(lookup: { [weak self] params in
+                    self?.submitInitalSearchRequest(params,
+                                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
+                })
+                let searchInputViewModel = SearchInputViewModel(content: contentViewModel,
+                                                                callbacks: callbacks)
+
                 let child = searchLookupChild(state.searchState.loadState,
                                               appCopyContent: appCopyContent,
                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
-                let viewModel = SearchLookupViewModel(searchState: state.searchState,
-                                                      copyContent: appCopyContent.searchInput,
-                                                      child: child) { [weak self] in
-                    self?.submitInitalSearchRequest($0,
-                                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
-                }
+
+                let viewModel = SearchLookupViewModel(searchInputViewModel: searchInputViewModel,
+                                                      child: child)
+
                 let detailsContext = detailsViewContext(state,
                                                         appCopyContent: appCopyContent)
 

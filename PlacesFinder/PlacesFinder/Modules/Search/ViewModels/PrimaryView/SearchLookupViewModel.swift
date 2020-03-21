@@ -10,8 +10,6 @@ import Foundation
 import Shared
 import SwiftDux
 
-typealias SearchLookupBlock = (SearchParams) -> Void
-
 struct SearchLookupViewModel {
     enum Child {
         case instructions(SearchInstructionsViewModel)
@@ -23,19 +21,4 @@ struct SearchLookupViewModel {
 
     let searchInputViewModel: SearchInputViewModel
     let child: Child
-    let lookupBlock: SearchLookupBlock
-}
-
-extension SearchLookupViewModel {
-
-    init(searchState: SearchState,
-         copyContent: SearchInputCopyContent,
-         child: Child,
-         lookupBlock: @escaping SearchLookupBlock) {
-        self.searchInputViewModel = SearchInputViewModel(searchParams: searchState.submittedParams,
-                                                         copyContent: copyContent)
-        self.child = child
-        self.lookupBlock = lookupBlock
-    }
-
 }
