@@ -14,7 +14,7 @@ class SearchLookupView: UIView {
     let searchBar: UISearchBar
     let childContainerView: SearchChildContainerView
 
-    init(searchInputViewModel: SearchInputViewModel,
+    init(contentViewModel: SearchInputContentViewModel,
          searchInputColorings: SearchInputViewColorings) {
         self.searchBar = UISearchBar()
         searchBar.returnKeyType = .go
@@ -26,7 +26,7 @@ class SearchLookupView: UIView {
 
         setupSubviews()
         setupConstraints()
-        configure(searchInputViewModel,
+        configure(contentViewModel,
                   colorings: searchInputColorings)
     }
 
@@ -54,9 +54,9 @@ class SearchLookupView: UIView {
 
 extension SearchLookupView {
 
-    func configure(_ viewModel: SearchInputViewModel,
+    func configure(_ viewModel: SearchInputContentViewModel,
                    colorings: SearchInputViewColorings) {
-        searchBar.text = viewModel.searchParams?.keywords.value
+        searchBar.text = viewModel.inputParams.params?.keywords.value
         searchBar.placeholder = viewModel.placeholder
 
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(

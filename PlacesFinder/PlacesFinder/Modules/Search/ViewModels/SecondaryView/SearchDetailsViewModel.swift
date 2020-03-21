@@ -14,6 +14,31 @@ enum SearchDetailsViewContext {
     case firstListedEntity(SearchDetailsViewModel)
 }
 
+extension SearchDetailsViewContext {
+
+    init?(_ state: AppState,
+          urlOpenerService: URLOpenerServiceProtocol,
+          copyFormatter: SearchCopyFormatterProtocol,
+          appCopyContent: AppCopyContent) {
+        let value: SearchDetailsViewContext? = state.searchState.detailedEntity.map {
+            .detailedEntity(SearchDetailsViewModel(entity: $0,
+                                                   urlOpenerService: urlOpenerService,
+                                                   copyFormatter: copyFormatter,
+                                                   resultsCopyContent: appCopyContent.searchResults))
+        }
+        ?? state.searchState.entities?.value.first.map {
+            .firstListedEntity(SearchDetailsViewModel(entity: $0,
+                                                      urlOpenerService: urlOpenerService,
+                                                      copyFormatter: copyFormatter,
+                                                      resultsCopyContent: appCopyContent.searchResults))
+        }
+
+        guard let caseValue = value else { return nil }
+        self = caseValue
+    }
+
+}
+
 struct SearchDetailsViewModel: Equatable {
     enum Section: Equatable {
         case info([SearchDetailsInfoSectionViewModel])

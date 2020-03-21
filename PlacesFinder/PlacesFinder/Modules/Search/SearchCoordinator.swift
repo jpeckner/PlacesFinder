@@ -96,89 +96,23 @@ private extension SearchCoordinator {
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
             case let .locationServicesEnabled(locationUpdateRequestBlock):
-                let child = searchLookupChild(state.searchState.loadState,
-                                              appCopyContent: appCopyContent,
-                                              locationUpdateRequestBlock: locationUpdateRequestBlock)
                 let viewModel = SearchLookupViewModel(searchState: state.searchState,
-                                                      copyContent: appCopyContent.searchInput,
-                                                      child: child) { [weak self] in
-                    self?.submitInitalSearchRequest($0,
-                                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
-                }
-                let detailsContext = detailsViewContext(state,
-                                                        appCopyContent: appCopyContent)
+                                                      store: store,
+                                                      actionPrism: actionPrism,
+                                                      copyFormatter: copyFormatter,
+                                                      appCopyContent: appCopyContent,
+                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
+
+                let detailsContext = SearchDetailsViewContext(state,
+                                                              urlOpenerService: urlOpenerService,
+                                                              copyFormatter: copyFormatter,
+                                                              appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,
                                           detailsViewContext: detailsContext,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)
             }
-        }
-    }
-
-    func searchLookupChild(
-        _ loadState: SearchLoadState,
-        appCopyContent: AppCopyContent,
-        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
-    ) -> SearchLookupViewModel.Child {
-        switch loadState {
-        case .idle:
-            return .instructions(SearchInstructionsViewModel(copyContent: appCopyContent.searchInstructions))
-        case .locationRequested,
-             .initialPageRequested:
-            return .progress
-        case let .pagesReceived(submittedParams, _, allEntities, tokenContainer):
-            let viewModel = resultViewModels(allEntities,
-                                             resultsCopyContent: appCopyContent.searchResults)
-            let refreshAction = initialRequestAction(submittedParams,
-                                                     locationUpdateRequestBlock: locationUpdateRequestBlock)
-            let nextRequestAction = tokenContainer.flatMap {
-                try? actionPrism.subsequentRequestAction(submittedParams,
-                                                         allEntities: allEntities,
-                                                         tokenContainer: $0)
-            }
-
-            return .results(viewModel,
-                            refreshAction: refreshAction,
-                            nextRequestAction: nextRequestAction)
-        case .noResultsFound:
-            return .noResults(SearchNoResultsFoundViewModel(copyContent: appCopyContent.searchNoResults))
-        case let .failure(submittedParams, _):
-            return .failure(SearchRetryViewModel(copyContent: appCopyContent.searchRetry) { [weak self] in
-                self?.submitInitalSearchRequest(submittedParams,
-                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
-            })
-        }
-    }
-
-    func resultViewModels(_ allEntities: NonEmptyArray<SearchEntityModel>,
-                          resultsCopyContent: SearchResultsCopyContent) -> SearchResultsViewModel {
-        let resultViewModels: NonEmptyArray<SearchResultViewModel> = allEntities.withTransformation {
-            let cellModel = SearchResultCellModel(model: $0,
-                                                  copyFormatter: copyFormatter,
-                                                  resultsCopyContent: resultsCopyContent)
-            let detailEntityAction = actionPrism.detailEntityAction($0)
-
-            return SearchResultViewModel(cellModel: cellModel,
-                                         detailEntityAction: detailEntityAction)
-        }
-
-        return SearchResultsViewModel(resultViewModels: resultViewModels)
-    }
-
-    func detailsViewContext(_ state: AppState,
-                            appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
-        return state.searchState.detailedEntity.map {
-            .detailedEntity(SearchDetailsViewModel(entity: $0,
-                                                   urlOpenerService: urlOpenerService,
-                                                   copyFormatter: copyFormatter,
-                                                   resultsCopyContent: appCopyContent.searchResults))
-        }
-        ?? state.searchState.entities?.value.first.map {
-            .firstListedEntity(SearchDetailsViewModel(entity: $0,
-                                                      urlOpenerService: urlOpenerService,
-                                                      copyFormatter: copyFormatter,
-                                                      resultsCopyContent: appCopyContent.searchResults))
         }
     }
 
