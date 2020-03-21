@@ -216,9 +216,7 @@ private extension SearchPresenter {
         _ viewModel: SearchDetailsViewModel,
         appSkin: AppSkin
     ) -> SearchDetailsViewController {
-        return SearchDetailsViewController(store: store,
-                                           removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
-                                           viewModel: viewModel,
+        return SearchDetailsViewController(viewModel: viewModel,
                                            appSkin: appSkin)
     }
 

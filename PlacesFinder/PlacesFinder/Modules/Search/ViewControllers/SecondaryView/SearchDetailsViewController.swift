@@ -7,30 +7,21 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 class SearchDetailsViewController: SingleContentViewController {
 
-    private let store: DispatchingStoreProtocol
-    private let removeDetailedEntityAction: Action
+    private let tableView: UITableView
+    private let titleLabel: StyledLabel
     private var viewModel: SearchDetailsViewModel
     private var colorings: SearchDetailsViewColorings
 
-    private let tableView: UITableView
-    private let titleLabel: StyledLabel
-
-    init(store: DispatchingStoreProtocol,
-         removeDetailedEntityAction: Action,
-         viewModel: SearchDetailsViewModel,
+    init(viewModel: SearchDetailsViewModel,
          appSkin: AppSkin) {
-        self.store = store
-        self.removeDetailedEntityAction = removeDetailedEntityAction
-        self.viewModel = viewModel
-        self.colorings = appSkin.colorings.searchDetails
-
         self.tableView = UITableView()
         self.titleLabel = StyledLabel(numberOfLines: 1)
+        self.viewModel = viewModel
+        self.colorings = appSkin.colorings.searchDetails
 
         super.init(contentView: tableView,
                    viewColoring: colorings.viewColoring)
@@ -106,7 +97,7 @@ extension SearchDetailsViewController {
 extension SearchDetailsViewController: PopCallbackViewController {
 
     func viewControllerWasPopped() {
-        store.dispatch(removeDetailedEntityAction)
+        viewModel.dispatchRemoveDetailsAction()
     }
 
 }
