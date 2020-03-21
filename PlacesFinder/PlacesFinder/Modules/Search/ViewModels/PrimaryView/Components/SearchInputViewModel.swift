@@ -9,7 +9,7 @@
 import Foundation
 import Shared
 
-struct SearchInputContentViewModel {
+struct SearchInputContentViewModel: Equatable {
     let inputParams: SearchInputParams
     let placeholder: String
 }
