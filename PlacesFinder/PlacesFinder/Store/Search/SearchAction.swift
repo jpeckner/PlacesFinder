@@ -16,6 +16,7 @@ enum SearchPageRequestError: Error, Equatable {
 }
 
 enum SearchAction: Action, Equatable {
+    // Load state
     case locationRequested(SearchParams)
 
     case initialPageRequested(SearchParams)
@@ -29,14 +30,18 @@ enum SearchAction: Action, Equatable {
         nextRequestToken: PlaceLookupTokenAttemptsContainer?
     )
 
-    case detailedEntity(SearchEntityModel)
-
-    case removeDetailedEntity
-
     case failure(
         SearchParams,
         underlyingError: IgnoredEquatable<Error>
     )
+
+    // Input params
+    case updateInputEditing(SearchBarEditAction)
+
+    // Detailed entity
+    case detailedEntity(SearchEntityModel)
+
+    case removeDetailedEntity
 }
 
 // MARK: SearchActionCreator

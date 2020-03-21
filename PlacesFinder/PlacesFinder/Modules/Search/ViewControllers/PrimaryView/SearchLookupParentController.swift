@@ -13,18 +13,33 @@ import UIKit
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let searchViewWrapper: SearchLookupViewWrapper
+    private let lookupView: SearchLookupView
+    private let searchBarFullHeight: CGFloat
+    private let searchBarHeightConstraint: NSLayoutConstraint
+
+    private var viewModel: SearchLookupViewModel
 
     init(store: DispatchingStoreProtocol,
          viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
         self.store = store
-        self.searchViewWrapper = SearchLookupViewWrapper(viewModel: viewModel,
-                                                         searchInputColorings: appSkin.colorings.searchInput)
 
-        super.init(contentView: searchViewWrapper.view,
+        self.lookupView = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
+                                           searchInputColorings: appSkin.colorings.searchInput) {
+            viewModel.searchInputViewModel.callbacks.isEditing(.endedEditing)
+        }
+
+        let searchBarView = lookupView.searchBarWrapperView
+        self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        self.searchBarHeightConstraint = searchBarView.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
+        searchBarHeightConstraint.isActive = true
+
+        self.viewModel = viewModel
+
+        super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
+        lookupView.setSearchBarWrapperDelegate(self)
         configure(viewModel,
                   appSkin: appSkin)
     }
@@ -39,13 +54,25 @@ extension SearchLookupParentController {
 
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
+        self.viewModel = viewModel
         self.viewColoring = appSkin.colorings.standard.viewColoring
 
-        searchViewWrapper.configure(viewModel,
-                                    appSkin: appSkin)
+        configureLookupView(viewModel.searchInputViewModel,
+                            colorings: appSkin.colorings.searchInput)
 
         activateChildView(viewModel,
                           appSkin: appSkin)
+    }
+
+    private func configureLookupView(_ viewModel: SearchInputViewModel,
+                                     colorings: SearchInputViewColorings) {
+        searchBarHeightConstraint.constant =
+            viewModel.content.isEditing ?
+                searchBarFullHeight
+                : searchBarHeightConstraint.constant
+
+        lookupView.configure(viewModel.content,
+                             colorings: colorings)
     }
 
     // swiftlint:disable function_body_length
@@ -78,7 +105,7 @@ extension SearchLookupParentController {
             let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
                 setSingleChildController(
-                    SearchResultsViewController(delegate: searchViewWrapper,
+                    SearchResultsViewController(delegate: self,
                                                 store: store,
                                                 refreshAction: refreshAction,
                                                 colorings: colorings,
@@ -125,118 +152,26 @@ extension SearchLookupParentController {
 
     private func setSingleChildController(_ controller: UIViewController) {
         setSingleChildController(controller) {
-            searchViewWrapper.view.setChildView($0)
+            lookupView.setChildView($0)
         }
     }
 
 }
 
-// MARK: SearchLookupViewWrapper
+extension SearchLookupParentController: SearchBarWrapperDelegate {
 
-private class SearchLookupViewWrapper: NSObject {
-
-    private enum TextEditState {
-        case notEditing
-        case editing(previous: String?)
-        case exitedWithReturn
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditAction) {
+        viewModel.searchInputViewModel.callbacks.isEditing(action)
     }
 
-    let view: SearchLookupView
-    private var viewModel: SearchLookupViewModel
-    private var editState: TextEditState
-    private let searchBarFullHeight: CGFloat
-    private let searchBarHeightConstraint: NSLayoutConstraint
-
-    init(viewModel: SearchLookupViewModel,
-         searchInputColorings: SearchInputViewColorings) {
-        self.view = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
-                                     searchInputColorings: searchInputColorings)
-
-        self.viewModel = viewModel
-        self.editState = .notEditing
-
-        self.searchBarFullHeight = view.searchBar.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-
-        self.searchBarHeightConstraint = view.searchBar.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
-        searchBarHeightConstraint.isActive = true
-
-        super.init()
-
-        view.searchBar.delegate = self
-        view.childContainerView.delegate = self
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString) {
+        let params = SearchParams(keywords: text)
+        viewModel.searchInputViewModel.callbacks.lookup(params)
     }
 
 }
 
-extension SearchLookupViewWrapper {
-
-    func configure(_ viewModel: SearchLookupViewModel,
-                   appSkin: AppSkin) {
-        self.viewModel = viewModel
-
-        view.configure(viewModel.searchInputViewModel.content,
-                       colorings: appSkin.colorings.searchInput)
-    }
-
-}
-
-extension SearchLookupViewWrapper: UISearchBarDelegate {
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        editState = .editing(previous: searchBar.text)
-        handleTextFieldEditingState(true)
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        switch editState {
-        case let .editing(previous):
-            searchBar.text = previous
-        case .exitedWithReturn:
-            break
-        case .notEditing:
-            AssertionHandler.performAssertionFailure { "Unexpected editState value: \(editState)" }
-        }
-
-        editState = .notEditing
-        handleTextFieldEditingState(false)
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        editState = .exitedWithReturn
-        searchBar.resignFirstResponder()
-
-        if let text = searchBar.text,
-            let keywords = try? NonEmptyString(text) {
-            let params = SearchParams(keywords: keywords)
-            viewModel.searchInputViewModel.callbacks.lookup(params)
-        } else {
-            AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return empty text" }
-        }
-    }
-
-    private func handleTextFieldEditingState(_ isEditing: Bool) {
-        view.childContainerView.configureCoverView(isEditing)
-
-        if isEditing {
-            searchBarHeightConstraint.constant = searchBarFullHeight
-        }
-    }
-
-}
-
-extension SearchLookupViewWrapper: SearchChildContainerViewDelegate {
-
-    func containerViewCoverWasTapped(_ containerView: SearchChildContainerView) {
-        view.searchBar.resignFirstResponder()
-    }
-
-}
-
-extension SearchLookupViewWrapper: SearchResultsViewControllerDelegate {
+extension SearchLookupParentController: SearchResultsViewControllerDelegate {
 
     func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
         let updatedHeight = deltaY > 0 ?

@@ -31,14 +31,19 @@ extension SearchLookupViewModel {
          copyFormatter: SearchCopyFormatterProtocol,
          appCopyContent: AppCopyContent,
          locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        let inputParams = SearchInputParams(params: searchState.submittedParams)
-        let contentViewModel = SearchInputContentViewModel(inputParams: inputParams,
+        let contentViewModel = SearchInputContentViewModel(keywords: searchState.inputParams.params?.keywords,
+                                                           isEditing: searchState.inputParams.isEditing,
                                                            copyContent: appCopyContent.searchInput)
-        let callbacks = SearchInputViewModel.Callbacks { params in
+
+        let callbacks = SearchInputViewModel.Callbacks(isEditing: { editAction in
+            let action = actionPrism.updateEditingAction(editAction)
+            store.dispatch(action)
+        }, lookup: { params in
             let action = actionPrism.initialRequestAction(params,
                                                           locationUpdateRequestBlock: locationUpdateRequestBlock)
             store.dispatch(action)
-        }
+        })
+
         self.searchInputViewModel = SearchInputViewModel(content: contentViewModel,
                                                          callbacks: callbacks)
 

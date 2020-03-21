@@ -11,16 +11,19 @@ import UIKit
 
 class SearchLookupView: UIView {
 
-    let searchBar: UISearchBar
-    let childContainerView: SearchChildContainerView
+    private let searchBarWrapper: SearchBarWrapper
+    private let childContainerView: SearchChildContainerView
+
+    var searchBarWrapperView: UIView {
+        return searchBarWrapper.view
+    }
 
     init(contentViewModel: SearchInputContentViewModel,
-         searchInputColorings: SearchInputViewColorings) {
-        self.searchBar = UISearchBar()
-        searchBar.returnKeyType = .go
-        searchBar.enablesReturnKeyAutomatically = true
+         searchInputColorings: SearchInputViewColorings,
+         coverTappedCallback: (() -> Void)?) {
+        self.searchBarWrapper = SearchBarWrapper()
 
-        self.childContainerView = SearchChildContainerView()
+        self.childContainerView = SearchChildContainerView(coverTappedCallback: coverTappedCallback)
 
         super.init(frame: .zero)
 
@@ -35,18 +38,18 @@ class SearchLookupView: UIView {
     }
 
     private func setupSubviews() {
-        addSubview(searchBar)
+        addSubview(searchBarWrapperView)
         addSubview(childContainerView)
     }
 
     private func setupConstraints() {
-        searchBar.snp.makeConstraints { make in
+        searchBarWrapperView.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(self)
         }
 
         childContainerView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
-            make.top.equalTo(searchBar.snp.bottom)
+            make.top.equalTo(searchBarWrapperView.snp.bottom)
         }
     }
 
@@ -56,13 +59,20 @@ extension SearchLookupView {
 
     func configure(_ viewModel: SearchInputContentViewModel,
                    colorings: SearchInputViewColorings) {
-        searchBar.text = viewModel.inputParams.params?.keywords.value
-        searchBar.placeholder = viewModel.placeholder
+        searchBarWrapper.configureText(viewModel.keywords?.value)
+        searchBarWrapper.configurePlaceholder(viewModel.placeholder)
+
+        childContainerView.configureCoverView(viewModel.isEditing)
+        searchBarWrapper.isFirstResponder = viewModel.isEditing
 
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
             AppTextStyleClass.textInput.textLayout.font,
             forKey: .font
         )
+    }
+
+    func setSearchBarWrapperDelegate(_ delegate: SearchBarWrapperDelegate) {
+        searchBarWrapper.delegate = delegate
     }
 
     func setChildView(_ childView: UIView) {
