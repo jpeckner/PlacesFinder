@@ -61,8 +61,7 @@ private extension SettingsPresenter {
     func buildSettingsViewController(_ viewModel: SettingsViewModel,
                                      titleViewModel: NavigationBarTitleViewModel,
                                      appSkin: AppSkin) -> SettingsViewController {
-        let controller = SettingsViewController(store: store,
-                                                viewModel: viewModel,
+        let controller = SettingsViewController(viewModel: viewModel,
                                                 colorings: appSkin.colorings.settings)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
