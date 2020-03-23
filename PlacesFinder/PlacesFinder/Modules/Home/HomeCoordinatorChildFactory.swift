@@ -30,6 +30,13 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
 
         switch immediateDescendent {
         case .search:
+            let presenter = SearchPresenter(tabItemProperties: immediateDescendent.tabItemProperties)
+
+            let copyFormatter = SearchCopyFormatter()
+
+            let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+                                              locationRequestHandler: serviceContainer.locationRequestHandler)
+
             let searchEntityModelBuilder = SearchEntityModelBuilder()
             let actionCreatorDependencies = SearchActionCreatorDependencies(
                 placeLookupService: serviceContainer.placeLookupService,
@@ -37,14 +44,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
             )
             let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
                                                 actionCreator: SearchActionCreator.self)
-            let copyFormatter = SearchCopyFormatter()
-
-            let presenter = SearchPresenter(store: store,
-                                            actionPrism: actionPrism,
-                                            tabItemProperties: immediateDescendent.tabItemProperties)
-
-            let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
-                                              locationRequestHandler: serviceContainer.locationRequestHandler)
 
             return SearchCoordinator(store: store,
                                      presenter: presenter,
