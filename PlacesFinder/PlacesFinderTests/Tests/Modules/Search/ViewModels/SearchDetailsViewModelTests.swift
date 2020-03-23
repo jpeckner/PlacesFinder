@@ -13,23 +13,36 @@ import Nimble
 import Quick
 import Shared
 import SharedTestComponents
+import SwiftDux
 
-class SearchDetailsViewModelInitTests: QuickSpec {
+class SearchDetailsViewModelTests: QuickSpec {
+
+    private enum StubViewModelAction: Action {
+        case removeDetailedEntityAction
+    }
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
+        var mockStore: MockAppStore!
+        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
         var mockCopyFormatter: SearchCopyFormatterProtocolMock!
 
-        var result: SearchDetailsViewModel!
+        var viewModel: SearchDetailsViewModel!
 
-        // swiftlint:disable line_length
         beforeEach {
+            mockStore = MockAppStore()
+
+            mockSearchActionPrism = SearchActionPrismProtocolMock()
+            mockSearchActionPrism.removeDetailedEntityAction = StubViewModelAction.removeDetailedEntityAction
+
             mockURLOpenerService = URLOpenerServiceProtocolMock()
 
             mockCopyFormatter = SearchCopyFormatterProtocolMock()
@@ -39,30 +52,30 @@ class SearchDetailsViewModelInitTests: QuickSpec {
             mockCopyFormatter.formatRatingsNumRatingsReturnValue = "formatRatingsNumRatingsReturnValue"
             mockCopyFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
         }
-        // swiftlint:enable line_length
 
-        func performTest(entity: SearchEntityModel) {
-            result = SearchDetailsViewModel(entity: entity,
-                                            urlOpenerService: mockURLOpenerService,
-                                            copyFormatter: mockCopyFormatter,
-
-                                            resultsCopyContent: stubCopyContent)
+        func constructResult(entity: SearchEntityModel) {
+            viewModel = SearchDetailsViewModel(entity: entity,
+                                               store: mockStore,
+                                               actionPrism: mockSearchActionPrism,
+                                               urlOpenerService: mockURLOpenerService,
+                                               copyFormatter: mockCopyFormatter,
+                                               resultsCopyContent: stubCopyContent)
         }
 
         describe("placeName") {
             beforeEach {
-                performTest(entity: stubModel)
+                constructResult(entity: stubModel)
             }
 
             it("has the same place name as the passed-in model") {
-                expect(result.placeName) == stubModel.name.value
+                expect(viewModel.placeName) == stubModel.name.value
             }
         }
 
         describe(".info section") {
 
             func returnedSection() -> SearchDetailsViewModel.Section? {
-                return result.sections.element(at: SearchDetailsViewModel.Section.infoSectionIndex)
+                return viewModel.sections.element(at: SearchDetailsViewModel.Section.infoSectionIndex)
             }
 
             var blockCalled: Bool!
@@ -73,7 +86,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     blockCalled = true
                 }
 
-                performTest(entity: stubModel)
+                constructResult(entity: stubModel)
             }
 
             it("includes SearchDetailsViewModel.Section.info") {
@@ -101,11 +114,9 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     expect(returnedViewModel()?.infoViewModel?.ratingsAverage) == stubModel.ratings.average
                 }
 
-                // swiftlint:disable line_length
                 it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
                     expect(returnedViewModel()?.infoViewModel?.numRatingsMessage) == "formatRatingsNumRatingsReturnValue"
                 }
-                // swiftlint:enable line_length
 
                 it("...and with the pricing returned by mockCopyFormatter.formatPricing()...") {
                     expect(returnedViewModel()?.infoViewModel?.pricing) == "formatPricingPricingReturnValue"
@@ -134,7 +145,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                             blockCalled = true
                         }
 
-                        performTest(entity: stubModel)
+                        constructResult(entity: stubModel)
                     }
 
                     it("contains .phoneNumber, with the value from copyFormatter.formatCallablePhoneNumber()") {
@@ -153,7 +164,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                     beforeEach {
                         mockURLOpenerService.buildPhoneCallBlockReturnValue = nil
 
-                        performTest(entity: stubModel)
+                        constructResult(entity: stubModel)
                     }
 
                     it("contains .phoneNumber, with the value from copyFormatter.formatNonCallablePhoneNumber()") {
@@ -169,7 +180,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
         describe(".location section") {
 
             func returnedSection() -> SearchDetailsViewModel.Section? {
-                return result.sections.element(at: SearchDetailsViewModel.Section.locationSectionIndex)
+                return viewModel.sections.element(at: SearchDetailsViewModel.Section.locationSectionIndex)
             }
 
             context("when the model has a non-nil coordinate") {
@@ -181,7 +192,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                 }
 
                 beforeEach {
-                    performTest(entity: SearchEntityModel.stubValue(coordinate: stubCoordinate))
+                    constructResult(entity: SearchEntityModel.stubValue(coordinate: stubCoordinate))
                 }
 
                 it("includes SearchDetailsViewModel.Section.location") {
@@ -208,7 +219,7 @@ class SearchDetailsViewModelInitTests: QuickSpec {
 
             context("else when the model has a nil coordinate") {
                 beforeEach {
-                    performTest(entity: SearchEntityModel.stubValue(coordinate: nil))
+                    constructResult(entity: SearchEntityModel.stubValue(coordinate: nil))
                 }
 
                 it("does not include SearchDetailsViewModel.Section.location") {
@@ -216,6 +227,17 @@ class SearchDetailsViewModelInitTests: QuickSpec {
                 }
             }
 
+        }
+
+        describe("dispatchRemoveDetailsAction") {
+            beforeEach {
+                constructResult(entity: stubModel)
+                viewModel.dispatchRemoveDetailsAction()
+            }
+
+            it("dispatches the expected action") {
+                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .removeDetailedEntityAction
+            }
         }
 
     }

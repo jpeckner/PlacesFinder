@@ -14,7 +14,7 @@ struct SearchLookupViewModel {
     enum Child {
         case instructions(SearchInstructionsViewModel)
         case progress
-        case results(SearchResultsViewModel, refreshAction: Action, nextRequestAction: Action?)
+        case results(SearchResultsViewModel)
         case noResults(SearchNoResultsFoundViewModel)
         case failure(SearchRetryViewModel)
     }
@@ -72,10 +72,6 @@ private extension SearchLookupViewModel.Child {
              .initialPageRequested:
             self = .progress
         case let .pagesReceived(submittedParams, _, allEntities, tokenContainer):
-            let viewModel = SearchResultsViewModel(allEntities: allEntities,
-                                                   actionPrism: actionPrism,
-                                                   copyFormatter: copyFormatter,
-                                                   resultsCopyContent: appCopyContent.searchResults)
             let refreshAction = actionPrism.initialRequestAction(submittedParams,
                                                                  locationUpdateRequestBlock: locationUpdateRequestBlock)
             let nextRequestAction = tokenContainer.flatMap {
@@ -84,9 +80,15 @@ private extension SearchLookupViewModel.Child {
                                                          tokenContainer: $0)
             }
 
-            self = .results(viewModel,
-                            refreshAction: refreshAction,
-                            nextRequestAction: nextRequestAction)
+            let viewModel = SearchResultsViewModel(allEntities: allEntities,
+                                                   store: store,
+                                                   actionPrism: actionPrism,
+                                                   copyFormatter: copyFormatter,
+                                                   resultsCopyContent: appCopyContent.searchResults,
+                                                   refreshAction: refreshAction,
+                                                   nextRequestAction: nextRequestAction)
+
+            self = .results(viewModel)
         case .noResultsFound:
             self = .noResults(SearchNoResultsFoundViewModel(copyContent: appCopyContent.searchNoResults))
         case let .failure(submittedParams, _):

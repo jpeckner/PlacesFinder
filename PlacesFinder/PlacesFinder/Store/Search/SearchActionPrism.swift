@@ -30,8 +30,9 @@ protocol SearchUpdateEditingActionPrismProtocol {
 }
 
 protocol SearchDetailsActionPrismProtocol {
-    func detailEntityAction(_ entity: SearchEntityModel) -> Action
     var removeDetailedEntityAction: Action { get }
+
+    func detailEntityAction(_ entity: SearchEntityModel) -> Action
 }
 
 protocol SearchActionPrismProtocol: SearchInitialActionPrismProtocol,

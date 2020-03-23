@@ -68,9 +68,7 @@ private extension SearchCoordinator {
 
     func presentViews(_ state: AppState,
                       updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        guard !updatedSubstates.isDisjoint(with: statePrism.presentationKeyPaths.partialKeyPaths) else {
-            return
-        }
+        guard !updatedSubstates.isDisjoint(with: statePrism.presentationKeyPaths.partialKeyPaths) else { return }
 
         let appCopyContent = state.appCopyContentState.copyContent
         let titleViewModel = NavigationBarTitleViewModel(copyContent: appCopyContent.displayName)
@@ -102,8 +100,9 @@ private extension SearchCoordinator {
                                                       copyFormatter: copyFormatter,
                                                       appCopyContent: appCopyContent,
                                                       locationUpdateRequestBlock: locationUpdateRequestBlock)
-
-                let detailsContext = SearchDetailsViewContext(state,
+                let detailsContext = SearchDetailsViewContext(searchState: state.searchState,
+                                                              store: store,
+                                                              actionPrism: actionPrism,
                                                               urlOpenerService: urlOpenerService,
                                                               copyFormatter: copyFormatter,
                                                               appCopyContent: appCopyContent)

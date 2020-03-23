@@ -39,7 +39,7 @@ struct SettingsSectionHeaderViewModel {
 
 struct SettingsMeasurementSystemHeaderViewModel {
     enum SystemOption {
-        case selectable(title: String, selectionAction: Action)
+        case selectable(title: String, selectionAction: () -> Void)
         case nonSelectable(title: String)
     }
 
@@ -51,15 +51,19 @@ extension SettingsMeasurementSystemHeaderViewModel {
 
     init(title: String,
          currentlyActiveSystem: MeasurementSystem,
+         store: DispatchingStoreProtocol,
          copyContent: SettingsMeasurementSystemCopyContent) {
         self.title = title
-        self.systemOptions = MeasurementSystem.allCases.map {
-            let systemTitle = copyContent.title($0)
-            return $0 == currentlyActiveSystem ?
+        self.systemOptions = MeasurementSystem.allCases.map { system in
+            let systemTitle = copyContent.title(system)
+            return system == currentlyActiveSystem ?
                 .nonSelectable(title: systemTitle)
-                : .selectable(
+                :
+                .selectable(
                     title: systemTitle,
-                    selectionAction: SearchPreferencesActionCreator.setMeasurementSystem($0)
+                    selectionAction: {
+                        store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
+                    }
                 )
         }
     }

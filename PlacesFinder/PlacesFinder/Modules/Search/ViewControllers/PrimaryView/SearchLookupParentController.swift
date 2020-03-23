@@ -7,23 +7,17 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    private let store: DispatchingStoreProtocol
     private let lookupView: SearchLookupView
     private let searchBarFullHeight: CGFloat
     private let searchBarHeightConstraint: NSLayoutConstraint
-
     private var viewModel: SearchLookupViewModel
 
-    init(store: DispatchingStoreProtocol,
-         viewModel: SearchLookupViewModel,
+    init(viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
-        self.store = store
-
         self.lookupView = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
                                            searchInputColorings: appSkin.colorings.searchInput) {
             viewModel.searchInputViewModel.callbacks.isEditing(.endedEditing)
@@ -101,22 +95,18 @@ extension SearchLookupParentController {
             }
 
             existingController.configure(colorings)
-        case let .results(viewModel, refreshAction, nextRequestAction):
+        case let .results(viewModel):
             let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
                 setSingleChildController(
                     SearchResultsViewController(delegate: self,
-                                                store: store,
-                                                refreshAction: refreshAction,
                                                 colorings: colorings,
-                                                viewModel: viewModel,
-                                                nextRequestAction: nextRequestAction)
+                                                viewModel: viewModel)
                 )
                 return
             }
 
             existingController.configure(viewModel,
-                                         nextRequestAction: nextRequestAction,
                                          colorings: colorings)
         case let .noResults(viewModel):
             let colorings = appSkin.colorings.standard

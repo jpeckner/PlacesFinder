@@ -12,11 +12,13 @@ import SwiftDux
 
 struct SettingsViewModel {
     let sections: NonEmptyArray<SettingsSectionViewModel>
+    private let store: DispatchingStoreProtocol
 }
 
 extension SettingsViewModel {
 
     init(searchPreferencesState: SearchPreferencesState,
+         store: DispatchingStoreProtocol,
          measurementFormatter: MeasurementFormatterProtocol,
          appCopyContent: AppCopyContent) {
         self.sections =
@@ -26,6 +28,7 @@ extension SettingsViewModel {
                         SettingsMeasurementSystemHeaderViewModel(
                             title: appCopyContent.settingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.distance.system,
+                            store: store,
                             copyContent: appCopyContent.settingsMeasurementSystem
                         )
                     ),
@@ -39,6 +42,8 @@ extension SettingsViewModel {
                     cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
                 ),
             ])
+
+        self.store = store
     }
 
     var tableModel: GroupedTableViewModel {
@@ -48,6 +53,16 @@ extension SettingsViewModel {
                 cellModels: $0.cells.map { $0.cellModel }
             )
         })
+    }
+
+}
+
+extension SettingsViewModel {
+
+    func dispatchCellAction(sectionIndex: Int,
+                            rowIndex: Int) {
+        let action = sections.value[sectionIndex].cells[rowIndex].action
+        store.dispatch(action)
     }
 
 }

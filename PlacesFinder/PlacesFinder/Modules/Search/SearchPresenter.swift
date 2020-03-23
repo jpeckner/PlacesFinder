@@ -204,8 +204,7 @@ private extension SearchPresenter {
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(store: store,
-                                                      viewModel: viewModel,
+        let controller = SearchLookupParentController(viewModel: viewModel,
                                                       appSkin: appSkin)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
@@ -217,9 +216,7 @@ private extension SearchPresenter {
         _ viewModel: SearchDetailsViewModel,
         appSkin: AppSkin
     ) -> SearchDetailsViewController {
-        return SearchDetailsViewController(store: store,
-                                           removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
-                                           viewModel: viewModel,
+        return SearchDetailsViewController(viewModel: viewModel,
                                            appSkin: appSkin)
     }
 

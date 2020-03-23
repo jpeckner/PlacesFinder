@@ -9,36 +9,6 @@
 import Shared
 import SwiftDux
 
-enum SearchDetailsViewContext {
-    case detailedEntity(SearchDetailsViewModel)
-    case firstListedEntity(SearchDetailsViewModel)
-}
-
-extension SearchDetailsViewContext {
-
-    init?(_ state: AppState,
-          urlOpenerService: URLOpenerServiceProtocol,
-          copyFormatter: SearchCopyFormatterProtocol,
-          appCopyContent: AppCopyContent) {
-        let value: SearchDetailsViewContext? = state.searchState.detailedEntity.map {
-            .detailedEntity(SearchDetailsViewModel(entity: $0,
-                                                   urlOpenerService: urlOpenerService,
-                                                   copyFormatter: copyFormatter,
-                                                   resultsCopyContent: appCopyContent.searchResults))
-        }
-        ?? state.searchState.entities?.value.first.map {
-            .firstListedEntity(SearchDetailsViewModel(entity: $0,
-                                                      urlOpenerService: urlOpenerService,
-                                                      copyFormatter: copyFormatter,
-                                                      resultsCopyContent: appCopyContent.searchResults))
-        }
-
-        guard let caseValue = value else { return nil }
-        self = caseValue
-    }
-
-}
-
 struct SearchDetailsViewModel: Equatable {
     enum Section: Equatable {
         case info([SearchDetailsInfoSectionViewModel])
@@ -47,11 +17,15 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     let sections: [Section]
+    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let removeDetailedEntityAction: IgnoredEquatable<Action>
 }
 
 extension SearchDetailsViewModel {
 
     init(entity: SearchEntityModel,
+         store: DispatchingStoreProtocol,
+         actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          resultsCopyContent: SearchResultsCopyContent) {
@@ -62,6 +36,17 @@ extension SearchDetailsViewModel {
                                     resultsCopyContent: resultsCopyContent),
             entity.buildLocationSection(copyFormatter)
         ].compactMap { $0 }
+
+        self.store = IgnoredEquatable(store)
+        self.removeDetailedEntityAction = IgnoredEquatable(actionPrism.removeDetailedEntityAction)
+    }
+
+}
+
+extension SearchDetailsViewModel {
+
+    func dispatchRemoveDetailsAction() {
+        store.value.dispatch(removeDetailedEntityAction.value)
     }
 
 }
