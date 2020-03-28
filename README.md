@@ -15,10 +15,10 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 
 ### One-Time Setup
 1. Install the following tools if your system doesn't have them already:
-- [Carthage](https://github.com/Carthage/Carthage#quick-start)
-- [Mint](https://github.com/yonaskolb/Mint)
-- [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/#installing-fastlane) (only follow the steps in the "Installing *fastlane*" section)
-- [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
+    * [Carthage](https://github.com/Carthage/Carthage#quick-start)
+    * [Mint](https://github.com/yonaskolb/Mint)
+    * [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/#installing-fastlane) (only follow the steps in the "Installing *fastlane*" section)
+    * [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
 2. Clone the PlacesFinder repo, including its Git submodules, onto your system:
    ```
    $ cd place/you/want/PlacesFinder
