@@ -15,21 +15,23 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 
 ### One-Time Setup
 1. Install the following tools if your system doesn't have them already:
-- [Carthage](https://github.com/Carthage/Carthage#quick-start)
-- [Mint](https://github.com/yonaskolb/Mint)
-- [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/#installing-fastlane) (only follow the steps in the "Installing *fastlane*" section)
-- [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
-2. Clone the PlacesFinder repo, including its Git submodules, onto your system.
-1. In the Terminal, run:
+    * [Carthage](https://github.com/Carthage/Carthage#quick-start)
+    * [Mint](https://github.com/yonaskolb/Mint)
+    * [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/#installing-fastlane) (only follow the steps in the "Installing *fastlane*" section)
+    * [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
+2. Clone the PlacesFinder repo, including its Git submodules, onto your system:
    ```
-   $ cd root/of/PlacesFinder/repo
+   $ cd place/you/want/PlacesFinder
+   $ git clone https://github.com/jpeckner/PlacesFinder.git
+   $ git submodule update --init --recursive
+   ```
+3. Next, run the initial Carthage bootstrap (can take 30-60 minutes to complete):
+   ```
    $ [bundle exec] fastlane run_carthage_bootstrap
    ```
 
-   This step could take a while to complete (30 ~ 60 minutes), as Carthage will download and build a number of dependencies.
-
 ### Generating Workspace
-1. In the Terminal, run:
+1. To generate the .xcworkspace file and other generated files, run:
    ```
    $ [bundle exec] fastlane generate_placesfinder
    ```
