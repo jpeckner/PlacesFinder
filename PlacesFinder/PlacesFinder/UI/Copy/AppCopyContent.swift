@@ -31,27 +31,27 @@ struct SearchInputCopyContent {
 }
 
 struct SearchInstructionsCopyContent {
-    let iconImage: UIImage
+    let iconImageName: String
     let title: String
     let description: String
     let resultsSource: String
 }
 
 struct SearchLocationDisabledCopyContent {
-    let iconImage: UIImage
+    let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
 }
 
 struct SearchNoInternetCopyContent {
-    let iconImage: UIImage
+    let iconImageName: String
     let title: String
     let description: String
 }
 
 struct SearchNoResultsCopyContent {
-    let iconImage: UIImage
+    let iconImageName: String
     let title: String
     let description: String
 }
@@ -64,7 +64,7 @@ struct SearchResultsCopyContent {
 }
 
 struct SearchRetryCopyContent {
-    let iconImage: UIImage
+    let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
