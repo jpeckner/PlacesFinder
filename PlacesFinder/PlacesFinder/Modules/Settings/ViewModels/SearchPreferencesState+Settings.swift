@@ -8,23 +8,28 @@
 
 import Foundation
 import Shared
+import SwiftDux
 
 extension SearchPreferencesState {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    func distanceCellModels(_ measurementFormatter: MeasurementFormatterProtocol) -> [SettingsCellViewModel] {
+    func distanceCellModels(_ store: DispatchingStoreProtocol,
+                            measurementFormatter: MeasurementFormatterProtocol) -> [SettingsCellViewModel] {
         switch distance {
         case let .imperial(currentlySelectedDistance):
             return buildModels(currentlySelectedDistance,
+                               store: store,
                                measurementFormatter: measurementFormatter) { .imperial($0) }
         case let .metric(currentlySelectedDistance):
             return buildModels(currentlySelectedDistance,
+                               store: store,
                                measurementFormatter: measurementFormatter) { .metric($0) }
         }
     }
 
     private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
+                                                    store: DispatchingStoreProtocol,
                                                     measurementFormatter: MeasurementFormatterProtocol,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
         return T.allCases.map {
@@ -35,6 +40,7 @@ extension SearchPreferencesState {
             )
 
             return SettingsCellViewModel(cellModel: .basic(viewModel),
+                                         store: store,
                                          action: SearchPreferencesAction.setDistance(distanceBlock($0)))
         }
     }
@@ -43,7 +49,8 @@ extension SearchPreferencesState {
 
 extension SearchPreferencesState {
 
-    func sortingCellModels(_ copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
+    func sortingCellModels(_ store: DispatchingStoreProtocol,
+                           copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
         return PlaceLookupSorting.allCases.map {
             let viewModel = GroupedTableBasicCellViewModel(
                 title: copyContent.title($0),
@@ -52,6 +59,7 @@ extension SearchPreferencesState {
             )
 
             return SettingsCellViewModel(cellModel: .basic(viewModel),
+                                         store: store,
                                          action: SearchPreferencesAction.setSorting($0))
         }
     }

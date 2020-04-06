@@ -32,14 +32,16 @@ extension SettingsViewModel {
                             copyContent: appCopyContent.settingsMeasurementSystem
                         )
                     ),
-                    cells: searchPreferencesState.distanceCellModels(measurementFormatter)
+                    cells: searchPreferencesState.distanceCellModels(store,
+                                                                     measurementFormatter: measurementFormatter)
                 )
             ).appendedWith([
                 SettingsSectionViewModel(
                     headerType: .plain(
                         SettingsSectionHeaderViewModel(title: appCopyContent.settingsHeaders.sortSectionTitle)
                     ),
-                    cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
+                    cells: searchPreferencesState.sortingCellModels(store,
+                                                                    copyContent: appCopyContent.settingsSortPreference)
                 ),
             ])
 
@@ -53,16 +55,6 @@ extension SettingsViewModel {
                 cellModels: $0.cells.map { $0.cellModel }
             )
         })
-    }
-
-}
-
-extension SettingsViewModel {
-
-    func dispatchCellAction(sectionIndex: Int,
-                            rowIndex: Int) {
-        let action = sections.value[sectionIndex].cells[rowIndex].action
-        store.dispatch(action)
     }
 
 }

@@ -12,5 +12,22 @@ import SwiftDux
 
 struct SettingsCellViewModel {
     let cellModel: GroupedTableViewCellModel
-    let action: Action
+    private let store: DispatchingStoreProtocol
+    private let action: Action
+
+    init(cellModel: GroupedTableViewCellModel,
+         store: DispatchingStoreProtocol,
+         action: Action) {
+        self.cellModel = cellModel
+        self.store = store
+        self.action = action
+    }
+}
+
+extension SettingsCellViewModel {
+
+    func dispatchAction() {
+        store.dispatch(action)
+    }
+
 }
