@@ -21,14 +21,10 @@ protocol SettingsPresenterProtocol: AutoMockable {
 class SettingsPresenter: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController
-    private let store: DispatchingStoreProtocol
 
-    init(tabItemProperties: TabItemProperties,
-         store: DispatchingStoreProtocol) {
+    init(tabItemProperties: TabItemProperties) {
         self.rootNavController = UINavigationController()
         rootNavController.configure(tabItemProperties)
-
-        self.store = store
     }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,

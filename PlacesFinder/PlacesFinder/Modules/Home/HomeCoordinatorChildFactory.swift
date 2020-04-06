@@ -52,8 +52,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
                                      statePrism: statePrism,
                                      actionPrism: actionPrism)
         case .settings:
-            let presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties,
-                                              store: store)
+            let presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties)
 
             let measurementFormatter = MeasurementFormatter()
             measurementFormatter.unitOptions = .providedUnit
