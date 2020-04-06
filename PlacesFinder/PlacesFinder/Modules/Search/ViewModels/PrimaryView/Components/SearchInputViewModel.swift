@@ -6,33 +6,36 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
-import Foundation
-import Shared
-
-struct SearchInputContentViewModel: Equatable {
-    let keywords: NonEmptyString?
-    let isEditing: Bool
-    let placeholder: String
-}
-
-extension SearchInputContentViewModel {
-
-    init(keywords: NonEmptyString?,
-         isEditing: Bool,
-         copyContent: SearchInputCopyContent) {
-        self.keywords = keywords
-        self.isEditing = isEditing
-        self.placeholder = copyContent.placeholder
-    }
-
-}
+import SwiftDux
 
 struct SearchInputViewModel {
-    struct Callbacks {
-        let isEditing: (SearchBarEditAction) -> Void
-        let lookup: (SearchParams) -> Void
+    let content: SearchInputContentViewModel
+    private let store: DispatchingStoreProtocol
+    private let actionPrism: SearchActionPrismProtocol
+    private let locationUpdateRequestBlock: LocationUpdateRequestBlock
+
+    init(content: SearchInputContentViewModel,
+         store: DispatchingStoreProtocol,
+         actionPrism: SearchActionPrismProtocol,
+         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
+        self.content = content
+        self.store = store
+        self.actionPrism = actionPrism
+        self.locationUpdateRequestBlock = locationUpdateRequestBlock
+    }
+}
+
+extension SearchInputViewModel {
+
+    func dispatchEditAction(_ editAction: SearchBarEditAction) {
+        let action = actionPrism.updateEditingAction(editAction)
+        store.dispatch(action)
     }
 
-    let content: SearchInputContentViewModel
-    let callbacks: Callbacks
+    func dispatchSearchParams(_ params: SearchParams) {
+        let action = actionPrism.initialRequestAction(params,
+                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
+        store.dispatch(action)
+    }
+
 }
