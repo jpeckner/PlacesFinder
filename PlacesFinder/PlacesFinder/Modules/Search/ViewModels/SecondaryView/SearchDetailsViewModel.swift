@@ -45,6 +45,23 @@ extension SearchDetailsViewModel {
 
 extension SearchDetailsViewModel {
 
+    func cellViewModels(sectionIndex: Int) -> [SearchDetailsSectionProtocol] {
+        switch sections[sectionIndex] {
+        case let .info(viewModels as [SearchDetailsSectionProtocol]),
+             let .location(viewModels as [SearchDetailsSectionProtocol]):
+            return viewModels
+        }
+    }
+
+    func cellViewModel(sectionIndex: Int,
+                       rowIndex: Int) -> SearchDetailsSectionProtocol {
+        return cellViewModels(sectionIndex: sectionIndex)[rowIndex]
+    }
+
+}
+
+extension SearchDetailsViewModel {
+
     func dispatchRemoveDetailsAction() {
         store.value.dispatch(removeDetailedEntityAction.value)
     }

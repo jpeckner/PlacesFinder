@@ -11,16 +11,8 @@ import Shared
 import SwiftDux
 
 struct SearchLookupViewModel {
-    enum Child {
-        case instructions(SearchInstructionsViewModel)
-        case progress
-        case results(SearchResultsViewModel)
-        case noResults(SearchNoResultsFoundViewModel)
-        case failure(SearchRetryViewModel)
-    }
-
     let searchInputViewModel: SearchInputViewModel
-    let child: Child
+    let child: SearchLookupChild
 }
 
 extension SearchLookupViewModel {
@@ -40,17 +32,17 @@ extension SearchLookupViewModel {
                                                          actionPrism: actionPrism,
                                                          locationUpdateRequestBlock: locationUpdateRequestBlock)
 
-        self.child = Child(loadState: searchState.loadState,
-                           store: store,
-                           actionPrism: actionPrism,
-                           copyFormatter: copyFormatter,
-                           appCopyContent: appCopyContent,
-                           locationUpdateRequestBlock: locationUpdateRequestBlock)
+        self.child = SearchLookupChild(loadState: searchState.loadState,
+                                       store: store,
+                                       actionPrism: actionPrism,
+                                       copyFormatter: copyFormatter,
+                                       appCopyContent: appCopyContent,
+                                       locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 
 }
 
-private extension SearchLookupViewModel.Child {
+private extension SearchLookupChild {
 
     init(loadState: SearchLoadState,
          store: DispatchingStoreProtocol,
