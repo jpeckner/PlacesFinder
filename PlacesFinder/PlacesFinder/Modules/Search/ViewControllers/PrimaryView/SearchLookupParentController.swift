@@ -20,7 +20,7 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
          appSkin: AppSkin) {
         self.lookupView = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
                                            searchInputColorings: appSkin.colorings.searchInput) {
-            viewModel.searchInputViewModel.callbacks.isEditing(.endedEditing)
+            viewModel.searchInputViewModel.dispatchEditAction(.endedEditing)
         }
 
         let searchBarView = lookupView.searchBarWrapperView
@@ -151,12 +151,12 @@ extension SearchLookupParentController {
 extension SearchLookupParentController: SearchBarWrapperDelegate {
 
     func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditAction) {
-        viewModel.searchInputViewModel.callbacks.isEditing(action)
+        viewModel.searchInputViewModel.dispatchEditAction(action)
     }
 
     func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString) {
         let params = SearchParams(keywords: text)
-        viewModel.searchInputViewModel.callbacks.lookup(params)
+        viewModel.searchInputViewModel.dispatchSearchParams(params)
     }
 
 }

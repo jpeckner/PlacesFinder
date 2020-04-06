@@ -35,17 +35,10 @@ extension SearchLookupViewModel {
                                                            isEditing: searchState.inputParams.isEditing,
                                                            copyContent: appCopyContent.searchInput)
 
-        let callbacks = SearchInputViewModel.Callbacks(isEditing: { editAction in
-            let action = actionPrism.updateEditingAction(editAction)
-            store.dispatch(action)
-        }, lookup: { params in
-            let action = actionPrism.initialRequestAction(params,
-                                                          locationUpdateRequestBlock: locationUpdateRequestBlock)
-            store.dispatch(action)
-        })
-
         self.searchInputViewModel = SearchInputViewModel(content: contentViewModel,
-                                                         callbacks: callbacks)
+                                                         store: store,
+                                                         actionPrism: actionPrism,
+                                                         locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         self.child = Child(loadState: searchState.loadState,
                            store: store,
