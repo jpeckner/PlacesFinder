@@ -49,6 +49,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
     private func presentViews(_ state: AppState) {
         let appCopyContent = state.appCopyContentState.copyContent
         let viewModel = SettingsViewModel(searchPreferencesState: state.searchPreferencesState,
+                                          store: store,
                                           measurementFormatter: measurementFormatter,
                                           appCopyContent: appCopyContent)
         let titleViewModel = NavigationBarTitleViewModel(copyContent: appCopyContent.displayName)

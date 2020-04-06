@@ -21,96 +21,11 @@ class SearchStateTests: QuickSpec {
     // swiftlint:disable function_body_length
     override func spec() {
 
-        let stubSubmittedParams = SearchSubmittedParams.stubValue()
+        let stubSearchParams = SearchParams.stubValue()
+        let stubSearchInputParams = SearchInputParams(params: stubSearchParams,
+                                                      isEditing: false)
         let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
-
-        describe("submittedParams") {
-
-            var result: SearchSubmittedParams?
-
-            context("when state.loadState == .idle") {
-                beforeEach {
-                    let state = SearchState(loadState: .idle,
-                                            detailedEntity: nil)
-                    result = state.submittedParams
-                }
-
-                it("returns nil") {
-                    expect(result).to(beNil())
-                }
-            }
-
-            context("else when state.loadState == .locationRequested") {
-                beforeEach {
-                    let state = SearchState(loadState: .locationRequested(stubSubmittedParams),
-                                            detailedEntity: nil)
-                    result = state.submittedParams
-                }
-
-                it("returns the SearchSubmittedParams") {
-                    expect(result) == stubSubmittedParams
-                }
-            }
-
-            context("else when state.loadState == .initialPageRequested") {
-                beforeEach {
-                    let state = SearchState(loadState: .initialPageRequested(stubSubmittedParams),
-                                            detailedEntity: nil)
-                    result = state.submittedParams
-                }
-
-                it("returns the SearchSubmittedParams") {
-                    expect(result) == stubSubmittedParams
-                }
-            }
-
-            context("else when state.loadState == .noResultsFound") {
-                beforeEach {
-                    let state = SearchState(loadState: .noResultsFound(stubSubmittedParams),
-                                            detailedEntity: nil)
-                    result = state.submittedParams
-                }
-
-                it("returns the SearchSubmittedParams") {
-                    expect(result) == stubSubmittedParams
-                }
-            }
-
-            context("else when state.loadState == .pagesReceived") {
-                beforeEach {
-                    let state = SearchState(
-                        loadState: SearchLoadState.pagesReceived(
-                            stubSubmittedParams,
-                            pageState: .success,
-                            allEntities: stubEntities,
-                            nextRequestToken: stubTokenContainer
-                        ),
-                        detailedEntity: nil
-                    )
-
-                    result = state.submittedParams
-                }
-
-                it("returns the SearchSubmittedParams") {
-                    expect(result) == stubSubmittedParams
-                }
-            }
-
-            context("else when state.loadState == .failure") {
-                beforeEach {
-                    let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
-                    let state = SearchState(loadState: .failure(stubSubmittedParams, underlyingError: underlyingError),
-                                            detailedEntity: nil)
-                    result = state.submittedParams
-                }
-
-                it("returns the SearchSubmittedParams") {
-                    expect(result) == stubSubmittedParams
-                }
-            }
-
-        }
 
         describe("entities") {
 
@@ -119,6 +34,7 @@ class SearchStateTests: QuickSpec {
             context("when state.loadState == .idle") {
                 beforeEach {
                     let state = SearchState(loadState: .idle,
+                                            inputParams: stubSearchInputParams,
                                             detailedEntity: nil)
                     result = state.entities
                 }
@@ -130,7 +46,8 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .locationRequested") {
                 beforeEach {
-                    let state = SearchState(loadState: .locationRequested(stubSubmittedParams),
+                    let state = SearchState(loadState: .locationRequested(stubSearchParams),
+                                            inputParams: stubSearchInputParams,
                                             detailedEntity: nil)
                     result = state.entities
                 }
@@ -142,7 +59,8 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .initialPageRequested") {
                 beforeEach {
-                    let state = SearchState(loadState: .initialPageRequested(stubSubmittedParams),
+                    let state = SearchState(loadState: .initialPageRequested(stubSearchParams),
+                                            inputParams: stubSearchInputParams,
                                             detailedEntity: nil)
                     result = state.entities
                 }
@@ -154,7 +72,8 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .noResultsFound") {
                 beforeEach {
-                    let state = SearchState(loadState: .noResultsFound(stubSubmittedParams),
+                    let state = SearchState(loadState: .noResultsFound(stubSearchParams),
+                                            inputParams: stubSearchInputParams,
                                             detailedEntity: nil)
                     result = state.entities
                 }
@@ -168,18 +87,19 @@ class SearchStateTests: QuickSpec {
                 beforeEach {
                     let state = SearchState(
                         loadState: SearchLoadState.pagesReceived(
-                            stubSubmittedParams,
+                            stubSearchParams,
                             pageState: .success,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         ),
+                        inputParams: stubSearchInputParams,
                         detailedEntity: nil
                     )
 
                     result = state.entities
                 }
 
-                it("returns the SearchSubmittedParams") {
+                it("returns the SearchParams") {
                     expect(result) == stubEntities
                 }
             }
@@ -187,7 +107,8 @@ class SearchStateTests: QuickSpec {
             context("else when state.loadState == .failure") {
                 beforeEach {
                     let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
-                    let state = SearchState(loadState: .failure(stubSubmittedParams, underlyingError: underlyingError),
+                    let state = SearchState(loadState: .failure(stubSearchParams, underlyingError: underlyingError),
+                                            inputParams: stubSearchInputParams,
                                             detailedEntity: nil)
                     result = state.entities
                 }

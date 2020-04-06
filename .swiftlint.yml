@@ -87,7 +87,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Shared/Carthage
   - Shared/Shared/OutdatedDependencies.swift
   - Shared/Shared/Sourcery/Output
-  - Shared/SharedTestComponents/AutoMockable.generated.swift
+  - Shared/SharedTestComponents/Sourcery/Output
 
 # rules that have both warning and error levels, can set just the warning level
 # implicitly

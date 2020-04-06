@@ -79,7 +79,7 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
                         }
 
                         AnyView(Button(title) {
-                            self.store.dispatch(selectionAction)
+                            selectionAction()
                         })
                     })
                 case let .nonSelectable(title):

@@ -7,22 +7,17 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 class SettingsViewController: SingleContentViewController {
 
-    private let store: DispatchingStoreProtocol
     private var viewModel: SettingsViewModel
     private var colorings: SettingsViewColorings
-
     private let tableView: GroupedTableView
 
-    init(store: DispatchingStoreProtocol,
-         viewModel: SettingsViewModel,
+    init(viewModel: SettingsViewModel,
          colorings: SettingsViewColorings) {
         self.viewModel = viewModel
-        self.store = store
         self.colorings = colorings
 
         self.tableView = GroupedTableView(tableModel: viewModel.tableModel)
@@ -77,8 +72,8 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let action = viewModel.sections.value[indexPath.section].cells[indexPath.row].action
-        store.dispatch(action)
+        viewModel.dispatchCellAction(sectionIndex: indexPath.section,
+                                     rowIndex: indexPath.row)
     }
 
     // MARK: Configure headers/footers
@@ -92,7 +87,6 @@ extension SettingsViewController: UITableViewDelegate {
                                              colorings: colorings)
         case let .measurementSystem(viewModel):
             return SettingsMeasurementSystemHeaderView(viewModel: viewModel,
-                                                       store: store,
                                                        colorings: colorings)
         }
     }

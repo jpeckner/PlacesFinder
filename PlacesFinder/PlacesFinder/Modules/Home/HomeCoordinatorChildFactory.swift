@@ -37,6 +37,18 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
     }
 
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        let presenter: SearchPresenterProtocol
+        if #available(iOS 13.0, *) {
+            presenter = SearchPresenterSUI(tabItemProperties: tabItemProperties)
+        } else {
+            presenter = SearchPresenter(tabItemProperties: tabItemProperties)
+        }
+
+        let copyFormatter = SearchCopyFormatter()
+
+        let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+                                          locationRequestHandler: serviceContainer.locationRequestHandler)
+
         let searchEntityModelBuilder = SearchEntityModelBuilder()
         let actionCreatorDependencies = SearchActionCreatorDependencies(
             placeLookupService: serviceContainer.placeLookupService,
@@ -44,21 +56,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         )
         let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
                                             actionCreator: SearchActionCreator.self)
-        let copyFormatter = SearchCopyFormatter()
-
-        let presenter: SearchPresenterProtocol
-        if #available(iOS 13.0, *) {
-            presenter = SearchPresenterSUI(store: store,
-                                           actionPrism: actionPrism,
-                                           tabItemProperties: tabItemProperties)
-        } else {
-            presenter = SearchPresenter(store: store,
-                                        actionPrism: actionPrism,
-                                        tabItemProperties: tabItemProperties)
-        }
-
-        let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
-                                          locationRequestHandler: serviceContainer.locationRequestHandler)
 
         return SearchCoordinator(store: store,
                                  presenter: presenter,

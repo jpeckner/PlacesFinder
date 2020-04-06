@@ -30,7 +30,7 @@ class SearchCoordinatorTests: QuickSpec {
             radius: stubState.searchPreferencesState.distance.distanceType.measurement,
             sorting: stubState.searchPreferencesState.sorting
         )
-        let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
+        let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!
@@ -323,7 +323,7 @@ class SearchCoordinatorTests: QuickSpec {
                             }) == true
                         }
 
-                        it("calls actionCreator.requestInitialPage(:submittedParams)") {
+                        it("calls actionCreator.requestInitialPage(:params)") {
                             expect(mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
                         }
 

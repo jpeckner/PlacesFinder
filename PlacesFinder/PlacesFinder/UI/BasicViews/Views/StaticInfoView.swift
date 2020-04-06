@@ -74,8 +74,8 @@ class StaticInfoView: UIView {
 extension StaticInfoView {
 
     func configure(_ viewModel: StaticInfoViewModel,
-                   colorings: AppStandardColorings) {
-        imageView.image = viewModel.image
+                   colorings: AppStandardColoringsProtocol) {
+        imageView.image = UIImage(named: viewModel.imageName)
 
         titleLabel.text = viewModel.title
         titleLabel.configure(.title,

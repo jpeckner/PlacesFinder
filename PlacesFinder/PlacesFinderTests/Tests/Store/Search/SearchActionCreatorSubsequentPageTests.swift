@@ -24,7 +24,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
     override func spec() {
 
         let stubParams = PlaceLookupParams.stubValue()
-        let stubSubmittedParams = SearchSubmittedParams(keywords: stubParams.keywords)
+        let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubDetailsViewModel = SearchEntityModel.stubValue()
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
@@ -43,7 +43,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
             let action = SearchActionCreator.requestSubsequentPage(
                 SearchActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
                                                 searchEntityModelBuilder: mockSearchEntityModelBuilder),
-                submittedParams: stubSubmittedParams,
+                searchParams: stubSearchParams,
                 previousResults: stubPreviousResults,
                 tokenContainer: stubTokenContainer
             )
@@ -63,7 +63,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                 }
 
                 it("...and with the previously received search params...") {
-                    expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                    expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                 }
 
                 it("...and with the previously received entities...") {
@@ -104,7 +104,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                         }
 
                         it("...and with the previously received search params...") {
-                            expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                            expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                         }
 
                         it("...and with the previously received entities...") {
@@ -138,7 +138,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                         }
 
                         it("...and with the previously received search params...") {
-                            expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                            expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                         }
 
                         it("...and with the previously received entities...") {
@@ -169,7 +169,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                         }
 
                         it("...and with the previously received search params...") {
-                            expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                            expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                         }
 
                         it("...and with the previously received entities...") {
@@ -211,7 +211,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                             }
 
                             it("...and with the previously received search params...") {
-                                expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                                expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                             }
 
                             it("...and with all entities received so far...") {
@@ -241,7 +241,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                             }
 
                             it("...and with the previously received search params...") {
-                                expect(mockStore.dispatchedSubmittedParams) == stubSubmittedParams
+                                expect(mockStore.dispatchedSubmittedParams) == stubSearchParams
                             }
 
                             it("...and with all entities received so far...") {

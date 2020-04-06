@@ -9,7 +9,7 @@
 import Foundation
 import Shared
 
-struct SearchResultCellModel {
+struct SearchResultCellModel: Equatable {
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue
     let pricing: String?

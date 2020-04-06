@@ -11,20 +11,14 @@ import UIKit
 
 class SearchPresenter: SearchPresenterProtocol, SearchContainerPresenterProtocol {
 
-    let store: DispatchingStoreProtocol
-    let actionPrism: SearchActionPrismProtocol
     let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
         return searchContainerViewController
     }
 
-    init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
-         tabItemProperties: TabItemProperties) {
+    init(tabItemProperties: TabItemProperties) {
         self.searchContainerViewController = SearchContainerViewController()
-        self.store = store
-        self.actionPrism = actionPrism
 
         searchContainerViewController.configure(tabItemProperties)
     }

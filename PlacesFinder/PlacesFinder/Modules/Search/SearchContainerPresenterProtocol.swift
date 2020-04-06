@@ -10,8 +10,6 @@ import SwiftDux
 
 protocol SearchContainerPresenterProtocol {
     var searchContainerViewController: SearchContainerViewController { get }
-    var store: DispatchingStoreProtocol { get }
-    var actionPrism: SearchActionPrismProtocol { get }
 }
 
 extension SearchContainerPresenterProtocol {
@@ -83,8 +81,7 @@ private extension SearchContainerPresenterProtocol {
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(store: store,
-                                                      viewModel: viewModel,
+        let controller = SearchLookupParentController(viewModel: viewModel,
                                                       appSkin: appSkin)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
@@ -96,9 +93,7 @@ private extension SearchContainerPresenterProtocol {
         _ viewModel: SearchDetailsViewModel,
         appSkin: AppSkin
     ) -> SearchDetailsViewController {
-        return SearchDetailsViewController(store: store,
-                                           removeDetailedEntityAction: actionPrism.removeDetailedEntityAction,
-                                           viewModel: viewModel,
+        return SearchDetailsViewController(viewModel: viewModel,
                                            appSkin: appSkin)
     }
 

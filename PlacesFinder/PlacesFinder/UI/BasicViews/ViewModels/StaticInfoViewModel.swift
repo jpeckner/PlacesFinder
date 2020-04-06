@@ -7,16 +7,15 @@
 //
 
 import Foundation
-import UIKit
 
 struct StaticInfoViewModel {
-    let image: UIImage
+    let imageName: String
     let title: String
     let description: String
 }
 
 protocol StaticInfoCopyProtocol {
-    var iconImage: UIImage { get }
+    var iconImageName: String { get }
     var title: String { get }
     var description: String { get }
 }
@@ -24,7 +23,7 @@ protocol StaticInfoCopyProtocol {
 extension StaticInfoCopyProtocol {
 
     var staticInfoViewModel: StaticInfoViewModel {
-        return StaticInfoViewModel(image: iconImage,
+        return StaticInfoViewModel(imageName: iconImageName,
                                    title: title,
                                    description: description)
     }

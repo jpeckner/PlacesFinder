@@ -36,7 +36,7 @@ extension AppStandardColoringsProtocol {
 }
 
 // sourcery: fieldName = "standard"
-struct AppStandardColorings: AppColoringProtocol {
+struct AppStandardColorings: AppColoringProtocol, AppStandardColoringsProtocol {
     let viewColoring: ViewColoring
     let titleTextColoring: TextColoring
     let bodyTextColoring: TextColoring

@@ -9,11 +9,6 @@
 import Shared
 import SwiftDux
 
-enum SearchDetailsViewContext {
-    case detailedEntity(SearchDetailsViewModel)
-    case firstListedEntity(SearchDetailsViewModel)
-}
-
 struct SearchDetailsViewModel: Equatable {
     enum Section: Equatable {
         case info([SearchDetailsInfoSectionViewModel])
@@ -22,11 +17,15 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     let sections: [Section]
+    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let removeDetailedEntityAction: IgnoredEquatable<Action>
 }
 
 extension SearchDetailsViewModel {
 
     init(entity: SearchEntityModel,
+         store: DispatchingStoreProtocol,
+         actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          resultsCopyContent: SearchResultsCopyContent) {
@@ -37,6 +36,17 @@ extension SearchDetailsViewModel {
                                     resultsCopyContent: resultsCopyContent),
             entity.buildLocationSection(copyFormatter)
         ].compactMap { $0 }
+
+        self.store = IgnoredEquatable(store)
+        self.removeDetailedEntityAction = IgnoredEquatable(actionPrism.removeDetailedEntityAction)
+    }
+
+}
+
+extension SearchDetailsViewModel {
+
+    func dispatchRemoveDetailsAction() {
+        store.value.dispatch(removeDetailedEntityAction.value)
     }
 
 }

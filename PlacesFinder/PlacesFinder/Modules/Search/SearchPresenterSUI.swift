@@ -14,19 +14,13 @@ import UIKit
 @available(iOS 13.0, *)
 class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProtocol {
 
-    let store: DispatchingStoreProtocol
-    let actionPrism: SearchActionPrismProtocol
     let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
         return searchContainerViewController
     }
 
-    init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
-         tabItemProperties: TabItemProperties) {
-        self.store = store
-        self.actionPrism = actionPrism
+    init(tabItemProperties: TabItemProperties) {
         self.searchContainerViewController = SearchContainerViewController()
 
         searchContainerViewController.configure(tabItemProperties)

@@ -9,15 +9,17 @@
 import Foundation
 
 struct SearchBackgroundViewModel {
-    let inputViewModel: SearchInputViewModel
+    let contentViewModel: SearchInputContentViewModel
     let instructionsViewModel: SearchInstructionsViewModel
 }
 
 extension SearchBackgroundViewModel {
 
     init(appCopyContent: AppCopyContent) {
-        self.inputViewModel = SearchInputViewModel(inputKeywords: nil,
-                                                   copyContent: appCopyContent.searchInput)
+        self.contentViewModel = SearchInputContentViewModel(keywords: nil,
+                                                            isEditing: false,
+                                                            copyContent: appCopyContent.searchInput)
+
         self.instructionsViewModel = SearchInstructionsViewModel(copyContent: appCopyContent.searchInstructions)
     }
 

@@ -7,21 +7,17 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 class SettingsMeasurementSystemHeaderView: UIView {
 
     private let viewModel: SettingsMeasurementSystemHeaderViewModel
-    private let store: DispatchingStoreProtocol
     private let sectionNameLabel: StyledLabel
     private let systemsStackView: UIStackView
 
     init(viewModel: SettingsMeasurementSystemHeaderViewModel,
-         store: DispatchingStoreProtocol,
          colorings: SettingsViewColorings) {
         self.viewModel = viewModel
-        self.store = store
 
         self.sectionNameLabel = StyledLabel(textStyleClass: .tableHeader,
                                             textColoring: colorings.headerColorings.textColoring)
@@ -83,10 +79,10 @@ class SettingsMeasurementSystemHeaderView: UIView {
             }
 
             switch systemOptions[idx] {
-            case let .selectable(title, selectionAction):
+            case let .selectable(title, selectionCallback):
                 systemsStackView.addArrangedSubview(button(title,
-                                                           selectionAction: selectionAction,
-                                                           colorings: colorings))
+                                                           colorings: colorings,
+                                                           selectionCallback: selectionCallback))
             case let .nonSelectable(title):
                 systemsStackView.addArrangedSubview(label(title,
                                                           colorings: colorings))
@@ -104,17 +100,13 @@ class SettingsMeasurementSystemHeaderView: UIView {
     }
 
     private func button(_ title: String,
-                        selectionAction: Action,
-                        colorings: SettingsViewColorings) -> ActionableButton {
-        let button = ActionableButton { [weak self] in
-            self?.store.dispatch(selectionAction)
-        }
-
+                        colorings: SettingsViewColorings,
+                        selectionCallback: @escaping () -> Void) -> ActionableButton {
+        let button = ActionableButton(touchUpInsideCallback: selectionCallback)
         button.setTitle(title, for: .normal)
         button.applyTextStyle(.tableHeaderNonSelectableOption)
         button.applyTextColoring(colorings.headerColorings.activeButtonTextColoring, for: .normal)
         button.constrainHeightToTitleLabel()
-
         return button
     }
 

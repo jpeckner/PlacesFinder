@@ -7,27 +7,33 @@
 //
 
 import Shared
-import SwiftDux
 import UIKit
 
 class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
 
-    private let store: DispatchingStoreProtocol
-    private let searchView: SearchLookupView
+    private let lookupView: SearchLookupView
+    private let searchBarFullHeight: CGFloat
+    private let searchBarHeightConstraint: NSLayoutConstraint
     private var viewModel: SearchLookupViewModel
 
-    init(store: DispatchingStoreProtocol,
-         viewModel: SearchLookupViewModel,
+    init(viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
-        self.store = store
-        self.viewModel = viewModel
-        self.searchView = SearchLookupView(searchInputViewModel: viewModel.searchInputViewModel,
-                                           searchInputColorings: appSkin.colorings.searchInput)
+        self.lookupView = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
+                                           searchInputColorings: appSkin.colorings.searchInput) {
+            viewModel.searchInputViewModel.dispatchEditAction(.endedEditing)
+        }
 
-        super.init(contentView: searchView,
+        let searchBarView = lookupView.searchBarWrapperView
+        self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        self.searchBarHeightConstraint = searchBarView.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
+        searchBarHeightConstraint.isActive = true
+
+        self.viewModel = viewModel
+
+        super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
-        searchView.delegate = self
+        lookupView.setSearchBarWrapperDelegate(self)
         configure(viewModel,
                   appSkin: appSkin)
     }
@@ -38,34 +44,29 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
 }
 
-extension SearchLookupParentController: SearchResultsViewControllerDelegate {
-
-    func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
-        searchView.childTableDidScroll(deltaY)
-    }
-
-}
-
-extension SearchLookupParentController: SearchLookupViewDelegate {
-
-    func searchView(_ searchView: SearchLookupView, didInputText text: NonEmptyString) {
-        viewModel.lookupBlock(text)
-    }
-
-}
-
 extension SearchLookupParentController {
 
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
-        self.viewColoring = appSkin.colorings.standard.viewColoring
         self.viewModel = viewModel
+        self.viewColoring = appSkin.colorings.standard.viewColoring
 
-        searchView.configure(viewModel.searchInputViewModel,
-                             colorings: appSkin.colorings.searchInput)
+        configureLookupView(viewModel.searchInputViewModel,
+                            colorings: appSkin.colorings.searchInput)
 
         activateChildView(viewModel,
                           appSkin: appSkin)
+    }
+
+    private func configureLookupView(_ viewModel: SearchInputViewModel,
+                                     colorings: SearchInputViewColorings) {
+        searchBarHeightConstraint.constant =
+            viewModel.content.isEditing ?
+                searchBarFullHeight
+                : searchBarHeightConstraint.constant
+
+        lookupView.configure(viewModel.content,
+                             colorings: colorings)
     }
 
     // swiftlint:disable function_body_length
@@ -94,22 +95,18 @@ extension SearchLookupParentController {
             }
 
             existingController.configure(colorings)
-        case let .results(viewModel, refreshAction, nextRequestAction):
+        case let .results(viewModel):
             let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
                 setSingleChildController(
                     SearchResultsViewController(delegate: self,
-                                                store: store,
-                                                refreshAction: refreshAction,
                                                 colorings: colorings,
-                                                viewModel: viewModel,
-                                                nextRequestAction: nextRequestAction)
+                                                viewModel: viewModel)
                 )
                 return
             }
 
             existingController.configure(viewModel,
-                                         nextRequestAction: nextRequestAction,
                                          colorings: colorings)
         case let .noResults(viewModel):
             let colorings = appSkin.colorings.standard
@@ -145,8 +142,35 @@ extension SearchLookupParentController {
 
     private func setSingleChildController(_ controller: UIViewController) {
         setSingleChildController(controller) {
-            searchView.setChildView($0)
+            lookupView.setChildView($0)
         }
+    }
+
+}
+
+extension SearchLookupParentController: SearchBarWrapperDelegate {
+
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditAction) {
+        viewModel.searchInputViewModel.dispatchEditAction(action)
+    }
+
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString) {
+        let params = SearchParams(keywords: text)
+        viewModel.searchInputViewModel.dispatchSearchParams(params)
+    }
+
+}
+
+extension SearchLookupParentController: SearchResultsViewControllerDelegate {
+
+    func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
+        let updatedHeight = deltaY > 0 ?
+            // Prevent setting constant < 0
+            max(0.0, searchBarHeightConstraint.constant - deltaY)
+            // Prevent setting constant > inputViewOriginalHeight
+            : min(searchBarFullHeight, searchBarHeightConstraint.constant - deltaY)
+
+        searchBarHeightConstraint.constant = updatedHeight
     }
 
 }

@@ -27,10 +27,9 @@ struct StaticInfoViewSUI: View {
 
     var body: some View {
         VStack {
-            Image(uiImage: viewModel.image)
+            Image(viewModel.imageName)
                 .resizable()
-                .frame(width: viewModel.image.widthToHeightRatio * Constants.imageHeight,
-                       height: Constants.imageHeight,
+                .frame(height: Constants.imageHeight,
                        alignment: .center)
                 .aspectRatio(contentMode: .fit)
 

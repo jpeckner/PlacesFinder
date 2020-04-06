@@ -10,17 +10,14 @@ import Shared
 import SnapKit
 import UIKit
 
-protocol SearchChildContainerViewDelegate: AnyObject {
-    func containerViewCoverWasTapped(_ containerView: SearchChildContainerView)
-}
-
 class SearchChildContainerView: UIView {
 
-    weak var delegate: SearchChildContainerViewDelegate?
+    private let coverTappedCallback: (() -> Void)?
     private let coverView: UIControl
     private var childView: UIView
 
-    init() {
+    init(coverTappedCallback: (() -> Void)?) {
+        self.coverTappedCallback = coverTappedCallback
         self.coverView = UIControl()
         self.childView = UIView()
 
@@ -48,7 +45,7 @@ class SearchChildContainerView: UIView {
 
     @objc
     private func coverViewWasTapped() {
-        delegate?.containerViewCoverWasTapped(self)
+        coverTappedCallback?()
     }
 
 }

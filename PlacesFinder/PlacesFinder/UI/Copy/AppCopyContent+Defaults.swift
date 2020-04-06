@@ -15,28 +15,27 @@ extension AppCopyContent {
         self.displayName = DisplayNameCopyContent(name: displayName)
 
         self.searchInput = SearchInputCopyContent(
-            placeholder: "Search nearby",
-            cancelButtonTitle: "Cancel"
+            placeholder: "Search nearby"
         )
         self.searchInstructions = SearchInstructionsCopyContent(
-            iconImage: #imageLiteral(resourceName: "search_home"),
+            iconImageName: "search_home",
             title: "Start Exploring!",
             description: "Enter search terms above to find nearby places.",
             resultsSource: "Powered by"
         )
         self.searchLocationDisabled = SearchLocationDisabledCopyContent(
-            iconImage: #imageLiteral(resourceName: "location_disabled"),
+            iconImageName: "location_disabled",
             title: "Where Am I?",
             description: "To show you the best nearby places, please enable location services in Settings.",
             ctaTitle: "Go to Settings"
         )
         self.searchNoInternet = SearchNoInternetCopyContent(
-            iconImage: #imageLiteral(resourceName: "no_internet"),
+            iconImageName: "no_internet",
             title: "No internet",
             description: "Looks like you're not connected to the internet; please reconnect to search for great places!"
         )
         self.searchNoResults = SearchNoResultsCopyContent(
-            iconImage: #imageLiteral(resourceName: "no_results"),
+            iconImageName: "no_results",
             title: "No Results Found",
             description: "Try entering different search terms above...there's somewhere great nearby!"
         )
@@ -47,7 +46,7 @@ extension AppCopyContent {
             numRatingsPluralFormatString: "%d reviews"
         )
         self.searchRetry = SearchRetryCopyContent(
-            iconImage: #imageLiteral(resourceName: "error"),
+            iconImageName: "error",
             title: "Pardon the hiccup...",
             description: "Sorry, there was an error on our end.",
             ctaTitle: "Try again"
