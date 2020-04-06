@@ -10,4 +10,5 @@ import './Lanes/Workspace/build_workspace.rb'
 import './Lanes/Workspace/WorkspaceFastfile'
 
 import './Lanes/CITestsFastfile'
+import './Lanes/SlatherFastfile'
 import './Lanes/UploadToTestflightFastfile'

@@ -109,11 +109,12 @@ extension SearchDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellViewModels(for: section).count
+        return viewModel.cellViewModels(sectionIndex: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = viewModel.cellViewModel(for: indexPath)
+        let cellViewModel = viewModel.cellViewModel(sectionIndex: indexPath.section,
+                                                    rowIndex: indexPath.row)
         let cell = tableView.dequeueReusableCell(withCellType: cellViewModel.cellType, for: indexPath)
 
         AssertionHandler.assertIfErrorThrown {
@@ -132,7 +133,9 @@ extension SearchDetailsViewController: UITableViewDataSource {
 extension SearchDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return viewModel.cellViewModel(for: indexPath).isSelectable ? indexPath : nil
+        let cellViewModel = viewModel.cellViewModel(sectionIndex: indexPath.section,
+                                                    rowIndex: indexPath.row)
+        return cellViewModel.isSelectable ? indexPath : nil
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -155,22 +158,6 @@ extension SearchDetailsViewController: UITableViewDelegate {
         case .info, .location:
             return 0.0
         }
-    }
-
-}
-
-private extension SearchDetailsViewModel {
-
-    func cellViewModels(for section: Int) -> [SearchDetailsSectionProtocol] {
-        switch sections[section] {
-        case let .info(viewModels as [SearchDetailsSectionProtocol]),
-             let .location(viewModels as [SearchDetailsSectionProtocol]):
-            return viewModels
-        }
-    }
-
-    func cellViewModel(for indexPath: IndexPath) -> SearchDetailsSectionProtocol {
-        return cellViewModels(for: indexPath.section)[indexPath.row]
     }
 
 }
