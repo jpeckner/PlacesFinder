@@ -22,6 +22,10 @@ class SettingsCoordinatorTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
+        let stubViewModel: SettingsViewModel = {
+            let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue())
+            return SettingsViewModel(sections: sections)
+        }()
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!
@@ -33,12 +37,12 @@ class SettingsCoordinatorTests: QuickSpec {
             mockSettingsPresenter = SettingsPresenterProtocolMock()
             mockSettingsPresenter.rootNavController = stubNavController
 
-            let measurementFormatterMock = MeasurementFormatterProtocolMock()
-            measurementFormatterMock.stringFromReturnValue = "stringFromReturnValue"
+            let mockViewModelBuilder = SettingsViewModelBuilderProtocolMock()
+            mockViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubViewModel
 
             coordinator = SettingsCoordinator(store: mockStore,
                                               presenter: mockSettingsPresenter,
-                                              measurementFormatter: measurementFormatterMock)
+                                              viewModelBuilder: mockViewModelBuilder)
         }
 
         describe("init") {
