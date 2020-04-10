@@ -12,49 +12,76 @@ import SwiftDux
 
 struct SettingsViewModel {
     let sections: NonEmptyArray<SettingsSectionViewModel>
-    private let store: DispatchingStoreProtocol
 }
 
 extension SettingsViewModel {
 
-    init(searchPreferencesState: SearchPreferencesState,
-         store: DispatchingStoreProtocol,
-         measurementFormatter: MeasurementFormatterProtocol,
-         appCopyContent: AppCopyContent) {
-        self.sections =
+    var tableModel: GroupedTableViewModel {
+        return GroupedTableViewModel(sectionModels: sections.value.map {
+            GroupedTableViewSectionModel(
+                title: $0.headerType.title,
+                cellModels: $0.cells.map {
+                    .basic(GroupedTableBasicCellViewModel(title: $0.title,
+                                                          image: nil,
+                                                          accessoryType: $0.isSelected ? .checkmark : .none))
+                }
+            )
+        })
+    }
+
+}
+
+// MARK: SettingsViewModelBuilder
+
+protocol SettingsViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(searchPreferencesState: SearchPreferencesState,
+                        appCopyContent: AppCopyContent) -> SettingsViewModel
+}
+
+class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
+
+    private let store: DispatchingStoreProtocol
+    private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
+    private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
+    private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
+
+    init(store: DispatchingStoreProtocol,
+         measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
+         plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
+         settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
+        self.store = store
+        self.measurementSystemHeaderViewModelBuilder = measurementSystemHeaderViewModelBuilder
+        self.plainHeaderViewModelBuilder = plainHeaderViewModelBuilder
+        self.settingsCellViewModelBuilder = settingsCellViewModelBuilder
+    }
+
+    func buildViewModel(searchPreferencesState: SearchPreferencesState,
+                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+        let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
                     headerType: .measurementSystem(
-                        SettingsMeasurementSystemHeaderViewModel(
+                        measurementSystemHeaderViewModelBuilder.buildViewModel(
                             title: appCopyContent.settingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.distance.system,
-                            store: store,
                             copyContent: appCopyContent.settingsMeasurementSystem
                         )
                     ),
-                    cells: searchPreferencesState.distanceCellModels(store,
-                                                                     measurementFormatter: measurementFormatter)
+                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.distance)
                 )
             ).appendedWith([
                 SettingsSectionViewModel(
                     headerType: .plain(
-                        SettingsSectionHeaderViewModel(title: appCopyContent.settingsHeaders.sortSectionTitle)
+                        plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
                     ),
-                    cells: searchPreferencesState.sortingCellModels(store,
-                                                                    copyContent: appCopyContent.settingsSortPreference)
-                ),
+                    cells: settingsCellViewModelBuilder.buildSortingCellModels(
+                        searchPreferencesState.sorting,
+                        copyContent: appCopyContent.settingsSortPreference
+                    )
+                )
             ])
 
-        self.store = store
-    }
-
-    var tableModel: GroupedTableViewModel {
-        return GroupedTableViewModel(sectionModels: sections.value.map {
-            GroupedTableViewSectionModel(
-                title: $0.title,
-                cellModels: $0.cells.map { $0.cellModel }
-            )
-        })
+        return SettingsViewModel(sections: sections)
     }
 
 }

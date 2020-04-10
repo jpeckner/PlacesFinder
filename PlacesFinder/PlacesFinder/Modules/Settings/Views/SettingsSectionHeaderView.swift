@@ -13,7 +13,7 @@ class SettingsSectionHeaderView: UIView {
 
     private let label: StyledLabel
 
-    init(viewModel: SettingsSectionHeaderViewModel,
+    init(viewModel: SettingsPlainHeaderViewModel,
          colorings: SettingsViewColorings) {
         self.label = StyledLabel(textStyleClass: .tableHeader,
                                  textColoring: colorings.headerTextColoring)
@@ -47,7 +47,7 @@ class SettingsSectionHeaderView: UIView {
         }
     }
 
-    private func setupContent(_ viewModel: SettingsSectionHeaderViewModel) {
+    private func setupContent(_ viewModel: SettingsPlainHeaderViewModel) {
         label.text = viewModel.title
     }
 

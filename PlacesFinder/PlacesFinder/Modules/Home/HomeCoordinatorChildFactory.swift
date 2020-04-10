@@ -30,37 +30,56 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
 
         switch immediateDescendent {
         case .search:
-            let presenter = SearchPresenter(tabItemProperties: immediateDescendent.tabItemProperties)
-
-            let copyFormatter = SearchCopyFormatter()
-
-            let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
-                                              locationRequestHandler: serviceContainer.locationRequestHandler)
-
-            let searchEntityModelBuilder = SearchEntityModelBuilder()
-            let actionCreatorDependencies = SearchActionCreatorDependencies(
-                placeLookupService: serviceContainer.placeLookupService,
-                searchEntityModelBuilder: searchEntityModelBuilder
-            )
-            let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
-                                                actionCreator: SearchActionCreator.self)
-
-            return SearchCoordinator(store: store,
-                                     presenter: presenter,
-                                     urlOpenerService: serviceContainer.urlOpenerService,
-                                     copyFormatter: copyFormatter,
-                                     statePrism: statePrism,
-                                     actionPrism: actionPrism)
+            return buildSearchCoordinator(immediateDescendent.tabItemProperties)
         case .settings:
-            let presenter = SettingsPresenter(tabItemProperties: immediateDescendent.tabItemProperties)
-
-            let measurementFormatter = MeasurementFormatter()
-            measurementFormatter.unitOptions = .providedUnit
-
-            return SettingsCoordinator(store: store,
-                                       presenter: presenter,
-                                       measurementFormatter: measurementFormatter)
+            return buildSettingsCoordinator(immediateDescendent.tabItemProperties)
         }
+    }
+
+    private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
+
+        let copyFormatter = SearchCopyFormatter()
+
+        let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+                                          locationRequestHandler: serviceContainer.locationRequestHandler)
+
+        let searchEntityModelBuilder = SearchEntityModelBuilder()
+        let actionCreatorDependencies = SearchActionCreatorDependencies(
+            placeLookupService: serviceContainer.placeLookupService,
+            searchEntityModelBuilder: searchEntityModelBuilder
+        )
+        let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
+                                            actionCreator: SearchActionCreator.self)
+
+        return SearchCoordinator(store: store,
+                                 presenter: presenter,
+                                 urlOpenerService: serviceContainer.urlOpenerService,
+                                 copyFormatter: copyFormatter,
+                                 statePrism: statePrism,
+                                 actionPrism: actionPrism)
+    }
+
+    private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        let presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
+
+        let measurementFormatter = MeasurementFormatter()
+        measurementFormatter.unitOptions = .providedUnit
+
+        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(store: store)
+        let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
+        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
+                                                                        measurementFormatter: measurementFormatter)
+        let viewModelBuilder = SettingsViewModelBuilder(
+            store: store,
+            measurementSystemHeaderViewModelBuilder: measurementSystemHeaderViewModelBuilder,
+            plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
+            settingsCellViewModelBuilder: settingsCellViewModelBuilder
+        )
+
+        return SettingsCoordinator(store: store,
+                                   presenter: presenter,
+                                   viewModelBuilder: viewModelBuilder)
     }
 
 }
