@@ -11,19 +11,19 @@ import Shared
 import SwiftDux
 
 struct SettingsSectionViewModel {
-    enum HeaderType {
-        case plain(SettingsSectionHeaderViewModel)
-        case measurementSystem(SettingsMeasurementSystemHeaderViewModel)
+    enum HeaderType: Equatable {
+        case plain(SettingsPlainHeaderViewModel)
+        case measurementSystem(SettingsUnitsHeaderViewModel)
     }
 
     let headerType: HeaderType
     let cells: [SettingsCellViewModel]
 }
 
-extension SettingsSectionViewModel {
+extension SettingsSectionViewModel.HeaderType {
 
     var title: String {
-        switch headerType {
+        switch self {
         case let .plain(viewModel):
             return viewModel.title
         case let .measurementSystem(viewModel):

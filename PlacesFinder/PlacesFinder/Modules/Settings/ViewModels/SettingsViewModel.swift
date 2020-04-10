@@ -12,57 +12,76 @@ import SwiftDux
 
 struct SettingsViewModel {
     let sections: NonEmptyArray<SettingsSectionViewModel>
-    private let store: DispatchingStoreProtocol
 }
 
 extension SettingsViewModel {
 
-    init(searchPreferencesState: SearchPreferencesState,
-         store: DispatchingStoreProtocol,
-         measurementFormatter: MeasurementFormatterProtocol,
-         appCopyContent: AppCopyContent) {
-        self.sections =
-            NonEmptyArray(with:
-                SettingsSectionViewModel(
-                    headerType: .measurementSystem(
-                        SettingsMeasurementSystemHeaderViewModel(
-                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
-                            currentlyActiveSystem: searchPreferencesState.distance.system,
-                            store: store,
-                            copyContent: appCopyContent.settingsMeasurementSystem
-                        )
-                    ),
-                    cells: searchPreferencesState.distanceCellModels(measurementFormatter)
-                )
-            ).appendedWith([
-                SettingsSectionViewModel(
-                    headerType: .plain(
-                        SettingsSectionHeaderViewModel(title: appCopyContent.settingsHeaders.sortSectionTitle)
-                    ),
-                    cells: searchPreferencesState.sortingCellModels(appCopyContent.settingsSortPreference)
-                ),
-            ])
-
-        self.store = store
-    }
-
     var tableModel: GroupedTableViewModel {
         return GroupedTableViewModel(sectionModels: sections.value.map {
             GroupedTableViewSectionModel(
-                title: $0.title,
-                cellModels: $0.cells.map { $0.cellModel }
+                title: $0.headerType.title,
+                cellModels: $0.cells.map {
+                    .basic(GroupedTableBasicCellViewModel(title: $0.title,
+                                                          image: nil,
+                                                          accessoryType: $0.isSelected ? .checkmark : .none))
+                }
             )
         })
     }
 
 }
 
-extension SettingsViewModel {
+// MARK: SettingsViewModelBuilder
 
-    func dispatchCellAction(sectionIndex: Int,
-                            rowIndex: Int) {
-        let action = sections.value[sectionIndex].cells[rowIndex].action
-        store.dispatch(action)
+protocol SettingsViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(searchPreferencesState: SearchPreferencesState,
+                        appCopyContent: AppCopyContent) -> SettingsViewModel
+}
+
+class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
+
+    private let store: DispatchingStoreProtocol
+    private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
+    private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
+    private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
+
+    init(store: DispatchingStoreProtocol,
+         measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
+         plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
+         settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
+        self.store = store
+        self.measurementSystemHeaderViewModelBuilder = measurementSystemHeaderViewModelBuilder
+        self.plainHeaderViewModelBuilder = plainHeaderViewModelBuilder
+        self.settingsCellViewModelBuilder = settingsCellViewModelBuilder
+    }
+
+    func buildViewModel(searchPreferencesState: SearchPreferencesState,
+                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+        let sections =
+            NonEmptyArray(with:
+                SettingsSectionViewModel(
+                    headerType: .measurementSystem(
+                        measurementSystemHeaderViewModelBuilder.buildViewModel(
+                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
+                            currentlyActiveSystem: searchPreferencesState.distance.system,
+                            copyContent: appCopyContent.settingsMeasurementSystem
+                        )
+                    ),
+                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.distance)
+                )
+            ).appendedWith([
+                SettingsSectionViewModel(
+                    headerType: .plain(
+                        plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
+                    ),
+                    cells: settingsCellViewModelBuilder.buildSortingCellModels(
+                        searchPreferencesState.sorting,
+                        copyContent: appCopyContent.settingsSortPreference
+                    )
+                )
+            ])
+
+        return SettingsViewModel(sections: sections)
     }
 
 }
