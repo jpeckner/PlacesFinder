@@ -39,11 +39,7 @@ extension EntityState {
 
 enum EntityReducer<T: Equatable> {
 
-    static func reduce(action: Action, currentState: EntityState<T>?) -> EntityState<T> {
-        guard let currentState = currentState else {
-            return EntityState()
-        }
-
+    static func reduce(action: Action, currentState: EntityState<T>) -> EntityState<T> {
         guard let entityAction = action as? EntityAction<T> else {
             return currentState
         }

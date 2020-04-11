@@ -95,11 +95,6 @@ class LaunchCoordinatorTests: QuickSpec {
                     expect(mockStore.dispatchedNonAsyncActions.last as? StubAppSkinAction) == .loadSkin
                 }
 
-                it("calls locationAuthListener.start()") {
-                    let listener = mockListenerContainer.locationAuthListener as? LocationAuthListenerProtocolMock
-                    expect(listener?.startCalled) == true
-                }
-
                 it("calls reachabilityListener.start()") {
                     let listener = mockListenerContainer.reachabilityListener as? ReachabilityListenerProtocolMock
                     expect(listener?.startCalled) == true
