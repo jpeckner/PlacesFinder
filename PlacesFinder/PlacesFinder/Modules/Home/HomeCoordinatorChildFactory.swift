@@ -57,12 +57,28 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
                                             actionCreator: SearchActionCreator.self)
 
+        let contentViewModelBuilder = SearchInputContentViewModelBuilder()
+        let instructionsViewModelBuilder = SearchInstructionsViewModelBuilder()
+        let backgroundViewModelBuilder = SearchBackgroundViewModelBuilder(
+            contentViewModelBuilder: contentViewModelBuilder,
+            instructionsViewModelBuilder: instructionsViewModelBuilder
+        )
+        let lookupViewModelBuilder = SearchLookupViewModelBuilder(
+            store: store,
+            actionPrism: actionPrism,
+            copyFormatter: copyFormatter,
+            contentViewModelBuilder: contentViewModelBuilder,
+            instructionsViewModelBuilder: instructionsViewModelBuilder
+        )
+
         return SearchCoordinator(store: store,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  copyFormatter: copyFormatter,
                                  statePrism: statePrism,
-                                 actionPrism: actionPrism)
+                                 actionPrism: actionPrism,
+                                 backgroundViewModelBuilder: backgroundViewModelBuilder,
+                                 lookupViewModelBuilder: lookupViewModelBuilder)
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
@@ -76,7 +92,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(store: store)
+        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder()
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
         let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
                                                                         measurementFormatter: measurementFormatter)
@@ -103,6 +119,39 @@ private extension HomeCoordinatorImmediateDescendent {
         case .settings:
             return TabItemProperties(image: #imageLiteral(resourceName: "gear"))
         }
+    }
+
+}
+
+private extension SearchLookupViewModelBuilder {
+
+    convenience init(store: DispatchingStoreProtocol,
+                     actionPrism: SearchActionPrismProtocol,
+                     copyFormatter: SearchCopyFormatterProtocol,
+                     contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
+                     instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol) {
+        let inputViewModelBuilder = SearchInputViewModelBuilder(store: store,
+                                                                actionPrism: actionPrism,
+                                                                contentViewModelBuilder: contentViewModelBuilder)
+
+        let resultCellModelBuilder = SearchResultCellModelBuilder(copyFormatter: copyFormatter)
+        let resultViewModelBuilder = SearchResultViewModelBuilder(store: store,
+                                                                  actionPrism: actionPrism,
+                                                                  copyFormatter: copyFormatter,
+                                                                  resultCellModelBuilder: resultCellModelBuilder)
+        let resultsViewModelBuilder = SearchResultsViewModelBuilder(store: store,
+                                                                    actionPrism: actionPrism,
+                                                                    resultViewModelBuilder: resultViewModelBuilder)
+        let noResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilder()
+        let retryViewModelBuilder = SearchRetryViewModelBuilder()
+
+        let childBuilder = SearchLookupChildBuilder(instructionsViewModelBuilder: instructionsViewModelBuilder,
+                                                    resultsViewModelBuilder: resultsViewModelBuilder,
+                                                    noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
+                                                    retryViewModelBuilder: retryViewModelBuilder)
+
+        self.init(inputViewModelBuilder: inputViewModelBuilder,
+                  childBuilder: childBuilder)
     }
 
 }

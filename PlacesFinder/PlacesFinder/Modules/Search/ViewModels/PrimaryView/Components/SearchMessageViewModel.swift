@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchMessageViewModel {
+struct SearchMessageViewModel: Equatable {
     let infoViewModel: StaticInfoViewModel
 }
 

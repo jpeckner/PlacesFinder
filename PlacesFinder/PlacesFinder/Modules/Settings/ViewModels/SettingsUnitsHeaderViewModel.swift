@@ -23,20 +23,16 @@ struct SettingsUnitsHeaderViewModel: Equatable {
 // MARK: SettingsUnitsHeaderViewModelBuilder
 
 protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(title: String,
+    func buildViewModel(_ store: DispatchingStoreProtocol,
+                        title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel
 }
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
-
-    init(store: DispatchingStoreProtocol) {
-        self.store = store
-    }
-
-    func buildViewModel(title: String,
+    func buildViewModel(_ store: DispatchingStoreProtocol,
+                        title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
         let systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] =
@@ -47,8 +43,8 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
                     :
                     .selectable(
                         title: systemTitle,
-                        selectionAction: IgnoredEquatable { [weak self] in
-                            self?.store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
+                        selectionAction: IgnoredEquatable {
+                            store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
                         }
                     )
             }

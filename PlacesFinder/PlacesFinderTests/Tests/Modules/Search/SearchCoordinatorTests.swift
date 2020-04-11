@@ -38,6 +38,8 @@ class SearchCoordinatorTests: QuickSpec {
         var mockSearchPresenter: SearchPresenterProtocolMock!
         var mockStatePrism: SearchStatePrismProtocolMock!
         var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
+        var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
         var coordinator: SearchCoordinator<MockAppStore>!
 
         func initCoordinator(statePrism: SearchStatePrismProtocol) {
@@ -51,12 +53,26 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchActionPrism = SearchActionPrismProtocolMock()
             mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchAction.requestInitialPage
 
+            mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
+            mockSearchBackgroundViewModelBuilder.buildViewModelReturnValue = SearchBackgroundViewModel.stubValue()
+
+            let searchInputViewModel = SearchInputViewModel(content: SearchInputContentViewModel.stubValue(),
+                                                            store: mockStore,
+                                                            actionPrism: mockSearchActionPrism) { _ in }
+            let lookupViewModel = SearchLookupViewModel(searchInputViewModel: searchInputViewModel,
+                                                        child: .progress)
+            mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
+            mockSearchLookupViewModelBuilder.buildViewModelActionPrismSearchStateAppCopyContentLocationUpdateRequestBlockReturnValue
+                = lookupViewModel
+
             coordinator = SearchCoordinator(store: mockStore,
                                             presenter: mockSearchPresenter,
                                             urlOpenerService: mockServiceContainer.urlOpenerService,
                                             copyFormatter: SearchCopyFormatterProtocolMock(),
                                             statePrism: statePrism,
-                                            actionPrism: mockSearchActionPrism)
+                                            actionPrism: mockSearchActionPrism,
+                                            backgroundViewModelBuilder: mockSearchBackgroundViewModelBuilder,
+                                            lookupViewModelBuilder: mockSearchLookupViewModelBuilder)
         }
 
         beforeEach {

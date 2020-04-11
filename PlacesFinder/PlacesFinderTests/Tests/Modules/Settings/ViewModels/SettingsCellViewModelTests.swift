@@ -28,7 +28,8 @@ class SettingsCellViewModelTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            sut = SettingsCellViewModel(title: "",
+            sut = SettingsCellViewModel(id: 0,
+                                        title: "",
                                         isSelected: false,
                                         store: mockStore,
                                         action: StubAction.genericAction)

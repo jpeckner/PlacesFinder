@@ -26,7 +26,7 @@ struct SearchCTAViewSUI: View {
                 .padding(.bottom)
 
             viewModel.ctaBlock.map {
-                Button(action: $0) {
+                Button(action: $0.value) {
                     Text(viewModel.ctaTitle)
                 }
                 .configure(.ctaButton, textColoring: colorings.ctaTextColoring)

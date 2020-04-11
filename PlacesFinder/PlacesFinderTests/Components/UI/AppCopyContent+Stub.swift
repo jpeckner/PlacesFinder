@@ -1,4 +1,3 @@
-// swiftlint:disable:this file_name
 //
 //  SearchResultsCopyContent+Stub.swift
 //  PlacesFinder
@@ -11,6 +10,27 @@ import Foundation
 #if DEBUG
 @testable import PlacesFinder
 #endif
+import Shared
+
+extension AppCopyContent {
+
+    static func stubValue(displayName: NonEmptyString = .stubValue("stubDisplayName")) -> AppCopyContent {
+        return AppCopyContent(displayName: displayName)
+    }
+
+}
+
+extension SearchNoResultsCopyContent {
+
+    static func stubValue() -> SearchNoResultsCopyContent {
+        return SearchNoResultsCopyContent(
+            iconImageName: "stubIconImageName",
+            title: "stubTitle",
+            description: "stubDescription"
+        )
+    }
+
+}
 
 extension SearchResultsCopyContent {
 
@@ -20,6 +40,19 @@ extension SearchResultsCopyContent {
             callNumberFormatString: "callNumberFormatString - %@",
             numRatingsSingularFormatString: "numRatingsSingularFormatString - %d",
             numRatingsPluralFormatString: "numRatingsPluralFormatString - %d"
+        )
+    }
+
+}
+
+extension SearchRetryCopyContent {
+
+    static func stubValue() -> SearchRetryCopyContent {
+        return SearchRetryCopyContent(
+            iconImageName: "stubIconImageName",
+            title: "stubTitle",
+            description: "stubDescription",
+            ctaTitle: "stubCTATitle"
         )
     }
 

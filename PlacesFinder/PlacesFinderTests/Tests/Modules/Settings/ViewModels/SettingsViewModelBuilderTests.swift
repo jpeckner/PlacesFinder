@@ -47,13 +47,15 @@ class SettingsViewModelBuilderTests: QuickSpec {
             mockPlainHeaderViewModelBuilder.buildViewModelReturnValue = stubPlainHeaderViewModel
 
             stubDistanceCellModels = [
-                SettingsCellViewModel(title: "stubDistanceCellModel",
+                SettingsCellViewModel(id: 0,
+                                      title: "stubDistanceCellModel",
                                       isSelected: false,
                                       store: mockStore,
                                       action: StubAction.genericAction)
             ]
             stubSortingCellModels = [
-                SettingsCellViewModel(title: "stubSortingCellModel",
+                SettingsCellViewModel(id: 0,
+                                      title: "stubSortingCellModel",
                                       isSelected: false,
                                       store: mockStore,
                                       action: StubAction.genericAction)
@@ -74,7 +76,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             let stubSearchPreferencesState = SearchPreferencesState(distance: .imperial(.twentyMiles),
                                                                     sorting: .reviewCount)
-            let stubAppCopyContent = AppCopyContent(displayName: .stubValue("stubDisplayName"))
+            let stubAppCopyContent = AppCopyContent.stubValue()
 
             beforeEach {
                 result = sut.buildViewModel(searchPreferencesState: stubSearchPreferencesState,

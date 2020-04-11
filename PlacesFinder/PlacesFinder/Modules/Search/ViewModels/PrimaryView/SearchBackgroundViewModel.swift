@@ -7,20 +7,41 @@
 //
 
 import Foundation
+import Shared
 
 struct SearchBackgroundViewModel {
     let contentViewModel: SearchInputContentViewModel
     let instructionsViewModel: SearchInstructionsViewModel
 }
 
-extension SearchBackgroundViewModel {
+// MARK: SearchBackgroundViewModelBuilder
 
-    init(appCopyContent: AppCopyContent) {
-        self.contentViewModel = SearchInputContentViewModel(keywords: nil,
-                                                            isEditing: false,
-                                                            copyContent: appCopyContent.searchInput)
+protocol SearchBackgroundViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(_ appCopyContent: AppCopyContent) -> SearchBackgroundViewModel
+}
 
-        self.instructionsViewModel = SearchInstructionsViewModel(copyContent: appCopyContent.searchInstructions)
+class SearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol {
+
+    private let contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol
+    private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
+
+    init(contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
+         instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol) {
+        self.contentViewModelBuilder = contentViewModelBuilder
+        self.instructionsViewModelBuilder = instructionsViewModelBuilder
+    }
+
+    func buildViewModel(_ appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
+        let contentViewModel = contentViewModelBuilder.buildViewModel(keywords: nil,
+                                                                      isEditing: false,
+                                                                      copyContent: appCopyContent.searchInput)
+
+        let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
+            copyContent: appCopyContent.searchInstructions
+        )
+
+        return SearchBackgroundViewModel(contentViewModel: contentViewModel,
+                                         instructionsViewModel: instructionsViewModel)
     }
 
 }

@@ -25,9 +25,11 @@ class SettingsViewModelTests: QuickSpec {
         func buildSectionViewModels() -> NonEmptyArray<SettingsSectionViewModel> {
             let sections = [0, 1, 2].map { sectionIdx in
                 SettingsSectionViewModel.stubValue(
+                    id: sectionIdx,
                     headerType: .plain(.stubValue(title: "stubSection\(sectionIdx)Title")),
                     cells: [0, 1, 2].map { cellIdx in
-                        SettingsCellViewModel(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
+                        SettingsCellViewModel(id: cellIdx,
+                                              title: "stubSection\(sectionIdx)Cell\(cellIdx)",
                                               isSelected: cellIdx == 1,
                                               store: mockStore,
                                               action: StubAction.genericAction)

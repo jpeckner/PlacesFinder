@@ -23,7 +23,7 @@ class SettingsCoordinatorTests: QuickSpec {
     override func spec() {
 
         let stubViewModel: SettingsViewModel = {
-            let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue())
+            let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue(id: 0))
             return SettingsViewModel(sections: sections)
         }()
         let stubNavController = UINavigationController()

@@ -12,9 +12,11 @@
 
 extension SettingsSectionViewModel {
 
-    static func stubValue(headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
+    static func stubValue(id: Int,
+                          headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
                           cells: [SettingsCellViewModel] = []) -> SettingsSectionViewModel {
-        return SettingsSectionViewModel(headerType: headerType,
+        return SettingsSectionViewModel(id: id,
+                                        headerType: headerType,
                                         cells: cells)
     }
 

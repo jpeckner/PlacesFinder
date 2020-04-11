@@ -7,17 +7,24 @@
 //
 
 import Foundation
+import Shared
 
-struct SearchNoResultsFoundViewModel {
+struct SearchNoResultsFoundViewModel: Equatable {
     let messageViewModel: SearchMessageViewModel
 }
 
 extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
 
-extension SearchNoResultsFoundViewModel {
+// MARK: SearchNoResultsFoundViewModelBuilder
 
-    init(copyContent: SearchNoResultsCopyContent) {
-        self.messageViewModel = SearchMessageViewModel(copyContent: copyContent)
+protocol SearchNoResultsFoundViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel
+}
+
+class SearchNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol {
+
+    func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel {
+        return SearchNoResultsFoundViewModel(messageViewModel: SearchMessageViewModel(copyContent: copyContent))
     }
 
 }
