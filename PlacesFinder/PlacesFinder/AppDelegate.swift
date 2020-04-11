@@ -154,8 +154,8 @@ private extension ServiceContainer {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationRequestHandler = LocationRequestHandler(locationManager: locationManager)
 
-        self.placeLookupService = PlaceLookupService(
-            apiOption: .yelp(appConfig.yelpRequestConfig),
+        self.placeLookupService = YelpRequestService(
+            config: appConfig.yelpRequestConfig,
             decodableService: decodableServices.standardTimeoutDecodableService
         )
 

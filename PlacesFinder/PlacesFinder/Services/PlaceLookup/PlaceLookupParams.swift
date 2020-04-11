@@ -21,20 +21,8 @@ enum PlaceLookupSorting: String, CaseIterable, Codable {
 }
 
 struct PlaceLookupParams: Equatable {
-
     let keywords: NonEmptyString
     let coordinate: PlaceLookupCoordinate
     let radius: PlaceLookupDistance
     let sorting: PlaceLookupSorting
-
-    init(keywords: NonEmptyString,
-                coordinate: PlaceLookupCoordinate,
-                radius: PlaceLookupDistance,
-                sorting: PlaceLookupSorting) {
-        self.keywords = keywords
-        self.coordinate = coordinate
-        self.radius = radius
-        self.sorting = sorting
-    }
-
 }
