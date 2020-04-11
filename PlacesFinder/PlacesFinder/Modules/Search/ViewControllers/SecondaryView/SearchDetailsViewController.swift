@@ -105,7 +105,7 @@ extension SearchDetailsViewController: PopCallbackViewController {
 extension SearchDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sections.count
+        return viewModel.sectionsCount
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,8 +154,9 @@ extension SearchDetailsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch viewModel.sections[section] {
-        case .info, .location:
+        switch viewModel.section(sectionIndex: section) {
+        case .info,
+             .location:
             return 0.0
         }
     }

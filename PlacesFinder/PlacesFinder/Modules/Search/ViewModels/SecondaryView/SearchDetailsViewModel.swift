@@ -10,43 +10,41 @@ import Shared
 import SwiftDux
 
 struct SearchDetailsViewModel: Equatable {
+
     enum Section: Equatable {
         case info([SearchDetailsInfoSectionViewModel])
         case location([SearchDetailsMapSectionViewModel])
     }
 
     let placeName: String
-    let sections: [Section]
+    private let sections: [Section]
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let removeDetailedEntityAction: IgnoredEquatable<Action>
-}
 
-extension SearchDetailsViewModel {
-
-    init(entity: SearchEntityModel,
+    init(placeName: String,
+         sections: [SearchDetailsViewModel.Section],
          store: DispatchingStoreProtocol,
-         actionPrism: SearchDetailsActionPrismProtocol,
-         urlOpenerService: URLOpenerServiceProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
-         resultsCopyContent: SearchResultsCopyContent) {
-        self.placeName = entity.name.value
-        self.sections = [
-            entity.buildInfoSection(urlOpenerService,
-                                    copyFormatter: copyFormatter,
-                                    resultsCopyContent: resultsCopyContent),
-            entity.buildLocationSection(copyFormatter)
-        ].compactMap { $0 }
-
+         removeDetailedEntityAction: Action) {
+        self.placeName = placeName
+        self.sections = sections
         self.store = IgnoredEquatable(store)
-        self.removeDetailedEntityAction = IgnoredEquatable(actionPrism.removeDetailedEntityAction)
+        self.removeDetailedEntityAction = IgnoredEquatable(removeDetailedEntityAction)
     }
 
 }
 
 extension SearchDetailsViewModel {
 
+    var sectionsCount: Int {
+        return sections.count
+    }
+
+    func section(sectionIndex: Int) -> Section {
+        return sections[sectionIndex]
+    }
+
     func cellViewModels(sectionIndex: Int) -> [SearchDetailsSectionProtocol] {
-        switch sections[sectionIndex] {
+        switch section(sectionIndex: sectionIndex) {
         case let .info(viewModels as [SearchDetailsSectionProtocol]),
              let .location(viewModels as [SearchDetailsSectionProtocol]):
             return viewModels
@@ -64,6 +62,47 @@ extension SearchDetailsViewModel {
 
     func dispatchRemoveDetailsAction() {
         store.value.dispatch(removeDetailedEntityAction.value)
+    }
+
+}
+
+// MARK: SearchDetailsViewModelBuilder
+
+protocol SearchDetailsViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(_ entity: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel
+}
+
+class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
+
+    private let store: DispatchingStoreProtocol
+    private let actionPrism: SearchDetailsActionPrismProtocol
+    private let urlOpenerService: URLOpenerServiceProtocol
+    private let copyFormatter: SearchCopyFormatterProtocol
+
+    init(store: DispatchingStoreProtocol,
+         actionPrism: SearchDetailsActionPrismProtocol,
+         urlOpenerService: URLOpenerServiceProtocol,
+         copyFormatter: SearchCopyFormatterProtocol) {
+        self.store = store
+        self.actionPrism = actionPrism
+        self.urlOpenerService = urlOpenerService
+        self.copyFormatter = copyFormatter
+    }
+
+    func buildViewModel(_ entity: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel {
+        let sections = [
+            entity.buildInfoSection(urlOpenerService,
+                                    copyFormatter: copyFormatter,
+                                    resultsCopyContent: resultsCopyContent),
+            entity.buildLocationSection(copyFormatter),
+        ].compactMap { $0 }
+
+        return SearchDetailsViewModel(placeName: entity.name.value,
+                                      sections: sections,
+                                      store: store,
+                                      removeDetailedEntityAction: actionPrism.removeDetailedEntityAction)
     }
 
 }
