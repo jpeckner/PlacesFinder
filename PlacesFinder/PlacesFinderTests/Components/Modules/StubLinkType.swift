@@ -8,9 +8,6 @@
 
 import CoordiNode
 import Foundation
-#if DEBUG
-@testable import PlacesFinder
-#endif
 
 struct StubLinkType: LinkTypeProtocol, Equatable {
 

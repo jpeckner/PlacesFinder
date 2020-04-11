@@ -15,9 +15,6 @@ mint run krzysztofzablocki/sourcery sourcery                \
 AUTO_MOCKABLE_IMPORTS="
 import Foundation
 import CoordiNode
-#if DEBUG
-@testable import PlacesFinder
-#endif
 import Shared
 import SharedTestComponents
 import SwiftDux

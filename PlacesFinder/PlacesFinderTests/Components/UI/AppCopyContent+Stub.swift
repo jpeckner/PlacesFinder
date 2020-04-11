@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if DEBUG
-@testable import PlacesFinder
-#endif
 import Shared
 
 extension AppCopyContent {

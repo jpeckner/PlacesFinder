@@ -4,7 +4,10 @@ lane :run_slather do |options|
   run_script(
     [
       "cd ../" + PLACESFINDER_ROOT,
-      "bundle exec slather coverage --html --show"
+      "bundle exec slather coverage "\
+      " --binary-basename PlacesFinderTests.xctest"\
+      " --verbose"\
+      " --html --show"
     ].join("\n")
   )
 end

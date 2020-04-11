@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if DEBUG
-@testable import PlacesFinder
-#endif
 
 // swiftlint:disable implicitly_unwrapped_optional
 internal class MeasurementFormatterProtocolMock: MeasurementFormatterProtocol {

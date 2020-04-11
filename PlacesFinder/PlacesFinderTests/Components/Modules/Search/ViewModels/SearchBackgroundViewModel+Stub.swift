@@ -6,9 +6,7 @@
 //  Copyright © 2020 Justin Peckner. All rights reserved.
 //
 
-#if DEBUG
-@testable import PlacesFinder
-#endif
+import Foundation
 
 extension SearchBackgroundViewModel {
 
