@@ -73,7 +73,6 @@ targets:
     sources:
       - path: PlacesFinder
       - path: PlacesFinderTests
-      # placeholder:PlacesFinderTests:sources:path
     dependencies:
       - framework: SharedTestComponents.framework
         implicit: true
