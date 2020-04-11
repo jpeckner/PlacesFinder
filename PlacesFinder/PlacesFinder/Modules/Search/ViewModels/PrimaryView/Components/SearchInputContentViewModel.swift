@@ -15,14 +15,22 @@ struct SearchInputContentViewModel: Equatable {
     let placeholder: String
 }
 
-extension SearchInputContentViewModel {
+// MARK: SearchInputContentViewModelBuilder
 
-    init(keywords: NonEmptyString?,
-         isEditing: Bool,
-         copyContent: SearchInputCopyContent) {
-        self.keywords = keywords
-        self.isEditing = isEditing
-        self.placeholder = copyContent.placeholder
+protocol SearchInputContentViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(keywords: NonEmptyString?,
+                        isEditing: Bool,
+                        copyContent: SearchInputCopyContent) -> SearchInputContentViewModel
+}
+
+class SearchInputContentViewModelBuilder: SearchInputContentViewModelBuilderProtocol {
+
+    func buildViewModel(keywords: NonEmptyString?,
+                        isEditing: Bool,
+                        copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
+        return SearchInputContentViewModel(keywords: keywords,
+                                           isEditing: isEditing,
+                                           placeholder: copyContent.placeholder)
     }
 
 }

@@ -150,7 +150,7 @@ extension SearchLookupParentController {
 
 extension SearchLookupParentController: SearchBarWrapperDelegate {
 
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction event: SearchBarEditEvent) {
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformEvent event: SearchBarEditEvent) {
         viewModel.searchInputViewModel.dispatchEditEvent(event)
     }
 

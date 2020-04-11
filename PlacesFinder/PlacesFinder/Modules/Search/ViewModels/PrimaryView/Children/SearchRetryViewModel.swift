@@ -7,20 +7,30 @@
 //
 
 import Foundation
+import Shared
 
-struct SearchRetryViewModel {
+struct SearchRetryViewModel: Equatable {
     let ctaViewModel: SearchCTAViewModel
 }
 
 extension SearchRetryCopyContent: SearchCTACopyProtocol {}
 
-extension SearchRetryViewModel {
+// MARK: SearchRetryViewModelBuilder
 
-    init(copyContent: SearchRetryCopyContent,
-         ctaBlock: @escaping SearchCTABlock) {
-        self.ctaViewModel = SearchCTAViewModel(infoViewModel: copyContent.staticInfoViewModel,
-                                               ctaTitle: copyContent.ctaTitle,
-                                               ctaBlock: ctaBlock)
+protocol SearchRetryViewModelBuilderProtocol: AutoMockable {
+    func buildViewModel(_ copyContent: SearchRetryCopyContent,
+                        ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel
+}
+
+class SearchRetryViewModelBuilder: SearchRetryViewModelBuilderProtocol {
+
+    func buildViewModel(_ copyContent: SearchRetryCopyContent,
+                        ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
+        let ctaViewModel = SearchCTAViewModel(infoViewModel: copyContent.staticInfoViewModel,
+                                              ctaTitle: copyContent.ctaTitle,
+                                              ctaBlock: IgnoredEquatable(ctaBlock))
+
+        return SearchRetryViewModel(ctaViewModel: ctaViewModel)
     }
 
 }

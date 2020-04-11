@@ -21,19 +21,25 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let copyFormatter: SearchCopyFormatterProtocol
     private let statePrism: SearchStatePrismProtocol
     private let actionPrism: SearchActionPrismProtocol
+    private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
+    private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
 
     init(store: TStore,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          statePrism: SearchStatePrismProtocol,
-         actionPrism: SearchActionPrismProtocol) {
+         actionPrism: SearchActionPrismProtocol,
+         backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
+         lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol) {
         self.store = store
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
         self.copyFormatter = copyFormatter
         self.statePrism = statePrism
         self.actionPrism = actionPrism
+        self.backgroundViewModelBuilder = backgroundViewModelBuilder
+        self.lookupViewModelBuilder = lookupViewModelBuilder
 
         let keyPaths = statePrism.presentationKeyPaths.union([
             EquatableKeyPath(\AppState.routerState),
@@ -89,17 +95,18 @@ private extension SearchCoordinator {
         case let .search(authType):
             switch authType.value {
             case .locationServicesNotDetermined:
-                let viewModel = SearchBackgroundViewModel(appCopyContent: appCopyContent)
+                let viewModel = backgroundViewModelBuilder.buildViewModel(appCopyContent)
                 presenter.loadSearchBackgroundView(viewModel,
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
             case let .locationServicesEnabled(locationUpdateRequestBlock):
-                let viewModel = SearchLookupViewModel(searchState: state.searchState,
-                                                      store: store,
-                                                      actionPrism: actionPrism,
-                                                      copyFormatter: copyFormatter,
-                                                      appCopyContent: appCopyContent,
-                                                      locationUpdateRequestBlock: locationUpdateRequestBlock)
+                let viewModel = lookupViewModelBuilder.buildViewModel(
+                    store,
+                    actionPrism: actionPrism,
+                    searchState: state.searchState,
+                    appCopyContent: appCopyContent,
+                    locationUpdateRequestBlock: locationUpdateRequestBlock
+                )
                 let detailsContext = SearchDetailsViewContext(searchState: state.searchState,
                                                               store: store,
                                                               actionPrism: actionPrism,

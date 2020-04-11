@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StaticInfoViewModel {
+struct StaticInfoViewModel: Equatable {
     let imageName: String
     let title: String
     let description: String
