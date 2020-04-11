@@ -62,6 +62,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                 SettingsSectionViewModel(
                     headerType: .measurementSystem(
                         measurementSystemHeaderViewModelBuilder.buildViewModel(
+                            store,
                             title: appCopyContent.settingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.distance.system,
                             copyContent: appCopyContent.settingsMeasurementSystem

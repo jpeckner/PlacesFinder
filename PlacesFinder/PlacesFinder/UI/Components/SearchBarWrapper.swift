@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: SearchBarEditEvent
 
-enum SearchBarEditEvent {
+enum SearchBarEditEvent: CaseIterable {
     case beganEditing
     case clearedInput
     case endedEditing
@@ -20,7 +20,7 @@ enum SearchBarEditEvent {
 // MARK: SearchBarWrapper
 
 protocol SearchBarWrapperDelegate: AnyObject {
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditEvent)
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformEvent event: SearchBarEditEvent)
 
     func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString)
 }
@@ -75,11 +75,11 @@ extension SearchBarWrapper {
 extension SearchBarWrapper: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        delegate?.searchBarWrapper(self, didPerformAction: .beganEditing)
+        delegate?.searchBarWrapper(self, didPerformEvent: .beganEditing)
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        delegate?.searchBarWrapper(self, didPerformAction: .endedEditing)
+        delegate?.searchBarWrapper(self, didPerformEvent: .endedEditing)
     }
 
     // Hacky way to detect that the circled-X button was tapped; unfortunately Apple doesn't provide a real API for it.
@@ -94,7 +94,7 @@ extension SearchBarWrapper: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar,
                    textDidChange searchText: String) {
         if !didTapDeleteKey && searchText.isEmpty {
-            delegate?.searchBarWrapper(self, didPerformAction: .clearedInput)
+            delegate?.searchBarWrapper(self, didPerformEvent: .clearedInput)
         }
 
         didTapDeleteKey = false

@@ -16,15 +16,29 @@ struct SearchResultCellModel: Equatable {
     let image: URL
 }
 
-extension SearchResultCellModel {
+// MARK: SearchResultCellModelBuilder
 
-    init(model: SearchEntityModel,
-         copyFormatter: SearchCopyFormatterProtocol,
-         resultsCopyContent: SearchResultsCopyContent) {
-        self.name = model.name
-        self.ratingsAverage = model.ratings.average
-        self.pricing = model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) }
-        self.image = model.image
+protocol SearchResultCellModelBuilderProtocol: AutoMockable {
+    func buildViewModel(_ model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel
+}
+
+class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
+
+    let copyFormatter: SearchCopyFormatterProtocol
+
+    init(copyFormatter: SearchCopyFormatterProtocol) {
+        self.copyFormatter = copyFormatter
+    }
+
+    func buildViewModel(_ model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel {
+        return SearchResultCellModel(
+            name: model.name,
+            ratingsAverage: model.ratings.average,
+            pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
+            image: model.image
+        )
     }
 
 }

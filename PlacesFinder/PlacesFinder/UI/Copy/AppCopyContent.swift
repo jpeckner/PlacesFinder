@@ -8,7 +8,7 @@
 
 import Shared
 
-struct AppCopyContent {
+struct AppCopyContent: Equatable {
     let displayName: DisplayNameCopyContent
     let searchInput: SearchInputCopyContent
     let searchInstructions: SearchInstructionsCopyContent
@@ -22,67 +22,67 @@ struct AppCopyContent {
     let settingsMeasurementSystem: SettingsMeasurementSystemCopyContent
 }
 
-struct DisplayNameCopyContent {
+struct DisplayNameCopyContent: Equatable {
     let name: NonEmptyString
 }
 
-struct SearchInputCopyContent {
+struct SearchInputCopyContent: Equatable {
     let placeholder: String
 }
 
-struct SearchInstructionsCopyContent {
+struct SearchInstructionsCopyContent: Equatable {
     let iconImageName: String
     let title: String
     let description: String
     let resultsSource: String
 }
 
-struct SearchLocationDisabledCopyContent {
+struct SearchLocationDisabledCopyContent: Equatable {
     let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
 }
 
-struct SearchNoInternetCopyContent {
+struct SearchNoInternetCopyContent: Equatable {
     let iconImageName: String
     let title: String
     let description: String
 }
 
-struct SearchNoResultsCopyContent {
+struct SearchNoResultsCopyContent: Equatable {
     let iconImageName: String
     let title: String
     let description: String
 }
 
-struct SearchResultsCopyContent {
+struct SearchResultsCopyContent: Equatable {
     let currencySymbol: String
     let callNumberFormatString: String
     let numRatingsSingularFormatString: String
     let numRatingsPluralFormatString: String
 }
 
-struct SearchRetryCopyContent {
+struct SearchRetryCopyContent: Equatable {
     let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
 }
 
-struct SettingsHeadersCopyContent {
+struct SettingsHeadersCopyContent: Equatable {
     let distanceSectionTitle: String
     let sortSectionTitle: String
 }
 
-struct SettingsSortPreferenceCopyContent {
+struct SettingsSortPreferenceCopyContent: Equatable {
     let bestMatchTitle: String
     let distanceTitle: String
     let ratingTitle: String
     let reviewCountTitle: String
 }
 
-struct SettingsMeasurementSystemCopyContent {
+struct SettingsMeasurementSystemCopyContent: Equatable {
     let imperial: String
     let metric: String
 }

@@ -1,5 +1,5 @@
 //
-//  SearchResultCellModelTests.swift
+//  SearchResultCellModelBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Created by Justin Peckner.
@@ -12,37 +12,45 @@ import Nimble
 #endif
 import Quick
 
-class SearchResultCellModelTests: QuickSpec {
+class SearchResultCellModelBuilderTests: QuickSpec {
 
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var mockFormatter: SearchCopyFormatterProtocolMock!
 
-        var result: SearchResultCellModel!
+        var sut: SearchResultCellModelBuilder!
 
         beforeEach {
             mockFormatter = SearchCopyFormatterProtocolMock()
             mockFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
+
+            sut = SearchResultCellModelBuilder(copyFormatter: mockFormatter)
         }
 
-        describe("init(summaryModel:formatter:)") {
-            let stubSummaryModel = SearchEntityModel.stubValue()
+        describe("buildViewModel()") {
+            let stubEntityModel = SearchEntityModel.stubValue()
             let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-            beforeEach {
-                result = SearchResultCellModel(model: stubSummaryModel,
-                                               copyFormatter: mockFormatter,
+            var result: SearchResultCellModel!
 
-                                               resultsCopyContent: stubCopyContent)
+            beforeEach {
+                result = sut.buildViewModel(stubEntityModel,
+                                            resultsCopyContent: stubCopyContent)
+            }
+
+            it("calls mockFormatter with expected method and args") {
+                let receivedArgs = mockFormatter.formatPricingPricingReceivedArguments
+                expect(receivedArgs?.resultsCopyContent) == stubCopyContent
+                expect(receivedArgs?.pricing) == stubEntityModel.pricing
             }
 
             it("inits a viewmodel with the model's name...") {
-                expect(result.name) == stubSummaryModel.name
+                expect(result.name) == stubEntityModel.name
             }
 
             it("...and with the model's ratings average...") {
-                expect(result.ratingsAverage) == stubSummaryModel.ratings.average
+                expect(result.ratingsAverage) == stubEntityModel.ratings.average
             }
 
             it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
@@ -50,7 +58,7 @@ class SearchResultCellModelTests: QuickSpec {
             }
 
             it("...and with the model's image") {
-                expect(result.image) == stubSummaryModel.image
+                expect(result.image) == stubEntityModel.image
             }
         }
 
