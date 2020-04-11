@@ -19,6 +19,7 @@ class HomeCoordinatorTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
         let dummyRootViewController = UIViewController()
@@ -150,15 +151,45 @@ class HomeCoordinatorTests: QuickSpec {
 
             describe("switchSubtree()") {
 
-                for descendent in HomeCoordinatorDescendent.allCases {
+                for currentDescendent in HomeCoordinatorDescendent.allCases {
                     for destinationDescendent in HomeCoordinatorDestinationDescendent.allCases {
                         let immediateDescendent =
                             HomeCoordinatorDescendent(destinationDescendent: destinationDescendent).immediateDescendent
 
-                        context("when switchSubtree() switches from \(descendent) to \(destinationDescendent)") {
+                        context("when switchSubtree() switches from \(currentDescendent) to \(destinationDescendent)") {
                             beforeEach {
-                                coordinator.switchSubtree(from: descendent,
+                                coordinator.switchSubtree(from: currentDescendent,
                                                           to: destinationDescendent)
+                            }
+
+                            it("activates the corresponding coordinator") {
+                                verifyCoordinatorWasActivated(stubChildContainer.coordinator(for: immediateDescendent),
+                                                              with: immediateDescendent.nodeBox)
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        describe("HomeViewControllerDelegate") {
+
+            let stubHomeViewController = HomeViewController(viewControllers: [])
+
+            describe("didSelectIndex()") {
+
+                for currentDescendentIdx in HomeCoordinatorDescendent.allCases.indices {
+                    for (destinationDescedentIdx, destinationDescendent) in HomeCoordinatorDestinationDescendent.allCases.enumerated() {
+                        let immediateDescendent =
+                            HomeCoordinatorDescendent(destinationDescendent: destinationDescendent).immediateDescendent
+
+                        context("when didSelectIndex() switches from index \(currentDescendentIdx) to index \(destinationDescedentIdx)") {
+                            beforeEach {
+                                coordinator.viewController(stubHomeViewController,
+                                                           didSelectIndex: destinationDescedentIdx,
+                                                           previousIndex: currentDescendentIdx)
                             }
 
                             it("activates the corresponding coordinator") {

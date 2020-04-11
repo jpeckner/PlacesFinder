@@ -39,6 +39,26 @@ class EntityReducerTests: QuickSpec {
                 }
             }
 
+            context("when the action is .idle") {
+                let currentState = EntityState<StubEntity>(loadState: .inProgress,
+                                                           currentValue: stubEntity)
+
+                var resultState: EntityState<StubEntity>!
+
+                beforeEach {
+                    resultState = EntityReducer.reduce(action: EntityAction<StubEntity>.idle,
+                                                       currentState: currentState)
+                }
+
+                it("returns the .idle loadState") {
+                    expect(resultState.loadState) == .idle
+                }
+
+                it("returns the currentValue held previously") {
+                    expect(resultState.currentValue) == stubEntity
+                }
+            }
+
             context("when the action is .inProgress") {
                 let currentState = EntityState<StubEntity>(loadState: .idle,
                                                            currentValue: stubEntity)

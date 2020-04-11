@@ -11,7 +11,6 @@ import Shared
 import SwiftDux
 
 protocol LocationAuthListenerProtocol: AutoMockable {
-    func start()
     func requestWhenInUseAuthorization()
 }
 
@@ -31,10 +30,6 @@ class LocationAuthListener: NSObject, LocationAuthListenerProtocol {
         super.init()
 
         locationAuthManager.delegate = self
-    }
-
-    func start() {
-        // Placeholder for consistency with other listeners/future usage
     }
 
     func requestWhenInUseAuthorization() {
