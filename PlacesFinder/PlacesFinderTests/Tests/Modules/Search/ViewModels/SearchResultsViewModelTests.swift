@@ -19,38 +19,25 @@ class SearchResultsViewModelTests: QuickSpec {
     private enum StubViewModelAction: Action, Equatable {
         case refreshAction
         case nextRequestAction
-        case detailEntity(SearchEntityModel)
+        case detailEntity(String)
     }
 
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable function_body_length
     override func spec() {
 
-        let stubEntity = SearchEntityModel.stubValue()
-        let stubEntities = NonEmptyArray(with:
-            SearchEntityModel.stubValue(id: "stubID_0")
-        ).appendedWith([
-            SearchEntityModel.stubValue(id: "stubID_1"),
-            SearchEntityModel.stubValue(id: "stubID_2"),
-        ])
-
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockStore: MockAppStore!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
-        var mockFormatter: SearchCopyFormatterProtocolMock!
-
-        var viewModel: SearchResultsViewModel!
+        var stubResultViewModels: NonEmptyArray<SearchResultViewModel>!
+        var result: SearchResultsViewModel!
 
         func buildViewModel(
-            allEntities: NonEmptyArray<SearchEntityModel>,
+            resultViewModels: NonEmptyArray<SearchResultViewModel>,
             nextRequestAction: Action? = StubViewModelAction.nextRequestAction
         ) -> SearchResultsViewModel {
-            return SearchResultsViewModel(allEntities: allEntities,
+            return SearchResultsViewModel(resultViewModels: resultViewModels,
                                           store: mockStore,
-                                          actionPrism: mockSearchActionPrism,
-                                          copyFormatter: mockFormatter,
-                                          resultsCopyContent: stubCopyContent,
                                           refreshAction: StubViewModelAction.refreshAction,
                                           nextRequestAction: nextRequestAction)
         }
@@ -58,24 +45,31 @@ class SearchResultsViewModelTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.detailEntityActionClosure = { StubViewModelAction.detailEntity($0) }
-
-            mockFormatter = SearchCopyFormatterProtocolMock()
-            mockFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
+            stubResultViewModels = NonEmptyArray([0, 1, 2].map { idx in
+                SearchResultViewModel.stubValue(
+                    store: mockStore,
+                    cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
+                    detailEntityAction: StubViewModelAction.detailEntity("\(idx)")
+                )
+            })
         }
 
         describe("cellViewModelCount") {
 
             it("returns the number of cell view-models") {
-                viewModel = buildViewModel(allEntities: stubEntities)
-                expect(viewModel.cellViewModelCount) == 3
+                result = buildViewModel(resultViewModels: stubResultViewModels)
+                expect(result.cellViewModelCount) == 3
 
-                viewModel = buildViewModel(allEntities: stubEntities.appendedWith([stubEntity]))
-                expect(viewModel.cellViewModelCount) == 4
+                result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
+                    SearchResultViewModel.stubValue(store: mockStore)
+                ]))
+                expect(result.cellViewModelCount) == 4
 
-                viewModel = buildViewModel(allEntities: stubEntities.appendedWith([stubEntity, stubEntity]))
-                expect(viewModel.cellViewModelCount) == 5
+                result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
+                    SearchResultViewModel.stubValue(store: mockStore),
+                    SearchResultViewModel.stubValue(store: mockStore)
+                ]))
+                expect(result.cellViewModelCount) == 5
             }
 
         }
@@ -83,15 +77,11 @@ class SearchResultsViewModelTests: QuickSpec {
         describe("cellViewModel(rowIndex:)") {
 
             beforeEach {
-                viewModel = buildViewModel(allEntities: stubEntities)
+                result = buildViewModel(resultViewModels: stubResultViewModels)
             }
 
             it("returns the view-model at the specified index") {
-                expect(viewModel.cellViewModel(rowIndex: 2)) == SearchResultCellModel(
-                    model: stubEntities.value[2],
-                    copyFormatter: mockFormatter,
-                    resultsCopyContent: stubCopyContent
-                )
+                expect(result.cellViewModel(rowIndex: 2)) == stubResultViewModels.value[2].cellModel
             }
 
         }
@@ -100,46 +90,35 @@ class SearchResultsViewModelTests: QuickSpec {
 
             context("when nextRequestAction is not nil") {
                 beforeEach {
-                    viewModel = buildViewModel(allEntities: stubEntities,
-                                               nextRequestAction: StubViewModelAction.nextRequestAction)
+                    result = buildViewModel(resultViewModels: stubResultViewModels,
+                                            nextRequestAction: StubViewModelAction.nextRequestAction)
                 }
 
                 it("returns true") {
-                    expect(viewModel.hasNextRequestAction) == true
+                    expect(result.hasNextRequestAction) == true
                 }
             }
 
             context("else (when nextRequestAction is nil)") {
                 beforeEach {
-                    viewModel = buildViewModel(allEntities: stubEntities,
-                                               nextRequestAction: nil)
+                    result = buildViewModel(resultViewModels: stubResultViewModels,
+                                            nextRequestAction: nil)
                 }
 
                 it("returns false") {
-                    expect(viewModel.hasNextRequestAction) == false
+                    expect(result.hasNextRequestAction) == false
                 }
             }
 
-        }
-
-        describe("dispatchRefreshAction()") {
-            beforeEach {
-                viewModel = buildViewModel(allEntities: stubEntities)
-                viewModel.dispatchRefreshAction()
-            }
-
-            it("dispatches the expected action") {
-                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .refreshAction
-            }
         }
 
         describe("dispatchNextRequestAction()") {
 
             context("when nextRequestAction is not nil") {
                 beforeEach {
-                    viewModel = buildViewModel(allEntities: stubEntities,
-                                               nextRequestAction: StubViewModelAction.nextRequestAction)
-                    viewModel.dispatchNextRequestAction()
+                    result = buildViewModel(resultViewModels: stubResultViewModels,
+                                            nextRequestAction: StubViewModelAction.nextRequestAction)
+                    result.dispatchNextRequestAction()
                 }
 
                 it("dispatches the expected action") {
@@ -147,7 +126,7 @@ class SearchResultsViewModelTests: QuickSpec {
                 }
 
                 it("nils-out nextRequestAction") {
-                    expect(viewModel.hasNextRequestAction) == false
+                    expect(result.hasNextRequestAction) == false
                 }
             }
 
@@ -155,11 +134,11 @@ class SearchResultsViewModelTests: QuickSpec {
                 var verificationBlock: NoDispatchVerificationBlock!
 
                 beforeEach {
-                    viewModel = buildViewModel(allEntities: stubEntities,
-                                               nextRequestAction: nil)
+                    result = buildViewModel(resultViewModels: stubResultViewModels,
+                                            nextRequestAction: nil)
 
                     verificationBlock = self.verifyNoDispatches(from: mockStore) {
-                        viewModel.dispatchNextRequestAction()
+                        result.dispatchNextRequestAction()
                     }
                 }
 
@@ -170,15 +149,25 @@ class SearchResultsViewModelTests: QuickSpec {
 
         }
 
-        describe("dispatchDetailsAction()") {
+        describe("dispatchRefreshAction()") {
             beforeEach {
-                viewModel = buildViewModel(allEntities: stubEntities)
-                viewModel.dispatchDetailsAction(rowIndex: 2)
+                result = buildViewModel(resultViewModels: stubResultViewModels)
+                result.dispatchRefreshAction()
             }
 
             it("dispatches the expected action") {
-                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction)
-                    == .detailEntity(stubEntities.value[2])
+                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .refreshAction
+            }
+        }
+
+        describe("dispatchDetailsAction()") {
+            beforeEach {
+                result = buildViewModel(resultViewModels: stubResultViewModels)
+                result.dispatchDetailsAction(rowIndex: 2)
+            }
+
+            it("dispatches the expected action") {
+                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .detailEntity("2")
             }
         }
 

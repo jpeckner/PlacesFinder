@@ -1,5 +1,5 @@
 //
-//  SearchParams+Stub.swift
+//  SearchInputParams+Stub.swift
 //  PlacesFinderTests
 //
 //  Created by Justin Peckner.
@@ -16,6 +16,16 @@ extension SearchParams {
 
     static func stubValue(keywords: NonEmptyString = .stubValue("stubkeywords")) -> SearchParams {
         return SearchParams(keywords: keywords)
+    }
+
+}
+
+extension SearchInputParams {
+
+    static func stubValue(params: SearchParams? = .stubValue(),
+                          isEditing: Bool = false) -> SearchInputParams {
+        return SearchInputParams(params: params,
+                                 isEditing: isEditing)
     }
 
 }

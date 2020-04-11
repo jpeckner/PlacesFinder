@@ -29,13 +29,14 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            sut = SettingsUnitsHeaderViewModelBuilder(store: mockStore)
+            sut = SettingsUnitsHeaderViewModelBuilder()
         }
 
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(title: "stubTitle",
+                result = sut.buildViewModel(mockStore,
+                                            title: "stubTitle",
                                             currentlyActiveSystem: .imperial,
                                             copyContent: SettingsMeasurementSystemCopyContent.stubValue())
             }
