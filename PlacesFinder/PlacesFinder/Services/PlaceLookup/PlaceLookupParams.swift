@@ -9,32 +9,20 @@
 import Foundation
 import Shared
 
-public typealias PlaceLookupDistance = Measurement<UnitLength>
+typealias PlaceLookupDistance = Measurement<UnitLength>
 
-public typealias PlaceLookupCoordinate = LocationCoordinate
+typealias PlaceLookupCoordinate = LocationCoordinate
 
-public enum PlaceLookupSorting: String, CaseIterable, Codable {
+enum PlaceLookupSorting: String, CaseIterable, Codable {
     case bestMatch
     case distance
     case rating
     case reviewCount
 }
 
-public struct PlaceLookupParams: Equatable {
-
-    public let keywords: NonEmptyString
-    public let coordinate: PlaceLookupCoordinate
-    public let radius: PlaceLookupDistance
-    public let sorting: PlaceLookupSorting
-
-    public init(keywords: NonEmptyString,
-                coordinate: PlaceLookupCoordinate,
-                radius: PlaceLookupDistance,
-                sorting: PlaceLookupSorting) {
-        self.keywords = keywords
-        self.coordinate = coordinate
-        self.radius = radius
-        self.sorting = sorting
-    }
-
+struct PlaceLookupParams: Equatable {
+    let keywords: NonEmptyString
+    let coordinate: PlaceLookupCoordinate
+    let radius: PlaceLookupDistance
+    let sorting: PlaceLookupSorting
 }

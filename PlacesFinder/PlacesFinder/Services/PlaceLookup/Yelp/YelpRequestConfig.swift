@@ -8,16 +8,16 @@
 
 import Foundation
 
-public enum YelpRequestConfigError: Error {
+enum YelpRequestConfigError: Error {
     case invalidURLComponents
 }
 
-public struct YelpRequestConfig {
-    public let apiKey: String
-    public let searchURLComponents: URLComponents
+struct YelpRequestConfig {
+    let apiKey: String
+    let searchURLComponents: URLComponents
 }
 
-public extension YelpRequestConfig {
+extension YelpRequestConfig {
 
      init(apiKey: String, baseURL: URL) throws {
         self.apiKey = apiKey
