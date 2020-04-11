@@ -6,6 +6,7 @@
 //  Copyright © 2020 Justin Peckner. All rights reserved.
 //
 
+import Foundation
 
 extension SearchMessageViewModel {
 
