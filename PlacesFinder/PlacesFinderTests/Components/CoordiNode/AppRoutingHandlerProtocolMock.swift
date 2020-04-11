@@ -7,9 +7,6 @@
 //
 
 import CoordiNode
-#if DEBUG
-@testable import PlacesFinder
-#endif
 
 // swiftlint:disable identifier_name
 // swiftlint:disable large_tuple
