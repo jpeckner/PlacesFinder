@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum PlaceLookupRequestBuilderError: Error, Equatable {
+enum PlaceLookupRequestBuilderError: Error, Equatable {
     case invalidResultsPerPageAmount(acceptableRange: ClosedRange<Int>)
     case invalidURL(components: URLComponents)
 }
 
-public typealias PlaceLookupPageRequestTokenResult = Result<PlaceLookupPageRequestToken, PlaceLookupRequestBuilderError>
+typealias PlaceLookupPageRequestTokenResult = Result<PlaceLookupPageRequestToken, PlaceLookupRequestBuilderError>
 
-public protocol PlaceLookupRequestBuilderProtocol {
+protocol PlaceLookupRequestBuilderProtocol {
     func buildPageRequestToken(_ placeLookupParams: PlaceLookupParams,
                                startingIndex: Int,
                                resultsPerPage: Int) -> PlaceLookupPageRequestTokenResult
