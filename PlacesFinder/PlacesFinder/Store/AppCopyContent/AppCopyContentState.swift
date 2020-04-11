@@ -8,7 +8,7 @@
 
 import SwiftDux
 
-struct AppCopyContentState {
+struct AppCopyContentState: Equatable {
     let copyContent: AppCopyContent
 }
 
