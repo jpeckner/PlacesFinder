@@ -9,38 +9,38 @@
 import Shared
 import SwiftDux
 
-enum SearchDetailsViewContext {
+enum SearchDetailsViewContext: Equatable {
     case detailedEntity(SearchDetailsViewModel)
     case firstListedEntity(SearchDetailsViewModel)
 }
 
-extension SearchDetailsViewContext {
+// MARK: SearchDetailsViewContextBuilder
 
-    init?(searchState: SearchState,
-          store: DispatchingStoreProtocol,
-          actionPrism: SearchDetailsActionPrismProtocol,
-          urlOpenerService: URLOpenerServiceProtocol,
-          copyFormatter: SearchCopyFormatterProtocol,
-          appCopyContent: AppCopyContent) {
-        let value: SearchDetailsViewContext? = searchState.detailedEntity.map {
-            .detailedEntity(SearchDetailsViewModel(entity: $0,
-                                                   store: store,
-                                                   actionPrism: actionPrism,
-                                                   urlOpenerService: urlOpenerService,
-                                                   copyFormatter: copyFormatter,
-                                                   resultsCopyContent: appCopyContent.searchResults))
+protocol SearchDetailsViewContextBuilderProtocol: AutoMockable {
+    func buildViewContext(_ searchState: SearchState,
+                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext?
+}
+
+class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
+
+    private let detailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol
+
+    init(detailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol) {
+        self.detailsViewModelBuilder = detailsViewModelBuilder
+    }
+
+    func buildViewContext(_ searchState: SearchState,
+                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
+        return searchState.detailedEntity.map {
+            let viewModel = detailsViewModelBuilder.buildViewModel($0,
+                                                                   resultsCopyContent: appCopyContent.searchResults)
+            return .detailedEntity(viewModel)
         }
         ?? searchState.entities?.value.first.map {
-            .firstListedEntity(SearchDetailsViewModel(entity: $0,
-                                                      store: store,
-                                                      actionPrism: actionPrism,
-                                                      urlOpenerService: urlOpenerService,
-                                                      copyFormatter: copyFormatter,
-                                                      resultsCopyContent: appCopyContent.searchResults))
+            let viewModel = detailsViewModelBuilder.buildViewModel($0,
+                                                                   resultsCopyContent: appCopyContent.searchResults)
+            return .firstListedEntity(viewModel)
         }
-
-        guard let caseValue = value else { return nil }
-        self = caseValue
     }
 
 }

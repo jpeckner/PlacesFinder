@@ -37,6 +37,8 @@ class SearchCoordinatorTests: QuickSpec {
         var mockSearchActionPrism: SearchActionPrismProtocolMock!
         var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
         var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
+        var mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock!
+
         var coordinator: SearchCoordinator<MockAppStore>!
 
         func initCoordinator(statePrism: SearchStatePrismProtocol) {
@@ -62,14 +64,16 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchLookupViewModelBuilder.buildViewModelActionPrismSearchStateAppCopyContentLocationUpdateRequestBlockReturnValue
                 = lookupViewModel
 
+            mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
+
             coordinator = SearchCoordinator(store: mockStore,
                                             presenter: mockSearchPresenter,
                                             urlOpenerService: mockServiceContainer.urlOpenerService,
-                                            copyFormatter: SearchCopyFormatterProtocolMock(),
                                             statePrism: statePrism,
                                             actionPrism: mockSearchActionPrism,
                                             backgroundViewModelBuilder: mockSearchBackgroundViewModelBuilder,
-                                            lookupViewModelBuilder: mockSearchLookupViewModelBuilder)
+                                            lookupViewModelBuilder: mockSearchLookupViewModelBuilder,
+                                            detailsViewContextBuilder: mockSearchDetailsViewContextBuilder)
         }
 
         beforeEach {

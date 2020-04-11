@@ -18,28 +18,28 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let store: TStore
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
     private let statePrism: SearchStatePrismProtocol
     private let actionPrism: SearchActionPrismProtocol
     private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
     private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
+    private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
 
     init(store: TStore,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
          statePrism: SearchStatePrismProtocol,
          actionPrism: SearchActionPrismProtocol,
          backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
-         lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol) {
+         lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
+         detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol) {
         self.store = store
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
-        self.copyFormatter = copyFormatter
         self.statePrism = statePrism
         self.actionPrism = actionPrism
         self.backgroundViewModelBuilder = backgroundViewModelBuilder
         self.lookupViewModelBuilder = lookupViewModelBuilder
+        self.detailsViewContextBuilder = detailsViewContextBuilder
 
         let keyPaths = statePrism.presentationKeyPaths.union([
             EquatableKeyPath(\AppState.routerState),
@@ -107,12 +107,8 @@ private extension SearchCoordinator {
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
-                let detailsContext = SearchDetailsViewContext(searchState: state.searchState,
-                                                              store: store,
-                                                              actionPrism: actionPrism,
-                                                              urlOpenerService: urlOpenerService,
-                                                              copyFormatter: copyFormatter,
-                                                              appCopyContent: appCopyContent)
+                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchState,
+                                                                                appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,
                                           detailsViewContext: detailsContext,

@@ -14,5 +14,6 @@ struct ServiceContainer {
     let locationRequestHandler: LocationRequestHandlerProtocol
     let placeLookupService: PlaceLookupServiceProtocol
     let routingHandler: AppRoutingHandlerProtocol
+    let searchCopyFormatter: SearchCopyFormatterProtocol
     let urlOpenerService: URLOpenerServiceProtocol
 }

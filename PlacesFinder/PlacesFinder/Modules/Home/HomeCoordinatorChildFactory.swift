@@ -39,8 +39,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
-        let copyFormatter = SearchCopyFormatter()
-
         let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
                                           locationRequestHandler: serviceContainer.locationRequestHandler)
 
@@ -61,19 +59,27 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         let lookupViewModelBuilder = SearchLookupViewModelBuilder(
             store: store,
             actionPrism: actionPrism,
-            copyFormatter: copyFormatter,
+            copyFormatter: serviceContainer.searchCopyFormatter,
             contentViewModelBuilder: contentViewModelBuilder,
             instructionsViewModelBuilder: instructionsViewModelBuilder
+        )
+
+        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(store: store,
+                                                                    actionPrism: actionPrism,
+                                                                    urlOpenerService: serviceContainer.urlOpenerService,
+                                                                    copyFormatter: serviceContainer.searchCopyFormatter)
+        let detailsViewContextBuilder = SearchDetailsViewContextBuilder(
+            detailsViewModelBuilder: detailsViewModelBuilder
         )
 
         return SearchCoordinator(store: store,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
-                                 copyFormatter: copyFormatter,
                                  statePrism: statePrism,
                                  actionPrism: actionPrism,
                                  backgroundViewModelBuilder: backgroundViewModelBuilder,
-                                 lookupViewModelBuilder: lookupViewModelBuilder)
+                                 lookupViewModelBuilder: lookupViewModelBuilder,
+                                 detailsViewContextBuilder: detailsViewContextBuilder)
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
