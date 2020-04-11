@@ -159,7 +159,10 @@ private extension ServiceContainer {
             decodableService: decodableServices.standardTimeoutDecodableService
         )
 
-        self.routingHandler = AppRoutingHandler(routingHandler: RoutingHandler())
+        let routingHandler = RoutingHandler()
+        self.routingHandler = AppRoutingHandler(routingHandler: routingHandler)
+
+        self.searchCopyFormatter = SearchCopyFormatter()
 
         self.urlOpenerService = URLOpenerService(urlOpener: UIApplication.shared)
     }
