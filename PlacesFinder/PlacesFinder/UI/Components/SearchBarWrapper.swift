@@ -9,9 +9,9 @@
 import Shared
 import UIKit
 
-// MARK: SearchBarEditAction
+// MARK: SearchBarEditEvent
 
-enum SearchBarEditAction {
+enum SearchBarEditEvent {
     case beganEditing
     case clearedInput
     case endedEditing
@@ -20,7 +20,7 @@ enum SearchBarEditAction {
 // MARK: SearchBarWrapper
 
 protocol SearchBarWrapperDelegate: AnyObject {
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditAction)
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformAction action: SearchBarEditEvent)
 
     func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString)
 }

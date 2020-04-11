@@ -36,7 +36,7 @@ enum SearchAction: Action, Equatable {
     )
 
     // Input params
-    case updateInputEditing(SearchBarEditAction)
+    case updateInputEditing(SearchBarEditEvent)
 
     // Detailed entity
     case detailedEntity(SearchEntityModel)

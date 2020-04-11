@@ -135,14 +135,14 @@ class SearchActionPrismTests: QuickSpec {
         }
 
         describe("updateEditingAction") {
-            let editAction: SearchBarEditAction = .beganEditing
+            let editEvent: SearchBarEditEvent = .beganEditing
 
             beforeEach {
-                result = prism.updateEditingAction(editAction)
+                result = prism.updateEditingAction(editEvent)
             }
 
-            it("returns SearchAction.updateInputEditing(editAction:)") {
-                expect(result as? SearchAction) == .updateInputEditing(editAction)
+            it("returns SearchAction.updateInputEditing(editEvent:)") {
+                expect(result as? SearchAction) == .updateInputEditing(editEvent)
             }
         }
 
