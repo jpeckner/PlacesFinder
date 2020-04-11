@@ -8,9 +8,6 @@
 
 import CoordiNodeTestComponents
 import Nimble
-#if DEBUG
-@testable import PlacesFinder
-#endif
 import Quick
 
 class AppRoutingHandlerTests: QuickSpec {

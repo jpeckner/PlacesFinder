@@ -73,11 +73,9 @@ targets:
     info:
       path: PlacesFinderTests/Info.plist
     sources:
-      - path: PlacesFinder/Sourcery/Output/AutoMockable.generated.swift
+      - path: PlacesFinder
       - path: PlacesFinderTests
-      # placeholder:PlacesFinderTests:sources:path
     dependencies:
-      - target: PlacesFinder
       - framework: SharedTestComponents.framework
         implicit: true
       - framework: CoordiNodeTestComponents.framework
@@ -85,6 +83,11 @@ targets:
       - carthage: SwiftDuxTestComponents
       - carthage: Nimble
       - carthage: Quick
+      - carthage: Kingfisher
+      - carthage: Reachability
+      - carthage: SwiftDux
+      - carthage: SkeletonView
+      - carthage: SnapKit
       
   PlacesFinderIntegrationTests:
     type: bundle.unit-test

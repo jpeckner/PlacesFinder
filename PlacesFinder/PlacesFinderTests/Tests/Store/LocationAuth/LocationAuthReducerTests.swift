@@ -7,9 +7,6 @@
 //
 
 import Nimble
-#if DEBUG
-@testable import PlacesFinder
-#endif
 import Quick
 import Shared
 import SwiftDuxTestComponents
