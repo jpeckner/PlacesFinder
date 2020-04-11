@@ -9,18 +9,18 @@
 import Foundation
 import Shared
 
-public enum PlaceLookupErrorPayload: Equatable {
+enum PlaceLookupErrorPayload: Equatable {
     case codeAndDescription(code: String, description: String)
 }
 
-public enum PlaceLookupServiceError: Equatable {
+enum PlaceLookupServiceError: Equatable {
     case errorPayloadReturned(PlaceLookupErrorPayload, urlResponse: HTTPURLResponse)
     case unexpectedDecodingError(underlyingError: DecodableServiceUnexpectedError)
 }
 
 extension PlaceLookupServiceError: RetryStatusError {
 
-    public var isRetriable: Bool {
+    var isRetriable: Bool {
         switch self {
         case .unexpectedDecodingError:
             return false
@@ -31,27 +31,27 @@ extension PlaceLookupServiceError: RetryStatusError {
 
 }
 
-public struct PlaceLookupResponse: Equatable {
-    public let page: PlaceLookupPage
-    public let nextRequestTokenResult: PlaceLookupPageRequestTokenResult?
+struct PlaceLookupResponse: Equatable {
+    let page: PlaceLookupPage
+    let nextRequestTokenResult: PlaceLookupPageRequestTokenResult?
 
-    public init(page: PlaceLookupPage,
+    init(page: PlaceLookupPage,
                 nextRequestTokenResult: PlaceLookupPageRequestTokenResult?) {
         self.page = page
         self.nextRequestTokenResult = nextRequestTokenResult
     }
 }
 
-public typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceError>
-public typealias PlaceLookupCompletion = (PlaceLookupResult) -> Void
+typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceError>
+typealias PlaceLookupCompletion = (PlaceLookupResult) -> Void
 
 // MARK: PlaceLookupService
 
-public enum PlaceLookupAPIOption {
+enum PlaceLookupAPIOption {
     case yelp(YelpRequestConfig)
 }
 
-public protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
+protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
     func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
                                       resultsPerPage: Int) throws -> PlaceLookupPageRequestToken
 
@@ -61,13 +61,13 @@ public protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
                      completion: @escaping PlaceLookupCompletion)
 }
 
-public class PlaceLookupService {
+class PlaceLookupService {
 
-    public static let maxResultsPerPage = YelpRequestBuilder.maxResultsPerPage
+    static let maxResultsPerPage = YelpRequestBuilder.maxResultsPerPage
 
     private let standInService: PlaceLookupServiceProtocol
 
-    public init(apiOption: PlaceLookupAPIOption,
+    init(apiOption: PlaceLookupAPIOption,
                 decodableService: DecodableServiceProtocol) {
         switch apiOption {
         case let .yelp(config):
@@ -80,19 +80,19 @@ public class PlaceLookupService {
 
 extension PlaceLookupService: PlaceLookupServiceProtocol {
 
-    public func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
+    func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
                                              resultsPerPage: Int) throws -> PlaceLookupPageRequestToken {
         return try standInService.buildInitialPageRequestToken(placeLookupParams,
                                                                resultsPerPage: resultsPerPage)
     }
 
-    public func buildInitialPageRequestToken(
+    func buildInitialPageRequestToken(
         _ placeLookupParams: PlaceLookupParams
     ) throws -> PlaceLookupPageRequestToken {
         return try standInService.buildInitialPageRequestToken(placeLookupParams)
     }
 
-    public func requestPage(_ requestToken: PlaceLookupPageRequestToken,
+    func requestPage(_ requestToken: PlaceLookupPageRequestToken,
                             completion: @escaping PlaceLookupCompletion) {
         standInService.requestPage(requestToken,
                                    completion: completion)

@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct PlaceLookupPageRequestToken: Equatable {
-    public let placeLookupParams: PlaceLookupParams
-    public let urlRequest: URLRequest
-    public let startingIndex: Int
-    public let resultsPerPage: Int
+struct PlaceLookupPageRequestToken: Equatable {
+    let placeLookupParams: PlaceLookupParams
+    let urlRequest: URLRequest
+    let startingIndex: Int
+    let resultsPerPage: Int
 
-    public init(placeLookupParams: PlaceLookupParams,
+    init(placeLookupParams: PlaceLookupParams,
                 urlRequest: URLRequest,
                 startingIndex: Int,
                 resultsPerPage: Int) {
@@ -25,12 +25,12 @@ public struct PlaceLookupPageRequestToken: Equatable {
     }
 }
 
-public struct PlaceLookupTokenAttemptsContainer: Equatable {
-    public let token: PlaceLookupPageRequestToken
-    public let maxAttempts: Int
-    public let numAttemptsSoFar: Int
+struct PlaceLookupTokenAttemptsContainer: Equatable {
+    let token: PlaceLookupPageRequestToken
+    let maxAttempts: Int
+    let numAttemptsSoFar: Int
 
-    public init(token: PlaceLookupPageRequestToken,
+    init(token: PlaceLookupPageRequestToken,
                 maxAttempts: Int,
                 numAttemptsSoFar: Int) {
         self.token = token
