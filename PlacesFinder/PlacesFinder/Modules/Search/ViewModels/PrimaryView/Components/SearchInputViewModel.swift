@@ -27,8 +27,8 @@ struct SearchInputViewModel {
 
 extension SearchInputViewModel {
 
-    func dispatchEditAction(_ editAction: SearchBarEditAction) {
-        let action = actionPrism.updateEditingAction(editAction)
+    func dispatchEditEvent(_ editEvent: SearchBarEditEvent) {
+        let action = actionPrism.updateEditingAction(editEvent)
         store.dispatch(action)
     }
 

@@ -155,7 +155,7 @@ enum SearchReducer {
     // swiftlint:enable function_body_length
 
     private static func buildInputParams(_ currentState: SearchState,
-                                         action: SearchBarEditAction) -> SearchInputParams {
+                                         action: SearchBarEditEvent) -> SearchInputParams {
         switch action {
         case .beganEditing:
             return SearchInputParams(params: currentState.inputParams.params,
