@@ -26,7 +26,7 @@ protocol SearchSubsequentActionPrismProtocol {
 }
 
 protocol SearchUpdateEditingActionPrismProtocol {
-    func updateEditingAction(_ editAction: SearchBarEditAction) -> Action
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action
 }
 
 protocol SearchDetailsActionPrismProtocol {
@@ -88,8 +88,8 @@ extension SearchActionPrism: SearchSubsequentActionPrismProtocol {
 
 extension SearchActionPrism: SearchUpdateEditingActionPrismProtocol {
 
-    func updateEditingAction(_ editAction: SearchBarEditAction) -> Action {
-        return SearchAction.updateInputEditing(editAction)
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action {
+        return SearchAction.updateInputEditing(editEvent)
     }
 
 }

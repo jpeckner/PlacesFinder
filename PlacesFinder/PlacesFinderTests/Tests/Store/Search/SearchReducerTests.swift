@@ -258,7 +258,7 @@ class SearchReducerTests: QuickSpec {
 
             context("else when the action is SearchAction.updateInputEditing") {
 
-                context("and the editAction is .beganEditing") {
+                context("and the editEvent is .beganEditing") {
 
                     let currentInputParams = SearchInputParams(params: stubSearchParams,
                                                                isEditing: false)
@@ -280,7 +280,7 @@ class SearchReducerTests: QuickSpec {
 
                 }
 
-                context("and the editAction is .clearedInput") {
+                context("and the editEvent is .clearedInput") {
 
                     let currentInputParams = SearchInputParams(params: stubSearchParams,
                                                                isEditing: false)
@@ -302,7 +302,7 @@ class SearchReducerTests: QuickSpec {
 
                 }
 
-                context("and the editAction is .endedEditing") {
+                context("and the editEvent is .endedEditing") {
 
                     let currentParams = SearchParams.stubValue(keywords: NonEmptyString.stubValue())
                     let currentInputParams = SearchInputParams(params: currentParams,
