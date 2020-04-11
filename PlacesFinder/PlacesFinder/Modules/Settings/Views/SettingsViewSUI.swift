@@ -7,19 +7,15 @@
 //
 
 import Shared
-import SwiftDux
 import SwiftUI
 
 @available(iOS 13.0.0, *)
 struct SettingsViewSUI: View {
 
     @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
-    private let store: DispatchingStoreProtocol
 
-    init(viewModel: SettingsViewModel,
-         store: DispatchingStoreProtocol) {
+    init(viewModel: SettingsViewModel) {
         self.viewModel = ValueObservable(value: viewModel)
-        self.store = store
     }
 
     var body: some View {
@@ -30,7 +26,7 @@ struct SettingsViewSUI: View {
                         SettingsCell(viewModel: cellViewModel)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                self.store.dispatch(cellViewModel.action)
+                                cellViewModel.dispatchAction()
                             }
                     }
                 }
@@ -45,8 +41,7 @@ struct SettingsViewSUI: View {
         case let .plain(viewModel):
             return AnyView(Text(viewModel.title))
         case let .measurementSystem(viewModel):
-            return AnyView(SettingsMeasurementSystemHeaderViewSUI(viewModel: viewModel,
-                                                                  store: store))
+            return AnyView(SettingsMeasurementSystemHeaderViewSUI(viewModel: viewModel))
         }
     }
 
@@ -55,8 +50,7 @@ struct SettingsViewSUI: View {
 @available(iOS 13.0.0, *)
 private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
-    let viewModel: SettingsMeasurementSystemHeaderViewModel
-    let store: DispatchingStoreProtocol
+    let viewModel: SettingsUnitsHeaderViewModel
 
     var body: some View {
         HStack {
@@ -79,7 +73,7 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
                         }
 
                         AnyView(Button(title) {
-                            selectionAction()
+                            selectionAction.value()
                         })
                     })
                 case let .nonSelectable(title):
@@ -117,7 +111,7 @@ private struct SettingsCell: View {
 
             Spacer()
 
-            if viewModel.hasCheckmark {
+            if viewModel.isSelected {
                 Image(uiImage: Constants.image)
                     .resizable()
                     .frame(width: Constants.imageHeight * Constants.image.widthToHeightRatio,

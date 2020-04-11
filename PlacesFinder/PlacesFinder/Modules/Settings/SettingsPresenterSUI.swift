@@ -7,7 +7,6 @@
 //
 
 import Shared
-import SwiftDux
 import SwiftUI
 import UIKit
 
@@ -15,26 +14,17 @@ import UIKit
 class SettingsPresenterSUI: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController
-    private let formatter: MeasurementFormatter
-    private let store: DispatchingStoreProtocol
 
-    init(tabItemProperties: TabItemProperties,
-         store: DispatchingStoreProtocol) {
+    init(tabItemProperties: TabItemProperties) {
         self.rootNavController = UINavigationController()
         rootNavController.configure(tabItemProperties)
-
-        self.formatter = MeasurementFormatter()
-        formatter.unitOptions = .providedUnit
-
-        self.store = store
     }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
         guard let existingSettingsView: SettingsViewSUI = rootControllerView() else {
-            let settingsView = SettingsViewSUI(viewModel: viewModel,
-                                               store: store)
+            let settingsView = SettingsViewSUI(viewModel: viewModel)
             setRootController(settingsView,
                               titleViewModel: titleViewModel,
                               appSkin: appSkin)

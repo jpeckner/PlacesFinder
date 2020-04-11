@@ -11,11 +11,11 @@ import UIKit
 
 class SettingsMeasurementSystemHeaderView: UIView {
 
-    private let viewModel: SettingsMeasurementSystemHeaderViewModel
+    private let viewModel: SettingsUnitsHeaderViewModel
     private let sectionNameLabel: StyledLabel
     private let systemsStackView: UIStackView
 
-    init(viewModel: SettingsMeasurementSystemHeaderViewModel,
+    init(viewModel: SettingsUnitsHeaderViewModel,
          colorings: SettingsViewColorings) {
         self.viewModel = viewModel
 
@@ -66,7 +66,7 @@ class SettingsMeasurementSystemHeaderView: UIView {
         sectionNameLabel.text = title
     }
 
-    private func setupStackView(_ systemOptions: [SettingsMeasurementSystemHeaderViewModel.SystemOption],
+    private func setupStackView(_ systemOptions: [SettingsUnitsHeaderViewModel.SystemOption],
                                 colorings: SettingsViewColorings) {
         systemsStackView.axis = .horizontal
         systemsStackView.spacing = 8.0
@@ -82,7 +82,7 @@ class SettingsMeasurementSystemHeaderView: UIView {
             case let .selectable(title, selectionCallback):
                 systemsStackView.addArrangedSubview(button(title,
                                                            colorings: colorings,
-                                                           selectionCallback: selectionCallback))
+                                                           selectionCallback: selectionCallback.value))
             case let .nonSelectable(title):
                 systemsStackView.addArrangedSubview(label(title,
                                                           colorings: colorings))

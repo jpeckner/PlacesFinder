@@ -68,19 +68,28 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let presenter: SettingsPresenterProtocol
         if #available(iOS 13.0, *) {
-            presenter = SettingsPresenterSUI(tabItemProperties: tabItemProperties,
-                                             store: store)
+            presenter = SettingsPresenterSUI(tabItemProperties: tabItemProperties)
         } else {
-            presenter = SettingsPresenter(tabItemProperties: tabItemProperties,
-                                          store: store)
+            presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
         }
 
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
+        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(store: store)
+        let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
+        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
+                                                                        measurementFormatter: measurementFormatter)
+        let viewModelBuilder = SettingsViewModelBuilder(
+            store: store,
+            measurementSystemHeaderViewModelBuilder: measurementSystemHeaderViewModelBuilder,
+            plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
+            settingsCellViewModelBuilder: settingsCellViewModelBuilder
+        )
+
         return SettingsCoordinator(store: store,
                                    presenter: presenter,
-                                   measurementFormatter: measurementFormatter)
+                                   viewModelBuilder: viewModelBuilder)
     }
 
 }

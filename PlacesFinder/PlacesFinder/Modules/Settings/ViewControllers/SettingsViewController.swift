@@ -72,8 +72,8 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        viewModel.dispatchCellAction(sectionIndex: indexPath.section,
-                                     rowIndex: indexPath.row)
+        let cellModel = viewModel.sections.value[indexPath.section].cells[indexPath.row]
+        cellModel.dispatchAction()
     }
 
     // MARK: Configure headers/footers

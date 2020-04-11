@@ -1,7 +1,6 @@
 disabled_rules: # rule identifiers to exclude from running
   - identifier_name
   - trailing_comma
-  - todo
 opt_in_rules: # some rules are only opt-in
   - anyobject_protocol
   - array_init
