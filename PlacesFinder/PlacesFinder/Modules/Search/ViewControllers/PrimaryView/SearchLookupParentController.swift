@@ -18,10 +18,8 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
     init(viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
-        self.lookupView = SearchLookupView(contentViewModel: viewModel.searchInputViewModel.content,
-                                           searchInputColorings: appSkin.colorings.searchInput) {
-            viewModel.searchInputViewModel.dispatchEditEvent(.endedEditing)
-        }
+        self.lookupView = SearchLookupView(inputViewModel: viewModel.searchInputViewModel,
+                                           searchInputColorings: appSkin.colorings.searchInput)
 
         let searchBarView = lookupView.searchBarWrapperView
         self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
@@ -33,7 +31,6 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
         super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
 
-        lookupView.setSearchBarWrapperDelegate(self)
         configure(viewModel,
                   appSkin: appSkin)
     }
@@ -65,7 +62,7 @@ extension SearchLookupParentController {
                 searchBarFullHeight
                 : searchBarHeightConstraint.constant
 
-        lookupView.configure(viewModel.content,
+        lookupView.configure(viewModel,
                              colorings: colorings)
     }
 
@@ -144,19 +141,6 @@ extension SearchLookupParentController {
         setSingleChildController(controller) {
             lookupView.setChildView($0)
         }
-    }
-
-}
-
-extension SearchLookupParentController: SearchBarWrapperDelegate {
-
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didPerformEvent event: SearchBarEditEvent) {
-        viewModel.searchInputViewModel.dispatchEditEvent(event)
-    }
-
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString) {
-        let params = SearchParams(keywords: text)
-        viewModel.searchInputViewModel.dispatchSearchParams(params)
     }
 
 }

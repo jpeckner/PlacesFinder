@@ -1,5 +1,5 @@
 //
-//  SearchInputViewModelTests.swift
+//  SearchInputDispatcherTests.swift
 //  PlacesFinder
 //
 //  Created by Justin Peckner.
@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import SwiftDux
 
-class SearchInputViewModelTests: QuickSpec {
+class SearchInputDispatcherTests: QuickSpec {
 
     private enum StubPrismAction: Action, Equatable {
         case initialRequest(SearchParams)
@@ -25,7 +25,7 @@ class SearchInputViewModelTests: QuickSpec {
         var mockActionPrism: SearchActionPrismProtocolMock!
 
         var locationBlockCalled: Bool!
-        var sut: SearchInputViewModel!
+        var sut: SearchInputDispatcher!
 
         beforeEach {
             mockStore = MockAppStore()
@@ -36,9 +36,8 @@ class SearchInputViewModelTests: QuickSpec {
             }
 
             locationBlockCalled = false
-            sut = SearchInputViewModel(content: SearchInputContentViewModel.stubValue(),
-                                       store: mockStore,
-                                       actionPrism: mockActionPrism) { _ in
+            sut = SearchInputDispatcher(store: mockStore,
+                                        actionPrism: mockActionPrism) { _ in
                 locationBlockCalled = true
             }
         }

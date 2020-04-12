@@ -41,7 +41,7 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
     func buildViewModel(_ searchState: SearchState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
-        let searchInputViewModel = inputViewModelBuilder.buildViewModel(
+        let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
             searchState.inputParams,
             copyContent: appCopyContent.searchInput,
             locationUpdateRequestBlock: locationUpdateRequestBlock

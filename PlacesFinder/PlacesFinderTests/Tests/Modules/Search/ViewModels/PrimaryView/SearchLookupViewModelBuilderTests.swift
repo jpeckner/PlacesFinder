@@ -42,12 +42,13 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockSearchActionPrism = SearchActionPrismProtocolMock()
             locationBlockCalled = false
 
-            stubInputViewModel = SearchInputViewModel(content: .stubValue(),
-                                                      store: mockStore,
-                                                      actionPrism: mockSearchActionPrism,
-                                                      locationUpdateRequestBlock: locationUpdateStub)
+            let dispatcher = SearchInputDispatcher(store: mockStore,
+                                                   actionPrism: mockSearchActionPrism,
+                                                   locationUpdateRequestBlock: locationUpdateStub)
+            stubInputViewModel = .dispatching(content: .stubValue(),
+                                              dispatcher: dispatcher)
             mockInputViewModelBuilder = SearchInputViewModelBuilderProtocolMock()
-            mockInputViewModelBuilder.buildViewModelCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
+            mockInputViewModelBuilder.buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
             mockChildBuilder.buildChildAppCopyContentLocationUpdateRequestBlockReturnValue = .progress
@@ -68,7 +69,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockInputViewModelBuilder with expected method and args") {
-                let receivedArgs = mockInputViewModelBuilder.buildViewModelCopyContentLocationUpdateRequestBlockReceivedArguments
+                let receivedArgs = mockInputViewModelBuilder.buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedArguments
                 expect(receivedArgs?.inputParams) == stubInputParams
                 expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
 
