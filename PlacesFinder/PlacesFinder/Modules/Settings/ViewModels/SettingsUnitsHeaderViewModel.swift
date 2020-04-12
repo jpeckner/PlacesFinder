@@ -23,18 +23,24 @@ struct SettingsUnitsHeaderViewModel: Equatable {
 // MARK: SettingsUnitsHeaderViewModelBuilder
 
 protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ store: DispatchingStoreProtocol,
-                        title: String,
+    func buildViewModel(_ title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel
 }
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    func buildViewModel(_ store: DispatchingStoreProtocol,
-                        title: String,
+    private let store: DispatchingStoreProtocol
+
+    init(store: DispatchingStoreProtocol) {
+        self.store = store
+    }
+
+    func buildViewModel(_ title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
+        let store = self.store
+
         let systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] =
             MeasurementSystem.allCases.map { system in
                 let systemTitle = copyContent.title(system)

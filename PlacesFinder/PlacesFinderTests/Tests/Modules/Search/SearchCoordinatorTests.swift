@@ -22,12 +22,7 @@ class SearchCoordinatorTests: QuickSpec {
     override func spec() {
 
         let stubState = AppState.stubValue()
-        let stubkeywords = NonEmptyString.stubValue("abc")
-        let stubParams = PlaceLookupParams.stubValue(
-            radius: stubState.searchPreferencesState.distance.distanceType.measurement,
-            sorting: stubState.searchPreferencesState.sorting
-        )
-        let stubSearchParams = SearchParams(keywords: stubParams.keywords)
+        let stubKeywords = NonEmptyString.stubValue("abc")
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!
@@ -61,8 +56,7 @@ class SearchCoordinatorTests: QuickSpec {
             let lookupViewModel = SearchLookupViewModel(searchInputViewModel: searchInputViewModel,
                                                         child: .progress)
             mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
-            mockSearchLookupViewModelBuilder.buildViewModelActionPrismSearchStateAppCopyContentLocationUpdateRequestBlockReturnValue
-                = lookupViewModel
+            mockSearchLookupViewModelBuilder.buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue = lookupViewModel
 
             mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
@@ -159,7 +153,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     context("when the state has a pending .search linkType") {
                         beforeEach {
-                            let payload = SearchLinkPayload(keywords: stubkeywords)
+                            let payload = SearchLinkPayload(keywords: stubKeywords)
                             performTest(linkType: .search(payload))
                         }
 
@@ -222,7 +216,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     context("when the state has a pending .search linkType") {
                         beforeEach {
-                            let payload = SearchLinkPayload(keywords: stubkeywords)
+                            let payload = SearchLinkPayload(keywords: stubKeywords)
                             performTest(linkType: .search(payload))
                         }
 
@@ -327,7 +321,7 @@ class SearchCoordinatorTests: QuickSpec {
                     context("and the state has a pending .search linkType") {
 
                         beforeEach {
-                            performTest(linkType: .search(SearchLinkPayload(keywords: stubkeywords)))
+                            performTest(linkType: .search(SearchLinkPayload(keywords: stubKeywords)))
                         }
 
                         it("calls presenter.loadSearchViews()") {

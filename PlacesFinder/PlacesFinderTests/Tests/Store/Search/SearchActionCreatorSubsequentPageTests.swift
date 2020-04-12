@@ -22,7 +22,6 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
 
         let stubParams = PlaceLookupParams.stubValue()
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
-        let stubDetailsViewModel = SearchEntityModel.stubValue()
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 

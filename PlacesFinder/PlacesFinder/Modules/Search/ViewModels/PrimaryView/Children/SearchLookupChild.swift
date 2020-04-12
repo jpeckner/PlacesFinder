@@ -20,33 +20,35 @@ enum SearchLookupChild: Equatable {
 // MARK: SearchLookupChildBuilder
 
 protocol SearchLookupChildBuilderProtocol: AutoMockable {
-    func buildChild(_ store: DispatchingStoreProtocol,
-                    actionPrism: SearchActionPrismProtocol,
-                    loadState: SearchLoadState,
+    func buildChild(_ loadState: SearchLoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
+    private let store: DispatchingStoreProtocol
+    private let actionPrism: SearchActionPrismProtocol
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
 
-    init(instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
+    init(store: DispatchingStoreProtocol,
+         actionPrism: SearchActionPrismProtocol,
+         instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
          noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,
          retryViewModelBuilder: SearchRetryViewModelBuilderProtocol) {
+        self.store = store
+        self.actionPrism = actionPrism
         self.instructionsViewModelBuilder = instructionsViewModelBuilder
         self.resultsViewModelBuilder = resultsViewModelBuilder
         self.noResultsFoundViewModelBuilder = noResultsFoundViewModelBuilder
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
-    func buildChild(_ store: DispatchingStoreProtocol,
-                    actionPrism: SearchActionPrismProtocol,
-                    loadState: SearchLoadState,
+    func buildChild(_ loadState: SearchLoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
@@ -70,6 +72,8 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(appCopyContent.searchNoResults)
             return .noResults(noResultsViewModel)
         case let .failure(submittedParams, _):
+            let store = self.store
+            let actionPrism = self.actionPrism
             return .failure(retryViewModelBuilder.buildViewModel(appCopyContent.searchRetry) {
                 let action = actionPrism.initialRequestAction(submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)

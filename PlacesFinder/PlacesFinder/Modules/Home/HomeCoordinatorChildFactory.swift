@@ -98,7 +98,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder()
+        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(store: store)
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
         let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
                                                                         measurementFormatter: measurementFormatter)
@@ -151,12 +151,16 @@ private extension SearchLookupViewModelBuilder {
         let noResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilder()
         let retryViewModelBuilder = SearchRetryViewModelBuilder()
 
-        let childBuilder = SearchLookupChildBuilder(instructionsViewModelBuilder: instructionsViewModelBuilder,
+        let childBuilder = SearchLookupChildBuilder(store: store,
+                                                    actionPrism: actionPrism,
+                                                    instructionsViewModelBuilder: instructionsViewModelBuilder,
                                                     resultsViewModelBuilder: resultsViewModelBuilder,
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
                                                     retryViewModelBuilder: retryViewModelBuilder)
 
-        self.init(inputViewModelBuilder: inputViewModelBuilder,
+        self.init(store: store,
+                  actionPrism: actionPrism,
+                  inputViewModelBuilder: inputViewModelBuilder,
                   childBuilder: childBuilder)
     }
 
