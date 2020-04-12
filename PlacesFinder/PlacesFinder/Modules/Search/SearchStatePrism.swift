@@ -52,14 +52,16 @@ class SearchStatePrism: SearchStatePrismProtocol {
     func presentationType(for state: AppState) -> SearchPresentationType {
         if case .unreachable? = state.reachabilityState.status { return .noInternet }
 
+        let locationAuthListener = self.locationAuthListener
+        let locationRequestHandler = self.locationRequestHandler
         switch state.locationAuthState.authStatus {
         case .notDetermined:
-            return .search(IgnoredEquatable(.locationServicesNotDetermined { [weak self] in
-                self?.locationAuthListener.requestWhenInUseAuthorization()
+            return .search(IgnoredEquatable(.locationServicesNotDetermined {
+                locationAuthListener.requestWhenInUseAuthorization()
             }))
         case .locationServicesEnabled:
-            return .search(IgnoredEquatable(.locationServicesEnabled { [weak self] locationCallback in
-                self?.locationRequestHandler.requestLocation(locationCallback)
+            return .search(IgnoredEquatable(.locationServicesEnabled { locationCallback in
+                locationRequestHandler.requestLocation(locationCallback)
             }))
         case .locationServicesDisabled:
             return .locationServicesDisabled

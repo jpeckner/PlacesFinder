@@ -25,12 +25,13 @@ class ReachabilityListener: ReachabilityListenerProtocol {
     }
 
     func start() throws {
-        reachability.setReachabilityCallback { [weak self] status in
+        let store = self.store
+        reachability.setReachabilityCallback { status in
             switch status {
             case .unreachable:
-                self?.store.dispatch(ReachabilityAction.unreachable)
+                store.dispatch(ReachabilityAction.unreachable)
             case let .reachable(connectionType):
-                self?.store.dispatch(ReachabilityAction.reachable(connectionType))
+                store.dispatch(ReachabilityAction.reachable(connectionType))
             }
         }
 

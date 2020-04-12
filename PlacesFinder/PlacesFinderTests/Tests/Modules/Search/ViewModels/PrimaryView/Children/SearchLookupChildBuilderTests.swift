@@ -64,7 +64,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
             mockRetryViewModelBuilder = SearchRetryViewModelBuilderProtocolMock()
 
-            sut = SearchLookupChildBuilder(instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
+            sut = SearchLookupChildBuilder(store: mockStore,
+                                           actionPrism: mockSearchActionPrism,
+                                           instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
                                            resultsViewModelBuilder: mockResultsViewModelBuilder,
                                            noResultsFoundViewModelBuilder: mockNoResultsFoundViewModelBuilder,
                                            retryViewModelBuilder: mockRetryViewModelBuilder)
@@ -75,9 +77,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .idle") {
 
                 beforeEach {
-                    result = sut.buildChild(mockStore,
-                                            actionPrism: mockSearchActionPrism,
-                                            loadState: .idle,
+                    result = sut.buildChild(.idle,
                                             appCopyContent: stubAppCopyContent) { _ in }
                 }
 
@@ -100,9 +100,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .locationRequested") {
 
                 beforeEach {
-                    result = sut.buildChild(mockStore,
-                                            actionPrism: mockSearchActionPrism,
-                                            loadState: .locationRequested(stubSearchParams),
+                    result = sut.buildChild(.locationRequested(stubSearchParams),
                                             appCopyContent: stubAppCopyContent) { _ in }
                 }
 
@@ -118,9 +116,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .locationRequested") {
 
                 beforeEach {
-                    result = sut.buildChild(mockStore,
-                                            actionPrism: mockSearchActionPrism,
-                                            loadState: .initialPageRequested(stubSearchParams),
+                    result = sut.buildChild(.initialPageRequested(stubSearchParams),
                                             appCopyContent: stubAppCopyContent) { _ in }
                 }
 
@@ -139,12 +135,10 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 let tokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 
                 beforeEach {
-                    result = sut.buildChild(mockStore,
-                                            actionPrism: mockSearchActionPrism,
-                                            loadState: .pagesReceived(stubSearchParams,
-                                                                      pageState: .success,
-                                                                      allEntities: stubEntities,
-                                                                      nextRequestToken: tokenContainer),
+                    result = sut.buildChild(.pagesReceived(stubSearchParams,
+                                                           pageState: .success,
+                                                           allEntities: stubEntities,
+                                                           nextRequestToken: tokenContainer),
                                             appCopyContent: stubAppCopyContent) { _ in }
                 }
 
@@ -172,9 +166,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .noResultsFound") {
 
                 beforeEach {
-                    result = sut.buildChild(mockStore,
-                                            actionPrism: mockSearchActionPrism,
-                                            loadState: .noResultsFound(stubSearchParams),
+                    result = sut.buildChild(.noResultsFound(stubSearchParams),
                                             appCopyContent: stubAppCopyContent) { _ in }
                 }
 
@@ -205,13 +197,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         return stubRetryViewModel
                     }
 
-                    result = sut.buildChild(
-                        mockStore,
-                        actionPrism: mockSearchActionPrism,
-                        loadState: .failure(stubSearchParams,
-                                            underlyingError: IgnoredEquatable(StubError.plainError)),
-                        appCopyContent: stubAppCopyContent
-                    ) { _ in }
+                    result = sut.buildChild(.failure(stubSearchParams,
+                                                     underlyingError: IgnoredEquatable(StubError.plainError)),
+                                            appCopyContent: stubAppCopyContent) { _ in }
                 }
 
                 it("calls mockRetryViewModelBuilder with expected method and args") {

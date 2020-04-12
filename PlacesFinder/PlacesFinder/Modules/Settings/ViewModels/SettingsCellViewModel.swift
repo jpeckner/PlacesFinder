@@ -64,19 +64,13 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
     func buildDistanceCellModels(_ currentSearchDistance: SearchDistance) -> [SettingsCellViewModel] {
         switch currentSearchDistance {
         case let .imperial(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance,
-                               store: store,
-                               measurementFormatter: measurementFormatter) { .imperial($0) }
+            return buildModels(currentlySelectedDistance) { .imperial($0) }
         case let .metric(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance,
-                               store: store,
-                               measurementFormatter: measurementFormatter) { .metric($0) }
+            return buildModels(currentlySelectedDistance) { .metric($0) }
         }
     }
 
     private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
-                                                    store: DispatchingStoreProtocol,
-                                                    measurementFormatter: MeasurementFormatterProtocol,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
         return T.allCases.map {
             SettingsCellViewModel(title: measurementFormatter.string(from: $0.measurement),

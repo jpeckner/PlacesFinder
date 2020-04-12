@@ -16,27 +16,29 @@ struct SearchLookupViewModel: Equatable {
 }
 
 protocol SearchLookupViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ store: DispatchingStoreProtocol,
-                        actionPrism: SearchActionPrismProtocol,
-                        searchState: SearchState,
+    func buildViewModel(_ searchState: SearchState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
 }
 
 class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
 
+    private let store: DispatchingStoreProtocol
+    private let actionPrism: SearchActionPrismProtocol
     private let inputViewModelBuilder: SearchInputViewModelBuilderProtocol
     private let childBuilder: SearchLookupChildBuilderProtocol
 
-    init(inputViewModelBuilder: SearchInputViewModelBuilderProtocol,
+    init(store: DispatchingStoreProtocol,
+         actionPrism: SearchActionPrismProtocol,
+         inputViewModelBuilder: SearchInputViewModelBuilderProtocol,
          childBuilder: SearchLookupChildBuilderProtocol) {
+        self.store = store
+        self.actionPrism = actionPrism
         self.inputViewModelBuilder = inputViewModelBuilder
         self.childBuilder = childBuilder
     }
 
-    func buildViewModel(_ store: DispatchingStoreProtocol,
-                        actionPrism: SearchActionPrismProtocol,
-                        searchState: SearchState,
+    func buildViewModel(_ searchState: SearchState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         let searchInputViewModel = inputViewModelBuilder.buildViewModel(
@@ -45,9 +47,7 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
             locationUpdateRequestBlock: locationUpdateRequestBlock
         )
 
-        let child = childBuilder.buildChild(store,
-                                            actionPrism: actionPrism,
-                                            loadState: searchState.loadState,
+        let child = childBuilder.buildChild(searchState.loadState,
                                             appCopyContent: appCopyContent,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 
