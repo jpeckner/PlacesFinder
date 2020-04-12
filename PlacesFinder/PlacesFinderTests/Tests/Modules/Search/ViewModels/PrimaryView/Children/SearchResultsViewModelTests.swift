@@ -23,8 +23,6 @@ class SearchResultsViewModelTests: QuickSpec {
     // swiftlint:disable function_body_length
     override func spec() {
 
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
-
         var mockStore: MockAppStore!
         var stubResultViewModels: NonEmptyArray<SearchResultViewModel>!
         var result: SearchResultsViewModel!

@@ -23,11 +23,6 @@ class SearchCoordinatorTests: QuickSpec {
 
         let stubState = AppState.stubValue()
         let stubkeywords = NonEmptyString.stubValue("abc")
-        let stubParams = PlaceLookupParams.stubValue(
-            radius: stubState.searchPreferencesState.distance.distanceType.measurement,
-            sorting: stubState.searchPreferencesState.sorting
-        )
-        let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!

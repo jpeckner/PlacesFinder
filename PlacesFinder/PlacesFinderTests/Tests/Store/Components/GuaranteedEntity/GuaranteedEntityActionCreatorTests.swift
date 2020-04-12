@@ -23,9 +23,6 @@ class GuaranteedEntityActionCreatorTests: QuickSpec {
         describe("loadGuaranteedEntity") {
 
             let stubEntity = StubEntity.stubValue()
-            let fallbackEntity = StubEntity(stringValue: "NOT \(stubEntity.stringValue)",
-                                            intValue: stubEntity.intValue + 500,
-                                            doubleValue: stubEntity.doubleValue + 2.5)
 
             var mockStore: MockAppStore!
 
