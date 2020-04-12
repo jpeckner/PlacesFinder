@@ -46,8 +46,8 @@ extension SettingsViewController {
 
     func configure(_ viewModel: SettingsViewModel,
                    colorings: SettingsViewColorings) {
-        self.colorings = colorings
         self.viewModel = viewModel
+        self.colorings = colorings
 
         viewColoring = colorings.viewColoring
 
