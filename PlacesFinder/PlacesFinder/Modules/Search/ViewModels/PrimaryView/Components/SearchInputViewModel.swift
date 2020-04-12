@@ -9,24 +9,40 @@
 import Shared
 import SwiftDux
 
-struct SearchInputViewModel: Equatable {
-    let content: SearchInputContentViewModel
+enum SearchInputViewModel: Equatable {
+    case nonDispatching(content: SearchInputContentViewModel)
+
+    case dispatching(content: SearchInputContentViewModel,
+                     dispatcher: SearchInputDispatcher)
+}
+
+extension SearchInputViewModel {
+
+    var content: SearchInputContentViewModel {
+        switch self {
+        case let .nonDispatching(content),
+             let .dispatching(content, _):
+            return content
+        }
+    }
+
+}
+
+struct SearchInputDispatcher: Equatable {
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let actionPrism: IgnoredEquatable<SearchActionPrismProtocol>
     private let locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
 
-    init(content: SearchInputContentViewModel,
-         store: DispatchingStoreProtocol,
+    init(store: DispatchingStoreProtocol,
          actionPrism: SearchActionPrismProtocol,
          locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        self.content = content
         self.store = IgnoredEquatable(store)
         self.actionPrism = IgnoredEquatable(actionPrism)
         self.locationUpdateRequestBlock = IgnoredEquatable(locationUpdateRequestBlock)
     }
 }
 
-extension SearchInputViewModel {
+extension SearchInputDispatcher {
 
     func dispatchEditEvent(_ editEvent: SearchBarEditEvent) {
         let action = actionPrism.value.updateEditingAction(editEvent)
@@ -46,9 +62,11 @@ extension SearchInputViewModel {
 // MARK: SearchInputViewModelBuilder
 
 protocol SearchInputViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ inputParams: SearchInputParams,
-                        copyContent: SearchInputCopyContent,
-                        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchInputViewModel
+    func buildDispatchingViewModel(
+        _ inputParams: SearchInputParams,
+        copyContent: SearchInputCopyContent,
+        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
+    ) -> SearchInputViewModel
 }
 
 class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
@@ -65,17 +83,21 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
         self.contentViewModelBuilder = contentViewModelBuilder
     }
 
-    func buildViewModel(_ inputParams: SearchInputParams,
-                        copyContent: SearchInputCopyContent,
-                        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchInputViewModel {
+    func buildDispatchingViewModel(
+        _ inputParams: SearchInputParams,
+        copyContent: SearchInputCopyContent,
+        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
+    ) -> SearchInputViewModel {
         let contentViewModel = contentViewModelBuilder.buildViewModel(keywords: inputParams.params?.keywords,
                                                                       isEditing: inputParams.isEditing,
                                                                       copyContent: copyContent)
 
-        return SearchInputViewModel(content: contentViewModel,
-                                    store: store,
-                                    actionPrism: actionPrism,
-                                    locationUpdateRequestBlock: locationUpdateRequestBlock)
+        let dispatcher = SearchInputDispatcher(store: store,
+                                               actionPrism: actionPrism,
+                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
+
+        return .dispatching(content: contentViewModel,
+                            dispatcher: dispatcher)
     }
 
 }
