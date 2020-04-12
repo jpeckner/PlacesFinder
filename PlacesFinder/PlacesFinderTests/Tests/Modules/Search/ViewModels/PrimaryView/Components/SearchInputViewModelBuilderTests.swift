@@ -42,8 +42,8 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(stubInputParams,
-                                            copyContent: stubInputCopyContent) { _ in }
+                result = sut.buildDispatchingViewModel(stubInputParams,
+                                                       copyContent: stubInputCopyContent) { _ in }
             }
 
             it("calls mockContentViewModelBuilder with expected method and args") {

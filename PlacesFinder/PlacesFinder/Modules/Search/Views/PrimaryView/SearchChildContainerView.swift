@@ -24,8 +24,8 @@ class SearchChildContainerView: UIView {
         super.init(frame: .zero)
 
         setupSubviews()
-        configureCoverView(false)
         setupTapHandler()
+        configureCoverView(false)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,12 +57,12 @@ extension SearchChildContainerView {
         addSubview(newChildView)
         newChildView.fitFully(to: self)
         childView = newChildView
-
-        let coverBackgroundColor = newChildView.backgroundColor.map { $0.isLight ? .black : .white } ?? UIColor.black
-        coverView.backgroundColor = coverBackgroundColor.withAlphaComponent(0.3)
     }
 
     func configureCoverView(_ showCoverView: Bool) {
+        let coverBackgroundColor = childView.backgroundColor.map { $0.isLight ? .black : .white } ?? UIColor.black
+        coverView.backgroundColor = coverBackgroundColor.withAlphaComponent(0.3)
+
         bringSubviewToFront(showCoverView ? coverView : childView)
     }
 
