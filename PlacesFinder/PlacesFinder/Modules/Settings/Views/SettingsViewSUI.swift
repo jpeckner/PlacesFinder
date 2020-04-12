@@ -13,9 +13,12 @@ import SwiftUI
 struct SettingsViewSUI: View {
 
     @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
+    @ObservedObject var colorings: ValueObservable<SettingsViewColorings>
 
-    init(viewModel: SettingsViewModel) {
+    init(viewModel: SettingsViewModel,
+         colorings: SettingsViewColorings) {
         self.viewModel = ValueObservable(value: viewModel)
+        self.colorings = ValueObservable(value: colorings)
     }
 
     var body: some View {
@@ -23,26 +26,54 @@ struct SettingsViewSUI: View {
             ForEach(viewModel.value.sections.value) { sectionViewModel in
                 Section(header: self.header(sectionViewModel)) {
                     ForEach(sectionViewModel.cells) { cellViewModel in
-                        SettingsCell(viewModel: cellViewModel)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                cellViewModel.dispatchAction()
-                            }
+                        SettingsCell(viewModel: cellViewModel,
+                                     colorings: self.colorings.value.cellColorings)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            cellViewModel.dispatchAction()
+                        }
                     }
                 }
             }
         }
         .listStyle(GroupedListStyle())
-        .padding(.top, 20.0)
+        .background(Color(colorings.value.viewColoring.backgroundColor))
     }
 
     private func header(_ sectionViewModel: SettingsSectionViewModel) -> some View {
         switch sectionViewModel.headerType {
         case let .plain(viewModel):
-            return AnyView(Text(viewModel.title))
+            return AnyView(SettingsPlainSystemHeaderViewSUI(viewModel: viewModel,
+                                                            colorings: colorings.value.headerColorings))
         case let .measurementSystem(viewModel):
-            return AnyView(SettingsMeasurementSystemHeaderViewSUI(viewModel: viewModel))
+            return AnyView(SettingsMeasurementSystemHeaderViewSUI(viewModel: viewModel,
+                                                                  colorings: colorings.value.headerColorings))
         }
+    }
+
+}
+
+@available(iOS 13.0.0, *)
+extension SettingsViewSUI {
+
+    func configure(_ viewModel: SettingsViewModel,
+                   colorings: SettingsViewColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
+    }
+
+}
+
+@available(iOS 13.0.0, *)
+private struct SettingsPlainSystemHeaderViewSUI: View {
+
+    let viewModel: SettingsPlainHeaderViewModel
+    let colorings: SettingsHeaderViewColorings
+
+    var body: some View {
+        Text(viewModel.title)
+            .configure(.tableHeader,
+                       textColoring: colorings.textColoring)
     }
 
 }
@@ -51,10 +82,13 @@ struct SettingsViewSUI: View {
 private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
     let viewModel: SettingsUnitsHeaderViewModel
+    let colorings: SettingsHeaderViewColorings
 
     var body: some View {
         HStack {
             Text(viewModel.title)
+                .configure(.tableHeader,
+                           textColoring: colorings.textColoring)
 
             Spacer()
 
@@ -75,11 +109,22 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
     private func systemOptionElement(index: Int) -> some View {
         switch self.viewModel.systemOptions[index] {
         case let .selectable(title, selectionAction):
-            return AnyView(Button(title) {
-                selectionAction.value()
-            })
+            return AnyView(
+                Button(action: {
+                    selectionAction.value()
+                }, label: {
+                    Text(title)
+                        .configure(.tableHeaderSelectableOption,
+                                   textColoring: colorings.activeButtonTextColoring)
+                })
+
+            )
         case let .nonSelectable(title):
-            return AnyView(Text(title))
+            return AnyView(
+                Text(title)
+                    .configure(.tableHeaderNonSelectableOption,
+                               textColoring: colorings.textColoring)
+            )
         }
     }
 
@@ -94,10 +139,13 @@ private struct SettingsCell: View {
     }
 
     let viewModel: SettingsCellViewModel
+    let colorings: SettingsCellColorings
 
     var body: some View {
         HStack {
             Text(viewModel.title)
+                .configure(.cellText,
+                           textColoring: colorings.textColoring)
 
             Spacer()
 
@@ -107,7 +155,7 @@ private struct SettingsCell: View {
                     .frame(width: Constants.imageHeight * Constants.image.widthToHeightRatio,
                            height: Constants.imageHeight)
                     .aspectRatio(contentMode: .fit)
-                    .colorMultiply(Color(.label))
+                    .colorMultiply(Color(colorings.checkmarkTint.color))
             }
         }
     }

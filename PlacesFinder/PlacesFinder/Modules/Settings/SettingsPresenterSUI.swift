@@ -23,15 +23,17 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
     func loadSettingsView(_ viewModel: SettingsViewModel,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
-        guard let existingSettingsView: SettingsViewSUI = rootControllerView() else {
-            let settingsView = SettingsViewSUI(viewModel: viewModel)
+        guard let existingView: SettingsViewSUI = existingRootView() else {
+            let settingsView = SettingsViewSUI(viewModel: viewModel,
+                                               colorings: appSkin.colorings.settings)
             setRootController(settingsView,
                               titleViewModel: titleViewModel,
                               appSkin: appSkin)
             return
         }
 
-        existingSettingsView.viewModel.value = viewModel
+        existingView.configure(viewModel,
+                               colorings: appSkin.colorings.settings)
     }
 
 }
@@ -39,7 +41,7 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
 @available(iOS 13.0, *)
 private extension SettingsPresenterSUI {
 
-    func rootControllerView<T: View>() -> T? {
+    func existingRootView<T: View>() -> T? {
         return (rootNavController.viewControllers.first as? UIHostingController<T>)?.rootView
     }
 
