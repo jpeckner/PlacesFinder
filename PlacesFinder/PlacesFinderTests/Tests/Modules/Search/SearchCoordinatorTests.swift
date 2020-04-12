@@ -22,7 +22,7 @@ class SearchCoordinatorTests: QuickSpec {
     override func spec() {
 
         let stubState = AppState.stubValue()
-        let stubkeywords = NonEmptyString.stubValue("abc")
+        let stubKeywords = NonEmptyString.stubValue("abc")
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!
@@ -154,7 +154,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     context("when the state has a pending .search linkType") {
                         beforeEach {
-                            let payload = SearchLinkPayload(keywords: stubkeywords)
+                            let payload = SearchLinkPayload(keywords: stubKeywords)
                             performTest(linkType: .search(payload))
                         }
 
@@ -217,7 +217,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     context("when the state has a pending .search linkType") {
                         beforeEach {
-                            let payload = SearchLinkPayload(keywords: stubkeywords)
+                            let payload = SearchLinkPayload(keywords: stubKeywords)
                             performTest(linkType: .search(payload))
                         }
 
@@ -322,7 +322,7 @@ class SearchCoordinatorTests: QuickSpec {
                     context("and the state has a pending .search linkType") {
 
                         beforeEach {
-                            performTest(linkType: .search(SearchLinkPayload(keywords: stubkeywords)))
+                            performTest(linkType: .search(SearchLinkPayload(keywords: stubKeywords)))
                         }
 
                         it("calls presenter.loadSearchViews()") {
