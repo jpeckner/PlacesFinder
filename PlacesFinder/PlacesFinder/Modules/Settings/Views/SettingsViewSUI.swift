@@ -58,39 +58,29 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
             Spacer()
 
-            measurementSystemStack
-        }
-    }
-
-    private var measurementSystemStack: some View {
-        HStack {
-            ForEach(0..<viewModel.systemOptions.count) { idx -> AnyView in
-                switch self.viewModel.systemOptions[idx] {
-                case let .selectable(title, selectionAction):
-                    return AnyView(Group {
-                        if idx > 0 {
-                            self.delimeter
+            HStack {
+                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index -> AnyView in
+                    AnyView(Group {
+                        if index > 0 {
+                            AnyView(Text("|"))
                         }
 
-                        AnyView(Button(title) {
-                            selectionAction.value()
-                        })
-                    })
-                case let .nonSelectable(title):
-                    return AnyView(Group {
-                        if idx > 0 {
-                            self.delimeter
-                        }
-
-                        AnyView(Text(title))
+                        self.systemOptionElement(index: index)
                     })
                 }
             }
         }
     }
 
-    private var delimeter: AnyView {
-        return AnyView(Text("|"))
+    private func systemOptionElement(index: Int) -> some View {
+        switch self.viewModel.systemOptions[index] {
+        case let .selectable(title, selectionAction):
+            return AnyView(Button(title) {
+                selectionAction.value()
+            })
+        case let .nonSelectable(title):
+            return AnyView(Text(title))
+        }
     }
 
 }

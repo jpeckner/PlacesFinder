@@ -40,6 +40,11 @@ protocol SettingsViewModelBuilderProtocol: AutoMockable {
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
+    private enum Constants {
+        static let measurementSectionIndex = 0
+        static let sortingSectionIndex = 1
+    }
+
     private let store: DispatchingStoreProtocol
     private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
     private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
@@ -60,7 +65,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
         let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
-                    id: 0,
+                    id: Constants.measurementSectionIndex,
                     headerType: .measurementSystem(
                         measurementSystemHeaderViewModelBuilder.buildViewModel(
                             appCopyContent.settingsHeaders.distanceSectionTitle,
@@ -72,7 +77,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                 )
             ).appendedWith([
                 SettingsSectionViewModel(
-                    id: 1,
+                    id: Constants.sortingSectionIndex,
                     headerType: .plain(
                         plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
                     ),
