@@ -26,7 +26,6 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
             sorting: stubState.searchPreferencesState.sorting
         )
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
-        let stubDetailsViewModel = SearchEntityModel.stubValue()
 
         var mockLocationRequestBlockCalled: Bool!
         var mockLocationRequestReturnValue: LocationRequestResult!

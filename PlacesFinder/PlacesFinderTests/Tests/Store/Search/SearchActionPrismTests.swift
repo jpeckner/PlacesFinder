@@ -54,9 +54,6 @@ class SearchActionPrismTests: QuickSpec {
             }
 
             it("calls actionCreator.requestInitialPage() with the args for the next page request") {
-                let expectedTokenContainer = PlaceLookupTokenAttemptsContainer(token: stubRequestToken,
-                                                                               maxAttempts: 5,
-                                                                               numAttemptsSoFar: 5)
                 SearchActionCreatorProtocolMock.verifyRequestInitialPageCalled(
                     with: stubSearchParams,
                     placeLookupService: mockPlaceLookupService,
