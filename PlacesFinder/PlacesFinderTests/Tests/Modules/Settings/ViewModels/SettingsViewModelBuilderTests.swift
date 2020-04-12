@@ -37,7 +37,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
             mockStore = MockAppStore()
 
             mockMeasurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilderProtocolMock()
-            mockMeasurementSystemHeaderViewModelBuilder.buildViewModelTitleCurrentlyActiveSystemCopyContentReturnValue =
+            mockMeasurementSystemHeaderViewModelBuilder.buildViewModelCurrentlyActiveSystemCopyContentReturnValue =
                 stubUnitsHeaderViewModel
 
             mockPlainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilderProtocolMock()
