@@ -22,14 +22,16 @@ struct SearchCTAViewSUI: View {
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: viewModel.infoViewModel, colorings: colorings.standard)
+            StaticInfoViewSUI(viewModel: viewModel.infoViewModel,
+                              colorings: colorings.standard)
                 .padding(.bottom)
 
             viewModel.ctaBlock.map {
                 Button(action: $0.value) {
                     Text(viewModel.ctaTitle)
                 }
-                .configure(.ctaButton, textColoring: colorings.ctaTextColoring)
+                .configure(.ctaButton,
+                           textColoring: colorings.ctaTextColoring)
             }
         }
         .padding()

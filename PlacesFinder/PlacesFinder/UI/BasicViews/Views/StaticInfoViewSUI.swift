@@ -42,6 +42,7 @@ struct StaticInfoViewSUI: View {
             StyledLabelSUI(text: viewModel.description,
                            styleClass: .body,
                            textColoring: colorings.bodyTextColoring)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
