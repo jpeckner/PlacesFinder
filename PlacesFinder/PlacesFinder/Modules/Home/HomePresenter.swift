@@ -10,8 +10,14 @@ import CoordiNode
 import Shared
 import UIKit
 
+protocol HomePresenterDelegate: AnyObject {
+    func homePresenter(_ homePresenter: HomePresenterProtocol,
+                       didSelectChildCoordinator index: Int,
+                       previousChildIndex: Int)
+}
+
 protocol HomePresenterProtocol: AnyObject, AutoMockable {
-    var delegate: HomeViewControllerDelegate? { get set }
+    var delegate: HomePresenterDelegate? { get set }
     var rootViewController: UIViewController { get }
 
     func setSelectedViewController(_ controller: UIViewController)
@@ -19,33 +25,33 @@ protocol HomePresenterProtocol: AnyObject, AutoMockable {
 
 class HomePresenter: HomePresenterProtocol {
 
-    weak var delegate: HomeViewControllerDelegate?
-    private let homeViewController: HomeViewController
+    weak var delegate: HomePresenterDelegate?
+    private let tabSelectionViewController: TabSelectionViewController
 
     var rootViewController: UIViewController {
-        return homeViewController
+        return tabSelectionViewController
     }
 
     init(orderedChildViewControllers: [UIViewController]) {
-        self.homeViewController = HomeViewController(viewControllers: orderedChildViewControllers)
+        self.tabSelectionViewController = TabSelectionViewController(viewControllers: orderedChildViewControllers)
 
-        homeViewController.homeViewControllerDelegate = self
+        tabSelectionViewController.tabSelectionViewControllerDelegate = self
     }
 
     func setSelectedViewController(_ controller: UIViewController) {
-        homeViewController.selectedViewController = controller
+        tabSelectionViewController.selectedViewController = controller
     }
 
 }
 
-extension HomePresenter: HomeViewControllerDelegate {
+extension HomePresenter: TabSelectionViewControllerDelegate {
 
-    func viewController(_ homeViewController: HomeViewController,
+    func viewController(_ tabSelectionViewController: TabSelectionViewController,
                         didSelectIndex index: Int,
                         previousIndex: Int) {
-        delegate?.viewController(homeViewController,
-                                 didSelectIndex: index,
-                                 previousIndex: previousIndex)
+        delegate?.homePresenter(self,
+                                didSelectChildCoordinator: index,
+                                previousChildIndex: previousIndex)
     }
 
 }

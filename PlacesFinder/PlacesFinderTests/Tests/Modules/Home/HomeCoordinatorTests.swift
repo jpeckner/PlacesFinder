@@ -176,9 +176,7 @@ class HomeCoordinatorTests: QuickSpec {
 
         }
 
-        describe("HomeViewControllerDelegate") {
-
-            let stubHomeViewController = HomeViewController(viewControllers: [])
+        describe("TabSelectionViewControllerDelegate") {
 
             describe("didSelectIndex()") {
 
@@ -189,9 +187,9 @@ class HomeCoordinatorTests: QuickSpec {
 
                         context("when didSelectIndex() switches from index \(currentDescendentIdx) to index \(destinationDescedentIdx)") {
                             beforeEach {
-                                coordinator.viewController(stubHomeViewController,
-                                                           didSelectIndex: destinationDescedentIdx,
-                                                           previousIndex: currentDescendentIdx)
+                                coordinator.homePresenter(mockPresenter,
+                                                          didSelectChildCoordinator: destinationDescedentIdx,
+                                                          previousChildIndex: currentDescendentIdx)
                             }
 
                             it("activates the corresponding coordinator") {
