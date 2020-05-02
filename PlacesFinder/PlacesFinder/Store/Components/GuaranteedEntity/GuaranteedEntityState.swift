@@ -10,7 +10,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-// MARK: GuaranteedLoadState
+// MARK: GuaranteedEntityLoadState
 
 enum GuaranteedEntityLoadState<TEntity: Equatable>: Action, Equatable {
     case idle

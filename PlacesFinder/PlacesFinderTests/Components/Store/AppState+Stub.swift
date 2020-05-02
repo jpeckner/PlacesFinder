@@ -6,13 +6,13 @@
 //  Copyright © 2018 Justin Peckner. All rights reserved.
 //
 
+import CoordiNodeTestComponents
 import SharedTestComponents
 
-// swiftlint:disable line_length
 extension AppState {
 
     static func stubValue(
-        appCopyContentState: AppCopyContentState = .init(copyContent: .init(displayName: .stubValue("stubDisplayName"))),
+        appCopyContentState: AppCopyContentState = .init(copyContent: .stubValue()),
         appSkinState: AppSkinState = .init(),
         locationAuthState: LocationAuthState = .init(authStatus: .locationServicesDisabled),
         reachabilityState: ReachabilityState = .init(),

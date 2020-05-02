@@ -7,6 +7,7 @@
 //
 
 import CoordiNode
+import CoordiNodeTestComponents
 import Nimble
 import Quick
 import Shared
@@ -33,6 +34,7 @@ class SearchCoordinatorTests: QuickSpec {
         var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
         var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
         var mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock!
+        var mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock!
 
         var coordinator: SearchCoordinator<MockAppStore>!
 
@@ -57,6 +59,9 @@ class SearchCoordinatorTests: QuickSpec {
 
             mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
+            mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
+            mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
+
             coordinator = SearchCoordinator(store: mockStore,
                                             presenter: mockSearchPresenter,
                                             urlOpenerService: mockServiceContainer.urlOpenerService,
@@ -64,7 +69,8 @@ class SearchCoordinatorTests: QuickSpec {
                                             actionPrism: mockSearchActionPrism,
                                             backgroundViewModelBuilder: mockSearchBackgroundViewModelBuilder,
                                             lookupViewModelBuilder: mockSearchLookupViewModelBuilder,
-                                            detailsViewContextBuilder: mockSearchDetailsViewContextBuilder)
+                                            detailsViewContextBuilder: mockSearchDetailsViewContextBuilder,
+                                            navigationBarViewModelBuilder: mockNavigationBarViewModelBuilder)
         }
 
         beforeEach {

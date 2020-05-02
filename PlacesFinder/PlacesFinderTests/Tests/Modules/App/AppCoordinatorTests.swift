@@ -7,6 +7,7 @@
 //
 
 import CoordiNode
+import CoordiNodeTestComponents
 import Nimble
 import Quick
 import Shared

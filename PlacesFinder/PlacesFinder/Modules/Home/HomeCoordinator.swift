@@ -10,15 +10,15 @@ import CoordiNode
 import SwiftDux
 import UIKit
 
-class HomeCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class HomeCoordinator<TFactory: HomeCoordinatorChildFactoryProtocol> {
 
-    private let store: TStore
-    private let childContainer: HomeCoordinatorChildContainer
+    private let store: TFactory.TStore
+    private let childContainer: HomeCoordinatorChildContainer<TFactory>
     private let presenter: HomePresenterProtocol
     private let routingHandler: AppRoutingHandlerProtocol
 
-    init(store: TStore,
-         childContainer: HomeCoordinatorChildContainer,
+    init(store: TFactory.TStore,
+         childContainer: HomeCoordinatorChildContainer<TFactory>,
          presenter: HomePresenterProtocol,
          routingHandler: AppRoutingHandlerProtocol) {
         self.store = store

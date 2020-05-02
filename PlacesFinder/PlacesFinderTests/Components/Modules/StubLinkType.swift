@@ -7,6 +7,7 @@
 //
 
 import CoordiNode
+import CoordiNodeTestComponents
 import Foundation
 
 struct StubLinkType: LinkTypeProtocol, Equatable {
