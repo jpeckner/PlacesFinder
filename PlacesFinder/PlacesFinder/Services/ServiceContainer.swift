@@ -10,10 +10,10 @@ import CoordiNode
 import Shared
 
 struct ServiceContainer {
+    let appRoutingHandler: AppRoutingHandlerProtocol
     let appSkinService: AppSkinServiceProtocol
     let locationRequestHandler: LocationRequestHandlerProtocol
     let placeLookupService: PlaceLookupServiceProtocol
-    let routingHandler: AppRoutingHandlerProtocol
     let searchCopyFormatter: SearchCopyFormatterProtocol
     let urlOpenerService: URLOpenerServiceProtocol
 }

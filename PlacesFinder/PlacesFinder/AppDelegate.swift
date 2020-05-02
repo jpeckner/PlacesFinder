@@ -146,7 +146,8 @@ private extension ServiceContainer {
 
     init(appConfig: AppConfig,
          store: DispatchingStoreProtocol) {
-        let decodableServices = DecodableServices()
+        let routingHandler = RoutingHandler()
+        self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler)
 
         self.appSkinService = AppSkinService()
 
@@ -154,13 +155,11 @@ private extension ServiceContainer {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationRequestHandler = LocationRequestHandler(locationManager: locationManager)
 
+        let decodableServices = DecodableServices()
         self.placeLookupService = YelpRequestService(
             config: appConfig.yelpRequestConfig,
             decodableService: decodableServices.standardTimeoutDecodableService
         )
-
-        let routingHandler = RoutingHandler()
-        self.routingHandler = AppRoutingHandler(routingHandler: routingHandler)
 
         self.searchCopyFormatter = SearchCopyFormatter()
 

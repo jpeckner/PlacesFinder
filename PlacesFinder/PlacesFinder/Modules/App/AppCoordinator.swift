@@ -97,7 +97,7 @@ extension AppCoordinator: SubstatesSubscriber {
     func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
         dispatchDestinationForLinkType(state)
 
-        let routingHandler = childFactory.serviceContainer.routingHandler
+        let routingHandler = childFactory.serviceContainer.appRoutingHandler
         routingHandler.handleRouting(state,
                                      updatedSubstates: updatedSubstates,
                                      router: self)

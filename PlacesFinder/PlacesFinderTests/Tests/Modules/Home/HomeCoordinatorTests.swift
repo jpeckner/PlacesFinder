@@ -54,7 +54,7 @@ class HomeCoordinatorTests: QuickSpec {
             coordinator = HomeCoordinator(store: mockStore,
                                           childContainer: stubChildContainer,
                                           presenter: mockPresenter,
-                                          routingHandler: mockAppRoutingHandler)
+                                          appRoutingHandler: mockAppRoutingHandler)
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
