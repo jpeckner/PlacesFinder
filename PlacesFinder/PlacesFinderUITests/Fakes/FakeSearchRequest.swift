@@ -1,6 +1,6 @@
 //
 //  FakeSearchRequest.swift
-//  PlacesFinder
+//  PlacesFinderUITests
 //
 //  Created by Justin Peckner.
 //  Copyright © 2019 Justin Peckner. All rights reserved.
