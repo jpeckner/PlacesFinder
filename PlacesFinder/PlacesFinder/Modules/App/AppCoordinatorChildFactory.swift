@@ -95,7 +95,7 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
             return HomeCoordinator(store: store,
                                    childContainer: childContainer,
                                    presenter: presenter,
-                                   routingHandler: serviceContainer.routingHandler)
+                                   appRoutingHandler: serviceContainer.appRoutingHandler)
         }
     }
 

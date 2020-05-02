@@ -15,16 +15,16 @@ class HomeCoordinator<TFactory: HomeCoordinatorChildFactoryProtocol> {
     private let store: TFactory.TStore
     private let childContainer: HomeCoordinatorChildContainer<TFactory>
     private let presenter: HomePresenterProtocol
-    private let routingHandler: AppRoutingHandlerProtocol
+    private let appRoutingHandler: AppRoutingHandlerProtocol
 
     init(store: TFactory.TStore,
          childContainer: HomeCoordinatorChildContainer<TFactory>,
          presenter: HomePresenterProtocol,
-         routingHandler: AppRoutingHandlerProtocol) {
+         appRoutingHandler: AppRoutingHandlerProtocol) {
         self.store = store
         self.childContainer = childContainer
         self.presenter = presenter
-        self.routingHandler = routingHandler
+        self.appRoutingHandler = appRoutingHandler
 
         presenter.delegate = self
     }
@@ -83,9 +83,9 @@ extension HomeCoordinator: SubstatesSubscriber {
     typealias StoreState = AppState
 
     func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        routingHandler.handleRouting(state,
-                                     updatedSubstates: updatedSubstates,
-                                     router: self)
+        appRoutingHandler.handleRouting(state,
+                                        updatedSubstates: updatedSubstates,
+                                        router: self)
     }
 
 }

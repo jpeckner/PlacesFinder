@@ -69,7 +69,7 @@ class AppCoordinatorTests: QuickSpec {
 
             mockChildFactory.store = mockStore
             mockAppRoutingHandler = AppRoutingHandlerProtocolMock()
-            mockChildFactory.serviceContainer = ServiceContainer.mockValue(routingHandler: mockAppRoutingHandler)
+            mockChildFactory.serviceContainer = ServiceContainer.mockValue(appRoutingHandler: mockAppRoutingHandler)
             mockChildFactory.launchStatePrism = launchStatePrism
             mockChildFactory.buildLaunchCoordinatorReturnValue = mockLaunchCoordinator
             mockChildFactory.buildCoordinatorForClosure = { _ in mockHomeCoordinator }
