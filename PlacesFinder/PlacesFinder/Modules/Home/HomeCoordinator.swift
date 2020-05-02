@@ -7,6 +7,7 @@
 //
 
 import CoordiNode
+import Shared
 import SwiftDux
 import UIKit
 
@@ -67,12 +68,12 @@ extension HomeCoordinator {
 
 }
 
-extension HomeCoordinator: HomeViewControllerDelegate {
+extension HomeCoordinator: HomePresenterDelegate {
 
-    func viewController(_ homeViewController: HomeViewController,
-                        didSelectIndex index: Int,
-                        previousIndex: Int) {
-        switchSubtree(from: HomeCoordinatorDescendent.allCases[previousIndex],
+    func homePresenter(_ homePresenter: HomePresenterProtocol,
+                       didSelectChildCoordinator index: Int,
+                       previousChildIndex: Int) {
+        switchSubtree(from: HomeCoordinatorDescendent.allCases[previousChildIndex],
                       to: HomeCoordinatorDestinationDescendent.allCases[index])
     }
 

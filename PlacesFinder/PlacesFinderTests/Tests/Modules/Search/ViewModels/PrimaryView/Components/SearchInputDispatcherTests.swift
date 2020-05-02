@@ -8,6 +8,7 @@
 
 import Nimble
 import Quick
+import Shared
 import SwiftDux
 
 class SearchInputDispatcherTests: QuickSpec {

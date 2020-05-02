@@ -6,6 +6,7 @@
 //  Copyright © 2018 Justin Peckner. All rights reserved.
 //
 
+import Shared
 import SwiftDux
 import UIKit
 
