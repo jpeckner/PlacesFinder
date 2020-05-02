@@ -14,17 +14,17 @@ import SharedTestComponents
 extension ServiceContainer {
 
     static func mockValue(
+        appRoutingHandler: AppRoutingHandlerProtocol = AppRoutingHandlerProtocolMock(),
         appSkinService: AppSkinServiceProtocol = AppSkinServiceProtocolMock(),
         locationRequestHandler: LocationRequestHandlerProtocol = LocationRequestHandlerProtocolMock(),
         placeLookupService: PlaceLookupServiceProtocol = PlaceLookupServiceProtocolMock(),
-        routingHandler: AppRoutingHandlerProtocol = AppRoutingHandlerProtocolMock(),
         searchCopyFormatter: SearchCopyFormatterProtocol = SearchCopyFormatterProtocolMock(),
         urlOpenerService: URLOpenerServiceProtocol = URLOpenerServiceProtocolMock()
     ) -> ServiceContainer {
-        return ServiceContainer(appSkinService: appSkinService,
+        return ServiceContainer(appRoutingHandler: appRoutingHandler,
+                                appSkinService: appSkinService,
                                 locationRequestHandler: locationRequestHandler,
                                 placeLookupService: placeLookupService,
-                                routingHandler: routingHandler,
                                 searchCopyFormatter: searchCopyFormatter,
                                 urlOpenerService: urlOpenerService)
     }

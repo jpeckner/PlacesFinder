@@ -23,6 +23,7 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
     private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
+    private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
     init(store: TStore,
          presenter: SearchPresenterProtocol,
@@ -31,7 +32,8 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
          actionPrism: SearchActionPrismProtocol,
          backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
-         detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol) {
+         detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
+         navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
         self.store = store
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
@@ -40,6 +42,7 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
         self.backgroundViewModelBuilder = backgroundViewModelBuilder
         self.lookupViewModelBuilder = lookupViewModelBuilder
         self.detailsViewContextBuilder = detailsViewContextBuilder
+        self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
 
         let keyPaths = statePrism.presentationKeyPaths.union([
             EquatableKeyPath(\AppState.routerState),
@@ -77,7 +80,7 @@ private extension SearchCoordinator {
         guard !updatedSubstates.isDisjoint(with: statePrism.presentationKeyPaths.partialKeyPaths) else { return }
 
         let appCopyContent = state.appCopyContentState.copyContent
-        let titleViewModel = NavigationBarTitleViewModel(copyContent: appCopyContent.displayName)
+        let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
         let appSkin = state.appSkinState.currentValue
 
         switch statePrism.presentationType(for: state) {

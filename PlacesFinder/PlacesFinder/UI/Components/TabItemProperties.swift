@@ -10,7 +10,7 @@ import Shared
 import UIKit
 
 struct TabItemProperties {
-    let image: UIImage
+    let imageName: String
 }
 
 extension UIViewController {
@@ -22,7 +22,9 @@ extension UIViewController {
     private static let tabImageSize = CGSize(width: 32.0, height: 32.0)
 
     func configure(_ properties: TabItemProperties) {
-        let templateImage = properties.image.withRenderingMode(.alwaysTemplate)
+        guard let image = UIImage(named: properties.imageName) else { return }
+
+        let templateImage = image.withRenderingMode(.alwaysTemplate)
         tabBarItem.image = templateImage.with(size: UIViewController.tabImageSize)
     }
 

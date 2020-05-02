@@ -10,9 +10,19 @@ import CoordiNode
 import Shared
 import SwiftDux
 
-class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == AppState {
+// sourcery: genericTypes = "TStore: StoreProtocol"
+// sourcery: genericConstraints = "TStore.State == AppState"
+protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
+    associatedtype TStore: StoreProtocol where TStore.State == AppState
 
-    let store: TStore
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
+}
+
+// swiftlint:disable line_length
+class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.State == AppState {
+// swiftlint:enable line_length
+
+    private let store: TStore
     private let listenerContainer: ListenerContainer
     private let serviceContainer: ServiceContainer
 
@@ -77,6 +87,8 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
             detailsViewModelBuilder: detailsViewModelBuilder
         )
 
+        let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
+
         return SearchCoordinator(store: store,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
@@ -84,7 +96,8 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
                                  actionPrism: actionPrism,
                                  backgroundViewModelBuilder: backgroundViewModelBuilder,
                                  lookupViewModelBuilder: lookupViewModelBuilder,
-                                 detailsViewContextBuilder: detailsViewContextBuilder)
+                                 detailsViewContextBuilder: detailsViewContextBuilder,
+                                 navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
@@ -102,16 +115,19 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
         let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
                                                                         measurementFormatter: measurementFormatter)
-        let viewModelBuilder = SettingsViewModelBuilder(
+        let settingsViewModelBuilder = SettingsViewModelBuilder(
             store: store,
             measurementSystemHeaderViewModelBuilder: measurementSystemHeaderViewModelBuilder,
             plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
             settingsCellViewModelBuilder: settingsCellViewModelBuilder
         )
 
+        let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
+
         return SettingsCoordinator(store: store,
                                    presenter: presenter,
-                                   viewModelBuilder: viewModelBuilder)
+                                   settingsViewModelBuilder: settingsViewModelBuilder,
+                                   navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
 
 }
@@ -121,9 +137,9 @@ private extension HomeCoordinatorImmediateDescendent {
     var tabItemProperties: TabItemProperties {
         switch self {
         case .search:
-            return TabItemProperties(image: #imageLiteral(resourceName: "magnifying_glass"))
+            return TabItemProperties(imageName: "magnifying_glass")
         case .settings:
-            return TabItemProperties(image: #imageLiteral(resourceName: "gear"))
+            return TabItemProperties(imageName: "gear")
         }
     }
 

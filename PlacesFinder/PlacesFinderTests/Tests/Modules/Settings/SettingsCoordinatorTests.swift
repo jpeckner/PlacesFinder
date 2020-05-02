@@ -6,6 +6,7 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
+import CoordiNodeTestComponents
 import Nimble
 import Quick
 import Shared
@@ -17,9 +18,10 @@ class SettingsCoordinatorTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
-        let stubViewModel: SettingsViewModel = {
+        let stubSettingsViewModel: SettingsViewModel = {
             let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue(id: 0))
             return SettingsViewModel(sections: sections)
         }()
@@ -27,6 +29,9 @@ class SettingsCoordinatorTests: QuickSpec {
 
         var mockStore: MockAppStore!
         var mockSettingsPresenter: SettingsPresenterProtocolMock!
+        var mockSettingsViewModelBuilder: SettingsViewModelBuilderProtocolMock!
+        var mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock!
+
         var coordinator: SettingsCoordinator<MockAppStore>!
 
         beforeEach {
@@ -34,12 +39,16 @@ class SettingsCoordinatorTests: QuickSpec {
             mockSettingsPresenter = SettingsPresenterProtocolMock()
             mockSettingsPresenter.rootNavController = stubNavController
 
-            let mockViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-            mockViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubViewModel
+            mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
+            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
+
+            mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
+            mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
 
             coordinator = SettingsCoordinator(store: mockStore,
                                               presenter: mockSettingsPresenter,
-                                              viewModelBuilder: mockViewModelBuilder)
+                                              settingsViewModelBuilder: mockSettingsViewModelBuilder,
+                                              navigationBarViewModelBuilder: mockNavigationBarViewModelBuilder)
         }
 
         describe("init") {

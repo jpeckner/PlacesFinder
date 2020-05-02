@@ -7,15 +7,20 @@
 //
 
 import Foundation
+import Shared
 
-struct NavigationBarTitleViewModel {
+struct NavigationBarTitleViewModel: Equatable {
     let displayName: String
 }
 
-extension NavigationBarTitleViewModel {
+protocol NavigationBarViewModelBuilderProtocol: AutoMockable {
+    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel
+}
 
-    init(copyContent: DisplayNameCopyContent) {
-        self.displayName = copyContent.name.value
+class NavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol {
+
+    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel {
+        return NavigationBarTitleViewModel(displayName: copyContent.name.value)
     }
 
 }

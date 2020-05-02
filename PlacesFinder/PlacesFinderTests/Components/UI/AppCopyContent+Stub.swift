@@ -1,6 +1,6 @@
 //
 //  SearchResultsCopyContent+Stub.swift
-//  PlacesFinder
+//  PlacesFinderTests
 //
 //  Created by Justin Peckner.
 //  Copyright © 2020 Justin Peckner. All rights reserved.
@@ -13,6 +13,14 @@ extension AppCopyContent {
 
     static func stubValue(displayName: NonEmptyString = .stubValue("stubDisplayName")) -> AppCopyContent {
         return AppCopyContent(displayName: displayName)
+    }
+
+}
+
+extension DisplayNameCopyContent {
+
+    static func stubValue(name: NonEmptyString = .stubValue("stubDisplayName")) -> DisplayNameCopyContent {
+        return DisplayNameCopyContent(name: name)
     }
 
 }

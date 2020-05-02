@@ -26,8 +26,8 @@ class HomePresenter: HomePresenterProtocol {
         return homeViewController
     }
 
-    init(childContainer: HomeCoordinatorChildContainer) {
-        self.homeViewController = HomeViewController(viewControllers: childContainer.orderedChildViewControllers)
+    init(orderedChildViewControllers: [UIViewController]) {
+        self.homeViewController = HomeViewController(viewControllers: orderedChildViewControllers)
 
         homeViewController.homeViewControllerDelegate = self
     }

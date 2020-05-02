@@ -15,14 +15,17 @@ class SettingsCoordinator<TStore: StoreProtocol> where TStore.State == AppState 
 
     private let store: TStore
     private let presenter: SettingsPresenterProtocol
-    private let viewModelBuilder: SettingsViewModelBuilderProtocol
+    private let settingsViewModelBuilder: SettingsViewModelBuilderProtocol
+    private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
     init(store: TStore,
          presenter: SettingsPresenterProtocol,
-         viewModelBuilder: SettingsViewModelBuilderProtocol) {
+         settingsViewModelBuilder: SettingsViewModelBuilderProtocol,
+         navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
         self.store = store
         self.presenter = presenter
-        self.viewModelBuilder = viewModelBuilder
+        self.settingsViewModelBuilder = settingsViewModelBuilder
+        self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
 
         store.subscribe(self, keyPath: \AppState.searchPreferencesState)
     }
@@ -48,9 +51,9 @@ extension SettingsCoordinator: SubstatesSubscriber {
 
     private func presentViews(_ state: AppState) {
         let appCopyContent = state.appCopyContentState.copyContent
-        let viewModel = viewModelBuilder.buildViewModel(searchPreferencesState: state.searchPreferencesState,
-                                                        appCopyContent: appCopyContent)
-        let titleViewModel = NavigationBarTitleViewModel(copyContent: appCopyContent.displayName)
+        let viewModel = settingsViewModelBuilder.buildViewModel(searchPreferencesState: state.searchPreferencesState,
+                                                                appCopyContent: appCopyContent)
+        let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
 
         presenter.loadSettingsView(viewModel,
                                    titleViewModel: titleViewModel,

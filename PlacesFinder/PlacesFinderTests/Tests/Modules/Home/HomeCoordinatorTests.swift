@@ -17,6 +17,8 @@ import UIKit
 
 class HomeCoordinatorTests: QuickSpec {
 
+    private typealias TFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
+
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
@@ -29,10 +31,10 @@ class HomeCoordinatorTests: QuickSpec {
         var mockStore: MockAppStore!
         var mockSearchCoordinator: TabCoordinatorProtocolMock!
         var mockSettingsCoordinator: TabCoordinatorProtocolMock!
-        var stubChildContainer: HomeCoordinatorChildContainer!
+        var stubChildContainer: HomeCoordinatorChildContainer<TFactory>!
         var mockPresenter: HomePresenterProtocolMock!
         var mockAppRoutingHandler: AppRoutingHandlerProtocolMock!
-        var coordinator: HomeCoordinator<MockAppStore>!
+        var coordinator: HomeCoordinator<TFactory>!
 
         beforeEach {
             mockStore = MockAppStore()
@@ -52,7 +54,7 @@ class HomeCoordinatorTests: QuickSpec {
             coordinator = HomeCoordinator(store: mockStore,
                                           childContainer: stubChildContainer,
                                           presenter: mockPresenter,
-                                          routingHandler: mockAppRoutingHandler)
+                                          appRoutingHandler: mockAppRoutingHandler)
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
@@ -93,11 +95,11 @@ class HomeCoordinatorTests: QuickSpec {
                 }
 
                 it("subscribes to its relevant key paths") {
-                    let substatesSubscription =
+                    let subscription =
                         mockStore.receivedSubscriptions.first?.subscription
-                            as? SubstatesSubscription<HomeCoordinator<MockAppStore>>
-                    expect(substatesSubscription?.subscribedPaths.count) == 1
-                    expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
+                        as? SubstatesSubscription<HomeCoordinator<TFactory>>
+                    expect(subscription?.subscribedPaths.count) == 1
+                    expect(subscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
                 }
 
                 it("executes the completion block") {
@@ -117,7 +119,7 @@ class HomeCoordinatorTests: QuickSpec {
                 }
 
                 it("unsubscribes from the store") {
-                    expect(mockStore.receivedUnsubscribers.first as? HomeCoordinator<MockAppStore>) === coordinator
+                    expect(mockStore.receivedUnsubscribers.first as? HomeCoordinator<TFactory>) === coordinator
                 }
 
                 it("passes the completion block to mockLaunchPresenter for execution") {

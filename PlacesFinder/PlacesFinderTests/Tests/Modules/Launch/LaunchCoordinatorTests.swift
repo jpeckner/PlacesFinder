@@ -6,6 +6,7 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
+import CoordiNodeTestComponents
 import Nimble
 import Quick
 import Shared

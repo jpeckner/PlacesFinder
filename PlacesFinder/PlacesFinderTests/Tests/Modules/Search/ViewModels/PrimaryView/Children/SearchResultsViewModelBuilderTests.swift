@@ -1,6 +1,6 @@
 //
 //  SearchResultsViewModelBuilderTests.swift
-//  PlacesFinder
+//  PlacesFinderTests
 //
 //  Created by Justin Peckner.
 //  Copyright © 2020 Justin Peckner. All rights reserved.
