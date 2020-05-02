@@ -18,7 +18,6 @@ class HomeViewController: UITabBarController {
 
     weak var homeViewControllerDelegate: HomeViewControllerDelegate?
     private var previousIndex = 0
-    private var hasAdjustedTabBarInsets = false
 
     override var selectedViewController: UIViewController? {
         willSet {
@@ -51,11 +50,8 @@ extension HomeViewController {
     }
 
     private func adjustTabImageInsets() {
-        guard !hasAdjustedTabBarInsets,
-            let horizontalSizeClass = horizontalSpecifiedClass
-        else { return }
+        guard let horizontalSizeClass = horizontalSpecifiedClass else { return }
 
-        hasAdjustedTabBarInsets = true
         adjustTabImageInsets(horizontalSizeClass)
     }
 

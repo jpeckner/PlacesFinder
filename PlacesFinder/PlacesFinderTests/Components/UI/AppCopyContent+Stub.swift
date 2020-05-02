@@ -17,6 +17,14 @@ extension AppCopyContent {
 
 }
 
+extension DisplayNameCopyContent {
+
+    static func stubValue(name: NonEmptyString = .stubValue("stubDisplayName")) -> DisplayNameCopyContent {
+        return DisplayNameCopyContent(name: name)
+    }
+
+}
+
 extension SearchNoResultsCopyContent {
 
     static func stubValue() -> SearchNoResultsCopyContent {

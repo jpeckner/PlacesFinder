@@ -3,11 +3,11 @@ import UIKit
 
 {% for enum in types.enums where enum.name == "HomeCoordinatorImmediateDescendent" %}
 
-struct HomeCoordinatorChildContainer {
+struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtocol> {
     {% for case in enum.cases %}private let {{ case.name }}: TabCoordinatorProtocol
     {% endfor %}
 
-    init<TStore: StoreProtocol>(childFactory: HomeCoordinatorChildFactory<TStore>) where TStore.State == AppState {
+    init<TStore: StoreProtocol>(childFactory: TFactory) where TStore.State == AppState, TFactory.TStore == TStore {
         {% for case in enum.cases %}self.{{ case.name }} = childFactory.buildCoordinator(for: .{{ case.name }})
         {% endfor %}
     }

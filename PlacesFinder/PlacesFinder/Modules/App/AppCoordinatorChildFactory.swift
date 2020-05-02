@@ -90,7 +90,7 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
                                                            listenerContainer: listenerContainer,
                                                            serviceContainer: serviceContainer)
             let childContainer = HomeCoordinatorChildContainer(childFactory: childFactory)
-            let presenter = HomePresenter(childContainer: childContainer)
+            let presenter = HomePresenter(orderedChildViewControllers: childContainer.orderedChildViewControllers)
 
             return HomeCoordinator(store: store,
                                    childContainer: childContainer,

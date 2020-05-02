@@ -11,13 +11,15 @@ import Quick
 
 class AppChildCoordinatorTests: QuickSpec {
 
+    private typealias THomeCoordinatorFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
+
     override func spec() {
 
         describe("AppCoordinatorChildProtocol") {
 
             describe("HomeCoordinator") {
                 it("returns .home") {
-                    expect(HomeCoordinator<MockAppStore>.self.appCoordinatorImmediateDescendent) == .home
+                    expect(HomeCoordinator<THomeCoordinatorFactory>.self.appCoordinatorImmediateDescendent) == .home
                 }
             }
 
