@@ -9,6 +9,7 @@
 import Foundation
 import Shared
 import SwiftDux
+import SwiftDuxExtensions
 
 enum SearchPageRequestError: Error, Equatable {
     case cannotRetryRequest(underlyingError: IgnoredEquatable<Error>)

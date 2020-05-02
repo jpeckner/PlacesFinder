@@ -7,6 +7,7 @@
 //
 
 import SwiftDux
+import SwiftDuxTestComponents
 
 extension SearchResultViewModel {
 

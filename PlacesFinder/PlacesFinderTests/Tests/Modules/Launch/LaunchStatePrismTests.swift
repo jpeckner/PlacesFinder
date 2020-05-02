@@ -11,6 +11,7 @@ import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
+import SwiftDuxExtensions
 import SwiftDuxTestComponents
 
 class LaunchStatePrismTests: QuickSpec {
@@ -30,7 +31,7 @@ class LaunchStatePrismTests: QuickSpec {
 
             context("when state.appSkinState.hasCompletedLoading is true") {
                 beforeEach {
-                    let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
+                    let underlyingError = EquatableError(StubError.plainError)
                     let state = AppState.stubValue(
                         appSkinState: AppSkinState(loadState: .failure(.loadError(underlyingError: underlyingError)))
                     )
