@@ -30,21 +30,13 @@ class SearchProgressViewController: SingleContentViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        tableView.visibleCells.forEach {
-            $0.hideSkeleton()
-            $0.showAnimatedGradientSkeleton(usingGradient: gradient)
-        }
-    }
-
     private func setupTableView() {
         tableView.performStandardSetup(
             cellTypes: [
                 SearchProgressCell.self
             ],
-            dataSource: self
+            dataSource: self,
+            delegate: self
         )
 
         tableView.isScrollEnabled = false
@@ -71,7 +63,6 @@ extension SearchProgressViewController: SkeletonTableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withCellType: SearchProgressCell.self, for: indexPath)
-        cell.showGradientSkeleton(usingGradient: gradient)
         cell.makeTransparent()
         return cell
     }
@@ -79,6 +70,16 @@ extension SearchProgressViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView,
                                 cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return SearchProgressCell.cellIdentifier
+    }
+
+}
+
+extension SearchProgressViewController: SkeletonTableViewDelegate {
+
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        cell.showAnimatedGradientSkeleton(usingGradient: gradient)
     }
 
 }
