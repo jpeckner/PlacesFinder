@@ -9,6 +9,7 @@
 import Nimble
 import Quick
 import Shared
+import SwiftDuxTestComponents
 
 class SettingsViewModelTests: QuickSpec {
 

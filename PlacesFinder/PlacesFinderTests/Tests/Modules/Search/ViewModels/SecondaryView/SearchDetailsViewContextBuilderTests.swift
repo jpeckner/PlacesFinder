@@ -10,6 +10,7 @@ import Nimble
 import Quick
 import Shared
 import SwiftDux
+import SwiftDuxTestComponents
 
 class SearchDetailsViewContextBuilderTests: QuickSpec {
 

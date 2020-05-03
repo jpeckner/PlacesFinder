@@ -8,6 +8,7 @@
 
 import Nimble
 import Quick
+import SwiftDuxTestComponents
 
 class AppCopyContentReducerTests: QuickSpec {
 
