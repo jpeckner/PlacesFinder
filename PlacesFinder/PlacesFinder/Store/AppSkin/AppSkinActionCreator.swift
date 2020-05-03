@@ -9,6 +9,7 @@
 import Foundation
 import Shared
 import SwiftDux
+import SwiftDuxExtensions
 
 protocol AppSkinActionCreatorProtocol: ResettableAutoMockable {
     static func loadSkin(skinService: AppSkinServiceProtocol) -> Action
@@ -17,7 +18,8 @@ protocol AppSkinActionCreatorProtocol: ResettableAutoMockable {
 enum AppSkinActionCreator: AppSkinActionCreatorProtocol, GuaranteedEntityActionCreator {
 
     static func loadSkin(skinService: AppSkinServiceProtocol) -> Action {
-        return loadGuaranteedEntity(.nonThrowing(skinService.fetchAppSkin))
+        let action: AppAsyncAction = loadGuaranteedEntity(.nonThrowing(skinService.fetchAppSkin))
+        return action
     }
 
 }

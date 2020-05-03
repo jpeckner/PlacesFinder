@@ -1,5 +1,5 @@
 //
-//  SearchResultsCopyContent+Stub.swift
+//  AppCopyContent+Stub.swift
 //  PlacesFinderTests
 //
 //  Created by Justin Peckner.

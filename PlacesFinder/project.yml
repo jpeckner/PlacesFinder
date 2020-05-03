@@ -55,9 +55,10 @@ targets:
         implicit: true
       - carthage: Kingfisher
       - carthage: Reachability
-      - carthage: SwiftDux
       - carthage: SkeletonView
       - carthage: SnapKit
+      - carthage: SwiftDux
+      - carthage: SwiftDuxExtensions
     preBuildScripts:
       - path: BuildScripts/carthage_verify.sh
         name: Carthage - Verify
@@ -80,14 +81,15 @@ targets:
         implicit: true
       - framework: CoordiNodeTestComponents.framework
         implicit: true
-      - carthage: SwiftDuxTestComponents
+      - carthage: Kingfisher
       - carthage: Nimble
       - carthage: Quick
-      - carthage: Kingfisher
       - carthage: Reachability
-      - carthage: SwiftDux
       - carthage: SkeletonView
       - carthage: SnapKit
+      - carthage: SwiftDux
+      - carthage: SwiftDuxExtensions
+      - carthage: SwiftDuxTestComponents
       
   PlacesFinderIntegrationTests:
     type: bundle.unit-test
