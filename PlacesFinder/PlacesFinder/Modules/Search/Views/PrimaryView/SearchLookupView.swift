@@ -86,8 +86,21 @@ extension SearchLookupView: SearchBarWrapperDelegate {
         inputViewModel.dispatcher?.dispatchEditEvent(event)
     }
 
-    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: NonEmptyString) {
-        let params = SearchParams(keywords: text)
+    func searchBarWrapper(_ searchBarWrapper: SearchBarWrapper, didClickSearch text: String?) {
+        guard let text = text,
+            !text.isEmpty
+        else {
+            AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return nil text" }
+            inputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            return
+        }
+
+        guard let nonEmptyText = try? NonEmptyString(text.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            inputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            return
+        }
+
+        let params = SearchParams(keywords: nonEmptyText)
         inputViewModel.dispatcher?.dispatchSearchParams(params)
     }
 
