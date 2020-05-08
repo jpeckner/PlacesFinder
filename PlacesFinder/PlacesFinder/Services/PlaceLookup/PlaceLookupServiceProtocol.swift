@@ -24,11 +24,11 @@ protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
 
 // MARK: PlaceLookupServiceError
 
-enum PlaceLookupErrorPayload: Equatable {
+enum PlaceLookupErrorPayload {
     case codeAndDescription(code: String, description: String)
 }
 
-enum PlaceLookupServiceError: Equatable {
+enum PlaceLookupServiceError {
     case errorPayloadReturned(PlaceLookupErrorPayload, urlResponse: HTTPURLResponse)
     case unexpectedDecodingError(underlyingError: DecodableServiceUnexpectedError)
 }
