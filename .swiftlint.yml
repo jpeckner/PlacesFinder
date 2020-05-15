@@ -80,7 +80,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - PlacesFinder/PlacesFinder/CoordiNode/Output
   - PlacesFinder/PlacesFinder/OutdatedDependencies.swift
   - PlacesFinder/PlacesFinder/Sourcery/Output
-  - PlacesFinder/PlacesFinderTests/Components/AutoMockable.generated.swift
+  - PlacesFinder/PlacesFinderTests/Components/Sourcery/Output
   - PlacesFinder/PlacesFinderUITests/Carthage
   - PlacesFinder/PlacesFinderUITests/Fakes
   - Shared/Carthage

@@ -38,6 +38,7 @@ Slather
 ##### Sourcery #####
 
 PlacesFinder/PlacesFinder/Sourcery/Output
+PlacesFinder/PlacesFinderTests/Components/Sourcery/Output
 
 ##### Carthage #####
 
