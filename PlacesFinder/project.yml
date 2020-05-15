@@ -43,9 +43,7 @@ targets:
     attributes:
       DevelopmentTeam: ER3Y6PM2YR
     sources:
-    - path: PlacesFinder
-      excludes:
-        - "Sourcery/Output/AutoMockable.generated.swift"
+      - path: PlacesFinder
     dependencies:
       - framework: Shared.framework
         implicit: true
