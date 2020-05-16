@@ -109,7 +109,7 @@ private class ResultsSourceView: UIView {
         logoView.snp.makeConstraints { make in
             make.leading.equalTo(label.snp.trailing)
             make.trailing.top.bottom.equalTo(self)
-            make.width.equalTo(APILogoView.minWidth)
+            make.width.equalTo(APILogoConstants.minWidth)
         }
     }
 

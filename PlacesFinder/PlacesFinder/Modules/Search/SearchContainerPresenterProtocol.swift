@@ -6,8 +6,6 @@
 //  Copyright © 2020 Justin Peckner. All rights reserved.
 //
 
-import SwiftDux
-
 protocol SearchContainerPresenterProtocol {
     var searchContainerViewController: SearchContainerViewController { get }
 }

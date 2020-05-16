@@ -10,7 +10,6 @@ import Shared
 import SwiftUI
 
 // NOTE: this view is unused until SwiftUI supports chained animations (see LaunchView.swift for desired animations).
-@available(iOS 13.0.0, *)
 struct LaunchViewSUI: View {
 
     private enum Constants {
@@ -34,7 +33,7 @@ struct LaunchViewSUI: View {
                 Color.clear.frame(height: metrics.size.height * 0.15)
 
                 ActivityIndicator(_isAnimating: self.$viewModel.isAnimating,
-                                  style: .whiteLarge,
+                                  style: .large,
                                   color: self.colorings.spinnerColor.color)
             }
 
@@ -60,7 +59,6 @@ struct LaunchViewSUI: View {
 
 }
 
-@available(iOS 13.0.0, *)
 extension LaunchViewSUI: LaunchViewProtocol {
 
     func startSpinner() {

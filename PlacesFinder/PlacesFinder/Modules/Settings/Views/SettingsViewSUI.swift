@@ -9,7 +9,6 @@
 import Shared
 import SwiftUI
 
-@available(iOS 13.0.0, *)
 struct SettingsViewSUI: View {
 
     @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
@@ -53,7 +52,6 @@ struct SettingsViewSUI: View {
 
 }
 
-@available(iOS 13.0.0, *)
 extension SettingsViewSUI {
 
     func configure(_ viewModel: SettingsViewModel,
@@ -64,7 +62,6 @@ extension SettingsViewSUI {
 
 }
 
-@available(iOS 13.0.0, *)
 private struct SettingsPlainSystemHeaderViewSUI: View {
 
     let viewModel: SettingsPlainHeaderViewModel
@@ -78,7 +75,6 @@ private struct SettingsPlainSystemHeaderViewSUI: View {
 
 }
 
-@available(iOS 13.0.0, *)
 private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
     let viewModel: SettingsUnitsHeaderViewModel
@@ -130,7 +126,6 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
 }
 
-@available(iOS 13.0.0, *)
 private struct SettingsCell: View {
 
     private enum Constants {

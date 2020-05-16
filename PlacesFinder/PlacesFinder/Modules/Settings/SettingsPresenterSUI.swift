@@ -10,7 +10,14 @@ import Shared
 import SwiftUI
 import UIKit
 
-@available(iOS 13.0, *)
+protocol SettingsPresenterProtocol: AutoMockable {
+    var rootNavController: UINavigationController { get }
+
+    func loadSettingsView(_ viewModel: SettingsViewModel,
+                          titleViewModel: NavigationBarTitleViewModel,
+                          appSkin: AppSkin)
+}
+
 class SettingsPresenterSUI: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController
@@ -38,7 +45,6 @@ class SettingsPresenterSUI: SettingsPresenterProtocol {
 
 }
 
-@available(iOS 13.0, *)
 private extension SettingsPresenterSUI {
 
     func existingRootView<T: View>() -> T? {

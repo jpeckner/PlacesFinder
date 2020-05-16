@@ -9,7 +9,6 @@
 import Shared
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct SearchNoInternetViewSUI: View {
 
     @ObservedObject var viewModel: ValueObservable<SearchNoInternetViewModel>

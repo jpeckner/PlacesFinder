@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct SearchCTAViewSUI: View {
 
     private let viewModel: SearchCTAViewModel

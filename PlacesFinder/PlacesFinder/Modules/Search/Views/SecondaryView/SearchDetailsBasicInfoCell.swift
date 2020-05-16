@@ -213,7 +213,7 @@ private class RatingsPricingView: UIView {
             make.bottom.lessThanOrEqualTo(self)
 
             make.width.equalTo(100.0)
-            make.width.equalTo(apiLinkButton.snp.height).multipliedBy(APILogoView.widthToHeightRatio)
+            make.width.equalTo(apiLinkButton.snp.height).multipliedBy(APILogoConstants.logoImage.widthToHeightRatio)
         }
     }
 
@@ -246,7 +246,7 @@ extension RatingsPricingView {
                                textColoring: colorings.bodyTextColoring)
         pricingLabel.textAlignment = .right
 
-        apiLinkButton.setImage(colorings.viewColoring.apiLogo, for: .normal)
+        apiLinkButton.setImage(APILogoConstants.logoImage, for: .normal)
         apiLinkCallback = viewModel.apiLinkCallback?.value
     }
 
