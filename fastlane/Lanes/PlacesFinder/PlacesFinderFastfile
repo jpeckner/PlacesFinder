@@ -3,18 +3,7 @@ lane :generate_placesfinder do |options|
   config = options[:config] || "Debug"
   apiKey = options[:apiKey] || ENV["PLACE_LOOKUP_KEY"]
   
-  clear_derived_data
   generate_placesfinder(PLACE_LOOKUP_BASE_URL, apiKey, config)
   
   run_script("open ../PlacesFinder.xcworkspace")
-end
-
-lane :generate_placesfinder_project_files do |options|
-  generate_project_files()
-  
-  run_script("open ../PlacesFinder.xcworkspace")
-end
-
-lane :generate_placesfinder_sourcery_files do |options|
-  generate_sourcery_files()
 end

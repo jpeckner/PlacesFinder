@@ -47,16 +47,15 @@ targets:
     settings:
       OTHER_LDFLAGS: -weak_framework SwiftUI
     dependencies:
-      - framework: Shared.framework
-        implicit: true
-      - framework: CoordiNode.framework
-        implicit: true
+      - carthage: CoordiNode
       - carthage: Kingfisher
       - carthage: Reachability
       - carthage: SkeletonView
       - carthage: SnapKit
       - carthage: SwiftDux
       - carthage: SwiftDuxExtensions
+      - framework: Shared.framework
+        implicit: true
     preBuildScripts:
       - path: BuildScripts/carthage_verify.sh
         name: Carthage - Verify
@@ -75,19 +74,19 @@ targets:
       - path: PlacesFinder
       - path: PlacesFinderTests
     dependencies:
-      - framework: SharedTestComponents.framework
-        implicit: true
-      - framework: CoordiNodeTestComponents.framework
-        implicit: true
+      - carthage: CoordiNode
       - carthage: Kingfisher
-      - carthage: Nimble
-      - carthage: Quick
       - carthage: Reachability
       - carthage: SkeletonView
       - carthage: SnapKit
       - carthage: SwiftDux
       - carthage: SwiftDuxExtensions
+      - carthage: CoordiNodeTestComponents
+      - carthage: Nimble
+      - carthage: Quick
       - carthage: SwiftDuxTestComponents
+      - framework: SharedTestComponents.framework
+        implicit: true
       
   PlacesFinderIntegrationTests:
     type: bundle.unit-test

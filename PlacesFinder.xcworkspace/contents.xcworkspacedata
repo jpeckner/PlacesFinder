@@ -7,7 +7,4 @@
    <FileRef
       location = "group:Shared/Shared.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:CoordiNode/CoordiNode.xcodeproj">
-   </FileRef>
 </Workspace>
