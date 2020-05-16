@@ -39,8 +39,8 @@ extension AppColorings {
             disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
         searchInput: SearchInputViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemGray(alternative: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))),
-            iconTintColoring: FillColoring(color: .systemGray(alternative: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemGray),
+            iconTintColoring: FillColoring(color: .systemGray),
             textFieldViewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
             placeholderColoring: TextColoring(textColor: .placeholderText(alternative: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))),
             inputTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
@@ -66,7 +66,7 @@ extension AppColorings {
         tabBar: TabBarColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGray5(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
             selectedItemTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            unselectedItemTint: FillColoring(color: .systemGray(alternative: #colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1)))
+            unselectedItemTint: FillColoring(color: .systemGray)
         )
     )
 
