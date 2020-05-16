@@ -47,13 +47,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
     }
 
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
-        let presenter: SearchPresenterProtocol
-        if #available(iOS 13.0, *) {
-            presenter = SearchPresenterSUI(tabItemProperties: tabItemProperties)
-        } else {
-            presenter = SearchPresenter(tabItemProperties: tabItemProperties)
-        }
-
+        let presenter = SearchPresenterSUI(tabItemProperties: tabItemProperties)
         let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
                                           locationRequestHandler: serviceContainer.locationRequestHandler)
 
@@ -101,12 +95,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
-        let presenter: SettingsPresenterProtocol
-        if #available(iOS 13.0, *) {
-            presenter = SettingsPresenterSUI(tabItemProperties: tabItemProperties)
-        } else {
-            presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
-        }
+        let presenter = SettingsPresenterSUI(tabItemProperties: tabItemProperties)
 
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit

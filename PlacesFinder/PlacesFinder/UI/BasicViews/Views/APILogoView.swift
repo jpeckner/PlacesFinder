@@ -11,18 +11,11 @@ import UIKit
 
 class APILogoView: UIImageView {
 
-    static let widthToHeightRatio: CGFloat = #imageLiteral(resourceName: "Yelp_trademark_RGB").widthToHeightRatio
-    static let minWidth: CGFloat = 64.0
-
     init(viewColoring: ViewColoring) {
-        let apiLogo = viewColoring.apiLogo
+        super.init(image: APILogoConstants.logoImage)
 
-        super.init(image: apiLogo)
-
-        // Per https://www.yelp.com/brand#content - "We require that our logo be shown no smaller than...64dp in width
-        // for screens."
-        widthAnchor.constraint(greaterThanOrEqualToConstant: APILogoView.minWidth).isActive = true
-        alignProportions(with: apiLogo)
+        widthAnchor.constraint(greaterThanOrEqualToConstant: APILogoConstants.minWidth).isActive = true
+        alignProportions(with: APILogoConstants.logoImage)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct SearchMessageViewSUI: View {
 
     private let viewModel: SearchMessageViewModel

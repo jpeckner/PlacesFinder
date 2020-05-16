@@ -11,7 +11,27 @@ import Shared
 import SwiftUI
 import UIKit
 
-@available(iOS 13.0, *)
+protocol SearchPresenterProtocol: AutoMockable {
+    var rootViewController: UIViewController { get }
+
+    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
+                             titleViewModel: NavigationBarTitleViewModel,
+                             appSkin: AppSkin)
+
+    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
+                                           titleViewModel: NavigationBarTitleViewModel,
+                                           appSkin: AppSkin)
+
+    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
+                                  titleViewModel: NavigationBarTitleViewModel,
+                                  appSkin: AppSkin)
+
+    func loadSearchViews(_ viewModel: SearchLookupViewModel,
+                         detailsViewContext: SearchDetailsViewContext?,
+                         titleViewModel: NavigationBarTitleViewModel,
+                         appSkin: AppSkin)
+}
+
 class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProtocol {
 
     let searchContainerViewController: SearchContainerViewController
@@ -98,7 +118,6 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
 
 }
 
-@available(iOS 13.0, *)
 private extension SearchPresenterSUI {
 
     func existingPrimaryController<T: SearchPrimaryViewController>() -> T? {
@@ -107,7 +126,6 @@ private extension SearchPresenterSUI {
 
 }
 
-@available(iOS 13.0, *)
 private extension SearchPresenterSUI {
 
     typealias SearchNoInternetController = SearchPrimaryViewHostController<SearchNoInternetViewSUI>
@@ -157,6 +175,5 @@ private extension SearchPresenterSUI {
 
 }
 
-@available(iOS 13.0, *)
 private class SearchPrimaryViewHostController<TView: View>: UIHostingController<TView>,
                                                             SearchPrimaryViewControllerProtocol {}

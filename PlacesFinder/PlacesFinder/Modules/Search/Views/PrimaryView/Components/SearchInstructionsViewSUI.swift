@@ -9,7 +9,6 @@
 import Shared
 import SwiftUI
 
-@available(iOS 13.0.0, *)
 struct SearchInstructionsViewSUI: View {
 
     @ObservedObject var viewModel: ValueObservable<SearchInstructionsViewModel>
@@ -35,7 +34,6 @@ struct SearchInstructionsViewSUI: View {
 
 }
 
-@available(iOS 13.0.0, *)
 private struct ResultsSourceViewSUI: View {
 
     private enum Constants {
@@ -52,15 +50,11 @@ private struct ResultsSourceViewSUI: View {
                            textColoring: colorings.bodyTextColoring)
                 .padding(.top, 3.0)
 
-            Image(uiImage: apiLogo)
+            Image(uiImage: APILogoConstants.logoImage)
                 .resizable()
                 .frame(width: Constants.imageWidth,
-                       height: Constants.imageWidth / apiLogo.widthToHeightRatio)
+                       height: Constants.imageWidth / APILogoConstants.logoImage.widthToHeightRatio)
         }
-    }
-
-    private var apiLogo: UIImage {
-        return colorings.viewColoring.apiLogo
     }
 
 }

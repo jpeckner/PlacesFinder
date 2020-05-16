@@ -9,7 +9,6 @@
 import Shared
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct StaticInfoViewSUI: View {
 
     private enum Constants {
