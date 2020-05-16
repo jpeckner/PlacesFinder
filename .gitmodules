@@ -1,6 +1,3 @@
 [submodule "Shared"]
 	path = Shared
 	url = https://github.com/jpeckner/Shared
-[submodule "CoordiNode"]
-	path = CoordiNode
-	url = https://github.com/jpeckner/CoordiNode
