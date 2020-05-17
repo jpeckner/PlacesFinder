@@ -9,13 +9,6 @@
 import Swifter
 import XCTest
 
-private struct PlaceDetails {
-    let name: String
-    let address: String
-    let numReviews: Int
-    let phoneNumber: String
-}
-
 class PlacesFinderLinkTests: XCTestCase {
 
     private static let appDisplayName = "PlacesFinder"
@@ -30,22 +23,14 @@ class PlacesFinderLinkTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
         continueAfterFailure = false
         app = XCUIApplication()
         safariHandler = SafariHandler()
         springboardHandler = SpringboardHandler()
 
         server = HttpServer()
-        server["v3/businesses/search"] = { request in
-            guard request.method == "GET",
-                let term = (request.queryParams.first { $0.0 == "term" })?.1,
-                let requestType = FakeSearchRequest(rawValue: term)
-            else {
-                return HttpResponse.badRequest(nil)
-            }
-
-            return HttpResponse.ok(.text(requestType.response))
-        }
+        server.configureSearchEndpoints()
 
         installFreshApp()
     }
@@ -58,7 +43,7 @@ extension PlacesFinderLinkTests {
         launchApp(with: "search")
         enableLocationServices()
 
-        XCTAssertTrue(app.textFields["Search nearby"].exists)
+        XCTAssertTrue(app.searchFields["Search nearby"].exists)
     }
 
 }
@@ -66,7 +51,7 @@ extension PlacesFinderLinkTests {
 extension PlacesFinderLinkTests {
 
     func testSearchLinkLaunchesAppToSearchViewAndExecutesSearch() {
-        startServer()
+        server.start()
 
         launchApp(with: "search?keywords=Fast%20casual%20restaurants")
         enableLocationServices()
@@ -85,7 +70,7 @@ extension PlacesFinderLinkTests {
             )
         )
 
-        XCUIDevice.shared.press(XCUIDevice.Button.home)
+        XCUIDevice.shared.press(.home)
         launchApp(with: "search?keywords=Go%20Karts")
         verifySearch(
             keywords: "Go Karts",
@@ -107,23 +92,29 @@ extension PlacesFinderLinkTests {
                               placeNames: [String],
                               detailedPlace: PlaceDetails) {
         verifySearchResultsView(keywords: keywords,
-                                placeNames: placeNames,
-                                waitForResults: true)
+                                placeNames: placeNames)
         verifyDetailsView(detailedPlace)
 
         app.navigationBars[detailedPlace.name].buttons["Back"].tap()
         verifySearchResultsView(keywords: keywords,
-                                placeNames: placeNames,
-                                waitForResults: false)
+                                placeNames: placeNames)
     }
 
     private func verifySearchResultsView(keywords: String,
-                                         placeNames: [String],
-                                         waitForResults: Bool) {
+                                         placeNames: [String]) {
+        Thread.sleep(forTimeInterval: 2.0)
+
         XCTAssertTrue(app.navigationBars.staticTexts[PlacesFinderLinkTests.appDisplayName].exists)
-        XCTAssertTrue(app.textFields[keywords].exists)
-        if waitForResults { Thread.sleep(forTimeInterval: 2.0) }
-        placeNames.forEach { XCTAssertTrue(app.staticTexts[$0].exists) }
+
+        // Identifying the text inputted into UISearchBar appears to be broken in Xcode 11.X:
+        //   https://stackoverflow.com/questions/58907895/xcuitest-failed-to-find-matching-element
+        //   https://stackoverflow.com/questions/58682989/cannot-find-search-bar-in-ui-tests
+        // Comment this line back in once Apple has fixed this issue.
+//        XCTAssertTrue(app.searchFields["Search nearby"].textFields[keywords].exists)
+
+        placeNames.forEach {
+            XCTAssertTrue(app.staticTexts[$0].exists)
+        }
     }
 
     private func verifyDetailsView(_ placeDetails: PlaceDetails) {
@@ -152,29 +143,18 @@ extension PlacesFinderLinkTests {
 
 private extension PlacesFinderLinkTests {
 
-    func startServer() {
-        guard let portString = ProcessInfo().environment["TEST_PLACE_LOOKUP_PORT"] else {
-            XCTFail("TEST_PLACE_LOOKUP_PORT environment variable must be set")
-            return
-        }
-
-        guard let port = UInt16(portString) else {
-            XCTFail("Invalid UInt16 value: \(portString)")
-            return
-        }
-
-        do {
-            try server.start(port, forceIPv4: true)
-        } catch {
-            XCTFail("\(error)")
-        }
-    }
-
     func installFreshApp() {
-        try? springboardHandler.deleteApp(app, displayName: PlacesFinderLinkTests.appDisplayName)
+        if #available(iOS 13.4, *) {
+            app.resetAuthorizationStatus(for: .location)
+        } else {
+            springboardHandler.deleteApp(app,
+                                         displayName: PlacesFinderLinkTests.appDisplayName)
 
-        // Call app.launch() to install the latest build of the app, but then immediately terminate it, since we want to
-        // test that the app can be launched via deep link
+            // Note: when running more than one UI test in Xcode 11.X, iOS 12 devices are
+            // failing on the second test, because they're not re-installing the app after
+            // deleting it. This used to work correctly in Xcode 10.X.
+        }
+
         app.launch()
         app.terminate()
     }
@@ -189,8 +169,24 @@ private extension PlacesFinderLinkTests {
     }
 
     func enableLocationServices() {
-        Thread.sleep(forTimeInterval: 0.5)
-        springboardHandler.tapAlertButton(labeled: "Allow")
+        Thread.sleep(forTimeInterval: 1.0)
+        springboardHandler.tapAlertButton(labeled: allowButtonText)
+        Thread.sleep(forTimeInterval: 1.0)
     }
 
+    var allowButtonText: String {
+        if #available(iOS 13.0, *) {
+            return "Allow While Using App"
+        } else {
+            return "Allow"
+        }
+    }
+
+}
+
+private struct PlaceDetails {
+    let name: String
+    let address: String
+    let numReviews: Int
+    let phoneNumber: String
 }

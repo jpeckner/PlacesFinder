@@ -9,10 +9,6 @@
 import CoreGraphics
 import XCTest
 
-enum SpringboardHandlerError: Error {
-    case appNotFound(displayName: String)
-}
-
 class SpringboardHandler {
 
     private let springboardApp: XCUIApplication
@@ -33,16 +29,42 @@ class SpringboardHandler {
         alertElement.buttons[label].tap()
     }
 
-    // Source: https://stackoverflow.com/a/36168101/1342984
     func deleteApp(_ application: XCUIApplication,
-                   displayName: String) throws {
+                   displayName: String) {
         application.terminate()
 
         let icon = springboardApp.icons[displayName]
         guard icon.exists else {
-            throw SpringboardHandlerError.appNotFound(displayName: displayName)
+            return
         }
 
+        if #available(iOS 13.0, *) {
+            deleteiOS13App(displayName)
+        } else {
+            deletePreiOS13App(icon,
+                              displayName: displayName)
+        }
+    }
+
+    // Source: https://stackoverflow.com/a/58696197/1342984
+    @available(iOS 13.0, *)
+    private func deleteiOS13App(_ displayName: String) {
+        Thread.sleep(forTimeInterval: 1.0)
+        let appIcon = springboardApp.icons.matching(identifier: displayName).firstMatch
+        appIcon.press(forDuration: 1.3)
+        Thread.sleep(forTimeInterval: 1.0)
+
+        springboardApp.buttons["Delete App"].tap()
+
+        let deleteButton = springboardApp.alerts.buttons["Delete"].firstMatch
+        if deleteButton.waitForExistence(timeout: 5) {
+            deleteButton.tap()
+        }
+    }
+
+    // Source: https://stackoverflow.com/a/36168101/1342984
+    private func deletePreiOS13App(_ icon: XCUIElement,
+                                   displayName: String) {
         let iconFrame = icon.frame
         let springboardFrame = springboardApp.frame
         icon.press(forDuration: 1.3)
