@@ -5,7 +5,6 @@ lane :ci_tests do
   regenerate_all_artifacts(baseURL, "None")
 
   shared_ci
-  coordinode_ci
   placesfinder_ci
 end
 
@@ -15,14 +14,6 @@ private_lane :shared_ci do
   run_tests(
     project: SHARED_PROJECT_PATH,
     scheme: SHARED_RELEASE_SCHEME,
-    clean: true
-  )
-end
-
-private_lane :coordinode_ci do
-  run_tests(
-    project: COORDINODE_PROJECT_PATH,
-    scheme: COORDINODE_RELEASE_SCHEME,
     clean: true
   )
 end
