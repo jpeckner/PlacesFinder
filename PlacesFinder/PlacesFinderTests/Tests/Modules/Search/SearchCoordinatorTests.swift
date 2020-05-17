@@ -50,7 +50,7 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchAction.requestInitialPage
 
             mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
-            mockSearchBackgroundViewModelBuilder.buildViewModelReturnValue = SearchBackgroundViewModel.stubValue()
+            mockSearchBackgroundViewModelBuilder.buildViewModelAppCopyContentReturnValue = SearchBackgroundViewModel.stubValue()
 
             let lookupViewModel = SearchLookupViewModel(searchInputViewModel: .nonDispatching(content: .stubValue()),
                                                         child: .progress)

@@ -43,10 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        window.makeKeyAndVisible()
-        appCoordinator.start()
+        // Defer this so that appCoordinator first has a chance to dispatch the link payload (if any) to the app's state
+        defer {
+            appCoordinator.start()
+        }
 
-        guard let url = launchOptions?[.url] as? URL else { return true }
+        window.makeKeyAndVisible()
+
+        guard let url = launchOptions?[.url] as? URL else {
+            return true
+        }
 
         return appCoordinator.handleURL(url)
     }

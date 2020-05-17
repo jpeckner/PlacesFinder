@@ -64,6 +64,7 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
     }
 
     private func startListeners() {
+        listenerContainer.locationAuthListener.start()
         AssertionHandler.assertIfErrorThrown { try listenerContainer.reachabilityListener?.start() }
         listenerContainer.userDefaultsListener.start()
     }
