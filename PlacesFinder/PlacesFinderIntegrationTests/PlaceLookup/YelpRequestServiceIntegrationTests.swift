@@ -1,18 +1,17 @@
 //
-//  PlaceLookupServiceIntegrationTests.swift
+//  YelpRequestServiceIntegrationTests.swift
 //  SharedIntegrationTests
 //
 //  Created by Justin Peckner.
 //  Copyright © 2018 Justin Peckner. All rights reserved.
 //
 
-import Foundation
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
 
-class PlaceLookupServiceIntegrationTests: QuickSpec {
+class YelpRequestServiceIntegrationTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -35,7 +34,7 @@ class PlaceLookupServiceIntegrationTests: QuickSpec {
                                        radius: .init(value: 400, unit: .meters),
                                        sorting: .distance)
 
-        var placeLookupService: PlaceLookupService!
+        var placeLookupService: YelpRequestService!
         var nextRequestToken: PlaceLookupPageRequestToken!
 
         func setupTest(apiKey: String) {
@@ -49,7 +48,7 @@ class PlaceLookupServiceIntegrationTests: QuickSpec {
             do {
                 let config = try YelpRequestConfig(apiKey: apiKey,
                                                    baseURL: baseURL)
-                placeLookupService = PlaceLookupService(apiOption: .yelp(config),
+                placeLookupService = YelpRequestService(config: config,
                                                         decodableService: decodableService)
                 nextRequestToken = try placeLookupService.buildInitialPageRequestToken(params)
             } catch {
@@ -98,12 +97,12 @@ class PlaceLookupServiceIntegrationTests: QuickSpec {
 
                 it("returns the requested number of items per page for the first n-1 pages") {
                     for page in pagesReturned.dropLast() {
-                        expect(page.entities.count) == PlaceLookupService.maxResultsPerPage
+                        expect(page.entities.count) == YelpRequestService.maxResultsPerPage
                     }
                 }
 
                 it("returns up to the requested number of items per page for the last page") {
-                    expect(pagesReturned.last?.entities.count) <= PlaceLookupService.maxResultsPerPage
+                    expect(pagesReturned.last?.entities.count) <= YelpRequestService.maxResultsPerPage
                 }
 
             }

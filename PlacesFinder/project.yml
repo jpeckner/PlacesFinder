@@ -92,12 +92,13 @@ targets:
     info:
       path: PlacesFinderIntegrationTests/Info.plist
     sources:
-      - path: PlacesFinderIntegrationTests
       - path: PlacesFinder
+      - path: PlacesFinderIntegrationTests
     dependencies:
-      - target: PlacesFinder
       - carthage: Nimble
       - carthage: Quick
+      - framework: SharedTestComponents.framework
+        implicit: true
       
   PlacesFinderUITests:
     type: bundle.ui-testing

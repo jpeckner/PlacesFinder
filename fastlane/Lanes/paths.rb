@@ -2,9 +2,6 @@
 SHARED_ROOT = "Shared"
 SHARED_PROJECT_PATH = SHARED_ROOT + "/Shared.xcodeproj"
 
-COORDINODE_ROOT = "CoordiNode"
-COORDINODE_PROJECT_PATH = COORDINODE_ROOT + "/CoordiNode.xcodeproj"
-
 PLACESFINDER_ROOT = "PlacesFinder"
 PLACESFINDER_WORKSPACE = "PlacesFinder.xcworkspace"
 PLACESFINDER_PROJECT_PATH = PLACESFINDER_ROOT + "/PlacesFinder.xcodeproj"
