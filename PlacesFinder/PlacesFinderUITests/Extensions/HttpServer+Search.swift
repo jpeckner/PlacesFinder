@@ -1,5 +1,5 @@
 //
-//  HTTPServer+Search.swift
+//  HttpServer+Search.swift
 //  PlacesFinderUITests
 //
 //  Created by Justin Peckner.
