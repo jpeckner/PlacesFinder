@@ -58,7 +58,7 @@ class AppRoutingHandlerTests: QuickSpec {
             context("else when the state's destinationNodeBox value is not a descendent of stubRouter") {
                 beforeEach {
                     let routerState = RouterState<AppLinkType>(
-                        loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox, payload: nil),
+                        loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox, linkType: nil),
                         currentNode: RootCoordinatorMock.nodeBox
                     )
                     let stubState = AppState.stubValue(routerState: routerState)
@@ -76,7 +76,7 @@ class AppRoutingHandlerTests: QuickSpec {
             context("else when the state's destinationNodeBox value is a descendent of stubRouter") {
                 beforeEach {
                     let routerState = RouterState<AppLinkType>(
-                        loadState: .navigatingToDestination(SecondGrandchildCoordinatorMock.destinationNodeBox, payload: nil),
+                        loadState: .navigatingToDestination(SecondGrandchildCoordinatorMock.destinationNodeBox, linkType: nil),
                         currentNode: RootCoordinatorMock.nodeBox
                     )
                     let stubState = AppState.stubValue(routerState: routerState)

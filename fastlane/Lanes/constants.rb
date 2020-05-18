@@ -1,6 +1,4 @@
 
-COORDINODE_RELEASE_SCHEME = "CoordiNode-Release"
-
 SHARED_RELEASE_SCHEME = "Shared-Release"
 
 PLACESFINDER_APP_ID = "com.justinpeckner.PlacesFinder"

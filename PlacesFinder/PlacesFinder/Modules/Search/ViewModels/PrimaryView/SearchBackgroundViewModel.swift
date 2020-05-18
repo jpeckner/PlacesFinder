@@ -17,7 +17,8 @@ struct SearchBackgroundViewModel {
 // MARK: SearchBackgroundViewModelBuilder
 
 protocol SearchBackgroundViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ appCopyContent: AppCopyContent) -> SearchBackgroundViewModel
+    func buildViewModel(_ keywords: NonEmptyString?,
+                        appCopyContent: AppCopyContent) -> SearchBackgroundViewModel
 }
 
 class SearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol {
@@ -31,10 +32,13 @@ class SearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
         self.instructionsViewModelBuilder = instructionsViewModelBuilder
     }
 
-    func buildViewModel(_ appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
-        let contentViewModel = contentViewModelBuilder.buildViewModel(keywords: nil,
-                                                                      isEditing: false,
-                                                                      copyContent: appCopyContent.searchInput)
+    func buildViewModel(_ keywords: NonEmptyString?,
+                        appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
+        let contentViewModel = contentViewModelBuilder.buildViewModel(
+            keywords: keywords,
+            isEditing: false,
+            copyContent: appCopyContent.searchInput
+        )
 
         let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
             copyContent: appCopyContent.searchInstructions

@@ -14,7 +14,7 @@ struct RouterState<TLinkType: RouterLinkType>: Equatable {
     enum LoadState: Equatable {
         case idle
         case payloadRequested(TLinkType)
-        case navigatingToDestination(DestinationNodeBox, payload: TLinkType?)
+        case navigatingToDestination(DestinationNodeBox, linkType: TLinkType?)
         case waitingForPayloadToBeCleared(TLinkType)
     }
 
@@ -52,8 +52,8 @@ enum RouterReducer<TLinkType: RouterLinkType> {
         case let .setCurrentCoordinator(updatedCurrentNode):
             return RouterState(loadState: loadStateAfterUpdating(updatedCurrentNode, currentState: currentState),
                                currentNode: updatedCurrentNode)
-        case let .setDestinationCoordinator(destinationNodeBox, payload):
-            return RouterState(loadState: .navigatingToDestination(destinationNodeBox, payload: payload),
+        case let .setDestinationCoordinator(destinationNodeBox, linkType):
+            return RouterState(loadState: .navigatingToDestination(destinationNodeBox, linkType: linkType),
                                currentNode: currentState.currentNode)
         case let .requestLink(linkType):
             let isLinkForCurrentNode = currentState.currentNode == linkType.destinationNodeBox.storedType.nodeBox
@@ -76,16 +76,16 @@ enum RouterReducer<TLinkType: RouterLinkType> {
              .payloadRequested,
              .waitingForPayloadToBeCleared:
             return currentState.loadState
-        case let .navigatingToDestination(destinationNodeBox, payload):
+        case let .navigatingToDestination(destinationNodeBox, linkType):
             guard destinationNodeBox.storedType.nodeBox == updatedCurrentNode else {
                 return currentState.loadState
             }
 
-            guard let payload = payload else {
+            guard let linkType = linkType else {
                 return .idle
             }
 
-            return .waitingForPayloadToBeCleared(payload)
+            return .waitingForPayloadToBeCleared(linkType)
         }
     }
 

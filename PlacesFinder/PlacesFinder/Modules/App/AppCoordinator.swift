@@ -81,7 +81,7 @@ extension AppCoordinator {
     func handleURL(_ url: URL) -> Bool {
         guard let appLinkType = payloadBuilder.buildPayload(url) else { return false }
 
-        // Don't dispatch .setDestinationCoordinator here; that needs to be done by setDestinationForLinkType() below.
+        // Don't dispatch .setDestinationCoordinator here, but rather in dispatchDestinationForLinkType() below.
         // Otherwise, we could switch to another child coordinator before LaunchCoordinator has finished app launch.
         requestLinkTypeAction(appLinkType).map(store.dispatch)
 

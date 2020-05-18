@@ -21,9 +21,10 @@ class SafariHandler {
     }
 
     func openLink(_ link: String) {
-        safariApp.buttons["URL"].tap()
+        safariApp.textFields["Search or enter website name"].tap()
         safariApp.typeText(link)
-        safariApp.typeText("\n")
+        safariApp.keyboards.buttons["Go"].tap()
+
         safariApp.buttons["Open"].tap()
     }
 
