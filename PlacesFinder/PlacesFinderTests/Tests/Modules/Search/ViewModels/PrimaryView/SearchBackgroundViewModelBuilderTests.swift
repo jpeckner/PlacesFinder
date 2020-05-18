@@ -8,6 +8,8 @@
 
 import Nimble
 import Quick
+import Shared
+import SharedTestComponents
 import SwiftDux
 
 class SearchBackgroundViewModelBuilderTests: QuickSpec {
@@ -16,6 +18,7 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
+        let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubContentViewModel = SearchInputContentViewModel.stubValue()
         let stubInstructionsViewModel = SearchInstructionsViewModel.stubValue()
@@ -40,12 +43,13 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(stubAppCopyContent)
+                result = sut.buildViewModel(stubKeywords,
+                                            appCopyContent: stubAppCopyContent)
             }
 
             it("calls mockContentViewModelBuilder with expected method and args") {
                 let receivedArgs = mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReceivedArguments
-                expect(receivedArgs?.keywords).to(beNil())
+                expect(receivedArgs?.keywords) == stubKeywords
                 expect(receivedArgs?.isEditing) == false
                 expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
             }

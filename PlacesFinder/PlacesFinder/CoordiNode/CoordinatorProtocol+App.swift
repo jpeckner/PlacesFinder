@@ -27,16 +27,40 @@ extension CoordinatorProtocol {
 
 extension DestinationCoordinatorProtocol {
 
+    func currentNavigatingToDestinationPayload<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
+                                                                          state: AppState) -> T? {
+        switch state.routerState.loadState {
+        case let .navigatingToDestination(_, linkType):
+            return linkType?.value as? T
+        case .idle,
+             .payloadRequested,
+             .waitingForPayloadToBeCleared:
+            return nil
+        }
+    }
+
+    func currentPayloadToBeCleared<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
+                                                              state: AppState) -> T? {
+        switch state.routerState.loadState {
+        case let .waitingForPayloadToBeCleared(linkType):
+            return linkType.value as? T
+        case .idle,
+             .navigatingToDestination,
+             .payloadRequested:
+            return nil
+        }
+    }
+
     @discardableResult
-    func clearPayloadTypeIfPresent<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
-                                                              state: AppState,
-                                                              store: DispatchingStoreProtocol) -> T? {
-        guard case let .waitingForPayloadToBeCleared(payload) = state.routerState.loadState,
-            let payloadAsT = payload.value as? T
-        else { return nil }
+    func clearPayloadTypeIfPresent<TPayload: AppLinkPayloadProtocol>(_ payloadType: TPayload.Type,
+                                                                     state: AppState,
+                                                                     store: DispatchingStoreProtocol) -> TPayload? {
+        guard let payload = currentPayloadToBeCleared(payloadType, state: state) else {
+            return nil
+        }
 
         store.dispatch(AppRouterAction.clearLink)
-        return payloadAsT
+        return payload
     }
 
 }

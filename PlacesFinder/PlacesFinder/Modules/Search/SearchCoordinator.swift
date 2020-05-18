@@ -98,7 +98,10 @@ private extension SearchCoordinator {
         case let .search(authType):
             switch authType.value {
             case .locationServicesNotDetermined:
-                let viewModel = backgroundViewModelBuilder.buildViewModel(appCopyContent)
+                let searchLinkPayload = currentNavigatingToDestinationPayload(SearchLinkPayload.self,
+                                                                              state: state)
+                let viewModel = backgroundViewModelBuilder.buildViewModel(searchLinkPayload?.keywords,
+                                                                          appCopyContent: appCopyContent)
                 presenter.loadSearchBackgroundView(viewModel,
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
@@ -136,22 +139,17 @@ private extension SearchCoordinator {
                 // Payload (if any for this coordinator) will be processed and cleared on the next state update
                 authBlock()
             case let .locationServicesEnabled(requestBlock):
-                guard let keywords = clearPayloadTypeIfPresent(state)?.keywords else {
-                    clearAllAssociatedLinkTypes(state, store: store)
-                    return
-                }
+                let searchLinkPayload = currentPayloadToBeCleared(SearchLinkPayload.self,
+                                                                  state: state)
+                clearAllAssociatedLinkTypes(state, store: store)
 
-                let params = SearchParams(keywords: keywords)
-                submitInitalSearchRequest(params,
-                                          locationUpdateRequestBlock: requestBlock)
+                searchLinkPayload.map {
+                    let params = SearchParams(keywords: $0.keywords)
+                    submitInitalSearchRequest(params,
+                                              locationUpdateRequestBlock: requestBlock)
+                }
             }
         }
-    }
-
-    private func clearPayloadTypeIfPresent(_ state: AppState) -> SearchLinkPayload? {
-        return clearPayloadTypeIfPresent(SearchLinkPayload.self,
-                                         state: state,
-                                         store: store)
     }
 
 }

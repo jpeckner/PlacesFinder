@@ -23,10 +23,15 @@ extension RootCoordinatorProtocol {
     // response to link payloads being requested. Otherwise, any coordinator could effectively steer the app to any
     // other, which would negate the purpose of CoordiNode's routing system.
     func setLinkDestinationAction(_ state: AppState) -> Action? {
-        guard case let .payloadRequested(linkType) = state.routerState.loadState else { return nil }
-
-        return AppRouterAction.setDestinationCoordinator(linkType.destinationNodeBox,
-                                                         payload: linkType)
+        switch state.routerState.loadState {
+        case let .payloadRequested(linkType):
+            return AppRouterAction.setDestinationCoordinator(linkType.destinationNodeBox,
+                                                             payload: linkType)
+        case .idle,
+             .navigatingToDestination,
+             .waitingForPayloadToBeCleared:
+            return nil
+        }
     }
 
 }

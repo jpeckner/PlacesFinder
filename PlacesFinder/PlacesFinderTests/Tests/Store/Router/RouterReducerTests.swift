@@ -21,7 +21,7 @@ class RouterReducerTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
-        let stubPayload = StubLinkType()
+        let stubLinkType = StubLinkType()
 
         describe("reduce") {
 
@@ -61,7 +61,7 @@ class RouterReducerTests: QuickSpec {
                 context("and the loadState before reducing is .payloadRequested") {
                     beforeEach {
                         let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
-                        let currentState = RouterState<StubLinkType>(loadState: .payloadRequested(stubPayload),
+                        let currentState = RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
                                                                      currentNode: StubNode.nodeBox)
 
                         result = RouterReducer.reduce(action: action,
@@ -69,7 +69,7 @@ class RouterReducerTests: QuickSpec {
                     }
 
                     it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
-                        expect(result) == RouterState<StubLinkType>(loadState: .payloadRequested(stubPayload),
+                        expect(result) == RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
                                                                     currentNode: OtherStubNode.nodeBox)
                     }
                 }
@@ -78,7 +78,7 @@ class RouterReducerTests: QuickSpec {
                     beforeEach {
                         let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
                         let currentState = RouterState<StubLinkType>(
-                            loadState: .waitingForPayloadToBeCleared(stubPayload),
+                            loadState: .waitingForPayloadToBeCleared(stubLinkType),
                             currentNode: StubNode.nodeBox
                         )
 
@@ -88,7 +88,7 @@ class RouterReducerTests: QuickSpec {
 
                     it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
                         expect(result) == RouterState<StubLinkType>(
-                            loadState: .waitingForPayloadToBeCleared(stubPayload),
+                            loadState: .waitingForPayloadToBeCleared(stubLinkType),
                             currentNode: OtherStubNode.nodeBox
                         )
                     }
@@ -101,7 +101,7 @@ class RouterReducerTests: QuickSpec {
                             let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
                             let currentState = RouterState<StubLinkType>(
                                 loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    payload: stubPayload),
+                                                                    linkType: stubLinkType),
                                 currentNode: StubNode.nodeBox
                             )
 
@@ -112,7 +112,7 @@ class RouterReducerTests: QuickSpec {
                         it("returns a state with .setCurrentCoordinator's value, and otherwise unchanged") {
                             expect(result) == RouterState<StubLinkType>(
                                 loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    payload: stubPayload),
+                                                                    linkType: stubLinkType),
                                 currentNode: OtherStubNode.nodeBox
                             )
                         }
@@ -123,7 +123,7 @@ class RouterReducerTests: QuickSpec {
                             let action = RouterAction<StubLinkType>.setCurrentCoordinator(StubDestinationNode.nodeBox)
                             let currentState = RouterState<StubLinkType>(
                                 loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    payload: stubPayload),
+                                                                    linkType: stubLinkType),
                                 currentNode: StubNode.nodeBox
                             )
 
@@ -133,7 +133,7 @@ class RouterReducerTests: QuickSpec {
 
                         it("returns a state with .setCurrentCoordinator's value, and loadState == .waitingForPayloadToBeCleared") {
                             expect(result) == RouterState<StubLinkType>(
-                                loadState: .waitingForPayloadToBeCleared(stubPayload),
+                                loadState: .waitingForPayloadToBeCleared(stubLinkType),
                                 currentNode: StubDestinationNode.nodeBox
                             )
                         }
@@ -144,7 +144,7 @@ class RouterReducerTests: QuickSpec {
                             let action = RouterAction<StubLinkType>.setCurrentCoordinator(StubDestinationNode.nodeBox)
                             let currentState = RouterState<StubLinkType>(
                                 loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    payload: nil),
+                                                                    linkType: nil),
                                 currentNode: StubNode.nodeBox
                             )
 
@@ -168,7 +168,7 @@ class RouterReducerTests: QuickSpec {
 
                 beforeEach {
                     let action = RouterAction.setDestinationCoordinator(StubDestinationNode.destinationNodeBox,
-                                                                        payload: stubPayload)
+                                                                        payload: stubLinkType)
                     let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
 
                     result = RouterReducer.reduce(action: action,
@@ -178,7 +178,7 @@ class RouterReducerTests: QuickSpec {
                 it("returns a state with loadState == .navigatingToDestination, and otherwise unchanged") {
                     expect(result) == RouterState<StubLinkType>(
                         loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                            payload: stubPayload),
+                                                            linkType: stubLinkType),
                         currentNode: StubNode.nodeBox
                     )
                 }
@@ -188,12 +188,12 @@ class RouterReducerTests: QuickSpec {
 
                 beforeEach {
                     let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
-                    result = RouterReducer.reduce(action: RouterAction.requestLink(stubPayload),
+                    result = RouterReducer.reduce(action: RouterAction.requestLink(stubLinkType),
                                                   currentState: currentState)
                 }
 
                 it("returns a state with loadState == .payloadRequested, and otherwise unchanged") {
-                    expect(result) == RouterState<StubLinkType>(loadState: .payloadRequested(stubPayload),
+                    expect(result) == RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
                                                                 currentNode: StubNode.nodeBox)
                 }
 
