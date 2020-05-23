@@ -16,8 +16,8 @@ struct SearchLocationDisabledViewSUI: View {
 
     init(viewModel: SearchLocationDisabledViewModel,
          colorings: SearchCTAViewColorings) {
-        self.viewModel = ValueObservable(value: viewModel)
-        self.colorings = ValueObservable(value: colorings)
+        self.viewModel = ValueObservable(viewModel)
+        self.colorings = ValueObservable(colorings)
     }
 
     var body: some View {
