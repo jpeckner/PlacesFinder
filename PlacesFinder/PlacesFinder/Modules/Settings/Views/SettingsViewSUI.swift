@@ -16,8 +16,8 @@ struct SettingsViewSUI: View {
 
     init(viewModel: SettingsViewModel,
          colorings: SettingsViewColorings) {
-        self.viewModel = ValueObservable(value: viewModel)
-        self.colorings = ValueObservable(value: colorings)
+        self.viewModel = ValueObservable(viewModel)
+        self.colorings = ValueObservable(colorings)
     }
 
     var body: some View {
