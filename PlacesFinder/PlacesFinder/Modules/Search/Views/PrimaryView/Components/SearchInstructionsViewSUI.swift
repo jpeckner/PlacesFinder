@@ -11,8 +11,8 @@ import SwiftUI
 
 struct SearchInstructionsViewSUI: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchInstructionsViewModel>
-    @ObservedObject var colorings: ValueObservable<AppStandardColorings>
+    @ObservedObject private var viewModel: ValueObservable<SearchInstructionsViewModel>
+    @ObservedObject private var colorings: ValueObservable<AppStandardColorings>
 
     init(viewModel: SearchInstructionsViewModel,
          colorings: AppStandardColorings) {
@@ -30,6 +30,16 @@ struct SearchInstructionsViewSUI: View {
                                  colorings: colorings.value)
                 .padding()
         }
+    }
+
+}
+
+extension SearchInstructionsViewSUI {
+
+    func configure(_ viewModel: SearchInstructionsViewModel,
+                   colorings: AppStandardColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
     }
 
 }

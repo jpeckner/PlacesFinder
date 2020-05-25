@@ -11,8 +11,8 @@ import SwiftUI
 
 struct SettingsViewSUI: View {
 
-    @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
-    @ObservedObject var colorings: ValueObservable<SettingsViewColorings>
+    @ObservedObject private var viewModel: ValueObservable<SettingsViewModel>
+    @ObservedObject private var colorings: ValueObservable<SettingsViewColorings>
 
     init(viewModel: SettingsViewModel,
          colorings: SettingsViewColorings) {
