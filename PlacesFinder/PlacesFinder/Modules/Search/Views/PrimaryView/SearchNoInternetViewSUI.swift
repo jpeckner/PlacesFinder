@@ -11,8 +11,8 @@ import SwiftUI
 
 struct SearchNoInternetViewSUI: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchNoInternetViewModel>
-    @ObservedObject var colorings: ValueObservable<AppStandardColorings>
+    @ObservedObject private var viewModel: ValueObservable<SearchNoInternetViewModel>
+    @ObservedObject private var colorings: ValueObservable<AppStandardColorings>
 
     init(viewModel: SearchNoInternetViewModel,
          colorings: AppStandardColorings) {
@@ -23,6 +23,16 @@ struct SearchNoInternetViewSUI: View {
     var body: some View {
         SearchMessageViewSUI(viewModel: viewModel.value.messageViewModel,
                              colorings: colorings.value)
+    }
+
+}
+
+extension SearchNoInternetViewSUI {
+
+    func configure(_ viewModel: SearchNoInternetViewModel,
+                   colorings: AppStandardColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
     }
 
 }

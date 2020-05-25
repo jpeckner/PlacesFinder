@@ -60,8 +60,8 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
             return
         }
 
-        existingController.rootView.viewModel.value = viewModel
-        existingController.rootView.colorings.value = appSkin.colorings.standard
+        existingController.rootView.configure(viewModel,
+                                              colorings: appSkin.colorings.standard)
     }
 
     func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
@@ -78,8 +78,8 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
             return
         }
 
-        existingController.rootView.viewModel.value = viewModel
-        existingController.rootView.colorings.value = appSkin.colorings.searchCTA
+        existingController.rootView.configure(viewModel,
+                                              colorings: appSkin.colorings.searchCTA)
     }
 
     func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
@@ -96,8 +96,8 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
             return
         }
 
-        existingController.rootView.viewModel.value = viewModel.instructionsViewModel
-        existingController.rootView.colorings.value = appSkin.colorings.standard
+        existingController.rootView.configure(viewModel.instructionsViewModel,
+                                              colorings: appSkin.colorings.standard)
     }
 
     func loadSearchViews(_ viewModel: SearchLookupViewModel,

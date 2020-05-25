@@ -11,8 +11,8 @@ import SwiftUI
 
 struct SearchLocationDisabledViewSUI: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchLocationDisabledViewModel>
-    @ObservedObject var colorings: ValueObservable<SearchCTAViewColorings>
+    @ObservedObject private var viewModel: ValueObservable<SearchLocationDisabledViewModel>
+    @ObservedObject private var colorings: ValueObservable<SearchCTAViewColorings>
 
     init(viewModel: SearchLocationDisabledViewModel,
          colorings: SearchCTAViewColorings) {
@@ -23,6 +23,16 @@ struct SearchLocationDisabledViewSUI: View {
     var body: some View {
         SearchCTAViewSUI(viewModel: viewModel.value.ctaViewModel,
                          colorings: colorings.value)
+    }
+
+}
+
+extension SearchLocationDisabledViewSUI {
+
+    func configure(_ viewModel: SearchLocationDisabledViewModel,
+                   colorings: SearchCTAViewColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
     }
 
 }
