@@ -29,8 +29,12 @@ class DownloadedImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureImage(_ url: URL?) {
-        downloadTask = kf.setImage(with: url,
+}
+
+extension DownloadedImageView {
+
+    func configure(_ viewModel: DownloadedImageViewModel) {
+        downloadTask = kf.setImage(with: viewModel.url,
                                    placeholder: placeholderImage)
     }
 

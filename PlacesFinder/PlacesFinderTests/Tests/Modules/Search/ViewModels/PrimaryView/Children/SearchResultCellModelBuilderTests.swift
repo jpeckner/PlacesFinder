@@ -55,7 +55,7 @@ class SearchResultCellModelBuilderTests: QuickSpec {
             }
 
             it("...and with the model's image") {
-                expect(result.image) == stubEntityModel.image
+                expect(result.image.url) == stubEntityModel.image
             }
         }
 
