@@ -11,10 +11,6 @@ import SwiftUI
 
 struct StaticInfoViewSUI: View {
 
-    private enum Constants {
-        static let imageHeight: CGFloat = 240.0
-    }
-
     private let viewModel: StaticInfoViewModel
     private let colorings: AppStandardColorings
 
@@ -28,15 +24,16 @@ struct StaticInfoViewSUI: View {
         VStack {
             Image(viewModel.imageName)
                 .resizable()
-                .frame(height: Constants.imageHeight,
-                       alignment: .center)
                 .aspectRatio(contentMode: .fit)
+                .frame(idealHeight: 240.0,
+                       alignment: .center)
 
             StyledLabelSUI(text: viewModel.title,
                            styleClass: .title,
                            textColoring: colorings.titleTextColoring)
                 .lineLimit(1)
                 .allowsTightening(true)
+                .minimumScaleFactor(0.5)
 
             StyledLabelSUI(text: viewModel.description,
                            styleClass: .body,
