@@ -52,7 +52,10 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
             stubResultsViewModel = .stubValue(
                 store: mockStore,
-                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(store: mockStore))
+                resultViewModels: NonEmptyArray(with:
+                    SearchResultViewModel.stubValue(id: .stubValue("stubResultID_0"),
+                                                    store: mockStore)
+                )
             )
             mockResultsViewModelBuilder = SearchResultsViewModelBuilderProtocolMock()
             mockResultsViewModelBuilder

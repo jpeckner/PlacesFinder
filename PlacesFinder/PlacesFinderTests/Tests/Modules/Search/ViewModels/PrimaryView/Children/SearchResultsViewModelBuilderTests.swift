@@ -40,7 +40,8 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
             mockResultViewModelBuilder.buildViewModelResultsCopyContentClosure = { entityModel, _ in
                 let cellModel = SearchResultCellModel.stubValue(name: entityModel.name)
-                return SearchResultViewModel.stubValue(store: mockStore,
+                return SearchResultViewModel.stubValue(id: entityModel.id,
+                                                       store: mockStore,
                                                        cellModel: cellModel,
                                                        detailEntityAction: StubAction.genericAction)
             }

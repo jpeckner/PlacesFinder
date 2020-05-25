@@ -14,6 +14,10 @@ import Shared
 import SwiftDux
 import UIKit
 
+// TODO: run UI tests after switch to SwiftUI
+// TODO: delete dead UIKit code
+// TODO: remove "SUI" prefixes from types?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

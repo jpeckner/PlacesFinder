@@ -42,6 +42,7 @@ class SearchResultsViewModelTests: QuickSpec {
 
             stubResultViewModels = NonEmptyArray([0, 1, 2].map { idx in
                 SearchResultViewModel.stubValue(
+                    id: .stubValue("stubID_\(idx)"),
                     store: mockStore,
                     cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
                     detailEntityAction: StubViewModelAction.detailEntity("\(idx)")
@@ -56,13 +57,16 @@ class SearchResultsViewModelTests: QuickSpec {
                 expect(result.cellViewModelCount) == 3
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
-                    SearchResultViewModel.stubValue(store: mockStore)
+                    SearchResultViewModel.stubValue(id: .stubValue("stubID_3"),
+                                                    store: mockStore)
                 ]))
                 expect(result.cellViewModelCount) == 4
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
-                    SearchResultViewModel.stubValue(store: mockStore),
-                    SearchResultViewModel.stubValue(store: mockStore)
+                    SearchResultViewModel.stubValue(id: .stubValue("stubID_4"),
+                                                    store: mockStore),
+                    SearchResultViewModel.stubValue(id: .stubValue("stubID_5"),
+                                                    store: mockStore)
                 ]))
                 expect(result.cellViewModelCount) == 5
             }

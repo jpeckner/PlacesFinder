@@ -6,22 +6,34 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
+import Shared
 import SwiftUI
 
 struct SearchMessageViewSUI: View {
 
-    private let viewModel: SearchMessageViewModel
-    private let colorings: AppStandardColorings
+    @ObservedObject private var viewModel: ValueObservable<SearchMessageViewModel>
+    @ObservedObject private var colorings: ValueObservable<AppStandardColorings>
 
     init(viewModel: SearchMessageViewModel,
          colorings: AppStandardColorings) {
-        self.viewModel = viewModel
-        self.colorings = colorings
+        self.viewModel = ValueObservable(viewModel)
+        self.colorings = ValueObservable(colorings)
     }
 
     var body: some View {
-        StaticInfoViewSUI(viewModel: viewModel.infoViewModel, colorings: colorings)
+        StaticInfoViewSUI(viewModel: viewModel.value.infoViewModel,
+                          colorings: colorings.value)
             .padding()
+    }
+
+}
+
+extension SearchMessageViewSUI {
+
+    func configure(_ viewModel: SearchMessageViewModel,
+                   colorings: AppStandardColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
     }
 
 }

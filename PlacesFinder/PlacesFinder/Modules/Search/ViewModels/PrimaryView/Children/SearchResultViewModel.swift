@@ -9,14 +9,17 @@
 import Shared
 import SwiftDux
 
-struct SearchResultViewModel: Equatable {
+struct SearchResultViewModel: Equatable, Identifiable {
+    let id: NonEmptyString
     let cellModel: SearchResultCellModel
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let detailEntityAction: IgnoredEquatable<Action>
 
-    init(cellModel: SearchResultCellModel,
+    init(id: NonEmptyString,
+         cellModel: SearchResultCellModel,
          store: DispatchingStoreProtocol,
          detailEntityAction: Action) {
+        self.id = id
         self.cellModel = cellModel
         self.store = IgnoredEquatable(store)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
@@ -61,7 +64,8 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
                                                               resultsCopyContent: resultsCopyContent)
         let detailEntityAction = actionPrism.detailEntityAction(model)
 
-        return SearchResultViewModel(cellModel: cellModel,
+        return SearchResultViewModel(id: model.id,
+                                     cellModel: cellModel,
                                      store: store,
                                      detailEntityAction: detailEntityAction)
     }
