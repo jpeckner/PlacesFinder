@@ -22,6 +22,11 @@ class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
         tabBarAppearance.tintColor = appSkin.colorings.tabBar.selectedItemTint.color
         tabBarAppearance.unselectedItemTintColor = appSkin.colorings.tabBar.unselectedItemTint.color
         tabBarAppearance.barTintColor = appSkin.colorings.tabBar.viewColoring.backgroundColor
+
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
+            AppTextStyleClass.textInput.textLayout.font,
+            forKey: .font
+        )
     }
 
 }
