@@ -70,7 +70,7 @@ extension SearchResultCell {
 
     func configure(_ cellModel: SearchResultCellModel,
                    colorings: SearchResultsViewColorings) {
-        thumbnailImageView.configureImage(cellModel.image)
+        thumbnailImageView.configure(cellModel.image)
 
         nameLabel.text = cellModel.name.value
         nameLabel.configure(.cellText,

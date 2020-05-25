@@ -83,7 +83,7 @@ extension SearchDetailsBasicInfoCell {
 
     func configure(_ viewModel: SearchDetailsBasicInfoViewModel,
                    colorings: SearchDetailsViewColorings) {
-        mainImageView.configureImage(viewModel.image)
+        mainImageView.configure(viewModel.image)
 
         infoContentView.configure(viewModel,
                                   colorings: colorings)
