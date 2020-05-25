@@ -24,12 +24,12 @@ struct SearchInstructionsViewSUI: View {
         VStack {
             StaticInfoViewSUI(viewModel: viewModel.value.infoViewModel,
                               colorings: colorings.value)
-                .padding()
 
             ResultsSourceViewSUI(viewModel: viewModel.value,
                                  colorings: colorings.value)
                 .padding()
         }
+        .padding(8.0)
     }
 
 }

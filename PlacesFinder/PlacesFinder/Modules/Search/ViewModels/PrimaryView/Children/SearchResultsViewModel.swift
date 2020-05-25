@@ -10,7 +10,7 @@ import Shared
 import SwiftDux
 
 struct SearchResultsViewModel: Equatable {
-    private let resultViewModels: NonEmptyArray<SearchResultViewModel>
+    let resultViewModels: NonEmptyArray<SearchResultViewModel>
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let refreshAction: IgnoredEquatable<Action>
     private var nextRequestAction: IgnoredEquatable<Action>?

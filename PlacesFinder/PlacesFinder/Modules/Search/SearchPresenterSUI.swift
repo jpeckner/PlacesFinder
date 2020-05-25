@@ -116,6 +116,22 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
         )
     }
 
+    private func loadOrBuildLookupController(
+        _ viewModel: SearchLookupViewModel,
+        titleViewModel: NavigationBarTitleViewModel,
+        appSkin: AppSkin
+    ) -> SearchLookupController {
+        guard let existingController: SearchLookupController = existingPrimaryController() else {
+            return buildLookupViewController(viewModel,
+                                             titleViewModel: titleViewModel,
+                                             appSkin: appSkin)
+        }
+
+        existingController.rootView.configure(viewModel,
+                                              appSkin: appSkin)
+        return existingController
+    }
+
 }
 
 private extension SearchPresenterSUI {
@@ -135,9 +151,9 @@ private extension SearchPresenterSUI {
                                        appSkin: AppSkin) -> SearchNoInternetController {
         let view = SearchNoInternetViewSUI(viewModel: viewModel,
                                            colorings: appSkin.colorings.standard)
-        return buildHostingController(view,
-                                      titleViewModel: titleViewModel,
-                                      appSkin: appSkin)
+        return buildPrimaryHostController(view,
+                                          titleViewModel: titleViewModel,
+                                          appSkin: appSkin)
     }
 
     typealias SearchLocationDisabledController = SearchPrimaryViewHostController<SearchLocationDisabledViewSUI>
@@ -147,9 +163,9 @@ private extension SearchPresenterSUI {
                                              appSkin: AppSkin) -> SearchLocationDisabledController {
         let view = SearchLocationDisabledViewSUI(viewModel: viewModel,
                                                  colorings: appSkin.colorings.searchCTA)
-        return buildHostingController(view,
-                                      titleViewModel: titleViewModel,
-                                      appSkin: appSkin)
+        return buildPrimaryHostController(view,
+                                          titleViewModel: titleViewModel,
+                                          appSkin: appSkin)
     }
 
     typealias SearchBackgroundController = SearchPrimaryViewHostController<SearchInstructionsViewSUI>
@@ -159,14 +175,30 @@ private extension SearchPresenterSUI {
                                        appSkin: AppSkin) -> SearchBackgroundController {
         let view = SearchInstructionsViewSUI(viewModel: viewModel.instructionsViewModel,
                                              colorings: appSkin.colorings.standard)
-        return buildHostingController(view,
-                                      titleViewModel: titleViewModel,
-                                      appSkin: appSkin)
+        return buildPrimaryHostController(view,
+                                          titleViewModel: titleViewModel,
+                                          appSkin: appSkin)
     }
 
-    private func buildHostingController<TView: View>(_ view: TView,
-                                                     titleViewModel: NavigationBarTitleViewModel,
-                                                     appSkin: AppSkin) -> SearchPrimaryViewHostController<TView> {
+    typealias SearchLookupController = SearchPrimaryViewHostController<SearchLookupViewSUI>
+
+    func buildLookupViewController(_ viewModel: SearchLookupViewModel,
+                                   titleViewModel: NavigationBarTitleViewModel,
+                                   appSkin: AppSkin) -> SearchLookupController {
+        let view = SearchLookupViewSUI(viewModel: viewModel,
+                                       appSkin: appSkin)
+        return buildPrimaryHostController(view,
+                                          titleViewModel: titleViewModel,
+                                          appSkin: appSkin)
+    }
+
+}
+
+private extension SearchPresenterSUI {
+
+    func buildPrimaryHostController<TView: View>(_ view: TView,
+                                                 titleViewModel: NavigationBarTitleViewModel,
+                                                 appSkin: AppSkin) -> SearchPrimaryViewHostController<TView> {
         let hostingController = SearchPrimaryViewHostController(rootView: view)
         hostingController.configureTitleView(titleViewModel,
                                              appSkin: appSkin)

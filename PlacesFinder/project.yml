@@ -8,10 +8,16 @@ options:
     iOS: "13.0"
 attributes:
    ORGANIZATIONNAME: Justin Peckner
+
 fileGroups:
   - BuildScripts
-targets:
 
+packages:
+  SkeletonUI:
+    url: https://github.com/CSolanaM/SkeletonUI
+    from: 1.0.4
+
+targets:
   PlacesFinder:
     type: application
     platform: iOS
@@ -49,11 +55,13 @@ targets:
     dependencies:
       - carthage: CoordiNode
       - carthage: Kingfisher
+      - carthage: KingfisherSwiftUI
       - carthage: Reachability
       - carthage: SkeletonView
       - carthage: SnapKit
       - carthage: SwiftDux
       - carthage: SwiftDuxExtensions
+      - package: SkeletonUI
       - framework: Shared.framework
         implicit: true
     preBuildScripts:
@@ -76,6 +84,7 @@ targets:
     dependencies:
       - carthage: CoordiNode
       - carthage: Kingfisher
+      - carthage: KingfisherSwiftUI
       - carthage: Reachability
       - carthage: SkeletonView
       - carthage: SnapKit
@@ -85,6 +94,7 @@ targets:
       - carthage: Nimble
       - carthage: Quick
       - carthage: SwiftDuxTestComponents
+      - package: SkeletonUI
       - framework: SharedTestComponents.framework
         implicit: true
       
@@ -113,7 +123,6 @@ targets:
       - carthage: Swifter
 
 schemes:
-
   PlacesFinder-Debug:
     build:
       targets:

@@ -6,15 +6,18 @@
 //  Copyright © 2020 Justin Peckner. All rights reserved.
 //
 
+import Shared
 import SwiftDux
 import SwiftDuxTestComponents
 
 extension SearchResultViewModel {
 
-    static func stubValue(store: DispatchingStoreProtocol,
+    static func stubValue(id: NonEmptyString,
+                          store: DispatchingStoreProtocol,
                           cellModel: SearchResultCellModel = .stubValue(),
                           detailEntityAction: Action = StubAction.genericAction) -> SearchResultViewModel {
-        return SearchResultViewModel(cellModel: cellModel,
+        return SearchResultViewModel(id: id,
+                                     cellModel: cellModel,
                                      store: store,
                                      detailEntityAction: detailEntityAction)
     }

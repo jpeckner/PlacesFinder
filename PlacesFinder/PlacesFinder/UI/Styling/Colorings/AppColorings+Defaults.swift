@@ -48,7 +48,8 @@ extension AppColorings {
         ),
         searchProgress: SearchProgressViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            gradientFill: FillColoring(color: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+            gradientFill: FillColoring(color: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1)),
+            gradientBackground: FillColoring(color: .systemGray)
         ),
         searchResults: SearchResultsViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),

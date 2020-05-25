@@ -12,24 +12,6 @@ protocol SearchContainerPresenterProtocol {
 
 extension SearchContainerPresenterProtocol {
 
-    func loadOrBuildLookupController(
-        _ viewModel: SearchLookupViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin
-    ) -> SearchLookupParentController {
-        guard let existingController: SearchLookupParentController = existingPrimaryController() else {
-            return buildSearchParentViewController(viewModel,
-                                                   titleViewModel: titleViewModel,
-                                                   appSkin: appSkin)
-        }
-
-        existingController.configure(viewModel,
-                                     appSkin: appSkin)
-        existingController.configureTitleView(titleViewModel,
-                                              appSkin: appSkin)
-        return existingController
-    }
-
     func loadOrBuildSecondaryController(
         _ detailsViewContext: SearchDetailsViewContext?,
         appSkin: AppSkin
@@ -73,19 +55,6 @@ extension SearchContainerPresenterProtocol {
 }
 
 private extension SearchContainerPresenterProtocol {
-
-    func buildSearchParentViewController(
-        _ viewModel: SearchLookupViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
-        appSkin: AppSkin
-    ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(viewModel: viewModel,
-                                                      appSkin: appSkin)
-        controller.configureTitleView(titleViewModel,
-                                      appSkin: appSkin)
-        controller.navigationItem.backBarButtonItem = appSkin.backButtonItem
-        return controller
-    }
 
     func buildSearchDetailsViewController(
         _ viewModel: SearchDetailsViewModel,

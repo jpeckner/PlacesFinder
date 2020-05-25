@@ -6,34 +6,45 @@
 //  Copyright © 2019 Justin Peckner. All rights reserved.
 //
 
+import Shared
 import SwiftUI
 
 struct SearchCTAViewSUI: View {
 
-    private let viewModel: SearchCTAViewModel
-    private let colorings: SearchCTAViewColorings
+    @ObservedObject private var viewModel: ValueObservable<SearchCTAViewModel>
+    @ObservedObject private var colorings: ValueObservable<SearchCTAViewColorings>
 
     init(viewModel: SearchCTAViewModel,
          colorings: SearchCTAViewColorings) {
-        self.viewModel = viewModel
-        self.colorings = colorings
+        self.viewModel = ValueObservable(viewModel)
+        self.colorings = ValueObservable(colorings)
     }
 
     var body: some View {
         VStack {
-            StaticInfoViewSUI(viewModel: viewModel.infoViewModel,
-                              colorings: colorings.standard)
+            StaticInfoViewSUI(viewModel: viewModel.value.infoViewModel,
+                              colorings: colorings.value.standard)
                 .padding(.bottom)
 
-            viewModel.ctaBlock.map {
+            viewModel.value.ctaBlock.map {
                 Button(action: $0.value) {
-                    Text(viewModel.ctaTitle)
+                    Text(viewModel.value.ctaTitle)
                 }
                 .configure(.ctaButton,
-                           textColoring: colorings.ctaTextColoring)
+                           textColoring: colorings.value.ctaTextColoring)
             }
         }
         .padding()
+    }
+
+}
+
+extension SearchCTAViewSUI {
+
+    func configure(_ viewModel: SearchCTAViewModel,
+                   colorings: SearchCTAViewColorings) {
+        self.viewModel.value = viewModel
+        self.colorings.value = colorings
     }
 
 }
