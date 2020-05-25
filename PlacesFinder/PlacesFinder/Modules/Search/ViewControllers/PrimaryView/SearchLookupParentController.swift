@@ -95,11 +95,10 @@ extension SearchLookupParentController {
         case let .results(viewModel):
             let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
-                setSingleChildController(
-                    SearchResultsViewController(delegate: self,
-                                                colorings: colorings,
-                                                viewModel: viewModel)
-                )
+                let resultsController = SearchResultsViewController(viewModel: viewModel,
+                                                                    colorings: colorings)
+                resultsController.delegate = self
+                setSingleChildController(resultsController)
                 return
             }
 
