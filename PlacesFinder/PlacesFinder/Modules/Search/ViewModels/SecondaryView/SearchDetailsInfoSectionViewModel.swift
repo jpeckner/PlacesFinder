@@ -10,7 +10,7 @@ import Foundation
 import Shared
 
 struct SearchDetailsBasicInfoViewModel: Equatable {
-    let image: URL
+    let image: DownloadedImageViewModel
     let name: NonEmptyString
     let address: NonEmptyString?
     let ratingsAverage: SearchRatingValue

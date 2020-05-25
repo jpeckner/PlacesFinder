@@ -13,7 +13,7 @@ import SharedTestComponents
 
 extension SearchDetailsBasicInfoViewModel {
 
-    static func stubValue(image: URL = .stubValue(),
+    static func stubValue(image: DownloadedImageViewModel = DownloadedImageViewModel(url: .stubValue()),
                           name: NonEmptyString = .stubValue("stubName"),
                           address: NonEmptyString? = .stubValue("stubAddress"),
                           ratingsAverage: SearchRatingValue = .threeAndAHalf,

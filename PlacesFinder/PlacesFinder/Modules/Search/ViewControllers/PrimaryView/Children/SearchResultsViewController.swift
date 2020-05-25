@@ -16,24 +16,20 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 
 class SearchResultsViewController: SingleContentViewController {
 
-    private weak var delegate: SearchResultsViewControllerDelegate?
+    weak var delegate: SearchResultsViewControllerDelegate?
+    private var viewModel: SearchResultsViewModel
     private var colorings: SearchResultsViewColorings
-    private var viewModel: SearchResultsViewModel {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-
     private let tableView: UITableView
+    private let refreshControl: UIRefreshControl
+
     private var previousContentOffsetY: CGFloat = 0.0
 
-    init(delegate: SearchResultsViewControllerDelegate,
-         colorings: SearchResultsViewColorings,
-         viewModel: SearchResultsViewModel) {
-        self.delegate = delegate
-        self.colorings = colorings
+    init(viewModel: SearchResultsViewModel,
+         colorings: SearchResultsViewColorings) {
         self.viewModel = viewModel
+        self.colorings = colorings
         self.tableView = UITableView()
+        self.refreshControl = UIRefreshControl()
 
         super.init(contentView: tableView,
                    viewColoring: colorings.viewColoring)
@@ -58,7 +54,7 @@ class SearchResultsViewController: SingleContentViewController {
 
         tableView.prefetchDataSource = self
         tableView.allowsSelection = true
-        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
     }
 
 }
@@ -70,7 +66,9 @@ extension SearchResultsViewController {
         self.viewModel = viewModel
         self.colorings = colorings
 
-        tableView.refreshControl?.tintColor = colorings.refreshControlTint.color
+        refreshControl.tintColor = colorings.refreshControlTint.color
+
+        tableView.reloadData()
     }
 
 }
@@ -134,10 +132,10 @@ extension SearchResultsViewController: UITableViewDelegate {
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard tableView.refreshControl?.isRefreshing ?? false else { return }
+        guard refreshControl.isRefreshing else { return }
 
         tableView.setContentOffset(.zero, animated: true)
-        tableView.refreshControl?.endRefreshing()
+        refreshControl.endRefreshing()
 
         viewModel.dispatchRefreshAction()
     }

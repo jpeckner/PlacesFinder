@@ -13,7 +13,7 @@ struct SearchResultCellModel: Equatable {
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue
     let pricing: String?
-    let image: URL
+    let image: DownloadedImageViewModel
 }
 
 // MARK: SearchResultCellModelBuilder
@@ -37,7 +37,7 @@ class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
             name: model.name,
             ratingsAverage: model.ratings.average,
             pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
-            image: model.image
+            image: DownloadedImageViewModel(url: model.image)
         )
     }
 
