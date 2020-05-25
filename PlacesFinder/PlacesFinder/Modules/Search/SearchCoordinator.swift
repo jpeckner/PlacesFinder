@@ -145,27 +145,11 @@ private extension SearchCoordinator {
 
                 searchLinkPayload.map {
                     let params = SearchParams(keywords: $0.keywords)
-                    submitInitalSearchRequest(params,
-                                              locationUpdateRequestBlock: requestBlock)
+                    store.dispatch(actionPrism.initialRequestAction(params,
+                                                                    locationUpdateRequestBlock: requestBlock))
                 }
             }
         }
-    }
-
-}
-
-private extension SearchCoordinator {
-
-    func submitInitalSearchRequest(_ params: SearchParams,
-                                   locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        store.dispatch(initialRequestAction(params,
-                                            locationUpdateRequestBlock: locationUpdateRequestBlock))
-    }
-
-    func initialRequestAction(_ params: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        return actionPrism.initialRequestAction(params,
-                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
 
 }

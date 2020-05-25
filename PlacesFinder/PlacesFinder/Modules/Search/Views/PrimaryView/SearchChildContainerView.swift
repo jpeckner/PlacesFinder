@@ -53,6 +53,10 @@ class SearchChildContainerView: UIView {
 extension SearchChildContainerView {
 
     func setChildView(_ newChildView: UIView) {
+        guard newChildView !== childView else {
+            return
+        }
+
         childView.removeFromSuperview()
         addSubview(newChildView)
         newChildView.fitFully(to: self)
