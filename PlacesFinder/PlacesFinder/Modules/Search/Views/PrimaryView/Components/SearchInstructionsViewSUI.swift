@@ -21,15 +21,14 @@ struct SearchInstructionsViewSUI: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 8.0) {
             StaticInfoViewSUI(viewModel: viewModel.value.infoViewModel,
                               colorings: colorings.value)
 
             ResultsSourceViewSUI(viewModel: viewModel.value,
                                  colorings: colorings.value)
-                .padding()
         }
-        .padding(8.0)
+        .padding(EdgeInsets(uniformInset: 8.0))
     }
 
 }

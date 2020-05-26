@@ -13,13 +13,11 @@ extension StyledText {
 
     init(text: String,
          styleClass: AppTextStyleClass,
-         textColoring: TextColoring = .init(textColor: .label),
-         numberOfLines: Int? = nil) {
+         textColoring: TextColoring) {
         self.init(text: text,
                   font: Font(styleClass.textLayout.font.ctFont),
                   alignment: styleClass.textLayout.alignment.textAlignment,
-                  textColoring: textColoring,
-                  numberOfLines: numberOfLines)
+                  textColoring: textColoring)
     }
 
 }
