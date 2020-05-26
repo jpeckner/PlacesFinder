@@ -89,7 +89,7 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
             Spacer()
 
             HStack {
-                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index -> AnyView in
+                ForEach(viewModel.systemOptions.indices, id: \.self) { index -> AnyView in
                     AnyView(Group {
                         if index > 0 {
                             AnyView(Text("|"))

@@ -17,7 +17,7 @@ struct SearchDetailsViewModel: Equatable {
     }
 
     let placeName: String
-    private let sections: [Section]
+    let sections: [Section]
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let removeDetailedEntityAction: IgnoredEquatable<Action>
 

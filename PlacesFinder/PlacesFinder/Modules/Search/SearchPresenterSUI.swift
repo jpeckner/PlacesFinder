@@ -32,9 +32,9 @@ protocol SearchPresenterProtocol: AutoMockable {
                          appSkin: AppSkin)
 }
 
-class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProtocol {
+class SearchPresenterSUI: SearchPresenterProtocol {
 
-    let searchContainerViewController: SearchContainerViewController
+    private let searchContainerViewController: SearchContainerViewController
 
     var rootViewController: UIViewController {
         return searchContainerViewController
@@ -132,12 +132,44 @@ class SearchPresenterSUI: SearchPresenterProtocol, SearchContainerPresenterProto
         return existingController
     }
 
+    private func loadOrBuildSecondaryController(
+        _ detailsViewContext: SearchDetailsViewContext?,
+        appSkin: AppSkin
+    ) -> SearchContainerSplitControllers.SecondaryController? {
+        switch detailsViewContext {
+        case let .detailedEntity(viewModel):
+            return .anySizeClass(loadOrBuildDetailsController(viewModel,
+                                                              appSkin: appSkin))
+        case let .firstListedEntity(viewModel):
+            return .regularOnly(loadOrBuildDetailsController(viewModel,
+                                                             appSkin: appSkin))
+        case .none:
+            return nil
+        }
+    }
+
+    private func loadOrBuildDetailsController(_ viewModel: SearchDetailsViewModel,
+                                              appSkin: AppSkin) -> SearchDetailsViewController {
+        guard let controller = existingDetailsController else {
+            return buildSearchDetailsViewController(viewModel,
+                                                    appSkin: appSkin)
+        }
+
+        controller.rootView.configure(viewModel,
+                                      colorings: appSkin.colorings.searchDetails)
+        return controller
+    }
+
 }
 
 private extension SearchPresenterSUI {
 
     func existingPrimaryController<T: SearchPrimaryViewController>() -> T? {
         return searchContainerViewController.splitControllers.primaryController as? T
+    }
+
+    var existingDetailsController: SearchDetailsViewController? {
+        return searchContainerViewController.splitControllers.secondaryController?.detailsController
     }
 
 }
@@ -190,6 +222,15 @@ private extension SearchPresenterSUI {
         return buildPrimaryHostController(view,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)
+    }
+
+    func buildSearchDetailsViewController(
+        _ viewModel: SearchDetailsViewModel,
+        appSkin: AppSkin
+    ) -> SearchDetailsViewController {
+        let view = SearchDetailsViewSUI(viewModel: viewModel,
+                                        colorings: appSkin.colorings.searchDetails)
+        return UIHostingController(rootView: view)
     }
 
 }

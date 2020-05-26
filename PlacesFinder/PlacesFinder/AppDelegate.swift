@@ -15,7 +15,7 @@ import SwiftDux
 import UIKit
 
 // TODO: run UI tests after switch to SwiftUI
-// TODO: delete dead UIKit code
+// TODO: delete dead UIKit code (check Sourcery templates as well)
 // TODO: remove "SUI" prefixes from types?
 
 @UIApplicationMain
