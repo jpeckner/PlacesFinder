@@ -68,9 +68,9 @@ private struct SettingsPlainSystemHeaderViewSUI: View {
     let colorings: SettingsHeaderViewColorings
 
     var body: some View {
-        Text(viewModel.title)
-            .configure(.tableHeader,
-                       textColoring: colorings.textColoring)
+        StyledText(text: viewModel.title,
+                   styleClass: .tableHeader,
+                   textColoring: colorings.textColoring)
     }
 
 }
@@ -82,9 +82,9 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
 
     var body: some View {
         HStack {
-            Text(viewModel.title)
-                .configure(.tableHeader,
-                           textColoring: colorings.textColoring)
+            StyledText(text: viewModel.title,
+                       styleClass: .tableHeader,
+                       textColoring: colorings.textColoring)
 
             Spacer()
 
@@ -109,17 +109,16 @@ private struct SettingsMeasurementSystemHeaderViewSUI: View {
                 Button(action: {
                     selectionAction.value()
                 }, label: {
-                    Text(title)
-                        .configure(.tableHeaderSelectableOption,
-                                   textColoring: colorings.activeButtonTextColoring)
+                    StyledText(text: title,
+                               styleClass: .tableHeaderSelectableOption,
+                               textColoring: colorings.activeButtonTextColoring)
                 })
-
             )
         case let .nonSelectable(title):
             return AnyView(
-                Text(title)
-                    .configure(.tableHeaderNonSelectableOption,
-                               textColoring: colorings.textColoring)
+                StyledText(text: title,
+                           styleClass: .tableHeaderNonSelectableOption,
+                           textColoring: colorings.textColoring)
             )
         }
     }
@@ -138,9 +137,9 @@ private struct SettingsCell: View {
 
     var body: some View {
         HStack {
-            Text(viewModel.title)
-                .configure(.cellText,
-                           textColoring: colorings.textColoring)
+            StyledText(text: viewModel.title,
+                       styleClass: .cellText,
+                       textColoring: colorings.textColoring)
 
             Spacer()
 

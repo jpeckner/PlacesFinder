@@ -1,5 +1,5 @@
 //
-//  StyledLabelSUI+AppSkin.swift
+//  StyledText+AppSkin.swift
 //  PlacesFinder
 //
 //  Created by Justin Peckner.
@@ -9,7 +9,7 @@
 import Shared
 import SwiftUI
 
-extension StyledLabelSUI {
+extension StyledText {
 
     init(text: String,
          styleClass: AppTextStyleClass,

@@ -55,9 +55,9 @@ private struct ResultsSourceViewSUI: View {
 
     var body: some View {
         HStack(spacing: 0.0) {
-            StyledLabelSUI(text: viewModel.resultsSource,
-                           styleClass: .sourceAPILabel,
-                           textColoring: colorings.bodyTextColoring)
+            StyledText(text: viewModel.resultsSource,
+                       styleClass: .sourceAPILabel,
+                       textColoring: colorings.bodyTextColoring)
                 .padding(.top, 3.0)
 
             Image(uiImage: APILogoConstants.logoImage)
