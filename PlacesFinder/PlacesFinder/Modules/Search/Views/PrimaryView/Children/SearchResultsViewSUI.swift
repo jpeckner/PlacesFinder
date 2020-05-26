@@ -62,17 +62,17 @@ private struct SearchResultCellSUI: View {
                 .cornerRadius(4.0)
 
             VStack(alignment: .leading) {
-                Text(cellModel.name.value)
-                    .configure(.cellText,
-                               textColoring: colorings.bodyTextColoring)
+                StyledText(text: cellModel.name.value,
+                           styleClass: .cellText,
+                           textColoring: colorings.bodyTextColoring)
 
                 HStack {
                     Image(uiImage: cellModel.ratingsAverage.starsImage)
 
                     cellModel.pricing.map {
-                        Text($0)
-                            .configure(.pricingLabel,
-                                       textColoring: colorings.bodyTextColoring)
+                        StyledText(text: $0,
+                                   styleClass: .pricingLabel,
+                                   textColoring: colorings.bodyTextColoring)
                     }
                 }
             }

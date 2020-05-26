@@ -24,9 +24,9 @@ struct NavigationBarTitleViewSUI: View {
         HStack {
             Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))
 
-            StyledLabelSUI(text: viewModel.displayName,
-                           styleClass: .navBarTitle,
-                           textColoring: colorings.titleTextColoring)
+            StyledText(text: viewModel.displayName,
+                       styleClass: .navBarTitle,
+                       textColoring: colorings.titleTextColoring)
         }
     }
 

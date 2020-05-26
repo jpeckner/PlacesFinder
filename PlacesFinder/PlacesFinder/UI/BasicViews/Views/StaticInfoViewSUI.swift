@@ -28,16 +28,16 @@ struct StaticInfoViewSUI: View {
                 .frame(idealHeight: 240.0,
                        alignment: .center)
 
-            StyledLabelSUI(text: viewModel.title,
-                           styleClass: .title,
-                           textColoring: colorings.titleTextColoring)
+            StyledText(text: viewModel.title,
+                       styleClass: .title,
+                       textColoring: colorings.titleTextColoring)
                 .lineLimit(1)
                 .allowsTightening(true)
                 .minimumScaleFactor(0.5)
 
-            StyledLabelSUI(text: viewModel.description,
-                           styleClass: .body,
-                           textColoring: colorings.bodyTextColoring)
+            StyledText(text: viewModel.description,
+                       styleClass: .body,
+                       textColoring: colorings.bodyTextColoring)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
