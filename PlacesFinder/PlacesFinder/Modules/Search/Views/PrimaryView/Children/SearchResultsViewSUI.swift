@@ -97,15 +97,9 @@ private struct SearchResultCellSUI: View {
 struct SearchResultsViewSUI_Previews: PreviewProvider {
 
     static var previews: some View {
-        Group {
-            SearchResultsViewSUI(viewModel: stubViewModel,
-                                 colorings: AppColorings.defaultColorings.searchResults)
-                .previewDisplayName("iPhone SE")
-
-            SearchResultsViewSUI(viewModel: stubViewModel,
-                                 colorings: AppColorings.defaultColorings.searchResults)
-                .previewDisplayName("iPhone 11 Pro Max")
-        }
+        SearchResultsViewSUI(viewModel: stubViewModel,
+                             colorings: AppColorings.defaultColorings.searchResults)
+            .previewDisplayName("iPhone SE")
     }
 
     private static var stubViewModel: SearchResultsViewModel {

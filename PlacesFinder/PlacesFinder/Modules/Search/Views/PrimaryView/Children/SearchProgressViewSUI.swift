@@ -87,13 +87,8 @@ private struct SearchProgressCellSUI: View {
 struct SearchProgressViewSUI_Previews: PreviewProvider {
 
     static var previews: some View {
-        Group {
-            SearchProgressViewSUI(colorings: AppColorings.defaultColorings.searchProgress)
-                .previewDisplayName("iPhone SE")
-
-            SearchProgressViewSUI(colorings: AppColorings.defaultColorings.searchProgress)
-                .previewDisplayName("iPhone 11 Pro Max")
-        }
+        SearchProgressViewSUI(colorings: AppColorings.defaultColorings.searchProgress)
+            .previewDisplayName("iPhone SE")
     }
 
 }

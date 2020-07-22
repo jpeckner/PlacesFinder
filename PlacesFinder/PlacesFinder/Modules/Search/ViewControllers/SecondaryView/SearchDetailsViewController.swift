@@ -103,6 +103,48 @@ private struct BasicInfoCell: View {
 
 }
 
+#if DEBUG
+
+struct SearchDetailsViewSUI_Previews: PreviewProvider {
+
+    static var previews: some View {
+        SearchDetailsViewSUI(colorings: AppColorings.defaultColorings.searchProgress)
+            .previewDisplayName("iPhone SE")
+    }
+
+    private static var stubViewModel: SearchDetailsViewModel {
+        SearchDetailsViewModel(
+            placeName: "My Favorite Restaurant",
+            sections: [
+                .info([
+                    .basicInfo(SearchDetailsBasicInfoViewModel(
+                        image: DownloadedImageViewModel(url: URL(string: "https://picsum.photos/200")!),
+                        name: try! NonEmptyString("My Favorite Restaurant"),
+                        address: try! NonEmptyString("1234 Main St\nSome Town, CA 91234"),
+                        ratingsAverage: .four,
+                        numRatingsMessage: "999 reviews",
+                        pricing: "$$$$$",
+                        apiLinkCallback: nil
+                    ))
+                ]),
+                .location([
+                    .mapCoordinate(SearchDetailsMapCoordinateViewModel(
+                        placeName: try! NonEmptyString("My Favorite Restaurant"),
+                        address: <#T##NonEmptyString?#>,
+                        coordinate: <#T##PlaceLookupCoordinate#>,
+                        regionRadius: <#T##PlaceLookupDistance#>
+                    ))
+                ])
+            ],
+            store: StubDispatchingStore(),
+            removeDetailedEntityAction: StubAction.genericAction
+        )
+    }
+
+}
+
+#endif
+
 //class SearchDetailsViewController: SingleContentViewController {
 //
 //    private var viewModel: SearchDetailsViewModel
