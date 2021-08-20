@@ -3,7 +3,7 @@
 set -e
 
 cd ../../..
-APPCONFIG_PATH=$(pwd)/PlacesFinder/PlacesFinder/Config/AppConfig.plist
+APPCONFIG_PATH=$(pwd)/PlacesFinder/Config/AppConfig.plist
 baseURL=$1
 apiKey=$2
 

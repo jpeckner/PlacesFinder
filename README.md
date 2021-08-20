@@ -15,19 +15,15 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 
 ### One-Time Setup
 1. Install the following tools if your system doesn't have them already:
-    * [Carthage](https://github.com/Carthage/Carthage#quick-start)
+    * [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
     * [Mint](https://github.com/yonaskolb/Mint)
-    * [fastlane](https://docs.fastlane.tools/getting-started/ios/setup/#installing-fastlane) (only follow the steps in the "Installing *fastlane*" section)
     * [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
-2. Clone the PlacesFinder repo, including its Git submodules, onto your system:
+2. Run `bundle install` to install the dependencies listed in the Gemfile.
+3. Clone the PlacesFinder repo, including its Git submodules, onto your system:
    ```
    $ cd place/you/want/PlacesFinder
    $ git clone https://github.com/jpeckner/PlacesFinder.git
    $ git submodule update --init --recursive
-   ```
-3. Next, run the initial Carthage bootstrap (can take 30-60 minutes to complete):
-   ```
-   $ [bundle exec] fastlane run_carthage_bootstrap
    ```
 
 ### Generating Workspace
@@ -77,7 +73,7 @@ These include UI tests which run against a local HTTP server, at `http://localho
       $ cd root/of/PlacesFinder/repo
       $ echo "TEST_PLACE_LOOKUP_PORT=desired_port_number_here" >> fastlane/.env
       ```
-   * If you have macOS Firewall enabled, each time you run the tests you'll see an annoying pop-up asking if you want to allow an incoming connection. To prevent this, simply run the script at PlacesFinder/PlacesFinderUITests/add_firewall_exceptions.sh, and provide your password when prompted. (Note that you'll need to re-run it each time you restart your computer.) Credit to [Tom Soderling](https://tomsoderling.github.io/Disable-iOS-simulator-connections-popup/) for sharing this script!
+   * If you have macOS Firewall enabled, each time you run the tests you'll see an annoying pop-up asking if you want to allow an incoming connection. To prevent this, simply run the script at PlacesFinderUITests/add_firewall_exceptions.sh, and provide your password when prompted. (Note that you'll need to re-run it each time you restart your computer.) Credit to [Tom Soderling](https://tomsoderling.github.io/Disable-iOS-simulator-connections-popup/) for sharing this script!
       
      The `ci_tests` lane takes care of everything else, including setting an `NSAppTransportSecurity` exception for `localhost` in Info.plist.
 

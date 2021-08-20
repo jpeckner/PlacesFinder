@@ -1,15 +1,12 @@
 name: PlacesFinder
 options:
   bundleIdPrefix: com.justinpeckner
-  carthageExecutablePath: /usr/local/bin/carthage
   transitivelyLinkDependencies: true
   groupSortPosition: top
   deploymentTarget:
-    iOS: "12.0"
+    iOS: "13.0"
 attributes:
    ORGANIZATIONNAME: Justin Peckner
-fileGroups:
-  - BuildScripts
 targets:
 
   PlacesFinder:
@@ -45,21 +42,11 @@ targets:
     sources:
       - path: PlacesFinder
     dependencies:
-      - carthage: CoordiNode
-      - carthage: Kingfisher
-      - carthage: Reachability
-      - carthage: SkeletonView
-      - carthage: SnapKit
-      - carthage: SwiftDux
-      - carthage: SwiftDuxExtensions
       - framework: Shared.framework
         implicit: true
-    preBuildScripts:
-      - path: BuildScripts/carthage_verify.sh
-        name: Carthage - Verify
     postCompileScripts:
       - script: |
-                cd "$PROJECT_DIR/.."
+                cd "$PROJECT_DIR"
                 mint run realm/SwiftLint swiftlint
         name: SwiftLint
       
@@ -72,17 +59,6 @@ targets:
       - path: PlacesFinder
       - path: PlacesFinderTests
     dependencies:
-      - carthage: CoordiNode
-      - carthage: Kingfisher
-      - carthage: Reachability
-      - carthage: SkeletonView
-      - carthage: SnapKit
-      - carthage: SwiftDux
-      - carthage: SwiftDuxExtensions
-      - carthage: CoordiNodeTestComponents
-      - carthage: Nimble
-      - carthage: Quick
-      - carthage: SwiftDuxTestComponents
       - framework: SharedTestComponents.framework
         implicit: true
       
@@ -95,8 +71,6 @@ targets:
       - path: PlacesFinder
       - path: PlacesFinderIntegrationTests
     dependencies:
-      - carthage: Nimble
-      - carthage: Quick
       - framework: SharedTestComponents.framework
         implicit: true
       
@@ -108,7 +82,6 @@ targets:
     sources: PlacesFinderUITests
     dependencies:
       - target: PlacesFinder
-      - carthage: Swifter
 
 schemes:
 
@@ -117,11 +90,6 @@ schemes:
       targets:
         PlacesFinder: all
         PlacesFinderTests: [test]
-      postActions:
-        - script: |
-                  "$PROJECT_DIR/BuildScripts/carthage_outdated_post_action.sh"
-          name: Carthage - Outdated Frameworks
-          settingsTarget: PlacesFinder
     test:
       config: Debug
       gatherCoverageData: true

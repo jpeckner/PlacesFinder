@@ -111,7 +111,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
 
                 context("when mockPlaceLookupService.buildInitialPageRequestToken() throws an error") {
                     beforeEach {
-                        mockPlaceLookupService.buildInitialPageRequestTokenThrowableError = StubError.thrownError
+                        mockPlaceLookupService.buildInitialPageRequestTokenThrowableError =
+                            SharedTestComponents.StubError.thrownError
 
                         performTest()
                     }
@@ -120,7 +121,7 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                         let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
                         expect(dispatchedAction) == .failure(
                             stubSearchParams,
-                            underlyingError: IgnoredEquatable(StubError.thrownError)
+                            underlyingError: IgnoredEquatable(SharedTestComponents.StubError.thrownError)
                         )
                     }
                 }

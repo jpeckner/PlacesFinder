@@ -1,4 +1,5 @@
 disabled_rules: # rule identifiers to exclude from running
+  - implicit_return
   - trailing_comma
 opt_in_rules: # some rules are only opt-in
   - anyobject_protocol
@@ -66,23 +67,18 @@ opt_in_rules: # some rules are only opt-in
   - untyped_error_in_catch
   - unused_capture_list
   - unused_import
-  - unused_private_declaration
   - vertical_parameter_alignment_on_call
   - xct_specific_matcher
   - yoda_condition
   # Find all the available rules by running:
   # swiftlint rules
 excluded: # paths to ignore during linting. Takes precedence over `included`.
-  - CoordiNode/Carthage
-  - CoordiNode/CoordiNode/OutdatedDependencies.swift
-  - PlacesFinder/Carthage
-  - PlacesFinder/PlacesFinder/CoordiNode/Output
-  - PlacesFinder/PlacesFinder/OutdatedDependencies.swift
-  - PlacesFinder/PlacesFinder/Sourcery/Output
-  - PlacesFinder/PlacesFinderTests/Components/Sourcery/Output
-  - PlacesFinder/PlacesFinderUITests/Carthage
-  - PlacesFinder/PlacesFinderUITests/Fakes
-  - Shared/Carthage
+  - Pods
+  - PlacesFinder/CoordiNode/Output
+  - PlacesFinder/OutdatedDependencies.swift
+  - PlacesFinder/Sourcery/Output
+  - PlacesFinderTests/Components/Sourcery/Output
+  - PlacesFinderUITests/Fakes
   - Shared/Shared/OutdatedDependencies.swift
   - Shared/Shared/Sourcery/Output
   - Shared/SharedTestComponents/Sourcery/Output

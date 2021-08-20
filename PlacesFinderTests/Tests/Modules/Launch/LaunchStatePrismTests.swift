@@ -31,7 +31,7 @@ class LaunchStatePrismTests: QuickSpec {
 
             context("when state.appSkinState.hasCompletedLoading is true") {
                 beforeEach {
-                    let underlyingError = EquatableError(StubError.plainError)
+                    let underlyingError = EquatableError(SharedTestComponents.StubError.plainError)
                     let state = AppState.stubValue(
                         appSkinState: AppSkinState(loadState: .failure(.loadError(underlyingError: underlyingError)))
                     )

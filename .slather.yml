@@ -4,7 +4,7 @@ scheme: PlacesFinder-Debug
 source_directory: PlacesFinder
 output_directory: Slather/Output
 ignore:
-  - Carthage/*
+  - Cocoapods/*
   - PlacesFinder/AppDelegate.swift
   - PlacesFinder/Config/AppConfig.swift
   - PlacesFinder/Listeners/Reachability/ReachabilityProtocol.swift

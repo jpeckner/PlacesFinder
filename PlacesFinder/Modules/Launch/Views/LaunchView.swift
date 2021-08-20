@@ -20,7 +20,7 @@ class LaunchView: UIView {
         self.topPaddingView = UIView()
         self.imageView = UIImageView(image: #imageLiteral(resourceName: "app_icon"))
         self.centerYPaddingView = UIView()
-        self.activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        self.activityIndicator = UIActivityIndicatorView(style: .large)
 
         super.init(frame: .zero)
 

@@ -4,11 +4,11 @@ set -e
 
 cd ../../..
 
-OUTPUT_DIR=$(pwd)/PlacesFinder/PlacesFinder/Sourcery/Output
+OUTPUT_DIR=$(pwd)/PlacesFinder/Sourcery/Output
 rm -rf "$OUTPUT_DIR"
 mint run krzysztofzablocki/sourcery sourcery                \
-  --sources PlacesFinder/PlacesFinder                       \
-  --templates PlacesFinder/PlacesFinder/Sourcery/Templates  \
+  --sources PlacesFinder                       \
+  --templates PlacesFinder/Sourcery/Templates  \
   --templates Shared/Shared/Sourcery/Templates              \
   --output "$OUTPUT_DIR"
 
@@ -20,10 +20,10 @@ import SharedTestComponents
 import SwiftDux
 import UIKit
 "
-OUTPUT_DIR=$(pwd)/PlacesFinder/PlacesFinderTests/Components/Sourcery/Output
+OUTPUT_DIR=$(pwd)/PlacesFinderTests/Components/Sourcery/Output
 rm -rf "$OUTPUT_DIR"
 mint run krzysztofzablocki/sourcery sourcery                                        \
-  --sources PlacesFinder/PlacesFinder                                               \
+  --sources PlacesFinder                                               \
   --templates Shared/SharedTestComponents/Sourcery/Templates/AutoMockable.stencil   \
   --args imports="$AUTO_MOCKABLE_IMPORTS"                                           \
   --output "$OUTPUT_DIR"

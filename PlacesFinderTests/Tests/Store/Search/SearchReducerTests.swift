@@ -209,7 +209,7 @@ class SearchReducerTests: QuickSpec {
                     let currentState = SearchState(loadState: currentLoadState,
                                                    inputParams: stubSearchInputParams,
                                                    detailedEntity: stubDetailsViewModel)
-                    let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
+                    let underlyingError = IgnoredEquatable<Error>(SharedTestComponents.StubError.plainError)
                     let pageError = SearchPageRequestError.cannotRetryRequest(underlyingError: underlyingError)
 
                     beforeEach {
@@ -237,16 +237,20 @@ class SearchReducerTests: QuickSpec {
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    let action = SearchAction.failure(stubSearchParams,
-                                                      underlyingError: IgnoredEquatable(StubError.plainError))
+                    let action = SearchAction.failure(
+                        stubSearchParams,
+                        underlyingError: IgnoredEquatable(SharedTestComponents .StubError.plainError)
+                    )
                     result = SearchReducer.reduce(action: action,
                                                   currentState: currentState)
                 }
 
                 it("returns the expected state") {
                     expect(result) == SearchState(
-                        loadState: .failure(stubSearchParams,
-                                            underlyingError: IgnoredEquatable(StubError.plainError)),
+                        loadState: .failure(
+                            stubSearchParams,
+                            underlyingError: IgnoredEquatable(SharedTestComponents.StubError.plainError)
+                        ),
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil
                     )

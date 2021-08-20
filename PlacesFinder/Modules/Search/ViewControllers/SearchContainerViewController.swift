@@ -17,7 +17,7 @@ class SearchContainerViewController: UIViewController {
         }
     }
     private let searchSplitViewController: UISplitViewController
-    private let masterPaneNavController: SearchMasterPaneNavigationController
+    private let mainPaneNavController: SearchMainPaneNavigationController
     private var lastHorizontalSpecifiedClass: SpecifiedSizeClass?
 
     private var collapseSecondaryController: Bool {
@@ -28,7 +28,7 @@ class SearchContainerViewController: UIViewController {
         self.splitControllers = SearchContainerSplitControllers(primaryController: SearchPlaceholderViewController(),
                                                                 secondaryController: nil)
         self.searchSplitViewController = UISplitViewController()
-        self.masterPaneNavController = SearchMasterPaneNavigationController()
+        self.mainPaneNavController = SearchMainPaneNavigationController()
 
         super.init(nibName: nil, bundle: nil)
 
@@ -41,7 +41,7 @@ class SearchContainerViewController: UIViewController {
 
     private func setupSplitViewController() {
         searchSplitViewController.delegate = self
-        searchSplitViewController.viewControllers = [masterPaneNavController]
+        searchSplitViewController.viewControllers = [mainPaneNavController]
         searchSplitViewController.edgesForExtendedLayout = []
         searchSplitViewController.preferredDisplayMode = .allVisible
     }
@@ -127,19 +127,19 @@ private extension SearchContainerViewController {
                 splitControllers.primaryController,
                 detailsController
             ].compactMap { $0 }
-            let animated = updatedViewControllers.count != masterPaneNavController.viewControllers.count
+            let animated = updatedViewControllers.count != mainPaneNavController.viewControllers.count
 
-            masterPaneNavController.setViewControllers(updatedViewControllers,
-                                                       animated: animated)
-            searchSplitViewController.viewControllers = [masterPaneNavController]
+            mainPaneNavController.setViewControllers(updatedViewControllers,
+                                                     animated: animated)
+            searchSplitViewController.viewControllers = [mainPaneNavController]
         case .regular:
-            masterPaneNavController.setViewControllers(
+            mainPaneNavController.setViewControllers(
                 [splitControllers.primaryController],
                 animated: false
             )
 
             searchSplitViewController.viewControllers = [
-                masterPaneNavController,
+                mainPaneNavController,
                 detailsController
             ].compactMap { $0 }
         }
@@ -163,7 +163,7 @@ private extension SearchContainerViewController {
 /// SearchPlaceholderViewController is never actually shown; it allows var splitControllers above to be non-optional.
 private class SearchPlaceholderViewController: UIViewController, SearchPrimaryViewControllerProtocol {}
 
-private class SearchMasterPaneNavigationController: UINavigationController {
+private class SearchMainPaneNavigationController: UINavigationController {
 
     private var previousViewControllers: [UIViewController] = []
 
@@ -179,7 +179,7 @@ private class SearchMasterPaneNavigationController: UINavigationController {
 
 }
 
-extension SearchMasterPaneNavigationController: UINavigationControllerDelegate {
+extension SearchMainPaneNavigationController: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController,
                               didShow viewController: UIViewController,
