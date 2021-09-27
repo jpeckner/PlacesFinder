@@ -41,9 +41,6 @@ targets:
       DevelopmentTeam: ER3Y6PM2YR
     sources:
       - path: PlacesFinder
-    dependencies:
-      - framework: Shared.framework
-        implicit: true
     postCompileScripts:
       - script: |
                 cd "$PROJECT_DIR"
@@ -57,10 +54,8 @@ targets:
       path: PlacesFinderTests/Info.plist
     sources:
       - path: PlacesFinder
+        excludes: [Info.plist]
       - path: PlacesFinderTests
-    dependencies:
-      - framework: SharedTestComponents.framework
-        implicit: true
       
   PlacesFinderIntegrationTests:
     type: bundle.unit-test
@@ -69,10 +64,8 @@ targets:
       path: PlacesFinderIntegrationTests/Info.plist
     sources:
       - path: PlacesFinder
+        excludes: [Info.plist]
       - path: PlacesFinderIntegrationTests
-    dependencies:
-      - framework: SharedTestComponents.framework
-        implicit: true
       
   PlacesFinderUITests:
     type: bundle.ui-testing
