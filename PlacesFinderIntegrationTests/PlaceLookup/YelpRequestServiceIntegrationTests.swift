@@ -73,7 +73,7 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                     pagesReturned = []
 
                     while let requestToken = nextRequestToken {
-                        waitUntil(timeout: 5.0) { done in
+                        waitUntil(timeout: .seconds(5)) { done in
                             placeLookupService.requestPage(requestToken) { result in
                                 switch result {
                                 case let .success(response):
@@ -114,7 +114,7 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                 beforeSuite {
                     setupTest(apiKey: "")
 
-                    waitUntil(timeout: 5.0) { done in
+                    waitUntil(timeout: .seconds(5)) { done in
                         placeLookupService.requestPage(nextRequestToken) { result in
                             placeLookupResult = result
                             done()
