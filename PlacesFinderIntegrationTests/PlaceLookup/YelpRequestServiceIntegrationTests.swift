@@ -1,6 +1,6 @@
 //
 //  YelpRequestServiceIntegrationTests.swift
-//  SharedIntegrationTests
+//  PlacesFinderIntegrationTests
 //
 //  Created by Justin Peckner.
 //  Copyright © 2018 Justin Peckner. All rights reserved.
