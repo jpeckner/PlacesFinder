@@ -8,7 +8,6 @@
 
 import Shared
 import SwiftDux
-import SwiftDuxExtensions
 
 protocol LaunchStatePrismProtocol: AutoMockable {
     var launchKeyPaths: Set<EquatableKeyPath<AppState>> { get }

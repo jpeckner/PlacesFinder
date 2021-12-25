@@ -8,7 +8,6 @@
 
 import Shared
 import SwiftDux
-import SwiftDuxExtensions
 
 // MARK: SearchPagesReceivedState
 

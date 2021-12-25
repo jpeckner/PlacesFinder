@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftDuxExtensions
+import SwiftDux
 
 struct AppSkinState: GuaranteedEntityState, Equatable {
     typealias TEntity = AppSkin

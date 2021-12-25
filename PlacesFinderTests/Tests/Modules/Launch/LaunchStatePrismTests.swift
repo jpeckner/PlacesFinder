@@ -11,7 +11,6 @@ import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
-import SwiftDuxExtensions
 import SwiftDuxTestComponents
 
 class LaunchStatePrismTests: QuickSpec {

@@ -9,7 +9,6 @@
 import Foundation
 import Shared
 import SwiftDux
-import SwiftDuxExtensions
 
 protocol AppSkinActionCreatorProtocol: ResettableAutoMockable {
     static func loadSkin(skinService: AppSkinServiceProtocol) -> Action

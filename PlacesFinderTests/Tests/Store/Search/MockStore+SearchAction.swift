@@ -8,7 +8,7 @@
 
 import Nimble
 import Shared
-import SwiftDuxExtensions
+import SwiftDux
 import SwiftDuxTestComponents
 
 extension MockStore {

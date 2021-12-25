@@ -1,5 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/jpeckner/SwiftDux.git'
 
 platform :ios, '13.0'
 ensure_bundler!
@@ -12,7 +11,6 @@ def common_pods
   pod 'SnapKit'
   pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
   pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
-  pod 'SwiftDuxExtensions', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
 end
 
 target 'PlacesFinder' do
@@ -28,6 +26,7 @@ target 'PlacesFinder' do
     pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'master'
     pod 'Nimble'
     pod 'Quick'
+    # Note: these need to point to master to workaround podspec limitations
     pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
     pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
   end
