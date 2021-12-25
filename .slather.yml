@@ -1,0 +1,34 @@
+xcodeproj: PlacesFinder.xcodeproj
+workspace: ../PlacesFinder.xcworkspace
+scheme: PlacesFinder-Debug
+source_directory: PlacesFinder
+output_directory: Slather/Output
+ignore:
+  - Cocoapods/*
+  - PlacesFinder/AppDelegate.swift
+  - PlacesFinder/Config/AppConfig.swift
+  - PlacesFinder/Listeners/Reachability/ReachabilityProtocol.swift
+  - PlacesFinder/Modules/App/AppCoordinatorChildFactory.swift
+  - PlacesFinder/Modules/Home/HomeCoordinatorChildFactory.swift
+  - PlacesFinder/Modules/Home/HomePresenter.swift
+  - PlacesFinder/Modules/Home/ViewControllers*
+  - PlacesFinder/Modules/Launch/LaunchPresenter.swift
+  - PlacesFinder/Modules/Launch/ViewControllers*
+  - PlacesFinder/Modules/Launch/Views*
+  - PlacesFinder/Modules/Search/SearchPresenter.swift
+  - PlacesFinder/Modules/Search/ViewControllers*
+  - PlacesFinder/Modules/Search/Views*
+  - PlacesFinder/Modules/Settings/SettingsPresenter.swift
+  - PlacesFinder/Modules/Settings/ViewControllers*
+  - PlacesFinder/Modules/Settings/Views*
+  - PlacesFinder/CoordiNode/Output/*
+  - PlacesFinder/Services/AppSkin/AppSkinService.swift
+  - PlacesFinder/Services/DecodableServices.swift
+  - PlacesFinder/Services/PlaceLookup/Yelp/*
+  - PlacesFinder/Sourcery/*
+  - PlacesFinder/Store/AppSkin/AppSkinActionCreator.swift
+  - PlacesFinder/Store/AppState.swift
+  - PlacesFinder/UI/*
+  - PlacesFinderIntegrationTests/*
+  - PlacesFinderTests/*
+  - PlacesFinderUITests/*

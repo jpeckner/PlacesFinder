@@ -4,6 +4,7 @@ def generate_placesfinder(baseURL, apiKey, config = "Release")
   generate_coordinode_files()
   generate_sourcery_files()
   generate_project_files()
+  run_pod_install()
 end
 
 def generate_config(baseURL, apiKey)
@@ -45,4 +46,8 @@ def generate_project_files()
       "./generate_project_files.sh",
     ].join("\n")
   )
+end
+
+def run_pod_install()
+  run_script("bundle exec pod install")
 end

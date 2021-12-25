@@ -20,16 +20,16 @@ fastlane/Build
 
 ##### Generated project files #####
 
-PlacesFinder/PlacesFinder.xcodeproj
+PlacesFinder.xcodeproj
 PlacesFinder.xcworkspace/xcshareddata
 PlacesFinder.xcworkspace/xcuserdata
-PlacesFinder/**/Info.plist
-PlacesFinder/PlacesFinder/Config/AppConfig.plist
-PlacesFinder/PlacesFinder/Settings.bundle/Root.plist
+**/Info.plist
+PlacesFinder/Config/AppConfig.plist
+PlacesFinder/Settings.bundle/Root.plist
 
 ##### CoordiNodeGenerator #####
 
-PlacesFinder/PlacesFinder/CoordiNode/Output
+PlacesFinder/CoordiNode/Output
 
 ##### Slather #####
 
@@ -37,16 +37,16 @@ Slather
 
 ##### Sourcery #####
 
-PlacesFinder/PlacesFinder/Sourcery/Output
-PlacesFinder/PlacesFinderTests/Components/Sourcery/Output
+PlacesFinder/Sourcery/Output
+PlacesFinderTests/Components/Sourcery/Output
 
-##### Carthage #####
+##### Cocoapods #####
 
-Carthage
+Pods
 
 ##### Settings #####
 
-PlacesFinder/PlacesFinder/Settings.bundle/Licenses
+PlacesFinder/Settings.bundle/Licenses
 
 ##### Other #####
 Breakpoints_v2.xcbkptlist
