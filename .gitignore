@@ -20,7 +20,6 @@ fastlane/Build
 
 ##### Generated project files #####
 
-PlacesFinder.xcodeproj
 PlacesFinder.xcworkspace/xcshareddata
 PlacesFinder.xcworkspace/xcuserdata
 **/Info.plist
