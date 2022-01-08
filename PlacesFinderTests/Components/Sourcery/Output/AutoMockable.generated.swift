@@ -1223,10 +1223,10 @@ internal class UserDefaultsServiceProtocolMock: UserDefaultsServiceProtocol {
     internal var getSearchPreferencesCalled: Bool {
         return getSearchPreferencesCallsCount > 0
     }
-    internal var getSearchPreferencesReturnValue: SearchPreferencesState!
-    internal var getSearchPreferencesClosure: (() throws -> SearchPreferencesState)?
+    internal var getSearchPreferencesReturnValue: StoredSearchPreferences!
+    internal var getSearchPreferencesClosure: (() throws -> StoredSearchPreferences)?
 
-    internal func getSearchPreferences() throws -> SearchPreferencesState {
+    internal func getSearchPreferences() throws -> StoredSearchPreferences {
         getSearchPreferencesCallsCount += 1
         if let error = getSearchPreferencesThrowableError { throw error }
         return try getSearchPreferencesClosure.map({ try $0() }) ?? getSearchPreferencesReturnValue
@@ -1239,10 +1239,10 @@ internal class UserDefaultsServiceProtocolMock: UserDefaultsServiceProtocol {
     internal var setSearchPreferencesCalled: Bool {
         return setSearchPreferencesCallsCount > 0
     }
-    internal var setSearchPreferencesReceivedSearchPreferences: SearchPreferencesState?
-    internal var setSearchPreferencesClosure: ((SearchPreferencesState) throws -> Void)?
+    internal var setSearchPreferencesReceivedSearchPreferences: StoredSearchPreferences?
+    internal var setSearchPreferencesClosure: ((StoredSearchPreferences) throws -> Void)?
 
-    internal func setSearchPreferences(_ searchPreferences: SearchPreferencesState) throws {
+    internal func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws {
         setSearchPreferencesCallsCount += 1
         setSearchPreferencesReceivedSearchPreferences = searchPreferences
         if let error = setSearchPreferencesThrowableError { throw error }

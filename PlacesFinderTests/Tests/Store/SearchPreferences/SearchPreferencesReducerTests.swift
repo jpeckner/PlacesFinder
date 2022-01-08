@@ -37,8 +37,12 @@ class SearchPreferencesReducerTests: QuickSpec {
             var result: SearchPreferencesState!
 
             context("when the action is not a SearchPreferencesAction") {
-                let currentState = SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                          sorting: .rating)
+                let currentState = SearchPreferencesState(
+                    stored: StoredSearchPreferences(
+                        distance: .imperial(.twentyMiles),
+                        sorting: .rating
+                    )
+                )
 
                 beforeEach {
                     result = SearchPreferencesReducer.reduce(action: StubAction.genericAction,
@@ -51,8 +55,12 @@ class SearchPreferencesReducerTests: QuickSpec {
             }
 
             context("else when the action is SearchPreferencesAction.setDistance()") {
-                let currentState = SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                          sorting: .rating)
+                let currentState = SearchPreferencesState(
+                    stored: StoredSearchPreferences(
+                        distance: .imperial(.twentyMiles),
+                        sorting: .rating
+                    )
+                )
 
                 beforeEach {
                     result = SearchPreferencesReducer.reduce(
@@ -62,14 +70,22 @@ class SearchPreferencesReducerTests: QuickSpec {
                 }
 
                 it("returns a state with the updated distance, and all other fields unchanged") {
-                    expect(result) == SearchPreferencesState(distance: .imperial(.oneMile),
-                                                             sorting: .rating)
+                    expect(result) == SearchPreferencesState(
+                        stored: StoredSearchPreferences(
+                            distance: .imperial(.oneMile),
+                            sorting: .rating
+                        )
+                    )
                 }
             }
 
             context("else when the action is SearchPreferencesAction.setSorting()") {
-                let currentState = SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                          sorting: .rating)
+                let currentState = SearchPreferencesState(
+                    stored: StoredSearchPreferences(
+                        distance: .imperial(.twentyMiles),
+                        sorting: .rating
+                    )
+                )
 
                 beforeEach {
                     result = SearchPreferencesReducer.reduce(
@@ -79,8 +95,12 @@ class SearchPreferencesReducerTests: QuickSpec {
                 }
 
                 it("returns a state with the updated distance, and all other fields unchanged") {
-                    expect(result) == SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                             sorting: .bestMatch)
+                    expect(result) == SearchPreferencesState(
+                        stored: StoredSearchPreferences(
+                            distance: .imperial(.twentyMiles),
+                            sorting: .bestMatch
+                        )
+                    )
                 }
             }
 

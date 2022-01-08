@@ -38,8 +38,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
 
         let stubState = AppState.stubValue()
         let stubParams = PlaceLookupParams.stubValue(
-            radius: stubState.searchPreferencesState.distance.distanceType.measurement,
-            sorting: stubState.searchPreferencesState.sorting
+            radius: stubState.searchPreferencesState.stored.distance.distanceType.measurement,
+            sorting: stubState.searchPreferencesState.stored.sorting
         )
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
 

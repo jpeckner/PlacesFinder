@@ -79,11 +79,11 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                     headerType: .measurementSystem(
                         measurementSystemHeaderViewModelBuilder.buildViewModel(
                             appCopyContent.settingsHeaders.distanceSectionTitle,
-                            currentlyActiveSystem: searchPreferencesState.distance.system,
+                            currentlyActiveSystem: searchPreferencesState.stored.distance.system,
                             copyContent: appCopyContent.settingsMeasurementSystem
                         )
                     ),
-                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.distance)
+                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.stored.distance)
                 )
             ).appendedWith([
                 SettingsSectionViewModel(
@@ -91,7 +91,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                         plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
                     ),
                     cells: settingsCellViewModelBuilder.buildSortingCellModels(
-                        searchPreferencesState.sorting,
+                        searchPreferencesState.stored.sorting,
                         copyContent: appCopyContent.settingsSortPreference
                     )
                 )

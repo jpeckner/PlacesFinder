@@ -64,8 +64,12 @@ class UserDefaultsListenerTests: QuickSpec {
 
             describe("newState()") {
 
-                let stubSearchPreferencesState = SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                                        sorting: .reviewCount)
+                let stubSearchPreferencesState = SearchPreferencesState(
+                    stored: StoredSearchPreferences(
+                        distance: .imperial(.twentyMiles),
+                        sorting: .reviewCount
+                    )
+                )
 
                 beforeEach {
                     let stubState = AppState.stubValue(
@@ -76,7 +80,7 @@ class UserDefaultsListenerTests: QuickSpec {
 
                 it("calls mockUserDefaultsService.setSearchPreferences() with state.searchPreferencesState") {
                     let receivedPreferences = mockUserDefaultsService.setSearchPreferencesReceivedSearchPreferences
-                    expect(receivedPreferences) == stubSearchPreferencesState
+                    expect(receivedPreferences) == stubSearchPreferencesState.stored
                 }
 
             }

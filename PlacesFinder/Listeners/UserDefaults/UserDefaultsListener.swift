@@ -56,7 +56,7 @@ extension UserDefaultsListener: SubstatesSubscriber {
         // Persisting searchPreferencesState each time the user changes it is a nice-to-have, but not essential to the
         // functionality of the app, so nothing we can or should do on the off-chance that this fails in production.
         AssertionHandler.assertIfErrorThrown {
-            try userDefaultsService.setSearchPreferences(state.searchPreferencesState)
+            try userDefaultsService.setSearchPreferences(state.searchPreferencesState.stored)
         }
     }
 

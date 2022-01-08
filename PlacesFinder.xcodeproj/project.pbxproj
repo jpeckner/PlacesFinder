@@ -478,6 +478,9 @@
 		C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
 		C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */; };
 		C9E3A8ADEC285EE33D2A4009 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
+		CA3F770A278A4AE600847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
+		CA3F7749278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
+		CA3F774E278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
 		CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
@@ -625,7 +628,7 @@
 /* Begin PBXFileReference section */
 		01DF9F8AC8E7DD4FDE8F8A48 /* Pods-PlacesFinderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderUITests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		03691AB9343C4669226B4E57 /* ListenerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerContainer.swift; sourceTree = "<group>"; };
-		03E82E16F0B97C73710EAEF8 /* AutoSearchDetailsSections.stencil */ = {isa = PBXFileReference; path = AutoSearchDetailsSections.stencil; sourceTree = "<group>"; };
+		03E82E16F0B97C73710EAEF8 /* AutoSearchDetailsSections.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoSearchDetailsSections.stencil; sourceTree = "<group>"; };
 		0415FFEEFB2318C0317D5A6B /* UserDefaultsListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsListenerTests.swift; sourceTree = "<group>"; };
 		043634E4F43F1CF0574027CC /* SearchCellBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellBase.swift; sourceTree = "<group>"; };
 		058ED67AF54D02E58684D7EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -715,7 +718,7 @@
 		4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinActionCreator.swift; sourceTree = "<group>"; };
 		4D8E4136FD198F4F9614BE05 /* SearchInstructionsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */ = {isa = PBXFileReference; path = AutoAppLink.stencil; sourceTree = "<group>"; };
+		4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoAppLink.stencil; sourceTree = "<group>"; };
 		4E8DA42D385F10E36D0FB6A6 /* HomeCoordinatorChildContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorChildContainerTests.swift; sourceTree = "<group>"; };
 		4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMessageViewModel.swift; sourceTree = "<group>"; };
 		4F56E4D4D938092419492978 /* SearchColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchColorings.swift; sourceTree = "<group>"; };
@@ -731,7 +734,7 @@
 		552040C815599989C90F9A66 /* SearchInputContentViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputContentViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		55681DB11347069A8DFC1781 /* UILabel+AppSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AppSkin.swift"; sourceTree = "<group>"; };
 		55752985D69EE0C2DD4FA653 /* SearchReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReducerTests.swift; sourceTree = "<group>"; };
-		5596D36AFDBA7C57646BCC6A /* AutoHomeCoordinatorChildContainer.stencil */ = {isa = PBXFileReference; path = AutoHomeCoordinatorChildContainer.stencil; sourceTree = "<group>"; };
+		5596D36AFDBA7C57646BCC6A /* AutoHomeCoordinatorChildContainer.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoHomeCoordinatorChildContainer.stencil; sourceTree = "<group>"; };
 		56E88D643F0FF71D4031535F /* SearchMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMessageView.swift; sourceTree = "<group>"; };
 		5B873E16D32602A5DBFA1715 /* AppConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AppConfig.plist; sourceTree = "<group>"; };
 		5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementFormatterProtocol.swift; sourceTree = "<group>"; };
@@ -755,7 +758,7 @@
 		6A4F211A48D9CAE203B6539A /* SettingsUnitsHeaderViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsHeaderViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		6A727FA5829A0803638DA112 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		6AAB3AC2FFBC208E880F7F34 /* CoordinatorProtocol+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorProtocol+App.swift"; sourceTree = "<group>"; };
-		6D069CBCFB2B4F83F31B4ADA /* AutoCodable.swifttemplate */ = {isa = PBXFileReference; path = AutoCodable.swifttemplate; sourceTree = "<group>"; };
+		6D069CBCFB2B4F83F31B4ADA /* AutoCodable.swifttemplate */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoCodable.swifttemplate; sourceTree = "<group>"; };
 		6D7116AB78865ABE16A4A5D1 /* Pods-PlacesFinderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsSectionProtocol.swift; sourceTree = "<group>"; };
 		6DB426CBC6CFD247D55616D8 /* AppLinkTypeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkTypeBuilderTests.swift; sourceTree = "<group>"; };
@@ -795,7 +798,7 @@
 		917740B6A62EA050BACF1D8C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		91D20ADAB653F6239C94E423 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Settings.bundle; sourceTree = "<group>"; };
 		91F98A3447E3B2A94DCAB81A /* SearchResultsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelBuilderTests.swift; sourceTree = "<group>"; };
-		9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */ = {isa = PBXFileReference; path = AutoAppColorings.stencil; sourceTree = "<group>"; };
+		9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoAppColorings.stencil; sourceTree = "<group>"; };
 		93682776FF12457425245493 /* HomeCoordinatorChildFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorChildFactory.swift; sourceTree = "<group>"; };
 		94DE12507E49A40CA6381D6E /* SearchLookupParentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupParentController.swift; sourceTree = "<group>"; };
 		970BAB9CBB60ED41C9DBD701 /* SearchParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParams.swift; sourceTree = "<group>"; };
@@ -850,6 +853,7 @@
 		C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModel.swift; sourceTree = "<group>"; };
 		C9FE8D9DEAE96F59628080B5 /* SearchPreferencesReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesReducerTests.swift; sourceTree = "<group>"; };
+		CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredSearchPreferences.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CCA50B284C64F4468E1A3201 /* SearchResultsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsViewModel+Stub.swift"; sourceTree = "<group>"; };
@@ -1645,7 +1649,6 @@
 				01DF9F8AC8E7DD4FDE8F8A48 /* Pods-PlacesFinderUITests.debug.xcconfig */,
 				8F67501679CE299D7FCBF59A /* Pods-PlacesFinderUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1811,6 +1814,7 @@
 				B626C64A91146839543EFC9B /* SearchEntityModelBuilder.swift */,
 				970BAB9CBB60ED41C9DBD701 /* SearchParams.swift */,
 				2E54C382059E8456E5EC6183 /* SearchRatingValue.swift */,
+				CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -2668,6 +2672,7 @@
 				CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */,
 				BFCA9A7C47DF7CD1A0D09B00 /* SearchContainerViewController.swift in Sources */,
 				84CD07E5509CDD33F9E9C184 /* SearchCoordinator+CoordiNode.autogen.swift in Sources */,
+				CA3F7749278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */,
 				C2E7B8BD7154A67F577248B3 /* SearchCoordinator.swift in Sources */,
 				4EFC839781748BCF10851497 /* SearchCopyFormatter.swift in Sources */,
 				66FF912D7016ADF5E4B6C8B0 /* SearchDetailsBasicInfoCell.swift in Sources */,
@@ -2868,6 +2873,7 @@
 				E343B1543A1BFAED578A8814 /* SearchInstructionsView.swift in Sources */,
 				C12A3E8D6FFF616D879F6616 /* SearchInstructionsViewController.swift in Sources */,
 				873B4DAE8F3D276E40B9CEE2 /* SearchInstructionsViewModel.swift in Sources */,
+				CA3F770A278A4AE600847AA2 /* StoredSearchPreferences.swift in Sources */,
 				BC67DB8BFBC20CCCA3232D7A /* SearchLinkPayload.swift in Sources */,
 				A53808E6746B805BAD43A4F2 /* SearchLocationDisabledViewController.swift in Sources */,
 				2A10E4E452301557FE4EB46A /* SearchLocationDisabledViewModel.swift in Sources */,
@@ -3078,6 +3084,7 @@
 				C3B11819493E5F29237B64EC /* SearchInputCopyContent+Stub.swift in Sources */,
 				AF2DCD12CF7DA59012CFC9C9 /* SearchInputDispatcherTests.swift in Sources */,
 				19FED967EE8207DEBAF15F4C /* SearchInputParams+Stub.swift in Sources */,
+				CA3F774E278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */,
 				567F170D57A22503734BDA24 /* SearchInputViewModel.swift in Sources */,
 				F79118E43012882B89DD4E31 /* SearchInputViewModelBuilderTests.swift in Sources */,
 				3F56FF6B61BB3D78C6D02745 /* SearchInstructionsCopyContent+Stub.swift in Sources */,

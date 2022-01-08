@@ -85,8 +85,12 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
         describe("buildViewModel()") {
 
-            let stubSearchPreferencesState = SearchPreferencesState(distance: .imperial(.twentyMiles),
-                                                                    sorting: .reviewCount)
+            let stubSearchPreferencesState = SearchPreferencesState(
+                stored: StoredSearchPreferences(
+                    distance: .imperial(.twentyMiles),
+                    sorting: .reviewCount
+                )
+            )
             let stubAppCopyContent = AppCopyContent.stubValue()
 
             beforeEach {
