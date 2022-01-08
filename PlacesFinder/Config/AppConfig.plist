@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>placeLookup</key>
+	<dict>
+		<key>apiKey</key>
+		<string>your_Yelp_fusion_API_key_here</string>
+		<key>baseURL</key>
+		<dict>
+			<key>relative</key>
+			<string>https://api.yelp.com</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
