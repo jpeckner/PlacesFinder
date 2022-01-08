@@ -63,7 +63,6 @@
 		169953E3643178828DE56EB1 /* SettingsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6988CFCEE7149EB7B860939B /* SettingsCellViewModel.swift */; };
 		16D08339DFB0C7BFF87D4C08 /* AutoAppLink.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */; };
 		17113C02458CB627B6BDAB46 /* SearchInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B11EC86D266FFBE1BC4C60 /* SearchInstructionsViewController.swift */; };
-		17A3E9696B1AC25FE86C808E /* Pods_PlacesFinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2067BB299A628DC70B88159D /* Pods_PlacesFinderTests.framework */; };
 		19128C842DD3171E639D0380 /* SearchRatingValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B0E907EE9BC7957E23EE0 /* SearchRatingValueTests.swift */; };
 		192C188F7F6E4FEB0240420B /* SearchEntityModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664DD2BEB49B5AD9464E1C68 /* SearchEntityModelBuilderTests.swift */; };
 		195D7A75C9D82B3FFB9681E1 /* StaticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955490E81A2E483914AEDE0 /* StaticInfoView.swift */; };
@@ -96,7 +95,6 @@
 		22F31D9EDB9F4CF88D4FC20E /* CoordinatorProtocol+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAB3AC2FFBC208E880F7F34 /* CoordinatorProtocol+App.swift */; };
 		231EFF1805EA8E9201378FA0 /* AutoAppLink.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */; };
 		235A20D5FFC4851877A02C9B /* LaunchCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28526B39037CBF87ADDEA15 /* LaunchCoordinator+CoordiNode.autogen.swift */; };
-		23E48EDA4EEA7271AC4A9DBD /* UserDefaultsServiceIntegrationTests.swift.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9D23B01A91C516C55B59BFF /* UserDefaultsServiceIntegrationTests.swift.plist */; };
 		242D06C2D5AF9A5AC19170A5 /* SearchAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8319278AF1E32BCDBE16148B /* SearchAction.swift */; };
 		243BA764AB07FCE1F33D6C52 /* RatingStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D9906D7E327D706C3F1D31 /* RatingStarsView.swift */; };
 		2503AF377D44C35DA1F015C5 /* SearchPreferencesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC5398AFB947DBC6E7983F /* SearchPreferencesState.swift */; };
@@ -276,7 +274,6 @@
 		6CD40C3BE5DDECC08401EB03 /* UITextField+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F37F169D8C288F02725DFA /* UITextField+AppSkin.swift */; };
 		6E5D3286F1A4695F7AE3E052 /* SearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7317019571262C965873F143 /* SearchConfig.swift */; };
 		6E979A369284E4AA3C5CAE39 /* PlaceLookupPageRequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A7DDF3207B0F24DFF9B9C6 /* PlaceLookupPageRequestToken.swift */; };
-		6FA6F27166D0BFE05A9DBC7E /* Pods_PlacesFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCFEB1DC79F1FDB09A444E6 /* Pods_PlacesFinder.framework */; };
 		70BC48D20C74C2D50AC5969B /* AppSkinActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */; };
 		7160F308C5C501C650E1038A /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F27D0DDA08881BB3FF1036 /* HomeCoordinator.swift */; };
 		71793FB2D9FA44243BCD7C4D /* AutoCodable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817D4B92A0E1F005394E665 /* AutoCodable.generated.swift */; };
@@ -285,7 +282,6 @@
 		7239A3DDA974E8E812AD3C5C /* SearchNoResultsFoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A71E5B4AFCDBCB3CC77D32A /* SearchNoResultsFoundViewController.swift */; };
 		72797B223382D9A04715D4D5 /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		7367410873C0BA0C1CCCA123 /* NavigationBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB422026EAEF7FEFE6AF4D /* NavigationBarTitleView.swift */; };
-		73800A8C03ADEF27595DA3B7 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C79231F0106DB18041F121 /* Pods_PlacesFinderIntegrationTests.framework */; };
 		74046AB1CBAF97CFFD055382 /* SearchLocationDisabledViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */; };
 		745ACCF27580DD47543EBB13 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC69B4B508408EA5ACD274D0 /* AppConfig.swift */; };
 		74ACCD51A6C8347AC6B22866 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3F62F2BE7E1593701674EF /* SettingsPresenter.swift */; };
@@ -299,6 +295,7 @@
 		7B09F410F8F72736300AC05A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
 		7B828D86DFE02B5AC146EB1D /* HomeCoordinatorChildFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93682776FF12457425245493 /* HomeCoordinatorChildFactory.swift */; };
 		7BC7FCF37CA4BD5EEBA335F1 /* LaunchStatePrism.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CF1B87BBDAE9DA774EE56 /* LaunchStatePrism.swift */; };
+		7CAFEDF4859FAC7FAD1FBB66 /* Pods_PlacesFinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69ED809D6100CEE709D38FD6 /* Pods_PlacesFinderTests.framework */; };
 		7CE9D621D7304D108A7100D2 /* ChildCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FF307EE29526C6F649EA44 /* ChildCoordinatorProtocol.swift */; };
 		7CF8176AED6B90EFEBF6A937 /* ReachabilityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */; };
 		7D949E50D977ABBB29E45F82 /* SearchResultCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663790D65E009702EFEBC603 /* SearchResultCellModel.swift */; };
@@ -479,6 +476,7 @@
 		C902AFF06E782F5A9A8EAB9C /* SearchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8FAA0532A5EC4C5BDDF03 /* SearchDetailsViewController.swift */; };
 		C92168395D6A2930B4633D6C /* YelpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E979DAF934F98AF614BB58 /* YelpRequestBuilder.swift */; };
 		C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
+		C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */; };
 		C9E3A8ADEC285EE33D2A4009 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
 		CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
@@ -494,6 +492,7 @@
 		CEE436C1608088F2202AD54F /* SearchDetailsPhoneNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319BE046FC8C6E4899D8288C /* SearchDetailsPhoneNumberCell.swift */; };
 		CF3DE0ECA7D3A846B752C318 /* PlaceLookupRequestBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1139F22E04648626B0DA1F2E /* PlaceLookupRequestBuilderProtocol.swift */; };
 		CF3F5424656B8019DE8F67B4 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */; };
+		CFC022103DE8C6C090864B11 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6223EB8B13B95E81146E19C5 /* Pods_PlacesFinderIntegrationTests.framework */; };
 		D031F7252D8B07D6805490A4 /* MeasurementFormatterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */; };
 		D064479650C227A9FA5C666A /* SearchLocationDisabledViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */; };
 		D0D591CA279D05C45E5499B0 /* SearchBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935259BC1F38C6E3208BB06 /* SearchBackgroundViewController.swift */; };
@@ -536,6 +535,7 @@
 		E1B4DE63A3AAD2D467D9D4EB /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A727FA5829A0803638DA112 /* SearchResultCell.swift */; };
 		E1C48C67782E381297AA6790 /* RouterProtocol+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134440C1FEFBA37BBD69429 /* RouterProtocol+App.swift */; };
 		E1DCCBFA9A8FA8768BAF8462 /* SearchChildContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301E4C8CA6F71739EFDAEBB /* SearchChildContainerView.swift */; };
+		E2489C396F4957E0DD3F62D7 /* Pods_PlacesFinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ADC65A642CE6A2139B27B71 /* Pods_PlacesFinderUITests.framework */; };
 		E2C39E7D820B780AC6E4836A /* PlaceLookupServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE221B470A8510956F1458 /* PlaceLookupServiceProtocol.swift */; };
 		E31378CA29AE8617F73EF14D /* StubLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A3440E9DCD5CF3A8DECAB8 /* StubLinkType.swift */; };
 		E326C87A181D2B79C6858305 /* AppSkinActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */; };
@@ -546,7 +546,6 @@
 		E61AD158A829EE13A2F780E5 /* MeasurementFormatterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */; };
 		E6892CD0E5522AC814CACEF0 /* SearchRatingValue+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C1005075D620BB367842E9 /* SearchRatingValue+Image.swift */; };
 		E6931A6F05033254036E4C08 /* LocationAuthAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440F89146188350F08D11F5C /* LocationAuthAction.swift */; };
-		E6D420C04D28C44D29CC50BB /* Pods_PlacesFinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3DAEBFB4C8918425CAF492 /* Pods_PlacesFinderUITests.framework */; };
 		E703F76B9A8DDC041EA2E89D /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2083F686273EFDE519CAC7 /* HomePresenter.swift */; };
 		E788F1A7E16431AEBAAB0B92 /* RouterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294194DDECEFA249C4473B79 /* RouterAction.swift */; };
 		E7994B3F7BB8C73E8989AD7E /* APILogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6D0384799AC47AB81AE976 /* APILogoView.swift */; };
@@ -624,6 +623,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01DF9F8AC8E7DD4FDE8F8A48 /* Pods-PlacesFinderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderUITests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		03691AB9343C4669226B4E57 /* ListenerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerContainer.swift; sourceTree = "<group>"; };
 		03E82E16F0B97C73710EAEF8 /* AutoSearchDetailsSections.stencil */ = {isa = PBXFileReference; path = AutoSearchDetailsSections.stencil; sourceTree = "<group>"; };
 		0415FFEEFB2318C0317D5A6B /* UserDefaultsListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsListenerTests.swift; sourceTree = "<group>"; };
@@ -632,6 +632,7 @@
 		08E063A75A8BE831E6254BD7 /* SettingsColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsColorings.swift; sourceTree = "<group>"; };
 		090527E2EB88476843830131 /* SearchInstructionsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchInstructionsViewModel+Stub.swift"; sourceTree = "<group>"; };
 		09489F6315C0279991770626 /* LocationAuthReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthReducerTests.swift; sourceTree = "<group>"; };
+		0A7D49FA80040CD7E3BF9C02 /* Pods-PlacesFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinder.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		0C81F8E65FC0975E6A9FC50C /* SearchInputContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputContentViewModel.swift; sourceTree = "<group>"; };
 		0CFC5398AFB947DBC6E7983F /* SearchPreferencesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesState.swift; sourceTree = "<group>"; };
 		0DE823A18F7BA7436E039DF3 /* ReachabilityReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityReducerTests.swift; sourceTree = "<group>"; };
@@ -648,12 +649,10 @@
 		18DEC8E07C78D2D040396C16 /* SearchPreferencesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesAction.swift; sourceTree = "<group>"; };
 		1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoViewModel.swift; sourceTree = "<group>"; };
 		1B391C2B59C1A18AAA7A4C0E /* SearchResultViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelBuilderTests.swift; sourceTree = "<group>"; };
-		1BCFEB1DC79F1FDB09A444E6 /* Pods_PlacesFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityListener.swift; sourceTree = "<group>"; };
 		1DA4E3D46B78E975BC75AB3D /* MockStore+SearchAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockStore+SearchAction.swift"; sourceTree = "<group>"; };
 		1F660EAC4A5CEA5344D7CB78 /* MockAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppStore.swift; sourceTree = "<group>"; };
 		2060719B75D4DAF75DC1C1AD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		2067BB299A628DC70B88159D /* Pods_PlacesFinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A3440E9DCD5CF3A8DECAB8 /* StubLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubLinkType.swift; sourceTree = "<group>"; };
 		20AA98ED425B854B9136E7DC /* AppChildCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChildCoordinatorTests.swift; sourceTree = "<group>"; };
 		2124A70556DC684DA54CF3E8 /* ReachabilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityState.swift; sourceTree = "<group>"; };
@@ -693,13 +692,11 @@
 		388792B263033570D84E0515 /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLinkPayload.swift; sourceTree = "<group>"; };
 		3A71E5B4AFCDBCB3CC77D32A /* SearchNoResultsFoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoResultsFoundViewController.swift; sourceTree = "<group>"; };
-		3CD121CC74818E161FFBAE59 /* Pods-PlacesFinderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderUITests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3ADC65A642CE6A2139B27B71 /* Pods_PlacesFinderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D2083F686273EFDE519CAC7 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		3D693F799436FB827B7A0844 /* SearchBackgroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBackgroundViewModel.swift; sourceTree = "<group>"; };
 		3DE37A700A9F021F9B3CF1F7 /* SearchDistanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistanceTests.swift; sourceTree = "<group>"; };
 		3EB78D865B34361E193BC4BD /* AppCoordinatorChildFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorChildFactory.swift; sourceTree = "<group>"; };
-		40DAD7032C9F8A9E076FC7B6 /* Pods-PlacesFinderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderUITests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		41C79231F0106DB18041F121 /* Pods_PlacesFinderIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41D882899960626D3450C6D1 /* SettingsUnitsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsHeaderViewModel.swift; sourceTree = "<group>"; };
 		42B98DCE9C29D1AC87688363 /* YelpRequestConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestConfig.swift; sourceTree = "<group>"; };
 		42BB3B49F64C7A1E7064ABD4 /* AppColoringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColoringProtocol.swift; sourceTree = "<group>"; };
@@ -744,32 +741,33 @@
 		5F03EEFEC951DBBFE4B27040 /* LaunchStatePrismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatePrismTests.swift; sourceTree = "<group>"; };
 		5FC643B4AB50C613F635E2C1 /* ReachabilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityAction.swift; sourceTree = "<group>"; };
 		61B11EC86D266FFBE1BC4C60 /* SearchInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsViewController.swift; sourceTree = "<group>"; };
+		6223EB8B13B95E81146E19C5 /* Pods_PlacesFinderIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62274A543BD62B1216E20E7F /* Pods-PlacesFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinder.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder.release.xcconfig"; sourceTree = "<group>"; };
 		6301E4C8CA6F71739EFDAEBB /* SearchChildContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChildContainerView.swift; sourceTree = "<group>"; };
 		63949A3C06FE0006666E06A3 /* AppCopyContentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCopyContentState.swift; sourceTree = "<group>"; };
 		64638B8A363ADA77F021686C /* SearchCopyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCopyFormatter.swift; sourceTree = "<group>"; };
-		649373094E030E79BBBCBB68 /* Pods-PlacesFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinder.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder.release.xcconfig"; sourceTree = "<group>"; };
 		663790D65E009702EFEBC603 /* SearchResultCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModel.swift; sourceTree = "<group>"; };
 		664DD2BEB49B5AD9464E1C68 /* SearchEntityModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntityModelBuilderTests.swift; sourceTree = "<group>"; };
 		664F256C934B5B4A349BD9EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6988CFCEE7149EB7B860939B /* SettingsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellViewModel.swift; sourceTree = "<group>"; };
 		69A85B6105111602DBD5A8DE /* SearchLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLinkPayload.swift; sourceTree = "<group>"; };
+		69ED809D6100CEE709D38FD6 /* Pods_PlacesFinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4F211A48D9CAE203B6539A /* SettingsUnitsHeaderViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsHeaderViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		6A727FA5829A0803638DA112 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		6AAB3AC2FFBC208E880F7F34 /* CoordinatorProtocol+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorProtocol+App.swift"; sourceTree = "<group>"; };
 		6D069CBCFB2B4F83F31B4ADA /* AutoCodable.swifttemplate */ = {isa = PBXFileReference; path = AutoCodable.swifttemplate; sourceTree = "<group>"; };
+		6D7116AB78865ABE16A4A5D1 /* Pods-PlacesFinderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsSectionProtocol.swift; sourceTree = "<group>"; };
 		6DB426CBC6CFD247D55616D8 /* AppLinkTypeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkTypeBuilderTests.swift; sourceTree = "<group>"; };
 		6E7FFBD1D29F804E19CC1301 /* PlacesFinderIntegrationTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesFinderIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		707ACE43DB44856707F26C2C /* YelpRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestService.swift; sourceTree = "<group>"; };
 		70F9CB66F411E9B113942601 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		7317019571262C965873F143 /* SearchConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConfig.swift; sourceTree = "<group>"; };
-		75599816BFBDD7742AE00E4A /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderIntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		77879B5217696A51424CDCA6 /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		77E533322B90E4AA741D00F0 /* AppSkinState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinState.swift; sourceTree = "<group>"; };
 		780522681B9CB08811EA7D1D /* SearchDetailsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchDetailsViewModel+Stub.swift"; sourceTree = "<group>"; };
 		78A7DDF3207B0F24DFF9B9C6 /* PlaceLookupPageRequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLookupPageRequestToken.swift; sourceTree = "<group>"; };
 		797D4B7D98BE9E76E4871F08 /* SearchActionCreatorInitialPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchActionCreatorInitialPageTests.swift; sourceTree = "<group>"; };
-		7A3DAEBFB4C8918425CAF492 /* Pods_PlacesFinderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AC75B7F78A371D9C457E9DD /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		7ACE9988BCCEA9C77AEF9F93 /* SearchResultCellModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultCellModel+Stub.swift"; sourceTree = "<group>"; };
 		7AF76F9AAD467EB55736ECF7 /* PlacesFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlacesFinder.entitlements; sourceTree = "<group>"; };
@@ -792,7 +790,7 @@
 		8D16663401B46D796AAB6633 /* AppSkinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinService.swift; sourceTree = "<group>"; };
 		8E04ABD7FCF9A719BCFFA93B /* TabCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		8ECBEF10B69FF1F77397E551 /* SettingsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionViewModelTests.swift; sourceTree = "<group>"; };
-		8FA77414AFA799169311C5F2 /* Pods-PlacesFinderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.release.xcconfig"; sourceTree = "<group>"; };
+		8F67501679CE299D7FCBF59A /* Pods-PlacesFinderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderUITests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9053097469D52963A586380F /* UIView+Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Skeleton.swift"; sourceTree = "<group>"; };
 		917740B6A62EA050BACF1D8C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		91D20ADAB653F6239C94E423 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Settings.bundle; sourceTree = "<group>"; };
@@ -802,6 +800,7 @@
 		94DE12507E49A40CA6381D6E /* SearchLookupParentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupParentController.swift; sourceTree = "<group>"; };
 		970BAB9CBB60ED41C9DBD701 /* SearchParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParams.swift; sourceTree = "<group>"; };
 		981A12C73777DE2DA7C7955E /* PlaceLookupResponse+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceLookupResponse+Stub.swift"; sourceTree = "<group>"; };
+		98D3B46A4A74820E2D4C57C3 /* Pods-PlacesFinderIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderIntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		9912A0DE6911F8217574DCDD /* SearchDetailsMapSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsMapSectionViewModel.swift; sourceTree = "<group>"; };
 		9A815D6974649A96F8CF360B /* HomeCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorTests.swift; sourceTree = "<group>"; };
 		9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthStatus.swift; sourceTree = "<group>"; };
@@ -821,7 +820,6 @@
 		A69EA999B0F89F38C6FF532E /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContainerSplitControllers.swift; sourceTree = "<group>"; };
 		A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
-		A825932AB61B7A6E6C68CA1C /* Pods-PlacesFinderIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderIntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		A9E979DAF934F98AF614BB58 /* YelpRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestBuilder.swift; sourceTree = "<group>"; };
 		AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMeasurementSystemHeaderView.swift; sourceTree = "<group>"; };
 		ACE0FF6E52942753A0C91734 /* SearchDetailsViewContextBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewContextBuilderTests.swift; sourceTree = "<group>"; };
@@ -840,13 +838,11 @@
 		B935259BC1F38C6E3208BB06 /* SearchBackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBackgroundViewController.swift; sourceTree = "<group>"; };
 		B96279A6EBABA8B65C11C8D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B98C92D92983EBED05311A44 /* SearchStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStateTests.swift; sourceTree = "<group>"; };
-		B9D23B01A91C516C55B59BFF /* UserDefaultsServiceIntegrationTests.swift.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = UserDefaultsServiceIntegrationTests.swift.plist; sourceTree = "<group>"; };
 		BA91DF17B485F196486C0380 /* AppCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		BB0E41795D8F0CF032447E21 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		BB75D8B9F5872DFC76763E14 /* SearchStatePrismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatePrismTests.swift; sourceTree = "<group>"; };
 		BB75F6BC29698CE58697AC44 /* SearchNoResultsFoundViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoResultsFoundViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		BD69FFB934A77001F020D2E8 /* AppLinkTypeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkTypeBuilder.swift; sourceTree = "<group>"; };
-		C1C06DBB5F8086A47AF2B07C /* Pods-PlacesFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinder.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		C3F90019F1DCF09F3AEC47C1 /* SearchInputContentViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchInputContentViewModel+Stub.swift"; sourceTree = "<group>"; };
 		C49B4A7D5C3007BA2FA2E767 /* LaunchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		C5F27D0DDA08881BB3FF1036 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -864,6 +860,7 @@
 		CFF24353B57755101F348001 /* SettingsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarTitleViewModel.swift; sourceTree = "<group>"; };
 		D10C29A2462FDF1D9887D537 /* FakeSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSearchRequest.swift; sourceTree = "<group>"; };
+		D1AE94261A59C26202561A10 /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderIntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D289B192ED1C0E4D2631DAC1 /* SettingsSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionViewModel.swift; sourceTree = "<group>"; };
 		D2B831186C14DDB433FA4A49 /* XCTestCase+Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Element.swift"; sourceTree = "<group>"; };
 		D52CE3EE9D873B3373B2FCEE /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
@@ -887,10 +884,10 @@
 		E36375BA5B33146D78A43072 /* AppCopyContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCopyContent.swift; sourceTree = "<group>"; };
 		E5123CAB7B074A3E569E3812 /* SearchLookupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupViewModel.swift; sourceTree = "<group>"; };
 		E5F5EA755ACB21AE959FA234 /* SearchPrimaryViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPrimaryViewControllerProtocol.swift; sourceTree = "<group>"; };
-		E6295BF7299B8BBA62127DAA /* Pods-PlacesFinderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7E87AE8C6F951E00360C862 /* SearchResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModel.swift; sourceTree = "<group>"; };
 		E81F7224EAF2F7443F00F1CA /* AutoAppLink.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAppLink.generated.swift; sourceTree = "<group>"; };
 		E9E648568CCF9F978E01146A /* EquatableKeyPath+AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EquatableKeyPath+AppState.swift"; sourceTree = "<group>"; };
+		EB105BFECA93346DB7FA6A49 /* Pods-PlacesFinderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.release.xcconfig"; sourceTree = "<group>"; };
 		ECA6BAD70844CC0FC8E13E2B /* SearchDetailsInfoSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsInfoSectionViewModel.swift; sourceTree = "<group>"; };
 		ECBE221B470A8510956F1458 /* PlaceLookupServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLookupServiceProtocol.swift; sourceTree = "<group>"; };
 		EDA3861D26E2312C44BFF15C /* SearchCTAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCTAView.swift; sourceTree = "<group>"; };
@@ -905,6 +902,7 @@
 		F65621D9A537F5F496020B0E /* LocationAuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthState.swift; sourceTree = "<group>"; };
 		F6BEE0561701E9A26D30A79E /* SearchNoInternetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoInternetViewController.swift; sourceTree = "<group>"; };
 		F73B0E907EE9BC7957E23EE0 /* SearchRatingValueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRatingValueTests.swift; sourceTree = "<group>"; };
+		F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DBA960C25CAFEC63D7BF2F /* SearchDetailsViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewContext.swift; sourceTree = "<group>"; };
 		F9D445CADEBB61BCFAFA05FC /* SearchActionPrismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchActionPrismTests.swift; sourceTree = "<group>"; };
 		FBCA3B50CAC57A5A4C3617AD /* AppColorings+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppColorings+Defaults.swift"; sourceTree = "<group>"; };
@@ -914,35 +912,35 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3223504AA986CBA6086C234D /* Frameworks */ = {
+		115F18F73D075340D8786116 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6D420C04D28C44D29CC50BB /* Pods_PlacesFinderUITests.framework in Frameworks */,
+				7CAFEDF4859FAC7FAD1FBB66 /* Pods_PlacesFinderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79FB5E2B0D53F98561E5A8B0 /* Frameworks */ = {
+		7D1715F9564889F39A9E5AC9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73800A8C03ADEF27595DA3B7 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */,
+				CFC022103DE8C6C090864B11 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C19B2FC985676104172473DF /* Frameworks */ = {
+		A09D2550A9C7F863311DEAF1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17A3E9696B1AC25FE86C808E /* Pods_PlacesFinderTests.framework in Frameworks */,
+				E2489C396F4957E0DD3F62D7 /* Pods_PlacesFinderUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DBDBA4DA197C804B3CD4CB8B /* Frameworks */ = {
+		EAAFDE85F70E446121B0C623 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FA6F27166D0BFE05A9DBC7E /* Pods_PlacesFinder.framework in Frameworks */,
+				C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,6 +955,17 @@
 				DF53AD5C147F4FC9058FEA7E /* Info.plist */,
 			);
 			path = PlacesFinderTests;
+			sourceTree = "<group>";
+		};
+		05F4FDE340BFA3D428114980 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */,
+				6223EB8B13B95E81146E19C5 /* Pods_PlacesFinderIntegrationTests.framework */,
+				69ED809D6100CEE709D38FD6 /* Pods_PlacesFinderTests.framework */,
+				3ADC65A642CE6A2139B27B71 /* Pods_PlacesFinderUITests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		06064785AFEED3DB8A8DDEBF /* PlacesFinderIntegrationTests */ = {
@@ -992,17 +1001,6 @@
 				0DE823A18F7BA7436E039DF3 /* ReachabilityReducerTests.swift */,
 			);
 			path = Reachability;
-			sourceTree = "<group>";
-		};
-		0E1CA5CCF27C202CA3FFC65F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1BCFEB1DC79F1FDB09A444E6 /* Pods_PlacesFinder.framework */,
-				41C79231F0106DB18041F121 /* Pods_PlacesFinderIntegrationTests.framework */,
-				2067BB299A628DC70B88159D /* Pods_PlacesFinderTests.framework */,
-				7A3DAEBFB4C8918425CAF492 /* Pods_PlacesFinderUITests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		0EC68EA2F06DA9D99723DB1D /* Yelp */ = {
@@ -1045,22 +1043,6 @@
 				08E063A75A8BE831E6254BD7 /* SettingsColorings.swift */,
 			);
 			path = Styling;
-			sourceTree = "<group>";
-		};
-		195CD529ED83B87C92A352A8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C1C06DBB5F8086A47AF2B07C /* Pods-PlacesFinder.debug.xcconfig */,
-				649373094E030E79BBBCBB68 /* Pods-PlacesFinder.release.xcconfig */,
-				75599816BFBDD7742AE00E4A /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */,
-				A825932AB61B7A6E6C68CA1C /* Pods-PlacesFinderIntegrationTests.release.xcconfig */,
-				E6295BF7299B8BBA62127DAA /* Pods-PlacesFinderTests.debug.xcconfig */,
-				8FA77414AFA799169311C5F2 /* Pods-PlacesFinderTests.release.xcconfig */,
-				40DAD7032C9F8A9E076FC7B6 /* Pods-PlacesFinderUITests.debug.xcconfig */,
-				3CD121CC74818E161FFBAE59 /* Pods-PlacesFinderUITests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		1AC3F9C4BC3A205E73062C05 /* Output */ = {
@@ -1467,7 +1449,6 @@
 			isa = PBXGroup;
 			children = (
 				2F939B6FD9252941A676BDE1 /* UserDefaultsServiceIntegrationTests.swift */,
-				B9D23B01A91C516C55B59BFF /* UserDefaultsServiceIntegrationTests.swift.plist */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1650,6 +1631,22 @@
 				9053097469D52963A586380F /* UIView+Skeleton.swift */,
 			);
 			path = Styling;
+			sourceTree = "<group>";
+		};
+		885F101512DFE5F7F919AD9E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0A7D49FA80040CD7E3BF9C02 /* Pods-PlacesFinder.debug.xcconfig */,
+				62274A543BD62B1216E20E7F /* Pods-PlacesFinder.release.xcconfig */,
+				D1AE94261A59C26202561A10 /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */,
+				98D3B46A4A74820E2D4C57C3 /* Pods-PlacesFinderIntegrationTests.release.xcconfig */,
+				6D7116AB78865ABE16A4A5D1 /* Pods-PlacesFinderTests.debug.xcconfig */,
+				EB105BFECA93346DB7FA6A49 /* Pods-PlacesFinderTests.release.xcconfig */,
+				01DF9F8AC8E7DD4FDE8F8A48 /* Pods-PlacesFinderUITests.debug.xcconfig */,
+				8F67501679CE299D7FCBF59A /* Pods-PlacesFinderUITests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		8BED54EFBD32DE79F4866F18 /* PrimaryView */ = {
@@ -2065,8 +2062,8 @@
 				03EBB14FAEF2F205F43D1306 /* PlacesFinderTests */,
 				1D2129503CBDC617BE3BFCD6 /* PlacesFinderUITests */,
 				5629D061D9A6C2237F68BB91 /* Products */,
-				195CD529ED83B87C92A352A8 /* Pods */,
-				0E1CA5CCF27C202CA3FFC65F /* Frameworks */,
+				885F101512DFE5F7F919AD9E /* Pods */,
+				05F4FDE340BFA3D428114980 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2234,11 +2231,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A933A21F4BB1ADEF3C09FD55 /* Build configuration list for PBXNativeTarget "PlacesFinderUITests" */;
 			buildPhases = (
-				ADAD9380871E43A5172EDBD1 /* [CP] Check Pods Manifest.lock */,
+				38EBCC64AC09908B646B7855 /* [CP] Check Pods Manifest.lock */,
 				6BAE4162DF87C142B19302D3 /* Sources */,
 				81D03AA5BF8F02239C1149A1 /* Resources */,
-				3223504AA986CBA6086C234D /* Frameworks */,
-				660DD82894673A39A03B778B /* [CP] Embed Pods Frameworks */,
+				A09D2550A9C7F863311DEAF1 /* Frameworks */,
+				5162F49F8549D1C4441F1831 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2254,12 +2251,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 56668C0E8BE3AD952451F908 /* Build configuration list for PBXNativeTarget "PlacesFinder" */;
 			buildPhases = (
-				244656122A8FF5E25CE98B0C /* [CP] Check Pods Manifest.lock */,
+				8C7ED3C8737B43DB66F2109F /* [CP] Check Pods Manifest.lock */,
 				9D08C2F61AC9DE88423EA681 /* Sources */,
 				C23D03EB93B65EB53136D0CA /* SwiftLint */,
 				A8B02D2FD245808FE67C7B0B /* Resources */,
-				DBDBA4DA197C804B3CD4CB8B /* Frameworks */,
-				31C61E95EFBAB224A25D8364 /* [CP] Embed Pods Frameworks */,
+				EAAFDE85F70E446121B0C623 /* Frameworks */,
+				E1647C463E0AB33C3D7B64E6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2274,11 +2271,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B992B4D4BF6311323FC02542 /* Build configuration list for PBXNativeTarget "PlacesFinderIntegrationTests" */;
 			buildPhases = (
-				8A45EC70CA31A1D7CF43598C /* [CP] Check Pods Manifest.lock */,
+				36C4BB6153BE38D9527D5C64 /* [CP] Check Pods Manifest.lock */,
 				5DE415F4EF891D935EC325C1 /* Sources */,
 				481898F28A5941A78EE1F6ED /* Resources */,
-				79FB5E2B0D53F98561E5A8B0 /* Frameworks */,
-				C6981BE9F3570906FC93FE5C /* [CP] Embed Pods Frameworks */,
+				7D1715F9564889F39A9E5AC9 /* Frameworks */,
+				AB8C214AB9C1C8EDA9972F29 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2293,11 +2290,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 31109D3B7D605E5758EE1EAD /* Build configuration list for PBXNativeTarget "PlacesFinderTests" */;
 			buildPhases = (
-				F2A5358A46653C01798E0D77 /* [CP] Check Pods Manifest.lock */,
+				8DD2CB2EBE4E230098642EDC /* [CP] Check Pods Manifest.lock */,
 				C64434BB7C89E4EA8BB6D740 /* Sources */,
 				88DC7018B03B19C7AD4398E8 /* Resources */,
-				C19B2FC985676104172473DF /* Frameworks */,
-				119E362D1497DFEBB6E97E27 /* [CP] Embed Pods Frameworks */,
+				115F18F73D075340D8786116 /* Frameworks */,
+				174279A1FF6DC6948919AED2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2386,7 +2383,6 @@
 				C10B2576DF8BC71266ECC2AD /* LaunchScreen.storyboard in Resources */,
 				F5D6625980FE4993A0FFEDDE /* ModuleStructure.yml in Resources */,
 				2B30E72B6BDE3F1BD82BC40F /* Settings.bundle in Resources */,
-				23E48EDA4EEA7271AC4A9DBD /* UserDefaultsServiceIntegrationTests.swift.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2410,7 +2406,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		119E362D1497DFEBB6E97E27 /* [CP] Embed Pods Frameworks */ = {
+		174279A1FF6DC6948919AED2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2427,63 +2423,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		244656122A8FF5E25CE98B0C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PlacesFinder-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		31C61E95EFBAB224A25D8364 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		660DD82894673A39A03B778B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A45EC70CA31A1D7CF43598C /* [CP] Check Pods Manifest.lock */ = {
+		36C4BB6153BE38D9527D5C64 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2505,7 +2445,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ADAD9380871E43A5172EDBD1 /* [CP] Check Pods Manifest.lock */ = {
+		38EBCC64AC09908B646B7855 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2527,7 +2467,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C23D03EB93B65EB53136D0CA /* SwiftLint */ = {
+		5162F49F8549D1C4441F1831 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C7ED3C8737B43DB66F2109F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2535,34 +2492,21 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = SwiftLint;
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PlacesFinder-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$PROJECT_DIR\"\nmint run realm/SwiftLint swiftlint\n";
-		};
-		C6981BE9F3570906FC93FE5C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F2A5358A46653C01798E0D77 /* [CP] Check Pods Manifest.lock */ = {
+		8DD2CB2EBE4E230098642EDC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2582,6 +2526,58 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB8C214AB9C1C8EDA9972F29 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C23D03EB93B65EB53136D0CA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$PROJECT_DIR\"\nmint run realm/SwiftLint swiftlint\n";
+		};
+		E1647C463E0AB33C3D7B64E6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3326,7 +3322,7 @@
 		};
 		56CDE19622B04523670B6FE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6295BF7299B8BBA62127DAA /* Pods-PlacesFinderTests.debug.xcconfig */;
+			baseConfigurationReference = 6D7116AB78865ABE16A4A5D1 /* Pods-PlacesFinderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
@@ -3343,7 +3339,7 @@
 		};
 		69711740988F716002126603 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FA77414AFA799169311C5F2 /* Pods-PlacesFinderTests.release.xcconfig */;
+			baseConfigurationReference = EB105BFECA93346DB7FA6A49 /* Pods-PlacesFinderTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
@@ -3360,7 +3356,7 @@
 		};
 		7628F1EE40FEBFDED4F1245D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A825932AB61B7A6E6C68CA1C /* Pods-PlacesFinderIntegrationTests.release.xcconfig */;
+			baseConfigurationReference = 98D3B46A4A74820E2D4C57C3 /* Pods-PlacesFinderIntegrationTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
@@ -3377,7 +3373,7 @@
 		};
 		976B8CF5EF0CCB7D3E0572B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 75599816BFBDD7742AE00E4A /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */;
+			baseConfigurationReference = D1AE94261A59C26202561A10 /* Pods-PlacesFinderIntegrationTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
@@ -3409,7 +3405,7 @@
 		};
 		B70BA4115821937BB1B7A9F2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CD121CC74818E161FFBAE59 /* Pods-PlacesFinderUITests.release.xcconfig */;
+			baseConfigurationReference = 8F67501679CE299D7FCBF59A /* Pods-PlacesFinderUITests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
@@ -3427,7 +3423,7 @@
 		};
 		BFC40F9FD6EAE799BF804362 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40DAD7032C9F8A9E076FC7B6 /* Pods-PlacesFinderUITests.debug.xcconfig */;
+			baseConfigurationReference = 01DF9F8AC8E7DD4FDE8F8A48 /* Pods-PlacesFinderUITests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
