@@ -24,6 +24,7 @@
 
 import XCTest
 
+// More info: https://masilotti.com/test-deep-links-with-ui-testing/
 class SafariHandler {
 
     private let safariApp: XCUIApplication
@@ -37,7 +38,12 @@ class SafariHandler {
     }
 
     func openLink(_ link: String) {
-        safariApp.textFields["Search or enter website name"].tap()
+        safariApp.descendants(matching: .any)["URL"].tap()
+        if safariApp.buttons["Continue"].exists {
+            // Dismiss the "Slide to Type" popup
+            safariApp.buttons["Continue"].tap()
+        }
+
         safariApp.typeText(link)
         safariApp.keyboards.buttons["Go"].tap()
 

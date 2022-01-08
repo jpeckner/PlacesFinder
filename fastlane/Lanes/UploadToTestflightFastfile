@@ -74,7 +74,7 @@ lane :upload_build_to_testflight do
   )
   
   build_ios_app(
-    workspace: PLACESFINDER_WORKSPACE,
+    workspace: PLACESFINDER_WORKSPACE_PATH,
     scheme: PLACESFINDER_RELEASE_SCHEME,
     include_bitcode: true,
     output_directory: GYM_FOLDER_PATH,
