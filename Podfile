@@ -26,13 +26,14 @@ target 'PlacesFinder' do
     pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'master'
     pod 'Nimble'
     pod 'Quick'
-    # Note: these need to point to master to workaround podspec limitations
     pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
     pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
   end
 
   target 'PlacesFinderIntegrationTests' do
     inherit! :search_paths
+
+    common_pods
 
     pod 'Nimble'
     pod 'Quick'
@@ -41,6 +42,8 @@ target 'PlacesFinder' do
 
   target 'PlacesFinderUITests' do
     inherit! :search_paths
+
+    common_pods
 
     pod 'Swifter'
   end
