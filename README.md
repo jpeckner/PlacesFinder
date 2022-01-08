@@ -17,18 +17,10 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 1. Install the following tools if your system doesn't have them already:
     * [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
     * [Mint](https://github.com/yonaskolb/Mint)
-    * [Bundler](https://bundler.io/) (optional but recommended; include `bundle exec` in all commands below if you have Bundler)
-1. Run `bundle install` to install the dependencies listed in the Gemfile.
+    * [Bundler](https://bundler.io/)
 1. Clone the PlacesFinder repo onto your system.
-
-### Generating Workspace
-1. To generate the .xcworkspace file and other generated files, run:
-   ```
-   $ [bundle exec] fastlane generate_placesfinder
-   ```
-   *PlacesFinder uses [XcodeGen](https://github.com/yonaskolb/XcodeGen), [Sourcery](https://github.com/krzysztofzablocki/Sourcery), and other tools for generating boilerplate files; these files are intentionally not committed in Git and instead must be generated using this step.*
-1. Open `PlacesFinder.xcworkspace` in Xcode 10.2 or later.
-1. Verify that the `PlacesFinder-Debug` scheme builds and its tests pass successfully.
+1. Run `$ bundle install` to install the dependencies listed in the Gemfile.
+1. Run `$ bundle exec pod install` to install CocoaPods dependencies.
 
 ### Running PlacesFinder
 1. In order to display results from the Yelp Fusion API in PlacesFinder, you'll need to provide it with an API key from Yelp. You can [obtain a limited daily-use token](https://www.yelp.com/developers/documentation/v3/authentication) for free.
@@ -36,9 +28,10 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
    ```
    $ cd root/of/PlacesFinder/repo
    $ echo "PLACE_LOOKUP_KEY=value_of_your_API_key" >> fastlane/.env
-   $ [bundle exec] fastlane generate_placesfinder
+   $ bundle exec fastlane generate_placesfinder
    ```
-1. Build and run PlacesFinder; searching should now display results.
+1. Open `PlacesFinder.xcworkspace` in Xcode 12.0 or later.
+1. Build and run PlacesFinder; searching will correctly display results. (The app will also run without a valid API key, but searching won't work.)
 
    > NOTE: an app intended for App Store deployment (which PlacesFinder is not!) should NEVER bundle or be sent a globally-used private key. Instead, the app's own backend should manage private keys for external services such as Yelp, and provide authenticated client apps with limited-use tokens (such as OAuth tokens).
 
@@ -60,7 +53,7 @@ To use a deep link scheme:
    > NOTE: a business or organization with a website should use [universal links](https://developer.apple.com/ios/universal-links/) rather than a [custom URL scheme](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app). However, this in no way lessens the usefulness of PlacesFinder's deep link handling, as there is no significant difference between how it would handle a universal link versus a custom URL scheme link.
 
 ### Running CI Tests
-PlacesFinder includes a full suite of CI tests, which can be run via `[bundle exec] fastlane ci_tests`.
+PlacesFinder includes a full suite of CI tests, which can be run via `bundle exec fastlane ci_tests`.
 These include UI tests which run against a local HTTP server, at `http://localhost`, using [swifter](https://github.com/httpswift/swifter).
 
    * By default, the server runs on port 8080, but you can change the port in your fastlane/.env file as follows:
