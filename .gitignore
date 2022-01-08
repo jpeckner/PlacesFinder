@@ -22,7 +22,6 @@ fastlane/Build
 
 PlacesFinder.xcworkspace/xcshareddata
 PlacesFinder.xcworkspace/xcuserdata
-PlacesFinder/Config/AppConfig.plist
 PlacesFinder/Settings.bundle/Root.plist
 
 ##### Slather #####
