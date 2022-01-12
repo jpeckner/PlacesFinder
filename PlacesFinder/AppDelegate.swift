@@ -94,10 +94,13 @@ private extension AppDelegate.TChildFactory {
     convenience init(appConfig: AppConfig) {
         let userDefaultsService = UserDefaultsService(userDefaults: .standard)
         let appCopyContent = AppCopyContent(displayName: appConfig.displayName)
+        let locationAuthManager = CLLocationManager()
         let store = Store<AppState>(userDefaultsService: userDefaultsService,
+                                    locationAuthManager: locationAuthManager,
                                     appCopyContent: appCopyContent)
 
         let listenerContainer = ListenerContainer(store: store,
+                                                  locationAuthManager: locationAuthManager,
                                                   userDefaultsService: userDefaultsService)
 
         let serviceContainer = ServiceContainer(appConfig: appConfig,
@@ -119,6 +122,7 @@ private extension AppDelegate.TChildFactory {
 private extension Store where State == AppState {
 
     convenience init(userDefaultsService: UserDefaultsServiceProtocol,
+                     locationAuthManager: CLLocationManager,
                      appCopyContent: AppCopyContent) {
         let searchPreferencesState =
             (try? userDefaultsService.getSearchPreferences()).map { stored in
@@ -127,7 +131,7 @@ private extension Store where State == AppState {
             ?? SearchPreferencesState(usesMetricSystem: Locale.current.usesMetricSystem)
         let initialState = AppState(
             appCopyContent: appCopyContent,
-            locationAuthStatus: CLLocationManager.authorizationStatus().authStatus(),
+            locationAuthStatus: locationAuthManager.authorizationStatus.authStatus(),
             currentRouterNode: AppCoordinatorNode.nodeBox,
             searchPreferencesState: searchPreferencesState
         )
@@ -143,9 +147,10 @@ private extension Store where State == AppState {
 private extension ListenerContainer {
 
     init(store: Store<AppState>,
+         locationAuthManager: CLLocationManagerAuthProtocol,
          userDefaultsService: UserDefaultsServiceProtocol) {
         self.locationAuthListener = LocationAuthListener(store: store,
-                                                         locationAuthManager: CLLocationManager())
+                                                         locationAuthManager: locationAuthManager)
 
         // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
         // rather than a less specific error), but the app still functions correctly on the off-chance that

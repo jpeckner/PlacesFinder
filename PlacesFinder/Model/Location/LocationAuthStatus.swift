@@ -39,7 +39,7 @@ extension CLAuthorizationStatus {
             return .notDetermined
         case .authorizedAlways:
             assertionHandler.performAssertionFailure { "Unexpectedly received .authorizedAlways status" }
-            fallthrough
+            return .locationServicesEnabled
         case .authorizedWhenInUse:
             return .locationServicesEnabled
         case .denied,

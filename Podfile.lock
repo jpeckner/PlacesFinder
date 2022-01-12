@@ -2,14 +2,14 @@ PODS:
   - CoordiNode (1.0.4)
   - CoordiNodeTestComponents (1.0.4):
     - CoordiNode (= 1.0.4)
-  - Kingfisher (7.0.0)
+  - Kingfisher (7.1.2)
   - Nimble (9.2.1)
   - Quick (4.0.0)
   - ReachabilitySwift (5.0.0)
   - Shared (1.1.7)
   - SharedTestComponents (1.1.7):
     - Shared (= 1.1.7)
-  - SkeletonView (1.25.1)
+  - SkeletonView (1.29.1)
   - SnapKit (5.0.1)
   - SwiftDux (1.1.3)
   - SwiftDuxTestComponents (1.1.3):
@@ -32,7 +32,7 @@ DEPENDENCIES:
   - Swifter
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Kingfisher
     - Nimble
     - Quick
@@ -84,18 +84,18 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CoordiNode: 8bf9e5e745e349f6bb1ec0adce322a28ba6b740f
   CoordiNodeTestComponents: 0018e4562b38b1cf77705508cd829547d25c764e
-  Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Shared: d1cdb448344513e41c844b9620d947b18108beb0
   SharedTestComponents: 55ea877438f4ec1275fb5c2e5925936f9466c093
-  SkeletonView: 77079530e1348a72f48b79ae30dcb966c1b18b6a
+  SkeletonView: e2667ec83098a438eff6279fbaa49d2865b7af23
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftDux: bbe7d0feebb8369c2893c4da6fd8257f2c863ddc
   SwiftDuxTestComponents: a6d52dd53d84113074257d33e6ed579f3dd0715b
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
 
-PODFILE CHECKSUM: 66c09d17d37a73bfb06aa18f6bc8a2bd34f9beff
+PODFILE CHECKSUM: cfc8498b0a0450a93dbf4e630666049806050d93
 
 COCOAPODS: 1.11.2

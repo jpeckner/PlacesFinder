@@ -1,6 +1,5 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 ensure_bundler!
 
 def common_pods
