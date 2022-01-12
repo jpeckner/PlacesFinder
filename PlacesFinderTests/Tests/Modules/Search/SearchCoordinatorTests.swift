@@ -136,7 +136,7 @@ class SearchCoordinatorTests: QuickSpec {
                     beforeEach {
                         mockStatePrism.presentationKeyPaths = []
                         mockStatePrism.presentationTypeForReturnValue =
-                            .search(IgnoredEquatable(.locationServicesEnabled(requestBlock: { _ in })))
+                            .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
 
                         verificationBlock = self.verifyNoDispatches(from: mockStore) {
                             coordinator.newState(state: AppState.stubValue(),
@@ -331,7 +331,7 @@ class SearchCoordinatorTests: QuickSpec {
                         )
                         mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchState)]
                         mockStatePrism.presentationTypeForReturnValue =
-                            .search(IgnoredEquatable(.locationServicesEnabled(requestBlock: { _ in })))
+                            .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
 
                         coordinator.newState(state: state,
                                              updatedSubstates: [\AppState.searchState])

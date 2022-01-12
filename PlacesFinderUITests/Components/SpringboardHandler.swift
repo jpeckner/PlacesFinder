@@ -54,17 +54,11 @@ class SpringboardHandler {
             return
         }
 
-        if #available(iOS 13.0, *) {
-            deleteiOS13App(displayName)
-        } else {
-            deletePreiOS13App(icon,
-                              displayName: displayName)
-        }
+        deleteApp(displayName)
     }
 
     // Source: https://stackoverflow.com/a/58696197/1342984
-    @available(iOS 13.0, *)
-    private func deleteiOS13App(_ displayName: String) {
+    private func deleteApp(_ displayName: String) {
         Thread.sleep(forTimeInterval: 1.0)
         let appIcon = springboardApp.icons.matching(identifier: displayName).firstMatch
         appIcon.press(forDuration: 1.3)
@@ -76,22 +70,6 @@ class SpringboardHandler {
         if deleteButton.waitForExistence(timeout: 5) {
             deleteButton.tap()
         }
-    }
-
-    // Source: https://stackoverflow.com/a/36168101/1342984
-    private func deletePreiOS13App(_ icon: XCUIElement,
-                                   displayName: String) {
-        let iconFrame = icon.frame
-        let springboardFrame = springboardApp.frame
-        icon.press(forDuration: 1.3)
-
-        // Tap the little "X" button at approximately where it is. The X is not exposed directly.
-        let offset = CGVector(dx: (iconFrame.minX + 3) / springboardFrame.maxX,
-                              dy: (iconFrame.minY + 3) / springboardFrame.maxY)
-        springboardApp.coordinate(withNormalizedOffset: offset).tap()
-
-        Thread.sleep(forTimeInterval: 2.0)
-        tapAlertButton(labeled: "Delete")
     }
 
 }

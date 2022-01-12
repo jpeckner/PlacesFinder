@@ -38,6 +38,12 @@ class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
         tabBarAppearance.tintColor = appSkin.colorings.tabBar.selectedItemTint.color
         tabBarAppearance.unselectedItemTintColor = appSkin.colorings.tabBar.unselectedItemTint.color
         tabBarAppearance.barTintColor = appSkin.colorings.tabBar.viewColoring.backgroundColor
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        tabBarAppearance.standardAppearance = appearance
+        if #available(iOS 15.0, *) {
+            tabBarAppearance.scrollEdgeAppearance = appearance
+        }
 
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
             AppTextStyleClass.textInput.textLayout.font,

@@ -160,17 +160,7 @@ extension PlacesFinderLinkTests {
 private extension PlacesFinderLinkTests {
 
     func installFreshApp() {
-        if #available(iOS 13.4, *) {
-            app.resetAuthorizationStatus(for: .location)
-        } else {
-            springboardHandler.deleteApp(app,
-                                         displayName: PlacesFinderLinkTests.appDisplayName)
-
-            // Note: when running more than one UI test in Xcode 11.X, iOS 12 devices are
-            // failing on the second test, because they're not re-installing the app after
-            // deleting it. This used to work correctly in Xcode 10.X.
-        }
-
+        app.resetAuthorizationStatus(for: .location)
         app.launch()
         app.terminate()
     }
@@ -191,11 +181,7 @@ private extension PlacesFinderLinkTests {
     }
 
     var allowButtonText: String {
-        if #available(iOS 13.0, *) {
-            return "Allow While Using App"
-        } else {
-            return "Allow"
-        }
+        "Allow While Using App"
     }
 
 }

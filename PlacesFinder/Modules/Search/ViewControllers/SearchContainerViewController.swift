@@ -59,7 +59,7 @@ class SearchContainerViewController: UIViewController {
         searchSplitViewController.delegate = self
         searchSplitViewController.viewControllers = [mainPaneNavController]
         searchSplitViewController.edgesForExtendedLayout = []
-        searchSplitViewController.preferredDisplayMode = .allVisible
+        searchSplitViewController.preferredDisplayMode = .oneBesideSecondary
     }
 
 }
