@@ -121,7 +121,9 @@ private extension Store where State == AppState {
     convenience init(userDefaultsService: UserDefaultsServiceProtocol,
                      appCopyContent: AppCopyContent) {
         let searchPreferencesState =
-            (try? userDefaultsService.getSearchPreferences())
+            (try? userDefaultsService.getSearchPreferences()).map { stored in
+                SearchPreferencesState(stored: stored)
+            }
             ?? SearchPreferencesState(usesMetricSystem: Locale.current.usesMetricSystem)
         let initialState = AppState(
             appCopyContent: appCopyContent,

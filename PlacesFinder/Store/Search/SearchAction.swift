@@ -106,10 +106,12 @@ extension SearchActionCreator {
         locationUpdateRequestBlock { result in
             switch result {
             case let .success(coordinate):
-                let lookupParams = PlaceLookupParams(keywords: searchParams.keywords,
-                                                     coordinate: coordinate,
-                                                     radius: preferencesState.distance.distanceType.measurement,
-                                                     sorting: preferencesState.sorting)
+                let lookupParams = PlaceLookupParams(
+                    keywords: searchParams.keywords,
+                    coordinate: coordinate,
+                    radius: preferencesState.stored.distance.distanceType.measurement,
+                    sorting: preferencesState.stored.sorting
+                )
 
                 performInitialPageRequest(lookupParams,
                                           dependencies: dependencies,

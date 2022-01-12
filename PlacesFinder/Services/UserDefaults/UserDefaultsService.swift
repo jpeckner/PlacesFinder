@@ -26,8 +26,8 @@ import Foundation
 import Shared
 
 protocol UserDefaultsServiceProtocol: AutoMockable {
-    func getSearchPreferences() throws -> SearchPreferencesState
-    func setSearchPreferences(_ searchPreferences: SearchPreferencesState) throws
+    func getSearchPreferences() throws -> StoredSearchPreferences
+    func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws
 }
 
 enum UserDefaultsServiceError: Error {
@@ -50,11 +50,11 @@ class UserDefaultsService: UserDefaultsServiceProtocol {
 
     private static let searchPreferencesStateKey = "searchPreferencesState"
 
-    func getSearchPreferences() throws -> SearchPreferencesState {
+    func getSearchPreferences() throws -> StoredSearchPreferences {
         return try getValue(UserDefaultsService.searchPreferencesStateKey)
     }
 
-    func setSearchPreferences(_ searchPreferences: SearchPreferencesState) throws {
+    func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws {
         try setValue(searchPreferences, key: UserDefaultsService.searchPreferencesStateKey)
     }
 
@@ -62,7 +62,7 @@ class UserDefaultsService: UserDefaultsServiceProtocol {
 
 private extension UserDefaultsService {
 
-    func getValue<T: Codable>(_ key: String) throws -> T {
+    func getValue<T: Decodable>(_ key: String) throws -> T {
         guard let data = userDefaults.data(forKey: key) else {
             throw UserDefaultsServiceError.valueNotFound
         }
@@ -70,8 +70,8 @@ private extension UserDefaultsService {
         return try decoder.decode(T.self, from: data)
     }
 
-    func setValue<T: Codable>(_ value: T,
-                              key: String) throws {
+    func setValue<T: Encodable>(_ value: T,
+                                key: String) throws {
         let data = try encoder.encode(value)
         userDefaults.setValue(data, forKey: key)
     }

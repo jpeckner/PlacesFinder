@@ -43,13 +43,15 @@ class UserDefaultsServiceIntegrationTests: QuickSpec {
         describe("searchPreferences") {
 
             it("can set and get searchPreferencesState values") {
-                let stubSearchPreferencesState = SearchPreferencesState(distance: .imperial(.oneMile),
-                                                                        sorting: .reviewCount)
+                let stubSearchPreferences = StoredSearchPreferences(
+                    distance: .imperial(.oneMile),
+                    sorting: .reviewCount
+                )
 
                 expect {
-                    try userDefaultsService.setSearchPreferences(stubSearchPreferencesState)
-                    let retreivedState = try userDefaultsService.getSearchPreferences()
-                    return expect(retreivedState) == stubSearchPreferencesState
+                    try userDefaultsService.setSearchPreferences(stubSearchPreferences)
+                    let retreivedPreferences = try userDefaultsService.getSearchPreferences()
+                    return expect(retreivedPreferences) == stubSearchPreferences
                 }.toNot(throwError())
             }
 

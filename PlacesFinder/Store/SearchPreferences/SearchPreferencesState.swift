@@ -26,16 +26,17 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SearchPreferencesState: Equatable, Codable {
-    let distance: SearchDistance
-    let sorting: PlaceLookupSorting
+struct SearchPreferencesState: Equatable {
+    let stored: StoredSearchPreferences
 }
 
 extension SearchPreferencesState {
 
     init(usesMetricSystem: Bool) {
-        self.distance = usesMetricSystem ? .metric(.defaultDistance) : .imperial(.defaultDistance)
-        self.sorting = .distance
+        self.stored = StoredSearchPreferences(
+            distance: usesMetricSystem ? .metric(.defaultDistance) : .imperial(.defaultDistance),
+            sorting: .distance
+        )
     }
 
 }
@@ -52,11 +53,17 @@ enum SearchPreferencesReducer {
 
         switch searchPreferencesAction {
         case let .setDistance(distance):
-            return SearchPreferencesState(distance: distance,
-                                          sorting: currentState.sorting)
+            let updatedStored = StoredSearchPreferences(
+                distance: distance,
+                sorting: currentState.stored.sorting
+            )
+            return SearchPreferencesState(stored: updatedStored)
         case let .setSorting(sorting):
-            return SearchPreferencesState(distance: currentState.distance,
-                                          sorting: sorting)
+            let updatedStored = StoredSearchPreferences(
+                distance: currentState.stored.distance,
+                sorting: sorting
+            )
+            return SearchPreferencesState(stored: updatedStored)
         }
     }
 
