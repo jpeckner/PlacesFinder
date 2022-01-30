@@ -44,6 +44,7 @@ class SettingsCoordinatorTests: QuickSpec {
         let stubNavController = UINavigationController()
 
         var mockStore: MockAppStore!
+        var mockServiceContainer: ServiceContainer!
         var mockSettingsPresenter: SettingsPresenterProtocolMock!
         var mockSettingsViewModelBuilder: SettingsViewModelBuilderProtocolMock!
         var mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock!
@@ -55,14 +56,17 @@ class SettingsCoordinatorTests: QuickSpec {
             mockSettingsPresenter = SettingsPresenterProtocolMock()
             mockSettingsPresenter.rootNavController = stubNavController
 
+            mockServiceContainer = ServiceContainer.mockValue()
+
             mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
+            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue = stubSettingsViewModel
 
             mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
             mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
 
             coordinator = SettingsCoordinator(store: mockStore,
                                               presenter: mockSettingsPresenter,
+                                              serviceContainer: mockServiceContainer,
                                               settingsViewModelBuilder: mockSettingsViewModelBuilder,
                                               navigationBarViewModelBuilder: mockNavigationBarViewModelBuilder)
         }
@@ -74,7 +78,7 @@ class SettingsCoordinatorTests: QuickSpec {
                     mockStore.receivedSubscriptions.last?.subscription
                     as? SubstatesSubscription<SettingsCoordinator<MockAppStore>>
 
-                expect(substatesSubscription?.subscribedPaths.count) == 1
+                expect(substatesSubscription?.subscribedPaths.count) == 2
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.searchPreferencesState)) == true
             }
 

@@ -33,41 +33,45 @@ class AppRoutingHandlerTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
-        let stubRouter = RootCoordinatorMock()
-
-        var mockRoutingHandler: RoutingHandlerProtocolMock!
+        var mockRoutingHandler: RoutingHandlerProtocolMock<RootCoordinatorMock>!
+        var mockDestinationRoutingHandler: DestinationRoutingHandlerProtocolMock<SecondChildCoordinatorMock>!
         var appRoutingHandler: AppRoutingHandler!
 
-        beforeEach {
-            mockRoutingHandler = RoutingHandlerProtocolMock()
-            appRoutingHandler = AppRoutingHandler(routingHandler: mockRoutingHandler)
-        }
+        describe("determineRouting() for AppRouterProtocol") {
 
-        describe("handleRouting()") {
+            var stubRouter: AppRootCoordinatorMock!
+
+            beforeEach {
+                stubRouter = AppRootCoordinatorMock()
+                mockRoutingHandler = RoutingHandlerProtocolMock()
+                mockDestinationRoutingHandler = DestinationRoutingHandlerProtocolMock()
+                appRoutingHandler = AppRoutingHandler(routingHandler: mockRoutingHandler,
+                                                      destinationRoutingHandler: mockDestinationRoutingHandler)
+            }
 
             context("when updatedSubstates does not contain AppState.routerState") {
                 beforeEach {
                     let stubState = AppState.stubValue()
-                    appRoutingHandler.handleRouting(stubState,
-                                                    updatedSubstates: [],
-                                                    router: stubRouter)
+                    appRoutingHandler.determineRouting(stubState,
+                                                       updatedSubstates: [],
+                                                       router: stubRouter)
                 }
 
-                it("does not call mockRoutingHandler.handleRouting()") {
-                    expect(mockRoutingHandler.handleRoutingFromToForCalled) == false
+                it("does not call mockRoutingHandler.determineRouting()") {
+                    expect(mockRoutingHandler.determineRoutingFromToForCalled) == false
                 }
             }
 
             context("else when the state's destinationNodeBox value is nil") {
                 beforeEach {
                     let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
-                    appRoutingHandler.handleRouting(stubState,
-                                                    updatedSubstates: [\AppState.routerState],
-                                                    router: stubRouter)
+                    appRoutingHandler.determineRouting(stubState,
+                                                       updatedSubstates: [\AppState.routerState],
+                                                       router: stubRouter)
                 }
 
-                it("does not call mockRoutingHandler.handleRouting()") {
-                    expect(mockRoutingHandler.handleRoutingFromToForCalled) == false
+                it("does not call mockRoutingHandler.determineRouting()") {
+                    expect(mockRoutingHandler.determineRoutingFromToForCalled) == false
                 }
             }
 
@@ -79,37 +83,209 @@ class AppRoutingHandlerTests: QuickSpec {
                     )
                     let stubState = AppState.stubValue(routerState: routerState)
 
-                    appRoutingHandler.handleRouting(stubState,
-                                                    updatedSubstates: [\AppState.routerState],
-                                                    router: stubRouter)
+                    appRoutingHandler.determineRouting(stubState,
+                                                       updatedSubstates: [\AppState.routerState],
+                                                       router: stubRouter)
                 }
 
-                it("does not call mockRoutingHandler.handleRouting()") {
-                    expect(mockRoutingHandler.handleRoutingFromToForCalled) == false
+                it("does not call mockRoutingHandler.determineRouting()") {
+                    expect(mockRoutingHandler.determineRoutingFromToForCalled) == false
                 }
             }
 
             context("else when the state's destinationNodeBox value is a descendent of stubRouter") {
+
+                let routerState = RouterState<AppLinkType>(
+                    loadState: .navigatingToDestination(SecondGrandchildCoordinatorMock.destinationNodeBox, linkType: nil),
+                    currentNode: RootCoordinatorMock.nodeBox
+                )
+                let stubAppState = AppState.stubValue(routerState: routerState)
+
+                func executeTest() {
+                    appRoutingHandler.determineRouting(stubAppState,
+                                                       updatedSubstates: [\AppState.routerState],
+                                                       router: stubRouter)
+                }
+
+                context("when mockRoutingHandler.determineRouting() returns .createSubtree") {
+                    let stubCurrentNode = StubNode.nodeBox
+                    let stubDestination = RootCoordinatorMock.TDestinationDescendent.firstChild
+
+                    beforeEach {
+                        mockRoutingHandler.determineRoutingFromToForReturnValue = .createSubtree(
+                            currentNode: stubCurrentNode,
+                            destinationDescendent: stubDestination
+                        )
+
+                        executeTest()
+                    }
+
+                    it("calls stubRouter.createSubtree()") {
+                        expect(stubRouter.createSubtreeCurrentNodeArgValue) == stubCurrentNode
+                        expect(stubRouter.createSubtreeDestinationDescendentArgValue) == stubDestination
+                        expect(stubRouter.createSubtreeStateArgValue) == stubAppState
+                    }
+                }
+
+                context("else when mockRoutingHandler.determineRouting() returns .switchSubtree") {
+                    let stubCurrentNode = RootCoordinatorMock.TDescendent.firstGrandchild
+                    let stubDestination = RootCoordinatorMock.TDestinationDescendent.firstChild
+
+                    beforeEach {
+                        mockRoutingHandler.determineRoutingFromToForReturnValue = .switchSubtree(
+                            currentNode: stubCurrentNode,
+                            destinationDescendent: stubDestination
+                        )
+
+                        executeTest()
+                    }
+
+                    it("calls stubRouter.createSubtree()") {
+                        expect(stubRouter.switchSubtreeCurrentNodeArgValue) == stubCurrentNode
+                        expect(stubRouter.switchSubtreeDestinationDescendentArgValue) == stubDestination
+                        expect(stubRouter.switchSubtreeStateArgValue) == stubAppState
+                    }
+                }
+
+                context("else when mockRoutingHandler.determineRouting() returns nil") {
+                    beforeEach {
+                        mockRoutingHandler.determineRoutingFromToForReturnValue = nil
+
+                        executeTest()
+                    }
+
+                    it("calls nothing on stubRouter") {
+                        expect(stubRouter.createSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                    }
+                }
+
+            }
+
+        }
+
+        describe("determineRouting() for AppDestinationRouterProtocol") {
+
+            var stubDestinationRouter: AppSecondChildCoordinatorMock!
+
+            beforeEach {
+                stubDestinationRouter = AppSecondChildCoordinatorMock()
+                mockRoutingHandler = RoutingHandlerProtocolMock()
+                mockDestinationRoutingHandler = DestinationRoutingHandlerProtocolMock()
+                appRoutingHandler = AppRoutingHandler(routingHandler: mockRoutingHandler,
+                                                      destinationRoutingHandler: mockDestinationRoutingHandler)
+            }
+
+            context("when updatedSubstates does not contain AppState.routerState") {
                 beforeEach {
-                    let routerState = RouterState<AppLinkType>(
-                        loadState: .navigatingToDestination(SecondGrandchildCoordinatorMock.destinationNodeBox, linkType: nil),
-                        currentNode: RootCoordinatorMock.nodeBox
-                    )
-                    let stubState = AppState.stubValue(routerState: routerState)
-
-                    appRoutingHandler.handleRouting(stubState,
-                                                    updatedSubstates: [\AppState.routerState],
-                                                    router: stubRouter)
+                    let stubState = AppState.stubValue()
+                    appRoutingHandler.determineRouting(stubState,
+                                                       updatedSubstates: [],
+                                                       router: stubDestinationRouter)
                 }
 
-                it("calls mockRoutingHandler.handleRouting()") {
-                    expect(mockRoutingHandler.handleRoutingFromToForReceivedArguments?.0) == RootCoordinatorMock.nodeBox
-                    expect(
-                        mockRoutingHandler.handleRoutingFromToForReceivedArguments?.1
-                        as? RootCoordinatorMockDestinationDescendent
-                    ) == .secondGrandchild
-                    expect(mockRoutingHandler.handleRoutingFromToForReceivedArguments?.2) === stubRouter
+                it("does not call mockRoutingHandler.determineRouting()") {
+                    expect(mockRoutingHandler.determineRoutingFromToForCalled) == false
                 }
+            }
+
+            context("else when the state's destinationNodeBox value is nil") {
+                beforeEach {
+                    let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
+                    appRoutingHandler.determineRouting(stubState,
+                                                       updatedSubstates: [\AppState.routerState],
+                                                       router: stubDestinationRouter)
+                }
+
+                it("does not call mockRoutingHandler.determineRouting()") {
+                    expect(mockRoutingHandler.determineRoutingFromToForCalled) == false
+                }
+            }
+
+            context("else when the state's destinationNodeBox value is a descendent of stubRouter") {
+
+                let routerState = RouterState<AppLinkType>(
+                    loadState: .navigatingToDestination(SecondGrandchildCoordinatorMock.destinationNodeBox, linkType: nil),
+                    currentNode: RootCoordinatorMock.nodeBox
+                )
+                let stubAppState = AppState.stubValue(routerState: routerState)
+
+                func executeTest() {
+                    appRoutingHandler.determineRouting(stubAppState,
+                                                       updatedSubstates: [\AppState.routerState],
+                                                       router: stubDestinationRouter)
+                }
+
+                context("when mockRoutingHandler.determineRouting() returns .createSubtree") {
+                    let stubCurrentNode = StubNode.nodeBox
+                    let stubDestination = SecondChildCoordinatorMock.TDestinationDescendent.firstGrandchild
+
+                    beforeEach {
+                        mockDestinationRoutingHandler.determineRoutingFromToForReturnValue = .createSubtree(
+                            currentNode: stubCurrentNode,
+                            destinationDescendent: stubDestination
+                        )
+
+                        executeTest()
+                    }
+
+                    it("calls stubRouter.createSubtree()") {
+                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue) == stubCurrentNode
+                        expect(stubDestinationRouter.createSubtreeDestinationDescendentArgValue) == stubDestination
+                        expect(stubDestinationRouter.createSubtreeStateArgValue) == stubAppState
+                    }
+                }
+
+                context("else when mockRoutingHandler.determineRouting() returns .switchSubtree") {
+                    let stubCurrentNode = SecondChildCoordinatorMock.TDescendent.firstGrandchild
+                    let stubDestination = SecondChildCoordinatorMock.TDestinationDescendent.secondGrandchild
+
+                    beforeEach {
+                        mockDestinationRoutingHandler.determineRoutingFromToForReturnValue = .switchSubtree(
+                            currentNode: stubCurrentNode,
+                            destinationDescendent: stubDestination
+                        )
+
+                        executeTest()
+                    }
+
+                    it("calls stubRouter.createSubtree()") {
+                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue) == stubCurrentNode
+                        expect(stubDestinationRouter.switchSubtreeDestinationDescendentArgValue) == stubDestination
+                        expect(stubDestinationRouter.switchSubtreeStateArgValue) == stubAppState
+                    }
+                }
+
+                context("else when mockRoutingHandler.determineRouting() returns .closeAllSubtrees") {
+                    let stubCurrentNode = StubNode.nodeBox
+
+                    beforeEach {
+                        mockDestinationRoutingHandler.determineRoutingFromToForReturnValue = .closeAllSubtrees(
+                            currentNode: stubCurrentNode
+                        )
+
+                        executeTest()
+                    }
+
+                    it("calls stubRouter.createSubtree()") {
+                        expect(stubDestinationRouter.closeAllSubtreesCurrentNodeArgValue) == stubCurrentNode
+                        expect(stubDestinationRouter.closeAllSubtreesStateArgValue) == stubAppState
+                    }
+                }
+
+                context("else when mockRoutingHandler.determineRouting() returns nil") {
+                    beforeEach {
+                        mockRoutingHandler.determineRoutingFromToForReturnValue = nil
+
+                        executeTest()
+                    }
+
+                    it("calls nothing on stubDestinationRouter") {
+                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                    }
+                }
+
             }
 
         }

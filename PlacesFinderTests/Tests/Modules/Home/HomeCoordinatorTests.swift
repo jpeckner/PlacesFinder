@@ -57,8 +57,14 @@ class HomeCoordinatorTests: QuickSpec {
 
             mockSearchCoordinator = TabCoordinatorProtocolMock()
             mockSearchCoordinator.rootViewController = dummySearchRootController
+            mockSearchCoordinator.relinquishActiveCompletionClosure = { completion in
+                completion?()
+            }
             mockSettingsCoordinator = TabCoordinatorProtocolMock()
             mockSettingsCoordinator.rootViewController = dummySettingsRootController
+            mockSettingsCoordinator.relinquishActiveCompletionClosure = { completion in
+                completion?()
+            }
             stubChildContainer = HomeCoordinatorChildContainer(search: mockSearchCoordinator,
                                                                settings: mockSettingsCoordinator)
 
@@ -145,7 +151,7 @@ class HomeCoordinatorTests: QuickSpec {
 
         }
 
-        describe("RouterProtocol") {
+        describe("AppRouterProtocol") {
 
             describe("createSubtree()") {
 
@@ -155,7 +161,9 @@ class HomeCoordinatorTests: QuickSpec {
 
                     context("when createSubtree() is called to route towards \(destinationDescendent)") {
                         beforeEach {
-                            coordinator.createSubtree(towards: destinationDescendent)
+                            coordinator.createSubtree(from: HomeCoordinatorNode.nodeBox,
+                                                      towards: destinationDescendent,
+                                                      state: AppState.stubValue())
                         }
 
                         it("activates the corresponding coordinator") {
@@ -177,7 +185,8 @@ class HomeCoordinatorTests: QuickSpec {
                         context("when switchSubtree() switches from \(currentDescendent) to \(destinationDescendent)") {
                             beforeEach {
                                 coordinator.switchSubtree(from: currentDescendent,
-                                                          to: destinationDescendent)
+                                                          towards: destinationDescendent,
+                                                          state: AppState.stubValue())
                             }
 
                             it("activates the corresponding coordinator") {
@@ -229,8 +238,8 @@ class HomeCoordinatorTests: QuickSpec {
                                          updatedSubstates: [])
                 }
 
-                it("calls mockAppRoutingHandler.handleRouting()") {
-                    expect(mockAppRoutingHandler.handleRoutingUpdatedSubstatesRouterCalled) == true
+                it("calls mockAppRoutingHandler.determineRouting()") {
+                    expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
                 }
 
             }

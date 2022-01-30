@@ -52,6 +52,8 @@ class AppLinkTypeBuilder: AppLinkTypeBuilderProtocol {
             return .search(SearchLinkPayload(keywords: keywords))
         case "settings":
             return .settings(SettingsLinkPayload())
+        case "settingsChild":
+            return .settingsChild(SettingsChildLinkPayload())
         default:
             return nil
         }

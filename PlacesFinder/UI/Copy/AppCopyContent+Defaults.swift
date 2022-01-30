@@ -81,6 +81,16 @@ extension AppCopyContent {
             imperial: "U.S",
             metric: "Metric"
         )
+        self.settingsChildMenu = SettingsChildMenuCopyContent(
+            sectionTitle: "CHILD PLACEHOLDER",
+            ctaTitle: "Tap here for child test"
+        )
+        self.settingsChildView = SettingsChildViewCopyContent(
+            iconImageName: "gear",
+            title: "Under Construction",
+            description: "Placeholder for a potential future view",
+            ctaTitle: "Dismiss"
+        )
     }
 
 }

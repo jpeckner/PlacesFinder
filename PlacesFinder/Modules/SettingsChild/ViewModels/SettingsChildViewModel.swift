@@ -1,9 +1,8 @@
-//  swiftlint:disable:this file_name
 //
-//  EquatableKeyPath+AppState.swift
+//  SettingsChildViewModel.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +23,13 @@
 //  SOFTWARE.
 
 import Foundation
-import SwiftDux
 
-extension Set where Element == EquatableKeyPath<AppState> {
+struct SettingsChildViewModel {
+    typealias CTABlock = () -> Void
 
-    var partialKeyPaths: Set<PartialKeyPath<AppState>> {
-        return Set<PartialKeyPath<AppState>>(map { $0.keyPath })
-    }
-
+    let infoViewModel: StaticInfoViewModel
+    let ctaTitle: String
+    let ctaBlock: CTABlock
 }
+
+extension SettingsChildViewCopyContent: StaticInfoCopyProtocol {}

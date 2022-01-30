@@ -51,7 +51,8 @@ extension SettingsViewModel {
 
 protocol SettingsViewModelBuilderProtocol: AutoMockable {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent) -> SettingsViewModel
+                        appCopyContent: AppCopyContent,
+                        settingsChildRequestAction: Action) -> SettingsViewModel
 }
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
@@ -72,7 +73,8 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
     }
 
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+                        appCopyContent: AppCopyContent,
+                        settingsChildRequestAction: Action) -> SettingsViewModel {
         let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
@@ -85,7 +87,8 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                     ),
                     cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.stored.distance)
                 )
-            ).appendedWith([
+            )
+            .appendedWith([
                 SettingsSectionViewModel(
                     headerType: .plain(
                         plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
@@ -94,6 +97,21 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                         searchPreferencesState.stored.sorting,
                         copyContent: appCopyContent.settingsSortPreference
                     )
+                )
+            ])
+            .appendedWith([
+                SettingsSectionViewModel(
+                    headerType: .plain(
+                        plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsChildMenu.sectionTitle)
+                    ),
+                    cells: [
+                        SettingsCellViewModel(
+                            title: appCopyContent.settingsChildMenu.ctaTitle,
+                            isSelected: false,
+                            store: store,
+                            action: settingsChildRequestAction
+                        )
+                    ]
                 )
             ])
 

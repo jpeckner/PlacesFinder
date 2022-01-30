@@ -108,7 +108,7 @@ extension LaunchCoordinator: SubstatesSubscriber {
     private func requestDefaultLinkTypeIfNeeded(_ state: AppState) {
         switch state.routerState.loadState {
         case .idle:
-            requestLinkTypeAction(defaultLinkType).map(store.dispatch)
+            store.dispatch(requestLinkTypeAction(defaultLinkType))
         case .payloadRequested,
              .navigatingToDestination,
              .waitingForPayloadToBeCleared:

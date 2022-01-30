@@ -82,24 +82,12 @@ class CoordinatorProtocolTests: QuickSpec {
 
             var result: Action?
 
-            context("when the link type's destination node is equal to sut's") {
-                beforeEach {
-                    result = StubSearchCoordinator().requestLinkTypeAction(stubLinkType)
-                }
-
-                it("returns nil") {
-                    expect(result).to(beNil())
-                }
+            beforeEach {
+                result = StubSettingsCoordinator().requestLinkTypeAction(stubLinkType)
             }
 
-            context("else when the link type's destination node is not equal to sut's") {
-                beforeEach {
-                    result = StubSettingsCoordinator().requestLinkTypeAction(stubLinkType)
-                }
-
-                it("returns AppRouterAction.requestLink, containing the passed link") {
-                    expect(result as? AppRouterAction) == .requestLink(stubLinkType)
-                }
+            it("returns AppRouterAction.requestLink, containing the passed link") {
+                expect(result as? AppRouterAction) == .requestLink(stubLinkType)
             }
 
         }

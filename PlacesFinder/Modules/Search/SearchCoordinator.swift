@@ -74,6 +74,10 @@ extension SearchCoordinator: TabCoordinatorProtocol {
         return presenter.rootViewController
     }
 
+    func relinquishActive(completion: (() -> Void)?) {
+        completion?()
+    }
+
 }
 
 extension SearchCoordinator: SubstatesSubscriber {

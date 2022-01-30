@@ -25,30 +25,76 @@
 import CoordiNode
 
 protocol AppRoutingHandlerProtocol {
-    func handleRouting<TRouter: RouterProtocol>(_ state: AppState,
-                                                updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                router: TRouter)
+    func determineRouting<TRouter: AppRouterProtocol>(_ state: AppState,
+                                                      updatedSubstates: Set<PartialKeyPath<AppState>>,
+                                                      router: TRouter)
+
+    func determineRouting<TRouter: AppDestinationRouterProtocol>(_ state: AppState,
+                                                                 updatedSubstates: Set<PartialKeyPath<AppState>>,
+                                                                 router: TRouter)
 }
 
 class AppRoutingHandler: AppRoutingHandlerProtocol {
 
     private let routingHandler: RoutingHandlerProtocol
+    private let destinationRoutingHandler: DestinationRoutingHandlerProtocol
 
-    init(routingHandler: RoutingHandlerProtocol) {
+    init(routingHandler: RoutingHandlerProtocol,
+         destinationRoutingHandler: DestinationRoutingHandlerProtocol) {
         self.routingHandler = routingHandler
+        self.destinationRoutingHandler = destinationRoutingHandler
     }
 
-    func handleRouting<TRouter: RouterProtocol>(_ state: AppState,
-                                                updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                router: TRouter) {
+    func determineRouting<TRouter: AppRouterProtocol>(_ state: AppState,
+                                                      updatedSubstates: Set<PartialKeyPath<AppState>>,
+                                                      router: TRouter) {
         guard updatedSubstates.contains(\AppState.routerState),
-            let destinationNodeBox = state.routerState.destinationNodeBox,
-            let destinationDescendent = TRouter.TDestinationDescendent(destinationNodeBox: destinationNodeBox)
+              let destinationNodeBox = state.routerState.destinationNodeBox,
+              let destinationDescendent = TRouter.TDestinationDescendent(destinationNodeBox: destinationNodeBox)
         else { return }
 
-        routingHandler.handleRouting(from: state.routerState.currentNode,
-                                     to: destinationDescendent,
-                                     for: router)
+        let result = routingHandler.determineRouting(from: state.routerState.currentNode,
+                                                     to: destinationDescendent,
+                                                     for: router)
+        switch result {
+        case let .createSubtree(currentNode, destinationDescendent):
+            router.createSubtree(from: currentNode,
+                                 towards: destinationDescendent,
+                                 state: state)
+        case let .switchSubtree(currentNode, destinationDescendent):
+            router.switchSubtree(from: currentNode,
+                                 towards: destinationDescendent,
+                                 state: state)
+        case .none:
+            break
+        }
+    }
+
+    func determineRouting<TRouter: AppDestinationRouterProtocol>(_ state: AppState,
+                                                                 updatedSubstates: Set<PartialKeyPath<AppState>>,
+                                                                 router: TRouter) {
+        guard updatedSubstates.contains(\AppState.routerState),
+              let destinationNodeBox = state.routerState.destinationNodeBox
+        else { return }
+
+        let result = destinationRoutingHandler.determineRouting(from: state.routerState.currentNode,
+                                                                to: destinationNodeBox,
+                                                                for: router)
+        switch result {
+        case let .createSubtree(currentNode, destinationDescendent):
+            router.createSubtree(from: currentNode,
+                                 towards: destinationDescendent,
+                                 state: state)
+        case let .switchSubtree(currentNode, destinationDescendent):
+            router.switchSubtree(from: currentNode,
+                                 towards: destinationDescendent,
+                                 state: state)
+        case let .closeAllSubtrees(currentNode):
+            router.closeAllSubtrees(currentNode: currentNode,
+                                    state: state)
+        case .none:
+            break
+        }
     }
 
 }

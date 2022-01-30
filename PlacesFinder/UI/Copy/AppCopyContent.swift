@@ -36,6 +36,8 @@ struct AppCopyContent: Equatable {
     let settingsHeaders: SettingsHeadersCopyContent
     let settingsSortPreference: SettingsSortPreferenceCopyContent
     let settingsMeasurementSystem: SettingsMeasurementSystemCopyContent
+    let settingsChildMenu: SettingsChildMenuCopyContent
+    let settingsChildView: SettingsChildViewCopyContent
 }
 
 struct DisplayNameCopyContent: Equatable {
@@ -101,4 +103,16 @@ struct SettingsSortPreferenceCopyContent: Equatable {
 struct SettingsMeasurementSystemCopyContent: Equatable {
     let imperial: String
     let metric: String
+}
+
+struct SettingsChildMenuCopyContent: Equatable {
+    let sectionTitle: String
+    let ctaTitle: String
+}
+
+struct SettingsChildViewCopyContent: Equatable {
+    let iconImageName: String
+    let title: String
+    let description: String
+    let ctaTitle: String
 }

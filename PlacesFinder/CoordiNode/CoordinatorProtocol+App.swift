@@ -33,9 +33,7 @@ extension CoordinatorProtocol {
         return state.routerState.currentNode == Self.nodeBox
     }
 
-    func requestLinkTypeAction(_ linkType: AppLinkType) -> Action? {
-        guard linkType.destinationNodeBox.storedType.nodeBox != Self.nodeBox else { return nil }
-
+    func requestLinkTypeAction(_ linkType: AppLinkType) -> Action {
         return AppRouterAction.requestLink(linkType)
     }
 

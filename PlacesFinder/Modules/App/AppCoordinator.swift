@@ -65,7 +65,8 @@ extension AppCoordinator {
     }
 
     private func didSetChildCoordinator() {
-        store.dispatch(setCurrentCoordinatorAction(type(of: childCoordinator).appCoordinatorImmediateDescendent))
+        let immediateDescendent = type(of: childCoordinator).appCoordinatorImmediateDescendent
+        store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
 
         childCoordinator.start {
             mainWindow.rootViewController = childCoordinator.rootViewController
@@ -74,14 +75,17 @@ extension AppCoordinator {
 
 }
 
-extension AppCoordinator {
+extension AppCoordinator: AppRouterProtocol {
 
-    func createSubtree(towards destinationDescendent: AppCoordinatorDestinationDescendent) {
+    func createSubtree(from currentNode: NodeBox,
+                       towards destinationDescendent: AppCoordinatorDestinationDescendent,
+                       state: AppState) {
         childCoordinator = childFactory.buildCoordinator(for: destinationDescendent)
     }
 
-    func switchSubtree(from currentDescendent: AppCoordinatorDescendent,
-                       to destinationDescendent: AppCoordinatorDestinationDescendent) {
+    func switchSubtree(from currentNode: AppCoordinatorDescendent,
+                       towards destinationDescendent: AppCoordinatorDestinationDescendent,
+                       state: AppState) {
         // Build the new child coordinator here, not inside finish(), to avoid a split-second empty view flash
         let newChildCoordinator = childFactory.buildCoordinator(for: destinationDescendent)
 
@@ -99,7 +103,7 @@ extension AppCoordinator {
 
         // Don't dispatch .setDestinationCoordinator here, but rather in dispatchDestinationForLinkType() below.
         // Otherwise, we could switch to another child coordinator before LaunchCoordinator has finished app launch.
-        requestLinkTypeAction(appLinkType).map(store.dispatch)
+        store.dispatch(requestLinkTypeAction(appLinkType))
 
         return true
     }
@@ -114,9 +118,9 @@ extension AppCoordinator: SubstatesSubscriber {
         dispatchDestinationForLinkType(state)
 
         let routingHandler = childFactory.serviceContainer.appRoutingHandler
-        routingHandler.handleRouting(state,
-                                     updatedSubstates: updatedSubstates,
-                                     router: self)
+        routingHandler.determineRouting(state,
+                                        updatedSubstates: updatedSubstates,
+                                        router: self)
     }
 
     private func dispatchDestinationForLinkType(_ state: AppState) {

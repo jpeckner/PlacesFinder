@@ -11,6 +11,7 @@ struct AppColorings: Decodable, Equatable {
     let searchInput: SearchInputViewColorings
     let searchProgress: SearchProgressViewColorings
     let searchResults: SearchResultsViewColorings
+    let settingsChild: SettingsChildViewColorings
     let settings: SettingsViewColorings
     let tabBar: TabBarColorings
 }
