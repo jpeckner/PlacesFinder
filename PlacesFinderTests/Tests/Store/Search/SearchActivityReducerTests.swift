@@ -1,5 +1,5 @@
 //
-//  SearchReducerTests.swift
+//  SearchActivityReducerTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -28,7 +28,7 @@ import Shared
 import SharedTestComponents
 import SwiftDuxTestComponents
 
-class SearchReducerTests: QuickSpec {
+class SearchActivityReducerTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -54,8 +54,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: StubAction.genericAction,
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: StubAction.genericAction,
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the current state") {
@@ -72,8 +74,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchActivityAction.locationRequested(stubSearchParams),
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: SearchActivityAction.locationRequested(stubSearchParams),
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the expected state") {
@@ -93,8 +97,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchActivityAction.initialPageRequested(stubSearchParams),
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: SearchActivityAction.initialPageRequested(stubSearchParams),
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the expected state") {
@@ -114,8 +120,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchActivityAction.noResultsFound(stubSearchParams),
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: SearchActivityAction.noResultsFound(stubSearchParams),
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the expected state") {
@@ -162,8 +170,8 @@ class SearchReducerTests: QuickSpec {
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         )
-                        result = SearchReducer.reduce(action: action,
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(action: action,
+                                                              currentState: currentState)
                     }
 
                     it("returns the expected state") {
@@ -193,8 +201,8 @@ class SearchReducerTests: QuickSpec {
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         )
-                        result = SearchReducer.reduce(action: action,
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(action: action,
+                                                              currentState: currentState)
                     }
 
                     it("returns the expected state") {
@@ -224,8 +232,8 @@ class SearchReducerTests: QuickSpec {
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         )
-                        result = SearchReducer.reduce(action: action,
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(action: action,
+                                                              currentState: currentState)
                     }
 
                     it("returns the expected state") {
@@ -257,8 +265,8 @@ class SearchReducerTests: QuickSpec {
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         )
-                        result = SearchReducer.reduce(action: action,
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(action: action,
+                                                              currentState: currentState)
                     }
 
                     it("returns the expected state") {
@@ -281,8 +289,8 @@ class SearchReducerTests: QuickSpec {
                         stubSearchParams,
                         underlyingError: IgnoredEquatable(SharedTestComponents .StubError.plainError)
                     )
-                    result = SearchReducer.reduce(action: action,
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(action: action,
+                                                          currentState: currentState)
                 }
 
                 it("returns the expected state") {
@@ -310,8 +318,10 @@ class SearchReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.beganEditing),
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(
+                            action: SearchActivityAction.updateInputEditing(.beganEditing),
+                            currentState: currentState
+                        )
                     }
 
                     it("returns the expected state") {
@@ -336,8 +346,10 @@ class SearchReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.clearedInput),
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(
+                            action: SearchActivityAction.updateInputEditing(.clearedInput),
+                            currentState: currentState
+                        )
                     }
 
                     it("returns the expected state") {
@@ -363,8 +375,10 @@ class SearchReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.endedEditing),
-                                                      currentState: currentState)
+                        result = SearchActivityReducer.reduce(
+                            action: SearchActivityAction.updateInputEditing(.endedEditing),
+                            currentState: currentState
+                        )
                     }
 
                     it("returns the expected state") {
@@ -388,8 +402,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchActivityAction.detailedEntity(stubDetailsViewModel),
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: SearchActivityAction.detailedEntity(stubDetailsViewModel),
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the expected state") {
@@ -409,8 +425,10 @@ class SearchReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchActivityAction.removeDetailedEntity,
-                                                  currentState: currentState)
+                    result = SearchActivityReducer.reduce(
+                        action: SearchActivityAction.removeDetailedEntity,
+                        currentState: currentState
+                    )
                 }
 
                 it("returns the expected state") {

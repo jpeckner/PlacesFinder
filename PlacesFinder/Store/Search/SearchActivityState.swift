@@ -117,7 +117,7 @@ private extension SearchActivityState {
 
 // MARK: Reducer
 
-enum SearchReducer {
+enum SearchActivityReducer {
 
     // swiftlint:disable function_body_length
     static func reduce(action: Action,

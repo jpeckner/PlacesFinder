@@ -70,8 +70,8 @@ enum AppStateReducer {
                                                currentState: appState.routerState)
         let searchPreferencesState = SearchPreferencesReducer.reduce(action: action,
                                                                      currentState: appState.searchPreferencesState)
-        let searchState = SearchReducer.reduce(action: action,
-                                               currentState: appState.searchState)
+        let searchState = SearchActivityReducer.reduce(action: action,
+                                                       currentState: appState.searchState)
 
         return AppState(appCopyContentState: appCopyContentState,
                         appSkinState: appSkinState,
