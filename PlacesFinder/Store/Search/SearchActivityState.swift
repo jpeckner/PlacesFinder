@@ -1,5 +1,5 @@
 //
-//  SearchState.swift
+//  SearchActivityState.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2018 Justin Peckner
@@ -31,7 +31,7 @@ typealias SearchPageState = IntermediateStepLoadState<SearchPageRequestError>
 
 typealias SearchPageReducer = IntermediateStepLoadReducer<SearchPageRequestError>
 
-// MARK: SearchState
+// MARK: SearchActivityState
 
 enum SearchLoadState: Equatable {
     case idle
@@ -55,13 +55,13 @@ enum SearchLoadState: Equatable {
     )
 }
 
-struct SearchState: Equatable {
+struct SearchActivityState: Equatable {
     let loadState: SearchLoadState
     let inputParams: SearchInputParams
     let detailedEntity: SearchEntityModel?
 }
 
-extension SearchState {
+extension SearchActivityState {
 
     init() {
         self.loadState = .idle
@@ -85,7 +85,7 @@ extension SearchState {
 
 }
 
-private extension SearchState {
+private extension SearchActivityState {
 
     var submittedParams: SearchParams? {
         switch loadState {
@@ -121,23 +121,29 @@ enum SearchReducer {
 
     // swiftlint:disable function_body_length
     static func reduce(action: Action,
-                       currentState: SearchState) -> SearchState {
+                       currentState: SearchActivityState) -> SearchActivityState {
         guard let searchAction = action as? SearchActivityAction else { return currentState }
 
         switch searchAction {
         case let .locationRequested(submittedParams):
-            return SearchState(loadState: .locationRequested(submittedParams),
-                               inputParams: SearchInputParams(params: submittedParams,
-                                                              isEditing: false),
-                               detailedEntity: nil)
+            return SearchActivityState(
+                loadState: .locationRequested(submittedParams),
+                inputParams: SearchInputParams(params: submittedParams,
+                                               isEditing: false),
+                detailedEntity: nil
+            )
         case let .initialPageRequested(submittedParams):
-            return SearchState(loadState: .initialPageRequested(submittedParams),
-                               inputParams: currentState.inputParams,
-                               detailedEntity: nil)
+            return SearchActivityState(
+                loadState: .initialPageRequested(submittedParams),
+                inputParams: currentState.inputParams,
+                detailedEntity: nil
+            )
         case let .noResultsFound(submittedParams):
-            return SearchState(loadState: .noResultsFound(submittedParams),
-                               inputParams: currentState.inputParams,
-                               detailedEntity: nil)
+            return SearchActivityState(
+                loadState: .noResultsFound(submittedParams),
+                inputParams: currentState.inputParams,
+                detailedEntity: nil
+            )
         case let .subsequentRequest(submittedParams, pageAction, allEntities, nextRequestToken):
             let newPageState = SearchPageReducer.reduce(action: pageAction,
                                                         currentState: currentState.pageState)
@@ -146,31 +152,41 @@ enum SearchReducer {
                                                             allEntities: allEntities,
                                                             nextRequestToken: nextRequestToken)
 
-            return SearchState(loadState: loadState,
-                               inputParams: currentState.inputParams,
-                               detailedEntity: currentState.detailedEntity)
+            return SearchActivityState(
+                loadState: loadState,
+                inputParams: currentState.inputParams,
+                detailedEntity: currentState.detailedEntity
+            )
         case let .failure(submittedParams, searchError):
-            return SearchState(loadState: .failure(submittedParams, underlyingError: searchError),
-                               inputParams: currentState.inputParams,
-                               detailedEntity: nil)
+            return SearchActivityState(
+                loadState: .failure(submittedParams, underlyingError: searchError),
+                inputParams: currentState.inputParams,
+                detailedEntity: nil
+            )
         case let .updateInputEditing(action):
-            return SearchState(loadState: currentState.loadState,
-                               inputParams: buildInputParams(currentState, action: action),
-                               detailedEntity: currentState.detailedEntity)
+            return SearchActivityState(
+                loadState: currentState.loadState,
+                inputParams: buildInputParams(currentState, action: action),
+                detailedEntity: currentState.detailedEntity
+            )
         case let .detailedEntity(entity):
-            return SearchState(loadState: currentState.loadState,
-                               inputParams: currentState.inputParams,
-                               detailedEntity: entity)
+            return SearchActivityState(
+                loadState: currentState.loadState,
+                inputParams: currentState.inputParams,
+                detailedEntity: entity
+            )
         case .removeDetailedEntity:
-            return SearchState(loadState: currentState.loadState,
-                               inputParams: currentState.inputParams,
-                               detailedEntity: nil)
+            return SearchActivityState(
+                loadState: currentState.loadState,
+                inputParams: currentState.inputParams,
+                detailedEntity: nil
+            )
 
         }
     }
     // swiftlint:enable function_body_length
 
-    private static func buildInputParams(_ currentState: SearchState,
+    private static func buildInputParams(_ currentState: SearchActivityState,
                                          action: SearchBarEditEvent) -> SearchInputParams {
         switch action {
         case .beganEditing:

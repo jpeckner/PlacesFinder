@@ -1,5 +1,5 @@
 //
-//  SearchStatePrismTests.swift
+//  SearchActivityStatePrismTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -29,7 +29,7 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
-class SearchStatePrismTests: QuickSpec {
+class SearchActivityStatePrismTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -37,14 +37,14 @@ class SearchStatePrismTests: QuickSpec {
 
         var mockLocationAuthListener: LocationAuthListenerProtocolMock!
         var mockLocationRequestHandler: LocationRequestHandlerProtocolMock!
-        var statePrism: SearchStatePrism!
+        var statePrism: SearchActivityStatePrism!
 
         beforeEach {
             mockLocationAuthListener = LocationAuthListenerProtocolMock()
             mockLocationRequestHandler = LocationRequestHandlerProtocolMock()
 
-            statePrism = SearchStatePrism(locationAuthListener: mockLocationAuthListener,
-                                          locationRequestHandler: mockLocationRequestHandler)
+            statePrism = SearchActivityStatePrism(locationAuthListener: mockLocationAuthListener,
+                                                  locationRequestHandler: mockLocationRequestHandler)
         }
 
         describe("presentationKeyPaths") {

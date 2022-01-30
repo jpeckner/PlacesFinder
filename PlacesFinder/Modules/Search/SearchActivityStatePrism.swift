@@ -1,5 +1,5 @@
 //
-//  SearchStatePrism.swift
+//  SearchActivityStatePrism.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -40,13 +40,13 @@ enum SearchPresentationType: Equatable {
     case search(IgnoredEquatable<LocationServicesBlock>)
 }
 
-protocol SearchStatePrismProtocol: AutoMockable {
+protocol SearchActivityStatePrismProtocol: AutoMockable {
     var presentationKeyPaths: Set<EquatableKeyPath<AppState>> { get }
 
     func presentationType(for state: AppState) -> SearchPresentationType
 }
 
-class SearchStatePrism: SearchStatePrismProtocol {
+class SearchActivityStatePrism: SearchActivityStatePrismProtocol {
 
     let locationAuthListener: LocationAuthListenerProtocol
     let locationRequestHandler: LocationRequestHandlerProtocol

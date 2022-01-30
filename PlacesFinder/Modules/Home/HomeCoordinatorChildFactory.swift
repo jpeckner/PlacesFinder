@@ -65,8 +65,8 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
-        let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
-                                          locationRequestHandler: serviceContainer.locationRequestHandler)
+        let statePrism = SearchActivityStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+                                                  locationRequestHandler: serviceContainer.locationRequestHandler)
 
         let searchEntityModelBuilder = SearchEntityModelBuilder()
         let actionCreatorDependencies = SearchActivityActionCreatorDependencies(

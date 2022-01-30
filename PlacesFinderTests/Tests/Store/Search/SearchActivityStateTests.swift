@@ -1,5 +1,5 @@
 //
-//  SearchStateTests.swift
+//  SearchActivityStateTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -29,7 +29,7 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
-class SearchStateTests: QuickSpec {
+class SearchActivityStateTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     override func spec() {
@@ -46,9 +46,11 @@ class SearchStateTests: QuickSpec {
 
             context("when state.loadState == .idle") {
                 beforeEach {
-                    let state = SearchState(loadState: .idle,
-                                            inputParams: stubSearchInputParams,
-                                            detailedEntity: nil)
+                    let state = SearchActivityState(
+                        loadState: .idle,
+                        inputParams: stubSearchInputParams,
+                        detailedEntity: nil
+                    )
                     result = state.entities
                 }
 
@@ -59,9 +61,11 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .locationRequested") {
                 beforeEach {
-                    let state = SearchState(loadState: .locationRequested(stubSearchParams),
-                                            inputParams: stubSearchInputParams,
-                                            detailedEntity: nil)
+                    let state = SearchActivityState(
+                        loadState: .locationRequested(stubSearchParams),
+                        inputParams: stubSearchInputParams,
+                        detailedEntity: nil
+                    )
                     result = state.entities
                 }
 
@@ -72,9 +76,11 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .initialPageRequested") {
                 beforeEach {
-                    let state = SearchState(loadState: .initialPageRequested(stubSearchParams),
-                                            inputParams: stubSearchInputParams,
-                                            detailedEntity: nil)
+                    let state = SearchActivityState(
+                        loadState: .initialPageRequested(stubSearchParams),
+                        inputParams: stubSearchInputParams,
+                        detailedEntity: nil
+                    )
                     result = state.entities
                 }
 
@@ -85,9 +91,11 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .noResultsFound") {
                 beforeEach {
-                    let state = SearchState(loadState: .noResultsFound(stubSearchParams),
-                                            inputParams: stubSearchInputParams,
-                                            detailedEntity: nil)
+                    let state = SearchActivityState(
+                        loadState: .noResultsFound(stubSearchParams),
+                        inputParams: stubSearchInputParams,
+                        detailedEntity: nil
+                    )
                     result = state.entities
                 }
 
@@ -98,7 +106,7 @@ class SearchStateTests: QuickSpec {
 
             context("else when state.loadState == .pagesReceived") {
                 beforeEach {
-                    let state = SearchState(
+                    let state = SearchActivityState(
                         loadState: SearchLoadState.pagesReceived(
                             stubSearchParams,
                             pageState: .success,
@@ -120,9 +128,11 @@ class SearchStateTests: QuickSpec {
             context("else when state.loadState == .failure") {
                 beforeEach {
                     let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
-                    let state = SearchState(loadState: .failure(stubSearchParams, underlyingError: underlyingError),
-                                            inputParams: stubSearchInputParams,
-                                            detailedEntity: nil)
+                    let state = SearchActivityState(
+                        loadState: .failure(stubSearchParams, underlyingError: underlyingError),
+                        inputParams: stubSearchInputParams,
+                        detailedEntity: nil
+                    )
                     result = state.entities
                 }
 

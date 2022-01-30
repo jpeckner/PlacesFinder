@@ -34,7 +34,7 @@ extension AppState {
         reachabilityState: ReachabilityState = .init(),
         routerState: RouterState<AppLinkType> = .init(currentNode: StubNode.nodeBox),
         searchPreferencesState: SearchPreferencesState = SearchPreferencesState(usesMetricSystem: true),
-        searchState: SearchState = .init()
+        searchState: SearchActivityState = .init()
     ) -> AppState {
         return AppState(appCopyContentState: appCopyContentState,
                         appSkinState: appSkinState,

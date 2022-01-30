@@ -45,7 +45,7 @@ class SearchCoordinatorTests: QuickSpec {
         var mockStore: MockAppStore!
         var mockServiceContainer: ServiceContainer!
         var mockSearchPresenter: SearchPresenterProtocolMock!
-        var mockStatePrism: SearchStatePrismProtocolMock!
+        var mockStatePrism: SearchActivityStatePrismProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
         var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
@@ -54,7 +54,7 @@ class SearchCoordinatorTests: QuickSpec {
 
         var coordinator: SearchCoordinator<MockAppStore>!
 
-        func initCoordinator(statePrism: SearchStatePrismProtocol) {
+        func initCoordinator(statePrism: SearchActivityStatePrismProtocol) {
             mockStore = MockAppStore()
             mockStore.stubState = stubState
 
@@ -90,7 +90,7 @@ class SearchCoordinatorTests: QuickSpec {
         }
 
         beforeEach {
-            mockStatePrism = SearchStatePrismProtocolMock()
+            mockStatePrism = SearchActivityStatePrismProtocolMock()
             mockStatePrism.underlyingPresentationKeyPaths = []
 
             initCoordinator(statePrism: mockStatePrism)
@@ -98,8 +98,8 @@ class SearchCoordinatorTests: QuickSpec {
 
         describe("init") {
             beforeEach {
-                let statePrism = SearchStatePrism(locationAuthListener: LocationAuthListenerProtocolMock(),
-                                                  locationRequestHandler: LocationRequestHandlerProtocolMock())
+                let statePrism = SearchActivityStatePrism(locationAuthListener: LocationAuthListenerProtocolMock(),
+                                                          locationRequestHandler: LocationRequestHandlerProtocolMock())
                 initCoordinator(statePrism: statePrism)
             }
 

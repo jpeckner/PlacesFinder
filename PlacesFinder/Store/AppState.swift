@@ -34,7 +34,7 @@ struct AppState: StateProtocol, Equatable {
     let reachabilityState: ReachabilityState
     let routerState: RouterState<AppLinkType>
     let searchPreferencesState: SearchPreferencesState
-    let searchState: SearchState
+    let searchState: SearchActivityState
 }
 
 extension AppState {
@@ -49,7 +49,7 @@ extension AppState {
         self.reachabilityState = ReachabilityState()
         self.routerState = RouterState(currentNode: currentRouterNode)
         self.searchPreferencesState = searchPreferencesState
-        self.searchState = SearchState()
+        self.searchState = SearchActivityState()
     }
 
 }

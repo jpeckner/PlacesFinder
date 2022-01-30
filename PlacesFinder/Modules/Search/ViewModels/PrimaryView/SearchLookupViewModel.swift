@@ -32,7 +32,7 @@ struct SearchLookupViewModel: Equatable {
 }
 
 protocol SearchLookupViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ searchState: SearchState,
+    func buildViewModel(_ searchState: SearchActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
 }
@@ -54,7 +54,7 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
         self.childBuilder = childBuilder
     }
 
-    func buildViewModel(_ searchState: SearchState,
+    func buildViewModel(_ searchState: SearchActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
