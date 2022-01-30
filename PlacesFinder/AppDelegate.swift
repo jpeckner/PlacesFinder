@@ -176,7 +176,9 @@ private extension ServiceContainer {
     init(appConfig: AppConfig,
          store: DispatchingStoreProtocol) {
         let routingHandler = RoutingHandler()
-        self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler)
+        let destinationRoutingHandler = DestinationRoutingHandler()
+        self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler,
+                                                   destinationRoutingHandler: destinationRoutingHandler)
 
         self.appSkinService = AppSkinService()
 

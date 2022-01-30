@@ -1,4 +1,4 @@
-// Generated using CoordiNode 1.0.4 — https://github.com/jpeckner/CoordiNode
+// Generated using CoordiNode 1.1.0 — https://github.com/jpeckner/CoordiNode
 // DO NOT EDIT
 
 import CoordiNode
@@ -13,11 +13,17 @@ extension HomeCoordinator {
     }
 }
 
+
+extension HomeCoordinator {
+    typealias TDescendent = HomeCoordinatorDescendent
+}
+
 // MARK: HomeCoordinatorDescendent
 
 enum HomeCoordinatorDescendent: CaseIterable {
     case search
     case settings
+    case settingsChild
 }
 
 extension HomeCoordinatorDescendent: DescendentProtocol {
@@ -25,7 +31,9 @@ extension HomeCoordinatorDescendent: DescendentProtocol {
     init?(nodeBox: NodeBox) {
         guard let matchingCase = (HomeCoordinatorDescendent.allCases.first {
             $0.nodeBox == nodeBox
-        }) else { return nil }
+        }) else {
+            return nil
+        }
 
         self = matchingCase
     }
@@ -36,6 +44,8 @@ extension HomeCoordinatorDescendent: DescendentProtocol {
             self = .search
         case .settings:
             self = .settings
+        case .settingsChild:
+            self = .settingsChild
         }
     }
 
@@ -45,6 +55,8 @@ extension HomeCoordinatorDescendent: DescendentProtocol {
             return SearchCoordinatorNode.nodeBox
         case .settings:
             return SettingsCoordinatorNode.nodeBox
+        case .settingsChild:
+            return SettingsChildCoordinatorNode.nodeBox
         }
     }
 
@@ -53,6 +65,8 @@ extension HomeCoordinatorDescendent: DescendentProtocol {
         case .search:
             return .search
         case .settings:
+            return .settings
+        case .settingsChild:
             return .settings
         }
     }
@@ -71,7 +85,9 @@ extension HomeCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
     init?(nodeBox: NodeBox) {
         guard let matchingCase = (HomeCoordinatorImmediateDescendent.allCases.first {
             $0.nodeBox == nodeBox
-        }) else { return nil }
+        }) else {
+            return nil
+        }
 
         self = matchingCase
     }
@@ -92,6 +108,7 @@ extension HomeCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
 enum HomeCoordinatorDestinationDescendent: CaseIterable {
     case search
     case settings
+    case settingsChild
 }
 
 extension HomeCoordinatorDestinationDescendent: DestinationDescendentProtocol {
@@ -99,7 +116,9 @@ extension HomeCoordinatorDestinationDescendent: DestinationDescendentProtocol {
     init?(destinationNodeBox: DestinationNodeBox) {
         guard let matchingCase = (HomeCoordinatorDestinationDescendent.allCases.first {
             $0.destinationNodeBox == destinationNodeBox
-        }) else { return nil }
+        }) else {
+            return nil
+        }
 
         self = matchingCase
     }
@@ -110,6 +129,8 @@ extension HomeCoordinatorDestinationDescendent: DestinationDescendentProtocol {
             return SearchCoordinatorNode.destinationNodeBox
         case .settings:
             return SettingsCoordinatorNode.destinationNodeBox
+        case .settingsChild:
+            return SettingsChildCoordinatorNode.destinationNodeBox
         }
     }
 

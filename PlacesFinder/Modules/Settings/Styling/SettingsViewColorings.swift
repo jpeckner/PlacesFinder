@@ -1,6 +1,5 @@
-// swiftlint:disable:this file_name
 //
-//  SettingsColorings.swift
+//  SettingsViewColorings.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner

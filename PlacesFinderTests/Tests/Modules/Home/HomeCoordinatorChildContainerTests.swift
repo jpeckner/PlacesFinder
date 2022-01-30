@@ -61,7 +61,8 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
                     switch $0 {
                     case .search:
                         return stubSearchCoordinator
-                    case .settings:
+                    case .settings,
+                         .settingsChild:
                         return stubSettingsCoordinator
                     }
                 }
@@ -69,8 +70,11 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
                 sut = HomeCoordinatorChildContainer(childFactory: mockFactory)
             }
 
-            it("calls mockFactory.buildCoordinator() for each child coordinator") {
-                expect(receivedArgs) == HomeCoordinatorDestinationDescendent.allCases
+            it("calls mockFactory.buildCoordinator() for each immediate child coordinator") {
+                let receivedImmediateDescendents = receivedArgs.compactMap { descendent in
+                    HomeCoordinatorImmediateDescendent(nodeBox: descendent.destinationNodeBox.asNodeBox)
+                }
+                expect(receivedImmediateDescendents) == HomeCoordinatorImmediateDescendent.allCases
             }
 
             it("assigns each child property to the expected coordinator") {

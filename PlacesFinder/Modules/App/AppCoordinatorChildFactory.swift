@@ -101,7 +101,8 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
     func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
         switch childType {
         case .search,
-             .settings:
+             .settings,
+             .settingsChild:
             let childFactory = HomeCoordinatorChildFactory(store: store,
                                                            listenerContainer: listenerContainer,
                                                            serviceContainer: serviceContainer)

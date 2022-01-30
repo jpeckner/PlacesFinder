@@ -1,8 +1,8 @@
 //
-//  TabCoordinatorProtocol.swift
+//  SettingsChildViewController.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,36 @@
 import Shared
 import UIKit
 
-protocol TabCoordinatorProtocol: AutoMockable {
-    var rootViewController: UIViewController { get }
+protocol SettingsChildViewControllerDelegate: AnyObject {
+    func viewControllerWasDismissed(_ viewController: SettingsChildViewController)
+}
 
-    func relinquishActive(completion: (() -> Void)?)
+class SettingsChildViewController: SingleContentViewController {
+
+    weak var delegate: SettingsChildViewControllerDelegate?
+
+    init(viewModel: SettingsChildViewModel,
+         colorings: SettingsChildViewColorings) {
+        let childView = SettingsChildView(viewModel: viewModel,
+                                          colorings: colorings)
+
+        super.init(contentView: childView,
+                   viewColoring: colorings.viewColoring)
+
+        modalPresentationStyle = .pageSheet
+        presentationController?.delegate = self
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension SettingsChildViewController: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        delegate?.viewControllerWasDismissed(self)
+    }
+
 }

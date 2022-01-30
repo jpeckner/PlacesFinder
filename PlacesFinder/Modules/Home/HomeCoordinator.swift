@@ -66,20 +66,32 @@ extension HomeCoordinator: ChildCoordinatorProtocol {
 
 }
 
-extension HomeCoordinator {
+extension HomeCoordinator: AppRouterProtocol {
 
-    func createSubtree(towards destinationDescendent: HomeCoordinatorDestinationDescendent) {
+    func createSubtree(from currentNode: NodeBox,
+                       towards destinationDescendent: HomeCoordinatorDestinationDescendent,
+                       state: AppState) {
+        handleNewTabSet(destinationDescendent: destinationDescendent)
+    }
+
+    func switchSubtree(from currentNode: HomeCoordinatorDescendent,
+                       towards destinationDescendent: HomeCoordinatorDestinationDescendent,
+                       state: AppState) {
+        let currentCoordinator = childContainer.coordinator(for: currentNode.immediateDescendent)
+        currentCoordinator.relinquishActive { [weak self] in
+            self?.createSubtree(from: currentNode.nodeBox,
+                                towards: destinationDescendent,
+                                state: state)
+        }
+    }
+
+    private func handleNewTabSet(destinationDescendent: HomeCoordinatorDestinationDescendent) {
         let immediateDescendent =
             HomeCoordinatorDescendent(destinationDescendent: destinationDescendent).immediateDescendent
         let childCoordinator = childContainer.coordinator(for: immediateDescendent)
 
         store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
         presenter.setSelectedViewController(childCoordinator.rootViewController)
-    }
-
-    func switchSubtree(from currentDescendent: HomeCoordinatorDescendent,
-                       to destinationDescendent: HomeCoordinatorDestinationDescendent) {
-        createSubtree(towards: destinationDescendent)
     }
 
 }
@@ -89,8 +101,7 @@ extension HomeCoordinator: HomePresenterDelegate {
     func homePresenter(_ homePresenter: HomePresenterProtocol,
                        didSelectChildCoordinator index: Int,
                        previousChildIndex: Int) {
-        switchSubtree(from: HomeCoordinatorDescendent.allCases[previousChildIndex],
-                      to: HomeCoordinatorDestinationDescendent.allCases[index])
+        handleNewTabSet(destinationDescendent: HomeCoordinatorDestinationDescendent.allCases[index])
     }
 
 }
@@ -100,9 +111,9 @@ extension HomeCoordinator: SubstatesSubscriber {
     typealias StoreState = AppState
 
     func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        appRoutingHandler.handleRouting(state,
-                                        updatedSubstates: updatedSubstates,
-                                        router: self)
+        appRoutingHandler.determineRouting(state,
+                                           updatedSubstates: updatedSubstates,
+                                           router: self)
     }
 
 }

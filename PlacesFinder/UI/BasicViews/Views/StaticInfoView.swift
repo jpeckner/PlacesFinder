@@ -65,6 +65,7 @@ class StaticInfoView: UIView {
             make.leading.equalTo(snp.leadingMargin)
             make.trailing.equalTo(snp.trailingMargin)
             make.top.equalTo(snp.topMargin)
+            make.height.greaterThanOrEqualTo(160.0)
             make.height.lessThanOrEqualTo(240.0)
         }
 

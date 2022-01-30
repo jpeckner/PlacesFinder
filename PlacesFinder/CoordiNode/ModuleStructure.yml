@@ -11,3 +11,7 @@ AppCoordinator:
                     enumCaseName: search
                 - SettingsCoordinator:
                     enumCaseName: settings
+                    isDestinationNode: true
+                    children:
+                        - SettingsChildCoordinator:
+                            enumCaseName: settingsChild

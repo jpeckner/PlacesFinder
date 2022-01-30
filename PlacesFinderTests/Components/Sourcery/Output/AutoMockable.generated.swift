@@ -1174,19 +1174,20 @@ internal class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderPro
 
     // MARK: - buildViewModel
 
-    internal var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
-    internal var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
-        return buildViewModelSearchPreferencesStateAppCopyContentCallsCount > 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount = 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCalled: Bool {
+        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount > 0
     }
-    internal var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
-    internal var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
-    internal var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, settingsChildRequestAction: Action)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue: SettingsViewModel!
+    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure: ((SearchPreferencesState, AppCopyContent, Action) -> SettingsViewModel)?
 
     internal func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent) -> SettingsViewModel {
-        buildViewModelSearchPreferencesStateAppCopyContentCallsCount += 1
-        buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent)
-        return buildViewModelSearchPreferencesStateAppCopyContentClosure.map({ $0(searchPreferencesState, appCopyContent) }) ?? buildViewModelSearchPreferencesStateAppCopyContentReturnValue
+                        appCopyContent: AppCopyContent,
+                        settingsChildRequestAction: Action) -> SettingsViewModel {
+        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount += 1
+        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, settingsChildRequestAction: settingsChildRequestAction)
+        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure.map({ $0(searchPreferencesState, appCopyContent, settingsChildRequestAction) }) ?? buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue
     }
 
 }
@@ -1196,6 +1197,20 @@ internal class TabCoordinatorProtocolMock: TabCoordinatorProtocol {
         set(value) { underlyingRootViewController = value }
     }
     internal var underlyingRootViewController: UIViewController!
+
+    // MARK: - relinquishActive
+
+    internal var relinquishActiveCompletionCallsCount = 0
+    internal var relinquishActiveCompletionCalled: Bool {
+        return relinquishActiveCompletionCallsCount > 0
+    }
+    internal var relinquishActiveCompletionReceivedCompletion: (() -> Void)?
+    internal var relinquishActiveCompletionClosure: (((() -> Void)?) -> Void)?
+
+    internal func relinquishActive(completion: (() -> Void)?) {
+        relinquishActiveCompletionCallsCount += 1
+        relinquishActiveCompletionClosure?(completion)
+    }
 
 }
 internal class UserDefaultsListenerProtocolMock: UserDefaultsListenerProtocol {

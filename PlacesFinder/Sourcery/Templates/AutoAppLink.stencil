@@ -4,7 +4,7 @@ import SwiftDux
 {% macro extractEnumCaseName linkPayloadType %}{% if linkPayloadType.annotations.enumCaseName %}{{ linkPayloadType.annotations.enumCaseName }}{% else %}No enumCaseName found for {{ linkPayloadType }}!{% endif %}{% endmacro %}
 
 {% macro buildDestinationNodeCases linkPayloadType %}
-        {% for type in types.classes where type.based.DestinationCoordinatorProtocol %}
+        {% for type in types.classes where (type.based.DestinationCoordinatorProtocol or type.based.DestinationRouterProtocol) %}
         {% for key,value in type.annotations where key == "linkPayloadType" %}
         {% for payloadType in value|toArray %}
         {% if payloadType == linkPayloadType.name %}
@@ -49,7 +49,7 @@ extension AppLinkType: LinkTypeProtocol {
 
 }
 
-{% for type in types.classes where type.based.DestinationCoordinatorProtocol and type|annotated:"linkPayloadType" %}
+{% for type in types.classes where (type.based.DestinationCoordinatorProtocol or type.based.DestinationRouterProtocol) and type|annotated:"linkPayloadType" %}
 extension {{ type.name }} {
 
     func clearAllAssociatedLinkTypes(_ state: AppState,

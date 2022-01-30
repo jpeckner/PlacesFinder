@@ -1,9 +1,8 @@
-//  swiftlint:disable:this file_name
 //
-//  EquatableKeyPath+AppState.swift
+//  SettingsChildViewColorings.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +23,12 @@
 //  SOFTWARE.
 
 import Foundation
-import SwiftDux
+import Shared
 
-extension Set where Element == EquatableKeyPath<AppState> {
-
-    var partialKeyPaths: Set<PartialKeyPath<AppState>> {
-        return Set<PartialKeyPath<AppState>>(map { $0.keyPath })
-    }
-
+// sourcery: fieldName = "settingsChild"
+struct SettingsChildViewColorings: AppColoringProtocol, AppStandardColoringsProtocol {
+    let viewColoring: ViewColoring
+    let titleTextColoring: TextColoring
+    let bodyTextColoring: TextColoring
+    let ctaTextColoring: TextColoring
 }

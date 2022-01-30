@@ -8,6 +8,7 @@ import SwiftDux
 enum AppLinkType: Equatable {
     case emptySearch(EmptySearchLinkPayload)
     case search(SearchLinkPayload)
+    case settingsChild(SettingsChildLinkPayload)
     case settings(SettingsLinkPayload)
 }
 
@@ -18,6 +19,8 @@ extension AppLinkType {
         case let .emptySearch(payload):
             return payload
         case let .search(payload):
+            return payload
+        case let .settingsChild(payload):
             return payload
         case let .settings(payload):
             return payload
@@ -36,6 +39,8 @@ extension AppLinkType: LinkTypeProtocol {
             return SearchCoordinatorNode.destinationNodeBox
         case .search:
             return SearchCoordinatorNode.destinationNodeBox
+        case .settingsChild:
+            return SettingsChildCoordinatorNode.destinationNodeBox
         case .settings:
             return SettingsCoordinatorNode.destinationNodeBox
         }
@@ -51,6 +56,16 @@ extension SearchCoordinator {
                                   state: state,
                                   store: store)
         clearPayloadTypeIfPresent(EmptySearchLinkPayload.self,
+                                  state: state,
+                                  store: store)
+    }
+
+}
+extension SettingsChildCoordinator {
+
+    func clearAllAssociatedLinkTypes(_ state: AppState,
+                                     store: DispatchingStoreProtocol) {
+        clearPayloadTypeIfPresent(SettingsChildLinkPayload.self,
                                   state: state,
                                   store: store)
     }

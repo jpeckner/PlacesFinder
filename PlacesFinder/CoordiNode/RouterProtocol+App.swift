@@ -1,3 +1,4 @@
+//  swiftlint:disable:this file_name
 //
 //  RouterProtocol+App.swift
 //  PlacesFinder
@@ -25,7 +26,19 @@
 import CoordiNode
 import SwiftDux
 
-extension RouterProtocol {
+// MARK: AppRouterProtocol
+
+protocol AppRouterProtocol: RouterProtocol {
+    func createSubtree(from currentNode: NodeBox,
+                       towards destinationDescendent: TDestinationDescendent,
+                       state: AppState)
+
+    func switchSubtree(from currentNode: TDescendent,
+                       towards destinationDescendent: TDestinationDescendent,
+                       state: AppState)
+}
+
+extension AppRouterProtocol {
 
     func setCurrentCoordinatorAction(_ immediateDescendent: TDescendent.TImmediateDescendent) -> Action {
         return AppRouterAction.setCurrentCoordinator(immediateDescendent.nodeBox)
@@ -33,11 +46,28 @@ extension RouterProtocol {
 
 }
 
+// MARK: AppDestinationRouterProtocol
+
+protocol AppDestinationRouterProtocol: AppRouterProtocol, DestinationRouterProtocol {
+    func closeAllSubtrees(currentNode: NodeBox,
+                          state: AppState)
+}
+
+extension AppDestinationRouterProtocol {
+
+    var setSelfAsCurrentCoordinator: Action {
+        return AppRouterAction.setCurrentCoordinator(Self.nodeBox)
+    }
+
+}
+
+// MARK: RootCoordinatorProtocol
+
 extension RootCoordinatorProtocol {
 
-    // Only the RootCoordinatorProtocol, which controls the entire app, can dispatch setDestinationCoordinator in
-    // response to link payloads being requested. Otherwise, any coordinator could effectively steer the app to any
-    // other, which would negate the purpose of CoordiNode's routing system.
+    // Only the RootCoordinatorProtocol, which controls the entire app, can dispatch setDestinationCoordinator.
+    // Otherwise, any coordinator could effectively steer the app to any other, which would negate the purpose of
+    // CoordiNode's routing system.
     func setLinkDestinationAction(_ state: AppState) -> Action? {
         switch state.routerState.loadState {
         case let .payloadRequested(linkType):

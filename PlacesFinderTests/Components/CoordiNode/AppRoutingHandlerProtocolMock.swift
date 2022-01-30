@@ -23,27 +23,28 @@
 //  SOFTWARE.
 
 import CoordiNode
+import CoordiNodeTestComponents
 
 // swiftlint:disable identifier_name
 // swiftlint:disable large_tuple
 // swiftlint:disable line_length
 internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
 
-    // MARK: - handleRouting<TRouter: RouterProtocol>
+    // MARK: - determineRouting<TRouter: RouterProtocol>
 
-    internal var handleRoutingUpdatedSubstatesRouterCallsCount = 0
-    internal var handleRoutingUpdatedSubstatesRouterCalled: Bool {
-        return handleRoutingUpdatedSubstatesRouterCallsCount > 0
+    internal var determineRoutingUpdatedSubstatesRouterCallsCount = 0
+    internal var determineRoutingUpdatedSubstatesRouterCalled: Bool {
+        return determineRoutingUpdatedSubstatesRouterCallsCount > 0
     }
-    internal var handleRoutingUpdatedSubstatesRouterReceivedArguments: (state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>, router: CoordinatorProtocol)?
-    internal var handleRoutingUpdatedSubstatesRouterClosure: ((AppState, Set<PartialKeyPath<AppState>>, CoordinatorProtocol) -> Void)?
+    internal var determineRoutingUpdatedSubstatesRouterReceivedArguments: (state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>, router: CoordinatorProtocol)?
+    internal var determineRoutingUpdatedSubstatesRouterClosure: ((AppState, Set<PartialKeyPath<AppState>>, CoordinatorProtocol) -> Void)?
 
-    internal func handleRouting<TRouter: RouterProtocol>(_ state: AppState,
-                                                         updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                         router: TRouter) {
-        handleRoutingUpdatedSubstatesRouterCallsCount += 1
-        handleRoutingUpdatedSubstatesRouterReceivedArguments = (state: state, updatedSubstates: updatedSubstates, router: router)
-        handleRoutingUpdatedSubstatesRouterClosure?(state, updatedSubstates, router)
+    internal func determineRouting<TRouter: RouterProtocol>(_ state: AppState,
+                                                            updatedSubstates: Set<PartialKeyPath<AppState>>,
+                                                            router: TRouter) {
+        determineRoutingUpdatedSubstatesRouterCallsCount += 1
+        determineRoutingUpdatedSubstatesRouterReceivedArguments = (state: state, updatedSubstates: updatedSubstates, router: router)
+        determineRoutingUpdatedSubstatesRouterClosure?(state, updatedSubstates, router)
     }
 
 }

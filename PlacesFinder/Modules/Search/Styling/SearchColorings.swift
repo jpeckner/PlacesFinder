@@ -1,4 +1,4 @@
-// swiftlint:disable:this file_name
+//  swiftlint:disable:this file_name
 //
 //  SearchColorings.swift
 //  PlacesFinder

@@ -95,7 +95,8 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 result = sut.buildViewModel(searchPreferencesState: stubSearchPreferencesState,
-                                            appCopyContent: stubAppCopyContent)
+                                            appCopyContent: stubAppCopyContent,
+                                            settingsChildRequestAction: StubAction.genericAction)
             }
 
             it("returns a view model with a .measurementSystem header in index 0") {

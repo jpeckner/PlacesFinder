@@ -149,14 +149,16 @@ class AppCoordinatorTests: QuickSpec {
 
         }
 
-        describe("RouterProtocol") {
+        describe("AppRouterProtocol") {
 
             describe("createSubtree()") {
 
                 for destinationDescendent in AppCoordinatorDestinationDescendent.allCases {
                     context("when createSubtree() is called to route towards \(destinationDescendent)") {
                         beforeEach {
-                            coordinator.createSubtree(towards: destinationDescendent)
+                            coordinator.createSubtree(from: AppCoordinatorNode.nodeBox,
+                                                      towards: destinationDescendent,
+                                                      state: AppState.stubValue())
                         }
 
                         it("activates mockHomeCoordinator") {
@@ -176,7 +178,8 @@ class AppCoordinatorTests: QuickSpec {
                         context("when switchSubtree() switches from \(descendent) to \(destinationDescendent)") {
                             beforeEach {
                                 coordinator.switchSubtree(from: descendent,
-                                                          to: destinationDescendent)
+                                                          towards: destinationDescendent,
+                                                          state: AppState.stubValue())
                             }
 
                             it("deactivates the current child coordinator") {
@@ -265,8 +268,8 @@ class AppCoordinatorTests: QuickSpec {
                         }
                     }
 
-                    it("calls mockAppRoutingHandler.handleRouting()") {
-                        expect(mockAppRoutingHandler.handleRoutingUpdatedSubstatesRouterCalled) == true
+                    it("calls mockAppRoutingHandler.determineRouting()") {
+                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
                     }
 
                     it("does not dispatch an action") {
@@ -286,8 +289,8 @@ class AppCoordinatorTests: QuickSpec {
                                              updatedSubstates: [])
                     }
 
-                    it("calls mockAppRoutingHandler.handleRouting()") {
-                        expect(mockAppRoutingHandler.handleRoutingUpdatedSubstatesRouterCalled) == true
+                    it("calls mockAppRoutingHandler.determineRouting()") {
+                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
                     }
 
                     it("dispatches setDestinationCoordinator with the payload's destinationNodeBox") {
@@ -312,8 +315,8 @@ class AppCoordinatorTests: QuickSpec {
                         }
                     }
 
-                    it("calls mockAppRoutingHandler.handleRouting()") {
-                        expect(mockAppRoutingHandler.handleRoutingUpdatedSubstatesRouterCalled) == true
+                    it("calls mockAppRoutingHandler.determineRouting()") {
+                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
                     }
 
                     it("does not dispatch an action") {

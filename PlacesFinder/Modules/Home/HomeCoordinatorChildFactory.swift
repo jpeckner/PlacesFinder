@@ -132,6 +132,7 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
 
         return SettingsCoordinator(store: store,
                                    presenter: presenter,
+                                   serviceContainer: serviceContainer,
                                    settingsViewModelBuilder: settingsViewModelBuilder,
                                    navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
