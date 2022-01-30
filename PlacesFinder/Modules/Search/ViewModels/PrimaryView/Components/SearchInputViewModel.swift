@@ -46,11 +46,11 @@ extension SearchInputViewModel {
 
 struct SearchInputDispatcher: Equatable {
     private let store: IgnoredEquatable<DispatchingStoreProtocol>
-    private let actionPrism: IgnoredEquatable<SearchActionPrismProtocol>
+    private let actionPrism: IgnoredEquatable<SearchActivityActionPrismProtocol>
     private let locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
         self.store = IgnoredEquatable(store)
         self.actionPrism = IgnoredEquatable(actionPrism)
@@ -88,11 +88,11 @@ protocol SearchInputViewModelBuilderProtocol: AutoMockable {
 class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol) {
         self.store = store
         self.actionPrism = actionPrism

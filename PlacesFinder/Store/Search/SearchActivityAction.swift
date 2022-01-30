@@ -1,5 +1,5 @@
 //
-//  SearchAction.swift
+//  SearchActivityAction.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2018 Justin Peckner
@@ -31,7 +31,7 @@ enum SearchPageRequestError: Error, Equatable {
     case canRetryRequest(underlyingError: IgnoredEquatable<Error>)
 }
 
-enum SearchAction: Action, Equatable {
+enum SearchActivityAction: Action, Equatable {
     // Load state
     case locationRequested(SearchParams)
 
@@ -60,33 +60,33 @@ enum SearchAction: Action, Equatable {
     case removeDetailedEntity
 }
 
-// MARK: SearchActionCreator
+// MARK: SearchActivityActionCreator
 
-struct SearchActionCreatorDependencies {
+struct SearchActivityActionCreatorDependencies {
     let placeLookupService: PlaceLookupServiceProtocol
     let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
 }
 
-protocol SearchActionCreatorProtocol: ResettableAutoMockable {
-    static func requestInitialPage(_ dependencies: SearchActionCreatorDependencies,
+protocol SearchActivityActionCreatorProtocol: ResettableAutoMockable {
+    static func requestInitialPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                    searchParams: SearchParams,
                                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action
 
-    static func requestSubsequentPage(_ dependencies: SearchActionCreatorDependencies,
+    static func requestSubsequentPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                       searchParams: SearchParams,
                                       previousResults: NonEmptyArray<SearchEntityModel>,
                                       tokenContainer: PlaceLookupTokenAttemptsContainer) -> Action
 }
 
-enum SearchActionCreator: SearchActionCreatorProtocol {}
+enum SearchActivityActionCreator: SearchActivityActionCreatorProtocol {}
 
-extension SearchActionCreator {
+extension SearchActivityActionCreator {
 
-    static func requestInitialPage(_ dependencies: SearchActionCreatorDependencies,
+    static func requestInitialPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                    searchParams: SearchParams,
                                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
         return AppAsyncAction { dispatch, stateReceiverBlock in
-            dispatch(SearchAction.locationRequested(searchParams))
+            dispatch(SearchActivityAction.locationRequested(searchParams))
 
             stateReceiverBlock { appState in
                 requestLocation(appState.searchPreferencesState,
@@ -99,7 +99,7 @@ extension SearchActionCreator {
     }
 
     private static func requestLocation(_ preferencesState: SearchPreferencesState,
-                                        dependencies: SearchActionCreatorDependencies,
+                                        dependencies: SearchActivityActionCreatorDependencies,
                                         searchParams: SearchParams,
                                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock,
                                         dispatch: @escaping DispatchFunction) {
@@ -126,14 +126,14 @@ extension SearchActionCreator {
     }
 
     private static func performInitialPageRequest(_ placeLookupParams: PlaceLookupParams,
-                                                  dependencies: SearchActionCreatorDependencies,
+                                                  dependencies: SearchActivityActionCreatorDependencies,
                                                   searchParams: SearchParams,
                                                   dispatch: @escaping DispatchFunction) {
         do {
             let placeLookupService = dependencies.placeLookupService
             let initialRequestToken = try placeLookupService.buildInitialPageRequestToken(placeLookupParams)
 
-            dispatch(SearchAction.initialPageRequested(searchParams))
+            dispatch(SearchActivityAction.initialPageRequested(searchParams))
             placeLookupService.requestPage(initialRequestToken) { result in
                 switch result {
                 case let .success(lookupResponse):
@@ -154,17 +154,17 @@ extension SearchActionCreator {
         }
     }
 
-    private static func dispatchInitialPageSuccess(_ dependencies: SearchActionCreatorDependencies,
+    private static func dispatchInitialPageSuccess(_ dependencies: SearchActivityActionCreatorDependencies,
                                                    searchParams: SearchParams,
                                                    lookupResponse: PlaceLookupResponse,
                                                    dispatch: @escaping DispatchFunction) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
         guard let allEntities = NonEmptyArray(entityModels) else {
-            dispatch(SearchAction.noResultsFound(searchParams))
+            dispatch(SearchActivityAction.noResultsFound(searchParams))
             return
         }
 
-        dispatch(SearchAction.subsequentRequest(
+        dispatch(SearchActivityAction.subsequentRequest(
             searchParams,
             pageAction: .success,
             allEntities: allEntities,
@@ -175,20 +175,20 @@ extension SearchActionCreator {
     private static func dispatchInitialPageFailure(_ searchParams: SearchParams,
                                                    underlyingError: Error,
                                                    dispatch: @escaping DispatchFunction) {
-        dispatch(SearchAction.failure(searchParams,
-                                      underlyingError: IgnoredEquatable(underlyingError)))
+        dispatch(SearchActivityAction.failure(searchParams,
+                                              underlyingError: IgnoredEquatable(underlyingError)))
     }
 
 }
 
-extension SearchActionCreator {
+extension SearchActivityActionCreator {
 
-    static func requestSubsequentPage(_ dependencies: SearchActionCreatorDependencies,
+    static func requestSubsequentPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                       searchParams: SearchParams,
                                       previousResults: NonEmptyArray<SearchEntityModel>,
                                       tokenContainer: PlaceLookupTokenAttemptsContainer) -> Action {
         return AppAsyncAction { dispatch, _ in
-            dispatch(SearchAction.subsequentRequest(
+            dispatch(SearchActivityAction.subsequentRequest(
                 searchParams,
                 pageAction: .inProgress,
                 allEntities: previousResults,
@@ -216,12 +216,12 @@ extension SearchActionCreator {
 
     private static func dispatchSubsequentPageSuccess(_ previousResults: NonEmptyArray<SearchEntityModel>,
                                                       lookupResponse: PlaceLookupResponse,
-                                                      dependencies: SearchActionCreatorDependencies,
+                                                      dependencies: SearchActivityActionCreatorDependencies,
                                                       searchParams: SearchParams,
                                                       dispatch: @escaping DispatchFunction) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
 
-        dispatch(SearchAction.subsequentRequest(
+        dispatch(SearchActivityAction.subsequentRequest(
             searchParams,
             pageAction: .success,
             allEntities: previousResults.appendedWith(entityModels),
@@ -242,7 +242,7 @@ extension SearchActionCreator {
             .cannotRetryRequest(underlyingError: underlyingError)
         let nextRequestToken = isRequestRetriable ? lastRequestTokenContainer : nil
 
-        dispatch(SearchAction.subsequentRequest(
+        dispatch(SearchActivityAction.subsequentRequest(
             searchParams,
             pageAction: .failure(pageError),
             allEntities: previousResults,
@@ -252,7 +252,7 @@ extension SearchActionCreator {
 
 }
 
-private extension SearchActionCreator {
+private extension SearchActivityActionCreator {
 
     static func tokenContainer(for lookupResponse: PlaceLookupResponse) -> PlaceLookupTokenAttemptsContainer? {
         let nextRequestToken = try? lookupResponse.nextRequestTokenResult?.get()

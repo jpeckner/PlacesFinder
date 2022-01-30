@@ -1,5 +1,5 @@
 //
-//  MockStore+SearchAction.swift
+//  MockStore+SearchActivityAction.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -30,7 +30,7 @@ import SwiftDuxTestComponents
 extension MockStore {
 
     var dispatchedSubmittedParams: SearchParams? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchAction
+        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
         guard case let .subsequentRequest(submittedParams, _, _, _)? = dispatchedAction else {
             fail("Unexpected value: \(String(describing: dispatchedAction))")
             return nil
@@ -40,7 +40,7 @@ extension MockStore {
     }
 
     var dispatchedPageAction: IntermediateStepLoadAction<SearchPageRequestError>? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchAction
+        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, pageAction, _, _)? = dispatchedAction else {
             fail("Unexpected value: \(String(describing: dispatchedAction))")
             return nil
@@ -50,7 +50,7 @@ extension MockStore {
     }
 
     var dispatchedEntities: NonEmptyArray<SearchEntityModel>? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchAction
+        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, _, entities, _)? = dispatchedAction else {
             fail("Unexpected value: \(String(describing: dispatchedAction))")
             return nil
@@ -60,7 +60,7 @@ extension MockStore {
     }
 
     var dispatchedNextRequestToken: PlaceLookupTokenAttemptsContainer? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchAction
+        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, _, _, nextRequestToken)? = dispatchedAction else {
             fail("Unexpected value: \(String(describing: dispatchedAction))")
             return nil

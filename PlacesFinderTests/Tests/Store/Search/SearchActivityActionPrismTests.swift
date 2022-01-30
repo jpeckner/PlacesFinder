@@ -1,5 +1,5 @@
 //
-//  SearchActionPrismTests.swift
+//  SearchActivityActionPrismTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -29,7 +29,7 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
-class SearchActionPrismTests: QuickSpec {
+class SearchActivityActionPrismTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -42,25 +42,27 @@ class SearchActionPrismTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var prism: SearchActionPrism!
+        var prism: SearchActivityActionPrism!
 
         var result: Action!
 
         beforeEach {
-            SearchActionCreatorProtocolMock.setup()
+            SearchActivityActionCreatorProtocolMock.setup()
 
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
 
-            prism = SearchActionPrism(
-                dependencies: SearchActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
-                                                              searchEntityModelBuilder: mockSearchEntityModelBuilder),
-                actionCreator: SearchActionCreatorProtocolMock.self
+            prism = SearchActivityActionPrism(
+                dependencies: SearchActivityActionCreatorDependencies(
+                    placeLookupService: mockPlaceLookupService,
+                    searchEntityModelBuilder: mockSearchEntityModelBuilder
+                ),
+                actionCreator: SearchActivityActionCreatorProtocolMock.self
             )
         }
 
         afterEach {
-            SearchActionCreatorProtocolMock.resetAll()
+            SearchActivityActionCreatorProtocolMock.resetAll()
         }
 
         describe("initialRequestAction()") {
@@ -70,15 +72,15 @@ class SearchActionPrismTests: QuickSpec {
             }
 
             it("calls actionCreator.requestInitialPage() with the args for the next page request") {
-                SearchActionCreatorProtocolMock.verifyRequestInitialPageCalled(
+                SearchActivityActionCreatorProtocolMock.verifyRequestInitialPageCalled(
                     with: stubSearchParams,
                     placeLookupService: mockPlaceLookupService,
-                    actionCreator: SearchActionCreatorProtocolMock.self
+                    actionCreator: SearchActivityActionCreatorProtocolMock.self
                 )
             }
 
             it("returns the action returned by actionCreator.requestInitialPage()") {
-                expect(result as? StubSearchAction) == .requestInitialPage
+                expect(result as? StubSearchActivityAction) == .requestInitialPage
             }
 
         }
@@ -128,16 +130,16 @@ class SearchActionPrismTests: QuickSpec {
                     let expectedTokenContainer = PlaceLookupTokenAttemptsContainer(token: stubRequestToken,
                                                                                    maxAttempts: 5,
                                                                                    numAttemptsSoFar: 5)
-                    SearchActionCreatorProtocolMock.verifyRequestSubsequentPageCalled(
+                    SearchActivityActionCreatorProtocolMock.verifyRequestSubsequentPageCalled(
                         with: stubEntities.value,
                         nextRequestToken: expectedTokenContainer,
                         placeLookupService: mockPlaceLookupService,
-                        actionCreator: SearchActionCreatorProtocolMock.self
+                        actionCreator: SearchActivityActionCreatorProtocolMock.self
                     )
                 }
 
                 it("returns the action returned by actionCreator.requestSubsequentPage()") {
-                    expect(result as? StubSearchAction) == .requestSubsequentPage
+                    expect(result as? StubSearchActivityAction) == .requestSubsequentPage
                 }
 
             }
@@ -151,8 +153,8 @@ class SearchActionPrismTests: QuickSpec {
                 result = prism.updateEditingAction(editEvent)
             }
 
-            it("returns SearchAction.updateInputEditing(editEvent:)") {
-                expect(result as? SearchAction) == .updateInputEditing(editEvent)
+            it("returns SearchActivityAction.updateInputEditing(editEvent:)") {
+                expect(result as? SearchActivityAction) == .updateInputEditing(editEvent)
             }
         }
 
@@ -163,8 +165,8 @@ class SearchActionPrismTests: QuickSpec {
                 result = prism.detailEntityAction(stubEntity)
             }
 
-            it("returns SearchAction.detailedEntity(entity:)") {
-                expect(result as? SearchAction) == .detailedEntity(stubEntity)
+            it("returns SearchActivityAction.detailedEntity(entity:)") {
+                expect(result as? SearchActivityAction) == .detailedEntity(stubEntity)
             }
         }
 
@@ -173,8 +175,8 @@ class SearchActionPrismTests: QuickSpec {
                 result = prism.removeDetailedEntityAction
             }
 
-            it("returns SearchAction.detailedEntity(entity:)") {
-                expect(result as? SearchAction) == .removeDetailedEntity
+            it("returns SearchActivityAction.detailedEntity(entity:)") {
+                expect(result as? SearchActivityAction) == .removeDetailedEntity
             }
         }
 

@@ -1,5 +1,5 @@
 //
-//  SearchActionCreatorSubsequentPageTests.swift
+//  SearchActivityActionCreatorSubsequentPageTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -29,7 +29,8 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
-class SearchActionCreatorSubsequentPageTests: QuickSpec {
+// swiftlint:disable:next type_name
+class SearchActivityActionCreatorSubsequentPageTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -52,9 +53,9 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
         }
 
         func performTest() {
-            let action = SearchActionCreator.requestSubsequentPage(
-                SearchActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
-                                                searchEntityModelBuilder: mockSearchEntityModelBuilder),
+            let action = SearchActivityActionCreator.requestSubsequentPage(
+                SearchActivityActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
+                                                        searchEntityModelBuilder: mockSearchEntityModelBuilder),
                 searchParams: stubSearchParams,
                 previousResults: stubPreviousResults,
                 tokenContainer: stubTokenContainer
@@ -70,7 +71,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                     performTest()
                 }
 
-                it("dispatches SearchAction.subsequentRequest with .inProgress") {
+                it("dispatches SearchActivityAction.subsequentRequest with .inProgress") {
                     expect(mockStore.dispatchedPageAction) == .inProgress
                 }
 
@@ -176,7 +177,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                             performTest()
                         }
 
-                        it("dispatches SearchAction.subsequentRequest with .success") {
+                        it("dispatches SearchActivityAction.subsequentRequest with .success") {
                             expect(mockStore.dispatchedPageAction) == .success
                         }
 
@@ -218,7 +219,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchAction.subsequentRequest with .success") {
+                            it("dispatches SearchActivityAction.subsequentRequest with .success") {
                                 expect(mockStore.dispatchedPageAction) == .success
                             }
 
@@ -248,7 +249,7 @@ class SearchActionCreatorSubsequentPageTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchAction.subsequentRequest .success") {
+                            it("dispatches SearchActivityAction.subsequentRequest .success") {
                                 expect(mockStore.dispatchedPageAction) == .success
                             }
 

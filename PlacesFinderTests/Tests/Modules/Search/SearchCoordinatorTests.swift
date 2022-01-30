@@ -46,7 +46,7 @@ class SearchCoordinatorTests: QuickSpec {
         var mockServiceContainer: ServiceContainer!
         var mockSearchPresenter: SearchPresenterProtocolMock!
         var mockStatePrism: SearchStatePrismProtocolMock!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
         var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
         var mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock!
@@ -62,8 +62,8 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchPresenter = SearchPresenterProtocolMock()
             mockSearchPresenter.rootViewController = stubNavController
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchAction.requestInitialPage
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchActivityAction.requestInitialPage
 
             mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
             mockSearchBackgroundViewModelBuilder.buildViewModelAppCopyContentReturnValue = SearchBackgroundViewModel.stubValue()
@@ -82,7 +82,7 @@ class SearchCoordinatorTests: QuickSpec {
                                             presenter: mockSearchPresenter,
                                             urlOpenerService: mockServiceContainer.urlOpenerService,
                                             statePrism: statePrism,
-                                            actionPrism: mockSearchActionPrism,
+                                            actionPrism: mockSearchActivityActionPrism,
                                             backgroundViewModelBuilder: mockSearchBackgroundViewModelBuilder,
                                             lookupViewModelBuilder: mockSearchLookupViewModelBuilder,
                                             detailsViewContextBuilder: mockSearchDetailsViewContextBuilder,
@@ -354,11 +354,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls actionCreator.requestInitialPage(:params)") {
-                            expect(mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
+                            expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {
-                            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? StubSearchAction
+                            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? StubSearchActivityAction
                             expect(dispatchedAction) == .requestInitialPage
                         }
 

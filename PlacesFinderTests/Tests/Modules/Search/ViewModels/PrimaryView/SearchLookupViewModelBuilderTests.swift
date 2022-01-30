@@ -40,7 +40,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                                           detailedEntity: .stubValue())
 
         var mockStore: MockAppStore!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var stubInputViewModel: SearchInputViewModel!
         var mockInputViewModelBuilder: SearchInputViewModelBuilderProtocolMock!
         var mockChildBuilder: SearchLookupChildBuilderProtocolMock!
@@ -55,11 +55,11 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
 
         beforeEach {
             mockStore = MockAppStore()
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             locationBlockCalled = false
 
             let dispatcher = SearchInputDispatcher(store: mockStore,
-                                                   actionPrism: mockSearchActionPrism,
+                                                   actionPrism: mockSearchActivityActionPrism,
                                                    locationUpdateRequestBlock: locationUpdateStub)
             stubInputViewModel = .dispatching(content: .stubValue(),
                                               dispatcher: dispatcher)
@@ -70,7 +70,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockChildBuilder.buildChildAppCopyContentLocationUpdateRequestBlockReturnValue = .progress
 
             sut = SearchLookupViewModelBuilder(store: mockStore,
-                                               actionPrism: mockSearchActionPrism,
+                                               actionPrism: mockSearchActivityActionPrism,
                                                inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
         }

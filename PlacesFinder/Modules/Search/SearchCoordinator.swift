@@ -35,7 +35,7 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let statePrism: SearchStatePrismProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
     private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
@@ -45,7 +45,7 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          statePrism: SearchStatePrismProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,

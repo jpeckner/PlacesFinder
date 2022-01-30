@@ -122,7 +122,7 @@ enum SearchReducer {
     // swiftlint:disable function_body_length
     static func reduce(action: Action,
                        currentState: SearchState) -> SearchState {
-        guard let searchAction = action as? SearchAction else { return currentState }
+        guard let searchAction = action as? SearchActivityAction else { return currentState }
 
         switch searchAction {
         case let .locationRequested(submittedParams):

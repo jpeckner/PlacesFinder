@@ -46,7 +46,7 @@ class SearchReducerTests: QuickSpec {
 
             var result: SearchState!
 
-            context("when the action is not a SearchAction") {
+            context("when the action is not a SearchActivityAction") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: stubDetailsViewModel)
@@ -61,14 +61,14 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.locationRequested") {
+            context("else when the action is SearchActivityAction.locationRequested") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: SearchInputParams(params: stubSearchParams,
                                                                               isEditing: true),
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.locationRequested(stubSearchParams),
+                    result = SearchReducer.reduce(action: SearchActivityAction.locationRequested(stubSearchParams),
                                                   currentState: currentState)
                 }
 
@@ -79,13 +79,13 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.initialPageRequested") {
+            context("else when the action is SearchActivityAction.initialPageRequested") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.initialPageRequested(stubSearchParams),
+                    result = SearchReducer.reduce(action: SearchActivityAction.initialPageRequested(stubSearchParams),
                                                   currentState: currentState)
                 }
 
@@ -96,13 +96,13 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.noResultsFound") {
+            context("else when the action is SearchActivityAction.noResultsFound") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.noResultsFound(stubSearchParams),
+                    result = SearchReducer.reduce(action: SearchActivityAction.noResultsFound(stubSearchParams),
                                                   currentState: currentState)
                 }
 
@@ -113,7 +113,7 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.subsequentRequest") {
+            context("else when the action is SearchActivityAction.subsequentRequest") {
 
                 func verifyResult(expectedPageState: SearchPageState,
                                   expectedEntities: NonEmptyArray<SearchEntityModel>,
@@ -140,7 +140,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: stubDetailsViewModel)
 
                     beforeEach {
-                        let action = SearchAction.subsequentRequest(
+                        let action = SearchActivityAction.subsequentRequest(
                             stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
@@ -169,7 +169,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: stubDetailsViewModel)
 
                     beforeEach {
-                        let action = SearchAction.subsequentRequest(
+                        let action = SearchActivityAction.subsequentRequest(
                             stubSearchParams,
                             pageAction: .inProgress,
                             allEntities: stubEntities,
@@ -198,7 +198,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: stubDetailsViewModel)
 
                     beforeEach {
-                        let action = SearchAction.subsequentRequest(
+                        let action = SearchActivityAction.subsequentRequest(
                             stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
@@ -229,7 +229,7 @@ class SearchReducerTests: QuickSpec {
                     let pageError = SearchPageRequestError.cannotRetryRequest(underlyingError: underlyingError)
 
                     beforeEach {
-                        let action = SearchAction.subsequentRequest(
+                        let action = SearchActivityAction.subsequentRequest(
                             stubSearchParams,
                             pageAction: .failure(pageError),
                             allEntities: stubEntities,
@@ -247,13 +247,13 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.failure") {
+            context("else when the action is SearchActivityAction.failure") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    let action = SearchAction.failure(
+                    let action = SearchActivityAction.failure(
                         stubSearchParams,
                         underlyingError: IgnoredEquatable(SharedTestComponents .StubError.plainError)
                     )
@@ -273,7 +273,7 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.updateInputEditing") {
+            context("else when the action is SearchActivityAction.updateInputEditing") {
 
                 context("and the editEvent is .beganEditing") {
 
@@ -284,7 +284,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: nil)
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchAction.updateInputEditing(.beganEditing),
+                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.beganEditing),
                                                       currentState: currentState)
                     }
 
@@ -306,7 +306,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: nil)
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchAction.updateInputEditing(.clearedInput),
+                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.clearedInput),
                                                       currentState: currentState)
                     }
 
@@ -329,7 +329,7 @@ class SearchReducerTests: QuickSpec {
                                                    detailedEntity: nil)
 
                     beforeEach {
-                        result = SearchReducer.reduce(action: SearchAction.updateInputEditing(.endedEditing),
+                        result = SearchReducer.reduce(action: SearchActivityAction.updateInputEditing(.endedEditing),
                                                       currentState: currentState)
                     }
 
@@ -344,13 +344,13 @@ class SearchReducerTests: QuickSpec {
 
             }
 
-            context("else when the action is SearchAction.detailedEntity") {
+            context("else when the action is SearchActivityAction.detailedEntity") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: nil)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.detailedEntity(stubDetailsViewModel),
+                    result = SearchReducer.reduce(action: SearchActivityAction.detailedEntity(stubDetailsViewModel),
                                                   currentState: currentState)
                 }
 
@@ -361,13 +361,13 @@ class SearchReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is SearchAction.removeDetailedEntity") {
+            context("else when the action is SearchActivityAction.removeDetailedEntity") {
                 let currentState = SearchState(loadState: .idle,
                                                inputParams: stubSearchInputParams,
                                                detailedEntity: stubDetailsViewModel)
 
                 beforeEach {
-                    result = SearchReducer.reduce(action: SearchAction.removeDetailedEntity,
+                    result = SearchReducer.reduce(action: SearchActivityAction.removeDetailedEntity,
                                                   currentState: currentState)
                 }
 

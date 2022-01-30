@@ -30,7 +30,7 @@ import SwiftDux
 
 class SearchLookupChildBuilderTests: QuickSpec {
 
-    private enum SearchAction: Action {
+    private enum SearchActivityAction: Action {
         case initialRequest
     }
 
@@ -46,7 +46,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubRetryViewModel = SearchRetryViewModel(ctaViewModel: .stubValue())
 
         var mockStore: MockAppStore!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocolMock!
         var stubResultsViewModel: SearchResultsViewModel!
@@ -60,8 +60,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = SearchAction.initialRequest
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = SearchActivityAction.initialRequest
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
             mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
@@ -81,7 +81,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockRetryViewModelBuilder = SearchRetryViewModelBuilderProtocolMock()
 
             sut = SearchLookupChildBuilder(store: mockStore,
-                                           actionPrism: mockSearchActionPrism,
+                                           actionPrism: mockSearchActivityActionPrism,
                                            instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
                                            resultsViewModelBuilder: mockResultsViewModelBuilder,
                                            noResultsFoundViewModelBuilder: mockNoResultsFoundViewModelBuilder,
@@ -231,10 +231,10 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     expect(viewModel) == stubRetryViewModel
                 }
 
-                it("includes the Action returned by mockSearchActionPrism") {
+                it("includes the Action returned by mockSearchActivityActionPrism") {
                     expect(mockStore.dispatchedActions.isEmpty) == true
                     receivedCTABlock()
-                    expect(mockStore.dispatchedActions.first as? SearchAction) == .initialRequest
+                    expect(mockStore.dispatchedActions.first as? SearchActivityAction) == .initialRequest
                 }
 
             }

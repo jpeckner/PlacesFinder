@@ -39,7 +39,7 @@ class SearchInputDispatcherTests: QuickSpec {
     override func spec() {
 
         var mockStore: MockAppStore!
-        var mockActionPrism: SearchActionPrismProtocolMock!
+        var mockActionPrism: SearchActivityActionPrismProtocolMock!
 
         var locationBlockCalled: Bool!
         var sut: SearchInputDispatcher!
@@ -47,7 +47,7 @@ class SearchInputDispatcherTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            mockActionPrism = SearchActionPrismProtocolMock()
+            mockActionPrism = SearchActivityActionPrismProtocolMock()
             mockActionPrism.updateEditingActionClosure = {
                 StubPrismAction.update($0)
             }

@@ -451,7 +451,7 @@ internal class ReachabilityProtocolMock: ReachabilityProtocol {
     }
 
 }
-internal class SearchActionCreatorProtocolMock: SearchActionCreatorProtocol {
+internal class SearchActivityActionCreatorProtocolMock: SearchActivityActionCreatorProtocol {
 
     // MARK: - requestInitialPage
 
@@ -459,11 +459,11 @@ internal class SearchActionCreatorProtocolMock: SearchActionCreatorProtocol {
     internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockCalled: Bool {
         return requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount > 0
     }
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments: (dependencies: SearchActionCreatorDependencies, searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments: (dependencies: SearchActivityActionCreatorDependencies, searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockReturnValue: Action!
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockClosure: ((SearchActionCreatorDependencies, SearchParams, @escaping LocationUpdateRequestBlock) -> Action)?
+    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockClosure: ((SearchActivityActionCreatorDependencies, SearchParams, @escaping LocationUpdateRequestBlock) -> Action)?
 
-    internal static func requestInitialPage(_ dependencies: SearchActionCreatorDependencies,
+    internal static func requestInitialPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                    searchParams: SearchParams,
                                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
         requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount += 1
@@ -483,11 +483,11 @@ internal class SearchActionCreatorProtocolMock: SearchActionCreatorProtocol {
     internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerCalled: Bool {
         return requestSubsequentPageSearchParamsPreviousResultsTokenContainerCallsCount > 0
     }
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments: (dependencies: SearchActionCreatorDependencies, searchParams: SearchParams, previousResults: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
+    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments: (dependencies: SearchActivityActionCreatorDependencies, searchParams: SearchParams, previousResults: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
     internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerReturnValue: Action!
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure: ((SearchActionCreatorDependencies, SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) -> Action)?
+    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure: ((SearchActivityActionCreatorDependencies, SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) -> Action)?
 
-    internal static func requestSubsequentPage(_ dependencies: SearchActionCreatorDependencies,
+    internal static func requestSubsequentPage(_ dependencies: SearchActivityActionCreatorDependencies,
                                       searchParams: SearchParams,
                                       previousResults: NonEmptyArray<SearchEntityModel>,
                                       tokenContainer: PlaceLookupTokenAttemptsContainer) -> Action {
@@ -503,7 +503,7 @@ internal class SearchActionCreatorProtocolMock: SearchActionCreatorProtocol {
         requestSubsequentPageSearchParamsPreviousResultsTokenContainerReturnValue = nil
     }
 }
-internal class SearchActionPrismProtocolMock: SearchActionPrismProtocol {
+internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
     internal var removeDetailedEntityAction: Action {
         get { return underlyingRemoveDetailedEntityAction }
         set(value) { underlyingRemoveDetailedEntityAction = value }
