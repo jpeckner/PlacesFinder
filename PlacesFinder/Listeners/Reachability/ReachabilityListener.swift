@@ -35,11 +35,11 @@ protocol ReachabilityListenerProtocol: AutoMockable {
 class ReachabilityListener: ReachabilityListenerProtocol {
 
     var actionPublisher: AnyPublisher<Action, Never> {
-        subject.eraseToAnyPublisher()
+        actionSubject.eraseToAnyPublisher()
     }
 
     private let reachability: ReachabilityProtocol
-    private let subject = PassthroughSubject<Action, Never>()
+    private let actionSubject = PassthroughSubject<Action, Never>()
 
     init(reachability: ReachabilityProtocol) {
         self.reachability = reachability
@@ -49,9 +49,9 @@ class ReachabilityListener: ReachabilityListenerProtocol {
         reachability.setReachabilityCallback { [weak self] status in
             switch status {
             case .unreachable:
-                self?.subject.send(ReachabilityAction.unreachable)
+                self?.actionSubject.send(ReachabilityAction.unreachable)
             case let .reachable(connectionType):
-                self?.subject.send(ReachabilityAction.reachable(connectionType))
+                self?.actionSubject.send(ReachabilityAction.reachable(connectionType))
             }
         }
 

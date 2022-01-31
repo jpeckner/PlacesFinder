@@ -22,9 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
+import SwiftDux
 
 class SearchLookupViewModelBuilderTests: QuickSpec {
 
@@ -39,7 +41,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                                                           inputParams: stubInputParams,
                                                           detailedEntity: .stubValue())
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var stubInputViewModel: SearchInputViewModel!
         var mockInputViewModelBuilder: SearchInputViewModelBuilderProtocolMock!
@@ -54,11 +56,11 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
         }
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             locationBlockCalled = false
 
-            let dispatcher = SearchInputDispatcher(store: mockStore,
+            let dispatcher = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                    actionPrism: mockSearchActivityActionPrism,
                                                    locationUpdateRequestBlock: locationUpdateStub)
             stubInputViewModel = .dispatching(content: .stubValue(),
@@ -69,8 +71,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
             mockChildBuilder.buildChildAppCopyContentLocationUpdateRequestBlockReturnValue = .progress
 
-            sut = SearchLookupViewModelBuilder(store: mockStore,
-                                               actionPrism: mockSearchActivityActionPrism,
+            sut = SearchLookupViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
                                                inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
         }

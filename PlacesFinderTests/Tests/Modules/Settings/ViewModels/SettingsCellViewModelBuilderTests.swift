@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -36,16 +37,16 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockMeasurementFormatter: MeasurementFormatterProtocolMock!
 
         var sut: SettingsCellViewModelBuilder!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
             mockMeasurementFormatter = MeasurementFormatterProtocolMock()
 
-            sut = SettingsCellViewModelBuilder(store: mockStore,
+            sut = SettingsCellViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                measurementFormatter: mockMeasurementFormatter)
         }
 
@@ -95,9 +96,9 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                         }
 
                         it("dispatches the correct .setSorting action when dispatchAction() is called") {
-                            expect(mockStore.dispatchedActions.isEmpty) == true
+                            expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                             results[caseIdx].dispatchAction()
-                            expect(mockStore.dispatchedActions.first as? SearchPreferencesAction) == .setDistance(currentDistance)
+                            expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setDistance(currentDistance)
                         }
 
                     }
@@ -154,9 +155,9 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     }
 
                     it("dispatches the correct .setSorting action when dispatchAction() is called") {
-                        expect(mockStore.dispatchedActions.isEmpty) == true
+                        expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                         results[caseIdx].dispatchAction()
-                        expect(mockStore.dispatchedActions.first as? SearchPreferencesAction) == .setSorting(currentSortingCase)
+                        expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setSorting(currentSortingCase)
                     }
 
                 }

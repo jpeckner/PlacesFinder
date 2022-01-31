@@ -38,7 +38,7 @@ class SettingsCoordinator<TStore: StoreProtocol> where TStore.State == AppState 
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
     private let settingsChildDisposedSubject = PassthroughSubject<Void, Never>()
-    private var settingsChildDismissalActions: Set<Combine.AnyCancellable> = []
+    private var settingsChildDismissalActions: Set<AnyCancellable> = []
 
     private var child: Child? {
         didSet {

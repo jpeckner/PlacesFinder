@@ -39,16 +39,13 @@ protocol SearchLookupViewModelBuilderProtocol: AutoMockable {
 
 class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActivityActionPrismProtocol
     private let inputViewModelBuilder: SearchInputViewModelBuilderProtocol
     private let childBuilder: SearchLookupChildBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActivityActionPrismProtocol,
+    init(actionPrism: SearchActivityActionPrismProtocol,
          inputViewModelBuilder: SearchInputViewModelBuilderProtocol,
          childBuilder: SearchLookupChildBuilderProtocol) {
-        self.store = store
         self.actionPrism = actionPrism
         self.inputViewModelBuilder = inputViewModelBuilder
         self.childBuilder = childBuilder

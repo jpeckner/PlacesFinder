@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Foundation
 import Shared
 import SwiftDux
@@ -29,16 +30,16 @@ import SwiftDux
 struct SettingsCellViewModel: Equatable {
     let title: String
     let isSelected: Bool
-    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
     private let action: IgnoredEquatable<Action>
 
     init(title: String,
          isSelected: Bool,
-         store: DispatchingStoreProtocol,
+         actionSubscriber: AnySubscriber<Action, Never>,
          action: Action) {
         self.title = title
         self.isSelected = isSelected
-        self.store = IgnoredEquatable(store)
+        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.action = IgnoredEquatable(action)
     }
 }
@@ -46,7 +47,7 @@ struct SettingsCellViewModel: Equatable {
 extension SettingsCellViewModel {
 
     func dispatchAction() {
-        store.value.dispatch(action.value)
+        _ = actionSubscriber.value.receive(action.value)
     }
 
 }
@@ -64,12 +65,12 @@ class SettingsCellViewModelBuilder {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let measurementFormatter: MeasurementFormatterProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          measurementFormatter: MeasurementFormatterProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.measurementFormatter = measurementFormatter
     }
 
@@ -91,7 +92,7 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
         return T.allCases.map {
             SettingsCellViewModel(title: measurementFormatter.string(from: $0.measurement),
                                   isSelected: currentlySelectedDistance == $0,
-                                  store: store,
+                                  actionSubscriber: actionSubscriber,
                                   action: SearchPreferencesAction.setDistance(distanceBlock($0)))
         }
     }
@@ -101,7 +102,7 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
         return PlaceLookupSorting.allCases.map {
             SettingsCellViewModel(title: copyContent.title($0),
                                   isSelected: sorting == $0,
-                                  store: store,
+                                  actionSubscriber: actionSubscriber,
                                   action: SearchPreferencesAction.setSorting($0))
         }
     }

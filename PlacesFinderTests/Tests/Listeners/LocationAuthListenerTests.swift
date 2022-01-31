@@ -22,11 +22,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import CoreLocation
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
+import SwiftDux
 import SwiftDuxTestComponents
 
 class LocationAuthListenerTests: QuickSpec {
@@ -37,16 +39,23 @@ class LocationAuthListenerTests: QuickSpec {
 
         let dummyLocationManager = CLLocationManager()
 
-        var mockStore: MockAppStore!
+        var receivedActions: [Action]!
+        var cancellables: Set<AnyCancellable>!
         var mockLocationAuthManager: CLLocationManagerAuthProtocolMock!
         var listener: LocationAuthListener!
 
         beforeEach {
-            mockStore = MockAppStore()
+            receivedActions = []
+            cancellables = []
             mockLocationAuthManager = CLLocationManagerAuthProtocolMock()
-            listener = LocationAuthListener(store: mockStore,
-                                            locationAuthManager: mockLocationAuthManager,
+            listener = LocationAuthListener(locationAuthManager: mockLocationAuthManager,
                                             assertionHandler: NoOpAssertionHandler.self)
+
+            listener.actionPublisher
+                .sink { action in
+                    receivedActions.append(action)
+                }
+                .store(in: &cancellables)
         }
 
         describe("requestWhenInUseAuthorization") {
@@ -72,7 +81,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .notDetermined") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? LocationAuthAction) == .notDetermined
+                    expect(receivedActions.last as? LocationAuthAction) == .notDetermined
                 }
             }
 
@@ -82,7 +91,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesEnabled") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? LocationAuthAction) == .locationServicesEnabled
+                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesEnabled
                 }
             }
 
@@ -92,7 +101,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesEnabled") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? LocationAuthAction) == .locationServicesEnabled
+                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesEnabled
                 }
             }
 
@@ -102,7 +111,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesDisabled") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? LocationAuthAction) == .locationServicesDisabled
+                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesDisabled
                 }
             }
 
@@ -112,7 +121,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesDisabled") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? LocationAuthAction) == .locationServicesDisabled
+                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesDisabled
                 }
             }
 

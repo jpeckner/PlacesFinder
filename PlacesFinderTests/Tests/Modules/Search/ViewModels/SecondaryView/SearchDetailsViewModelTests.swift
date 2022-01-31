@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -44,15 +45,15 @@ class SearchDetailsViewModelTests: QuickSpec {
         let stubInfoSection = SearchDetailsViewModel.Section.info(stubInfoCellModels)
         let stubLocationSection = SearchDetailsViewModel.Section.location([.mapCoordinate(.stubValue())])
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var sut: SearchDetailsViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             sut = SearchDetailsViewModel(placeName: "stubPlaceName",
                                          sections: [stubInfoSection, stubLocationSection],
-                                         store: mockStore,
+                                         actionSubscriber: AnySubscriber(mockActionSubscriber),
                                          removeDetailedEntityAction: StubViewModelAction.removeDetailedEntityAction)
         }
 

@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
@@ -45,14 +46,14 @@ extension SearchInputViewModel {
 }
 
 struct SearchInputDispatcher: Equatable {
-    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
     private let actionPrism: IgnoredEquatable<SearchActivityActionPrismProtocol>
     private let locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        self.store = IgnoredEquatable(store)
+        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.actionPrism = IgnoredEquatable(actionPrism)
         self.locationUpdateRequestBlock = IgnoredEquatable(locationUpdateRequestBlock)
     }
@@ -62,7 +63,7 @@ extension SearchInputDispatcher {
 
     func dispatchEditEvent(_ editEvent: SearchBarEditEvent) {
         let action = actionPrism.value.updateEditingAction(editEvent)
-        store.value.dispatch(action)
+        _ = actionSubscriber.value.receive(action)
     }
 
     func dispatchSearchParams(_ params: SearchParams) {
@@ -70,7 +71,7 @@ extension SearchInputDispatcher {
             params,
             locationUpdateRequestBlock: locationUpdateRequestBlock.value
         )
-        store.value.dispatch(action)
+        _ = actionSubscriber.value.receive(action)
     }
 
 }
@@ -87,14 +88,14 @@ protocol SearchInputViewModelBuilderProtocol: AutoMockable {
 
 class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.contentViewModelBuilder = contentViewModelBuilder
     }
@@ -108,7 +109,7 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
                                                                       isEditing: inputParams.isEditing,
                                                                       copyContent: copyContent)
 
-        let dispatcher = SearchInputDispatcher(store: store,
+        let dispatcher = SearchInputDispatcher(actionSubscriber: actionSubscriber,
                                                actionPrism: actionPrism,
                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
 

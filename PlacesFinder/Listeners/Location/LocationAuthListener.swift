@@ -37,12 +37,12 @@ protocol LocationAuthListenerProtocol: AutoMockable {
 class LocationAuthListener: NSObject {
 
     var actionPublisher: AnyPublisher<Action, Never> {
-        subject.eraseToAnyPublisher()
+        actionSubject.eraseToAnyPublisher()
     }
 
     private let locationAuthManager: CLLocationManagerAuthProtocol
     private let assertionHandler: AssertionHandlerProtocol.Type
-    private let subject = PassthroughSubject<Action, Never>()
+    private let actionSubject = PassthroughSubject<Action, Never>()
 
     init(locationAuthManager: CLLocationManagerAuthProtocol,
          assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) {
@@ -69,7 +69,7 @@ extension LocationAuthListener: CLLocationManagerDelegate {
     @objc
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         let loadState = status.authStatus(assertionHandler: assertionHandler)
-        subject.send(loadState.locationAuthAction)
+        actionSubject.send(loadState.locationAuthAction)
     }
 
 }

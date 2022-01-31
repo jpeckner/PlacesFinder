@@ -22,9 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import SharedTestComponents
+import SwiftDux
 
 class ReachabilityListenerTests: QuickSpec {
 
@@ -32,15 +34,22 @@ class ReachabilityListenerTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var receivedActions: [Action]!
+        var cancellables: Set<AnyCancellable>!
         var mockReachability: ReachabilityProtocolMock!
         var listener: ReachabilityListener!
 
         beforeEach {
-            mockStore = MockAppStore()
+            receivedActions = []
+            cancellables = []
             mockReachability = ReachabilityProtocolMock()
-            listener = ReachabilityListener(store: mockStore,
-                                            reachability: mockReachability)
+            listener = ReachabilityListener(reachability: mockReachability)
+
+            listener.actionPublisher
+                .sink { action in
+                    receivedActions.append(action)
+                }
+                .store(in: &cancellables)
         }
 
         describe("start()") {
@@ -104,7 +113,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.reachable(.wifi)") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? ReachabilityAction) == .reachable(.wifi)
+                    expect(receivedActions.last as? ReachabilityAction) == .reachable(.wifi)
                 }
             }
 
@@ -114,7 +123,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.reachable(.cellular)") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? ReachabilityAction) == .reachable(.cellular)
+                    expect(receivedActions.last as? ReachabilityAction) == .reachable(.cellular)
                 }
             }
 
@@ -124,7 +133,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.unreachable") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? ReachabilityAction) == .unreachable
+                    expect(receivedActions.last as? ReachabilityAction) == .unreachable
                 }
             }
 

@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -40,7 +41,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         let stubResultCellModel = SearchResultCellModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockResultCellModelBuilder: SearchResultCellModelBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockFormatter: SearchCopyFormatterProtocolMock!
@@ -48,7 +49,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         var sut: SearchResultViewModelBuilder!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockResultCellModelBuilder = SearchResultCellModelBuilderProtocolMock()
             mockResultCellModelBuilder.buildViewModelResultsCopyContentReturnValue = stubResultCellModel
@@ -58,7 +59,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
 
             mockFormatter = SearchCopyFormatterProtocolMock()
 
-            sut = SearchResultViewModelBuilder(store: mockStore,
+            sut = SearchResultViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                actionPrism: mockSearchActivityActionPrism,
                                                copyFormatter: mockFormatter,
                                                resultCellModelBuilder: mockResultCellModelBuilder)
@@ -84,9 +85,9 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             }
 
             it("includes the Action returned by mockSearchActivityActionPrism") {
-                expect(mockStore.dispatchedActions.isEmpty) == true
+                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchDetailEntityAction()
-                expect(mockStore.dispatchedActions.first as? StubViewModelAction) == .detailEntity
+                expect(mockActionSubscriber.receivedInputs.first as? StubViewModelAction) == .detailEntity
             }
 
         }

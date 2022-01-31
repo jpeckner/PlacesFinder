@@ -495,6 +495,10 @@
 		CA784C862796200A00FE76CC /* SettingsChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* SettingsChildView.swift */; };
 		CA784C8C27963C6700FE76CC /* AppRootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8B27963C6700FE76CC /* AppRootCoordinatorMock.swift */; };
 		CA784C8E279644D200FE76CC /* AppSecondChildCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */; };
+		CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */; };
+		CAA5497127AA1BFE00F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
+		CAA5497327AA1C2800F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
+		CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CABEED5F278EB32E00F18456 /* SettingsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
@@ -875,6 +879,8 @@
 		CA784C752796083C00FE76CC /* SettingsChildViewColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewColorings.swift; sourceTree = "<group>"; };
 		CA784C8B27963C6700FE76CC /* AppRootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootCoordinatorMock.swift; sourceTree = "<group>"; };
 		CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecondChildCoordinatorMock.swift; sourceTree = "<group>"; };
+		CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriber.swift; sourceTree = "<group>"; };
+		CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSubscriber.swift; sourceTree = "<group>"; };
 		CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewController.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -1443,6 +1449,7 @@
 				D858BADA019D9C41611CCA99 /* Router */,
 				FB4BAC673B5F9CD6B4B74D99 /* Search */,
 				2D105FA3BC9AC18BDD8BD19D /* SearchPreferences */,
+				CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */,
 				3789067CE3B36F7841EEEE48 /* AppAsyncAction.swift */,
 				917740B6A62EA050BACF1D8C /* AppState.swift */,
 				E9E648568CCF9F978E01146A /* EquatableKeyPath+AppState.swift */,
@@ -2052,6 +2059,14 @@
 			path = Styling;
 			sourceTree = "<group>";
 		};
+		CAA5496D27A8F95F00F09F8A /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */,
+			);
+			path = Combine;
+			sourceTree = "<group>";
+		};
 		CAFB9897706B627156818B78 /* PlacesFinder */ = {
 			isa = PBXGroup;
 			children = (
@@ -2193,6 +2208,7 @@
 		E9ECE0FE8E3FBE41153111B4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				CAA5496D27A8F95F00F09F8A /* Combine */,
 				955EE9D6E61B745C4293C7CA /* CoordiNode */,
 				C543FF18322B819187CB7F57 /* Listeners */,
 				B27304518428B64EB16D67DC /* Model */,
@@ -2736,6 +2752,7 @@
 				FF44A64E03E70976EAA11778 /* SearchCTAView.swift in Sources */,
 				74FE8186E43A9400BD50EB66 /* SearchCTAViewModel.swift in Sources */,
 				0EF18763551A541F6E1A6C01 /* SearchCellBase.swift in Sources */,
+				CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */,
 				DE6460FC23DD6F9073F5C0C8 /* SearchChildContainerView.swift in Sources */,
 				85F8F8330966479930E61289 /* SearchColorings.swift in Sources */,
 				1B3D3EAFFEBEF4DBC75D404E /* SearchConfig.swift in Sources */,
@@ -2936,6 +2953,7 @@
 				FF3A30404BEB72CD955BA883 /* SearchDetailsSectionProtocol.swift in Sources */,
 				830750C6F987DA3CA88DAD88 /* SearchDetailsViewContext.swift in Sources */,
 				2AE1090DD60363381425E091 /* SearchDetailsViewController.swift in Sources */,
+				CAA5497127AA1BFE00F09F8A /* ActionSubscriber.swift in Sources */,
 				C4A808FE27660A928CF11740 /* SearchDetailsViewModel.swift in Sources */,
 				B0F3F53F766C1182B76FDBE1 /* SearchDistance.swift in Sources */,
 				7836CB6A8C01318725000AE5 /* SearchEntityModel.swift in Sources */,
@@ -3056,6 +3074,7 @@
 				B12198A56033ECCF3A09B7E0 /* AutoMockable.generated.swift in Sources */,
 				BBB8064399BFF6B8CEDE626A /* AutoSearchDetailsSections.generated.swift in Sources */,
 				7CE9D621D7304D108A7100D2 /* ChildCoordinatorProtocol.swift in Sources */,
+				CAA5497327AA1C2800F09F8A /* ActionSubscriber.swift in Sources */,
 				F0B8CFB0BF64C1145A3E4270 /* CoordinatorProtocol+App.swift in Sources */,
 				5060AA60947AD3AE90F4114D /* CoordinatorProtocolTests.swift in Sources */,
 				3B8668373D87292DC53638FB /* DecodableServices.swift in Sources */,
@@ -3203,6 +3222,7 @@
 				C0B9F33959D91411C2B8EF66 /* SearchProgressCell.swift in Sources */,
 				43BF3EAB6AD1A21DEE9B2738 /* SearchProgressViewController.swift in Sources */,
 				5C7F91BDFB7EDD025740B207 /* SearchRatingValue+Image.swift in Sources */,
+				CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */,
 				EE381F0DD8CFE8D8D1DD63E4 /* SearchRatingValue.swift in Sources */,
 				19128C842DD3171E639D0380 /* SearchRatingValueTests.swift in Sources */,
 				AA004809547E077DA84D9B09 /* SearchActivityReducerTests.swift in Sources */,

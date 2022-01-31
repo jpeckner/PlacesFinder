@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
@@ -43,20 +44,20 @@ protocol SearchLookupChildBuilderProtocol: AutoMockable {
 
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
          noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,
          retryViewModelBuilder: SearchRetryViewModelBuilderProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.instructionsViewModelBuilder = instructionsViewModelBuilder
         self.resultsViewModelBuilder = resultsViewModelBuilder
@@ -82,18 +83,19 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
                 allEntities: allEntities,
                 tokenContainer: tokenContainer,
                 resultsCopyContent: appCopyContent.searchResults,
+                actionSubscriber: actionSubscriber,
                 locationUpdateRequestBlock: locationUpdateRequestBlock
             ))
         case .noResultsFound:
             let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(appCopyContent.searchNoResults)
             return .noResults(noResultsViewModel)
         case let .failure(submittedParams, _):
-            let store = self.store
+            let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
             return .failure(retryViewModelBuilder.buildViewModel(appCopyContent.searchRetry) {
                 let action = actionPrism.initialRequestAction(submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
-                store.dispatch(action)
+                _ = actionSubscriber.receive(action)
             })
         }
     }

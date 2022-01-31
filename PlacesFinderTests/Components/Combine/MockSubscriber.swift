@@ -1,8 +1,8 @@
 //
-//  SearchResultsViewModel+Stub.swift
+//  MockSubscriber.swift
 //  PlacesFinderTests
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,19 @@
 //  SOFTWARE.
 
 import Combine
-import Shared
-import SwiftDux
 
-extension SearchResultsViewModel {
+class MockSubscriber<TInput>: Subscriber {
+    typealias Input = TInput
+    typealias Failure = Never
 
-    enum StubActions: Action {
-        case refreshAction
-        case nextRequestAction
+    private(set) var receivedInputs: [TInput] = []
+
+    func receive(subscription: Subscription) {}
+
+    func receive(_ input: TInput) -> Subscribers.Demand {
+        receivedInputs.append(input)
+        return .unlimited
     }
 
-    static func stubValue(actionSubscriber: AnySubscriber<Action, Never>,
-                          resultViewModels: NonEmptyArray<SearchResultViewModel>,
-                          refreshAction: Action = StubActions.refreshAction,
-                          nextRequestAction: Action? = StubActions.nextRequestAction) -> SearchResultsViewModel {
-        return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                      actionSubscriber: actionSubscriber,
-                                      refreshAction: refreshAction,
-                                      nextRequestAction: nextRequestAction)
-    }
-
+    func receive(completion: Subscribers.Completion<Never>) {}
 }

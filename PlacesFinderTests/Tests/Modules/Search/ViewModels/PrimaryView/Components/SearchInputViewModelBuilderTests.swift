@@ -22,8 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
+import SwiftDux
 
 class SearchInputViewModelBuilderTests: QuickSpec {
 
@@ -35,7 +37,7 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         let stubInputCopyContent = SearchInputCopyContent.stubValue()
         let stubContentViewModel = SearchInputContentViewModel.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockContentViewModelBuilder: SearchInputContentViewModelBuilderProtocolMock!
 
@@ -43,14 +45,14 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         var result: SearchInputViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
 
             mockContentViewModelBuilder = SearchInputContentViewModelBuilderProtocolMock()
             mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReturnValue = stubContentViewModel
 
-            sut = SearchInputViewModelBuilder(store: mockStore,
+            sut = SearchInputViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                               actionPrism: mockSearchActivityActionPrism,
                                               contentViewModelBuilder: mockContentViewModelBuilder)
         }

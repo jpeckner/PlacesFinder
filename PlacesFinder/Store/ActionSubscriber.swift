@@ -1,8 +1,8 @@
 //
-//  SearchResultsViewModel+Stub.swift
-//  PlacesFinderTests
+//  ActionSubscriber.swift
+//  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,24 @@
 //  SOFTWARE.
 
 import Combine
-import Shared
 import SwiftDux
 
-extension SearchResultsViewModel {
+class ActionSubscriber: Subscriber {
+    typealias Input = Action
+    typealias Failure = Never
 
-    enum StubActions: Action {
-        case refreshAction
-        case nextRequestAction
+    private let store: DispatchingStoreProtocol
+
+    init(store: DispatchingStoreProtocol) {
+        self.store = store
     }
 
-    static func stubValue(actionSubscriber: AnySubscriber<Action, Never>,
-                          resultViewModels: NonEmptyArray<SearchResultViewModel>,
-                          refreshAction: Action = StubActions.refreshAction,
-                          nextRequestAction: Action? = StubActions.nextRequestAction) -> SearchResultsViewModel {
-        return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                      actionSubscriber: actionSubscriber,
-                                      refreshAction: refreshAction,
-                                      nextRequestAction: nextRequestAction)
+    func receive(subscription: Subscription) {}
+
+    func receive(_ input: Action) -> Subscribers.Demand {
+        store.dispatch(input)
+        return .unlimited
     }
 
+    func receive(completion: Subscribers.Completion<Never>) {}
 }

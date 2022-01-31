@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Foundation
 import Shared
 import SwiftDux
@@ -46,17 +47,15 @@ protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
 
-    init(store: DispatchingStoreProtocol) {
-        self.store = store
+    init(actionSubscriber: AnySubscriber<Action, Never>) {
+        self.actionSubscriber = actionSubscriber
     }
 
     func buildViewModel(_ title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
-        let store = self.store
-
         let systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] =
             MeasurementSystem.allCases.map { system in
                 let systemTitle = copyContent.title(system)
@@ -65,8 +64,9 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
                     :
                     .selectable(
                         title: systemTitle,
-                        selectionAction: IgnoredEquatable {
-                            store.dispatch(SearchPreferencesActionCreator.setMeasurementSystem(system))
+                        selectionAction: IgnoredEquatable { [weak self] in
+                            let action = SearchPreferencesActionCreator.setMeasurementSystem(system)
+                            _ = self?.actionSubscriber.receive(action)
                         }
                     )
             }

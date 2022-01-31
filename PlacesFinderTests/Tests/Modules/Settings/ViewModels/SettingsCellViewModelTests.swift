@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -34,16 +35,16 @@ class SettingsCellViewModelTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
 
         var sut: SettingsCellViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             sut = SettingsCellViewModel(title: "",
                                         isSelected: false,
-                                        store: mockStore,
+                                        actionSubscriber: AnySubscriber(mockActionSubscriber),
                                         action: StubAction.genericAction)
         }
 
@@ -54,7 +55,7 @@ class SettingsCellViewModelTests: QuickSpec {
             }
 
             it("dispatches the cell's action") {
-                expect(mockStore.dispatchedActions.first as? StubAction) == .genericAction
+                expect(mockActionSubscriber.receivedInputs.first as? StubAction) == .genericAction
             }
 
         }

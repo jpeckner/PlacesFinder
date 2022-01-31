@@ -47,16 +47,17 @@ class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
 
     func buildViewContext(_ searchActivityState: SearchActivityState,
                           appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
-        return searchActivityState.detailedEntity.map {
-            let viewModel = detailsViewModelBuilder.buildViewModel($0,
-                                                                   resultsCopyContent: appCopyContent.searchResults)
-            return .detailedEntity(viewModel)
-        }
-        ?? searchActivityState.entities?.value.first.map {
-            let viewModel = detailsViewModelBuilder.buildViewModel($0,
-                                                                   resultsCopyContent: appCopyContent.searchResults)
-            return .firstListedEntity(viewModel)
-        }
+        return
+            searchActivityState.detailedEntity.map { entity in
+                let viewModel = detailsViewModelBuilder.buildViewModel(entity,
+                                                                       resultsCopyContent: appCopyContent.searchResults)
+                return .detailedEntity(viewModel)
+            }
+            ?? searchActivityState.entities?.value.first.map { entity in
+                let viewModel = detailsViewModelBuilder.buildViewModel(entity,
+                                                                       resultsCopyContent: appCopyContent.searchResults)
+                return .firstListedEntity(viewModel)
+            }
     }
 
 }

@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -39,7 +40,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
         let stubUnitsHeaderViewModel = SettingsUnitsHeaderViewModel.stubValue()
         let stubPlainHeaderViewModel = SettingsPlainHeaderViewModel.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockMeasurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocolMock!
         var mockPlainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocolMock!
         var stubDistanceCellModels: [SettingsCellViewModel]!
@@ -50,7 +51,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
         var result: SettingsViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockMeasurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilderProtocolMock()
             mockMeasurementSystemHeaderViewModelBuilder.buildViewModelCurrentlyActiveSystemCopyContentReturnValue =
@@ -62,13 +63,13 @@ class SettingsViewModelBuilderTests: QuickSpec {
             stubDistanceCellModels = [
                 SettingsCellViewModel(title: "stubDistanceCellModel",
                                       isSelected: false,
-                                      store: mockStore,
+                                      actionSubscriber: AnySubscriber(mockActionSubscriber),
                                       action: StubAction.genericAction)
             ]
             stubSortingCellModels = [
                 SettingsCellViewModel(title: "stubSortingCellModel",
                                       isSelected: false,
-                                      store: mockStore,
+                                      actionSubscriber: AnySubscriber(mockActionSubscriber),
                                       action: StubAction.genericAction)
             ]
             mockSettingsCellViewModelBuilder = SettingsCellViewModelBuilderProtocolMock()
@@ -76,7 +77,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
             mockSettingsCellViewModelBuilder.buildSortingCellModelsCopyContentReturnValue = stubSortingCellModels
 
             sut = SettingsViewModelBuilder(
-                store: mockStore,
+                actionSubscriber: AnySubscriber(mockActionSubscriber),
                 measurementSystemHeaderViewModelBuilder: mockMeasurementSystemHeaderViewModelBuilder,
                 plainHeaderViewModelBuilder: mockPlainHeaderViewModelBuilder,
                 settingsCellViewModelBuilder: mockSettingsCellViewModelBuilder

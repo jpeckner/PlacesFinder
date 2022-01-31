@@ -103,8 +103,7 @@ private extension AppDelegate.TChildFactory {
                                                   locationAuthManager: locationAuthManager,
                                                   userDefaultsService: userDefaultsService)
 
-        let serviceContainer = ServiceContainer(appConfig: appConfig,
-                                                store: store)
+        let serviceContainer = ServiceContainer(appConfig: appConfig)
 
         let launchStatePrism = LaunchStatePrism()
 
@@ -146,8 +145,7 @@ private extension Store where State == AppState {
 
 private extension ServiceContainer {
 
-    init(appConfig: AppConfig,
-         store: DispatchingStoreProtocol) {
+    init(appConfig: AppConfig) {
         let routingHandler = RoutingHandler()
         let destinationRoutingHandler = DestinationRoutingHandler()
         self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler,

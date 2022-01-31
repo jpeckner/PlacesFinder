@@ -31,8 +31,15 @@ struct ListenerContainer {
     let locationAuthListener: LocationAuthListenerProtocol
     let reachabilityListener: ReachabilityListenerProtocol?
     let userDefaultsListener: UserDefaultsListenerProtocol
-
     private var cancellables: Set<AnyCancellable> = []
+
+    init(locationAuthListener: LocationAuthListenerProtocol,
+         reachabilityListener: ReachabilityListenerProtocol?,
+         userDefaultsListener: UserDefaultsListenerProtocol) {
+        self.locationAuthListener = locationAuthListener
+        self.reachabilityListener = reachabilityListener
+        self.userDefaultsListener = userDefaultsListener
+    }
 }
 
 extension ListenerContainer {

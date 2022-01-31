@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Foundation
 import Shared
 import SwiftDux
@@ -57,16 +58,16 @@ protocol SettingsViewModelBuilderProtocol: AutoMockable {
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
     private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
     private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
          plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
          settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.measurementSystemHeaderViewModelBuilder = measurementSystemHeaderViewModelBuilder
         self.plainHeaderViewModelBuilder = plainHeaderViewModelBuilder
         self.settingsCellViewModelBuilder = settingsCellViewModelBuilder
@@ -108,7 +109,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                         SettingsCellViewModel(
                             title: appCopyContent.settingsChildMenu.ctaTitle,
                             isSelected: false,
-                            store: store,
+                            actionSubscriber: actionSubscriber,
                             action: settingsChildRequestAction
                         )
                     ]
