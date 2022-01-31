@@ -36,7 +36,7 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         let stubContentViewModel = SearchInputContentViewModel.stubValue()
 
         var mockStore: MockAppStore!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockContentViewModelBuilder: SearchInputContentViewModelBuilderProtocolMock!
 
         var sut: SearchInputViewModelBuilder!
@@ -45,13 +45,13 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
 
             mockContentViewModelBuilder = SearchInputContentViewModelBuilderProtocolMock()
             mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReturnValue = stubContentViewModel
 
             sut = SearchInputViewModelBuilder(store: mockStore,
-                                              actionPrism: mockSearchActionPrism,
+                                              actionPrism: mockSearchActivityActionPrism,
                                               contentViewModelBuilder: mockContentViewModelBuilder)
         }
 

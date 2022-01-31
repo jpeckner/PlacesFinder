@@ -42,7 +42,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
 
         var mockStore: MockAppStore!
         var mockResultCellModelBuilder: SearchResultCellModelBuilderProtocolMock!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockFormatter: SearchCopyFormatterProtocolMock!
 
         var sut: SearchResultViewModelBuilder!
@@ -53,13 +53,13 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             mockResultCellModelBuilder = SearchResultCellModelBuilderProtocolMock()
             mockResultCellModelBuilder.buildViewModelResultsCopyContentReturnValue = stubResultCellModel
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.detailEntityActionReturnValue = StubViewModelAction.detailEntity
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.detailEntityActionReturnValue = StubViewModelAction.detailEntity
 
             mockFormatter = SearchCopyFormatterProtocolMock()
 
             sut = SearchResultViewModelBuilder(store: mockStore,
-                                               actionPrism: mockSearchActionPrism,
+                                               actionPrism: mockSearchActivityActionPrism,
                                                copyFormatter: mockFormatter,
                                                resultCellModelBuilder: mockResultCellModelBuilder)
         }
@@ -83,7 +83,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
                 expect(result.cellModel) == stubResultCellModel
             }
 
-            it("includes the Action returned by mockSearchActionPrism") {
+            it("includes the Action returned by mockSearchActivityActionPrism") {
                 expect(mockStore.dispatchedActions.isEmpty) == true
                 result.dispatchDetailEntityAction()
                 expect(mockStore.dispatchedActions.first as? StubViewModelAction) == .detailEntity

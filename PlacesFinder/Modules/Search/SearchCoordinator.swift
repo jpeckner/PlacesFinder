@@ -34,8 +34,8 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let store: TStore
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
-    private let statePrism: SearchStatePrismProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let statePrism: SearchActivityStatePrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
     private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
@@ -44,8 +44,8 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     init(store: TStore,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
-         statePrism: SearchStatePrismProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         statePrism: SearchActivityStatePrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
@@ -127,11 +127,11 @@ private extension SearchCoordinator {
                                                    appSkin: appSkin)
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let viewModel = lookupViewModelBuilder.buildViewModel(
-                    state.searchState,
+                    state.searchActivityState,
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
-                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchState,
+                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchActivityState,
                                                                                 appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,

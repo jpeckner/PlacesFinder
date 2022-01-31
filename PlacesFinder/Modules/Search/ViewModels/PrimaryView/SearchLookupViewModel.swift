@@ -32,7 +32,7 @@ struct SearchLookupViewModel: Equatable {
 }
 
 protocol SearchLookupViewModelBuilderProtocol: AutoMockable {
-    func buildViewModel(_ searchState: SearchState,
+    func buildViewModel(_ searchActivityState: SearchActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
 }
@@ -40,12 +40,12 @@ protocol SearchLookupViewModelBuilderProtocol: AutoMockable {
 class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let inputViewModelBuilder: SearchInputViewModelBuilderProtocol
     private let childBuilder: SearchLookupChildBuilderProtocol
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          inputViewModelBuilder: SearchInputViewModelBuilderProtocol,
          childBuilder: SearchLookupChildBuilderProtocol) {
         self.store = store
@@ -54,16 +54,16 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
         self.childBuilder = childBuilder
     }
 
-    func buildViewModel(_ searchState: SearchState,
+    func buildViewModel(_ searchActivityState: SearchActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
-            searchState.inputParams,
+            searchActivityState.inputParams,
             copyContent: appCopyContent.searchInput,
             locationUpdateRequestBlock: locationUpdateRequestBlock
         )
 
-        let child = childBuilder.buildChild(searchState.loadState,
+        let child = childBuilder.buildChild(searchActivityState.loadState,
                                             appCopyContent: appCopyContent,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 

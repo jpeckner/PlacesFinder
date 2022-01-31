@@ -99,11 +99,11 @@ protocol SearchResultsViewModelBuilderProtocol: AutoMockable {
 class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let resultViewModelBuilder: SearchResultViewModelBuilderProtocol
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          resultViewModelBuilder: SearchResultViewModelBuilderProtocol) {
         self.store = store
         self.actionPrism = actionPrism

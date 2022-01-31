@@ -1,5 +1,5 @@
 //
-//  SearchActionCreatorInitialPageTests.swift
+//  SearchActivityActionCreatorInitialPageTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -30,7 +30,8 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
-class SearchActionCreatorInitialPageTests: QuickSpec {
+// swiftlint:disable:next type_name
+class SearchActivityActionCreatorInitialPageTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
@@ -62,9 +63,9 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
         }
 
         func performTest() {
-            let action = SearchActionCreator.requestInitialPage(
-                SearchActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
-                                                searchEntityModelBuilder: mockSearchEntityModelBuilder),
+            let action = SearchActivityActionCreator.requestInitialPage(
+                SearchActivityActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
+                                                        searchEntityModelBuilder: mockSearchEntityModelBuilder),
                 searchParams: stubSearchParams
             ) { resultBlock in
                 mockLocationRequestBlockCalled = true
@@ -82,10 +83,10 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                 mockLocationRequestReturnValue = .failure(stubUnderlyingError)
             }
 
-            it("dispatches SearchAction.locationRequested") {
+            it("dispatches SearchActivityAction.locationRequested") {
                 performTest()
 
-                let dispatchedAction = mockStore.dispatchedNonAsyncActions.first as? SearchAction
+                let dispatchedAction = mockStore.dispatchedNonAsyncActions.first as? SearchActivityAction
                 expect(dispatchedAction) == .locationRequested(stubSearchParams)
             }
 
@@ -102,8 +103,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                     performTest()
                 }
 
-                it("dispatches SearchAction.failure") {
-                    let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                it("dispatches SearchActivityAction.failure") {
+                    let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                     expect(dispatchedAction) == .failure(
                         stubSearchParams,
                         underlyingError: IgnoredEquatable(stubUnderlyingError)
@@ -133,8 +134,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                         performTest()
                     }
 
-                    it("dispatches SearchAction.failure") {
-                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                    it("dispatches SearchActivityAction.failure") {
+                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                         expect(dispatchedAction) == .failure(
                             stubSearchParams,
                             underlyingError: IgnoredEquatable(SharedTestComponents.StubError.thrownError)
@@ -144,10 +145,10 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
 
                 context("else") {
 
-                    it("dispatches SearchAction.initialPageRequested") {
+                    it("dispatches SearchActivityAction.initialPageRequested") {
                         performTest()
 
-                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                         expect(dispatchedAction) == .initialPageRequested(stubSearchParams)
                     }
 
@@ -172,8 +173,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchAction.failure") {
-                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                            it("dispatches SearchActivityAction.failure") {
+                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                                 expect(dispatchedAction) == .failure(
                                     stubSearchParams,
                                     underlyingError: IgnoredEquatable(stubUnderlyingError)
@@ -200,8 +201,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchAction.failure") {
-                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                            it("dispatches SearchActivityAction.failure") {
+                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                                 expect(dispatchedAction) == .failure(
                                     stubSearchParams,
                                     underlyingError: IgnoredEquatable(stubUnderlyingError)
@@ -224,8 +225,8 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchAction.noResultsFound") {
-                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchAction
+                            it("dispatches SearchActivityAction.noResultsFound") {
+                                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
                                 expect(dispatchedAction) == .noResultsFound(stubSearchParams)
                             }
                         }
@@ -256,7 +257,7 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches SearchAction.subsequentRequest with .success...") {
+                                it("dispatches SearchActivityAction.subsequentRequest with .success...") {
                                     expect(mockStore.dispatchedPageAction) == .success
                                 }
 
@@ -286,7 +287,7 @@ class SearchActionCreatorInitialPageTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches SearchAction.subsequentRequest with .success...") {
+                                it("dispatches SearchActivityAction.subsequentRequest with .success...") {
                                     expect(mockStore.dispatchedPageAction) == .success
                                 }
 

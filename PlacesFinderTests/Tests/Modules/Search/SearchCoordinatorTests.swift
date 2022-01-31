@@ -45,8 +45,8 @@ class SearchCoordinatorTests: QuickSpec {
         var mockStore: MockAppStore!
         var mockServiceContainer: ServiceContainer!
         var mockSearchPresenter: SearchPresenterProtocolMock!
-        var mockStatePrism: SearchStatePrismProtocolMock!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockStatePrism: SearchActivityStatePrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock!
         var mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock!
         var mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock!
@@ -54,7 +54,7 @@ class SearchCoordinatorTests: QuickSpec {
 
         var coordinator: SearchCoordinator<MockAppStore>!
 
-        func initCoordinator(statePrism: SearchStatePrismProtocol) {
+        func initCoordinator(statePrism: SearchActivityStatePrismProtocol) {
             mockStore = MockAppStore()
             mockStore.stubState = stubState
 
@@ -62,8 +62,8 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchPresenter = SearchPresenterProtocolMock()
             mockSearchPresenter.rootViewController = stubNavController
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchAction.requestInitialPage
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = StubSearchActivityAction.requestInitialPage
 
             mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
             mockSearchBackgroundViewModelBuilder.buildViewModelAppCopyContentReturnValue = SearchBackgroundViewModel.stubValue()
@@ -82,7 +82,7 @@ class SearchCoordinatorTests: QuickSpec {
                                             presenter: mockSearchPresenter,
                                             urlOpenerService: mockServiceContainer.urlOpenerService,
                                             statePrism: statePrism,
-                                            actionPrism: mockSearchActionPrism,
+                                            actionPrism: mockSearchActivityActionPrism,
                                             backgroundViewModelBuilder: mockSearchBackgroundViewModelBuilder,
                                             lookupViewModelBuilder: mockSearchLookupViewModelBuilder,
                                             detailsViewContextBuilder: mockSearchDetailsViewContextBuilder,
@@ -90,7 +90,7 @@ class SearchCoordinatorTests: QuickSpec {
         }
 
         beforeEach {
-            mockStatePrism = SearchStatePrismProtocolMock()
+            mockStatePrism = SearchActivityStatePrismProtocolMock()
             mockStatePrism.underlyingPresentationKeyPaths = []
 
             initCoordinator(statePrism: mockStatePrism)
@@ -98,8 +98,8 @@ class SearchCoordinatorTests: QuickSpec {
 
         describe("init") {
             beforeEach {
-                let statePrism = SearchStatePrism(locationAuthListener: LocationAuthListenerProtocolMock(),
-                                                  locationRequestHandler: LocationRequestHandlerProtocolMock())
+                let statePrism = SearchActivityStatePrism(locationAuthListener: LocationAuthListenerProtocolMock(),
+                                                          locationRequestHandler: LocationRequestHandlerProtocolMock())
                 initCoordinator(statePrism: statePrism)
             }
 
@@ -112,7 +112,7 @@ class SearchCoordinatorTests: QuickSpec {
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.locationAuthState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.reachabilityState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
-                expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.searchState)) == true
+                expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.searchActivityState)) == true
             }
         }
 
@@ -285,10 +285,10 @@ class SearchCoordinatorTests: QuickSpec {
                         let state = AppState.stubValue(
                             routerState: RouterState(currentNode: currentNode)
                         )
-                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchState)]
+                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchActivityState)]
 
                         coordinator.newState(state: state,
-                                             updatedSubstates: [\AppState.searchState])
+                                             updatedSubstates: [\AppState.searchActivityState])
                     }
 
                     context("when SearchCoordinator is the currently active coordinator") {
@@ -329,12 +329,12 @@ class SearchCoordinatorTests: QuickSpec {
                             routerState: RouterState(loadState: loadState,
                                                      currentNode: StubNode.nodeBox)
                         )
-                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchState)]
+                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchActivityState)]
                         mockStatePrism.presentationTypeForReturnValue =
                             .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
 
                         coordinator.newState(state: state,
-                                             updatedSubstates: [\AppState.searchState])
+                                             updatedSubstates: [\AppState.searchActivityState])
                     }
 
                     context("and the state has a pending .search linkType") {
@@ -354,11 +354,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls actionCreator.requestInitialPage(:params)") {
-                            expect(mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
+                            expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {
-                            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? StubSearchAction
+                            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? StubSearchActivityAction
                             expect(dispatchedAction) == .requestInitialPage
                         }
 

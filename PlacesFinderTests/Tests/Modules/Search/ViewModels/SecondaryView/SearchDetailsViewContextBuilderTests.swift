@@ -58,14 +58,14 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
 
         describe("buildViewContext()") {
 
-            context("when SearchState.detailedEntity is non-nil") {
+            context("when SearchActivityState.detailedEntity is non-nil") {
                 let stubEntity = SearchEntityModel.stubValue()
-                let stubSearchState = SearchState(loadState: .idle,
-                                                  inputParams: .stubValue(),
-                                                  detailedEntity: stubEntity)
+                let stubSearchActivityState = SearchActivityState(loadState: .idle,
+                                                                  inputParams: .stubValue(),
+                                                                  detailedEntity: stubEntity)
 
                 beforeEach {
-                    result = sut.buildViewContext(stubSearchState,
+                    result = sut.buildViewContext(stubSearchActivityState,
                                                   appCopyContent: stubAppCopyContent)
                 }
 
@@ -80,21 +80,23 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
                 }
             }
 
-            context("else when SearchState.detailedEntity is non-nil") {
+            context("else when SearchActivityState.detailedEntity is non-nil") {
                 let stubEntities = NonEmptyArray(with:
                     SearchEntityModel.stubValue(id: "stubID_0")
                 ).appendedWith([
                     SearchEntityModel.stubValue(id: "stubID_1"),
                     SearchEntityModel.stubValue(id: "stubID_2"),
                 ])
-                let stubSearchState = SearchState(loadState: .pagesReceived(.stubValue(),
-                                                                            pageState: .success,
-                                                                            allEntities: stubEntities,
-                                                                            nextRequestToken: nil),
-                                                  inputParams: .stubValue(),
-                                                  detailedEntity: nil)
+                let stubSearchActivityState = SearchActivityState(
+                    loadState: .pagesReceived(.stubValue(),
+                                              pageState: .success,
+                                              allEntities: stubEntities,
+                                              nextRequestToken: nil),
+                    inputParams: .stubValue(),
+                    detailedEntity: nil
+                )
                 beforeEach {
-                    result = sut.buildViewContext(stubSearchState,
+                    result = sut.buildViewContext(stubSearchActivityState,
                                                   appCopyContent: stubAppCopyContent)
                 }
 
@@ -110,11 +112,13 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
             }
 
             context("else") {
-                let stubSearchState = SearchState(loadState: .idle,
-                                                  inputParams: .stubValue(),
-                                                  detailedEntity: nil)
+                let stubSearchActivityState = SearchActivityState(
+                    loadState: .idle,
+                    inputParams: .stubValue(),
+                    detailedEntity: nil
+                )
                 beforeEach {
-                    result = sut.buildViewContext(stubSearchState,
+                    result = sut.buildViewContext(stubSearchActivityState,
                                                   appCopyContent: stubAppCopyContent)
                 }
 

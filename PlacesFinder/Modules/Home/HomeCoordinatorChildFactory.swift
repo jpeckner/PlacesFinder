@@ -65,16 +65,16 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
-        let statePrism = SearchStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
-                                          locationRequestHandler: serviceContainer.locationRequestHandler)
+        let statePrism = SearchActivityStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+                                                  locationRequestHandler: serviceContainer.locationRequestHandler)
 
         let searchEntityModelBuilder = SearchEntityModelBuilder()
-        let actionCreatorDependencies = SearchActionCreatorDependencies(
+        let actionCreatorDependencies = SearchActivityActionCreatorDependencies(
             placeLookupService: serviceContainer.placeLookupService,
             searchEntityModelBuilder: searchEntityModelBuilder
         )
-        let actionPrism = SearchActionPrism(dependencies: actionCreatorDependencies,
-                                            actionCreator: SearchActionCreator.self)
+        let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies,
+                                                    actionCreator: SearchActivityActionCreator.self)
 
         let contentViewModelBuilder = SearchInputContentViewModelBuilder()
         let instructionsViewModelBuilder = SearchInstructionsViewModelBuilder()
@@ -155,7 +155,7 @@ private extension HomeCoordinatorImmediateDescendent {
 private extension SearchLookupViewModelBuilder {
 
     convenience init(store: DispatchingStoreProtocol,
-                     actionPrism: SearchActionPrismProtocol,
+                     actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
                      instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol) {

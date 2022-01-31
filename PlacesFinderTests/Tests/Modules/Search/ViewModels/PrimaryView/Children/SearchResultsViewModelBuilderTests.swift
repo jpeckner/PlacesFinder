@@ -46,7 +46,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
         var mockStore: MockAppStore!
         var mockResultViewModelBuilder: SearchResultViewModelBuilderProtocolMock!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var sut: SearchResultsViewModelBuilder!
 
@@ -61,14 +61,14 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                                                        detailEntityAction: StubAction.genericAction)
             }
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue =
-                StubSearchAction.requestInitialPage
-            mockSearchActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue =
-                StubSearchAction.requestSubsequentPage
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue =
+                StubSearchActivityAction.requestInitialPage
+            mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue =
+                StubSearchActivityAction.requestSubsequentPage
 
             sut = SearchResultsViewModelBuilder(store: mockStore,
-                                                actionPrism: mockSearchActionPrism,
+                                                actionPrism: mockSearchActivityActionPrism,
                                                 resultViewModelBuilder: mockResultViewModelBuilder)
         }
 
@@ -87,8 +87,8 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 }
             }
 
-            it("calls mockSearchActionPrism to build refreshAction") {
-                let initialRequestReceivedArgs = mockSearchActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments
+            it("calls mockSearchActivityActionPrism to build refreshAction") {
+                let initialRequestReceivedArgs = mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments
                 expect(initialRequestReceivedArgs?.searchParams) == stubSearchParams
 
                 expect(locationBlockCalled) == false
@@ -96,8 +96,8 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 expect(locationBlockCalled) == true
             }
 
-            it("calls mockSearchActionPrism to build nextRequestAction") {
-                let initialRequestReceivedArgs = mockSearchActionPrism.subsequentRequestActionAllEntitiesTokenContainerReceivedArguments
+            it("calls mockSearchActivityActionPrism to build nextRequestAction") {
+                let initialRequestReceivedArgs = mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReceivedArguments
                 expect(initialRequestReceivedArgs?.searchParams) == stubSearchParams
                 expect(initialRequestReceivedArgs?.allEntities) == stubEntities
                 expect(initialRequestReceivedArgs?.tokenContainer) == stubTokenContainer
@@ -118,13 +118,13 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             it("passes the expected action as refreshAction") {
                 expect(mockStore.dispatchedActions.isEmpty) == true
                 result.dispatchRefreshAction()
-                expect(mockStore.dispatchedActions.first as? StubSearchAction) == .requestInitialPage
+                expect(mockStore.dispatchedActions.first as? StubSearchActivityAction) == .requestInitialPage
             }
 
             it("passes the expected action as nextRequestAction") {
                 expect(mockStore.dispatchedActions.isEmpty) == true
                 result.dispatchNextRequestAction()
-                expect(mockStore.dispatchedActions.first as? StubSearchAction) == .requestSubsequentPage
+                expect(mockStore.dispatchedActions.first as? StubSearchActivityAction) == .requestSubsequentPage
             }
 
         }

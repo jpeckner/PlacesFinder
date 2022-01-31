@@ -44,14 +44,14 @@ protocol SearchLookupChildBuilderProtocol: AutoMockable {
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
     private let store: DispatchingStoreProtocol
-    private let actionPrism: SearchActionPrismProtocol
+    private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
 
     init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActionPrismProtocol,
+         actionPrism: SearchActivityActionPrismProtocol,
          instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
          noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,

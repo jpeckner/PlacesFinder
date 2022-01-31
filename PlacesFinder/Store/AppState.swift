@@ -34,7 +34,7 @@ struct AppState: StateProtocol, Equatable {
     let reachabilityState: ReachabilityState
     let routerState: RouterState<AppLinkType>
     let searchPreferencesState: SearchPreferencesState
-    let searchState: SearchState
+    let searchActivityState: SearchActivityState
 }
 
 extension AppState {
@@ -49,7 +49,7 @@ extension AppState {
         self.reachabilityState = ReachabilityState()
         self.routerState = RouterState(currentNode: currentRouterNode)
         self.searchPreferencesState = searchPreferencesState
-        self.searchState = SearchState()
+        self.searchActivityState = SearchActivityState()
     }
 
 }
@@ -70,8 +70,8 @@ enum AppStateReducer {
                                                currentState: appState.routerState)
         let searchPreferencesState = SearchPreferencesReducer.reduce(action: action,
                                                                      currentState: appState.searchPreferencesState)
-        let searchState = SearchReducer.reduce(action: action,
-                                               currentState: appState.searchState)
+        let searchActivityState = SearchActivityReducer.reduce(action: action,
+                                                               currentState: appState.searchActivityState)
 
         return AppState(appCopyContentState: appCopyContentState,
                         appSkinState: appSkinState,
@@ -79,7 +79,7 @@ enum AppStateReducer {
                         reachabilityState: reachabilityState,
                         routerState: routerState,
                         searchPreferencesState: searchPreferencesState,
-                        searchState: searchState)
+                        searchActivityState: searchActivityState)
     }
 
 }

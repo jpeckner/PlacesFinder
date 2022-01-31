@@ -43,7 +43,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockStore: MockAppStore!
-        var mockSearchActionPrism: SearchActionPrismProtocolMock!
+        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
         var mockCopyFormatter: SearchCopyFormatterProtocolMock!
@@ -54,8 +54,8 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
         beforeEach {
             mockStore = MockAppStore()
 
-            mockSearchActionPrism = SearchActionPrismProtocolMock()
-            mockSearchActionPrism.removeDetailedEntityAction = StubViewModelAction.removeDetailedEntityAction
+            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.removeDetailedEntityAction = StubViewModelAction.removeDetailedEntityAction
 
             mockURLOpenerService = URLOpenerServiceProtocolMock()
 
@@ -67,7 +67,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
             mockCopyFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
 
             sut = SearchDetailsViewModelBuilder(store: mockStore,
-                                                actionPrism: mockSearchActionPrism,
+                                                actionPrism: mockSearchActivityActionPrism,
                                                 urlOpenerService: mockURLOpenerService,
                                                 copyFormatter: mockCopyFormatter)
         }
