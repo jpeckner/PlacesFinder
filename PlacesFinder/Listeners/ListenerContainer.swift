@@ -22,10 +22,44 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
+import Reachability
+import Shared
 import SwiftDux
 
 struct ListenerContainer {
     let locationAuthListener: LocationAuthListenerProtocol
     let reachabilityListener: ReachabilityListenerProtocol?
     let userDefaultsListener: UserDefaultsListenerProtocol
+
+    private var cancellables: Set<AnyCancellable> = []
+}
+
+extension ListenerContainer {
+
+    init(store: Store<AppState>,
+         locationAuthManager: CLLocationManagerAuthProtocol,
+         userDefaultsService: UserDefaultsServiceProtocol) {
+        self.locationAuthListener = LocationAuthListener(store: store,
+                                                         locationAuthManager: locationAuthManager)
+
+        // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
+        // rather than a less specific error), but the app still functions correctly on the off-chance that
+        // Reachability.init() returns nil.
+        do {
+            let reachability = try Reachability()
+            let listener = ReachabilityListener(reachability: reachability)
+            self.reachabilityListener = listener
+
+            listener.actionPublisher
+                .sink(receiveValue: store.dispatch)
+                .store(in: &cancellables)
+        } catch {
+            self.reachabilityListener = nil
+        }
+
+        self.userDefaultsListener = UserDefaultsListener(store: store,
+                                                         userDefaultsService: userDefaultsService)
+    }
+
 }

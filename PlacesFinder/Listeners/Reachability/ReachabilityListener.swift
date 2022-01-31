@@ -22,32 +22,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
 protocol ReachabilityListenerProtocol: AutoMockable {
+    var actionPublisher: AnyPublisher<Action, Never> { get }
+
     func start() throws
 }
 
 class ReachabilityListener: ReachabilityListenerProtocol {
 
-    private let store: DispatchingStoreProtocol
-    private let reachability: ReachabilityProtocol
+    var actionPublisher: AnyPublisher<Action, Never> {
+        subject.eraseToAnyPublisher()
+    }
 
-    init(store: DispatchingStoreProtocol,
-         reachability: ReachabilityProtocol) {
-        self.store = store
+    private let reachability: ReachabilityProtocol
+    private let subject = PassthroughSubject<Action, Never>()
+
+    init(reachability: ReachabilityProtocol) {
         self.reachability = reachability
     }
 
     func start() throws {
-        let store = self.store
-        reachability.setReachabilityCallback { status in
+        reachability.setReachabilityCallback { [weak self] status in
             switch status {
             case .unreachable:
-                store.dispatch(ReachabilityAction.unreachable)
+                self?.subject.send(ReachabilityAction.unreachable)
             case let .reachable(connectionType):
-                store.dispatch(ReachabilityAction.reachable(connectionType))
+                self?.subject.send(ReachabilityAction.reachable(connectionType))
             }
         }
 
