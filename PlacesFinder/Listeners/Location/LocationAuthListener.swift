@@ -22,25 +22,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import CoreLocation
 import Shared
 import SwiftDux
 
 protocol LocationAuthListenerProtocol: AutoMockable {
+    var actionPublisher: AnyPublisher<Action, Never> { get }
+
     func start()
     func requestWhenInUseAuthorization()
 }
 
 class LocationAuthListener: NSObject {
 
-    private let store: DispatchingStoreProtocol
+    var actionPublisher: AnyPublisher<Action, Never> {
+        subject.eraseToAnyPublisher()
+    }
+
     private let locationAuthManager: CLLocationManagerAuthProtocol
     private let assertionHandler: AssertionHandlerProtocol.Type
+    private let subject = PassthroughSubject<Action, Never>()
 
-    init(store: DispatchingStoreProtocol,
-         locationAuthManager: CLLocationManagerAuthProtocol,
+    init(locationAuthManager: CLLocationManagerAuthProtocol,
          assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) {
-        self.store = store
         self.locationAuthManager = locationAuthManager
         self.assertionHandler = assertionHandler
     }
@@ -64,7 +69,7 @@ extension LocationAuthListener: CLLocationManagerDelegate {
     @objc
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         let loadState = status.authStatus(assertionHandler: assertionHandler)
-        store.dispatch(loadState.locationAuthAction)
+        subject.send(loadState.locationAuthAction)
     }
 
 }

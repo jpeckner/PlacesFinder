@@ -40,18 +40,20 @@ extension ListenerContainer {
     init(store: Store<AppState>,
          locationAuthManager: CLLocationManagerAuthProtocol,
          userDefaultsService: UserDefaultsServiceProtocol) {
-        self.locationAuthListener = LocationAuthListener(store: store,
-                                                         locationAuthManager: locationAuthManager)
+        self.locationAuthListener = LocationAuthListener(locationAuthManager: locationAuthManager)
+        locationAuthListener.actionPublisher
+            .sink(receiveValue: store.dispatch)
+            .store(in: &cancellables)
 
         // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
         // rather than a less specific error), but the app still functions correctly on the off-chance that
         // Reachability.init() returns nil.
         do {
             let reachability = try Reachability()
-            let listener = ReachabilityListener(reachability: reachability)
-            self.reachabilityListener = listener
+            let reachabilityListener = ReachabilityListener(reachability: reachability)
+            self.reachabilityListener = reachabilityListener
 
-            listener.actionPublisher
+            reachabilityListener.actionPublisher
                 .sink(receiveValue: store.dispatch)
                 .store(in: &cancellables)
         } catch {
