@@ -127,11 +127,11 @@ private extension SearchCoordinator {
                                                    appSkin: appSkin)
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let viewModel = lookupViewModelBuilder.buildViewModel(
-                    state.searchState,
+                    state.searchActivityState,
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
-                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchState,
+                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchActivityState,
                                                                                 appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,

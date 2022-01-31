@@ -61,7 +61,7 @@ class SearchActivityStatePrism: SearchActivityStatePrismProtocol {
         return [
             EquatableKeyPath(\AppState.locationAuthState),
             EquatableKeyPath(\AppState.reachabilityState),
-            EquatableKeyPath(\AppState.searchState),
+            EquatableKeyPath(\AppState.searchActivityState),
         ]
     }
 

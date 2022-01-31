@@ -694,15 +694,15 @@ internal class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewCon
     internal var buildViewContextAppCopyContentCalled: Bool {
         return buildViewContextAppCopyContentCallsCount > 0
     }
-    internal var buildViewContextAppCopyContentReceivedArguments: (searchState: SearchActivityState, appCopyContent: AppCopyContent)?
+    internal var buildViewContextAppCopyContentReceivedArguments: (searchActivityState: SearchActivityState, appCopyContent: AppCopyContent)?
     internal var buildViewContextAppCopyContentReturnValue: SearchDetailsViewContext?
     internal var buildViewContextAppCopyContentClosure: ((SearchActivityState, AppCopyContent) -> SearchDetailsViewContext?)?
 
-    internal func buildViewContext(_ searchState: SearchActivityState,
+    internal func buildViewContext(_ searchActivityState: SearchActivityState,
                           appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
         buildViewContextAppCopyContentCallsCount += 1
-        buildViewContextAppCopyContentReceivedArguments = (searchState: searchState, appCopyContent: appCopyContent)
-        return buildViewContextAppCopyContentClosure.map({ $0(searchState, appCopyContent) }) ?? buildViewContextAppCopyContentReturnValue
+        buildViewContextAppCopyContentReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent)
+        return buildViewContextAppCopyContentClosure.map({ $0(searchActivityState, appCopyContent) }) ?? buildViewContextAppCopyContentReturnValue
     }
 
 }
@@ -853,16 +853,16 @@ internal class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBu
     internal var buildViewModelAppCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchState: SearchActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchActivityState: SearchActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
     internal var buildViewModelAppCopyContentLocationUpdateRequestBlockClosure: ((SearchActivityState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
 
-    internal func buildViewModel(_ searchState: SearchActivityState,
+    internal func buildViewModel(_ searchActivityState: SearchActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount += 1
-        buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments = (searchState: searchState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildViewModelAppCopyContentLocationUpdateRequestBlockClosure.map({ $0(searchState, appCopyContent, locationUpdateRequestBlock) }) ?? buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue
+        buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        return buildViewModelAppCopyContentLocationUpdateRequestBlockClosure.map({ $0(searchActivityState, appCopyContent, locationUpdateRequestBlock) }) ?? buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue
     }
 
 }

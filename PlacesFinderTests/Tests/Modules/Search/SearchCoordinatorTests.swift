@@ -112,7 +112,7 @@ class SearchCoordinatorTests: QuickSpec {
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.locationAuthState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.reachabilityState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
-                expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.searchState)) == true
+                expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.searchActivityState)) == true
             }
         }
 
@@ -285,10 +285,10 @@ class SearchCoordinatorTests: QuickSpec {
                         let state = AppState.stubValue(
                             routerState: RouterState(currentNode: currentNode)
                         )
-                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchState)]
+                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchActivityState)]
 
                         coordinator.newState(state: state,
-                                             updatedSubstates: [\AppState.searchState])
+                                             updatedSubstates: [\AppState.searchActivityState])
                     }
 
                     context("when SearchCoordinator is the currently active coordinator") {
@@ -329,12 +329,12 @@ class SearchCoordinatorTests: QuickSpec {
                             routerState: RouterState(loadState: loadState,
                                                      currentNode: StubNode.nodeBox)
                         )
-                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchState)]
+                        mockStatePrism.presentationKeyPaths = [EquatableKeyPath(\AppState.searchActivityState)]
                         mockStatePrism.presentationTypeForReturnValue =
                             .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
 
                         coordinator.newState(state: state,
-                                             updatedSubstates: [\AppState.searchState])
+                                             updatedSubstates: [\AppState.searchActivityState])
                     }
 
                     context("and the state has a pending .search linkType") {

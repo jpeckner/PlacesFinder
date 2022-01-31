@@ -53,7 +53,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 expect(statePrism.presentationKeyPaths) == [
                     EquatableKeyPath(\AppState.locationAuthState),
                     EquatableKeyPath(\AppState.reachabilityState),
-                    EquatableKeyPath(\AppState.searchState),
+                    EquatableKeyPath(\AppState.searchActivityState),
                 ]
             }
 

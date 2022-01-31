@@ -33,7 +33,7 @@ enum SearchDetailsViewContext: Equatable {
 // MARK: SearchDetailsViewContextBuilder
 
 protocol SearchDetailsViewContextBuilderProtocol: AutoMockable {
-    func buildViewContext(_ searchState: SearchActivityState,
+    func buildViewContext(_ searchActivityState: SearchActivityState,
                           appCopyContent: AppCopyContent) -> SearchDetailsViewContext?
 }
 
@@ -45,14 +45,14 @@ class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
         self.detailsViewModelBuilder = detailsViewModelBuilder
     }
 
-    func buildViewContext(_ searchState: SearchActivityState,
+    func buildViewContext(_ searchActivityState: SearchActivityState,
                           appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
-        return searchState.detailedEntity.map {
+        return searchActivityState.detailedEntity.map {
             let viewModel = detailsViewModelBuilder.buildViewModel($0,
                                                                    resultsCopyContent: appCopyContent.searchResults)
             return .detailedEntity(viewModel)
         }
-        ?? searchState.entities?.value.first.map {
+        ?? searchActivityState.entities?.value.first.map {
             let viewModel = detailsViewModelBuilder.buildViewModel($0,
                                                                    resultsCopyContent: appCopyContent.searchResults)
             return .firstListedEntity(viewModel)
