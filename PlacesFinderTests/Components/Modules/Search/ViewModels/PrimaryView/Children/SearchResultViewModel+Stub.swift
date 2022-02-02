@@ -22,16 +22,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import SwiftDux
 import SwiftDuxTestComponents
 
 extension SearchResultViewModel {
 
-    static func stubValue(store: DispatchingStoreProtocol,
+    static func stubValue(actionSubscriber: AnySubscriber<Action, Never>,
                           cellModel: SearchResultCellModel = .stubValue(),
                           detailEntityAction: Action = StubAction.genericAction) -> SearchResultViewModel {
         return SearchResultViewModel(cellModel: cellModel,
-                                     store: store,
+                                     actionSubscriber: actionSubscriber,
                                      detailEntityAction: detailEntityAction)
     }
 

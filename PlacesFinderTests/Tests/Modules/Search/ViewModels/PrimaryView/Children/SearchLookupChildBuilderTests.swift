@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -45,7 +46,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewModel: .stubValue())
         let stubRetryViewModel = SearchRetryViewModel(ctaViewModel: .stubValue())
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocolMock!
@@ -58,7 +59,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         var result: SearchLookupChild!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = SearchActivityAction.initialRequest
@@ -67,12 +68,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
 
             stubResultsViewModel = .stubValue(
-                store: mockStore,
-                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(store: mockStore))
+                actionSubscriber: AnySubscriber(mockActionSubscriber),
+                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber)))
             )
             mockResultsViewModelBuilder = SearchResultsViewModelBuilderProtocolMock()
             mockResultsViewModelBuilder
-                .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
+                .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
                 = stubResultsViewModel
 
             mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
@@ -80,7 +81,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
             mockRetryViewModelBuilder = SearchRetryViewModelBuilderProtocolMock()
 
-            sut = SearchLookupChildBuilder(store: mockStore,
+            sut = SearchLookupChildBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                            actionPrism: mockSearchActivityActionPrism,
                                            instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
                                            resultsViewModelBuilder: mockResultsViewModelBuilder,
@@ -161,7 +162,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 it("calls mockResultsViewModelBuilder with expected method and args") {
                     let args =
                         mockResultsViewModelBuilder
-                        .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments
+                        .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
                     expect(args?.submittedParams) == stubSearchParams
                     expect(args?.allEntities) == stubEntities
                     expect(args?.tokenContainer) == tokenContainer
@@ -232,9 +233,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("includes the Action returned by mockSearchActivityActionPrism") {
-                    expect(mockStore.dispatchedActions.isEmpty) == true
+                    expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                     receivedCTABlock()
-                    expect(mockStore.dispatchedActions.first as? SearchActivityAction) == .initialRequest
+                    expect(mockActionSubscriber.receivedInputs.first as? SearchActivityAction) == .initialRequest
                 }
 
             }

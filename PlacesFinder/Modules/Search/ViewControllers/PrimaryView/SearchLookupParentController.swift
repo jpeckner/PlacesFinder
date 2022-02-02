@@ -30,7 +30,6 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
     private let lookupView: SearchLookupView
     private let searchBarFullHeight: CGFloat
     private let searchBarHeightConstraint: NSLayoutConstraint
-    private var viewModel: SearchLookupViewModel
 
     init(viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
@@ -41,8 +40,6 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
         self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         self.searchBarHeightConstraint = searchBarView.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
         searchBarHeightConstraint.isActive = true
-
-        self.viewModel = viewModel
 
         super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
@@ -61,7 +58,6 @@ extension SearchLookupParentController {
 
     func configure(_ viewModel: SearchLookupViewModel,
                    appSkin: AppSkin) {
-        self.viewModel = viewModel
         self.viewColoring = appSkin.colorings.standard.viewColoring
 
         configureLookupView(viewModel.searchInputViewModel,

@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -36,7 +37,7 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var stubDetailsViewModel: SearchDetailsViewModel!
         var mockDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocolMock!
 
@@ -44,11 +45,11 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
         var result: SearchDetailsViewContext!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             stubDetailsViewModel = SearchDetailsViewModel(placeName: "stubPlaceName",
                                                           sections: [.info([.basicInfo(.stubValue())])],
-                                                          store: mockStore,
+                                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                           removeDetailedEntityAction: StubAction.genericAction)
             mockDetailsViewModelBuilder = SearchDetailsViewModelBuilderProtocolMock()
             mockDetailsViewModelBuilder.buildViewModelResultsCopyContentReturnValue = stubDetailsViewModel

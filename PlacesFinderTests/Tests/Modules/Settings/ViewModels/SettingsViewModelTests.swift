@@ -22,9 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
+import SwiftDux
 import SwiftDuxTestComponents
 
 class SettingsViewModelTests: QuickSpec {
@@ -33,7 +35,7 @@ class SettingsViewModelTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var sut: SettingsViewModel!
 
         func buildSectionViewModels() -> NonEmptyArray<SettingsSectionViewModel> {
@@ -43,7 +45,7 @@ class SettingsViewModelTests: QuickSpec {
                     cells: [0, 1, 2].map { cellIdx in
                         SettingsCellViewModel(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
                                               isSelected: cellIdx == 1,
-                                              store: mockStore,
+                                              actionSubscriber: AnySubscriber(mockActionSubscriber),
                                               action: StubAction.genericAction)
                     }
                 )
@@ -53,7 +55,7 @@ class SettingsViewModelTests: QuickSpec {
         }
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             let sections = buildSectionViewModels()
             sut = SettingsViewModel(sections: sections)

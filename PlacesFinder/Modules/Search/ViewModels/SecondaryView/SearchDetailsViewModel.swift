@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
@@ -34,16 +35,16 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     private let sections: [Section]
-    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
     private let removeDetailedEntityAction: IgnoredEquatable<Action>
 
     init(placeName: String,
          sections: [SearchDetailsViewModel.Section],
-         store: DispatchingStoreProtocol,
+         actionSubscriber: AnySubscriber<Action, Never>,
          removeDetailedEntityAction: Action) {
         self.placeName = placeName
         self.sections = sections
-        self.store = IgnoredEquatable(store)
+        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.removeDetailedEntityAction = IgnoredEquatable(removeDetailedEntityAction)
     }
 
@@ -77,7 +78,7 @@ extension SearchDetailsViewModel {
 extension SearchDetailsViewModel {
 
     func dispatchRemoveDetailsAction() {
-        store.value.dispatch(removeDetailedEntityAction.value)
+        _ = actionSubscriber.value.receive(removeDetailedEntityAction.value)
     }
 
 }
@@ -91,16 +92,16 @@ protocol SearchDetailsViewModelBuilderProtocol: AutoMockable {
 
 class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.urlOpenerService = urlOpenerService
         self.copyFormatter = copyFormatter
@@ -117,7 +118,7 @@ class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
 
         return SearchDetailsViewModel(placeName: entity.name.value,
                                       sections: sections,
-                                      store: store,
+                                      actionSubscriber: actionSubscriber,
                                       removeDetailedEntityAction: actionPrism.removeDetailedEntityAction)
     }
 

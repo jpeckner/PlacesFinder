@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -42,7 +43,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
@@ -52,7 +53,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
         var result: SearchDetailsViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.removeDetailedEntityAction = StubViewModelAction.removeDetailedEntityAction
@@ -66,7 +67,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
             mockCopyFormatter.formatRatingsNumRatingsReturnValue = "formatRatingsNumRatingsReturnValue"
             mockCopyFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
 
-            sut = SearchDetailsViewModelBuilder(store: mockStore,
+            sut = SearchDetailsViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                 actionPrism: mockSearchActivityActionPrism,
                                                 urlOpenerService: mockURLOpenerService,
                                                 copyFormatter: mockCopyFormatter)
@@ -254,7 +255,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .removeDetailedEntityAction
+                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .removeDetailedEntityAction
             }
         }
 

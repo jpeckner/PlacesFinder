@@ -22,21 +22,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
 struct SearchResultsViewModel: Equatable {
     private let resultViewModels: NonEmptyArray<SearchResultViewModel>
-    private let store: IgnoredEquatable<DispatchingStoreProtocol>
     private let refreshAction: IgnoredEquatable<Action>
     private var nextRequestAction: IgnoredEquatable<Action>?
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
 
     init(resultViewModels: NonEmptyArray<SearchResultViewModel>,
-         store: DispatchingStoreProtocol,
+         actionSubscriber: AnySubscriber<Action, Never>,
          refreshAction: Action,
          nextRequestAction: Action?) {
         self.resultViewModels = resultViewModels
-        self.store = IgnoredEquatable(store)
+        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.refreshAction = IgnoredEquatable(refreshAction)
         self.nextRequestAction = nextRequestAction.map { IgnoredEquatable($0) }
     }
@@ -63,12 +64,12 @@ extension SearchResultsViewModel {
     mutating func dispatchNextRequestAction() {
         guard let nextRequestAction = nextRequestAction else { return }
 
-        store.value.dispatch(nextRequestAction.value)
+        _ = actionSubscriber.value.receive(nextRequestAction.value)
         self.nextRequestAction = nil
     }
 
     func dispatchRefreshAction() {
-        store.value.dispatch(refreshAction.value)
+        _ = actionSubscriber.value.receive(refreshAction.value)
     }
 
     func dispatchDetailsAction(rowIndex: Int) {
@@ -89,31 +90,32 @@ private extension SearchResultsViewModel {
 // MARK: SearchResultsViewModelBuilder
 
 protocol SearchResultsViewModelBuilderProtocol: AutoMockable {
+    // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
+                        actionSubscriber: AnySubscriber<Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel
 }
 
 class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
     private let actionPrism: SearchActivityActionPrismProtocol
     private let resultViewModelBuilder: SearchResultViewModelBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
-         actionPrism: SearchActivityActionPrismProtocol,
+    init(actionPrism: SearchActivityActionPrismProtocol,
          resultViewModelBuilder: SearchResultViewModelBuilderProtocol) {
-        self.store = store
         self.actionPrism = actionPrism
         self.resultViewModelBuilder = resultViewModelBuilder
     }
 
+    // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
+                        actionSubscriber: AnySubscriber<Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         let resultViewModels: NonEmptyArray<SearchResultViewModel> = allEntities.withTransformation {
             resultViewModelBuilder.buildViewModel($0,
@@ -130,7 +132,7 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
         }
 
         return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                      store: store,
+                                      actionSubscriber: actionSubscriber,
                                       refreshAction: refreshAction,
                                       nextRequestAction: nextRequestAction)
     }

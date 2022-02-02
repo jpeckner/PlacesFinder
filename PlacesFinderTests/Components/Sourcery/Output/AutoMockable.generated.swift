@@ -18,8 +18,9 @@
 
 
 
-import Foundation
+import Combine
 import CoordiNode
+import Foundation
 import Shared
 import SharedTestComponents
 import SwiftDux
@@ -297,6 +298,11 @@ internal class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
 
 }
 internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
+    internal var actionPublisher: AnyPublisher<Action, Never> {
+        get { return underlyingActionPublisher }
+        set(value) { underlyingActionPublisher = value }
+    }
+    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
 
     // MARK: - start
 
@@ -401,6 +407,11 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
 }
 internal class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
+    internal var actionPublisher: AnyPublisher<Action, Never> {
+        get { return underlyingActionPublisher }
+        set(value) { underlyingActionPublisher = value }
+    }
+    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
 
     // MARK: - start
 
@@ -577,6 +588,30 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         updateEditingActionCallsCount += 1
         updateEditingActionReceivedEditEvent = editEvent
         return updateEditingActionClosure.map({ $0(editEvent) }) ?? updateEditingActionReturnValue
+    }
+
+}
+internal class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
+    internal var presentationKeyPaths: Set<EquatableKeyPath<AppState>> {
+        get { return underlyingPresentationKeyPaths }
+        set(value) { underlyingPresentationKeyPaths = value }
+    }
+    internal var underlyingPresentationKeyPaths: Set<EquatableKeyPath<AppState>>!
+
+    // MARK: - presentationType
+
+    internal var presentationTypeForCallsCount = 0
+    internal var presentationTypeForCalled: Bool {
+        return presentationTypeForCallsCount > 0
+    }
+    internal var presentationTypeForReceivedState: AppState?
+    internal var presentationTypeForReturnValue: SearchPresentationType!
+    internal var presentationTypeForClosure: ((AppState) -> SearchPresentationType)?
+
+    internal func presentationType(for state: AppState) -> SearchPresentationType {
+        presentationTypeForCallsCount += 1
+        presentationTypeForReceivedState = state
+        return presentationTypeForClosure.map({ $0(state) }) ?? presentationTypeForReturnValue
     }
 
 }
@@ -1006,22 +1041,23 @@ internal class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModel
 
     // MARK: - buildViewModel
 
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount = 0
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockCalled: Bool {
-        return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount > 0
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount = 0
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
+        return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
 
     internal func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
+                        actionSubscriber: AnySubscriber<Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
-        buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount += 1
-        buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure.map({ $0(submittedParams, allEntities, tokenContainer, resultsCopyContent, locationUpdateRequestBlock) }) ?? buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
+        buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount += 1
+        buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure.map({ $0(submittedParams, allEntities, tokenContainer, resultsCopyContent, actionSubscriber, locationUpdateRequestBlock) }) ?? buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
     }
 
 }
@@ -1042,30 +1078,6 @@ internal class SearchRetryViewModelBuilderProtocolMock: SearchRetryViewModelBuil
         buildViewModelCtaBlockCallsCount += 1
         buildViewModelCtaBlockReceivedArguments = (copyContent: copyContent, ctaBlock: ctaBlock)
         return buildViewModelCtaBlockClosure.map({ $0(copyContent, ctaBlock) }) ?? buildViewModelCtaBlockReturnValue
-    }
-
-}
-internal class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
-    internal var presentationKeyPaths: Set<EquatableKeyPath<AppState>> {
-        get { return underlyingPresentationKeyPaths }
-        set(value) { underlyingPresentationKeyPaths = value }
-    }
-    internal var underlyingPresentationKeyPaths: Set<EquatableKeyPath<AppState>>!
-
-    // MARK: - presentationType
-
-    internal var presentationTypeForCallsCount = 0
-    internal var presentationTypeForCalled: Bool {
-        return presentationTypeForCallsCount > 0
-    }
-    internal var presentationTypeForReceivedState: AppState?
-    internal var presentationTypeForReturnValue: SearchPresentationType!
-    internal var presentationTypeForClosure: ((AppState) -> SearchPresentationType)?
-
-    internal func presentationType(for state: AppState) -> SearchPresentationType {
-        presentationTypeForCallsCount += 1
-        presentationTypeForReceivedState = state
-        return presentationTypeForClosure.map({ $0(state) }) ?? presentationTypeForReturnValue
     }
 
 }

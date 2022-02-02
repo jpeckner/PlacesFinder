@@ -13,8 +13,9 @@ mint run krzysztofzablocki/sourcery sourcery            \
   --output "$OUTPUT_DIR"
 
 AUTO_MOCKABLE_IMPORTS="
-import Foundation
+import Combine
 import CoordiNode
+import Foundation
 import Shared
 import SharedTestComponents
 import SwiftDux

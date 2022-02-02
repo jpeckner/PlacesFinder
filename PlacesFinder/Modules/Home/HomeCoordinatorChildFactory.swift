@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import CoordiNode
 import Shared
 import SwiftDux
@@ -34,13 +35,11 @@ protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
 }
 
-// swiftlint:disable line_length
-class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.State == AppState {
-// swiftlint:enable line_length
-
+class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == AppState {
     private let store: TStore
     private let listenerContainer: ListenerContainer
     private let serviceContainer: ServiceContainer
+    private let actionSubscriber: AnySubscriber<Action, Never>
 
     init(store: TStore,
          listenerContainer: ListenerContainer,
@@ -48,7 +47,11 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
         self.store = store
         self.listenerContainer = listenerContainer
         self.serviceContainer = serviceContainer
+        self.actionSubscriber = AnySubscriber(ActionSubscriber(store: store))
     }
+}
+
+extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
         let immediateDescendent =
@@ -83,14 +86,14 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
         let lookupViewModelBuilder = SearchLookupViewModelBuilder(
-            store: store,
+            actionSubscriber: actionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
             contentViewModelBuilder: contentViewModelBuilder,
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
 
-        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(store: store,
+        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                     actionPrism: actionPrism,
                                                                     urlOpenerService: serviceContainer.urlOpenerService,
                                                                     copyFormatter: serviceContainer.searchCopyFormatter)
@@ -117,13 +120,13 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol>: HomeCoordinatorChildFa
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let measurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(store: store)
+        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(actionSubscriber: actionSubscriber)
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
-        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(store: store,
+        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                         measurementFormatter: measurementFormatter)
         let settingsViewModelBuilder = SettingsViewModelBuilder(
-            store: store,
-            measurementSystemHeaderViewModelBuilder: measurementSystemHeaderViewModelBuilder,
+            actionSubscriber: actionSubscriber,
+            measurementSystemHeaderViewModelBuilder: unitsHeaderViewModelBuilder,
             plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
             settingsCellViewModelBuilder: settingsCellViewModelBuilder
         )
@@ -154,35 +157,33 @@ private extension HomeCoordinatorImmediateDescendent {
 
 private extension SearchLookupViewModelBuilder {
 
-    convenience init(store: DispatchingStoreProtocol,
+    convenience init(actionSubscriber: AnySubscriber<Action, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
                      instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol) {
-        let inputViewModelBuilder = SearchInputViewModelBuilder(store: store,
+        let inputViewModelBuilder = SearchInputViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                 actionPrism: actionPrism,
                                                                 contentViewModelBuilder: contentViewModelBuilder)
 
         let resultCellModelBuilder = SearchResultCellModelBuilder(copyFormatter: copyFormatter)
-        let resultViewModelBuilder = SearchResultViewModelBuilder(store: store,
+        let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                   actionPrism: actionPrism,
                                                                   copyFormatter: copyFormatter,
                                                                   resultCellModelBuilder: resultCellModelBuilder)
-        let resultsViewModelBuilder = SearchResultsViewModelBuilder(store: store,
-                                                                    actionPrism: actionPrism,
+        let resultsViewModelBuilder = SearchResultsViewModelBuilder(actionPrism: actionPrism,
                                                                     resultViewModelBuilder: resultViewModelBuilder)
         let noResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilder()
         let retryViewModelBuilder = SearchRetryViewModelBuilder()
 
-        let childBuilder = SearchLookupChildBuilder(store: store,
+        let childBuilder = SearchLookupChildBuilder(actionSubscriber: actionSubscriber,
                                                     actionPrism: actionPrism,
                                                     instructionsViewModelBuilder: instructionsViewModelBuilder,
                                                     resultsViewModelBuilder: resultsViewModelBuilder,
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
                                                     retryViewModelBuilder: retryViewModelBuilder)
 
-        self.init(store: store,
-                  actionPrism: actionPrism,
+        self.init(actionPrism: actionPrism,
                   inputViewModelBuilder: inputViewModelBuilder,
                   childBuilder: childBuilder)
     }

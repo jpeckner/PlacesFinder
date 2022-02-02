@@ -22,19 +22,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
 import SwiftDux
 
 struct SearchResultViewModel: Equatable {
     let cellModel: SearchResultCellModel
-    private let store: IgnoredEquatable<DispatchingStoreProtocol>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
     private let detailEntityAction: IgnoredEquatable<Action>
 
     init(cellModel: SearchResultCellModel,
-         store: DispatchingStoreProtocol,
+         actionSubscriber: AnySubscriber<Action, Never>,
          detailEntityAction: Action) {
         self.cellModel = cellModel
-        self.store = IgnoredEquatable(store)
+        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
     }
 }
@@ -42,7 +43,7 @@ struct SearchResultViewModel: Equatable {
 extension SearchResultViewModel {
 
     func dispatchDetailEntityAction() {
-        store.value.dispatch(detailEntityAction.value)
+        _ = actionSubscriber.value.receive(detailEntityAction.value)
     }
 
 }
@@ -56,16 +57,16 @@ protocol SearchResultViewModelBuilderProtocol: AutoMockable {
 
 class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
-    private let store: DispatchingStoreProtocol
+    private let actionSubscriber: AnySubscriber<Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
     private let resultCellModelBuilder: SearchResultCellModelBuilderProtocol
 
-    init(store: DispatchingStoreProtocol,
+    init(actionSubscriber: AnySubscriber<Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          resultCellModelBuilder: SearchResultCellModelBuilderProtocol) {
-        self.store = store
+        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.copyFormatter = copyFormatter
         self.resultCellModelBuilder = resultCellModelBuilder
@@ -78,7 +79,7 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
         let detailEntityAction = actionPrism.detailEntityAction(model)
 
         return SearchResultViewModel(cellModel: cellModel,
-                                     store: store,
+                                     actionSubscriber: actionSubscriber,
                                      detailEntityAction: detailEntityAction)
     }
 

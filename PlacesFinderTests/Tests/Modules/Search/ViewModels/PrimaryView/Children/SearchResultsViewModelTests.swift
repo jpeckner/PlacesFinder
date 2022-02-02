@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -39,7 +40,7 @@ class SearchResultsViewModelTests: QuickSpec {
     // swiftlint:disable function_body_length
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var stubResultViewModels: NonEmptyArray<SearchResultViewModel>!
         var result: SearchResultsViewModel!
 
@@ -48,17 +49,17 @@ class SearchResultsViewModelTests: QuickSpec {
             nextRequestAction: Action? = StubViewModelAction.nextRequestAction
         ) -> SearchResultsViewModel {
             return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                          store: mockStore,
+                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
                                           refreshAction: StubViewModelAction.refreshAction,
                                           nextRequestAction: nextRequestAction)
         }
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             stubResultViewModels = NonEmptyArray([0, 1, 2].map { idx in
                 SearchResultViewModel.stubValue(
-                    store: mockStore,
+                    actionSubscriber: AnySubscriber(mockActionSubscriber),
                     cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
                     detailEntityAction: StubViewModelAction.detailEntity("\(idx)")
                 )
@@ -72,13 +73,13 @@ class SearchResultsViewModelTests: QuickSpec {
                 expect(result.cellViewModelCount) == 3
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
-                    SearchResultViewModel.stubValue(store: mockStore)
+                    SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))
                 ]))
                 expect(result.cellViewModelCount) == 4
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
-                    SearchResultViewModel.stubValue(store: mockStore),
-                    SearchResultViewModel.stubValue(store: mockStore)
+                    SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber)),
+                    SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))
                 ]))
                 expect(result.cellViewModelCount) == 5
             }
@@ -133,7 +134,7 @@ class SearchResultsViewModelTests: QuickSpec {
                 }
 
                 it("dispatches the expected action") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .nextRequestAction
+                    expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .nextRequestAction
                 }
 
                 it("nils-out nextRequestAction") {
@@ -142,19 +143,15 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             context("when nextRequestAction is nil") {
-                var verificationBlock: NoDispatchVerificationBlock!
-
                 beforeEach {
                     result = buildViewModel(resultViewModels: stubResultViewModels,
                                             nextRequestAction: nil)
 
-                    verificationBlock = self.verifyNoDispatches(from: mockStore) {
-                        result.dispatchNextRequestAction()
-                    }
+                    result.dispatchNextRequestAction()
                 }
 
                 it("does not dispatch an action") {
-                    verificationBlock()
+                    expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 }
             }
 
@@ -167,7 +164,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .refreshAction
+                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .refreshAction
             }
         }
 
@@ -178,7 +175,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockStore.dispatchedNonAsyncActions.last as? StubViewModelAction) == .detailEntity("2")
+                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .detailEntity("2")
             }
         }
 

@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -34,15 +35,15 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
 
         var sut: SettingsUnitsHeaderViewModelBuilder!
         var result: SettingsUnitsHeaderViewModel!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
-            sut = SettingsUnitsHeaderViewModelBuilder(store: mockStore)
+            sut = SettingsUnitsHeaderViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber))
         }
 
         describe("buildViewModel()") {
@@ -77,9 +78,9 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
                         numSelectableOptions += 1
                         expect(title) == "stubMetricTitle"
 
-                        expect(mockStore.dispatchedActions.isEmpty) == true
+                        expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                         actionBlock.value()
-                        expect(mockStore.dispatchedActions.first as? SearchPreferencesAction)
+                        expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction)
                             == .setDistance(.metric(.defaultDistance))
                     }
                 }

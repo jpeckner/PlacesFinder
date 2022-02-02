@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
@@ -38,14 +39,14 @@ class SearchInputDispatcherTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockActionPrism: SearchActivityActionPrismProtocolMock!
 
         var locationBlockCalled: Bool!
         var sut: SearchInputDispatcher!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockActionPrism = SearchActivityActionPrismProtocolMock()
             mockActionPrism.updateEditingActionClosure = {
@@ -53,7 +54,7 @@ class SearchInputDispatcherTests: QuickSpec {
             }
 
             locationBlockCalled = false
-            sut = SearchInputDispatcher(store: mockStore,
+            sut = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                         actionPrism: mockActionPrism) { _ in
                 locationBlockCalled = true
             }
@@ -73,7 +74,7 @@ class SearchInputDispatcherTests: QuickSpec {
                     }
 
                     it("dispatches the expected action") {
-                        expect(mockStore.dispatchedActions.first as? StubPrismAction) == .update(editEvent)
+                        expect(mockActionSubscriber.receivedInputs.first as? StubPrismAction) == .update(editEvent)
                     }
                 }
 
@@ -102,7 +103,7 @@ class SearchInputDispatcherTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockStore.dispatchedActions.first as? StubPrismAction) == .initialRequest(stubParams)
+                expect(mockActionSubscriber.receivedInputs.first as? StubPrismAction) == .initialRequest(stubParams)
             }
 
         }

@@ -22,9 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Nimble
 import Quick
 import Shared
+import SwiftDux
 import SwiftDuxTestComponents
 
 class SearchResultsViewModelBuilderTests: QuickSpec {
@@ -44,19 +46,19 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockStore: MockAppStore!
+        var mockActionSubscriber: MockSubscriber<Action>!
         var mockResultViewModelBuilder: SearchResultViewModelBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var sut: SearchResultsViewModelBuilder!
 
         beforeEach {
-            mockStore = MockAppStore()
+            mockActionSubscriber = MockSubscriber()
 
             mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
             mockResultViewModelBuilder.buildViewModelResultsCopyContentClosure = { entityModel, _ in
                 let cellModel = SearchResultCellModel.stubValue(name: entityModel.name)
-                return SearchResultViewModel.stubValue(store: mockStore,
+                return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                        cellModel: cellModel,
                                                        detailEntityAction: StubAction.genericAction)
             }
@@ -67,8 +69,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue =
                 StubSearchActivityAction.requestSubsequentPage
 
-            sut = SearchResultsViewModelBuilder(store: mockStore,
-                                                actionPrism: mockSearchActivityActionPrism,
+            sut = SearchResultsViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
                                                 resultViewModelBuilder: mockResultViewModelBuilder)
         }
 
@@ -82,7 +83,8 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 result = sut.buildViewModel(submittedParams: stubSearchParams,
                                             allEntities: stubEntities,
                                             tokenContainer: stubTokenContainer,
-                                            resultsCopyContent: stubCopyContent) { _ in
+                                            resultsCopyContent: stubCopyContent,
+                                            actionSubscriber: AnySubscriber(mockActionSubscriber)) { _ in
                     locationBlockCalled = true
                 }
             }
@@ -116,15 +118,15 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             }
 
             it("passes the expected action as refreshAction") {
-                expect(mockStore.dispatchedActions.isEmpty) == true
+                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchRefreshAction()
-                expect(mockStore.dispatchedActions.first as? StubSearchActivityAction) == .requestInitialPage
+                expect(mockActionSubscriber.receivedInputs.first as? StubSearchActivityAction) == .requestInitialPage
             }
 
             it("passes the expected action as nextRequestAction") {
-                expect(mockStore.dispatchedActions.isEmpty) == true
+                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchNextRequestAction()
-                expect(mockStore.dispatchedActions.first as? StubSearchActivityAction) == .requestSubsequentPage
+                expect(mockActionSubscriber.receivedInputs.first as? StubSearchActivityAction) == .requestSubsequentPage
             }
 
         }

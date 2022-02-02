@@ -103,8 +103,7 @@ private extension AppDelegate.TChildFactory {
                                                   locationAuthManager: locationAuthManager,
                                                   userDefaultsService: userDefaultsService)
 
-        let serviceContainer = ServiceContainer(appConfig: appConfig,
-                                                store: store)
+        let serviceContainer = ServiceContainer(appConfig: appConfig)
 
         let launchStatePrism = LaunchStatePrism()
 
@@ -142,39 +141,11 @@ private extension Store where State == AppState {
 
 }
 
-// MARK: ListenerContainer
-
-private extension ListenerContainer {
-
-    init(store: Store<AppState>,
-         locationAuthManager: CLLocationManagerAuthProtocol,
-         userDefaultsService: UserDefaultsServiceProtocol) {
-        self.locationAuthListener = LocationAuthListener(store: store,
-                                                         locationAuthManager: locationAuthManager)
-
-        // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
-        // rather than a less specific error), but the app still functions correctly on the off-chance that
-        // Reachability.init() returns nil.
-        do {
-            let reachability = try Reachability()
-            self.reachabilityListener = ReachabilityListener(store: store,
-                                                             reachability: reachability)
-        } catch {
-            self.reachabilityListener = nil
-        }
-
-        self.userDefaultsListener = UserDefaultsListener(store: store,
-                                                         userDefaultsService: userDefaultsService)
-    }
-
-}
-
 // MARK: ServiceContainer
 
 private extension ServiceContainer {
 
-    init(appConfig: AppConfig,
-         store: DispatchingStoreProtocol) {
+    init(appConfig: AppConfig) {
         let routingHandler = RoutingHandler()
         let destinationRoutingHandler = DestinationRoutingHandler()
         self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler,
