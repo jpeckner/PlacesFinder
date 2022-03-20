@@ -1,6 +1,6 @@
 //
-//  AppAsyncAction.swift
-//  PlacesFinder
+//  StubSearchActivityAction.swift
+//  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
 //  
@@ -24,4 +24,7 @@
 
 import SwiftDux
 
-typealias AppAsyncAction = AsyncAction<AppState>
+enum StubSearchActivityAction: Action {
+    case requestInitialPage
+    case requestSubsequentPage
+}

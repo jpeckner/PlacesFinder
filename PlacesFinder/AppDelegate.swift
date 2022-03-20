@@ -141,7 +141,9 @@ private extension Store where State == AppState {
             reducer: AppStateReducer.reduce,
             initialState: initialState,
             middleware: [
-                AppSkinMiddleware.loadSkinMiddleware(skinService: skinService)
+                AppSkinMiddleware.loadSkinMiddleware(skinService: skinService),
+                SearchActivityMiddleware.buildInitialRequestMiddleware(),
+                SearchActivityMiddleware.buildSubsequentRequestMiddleware()
             ]
         )
     }

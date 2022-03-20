@@ -119,12 +119,15 @@ private extension SearchActivityState {
 
 enum SearchActivityReducer {
 
+    // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
     static func reduce(action: Action,
                        currentState: SearchActivityState) -> SearchActivityState {
         guard let searchAction = action as? SearchActivityAction else { return currentState }
 
         switch searchAction {
+        case .startInitialRequest:
+            return currentState
         case let .locationRequested(submittedParams):
             return SearchActivityState(
                 loadState: .locationRequested(submittedParams),
@@ -144,6 +147,8 @@ enum SearchActivityReducer {
                 inputParams: currentState.inputParams,
                 detailedEntity: nil
             )
+        case .startSubsequentRequest:
+            return currentState
         case let .subsequentRequest(submittedParams, pageAction, allEntities, nextRequestToken):
             let newPageState = SearchPageReducer.reduce(action: pageAction,
                                                         currentState: currentState.pageState)
@@ -181,7 +186,6 @@ enum SearchActivityReducer {
                 inputParams: currentState.inputParams,
                 detailedEntity: nil
             )
-
         }
     }
     // swiftlint:enable function_body_length

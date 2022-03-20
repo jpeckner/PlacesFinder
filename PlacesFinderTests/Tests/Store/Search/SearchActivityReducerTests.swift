@@ -165,7 +165,7 @@ class SearchActivityReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchActivityAction.subsequentRequest(
-                            stubSearchParams,
+                            searchParams: stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -196,7 +196,7 @@ class SearchActivityReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchActivityAction.subsequentRequest(
-                            stubSearchParams,
+                            searchParams: stubSearchParams,
                             pageAction: .inProgress,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -227,7 +227,7 @@ class SearchActivityReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchActivityAction.subsequentRequest(
-                            stubSearchParams,
+                            searchParams: stubSearchParams,
                             pageAction: .success,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
@@ -260,7 +260,7 @@ class SearchActivityReducerTests: QuickSpec {
 
                     beforeEach {
                         let action = SearchActivityAction.subsequentRequest(
-                            stubSearchParams,
+                            searchParams: stubSearchParams,
                             pageAction: .failure(pageError),
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer

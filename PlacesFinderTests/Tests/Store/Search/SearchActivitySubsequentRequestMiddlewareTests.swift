@@ -1,5 +1,5 @@
 //
-//  SearchActivityActionCreatorSubsequentPageTests.swift
+//  SearchActivitySubsequentRequestMiddlewareTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -30,13 +30,14 @@ import SwiftDux
 import SwiftDuxTestComponents
 
 // swiftlint:disable:next type_name
-class SearchActivityActionCreatorSubsequentPageTests: QuickSpec {
+class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
+        let stubState = AppState.stubValue()
         let stubParams = PlaceLookupParams.stubValue()
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
@@ -44,22 +45,29 @@ class SearchActivityActionCreatorSubsequentPageTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var mockStore: MockAppStore!
+        var mockStore: SpyingStore<AppState>!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
-            mockStore = MockAppStore()
+            mockStore = SpyingStore(
+                reducer: AppStateReducer.reduce,
+                initialState: stubState,
+                middleware: [
+                    SearchActivityMiddleware.buildSubsequentRequestMiddleware()
+                ]
+            )
         }
 
         func performTest() {
-            let action = SearchActivityActionCreator.requestSubsequentPage(
-                SearchActivityActionCreatorDependencies(placeLookupService: mockPlaceLookupService,
-                                                        searchEntityModelBuilder: mockSearchEntityModelBuilder),
-                searchParams: stubSearchParams,
-                previousResults: stubPreviousResults,
-                tokenContainer: stubTokenContainer
+            let dependencies = SearchActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
             )
+            let action = SearchActivityAction.startSubsequentRequest(dependencies: dependencies,
+                                                                     searchParams: stubSearchParams,
+                                                                     previousResults: stubPreviousResults,
+                                                                     tokenContainer: stubTokenContainer)
 
             mockStore.dispatch(action)
         }

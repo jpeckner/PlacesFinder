@@ -60,12 +60,9 @@ protocol SearchActivityActionPrismProtocol: SearchInitialActionPrismProtocol,
 class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 
     private let dependencies: SearchActivityActionCreatorDependencies
-    private let actionCreator: SearchActivityActionCreatorProtocol.Type
 
-    init(dependencies: SearchActivityActionCreatorDependencies,
-         actionCreator: SearchActivityActionCreatorProtocol.Type) {
+    init(dependencies: SearchActivityActionCreatorDependencies) {
         self.dependencies = dependencies
-        self.actionCreator = actionCreator
     }
 
 }
@@ -74,10 +71,11 @@ extension SearchActivityActionPrism: SearchInitialActionPrismProtocol {
 
     func initialRequestAction(_ searchParams: SearchParams,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        return actionCreator.requestInitialPage(dependencies,
-                                                searchParams: searchParams,
-                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
+        return SearchActivityAction.startInitialRequest(dependencies: dependencies,
+                                                        searchParams: searchParams,
+                                                        locationUpdateRequestBlock: locationUpdateRequestBlock)
     }
+
 }
 
 extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
@@ -94,10 +92,10 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
                                                                       maxAttempts: tokenContainer.maxAttempts,
                                                                       numAttemptsSoFar: incrementedAttemptsCount)
 
-        return actionCreator.requestSubsequentPage(dependencies,
-                                                   searchParams: searchParams,
-                                                   previousResults: allEntities,
-                                                   tokenContainer: updatedTokenContainer)
+        return SearchActivityAction.startSubsequentRequest(dependencies: dependencies,
+                                                           searchParams: searchParams,
+                                                           previousResults: allEntities,
+                                                           tokenContainer: updatedTokenContainer)
     }
 
 }
