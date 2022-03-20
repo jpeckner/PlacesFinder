@@ -32,9 +32,11 @@ struct LocationAuthState: Equatable {
 
 enum LocationAuthReducer {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        currentState: LocationAuthState) -> LocationAuthState {
-        guard let locationAuthAction = action as? LocationAuthAction else { return currentState }
+        guard case let .locationAuth(locationAuthAction) = action else {
+            return currentState
+        }
 
         switch locationAuthAction {
         case .notDetermined:

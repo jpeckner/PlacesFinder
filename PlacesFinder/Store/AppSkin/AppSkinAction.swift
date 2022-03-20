@@ -26,30 +26,32 @@ import Foundation
 import Shared
 import SwiftDux
 
-enum AppSkinAction: Action {
-    case startLoadSkin
+enum AppSkinAction {
+    case startLoad
+    case load(GuaranteedEntityAction<AppSkin>)
 }
 
 enum AppSkinMiddleware {
 
-    static func loadSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppState> {
+    static func buildRequestSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
         return { dispatch, _ in
             return { next in
                 return { action in
-                    guard case AppSkinAction.startLoadSkin = action else {
+                    guard case let .appSkin(appSkinAction) = action,
+                          case .startLoad = appSkinAction
+                    else {
                         next(action)
                         return
                     }
 
-                    dispatch(GuaranteedEntityAction<AppSkin>.inProgress)
+                    dispatch(.appSkin(.load(.inProgress)))
 
                     skinService.fetchAppSkin { result in
                         switch result {
                         case let .success(appSkin):
-                            dispatch(GuaranteedEntityAction<AppSkin>.success(appSkin))
+                            dispatch(.appSkin(.load(.success(appSkin))))
                         case let .failure(error):
-                            let entityError = EntityError.loadError(underlyingError: EquatableError(error))
-                            dispatch(GuaranteedEntityAction<AppSkin>.failure(entityError))
+                            dispatch(.appSkin(.load(.failure(.loadError(underlyingError: EquatableError(error))))))
                         }
                     }
                 }

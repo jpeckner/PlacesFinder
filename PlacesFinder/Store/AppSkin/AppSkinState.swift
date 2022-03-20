@@ -36,4 +36,21 @@ struct AppSkinState: GuaranteedEntityState, Equatable {
     }
 }
 
-typealias AppSkinReducer = GuaranteedEntityReducer<AppSkinState>
+enum AppSkinReducer {
+
+    static func reduce(action: AppAction,
+                       currentState: AppSkinState) -> AppSkinState {
+        guard case let .appSkin(appSkinAction) = action else {
+            return currentState
+        }
+
+        switch appSkinAction {
+        case .startLoad:
+            return currentState
+        case let .load(entityAction):
+            return GuaranteedEntityReducer.reduce(action: entityAction,
+                                                  currentState: currentState)
+        }
+    }
+
+}

@@ -25,19 +25,19 @@
 import Combine
 import SwiftDux
 
-class ActionSubscriber: Subscriber {
-    typealias Input = Action
+class ActionSubscriber<TStore: DispatchingStoreProtocol>: Subscriber {
+    typealias Input = TStore.TAction
     typealias Failure = Never
 
-    private let store: DispatchingStoreProtocol
+    private let store: TStore
 
-    init(store: DispatchingStoreProtocol) {
+    init(store: TStore) {
         self.store = store
     }
 
     func receive(subscription: Subscription) {}
 
-    func receive(_ input: Action) -> Subscribers.Demand {
+    func receive(_ input: TStore.TAction) -> Subscribers.Demand {
         store.dispatch(input)
         return .unlimited
     }

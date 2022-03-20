@@ -481,6 +481,8 @@
 		CA3F770A278A4AE600847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
 		CA3F7749278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
 		CA3F774E278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
+		CA5F848C27E79C3C00EEF854 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497527AB741600F09F8A /* AppAction.swift */; };
+		CA5F848D27E79C3C00EEF854 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497527AB741600F09F8A /* AppAction.swift */; };
 		CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		CA784C712794F82B00FE76CC /* SettingsChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* SettingsChildView.swift */; };
 		CA784C732794F85100FE76CC /* SettingsChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */; };
@@ -497,6 +499,7 @@
 		CAA5497127AA1BFE00F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497327AA1C2800F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
+		CAA5497627AB741600F09F8A /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497527AB741600F09F8A /* AppAction.swift */; };
 		CABEED5F278EB32E00F18456 /* SettingsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
@@ -875,6 +878,7 @@
 		CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecondChildCoordinatorMock.swift; sourceTree = "<group>"; };
 		CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSubscriber.swift; sourceTree = "<group>"; };
+		CAA5497527AB741600F09F8A /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
 		CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewController.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -1444,6 +1448,7 @@
 				FB4BAC673B5F9CD6B4B74D99 /* Search */,
 				2D105FA3BC9AC18BDD8BD19D /* SearchPreferences */,
 				CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */,
+				CAA5497527AB741600F09F8A /* AppAction.swift */,
 				917740B6A62EA050BACF1D8C /* AppState.swift */,
 				E9E648568CCF9F978E01146A /* EquatableKeyPath+AppState.swift */,
 			);
@@ -2759,6 +2764,7 @@
 				2DE263EC987FF8A1E1BCB5D6 /* SearchEntityModelBuilder.swift in Sources */,
 				FACD7226116F46F9ACA73ED3 /* SearchInputContentViewModel.swift in Sources */,
 				316B2F4F105EE60A09007603 /* SearchInputViewModel.swift in Sources */,
+				CA5F848C27E79C3C00EEF854 /* AppAction.swift in Sources */,
 				1D755267EDC7FC76AE942AD9 /* SearchInstructionsView.swift in Sources */,
 				4D239612A990F38AD6D6649E /* SearchInstructionsViewController.swift in Sources */,
 				A842FCF2EA8B78777A7D6A2F /* SearchInstructionsViewModel.swift in Sources */,
@@ -3006,6 +3012,7 @@
 				CA3F76E5278A401B00847AA2 /* SettingsChildCoordinator.swift in Sources */,
 				F5D52B95A5D0B423EDBF5B60 /* UserDefaultsService.swift in Sources */,
 				A48237102AA304C125CC3BBD /* YelpRequestBuilder.swift in Sources */,
+				CAA5497627AB741600F09F8A /* AppAction.swift in Sources */,
 				AE92BB9FC79D72BDD3B88A26 /* YelpRequestConfig.swift in Sources */,
 				2C4984CB518239EE9D5C7721 /* YelpRequestService.swift in Sources */,
 			);
@@ -3228,6 +3235,7 @@
 				205E85EC1AC452AFCA2231C6 /* ServiceContainer+Mock.swift in Sources */,
 				6066F9617A9D1535759967F7 /* ServiceContainer.swift in Sources */,
 				0FF54F93D53266C497E4049F /* SettingsCellViewModel.swift in Sources */,
+				CA5F848D27E79C3C00EEF854 /* AppAction.swift in Sources */,
 				AB0EA1651D3204DE52C1573B /* SettingsCellViewModelBuilderTests.swift in Sources */,
 				A55EFFE410B58F08D301339E /* SettingsCellViewModelTests.swift in Sources */,
 				7DCE6D31C254046A2B90BDA7 /* SettingsViewColorings.swift in Sources */,

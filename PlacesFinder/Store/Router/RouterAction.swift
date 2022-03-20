@@ -29,7 +29,7 @@ import SwiftDux
 
 typealias RouterLinkType = LinkTypeProtocol & Equatable
 
-enum RouterAction<TLinkType: RouterLinkType>: Action, Equatable {
+enum RouterAction<TLinkType: RouterLinkType>: Equatable {
     case setCurrentCoordinator(NodeBox)
     case setDestinationCoordinator(DestinationNodeBox, payload: TLinkType?)
     case requestLink(TLinkType)

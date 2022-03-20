@@ -38,9 +38,11 @@ extension ReachabilityState {
 
 enum ReachabilityReducer {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        currentState: ReachabilityState) -> ReachabilityState {
-        guard let reachabilityAction = action as? ReachabilityAction else { return currentState }
+        guard case let .reachability(reachabilityAction) = action else {
+            return currentState
+        }
 
         switch reachabilityAction {
         case .unreachable:

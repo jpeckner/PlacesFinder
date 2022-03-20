@@ -56,7 +56,7 @@ extension AppState {
 
 enum AppStateReducer {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        appState: AppState) -> AppState {
         let appCopyContentState = AppCopyContentReducer.reduce(action: action,
                                                                currentState: appState.appCopyContentState)

@@ -32,23 +32,23 @@ enum SearchActivityActionPrismError: Error {
 
 protocol SearchInitialActionPrismProtocol {
     func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> AppAction
 }
 
 protocol SearchSubsequentActionPrismProtocol {
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> AppAction
 }
 
 protocol SearchUpdateEditingActionPrismProtocol {
-    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> AppAction
 }
 
 protocol SearchDetailsActionPrismProtocol {
-    var removeDetailedEntityAction: Action { get }
+    var removeDetailedEntityAction: AppAction { get }
 
-    func detailEntityAction(_ entity: SearchEntityModel) -> Action
+    func detailEntityAction(_ entity: SearchEntityModel) -> AppAction
 }
 
 protocol SearchActivityActionPrismProtocol: SearchInitialActionPrismProtocol,
@@ -70,10 +70,10 @@ class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 extension SearchActivityActionPrism: SearchInitialActionPrismProtocol {
 
     func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        return SearchActivityAction.startInitialRequest(dependencies: dependencies,
-                                                        searchParams: searchParams,
-                                                        locationUpdateRequestBlock: locationUpdateRequestBlock)
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> AppAction {
+        return .searchActivity(.startInitialRequest(dependencies: dependencies,
+                                                    searchParams: searchParams,
+                                                    locationUpdateRequestBlock: locationUpdateRequestBlock))
     }
 
 }
@@ -82,7 +82,7 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action {
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> AppAction {
         let incrementedAttemptsCount = tokenContainer.numAttemptsSoFar + 1
         guard incrementedAttemptsCount <= tokenContainer.maxAttempts else {
             throw SearchActivityActionPrismError.attemptLimitsExceeded
@@ -92,30 +92,30 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
                                                                       maxAttempts: tokenContainer.maxAttempts,
                                                                       numAttemptsSoFar: incrementedAttemptsCount)
 
-        return SearchActivityAction.startSubsequentRequest(dependencies: dependencies,
-                                                           searchParams: searchParams,
-                                                           previousResults: allEntities,
-                                                           tokenContainer: updatedTokenContainer)
+        return .searchActivity(.startSubsequentRequest(dependencies: dependencies,
+                                                       searchParams: searchParams,
+                                                       previousResults: allEntities,
+                                                       tokenContainer: updatedTokenContainer))
     }
 
 }
 
 extension SearchActivityActionPrism: SearchUpdateEditingActionPrismProtocol {
 
-    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action {
-        return SearchActivityAction.updateInputEditing(editEvent)
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> AppAction {
+        return .searchActivity(.updateInputEditing(editEvent))
     }
 
 }
 
 extension SearchActivityActionPrism: SearchDetailsActionPrismProtocol {
 
-    func detailEntityAction(_ entity: SearchEntityModel) -> Action {
-        return SearchActivityAction.detailedEntity(entity)
+    func detailEntityAction(_ entity: SearchEntityModel) -> AppAction {
+        return .searchActivity(SearchActivityAction.detailedEntity(entity))
     }
 
-    var removeDetailedEntityAction: Action {
-        return SearchActivityAction.removeDetailedEntity
+    var removeDetailedEntityAction: AppAction {
+        return .searchActivity(.removeDetailedEntity)
     }
 
 }

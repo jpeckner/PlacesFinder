@@ -9,7 +9,7 @@ def common_pods
   pod 'SkeletonView'
   pod 'SnapKit'
   pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
-  pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
+  pod 'SwiftDux', :path => '/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux'
 end
 
 target 'PlacesFinder' do
@@ -26,7 +26,7 @@ target 'PlacesFinder' do
     pod 'Nimble'
     pod 'Quick'
     pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
-    pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
+    pod 'SwiftDuxTestComponents', :path => '/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux'
   end
 
   target 'PlacesFinderIntegrationTests' do

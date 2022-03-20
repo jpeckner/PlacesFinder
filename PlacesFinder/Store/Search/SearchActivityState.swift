@@ -119,11 +119,12 @@ private extension SearchActivityState {
 
 enum SearchActivityReducer {
 
-    // swiftlint:disable cyclomatic_complexity
-    // swiftlint:disable function_body_length
-    static func reduce(action: Action,
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    static func reduce(action: AppAction,
                        currentState: SearchActivityState) -> SearchActivityState {
-        guard let searchAction = action as? SearchActivityAction else { return currentState }
+        guard case let .searchActivity(searchAction) = action else {
+            return currentState
+        }
 
         switch searchAction {
         case .startInitialRequest:
@@ -188,7 +189,6 @@ enum SearchActivityReducer {
             )
         }
     }
-    // swiftlint:enable function_body_length
 
     private static func buildInputParams(_ currentState: SearchActivityState,
                                          action: SearchBarEditEvent) -> SearchInputParams {

@@ -44,7 +44,7 @@ struct ListenerContainer {
 
 extension ListenerContainer {
 
-    init(store: Store<AppState>,
+    init(store: Store<AppAction, AppState>,
          locationAuthManager: CLLocationManagerAuthProtocol,
          userDefaultsService: UserDefaultsServiceProtocol) {
         self.locationAuthListener = LocationAuthListener(locationAuthManager: locationAuthManager)

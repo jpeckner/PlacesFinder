@@ -26,7 +26,7 @@ import Shared
 import SwiftDux
 import UIKit
 
-class LaunchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class LaunchCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let presenter: LaunchPresenterProtocol
@@ -73,7 +73,7 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
 
     private func subscribeAndDispatchActions() {
         store.subscribe(self, equatableKeyPaths: statePrism.launchKeyPaths)
-        store.dispatch(AppSkinAction.startLoadSkin)
+        store.dispatch(.appSkin(.startLoad))
     }
 
     private func startListeners() {

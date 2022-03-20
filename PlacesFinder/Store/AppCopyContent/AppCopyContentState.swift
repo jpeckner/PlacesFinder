@@ -30,7 +30,7 @@ struct AppCopyContentState: Equatable {
 
 enum AppCopyContentReducer {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        currentState: AppCopyContentState) -> AppCopyContentState {
         return currentState
     }

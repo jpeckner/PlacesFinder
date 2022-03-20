@@ -26,7 +26,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-enum LocationAuthAction: Action {
+enum LocationAuthAction {
     case notDetermined
     case locationServicesEnabled
     case locationServicesDisabled

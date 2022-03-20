@@ -60,9 +60,13 @@ extension RouterState {
 
 enum RouterReducer<TLinkType: RouterLinkType> {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        currentState: RouterState<TLinkType>) -> RouterState<TLinkType> {
-        guard let routerAction = action as? RouterAction<TLinkType> else { return currentState }
+        guard case let .router(wrappedRouterAction) = action,
+              let routerAction = wrappedRouterAction as? RouterAction<TLinkType>
+        else {
+            return currentState
+        }
 
         switch routerAction {
         case let .setCurrentCoordinator(updatedCurrentNode):
