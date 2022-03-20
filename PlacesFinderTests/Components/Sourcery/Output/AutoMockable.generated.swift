@@ -26,7 +26,7 @@ import SharedTestComponents
 import SwiftDux
 import UIKit
 
-internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.State == AppState {
+internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState {
     internal var store: TStore {
         get { return underlyingStore }
         set(value) { underlyingStore = value }
@@ -273,11 +273,11 @@ internal class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
 
 }
 internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
-    internal var actionPublisher: AnyPublisher<Action, Never> {
+    internal var actionPublisher: AnyPublisher<AppAction, Never> {
         get { return underlyingActionPublisher }
         set(value) { underlyingActionPublisher = value }
     }
-    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
+    internal var underlyingActionPublisher: AnyPublisher<AppAction, Never>!
 
     // MARK: - start
 
@@ -382,11 +382,11 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
 }
 internal class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
-    internal var actionPublisher: AnyPublisher<Action, Never> {
+    internal var actionPublisher: AnyPublisher<AppAction, Never> {
         get { return underlyingActionPublisher }
         set(value) { underlyingActionPublisher = value }
     }
-    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
+    internal var underlyingActionPublisher: AnyPublisher<AppAction, Never>!
 
     // MARK: - start
 
@@ -438,11 +438,11 @@ internal class ReachabilityProtocolMock: ReachabilityProtocol {
 
 }
 internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
-    internal var removeDetailedEntityAction: Action {
+    internal var removeDetailedEntityAction: AppAction {
         get { return underlyingRemoveDetailedEntityAction }
         set(value) { underlyingRemoveDetailedEntityAction = value }
     }
-    internal var underlyingRemoveDetailedEntityAction: Action!
+    internal var underlyingRemoveDetailedEntityAction: AppAction!
 
     // MARK: - detailEntityAction
 
@@ -451,10 +451,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return detailEntityActionCallsCount > 0
     }
     internal var detailEntityActionReceivedEntity: SearchEntityModel?
-    internal var detailEntityActionReturnValue: Action!
-    internal var detailEntityActionClosure: ((SearchEntityModel) -> Action)?
+    internal var detailEntityActionReturnValue: AppAction!
+    internal var detailEntityActionClosure: ((SearchEntityModel) -> AppAction)?
 
-    internal func detailEntityAction(_ entity: SearchEntityModel) -> Action {
+    internal func detailEntityAction(_ entity: SearchEntityModel) -> AppAction {
         detailEntityActionCallsCount += 1
         detailEntityActionReceivedEntity = entity
         return detailEntityActionClosure.map({ $0(entity) }) ?? detailEntityActionReturnValue
@@ -467,11 +467,11 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return initialRequestActionLocationUpdateRequestBlockCallsCount > 0
     }
     internal var initialRequestActionLocationUpdateRequestBlockReceivedArguments: (searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Action!
-    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Action)?
+    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: AppAction!
+    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> AppAction)?
 
     internal func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> AppAction {
         initialRequestActionLocationUpdateRequestBlockCallsCount += 1
         initialRequestActionLocationUpdateRequestBlockReceivedArguments = (searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock)
         return initialRequestActionLocationUpdateRequestBlockClosure.map({ $0(searchParams, locationUpdateRequestBlock) }) ?? initialRequestActionLocationUpdateRequestBlockReturnValue
@@ -485,12 +485,12 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return subsequentRequestActionAllEntitiesTokenContainerCallsCount > 0
     }
     internal var subsequentRequestActionAllEntitiesTokenContainerReceivedArguments: (searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
-    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Action!
-    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Action)?
+    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: AppAction!
+    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> AppAction)?
 
     internal func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action {
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> AppAction {
         subsequentRequestActionAllEntitiesTokenContainerCallsCount += 1
         subsequentRequestActionAllEntitiesTokenContainerReceivedArguments = (searchParams: searchParams, allEntities: allEntities, tokenContainer: tokenContainer)
         if let error = subsequentRequestActionAllEntitiesTokenContainerThrowableError { throw error }
@@ -504,10 +504,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return updateEditingActionCallsCount > 0
     }
     internal var updateEditingActionReceivedEditEvent: SearchBarEditEvent?
-    internal var updateEditingActionReturnValue: Action!
-    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Action)?
+    internal var updateEditingActionReturnValue: AppAction!
+    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> AppAction)?
 
-    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action {
+    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> AppAction {
         updateEditingActionCallsCount += 1
         updateEditingActionReceivedEditEvent = editEvent
         return updateEditingActionClosure.map({ $0(editEvent) }) ?? updateEditingActionReturnValue
@@ -968,15 +968,15 @@ internal class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModel
     internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<AppAction, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<AppAction, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
 
     internal func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
-                        actionSubscriber: AnySubscriber<Action, Never>,
+                        actionSubscriber: AnySubscriber<AppAction, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount += 1
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock)

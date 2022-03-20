@@ -47,9 +47,9 @@ protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
 
-    init(actionSubscriber: AnySubscriber<Action, Never>) {
+    init(actionSubscriber: AnySubscriber<AppAction, Never>) {
         self.actionSubscriber = actionSubscriber
     }
 

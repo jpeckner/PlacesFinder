@@ -53,17 +53,17 @@ extension SettingsViewModel {
 protocol SettingsViewModelBuilderProtocol: AutoMockable {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
                         appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: Action) -> SettingsViewModel
+                        settingsChildRequestAction: AppAction) -> SettingsViewModel
 }
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
     private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
     private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
     private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<AppAction, Never>,
          measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
          plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
          settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
@@ -75,7 +75,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
                         appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: Action) -> SettingsViewModel {
+                        settingsChildRequestAction: AppAction) -> SettingsViewModel {
         let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(

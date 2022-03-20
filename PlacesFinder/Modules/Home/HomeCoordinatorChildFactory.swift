@@ -30,16 +30,16 @@ import SwiftDux
 // sourcery: genericTypes = "TStore: StoreProtocol"
 // sourcery: genericConstraints = "TStore.State == AppState"
 protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
-    associatedtype TStore: StoreProtocol where TStore.State == AppState
+    associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
 }
 
-class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == AppState {
+class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
     private let store: TStore
     private let listenerContainer: ListenerContainer
     private let serviceContainer: ServiceContainer
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
 
     init(store: TStore,
          listenerContainer: ListenerContainer,
@@ -156,7 +156,7 @@ private extension HomeCoordinatorImmediateDescendent {
 
 private extension SearchLookupViewModelBuilder {
 
-    convenience init(actionSubscriber: AnySubscriber<Action, Never>,
+    convenience init(actionSubscriber: AnySubscriber<AppAction, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,

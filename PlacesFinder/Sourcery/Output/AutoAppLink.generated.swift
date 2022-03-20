@@ -50,8 +50,10 @@ extension AppLinkType: LinkTypeProtocol {
 
 extension SearchCoordinator {
 
-    func clearAllAssociatedLinkTypes(_ state: AppState,
-                                     store: DispatchingStoreProtocol) {
+    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
+        _ state: AppState,
+        store: TStore
+    ) where TStore.TAction == AppAction {
         clearPayloadTypeIfPresent(SearchLinkPayload.self,
                                   state: state,
                                   store: store)
@@ -63,8 +65,10 @@ extension SearchCoordinator {
 }
 extension SettingsChildCoordinator {
 
-    func clearAllAssociatedLinkTypes(_ state: AppState,
-                                     store: DispatchingStoreProtocol) {
+    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
+        _ state: AppState,
+        store: TStore
+    ) where TStore.TAction == AppAction {
         clearPayloadTypeIfPresent(SettingsChildLinkPayload.self,
                                   state: state,
                                   store: store)
@@ -73,8 +77,10 @@ extension SettingsChildCoordinator {
 }
 extension SettingsCoordinator {
 
-    func clearAllAssociatedLinkTypes(_ state: AppState,
-                                     store: DispatchingStoreProtocol) {
+    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
+        _ state: AppState,
+        store: TStore
+    ) where TStore.TAction == AppAction {
         clearPayloadTypeIfPresent(SettingsLinkPayload.self,
                                   state: state,
                                   store: store)

@@ -40,8 +40,8 @@ protocol AppRouterProtocol: RouterProtocol {
 
 extension AppRouterProtocol {
 
-    func setCurrentCoordinatorAction(_ immediateDescendent: TDescendent.TImmediateDescendent) -> Action {
-        return AppRouterAction.setCurrentCoordinator(immediateDescendent.nodeBox)
+    func setCurrentCoordinatorAction(_ immediateDescendent: TDescendent.TImmediateDescendent) -> AppAction {
+        return .router(.setCurrentCoordinator(immediateDescendent.nodeBox))
     }
 
 }
@@ -55,8 +55,8 @@ protocol AppDestinationRouterProtocol: AppRouterProtocol, DestinationRouterProto
 
 extension AppDestinationRouterProtocol {
 
-    var setSelfAsCurrentCoordinator: Action {
-        return AppRouterAction.setCurrentCoordinator(Self.nodeBox)
+    var setSelfAsCurrentCoordinator: AppAction {
+        return .router(.setCurrentCoordinator(Self.nodeBox))
     }
 
 }
@@ -68,11 +68,11 @@ extension RootCoordinatorProtocol {
     // Only the RootCoordinatorProtocol, which controls the entire app, can dispatch setDestinationCoordinator.
     // Otherwise, any coordinator could effectively steer the app to any other, which would negate the purpose of
     // CoordiNode's routing system.
-    func setLinkDestinationAction(_ state: AppState) -> Action? {
+    func setLinkDestinationAction(_ state: AppState) -> AppAction? {
         switch state.routerState.loadState {
         case let .payloadRequested(linkType):
-            return AppRouterAction.setDestinationCoordinator(linkType.destinationNodeBox,
-                                                             payload: linkType)
+            return .router(.setDestinationCoordinator(linkType.destinationNodeBox,
+                                                      payload: linkType))
         case .idle,
              .navigatingToDestination,
              .waitingForPayloadToBeCleared:

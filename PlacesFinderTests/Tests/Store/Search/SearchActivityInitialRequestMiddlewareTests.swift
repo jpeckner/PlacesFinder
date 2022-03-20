@@ -50,7 +50,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
         var mockLocationRequestReturnValue: LocationRequestResult!
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var mockStore: SpyingStore<AppState>!
+        var mockStore: SpyingStore<AppAction, AppState>!
 
         beforeEach {
             mockLocationRequestBlockCalled = false
@@ -102,7 +102,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
             it("dispatches SearchActivityAction.locationRequested") {
                 performTest { _, _ -> Bool in
-                    let action = mockStore.dispatchedNonAsyncActions[1] as? SearchActivityAction
+                    let action = mockStore.dispatchedActions[1] as? SearchActivityAction
                     guard case let .locationRequested(searchParams)? = action else {
                         return false
                     }
@@ -126,7 +126,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                 it("dispatches SearchActivityAction.failure") {
                     performTest { _, _ -> Bool in
-                        let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                        let action = mockStore.dispatchedActions.last as? SearchActivityAction
                         guard case let .failure(searchParams, _)? = action else {
                             return false
                         }
@@ -160,7 +160,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                     it("dispatches SearchActivityAction.failure") {
                         performTest { _, _ -> Bool in
-                            let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                            let action = mockStore.dispatchedActions.last as? SearchActivityAction
                             guard case let .failure(searchParams, underlyingError)? = action else {
                                 return false
                             }
@@ -177,7 +177,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                     it("dispatches SearchActivityAction.initialPageRequested") {
                         performTest { _, _ -> Bool in
-                            let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                            let action = mockStore.dispatchedActions.last as? SearchActivityAction
                             guard case let .initialPageRequested(searchParams)? = action else {
                                 return false
                             }
@@ -209,7 +209,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                             it("dispatches SearchActivityAction.failure") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
                                     guard case let .failure(searchParams, _)? = action else {
                                         return false
                                     }
@@ -240,7 +240,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                             it("dispatches SearchActivityAction.failure") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
                                     guard case let .failure(searchParams, _)? = action else {
                                         return false
                                     }
@@ -267,7 +267,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                             it("dispatches SearchActivityAction.noResultsFound") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedNonAsyncActions.last as? SearchActivityAction
+                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
                                     guard case let .noResultsFound(searchParams)? = action else {
                                         return false
                                     }

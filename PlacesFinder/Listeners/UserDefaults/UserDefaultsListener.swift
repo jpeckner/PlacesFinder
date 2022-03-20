@@ -31,7 +31,7 @@ protocol UserDefaultsListenerProtocol: AutoMockable {
 
 class UserDefaultsListener<
     TStore: SubscribableStoreProtocol
->: UserDefaultsListenerProtocol where TStore.State == AppState {
+>: UserDefaultsListenerProtocol where TStore.TState == AppState {
 
     private let store: TStore
     private let userDefaultsService: UserDefaultsServiceProtocol

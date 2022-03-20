@@ -29,7 +29,7 @@ import SwiftDux
 import UIKit
 
 // sourcery: linkPayloadType = "SettingsLinkPayload"
-class SettingsCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class SettingsCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let presenter: SettingsPresenterProtocol

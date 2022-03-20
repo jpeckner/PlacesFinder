@@ -103,7 +103,7 @@ class LaunchCoordinatorTests: QuickSpec {
                 }
 
                 it("dispatches the action returned by appSkinActionCreator.loadSkin()") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? AppSkinAction) == .startLoadSkin
+                    expect(mockStore.dispatchedActions.last as? AppSkinAction) == .startLoadSkin
                 }
 
                 it("calls reachabilityListener.start()") {
@@ -149,7 +149,7 @@ class LaunchCoordinatorTests: QuickSpec {
         describe("StoreSubscriber") {
 
             func verifyRequestLinkCalled(_ appLinkType: AppLinkType) {
-                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last
+                let dispatchedAction = mockStore.dispatchedActions.last
                 expect(dispatchedAction as? AppRouterAction) == .requestLink(appLinkType)
             }
 

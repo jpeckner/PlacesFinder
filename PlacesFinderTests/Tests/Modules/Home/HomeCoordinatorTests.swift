@@ -80,13 +80,13 @@ class HomeCoordinatorTests: QuickSpec {
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
+            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
             expect(dispatchedAction) == .setCurrentCoordinator(nodeBox)
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
                                                    linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
+            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
             expect(dispatchedAction) == .setDestinationCoordinator(destinationNodeBox, payload: linkType)
         }
 

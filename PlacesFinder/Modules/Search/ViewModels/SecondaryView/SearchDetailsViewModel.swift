@@ -35,13 +35,13 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     private let sections: [Section]
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
-    private let removeDetailedEntityAction: IgnoredEquatable<Action>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<AppAction, Never>>
+    private let removeDetailedEntityAction: IgnoredEquatable<AppAction>
 
     init(placeName: String,
          sections: [SearchDetailsViewModel.Section],
-         actionSubscriber: AnySubscriber<Action, Never>,
-         removeDetailedEntityAction: Action) {
+         actionSubscriber: AnySubscriber<AppAction, Never>,
+         removeDetailedEntityAction: AppAction) {
         self.placeName = placeName
         self.sections = sections
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
@@ -92,12 +92,12 @@ protocol SearchDetailsViewModelBuilderProtocol: AutoMockable {
 
 class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<AppAction, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol) {

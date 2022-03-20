@@ -44,14 +44,14 @@ protocol SearchLookupChildBuilderProtocol: AutoMockable {
 
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<AppAction, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,

@@ -30,13 +30,13 @@ import SwiftDux
 struct SettingsCellViewModel: Equatable {
     let title: String
     let isSelected: Bool
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
-    private let action: IgnoredEquatable<Action>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<AppAction, Never>>
+    private let action: IgnoredEquatable<AppAction>
 
     init(title: String,
          isSelected: Bool,
-         actionSubscriber: AnySubscriber<Action, Never>,
-         action: Action) {
+         actionSubscriber: AnySubscriber<AppAction, Never>,
+         action: AppAction) {
         self.title = title
         self.isSelected = isSelected
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
@@ -65,10 +65,10 @@ class SettingsCellViewModelBuilder {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<AppAction, Never>
     private let measurementFormatter: MeasurementFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<AppAction, Never>,
          measurementFormatter: MeasurementFormatterProtocol) {
         self.actionSubscriber = actionSubscriber
         self.measurementFormatter = measurementFormatter
@@ -93,7 +93,7 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
             SettingsCellViewModel(title: measurementFormatter.string(from: $0.measurement),
                                   isSelected: currentlySelectedDistance == $0,
                                   actionSubscriber: actionSubscriber,
-                                  action: SearchPreferencesAction.setDistance(distanceBlock($0)))
+                                  action: AppAction.searchPreferences(.setDistance(distanceBlock($0))))
         }
     }
 
@@ -103,7 +103,7 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
             SettingsCellViewModel(title: copyContent.title($0),
                                   isSelected: sorting == $0,
                                   actionSubscriber: actionSubscriber,
-                                  action: SearchPreferencesAction.setSorting($0))
+                                  action: AppAction.searchPreferences(.setSorting($0)))
         }
     }
 

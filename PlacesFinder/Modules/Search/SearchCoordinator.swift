@@ -29,7 +29,7 @@ import UIKit
 
 // sourcery: linkPayloadType = "EmptySearchLinkPayload"
 // sourcery: linkPayloadType = "SearchLinkPayload"
-class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class SearchCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let presenter: SearchPresenterProtocol

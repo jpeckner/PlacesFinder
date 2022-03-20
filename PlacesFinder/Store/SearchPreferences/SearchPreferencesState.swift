@@ -45,9 +45,9 @@ extension SearchPreferencesState {
 
 enum SearchPreferencesReducer {
 
-    static func reduce(action: Action,
+    static func reduce(action: AppAction,
                        currentState: SearchPreferencesState) -> SearchPreferencesState {
-        guard let searchPreferencesAction = action as? SearchPreferencesAction else {
+        guard case let .searchPreferences(searchPreferencesAction) = action else {
             return currentState
         }
 

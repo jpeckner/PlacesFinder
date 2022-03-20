@@ -26,19 +26,19 @@ import Foundation
 import Shared
 import SwiftDux
 
-enum SearchPreferencesAction: Action, Equatable {
+enum SearchPreferencesAction: Equatable {
     case setDistance(SearchDistance)
     case setSorting(PlaceLookupSorting)
 }
 
 enum SearchPreferencesActionCreator {
 
-    static func setMeasurementSystem(_ system: MeasurementSystem) -> Action {
+    static func setMeasurementSystem(_ system: MeasurementSystem) -> AppAction {
         switch system {
         case .imperial:
-            return SearchPreferencesAction.setDistance(.imperial(.defaultDistance))
+            return .searchPreferences(.setDistance(.imperial(.defaultDistance)))
         case .metric:
-            return SearchPreferencesAction.setDistance(.metric(.defaultDistance))
+            return .searchPreferences(.setDistance(.metric(.defaultDistance)))
         }
     }
 

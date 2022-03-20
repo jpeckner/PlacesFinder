@@ -45,7 +45,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var mockStore: SpyingStore<AppState>!
+        var mockStore: SpyingStore<AppAction, AppState>!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
