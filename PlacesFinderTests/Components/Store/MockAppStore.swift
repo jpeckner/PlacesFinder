@@ -24,4 +24,4 @@
 
 import SwiftDuxTestComponents
 
-typealias MockAppStore = MockStore<AppState>
+typealias MockAppStore = MockStore<AppAction, AppState>

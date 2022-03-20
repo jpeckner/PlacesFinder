@@ -177,7 +177,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }
@@ -190,7 +190,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }
@@ -240,7 +240,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }
@@ -253,7 +253,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }
@@ -348,7 +348,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }
@@ -358,7 +358,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {
-                            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? StubSearchActivityAction
+                            let dispatchedAction = mockStore.dispatchedActions.last as? StubSearchActivityAction
                             expect(dispatchedAction) == .requestInitialPage
                         }
 
@@ -374,7 +374,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockStore.dispatchedNonAsyncActions.contains {
+                            expect(mockStore.dispatchedActions.contains {
                                 ($0 as? AppRouterAction) == .clearLink
                             }) == true
                         }

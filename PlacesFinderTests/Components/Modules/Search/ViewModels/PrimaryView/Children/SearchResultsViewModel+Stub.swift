@@ -33,7 +33,7 @@ extension SearchResultsViewModel {
         case nextRequestAction
     }
 
-    static func stubValue(actionSubscriber: AnySubscriber<Action, Never>,
+    static func stubValue(actionSubscriber: AnySubscriber<AppAction, Never>,
                           resultViewModels: NonEmptyArray<SearchResultViewModel>,
                           refreshAction: Action = StubActions.refreshAction,
                           nextRequestAction: Action? = StubActions.nextRequestAction) -> SearchResultsViewModel {

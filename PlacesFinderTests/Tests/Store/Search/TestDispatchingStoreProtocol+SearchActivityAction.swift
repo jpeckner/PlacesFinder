@@ -30,7 +30,7 @@ import SwiftDuxTestComponents
 extension TestDispatchingStoreProtocol {
 
     var dispatchedSubmittedParams: SearchParams? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
+        let dispatchedAction = dispatchedActions.last as? SearchActivityAction
         guard case let .subsequentRequest(submittedParams, _, _, _)? = dispatchedAction else {
             return nil
         }
@@ -39,7 +39,7 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedPageAction: IntermediateStepLoadAction<SearchPageRequestError>? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
+        let dispatchedAction = dispatchedActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, pageAction, _, _)? = dispatchedAction else {
             return nil
         }
@@ -48,7 +48,7 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedEntities: NonEmptyArray<SearchEntityModel>? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
+        let dispatchedAction = dispatchedActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, _, entities, _)? = dispatchedAction else {
             return nil
         }
@@ -57,7 +57,7 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedNextRequestToken: PlaceLookupTokenAttemptsContainer? {
-        let dispatchedAction = dispatchedNonAsyncActions.last as? SearchActivityAction
+        let dispatchedAction = dispatchedActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, _, _, nextRequestToken)? = dispatchedAction else {
             return nil
         }

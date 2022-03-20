@@ -103,13 +103,13 @@ class AppCoordinatorTests: QuickSpec {
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
+            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
             expect(dispatchedAction) == .setCurrentCoordinator(nodeBox)
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
                                                    linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
+            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
             expect(dispatchedAction) == .setDestinationCoordinator(destinationNodeBox, payload: linkType)
         }
 
@@ -238,7 +238,7 @@ class AppCoordinatorTests: QuickSpec {
                     }
 
                     it("dispatches RouterAction.requestLink with the payload") {
-                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
+                        let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
                         expect(dispatchedAction) == .requestLink(stubLinkType)
                     }
 

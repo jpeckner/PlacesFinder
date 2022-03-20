@@ -121,7 +121,7 @@ class SettingsCoordinatorTests: QuickSpec {
                     }
 
                     it("dispatches AppRouterAction.clearLink") {
-                        expect(mockStore.dispatchedNonAsyncActions.contains {
+                        expect(mockStore.dispatchedActions.contains {
                             ($0 as? AppRouterAction) == .clearLink
                         }) == true
                     }
