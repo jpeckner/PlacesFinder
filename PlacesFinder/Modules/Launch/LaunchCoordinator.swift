@@ -35,7 +35,6 @@ class LaunchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let statePrism: LaunchStatePrismProtocol
     private let stylingsHandler: AppGlobalStylingsHandlerProtocol
     private let defaultLinkType: AppLinkType
-    private let appSkinActionCreator: AppSkinActionCreatorProtocol.Type
 
     init(store: TStore,
          presenter: LaunchPresenterProtocol,
@@ -43,8 +42,7 @@ class LaunchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
          serviceContainer: ServiceContainer,
          statePrism: LaunchStatePrismProtocol,
          stylingsHandler: AppGlobalStylingsHandlerProtocol,
-         defaultLinkType: AppLinkType,
-         appSkinActionCreator: AppSkinActionCreatorProtocol.Type = AppSkinActionCreator.self) {
+         defaultLinkType: AppLinkType) {
         self.store = store
         self.listenerContainer = listenerContainer
         self.serviceContainer = serviceContainer
@@ -52,7 +50,6 @@ class LaunchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
         self.statePrism = statePrism
         self.stylingsHandler = stylingsHandler
         self.defaultLinkType = defaultLinkType
-        self.appSkinActionCreator = appSkinActionCreator
     }
 
 }
@@ -76,7 +73,7 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
 
     private func subscribeAndDispatchActions() {
         store.subscribe(self, equatableKeyPaths: statePrism.launchKeyPaths)
-        store.dispatch(appSkinActionCreator.loadSkin(skinService: serviceContainer.appSkinService))
+        store.dispatch(AppSkinAction.startLoadSkin)
     }
 
     private func startListeners() {

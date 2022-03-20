@@ -1,5 +1,5 @@
 //
-//  AppSkinActionCreator.swift
+//  AppSkinAction.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2018 Justin Peckner
@@ -26,15 +26,35 @@ import Foundation
 import Shared
 import SwiftDux
 
-protocol AppSkinActionCreatorProtocol: ResettableAutoMockable {
-    static func loadSkin(skinService: AppSkinServiceProtocol) -> Action
+enum AppSkinAction: Action {
+    case startLoadSkin
 }
 
-enum AppSkinActionCreator: AppSkinActionCreatorProtocol, GuaranteedEntityActionCreator {
+enum AppSkinMiddleware {
 
-    static func loadSkin(skinService: AppSkinServiceProtocol) -> Action {
-        let action: AppAsyncAction = loadGuaranteedEntity(.nonThrowing(skinService.fetchAppSkin))
-        return action
+    static func loadSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppState> {
+        return { dispatch, _ in
+            return { next in
+                return { action in
+                    guard case AppSkinAction.startLoadSkin = action else {
+                        next(action)
+                        return
+                    }
+
+                    dispatch(GuaranteedEntityAction<AppSkin>.inProgress)
+
+                    skinService.fetchAppSkin { result in
+                        switch result {
+                        case let .success(appSkin):
+                            dispatch(GuaranteedEntityAction<AppSkin>.success(appSkin))
+                        case let .failure(error):
+                            let entityError = EntityError.loadError(underlyingError: EquatableError(error))
+                            dispatch(GuaranteedEntityAction<AppSkin>.failure(entityError))
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -116,31 +116,6 @@ internal class AppLinkTypeBuilderProtocolMock: AppLinkTypeBuilderProtocol {
     }
 
 }
-internal class AppSkinActionCreatorProtocolMock: AppSkinActionCreatorProtocol {
-
-    // MARK: - loadSkin
-
-    internal static var loadSkinSkinServiceCallsCount = 0
-    internal static var loadSkinSkinServiceCalled: Bool {
-        return loadSkinSkinServiceCallsCount > 0
-    }
-    internal static var loadSkinSkinServiceReceivedSkinService: AppSkinServiceProtocol?
-    internal static var loadSkinSkinServiceReturnValue: Action!
-    internal static var loadSkinSkinServiceClosure: ((AppSkinServiceProtocol) -> Action)?
-
-    internal static func loadSkin(skinService: AppSkinServiceProtocol) -> Action {
-        loadSkinSkinServiceCallsCount += 1
-        loadSkinSkinServiceReceivedSkinService = skinService
-        return loadSkinSkinServiceClosure.map({ $0(skinService) }) ?? loadSkinSkinServiceReturnValue
-    }
-
-    internal static func loadSkinSkinServiceReset() {
-        loadSkinSkinServiceClosure = nil
-        loadSkinSkinServiceCallsCount = 0
-        loadSkinSkinServiceReceivedSkinService = nil
-        loadSkinSkinServiceReturnValue = nil
-    }
-}
 internal class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
 
     // MARK: - fetchAppSkin

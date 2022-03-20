@@ -132,7 +132,7 @@
 		316B2F4F105EE60A09007603 /* SearchInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3FC8625A09FE8D5DD01A5 /* SearchInputViewModel.swift */; };
 		31A1C338F12DD024614DA572 /* SearchDetailsSectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */; };
 		31E3AF7CDC2CF7B57FA945C5 /* SearchCTAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA3861D26E2312C44BFF15C /* SearchCTAView.swift */; };
-		327968354A8D995EFC6C97F3 /* AppSkinActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */; };
+		327968354A8D995EFC6C97F3 /* AppSkinAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */; };
 		32C489F983B5859366A18692 /* ReachabilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2124A70556DC684DA54CF3E8 /* ReachabilityState.swift */; };
 		335BF8A4CA769C066BE614ED /* AutoCodable.swifttemplate in Resources */ = {isa = PBXBuildFile; fileRef = 6D069CBCFB2B4F83F31B4ADA /* AutoCodable.swifttemplate */; };
 		3374F81696AD47E021172DF9 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F9CB66F411E9B113942601 /* SettingsViewModelTests.swift */; };
@@ -182,7 +182,6 @@
 		49E6019DFA8405FD16ED5C26 /* UIButton+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */; };
 		4A831C8C94F1F1240887C829 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664F256C934B5B4A349BD9EF /* Assets.xcassets */; };
 		4AE486A83FA33C0658E22CB1 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB82F102B92D500DD50D7D2 /* AppCoordinatorTests.swift */; };
-		4B2434F793412AFC99A844F8 /* AppSkinActionCreatorProtocolMock+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB77DAB89510FE3D8B17572 /* AppSkinActionCreatorProtocolMock+Setup.swift */; };
 		4B5CB9BA2B477CA9A07F2CDF /* AppCopyContentReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5961160D1BA1BFBAF9A88A3 /* AppCopyContentReducerTests.swift */; };
 		4BC86C08996B02730F1278AB /* ReachabilityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */; };
 		4C5A547E540D72EB416E7E48 /* SettingsLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */; };
@@ -274,7 +273,7 @@
 		6CD40C3BE5DDECC08401EB03 /* UITextField+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F37F169D8C288F02725DFA /* UITextField+AppSkin.swift */; };
 		6E5D3286F1A4695F7AE3E052 /* SearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7317019571262C965873F143 /* SearchConfig.swift */; };
 		6E979A369284E4AA3C5CAE39 /* PlaceLookupPageRequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A7DDF3207B0F24DFF9B9C6 /* PlaceLookupPageRequestToken.swift */; };
-		70BC48D20C74C2D50AC5969B /* AppSkinActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */; };
+		70BC48D20C74C2D50AC5969B /* AppSkinAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */; };
 		7160F308C5C501C650E1038A /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F27D0DDA08881BB3FF1036 /* HomeCoordinator.swift */; };
 		71793FB2D9FA44243BCD7C4D /* AutoCodable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817D4B92A0E1F005394E665 /* AutoCodable.generated.swift */; };
 		718152026426FDC473D68055 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
@@ -559,7 +558,7 @@
 		E2489C396F4957E0DD3F62D7 /* Pods_PlacesFinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ADC65A642CE6A2139B27B71 /* Pods_PlacesFinderUITests.framework */; };
 		E2C39E7D820B780AC6E4836A /* PlaceLookupServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE221B470A8510956F1458 /* PlaceLookupServiceProtocol.swift */; };
 		E31378CA29AE8617F73EF14D /* StubLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A3440E9DCD5CF3A8DECAB8 /* StubLinkType.swift */; };
-		E326C87A181D2B79C6858305 /* AppSkinActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */; };
+		E326C87A181D2B79C6858305 /* AppSkinAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */; };
 		E343B1543A1BFAED578A8814 /* SearchInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D5BC5B925A91B8635C0029 /* SearchInstructionsView.swift */; };
 		E35E8D3554C992ED489D2F77 /* RouterProtocol+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134440C1FEFBA37BBD69429 /* RouterProtocol+App.swift */; };
 		E3778E965446DA660F88686E /* HomeCoordinatorChildFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93682776FF12457425245493 /* HomeCoordinatorChildFactory.swift */; };
@@ -733,7 +732,7 @@
 		4A87DE63FF802E0A4C33545C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4C3F62F2BE7E1593701674EF /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		4CC8FAA0532A5EC4C5BDDF03 /* SearchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewController.swift; sourceTree = "<group>"; };
-		4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinActionCreator.swift; sourceTree = "<group>"; };
+		4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinAction.swift; sourceTree = "<group>"; };
 		4D8E4136FD198F4F9614BE05 /* SearchInstructionsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoAppLink.stencil; sourceTree = "<group>"; };
@@ -756,7 +755,6 @@
 		56E88D643F0FF71D4031535F /* SearchMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMessageView.swift; sourceTree = "<group>"; };
 		5B873E16D32602A5DBFA1715 /* AppConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AppConfig.plist; sourceTree = "<group>"; };
 		5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementFormatterProtocol.swift; sourceTree = "<group>"; };
-		5BB77DAB89510FE3D8B17572 /* AppSkinActionCreatorProtocolMock+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSkinActionCreatorProtocolMock+Setup.swift"; sourceTree = "<group>"; };
 		5C55E78A64861D1B4087AFA1 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		5D3EA8788E785B6A377A22E2 /* SafariHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariHandler.swift; sourceTree = "<group>"; };
 		5F03EEFEC951DBBFE4B27040 /* LaunchStatePrismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatePrismTests.swift; sourceTree = "<group>"; };
@@ -1791,7 +1789,6 @@
 		9A714A42C2AF5C4EFF5A67CA /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				CC31C11BF7A0322BB4251D00 /* AppSkin */,
 				C0110702FCBED25FFF0C88CB /* Search */,
 				4A27A0A36568B7B3B95FC167 /* AppState+Stub.swift */,
 				1F660EAC4A5CEA5344D7CB78 /* MockAppStore.swift */,
@@ -1855,7 +1852,7 @@
 		AFF394EB601CEC92018EAB54 /* AppSkin */ = {
 			isa = PBXGroup;
 			children = (
-				4CF7FD8D5BF8D63199BF634D /* AppSkinActionCreator.swift */,
+				4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */,
 				77E533322B90E4AA741D00F0 /* AppSkinState.swift */,
 			);
 			path = AppSkin;
@@ -2095,14 +2092,6 @@
 				D5C405056E5BD9DAB2EC652C /* AppTextStyleClass.swift */,
 			);
 			path = TextLayouts;
-			sourceTree = "<group>";
-		};
-		CC31C11BF7A0322BB4251D00 /* AppSkin */ = {
-			isa = PBXGroup;
-			children = (
-				5BB77DAB89510FE3D8B17572 /* AppSkinActionCreatorProtocolMock+Setup.swift */,
-			);
-			path = AppSkin;
 			sourceTree = "<group>";
 		};
 		CD6296A42F25AED9DBF9E2C0 /* Extensions */ = {
@@ -2694,7 +2683,7 @@
 				6330C59DAFFB779E0C8AAF51 /* AppRoutingHandler.swift in Sources */,
 				7745C9EE2AEDD6539B29818C /* AppSkin+UIBarButtonItem.swift in Sources */,
 				383581198DEA9696E37A44FF /* AppSkin.swift in Sources */,
-				E326C87A181D2B79C6858305 /* AppSkinActionCreator.swift in Sources */,
+				E326C87A181D2B79C6858305 /* AppSkinAction.swift in Sources */,
 				CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */,
 				FAFB929AA7CC3804BB77478B /* AppSkinState.swift in Sources */,
 				98CFD8CA4BEA7DE7617B7B6B /* AppState.swift in Sources */,
@@ -2877,7 +2866,7 @@
 				68D7B57DC94CD933E8EFC1B5 /* AppRoutingHandler.swift in Sources */,
 				1D9051AF593B774AC559F4D4 /* AppSkin+UIBarButtonItem.swift in Sources */,
 				CEC3036E1D510AE33D686FAC /* AppSkin.swift in Sources */,
-				327968354A8D995EFC6C97F3 /* AppSkinActionCreator.swift in Sources */,
+				327968354A8D995EFC6C97F3 /* AppSkinAction.swift in Sources */,
 				72797B223382D9A04715D4D5 /* AppSkinService.swift in Sources */,
 				990DAF6C43F32508C676B83E /* AppSkinState.swift in Sources */,
 				4DBDEC054B000E27232A2F55 /* AppState.swift in Sources */,
@@ -3057,8 +3046,7 @@
 				0EA93AC11382763B8E85D984 /* AppRoutingHandlerTests.swift in Sources */,
 				A429F3208BFD8F524B8B1557 /* AppSkin+UIBarButtonItem.swift in Sources */,
 				6856C8A69A27894260A09E4A /* AppSkin.swift in Sources */,
-				70BC48D20C74C2D50AC5969B /* AppSkinActionCreator.swift in Sources */,
-				4B2434F793412AFC99A844F8 /* AppSkinActionCreatorProtocolMock+Setup.swift in Sources */,
+				70BC48D20C74C2D50AC5969B /* AppSkinAction.swift in Sources */,
 				81AE44F2EAA6F56AFECE6323 /* AppSkinService.swift in Sources */,
 				FCD4DF1D347246CA9DB2708C /* AppSkinState.swift in Sources */,
 				3D386BDA36E7E23188DA5BE2 /* AppState+Stub.swift in Sources */,
