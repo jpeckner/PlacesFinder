@@ -27,8 +27,8 @@ DEPENDENCIES:
   - SharedTestComponents (from `https://github.com/jpeckner/Shared.git`, branch `master`)
   - SkeletonView
   - SnapKit
-  - SwiftDux (from `/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux`)
-  - SwiftDuxTestComponents (from `/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux`)
+  - SwiftDux (from `https://github.com/jpeckner/SwiftDux.git`, branch `develop`)
+  - SwiftDuxTestComponents (from `https://github.com/jpeckner/SwiftDux.git`, branch `develop`)
   - Swifter
 
 SPEC REPOS:
@@ -55,9 +55,11 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
-    :path: "/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux"
+    :branch: develop
+    :git: https://github.com/jpeckner/SwiftDux.git
   SwiftDuxTestComponents:
-    :path: "/Users/jpeckner/Dropbox/CodingProjects/Github/jpeckner/SwiftDux"
+    :branch: develop
+    :git: https://github.com/jpeckner/SwiftDux.git
 
 CHECKOUT OPTIONS:
   CoordiNode:
@@ -72,6 +74,12 @@ CHECKOUT OPTIONS:
   SharedTestComponents:
     :commit: 1120fbd992ec7f2fa4d4a7bdd83cc298ac191cde
     :git: https://github.com/jpeckner/Shared.git
+  SwiftDux:
+    :commit: 85d379e82e11cabd0446e86b1ade35c4d26629d3
+    :git: https://github.com/jpeckner/SwiftDux.git
+  SwiftDuxTestComponents:
+    :commit: 85d379e82e11cabd0446e86b1ade35c4d26629d3
+    :git: https://github.com/jpeckner/SwiftDux.git
 
 SPEC CHECKSUMS:
   CoordiNode: 87f7cfa179883fe299a63e857493e716b8bb32b8
@@ -88,6 +96,6 @@ SPEC CHECKSUMS:
   SwiftDuxTestComponents: 659bdc33484da0622e401688ce4d1d780eea8270
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
 
-PODFILE CHECKSUM: 5f14168affa976f7d3af024a9dc8cee80c91fb9a
+PODFILE CHECKSUM: 5a4d42a736ec3f8b7d5298231e980195cda252aa
 
 COCOAPODS: 1.11.2
