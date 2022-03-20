@@ -47,8 +47,6 @@ class SearchActivityActionPrismTests: QuickSpec {
         var result: Action!
 
         beforeEach {
-            SearchActivityActionCreatorProtocolMock.setup()
-
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
 
@@ -56,13 +54,8 @@ class SearchActivityActionPrismTests: QuickSpec {
                 dependencies: SearchActivityActionCreatorDependencies(
                     placeLookupService: mockPlaceLookupService,
                     searchEntityModelBuilder: mockSearchEntityModelBuilder
-                ),
-                actionCreator: SearchActivityActionCreatorProtocolMock.self
+                )
             )
-        }
-
-        afterEach {
-            SearchActivityActionCreatorProtocolMock.resetAll()
         }
 
         describe("initialRequestAction()") {
@@ -71,16 +64,13 @@ class SearchActivityActionPrismTests: QuickSpec {
                 result = prism.initialRequestAction(stubSearchParams) { _ in }
             }
 
-            it("calls actionCreator.requestInitialPage() with the args for the next page request") {
-                SearchActivityActionCreatorProtocolMock.verifyRequestInitialPageCalled(
-                    with: stubSearchParams,
-                    placeLookupService: mockPlaceLookupService,
-                    actionCreator: SearchActivityActionCreatorProtocolMock.self
-                )
-            }
+            it("returns SearchActivityAction.startInitialRequest() with the args for the next page request") {
+                guard case let SearchActivityAction.startInitialRequest(_, searchParams, _)? = result else {
+                    fail("Unexpected value found")
+                    return
+                }
 
-            it("returns the action returned by actionCreator.requestInitialPage()") {
-                expect(result as? StubSearchActivityAction) == .requestInitialPage
+                expect(searchParams) == stubSearchParams
             }
 
         }
@@ -88,7 +78,7 @@ class SearchActivityActionPrismTests: QuickSpec {
         describe("subsequentRequestAction()") {
 
             var errorThrown: Error?
-            var result: Action?
+            var result: SearchActivityAction?
 
             func performTest(maxAttempts: Int,
                              numAttemptsSoFar: Int) {
@@ -98,7 +88,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 errorThrown = errorThrownBy {
                     result = try prism.subsequentRequestAction(stubSearchParams,
                                                                allEntities: stubEntities,
-                                                               tokenContainer: tokenContainer)
+                                                               tokenContainer: tokenContainer) as? SearchActivityAction
                 }
             }
 
@@ -117,6 +107,10 @@ class SearchActivityActionPrismTests: QuickSpec {
 
             context("else when incrementing the number of attempts would not exceed the max number allowed") {
 
+                let expectedTokenContainer = PlaceLookupTokenAttemptsContainer(token: stubRequestToken,
+                                                                               maxAttempts: 5,
+                                                                               numAttemptsSoFar: 5)
+
                 beforeEach {
                     performTest(maxAttempts: 5,
                                 numAttemptsSoFar: 4)
@@ -126,20 +120,18 @@ class SearchActivityActionPrismTests: QuickSpec {
                     expect(errorThrown).to(beNil())
                 }
 
-                it("calls actionCreator.requestSubsequentPage() with the args for the next page request") {
-                    let expectedTokenContainer = PlaceLookupTokenAttemptsContainer(token: stubRequestToken,
-                                                                                   maxAttempts: 5,
-                                                                                   numAttemptsSoFar: 5)
-                    SearchActivityActionCreatorProtocolMock.verifyRequestSubsequentPageCalled(
-                        with: stubEntities.value,
-                        nextRequestToken: expectedTokenContainer,
-                        placeLookupService: mockPlaceLookupService,
-                        actionCreator: SearchActivityActionCreatorProtocolMock.self
-                    )
-                }
+                it("returns SearchActivityAction.startSubsequentRequest() with the args for the next page request") {
+                    guard case let SearchActivityAction.startSubsequentRequest(_,
+                                                                               searchParams,
+                                                                               previousResults,
+                                                                               tokenContainer)? = result else {
+                        fail("Unexpected value found")
+                        return
+                    }
 
-                it("returns the action returned by actionCreator.requestSubsequentPage()") {
-                    expect(result as? StubSearchActivityAction) == .requestSubsequentPage
+                    expect(searchParams) == stubSearchParams
+                    expect(previousResults) == stubEntities
+                    expect(tokenContainer) == expectedTokenContainer
                 }
 
             }
@@ -147,14 +139,19 @@ class SearchActivityActionPrismTests: QuickSpec {
         }
 
         describe("updateEditingAction") {
-            let editEvent: SearchBarEditEvent = .beganEditing
+            let stubEditEvent: SearchBarEditEvent = .beganEditing
 
             beforeEach {
-                result = prism.updateEditingAction(editEvent)
+                result = prism.updateEditingAction(stubEditEvent)
             }
 
             it("returns SearchActivityAction.updateInputEditing(editEvent:)") {
-                expect(result as? SearchActivityAction) == .updateInputEditing(editEvent)
+                guard case let SearchActivityAction.updateInputEditing(editEvent)? = result else {
+                    fail("Unexpected value found")
+                    return
+                }
+
+                expect(editEvent) == stubEditEvent
             }
         }
 
@@ -166,7 +163,12 @@ class SearchActivityActionPrismTests: QuickSpec {
             }
 
             it("returns SearchActivityAction.detailedEntity(entity:)") {
-                expect(result as? SearchActivityAction) == .detailedEntity(stubEntity)
+                guard case let SearchActivityAction.detailedEntity(entity)? = result else {
+                    fail("Unexpected value found")
+                    return
+                }
+
+                expect(entity) == stubEntity
             }
         }
 
@@ -176,7 +178,10 @@ class SearchActivityActionPrismTests: QuickSpec {
             }
 
             it("returns SearchActivityAction.detailedEntity(entity:)") {
-                expect(result as? SearchActivityAction) == .removeDetailedEntity
+                guard case SearchActivityAction.removeDetailedEntity? = result else {
+                    fail("Unexpected value found")
+                    return
+                }
             }
         }
 

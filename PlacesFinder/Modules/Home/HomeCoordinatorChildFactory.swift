@@ -76,8 +76,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             placeLookupService: serviceContainer.placeLookupService,
             searchEntityModelBuilder: searchEntityModelBuilder
         )
-        let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies,
-                                                    actionCreator: SearchActivityActionCreator.self)
+        let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies)
 
         let contentViewModelBuilder = SearchInputContentViewModelBuilder()
         let instructionsViewModelBuilder = SearchInstructionsViewModelBuilder()

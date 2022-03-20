@@ -116,31 +116,6 @@ internal class AppLinkTypeBuilderProtocolMock: AppLinkTypeBuilderProtocol {
     }
 
 }
-internal class AppSkinActionCreatorProtocolMock: AppSkinActionCreatorProtocol {
-
-    // MARK: - loadSkin
-
-    internal static var loadSkinSkinServiceCallsCount = 0
-    internal static var loadSkinSkinServiceCalled: Bool {
-        return loadSkinSkinServiceCallsCount > 0
-    }
-    internal static var loadSkinSkinServiceReceivedSkinService: AppSkinServiceProtocol?
-    internal static var loadSkinSkinServiceReturnValue: Action!
-    internal static var loadSkinSkinServiceClosure: ((AppSkinServiceProtocol) -> Action)?
-
-    internal static func loadSkin(skinService: AppSkinServiceProtocol) -> Action {
-        loadSkinSkinServiceCallsCount += 1
-        loadSkinSkinServiceReceivedSkinService = skinService
-        return loadSkinSkinServiceClosure.map({ $0(skinService) }) ?? loadSkinSkinServiceReturnValue
-    }
-
-    internal static func loadSkinSkinServiceReset() {
-        loadSkinSkinServiceClosure = nil
-        loadSkinSkinServiceCallsCount = 0
-        loadSkinSkinServiceReceivedSkinService = nil
-        loadSkinSkinServiceReturnValue = nil
-    }
-}
 internal class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
 
     // MARK: - fetchAppSkin
@@ -461,58 +436,6 @@ internal class ReachabilityProtocolMock: ReachabilityProtocol {
         setReachabilityCallbackCallbackClosure?(callback)
     }
 
-}
-internal class SearchActivityActionCreatorProtocolMock: SearchActivityActionCreatorProtocol {
-
-    // MARK: - requestInitialPage
-
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount = 0
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockCalled: Bool {
-        return requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount > 0
-    }
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments: (dependencies: SearchActivityActionCreatorDependencies, searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockReturnValue: Action!
-    internal static var requestInitialPageSearchParamsLocationUpdateRequestBlockClosure: ((SearchActivityActionCreatorDependencies, SearchParams, @escaping LocationUpdateRequestBlock) -> Action)?
-
-    internal static func requestInitialPage(_ dependencies: SearchActivityActionCreatorDependencies,
-                                   searchParams: SearchParams,
-                                   locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
-        requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount += 1
-        requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments = (dependencies: dependencies, searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return requestInitialPageSearchParamsLocationUpdateRequestBlockClosure.map({ $0(dependencies, searchParams, locationUpdateRequestBlock) }) ?? requestInitialPageSearchParamsLocationUpdateRequestBlockReturnValue
-    }
-
-    internal static func requestInitialPageSearchParamsLocationUpdateRequestBlockReset() {
-        requestInitialPageSearchParamsLocationUpdateRequestBlockClosure = nil
-        requestInitialPageSearchParamsLocationUpdateRequestBlockCallsCount = 0
-        requestInitialPageSearchParamsLocationUpdateRequestBlockReceivedArguments = nil
-        requestInitialPageSearchParamsLocationUpdateRequestBlockReturnValue = nil
-    }
-    // MARK: - requestSubsequentPage
-
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerCallsCount = 0
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerCalled: Bool {
-        return requestSubsequentPageSearchParamsPreviousResultsTokenContainerCallsCount > 0
-    }
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments: (dependencies: SearchActivityActionCreatorDependencies, searchParams: SearchParams, previousResults: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerReturnValue: Action!
-    internal static var requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure: ((SearchActivityActionCreatorDependencies, SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) -> Action)?
-
-    internal static func requestSubsequentPage(_ dependencies: SearchActivityActionCreatorDependencies,
-                                      searchParams: SearchParams,
-                                      previousResults: NonEmptyArray<SearchEntityModel>,
-                                      tokenContainer: PlaceLookupTokenAttemptsContainer) -> Action {
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerCallsCount += 1
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments = (dependencies: dependencies, searchParams: searchParams, previousResults: previousResults, tokenContainer: tokenContainer)
-        return requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure.map({ $0(dependencies, searchParams, previousResults, tokenContainer) }) ?? requestSubsequentPageSearchParamsPreviousResultsTokenContainerReturnValue
-    }
-
-    internal static func requestSubsequentPageSearchParamsPreviousResultsTokenContainerReset() {
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerClosure = nil
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerCallsCount = 0
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerReceivedArguments = nil
-        requestSubsequentPageSearchParamsPreviousResultsTokenContainerReturnValue = nil
-    }
 }
 internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
     internal var removeDetailedEntityAction: Action {

@@ -92,18 +92,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate.TChildFactory {
 
     convenience init(appConfig: AppConfig) {
+        let serviceContainer = ServiceContainer(appConfig: appConfig)
         let userDefaultsService = UserDefaultsService(userDefaults: .standard)
         let appCopyContent = AppCopyContent(displayName: appConfig.displayName)
         let locationAuthManager = CLLocationManager()
+
         let store = Store<AppState>(userDefaultsService: userDefaultsService,
+                                    skinService: serviceContainer.appSkinService,
                                     locationAuthManager: locationAuthManager,
                                     appCopyContent: appCopyContent)
 
         let listenerContainer = ListenerContainer(store: store,
                                                   locationAuthManager: locationAuthManager,
                                                   userDefaultsService: userDefaultsService)
-
-        let serviceContainer = ServiceContainer(appConfig: appConfig)
 
         let launchStatePrism = LaunchStatePrism()
 
@@ -121,6 +122,7 @@ private extension AppDelegate.TChildFactory {
 private extension Store where State == AppState {
 
     convenience init(userDefaultsService: UserDefaultsServiceProtocol,
+                     skinService: AppSkinServiceProtocol,
                      locationAuthManager: CLLocationManager,
                      appCopyContent: AppCopyContent) {
         let searchPreferencesState =
@@ -135,8 +137,15 @@ private extension Store where State == AppState {
             searchPreferencesState: searchPreferencesState
         )
 
-        self.init(reducer: AppStateReducer.reduce,
-                  initialState: initialState)
+        self.init(
+            reducer: AppStateReducer.reduce,
+            initialState: initialState,
+            middleware: [
+                AppSkinMiddleware.loadSkinMiddleware(skinService: skinService),
+                SearchActivityMiddleware.buildInitialRequestMiddleware(),
+                SearchActivityMiddleware.buildSubsequentRequestMiddleware()
+            ]
+        )
     }
 
 }

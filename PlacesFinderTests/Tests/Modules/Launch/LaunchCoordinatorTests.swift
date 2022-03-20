@@ -56,7 +56,6 @@ class LaunchCoordinatorTests: QuickSpec {
             mockLaunchPresenter = LaunchPresenterProtocolMock()
             mockLaunchPresenter.rootViewController = stubRootViewController
             mockStylingsHandler = AppGlobalStylingsHandlerProtocolMock()
-            AppSkinActionCreatorProtocolMock.setup()
 
             coordinator = LaunchCoordinator(store: mockStore,
                                             presenter: mockLaunchPresenter,
@@ -64,8 +63,7 @@ class LaunchCoordinatorTests: QuickSpec {
                                             serviceContainer: mockServiceContainer,
                                             statePrism: statePrism,
                                             stylingsHandler: mockStylingsHandler,
-                                            defaultLinkType: stubDefaultLinkType,
-                                            appSkinActionCreator: AppSkinActionCreatorProtocolMock.self)
+                                            defaultLinkType: stubDefaultLinkType)
         }
 
         beforeEach {
@@ -73,10 +71,6 @@ class LaunchCoordinatorTests: QuickSpec {
             mockStatePrism.underlyingLaunchKeyPaths = []
 
             initCoordinator(statePrism: mockStatePrism)
-        }
-
-        afterEach {
-            AppSkinActionCreatorProtocolMock.loadSkinSkinServiceReset()
         }
 
         describe("ChildCoordinatorProtocol") {
@@ -109,7 +103,7 @@ class LaunchCoordinatorTests: QuickSpec {
                 }
 
                 it("dispatches the action returned by appSkinActionCreator.loadSkin()") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? StubAppSkinAction) == .loadSkin
+                    expect(mockStore.dispatchedNonAsyncActions.last as? AppSkinAction) == .startLoadSkin
                 }
 
                 it("calls reachabilityListener.start()") {

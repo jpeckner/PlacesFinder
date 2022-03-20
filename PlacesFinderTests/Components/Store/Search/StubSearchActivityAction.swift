@@ -1,8 +1,8 @@
 //
-//  AppSkinActionCreator.swift
-//  PlacesFinder
+//  StubSearchActivityAction.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2018 Justin Peckner
+//  Copyright (c) 2019 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
-import Shared
 import SwiftDux
 
-protocol AppSkinActionCreatorProtocol: ResettableAutoMockable {
-    static func loadSkin(skinService: AppSkinServiceProtocol) -> Action
-}
-
-enum AppSkinActionCreator: AppSkinActionCreatorProtocol, GuaranteedEntityActionCreator {
-
-    static func loadSkin(skinService: AppSkinServiceProtocol) -> Action {
-        let action: AppAsyncAction = loadGuaranteedEntity(.nonThrowing(skinService.fetchAppSkin))
-        return action
-    }
-
+enum StubSearchActivityAction: Action {
+    case requestInitialPage
+    case requestSubsequentPage
 }
