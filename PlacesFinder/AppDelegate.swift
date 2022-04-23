@@ -119,6 +119,7 @@ private extension AppDelegate.TChildFactory {
 
 // MARK: Store
 
+// periphery:ignore
 private extension Store where TAction == AppAction, TState == AppState {
 
     convenience init(locationAuthManager: CLLocationManager,

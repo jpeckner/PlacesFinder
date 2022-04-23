@@ -27,11 +27,8 @@ import CoreLocation
 import Shared
 import SwiftDux
 
-typealias LocationAuthManager = CLLocationManagerAuthProtocol & CLAuthorizationStatusProvider
-
 protocol LocationAuthListenerProtocol: AutoMockable {
     var actionPublisher: AnyPublisher<AppAction, Never> { get }
-    var authStatus: LocationAuthStatus { get }
 
     func start()
     func requestWhenInUseAuthorization()
@@ -43,11 +40,11 @@ class LocationAuthListener: NSObject {
         actionSubject.eraseToAnyPublisher()
     }
 
-    private let locationAuthManager: LocationAuthManager
+    private let locationAuthManager: CLLocationManagerAuthProtocol
     private let assertionHandler: AssertionHandlerProtocol.Type
     private let actionSubject = PassthroughSubject<AppAction, Never>()
 
-    init(locationAuthManager: LocationAuthManager,
+    init(locationAuthManager: CLLocationManagerAuthProtocol,
          assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) {
         self.locationAuthManager = locationAuthManager
         self.assertionHandler = assertionHandler
@@ -56,10 +53,6 @@ class LocationAuthListener: NSObject {
 }
 
 extension LocationAuthListener: LocationAuthListenerProtocol {
-
-    var authStatus: LocationAuthStatus {
-        locationAuthManager.authorizationStatus.authStatus()
-    }
 
     func start() {
         locationAuthManager.delegate = self

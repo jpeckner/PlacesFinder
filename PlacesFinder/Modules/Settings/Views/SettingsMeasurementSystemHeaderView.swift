@@ -27,14 +27,11 @@ import UIKit
 
 class SettingsMeasurementSystemHeaderView: UIView {
 
-    private let viewModel: SettingsUnitsHeaderViewModel
     private let sectionNameLabel: StyledLabel
     private let systemsStackView: UIStackView
 
     init(viewModel: SettingsUnitsHeaderViewModel,
          colorings: SettingsViewColorings) {
-        self.viewModel = viewModel
-
         self.sectionNameLabel = StyledLabel(textStyleClass: .tableHeader,
                                             textColoring: colorings.headerTextColoring)
         self.systemsStackView = UIStackView()

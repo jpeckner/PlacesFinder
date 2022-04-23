@@ -27,19 +27,11 @@ import Shared
 
 struct DecodableServices {
 
-    let quickTimeoutDecodableService: DecodableService
     let standardTimeoutDecodableService: DecodableService
 
     init() {
         let responseQueue = DispatchQueue(label: "NetworkDataService.responseQueue")
         let decoder = JSONDecoder()
-
-        let quickTimeoutConfig = URLSessionConfiguration.default
-        quickTimeoutConfig.timeoutIntervalForResource = 3.0
-        let quickTimeoutSession = URLSession(configuration: quickTimeoutConfig)
-        self.quickTimeoutDecodableService = DecodableService(urlSession: quickTimeoutSession,
-                                                             responseQueue: responseQueue,
-                                                             decoder: decoder)
 
         let standardTimeoutSession = URLSession.shared
         self.standardTimeoutDecodableService = DecodableService(urlSession: standardTimeoutSession,

@@ -32,8 +32,7 @@ import SwiftDux
 protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
-    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent,
-                          state: AppState) -> TabCoordinatorProtocol
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
 }
 
 class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
@@ -54,22 +53,19 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction ==
 
 extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
-    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent,
-                          state: AppState) -> TabCoordinatorProtocol {
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
         let immediateDescendent =
             HomeCoordinatorDescendent(destinationDescendent: destinationDescendent).immediateDescendent
 
         switch immediateDescendent {
         case .search:
-            return buildSearchCoordinator(immediateDescendent.tabItemProperties,
-                                          state: state)
+            return buildSearchCoordinator(immediateDescendent.tabItemProperties)
         case .settings:
             return buildSettingsCoordinator(immediateDescendent.tabItemProperties)
         }
     }
 
-    private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties,
-                                        state: AppState) -> TabCoordinatorProtocol {
+    private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let initialState = Search.State()
         let searchStore = Search.SearchStore(
             reducer: Search.reduce,
@@ -186,7 +182,6 @@ private extension SearchLookupViewModelBuilder {
         let resultCellModelBuilder = SearchResultCellModelBuilder(copyFormatter: copyFormatter)
         let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                   actionPrism: actionPrism,
-                                                                  copyFormatter: copyFormatter,
                                                                   resultCellModelBuilder: resultCellModelBuilder)
         let resultsViewModelBuilder = SearchResultsViewModelBuilder(actionPrism: actionPrism,
                                                                     resultViewModelBuilder: resultViewModelBuilder)
@@ -200,8 +195,7 @@ private extension SearchLookupViewModelBuilder {
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
                                                     retryViewModelBuilder: retryViewModelBuilder)
 
-        self.init(actionPrism: actionPrism,
-                  inputViewModelBuilder: inputViewModelBuilder,
+        self.init(inputViewModelBuilder: inputViewModelBuilder,
                   childBuilder: childBuilder)
     }
 

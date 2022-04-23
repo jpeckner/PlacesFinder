@@ -32,11 +32,6 @@ internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: Ap
         set(value) { underlyingStore = value }
     }
     internal var underlyingStore: TStore!
-    internal var listenerContainer: ListenerContainer {
-        get { return underlyingListenerContainer }
-        set(value) { underlyingListenerContainer = value }
-    }
-    internal var underlyingListenerContainer: ListenerContainer!
     internal var serviceContainer: ServiceContainer {
         get { return underlyingServiceContainer }
         set(value) { underlyingServiceContainer = value }
@@ -64,19 +59,18 @@ internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: Ap
 
     // MARK: - buildCoordinator
 
-    internal var buildCoordinatorForStateCallsCount = 0
-    internal var buildCoordinatorForStateCalled: Bool {
-        return buildCoordinatorForStateCallsCount > 0
+    internal var buildCoordinatorForCallsCount = 0
+    internal var buildCoordinatorForCalled: Bool {
+        return buildCoordinatorForCallsCount > 0
     }
-    internal var buildCoordinatorForStateReceivedArguments: (childType: AppCoordinatorDestinationDescendent, state: AppState)?
-    internal var buildCoordinatorForStateReturnValue: AppCoordinatorChildProtocol!
-    internal var buildCoordinatorForStateClosure: ((AppCoordinatorDestinationDescendent, AppState) -> AppCoordinatorChildProtocol)?
+    internal var buildCoordinatorForReceivedChildType: AppCoordinatorDestinationDescendent?
+    internal var buildCoordinatorForReturnValue: AppCoordinatorChildProtocol!
+    internal var buildCoordinatorForClosure: ((AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol)?
 
-    internal func buildCoordinator(for childType: AppCoordinatorDestinationDescendent,
-                          state: AppState) -> AppCoordinatorChildProtocol {
-        buildCoordinatorForStateCallsCount += 1
-        buildCoordinatorForStateReceivedArguments = (childType: childType, state: state)
-        return buildCoordinatorForStateClosure.map({ $0(childType, state) }) ?? buildCoordinatorForStateReturnValue
+    internal func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
+        buildCoordinatorForCallsCount += 1
+        buildCoordinatorForReceivedChildType = childType
+        return buildCoordinatorForClosure.map({ $0(childType) }) ?? buildCoordinatorForReturnValue
     }
 
 }
@@ -175,19 +169,18 @@ internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: H
 
     // MARK: - buildCoordinator
 
-    internal var buildCoordinatorForStateCallsCount = 0
-    internal var buildCoordinatorForStateCalled: Bool {
-        return buildCoordinatorForStateCallsCount > 0
+    internal var buildCoordinatorForCallsCount = 0
+    internal var buildCoordinatorForCalled: Bool {
+        return buildCoordinatorForCallsCount > 0
     }
-    internal var buildCoordinatorForStateReceivedArguments: (destinationDescendent: HomeCoordinatorDestinationDescendent, state: AppState)?
-    internal var buildCoordinatorForStateReturnValue: TabCoordinatorProtocol!
-    internal var buildCoordinatorForStateClosure: ((HomeCoordinatorDestinationDescendent, AppState) -> TabCoordinatorProtocol)?
+    internal var buildCoordinatorForReceivedDestinationDescendent: HomeCoordinatorDestinationDescendent?
+    internal var buildCoordinatorForReturnValue: TabCoordinatorProtocol!
+    internal var buildCoordinatorForClosure: ((HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol)?
 
-    internal func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent,
-                          state: AppState) -> TabCoordinatorProtocol {
-        buildCoordinatorForStateCallsCount += 1
-        buildCoordinatorForStateReceivedArguments = (destinationDescendent: destinationDescendent, state: state)
-        return buildCoordinatorForStateClosure.map({ $0(destinationDescendent, state) }) ?? buildCoordinatorForStateReturnValue
+    internal func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
+        buildCoordinatorForCallsCount += 1
+        buildCoordinatorForReceivedDestinationDescendent = destinationDescendent
+        return buildCoordinatorForClosure.map({ $0(destinationDescendent) }) ?? buildCoordinatorForReturnValue
     }
 
 }
@@ -280,11 +273,6 @@ internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
         set(value) { underlyingActionPublisher = value }
     }
     internal var underlyingActionPublisher: AnyPublisher<AppAction, Never>!
-    internal var authStatus: LocationAuthStatus {
-        get { return underlyingAuthStatus }
-        set(value) { underlyingAuthStatus = value }
-    }
-    internal var underlyingAuthStatus: LocationAuthStatus!
 
     // MARK: - start
 
@@ -336,25 +324,6 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
     // MARK: - buildInitialPageRequestToken
 
-    internal var buildInitialPageRequestTokenResultsPerPageThrowableError: Error?
-    internal var buildInitialPageRequestTokenResultsPerPageCallsCount = 0
-    internal var buildInitialPageRequestTokenResultsPerPageCalled: Bool {
-        return buildInitialPageRequestTokenResultsPerPageCallsCount > 0
-    }
-    internal var buildInitialPageRequestTokenResultsPerPageReceivedArguments: (placeLookupParams: PlaceLookupParams, resultsPerPage: Int)?
-    internal var buildInitialPageRequestTokenResultsPerPageReturnValue: PlaceLookupPageRequestToken!
-    internal var buildInitialPageRequestTokenResultsPerPageClosure: ((PlaceLookupParams, Int) throws -> PlaceLookupPageRequestToken)?
-
-    internal func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
-                                      resultsPerPage: Int) throws -> PlaceLookupPageRequestToken {
-        buildInitialPageRequestTokenResultsPerPageCallsCount += 1
-        buildInitialPageRequestTokenResultsPerPageReceivedArguments = (placeLookupParams: placeLookupParams, resultsPerPage: resultsPerPage)
-        if let error = buildInitialPageRequestTokenResultsPerPageThrowableError { throw error }
-        return try buildInitialPageRequestTokenResultsPerPageClosure.map({ try $0(placeLookupParams, resultsPerPage) }) ?? buildInitialPageRequestTokenResultsPerPageReturnValue
-    }
-
-    // MARK: - buildInitialPageRequestToken
-
     internal var buildInitialPageRequestTokenThrowableError: Error?
     internal var buildInitialPageRequestTokenCallsCount = 0
     internal var buildInitialPageRequestTokenCalled: Bool {
@@ -389,11 +358,6 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
 }
 internal class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
-    internal var actionPublisher: AnyPublisher<AppAction, Never> {
-        get { return underlyingActionPublisher }
-        set(value) { underlyingActionPublisher = value }
-    }
-    internal var underlyingActionPublisher: AnyPublisher<AppAction, Never>!
 
     // MARK: - start
 

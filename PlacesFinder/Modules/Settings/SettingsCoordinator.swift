@@ -174,13 +174,6 @@ private extension SettingsCoordinator {
 
     enum Child: Equatable {
         case settingsChild(IgnoredEquatable<SettingsChildCoordinator<TStore>>)
-
-        var rootViewController: UIViewController {
-            switch self {
-            case let .settingsChild(coordinator):
-                return coordinator.value.rootViewController
-            }
-        }
     }
 
 }

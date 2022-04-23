@@ -107,8 +107,7 @@ class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == App
             self?.presentViews(appState: appState,
                                searchState: searchState)
 
-            self?.processLinkPayload(appState: appState,
-                                     searchState: searchState)
+            self?.processLinkPayload(appState: appState)
         }
     }
 
@@ -182,8 +181,7 @@ private extension SearchCoordinator {
 
 private extension SearchCoordinator {
 
-    func processLinkPayload(appState: AppState,
-                            searchState: Search.State) {
+    func processLinkPayload(appState: AppState) {
         switch statePrism.presentationType(locationAuthState: appState.locationAuthState,
                                            reachabilityState: appState.reachabilityState) {
         case .noInternet,

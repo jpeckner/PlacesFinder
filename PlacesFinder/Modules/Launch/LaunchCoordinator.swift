@@ -31,7 +31,6 @@ class LaunchCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction
     private let store: TStore
     private let presenter: LaunchPresenterProtocol
     private let listenerContainer: ListenerContainer
-    private let serviceContainer: ServiceContainer
     private let statePrism: LaunchStatePrismProtocol
     private let stylingsHandler: AppGlobalStylingsHandlerProtocol
     private let defaultLinkType: AppLinkType
@@ -39,13 +38,11 @@ class LaunchCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction
     init(store: TStore,
          presenter: LaunchPresenterProtocol,
          listenerContainer: ListenerContainer,
-         serviceContainer: ServiceContainer,
          statePrism: LaunchStatePrismProtocol,
          stylingsHandler: AppGlobalStylingsHandlerProtocol,
          defaultLinkType: AppLinkType) {
         self.store = store
         self.listenerContainer = listenerContainer
-        self.serviceContainer = serviceContainer
         self.presenter = presenter
         self.statePrism = statePrism
         self.stylingsHandler = stylingsHandler

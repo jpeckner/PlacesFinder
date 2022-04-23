@@ -24,8 +24,8 @@
 
 import Foundation
 
-public protocol AutoDecodable: Decodable {}
+protocol AutoDecodable: Decodable {}
 
-public protocol AutoEncodable: Encodable {}
+protocol AutoEncodable: Encodable {}
 
-public protocol AutoCodable: AutoDecodable, AutoEncodable {}
+protocol AutoCodable: AutoDecodable, AutoEncodable {}

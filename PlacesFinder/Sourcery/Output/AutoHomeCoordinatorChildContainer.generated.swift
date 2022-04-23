@@ -8,11 +8,9 @@ struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtoc
     private let search: TabCoordinatorProtocol
     private let settings: TabCoordinatorProtocol
 
-    init<TStore>(childFactory: TFactory, state: AppState) where TStore.TState == AppState, TFactory.TStore == TStore {
-        self.search = childFactory.buildCoordinator(for: .search,
-                                                                                         state: state)
-        self.settings = childFactory.buildCoordinator(for: .settings,
-                                                                                         state: state)
+    init<TStore>(childFactory: TFactory) where TStore.TState == AppState, TFactory.TStore == TStore {
+        self.search = childFactory.buildCoordinator(for: .search)
+        self.settings = childFactory.buildCoordinator(for: .settings)
     }
 
     init(

@@ -27,8 +27,6 @@ import Shared
 import SwiftDux
 
 protocol ReachabilityListenerProtocol: AutoMockable {
-    var actionPublisher: AnyPublisher<AppAction, Never> { get }
-
     func start() throws
 }
 

@@ -80,16 +80,14 @@ extension AppCoordinator: AppRouterProtocol {
     func createSubtree(from currentNode: NodeBox,
                        towards destinationDescendent: AppCoordinatorDestinationDescendent,
                        state: AppState) {
-        childCoordinator = childFactory.buildCoordinator(for: destinationDescendent,
-                                                         state: state)
+        childCoordinator = childFactory.buildCoordinator(for: destinationDescendent)
     }
 
     func switchSubtree(from currentNode: AppCoordinatorDescendent,
                        towards destinationDescendent: AppCoordinatorDestinationDescendent,
                        state: AppState) {
         // Build the new child coordinator here, not inside finish(), to avoid a split-second empty view flash
-        let newChildCoordinator = childFactory.buildCoordinator(for: destinationDescendent,
-                                                                state: state)
+        let newChildCoordinator = childFactory.buildCoordinator(for: destinationDescendent)
 
         childCoordinator.finish { [weak self] in
             self?.childCoordinator = newChildCoordinator

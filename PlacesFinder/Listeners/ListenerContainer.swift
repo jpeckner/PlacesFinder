@@ -33,6 +33,7 @@ struct ListenerContainer {
     let userDefaultsListener: UserDefaultsListenerProtocol
     private var cancellables: Set<AnyCancellable> = []
 
+    // periphery:ignore
     init(locationAuthListener: LocationAuthListenerProtocol,
          reachabilityListener: ReachabilityListenerProtocol?,
          userDefaultsListener: UserDefaultsListenerProtocol) {
@@ -45,7 +46,7 @@ struct ListenerContainer {
 extension ListenerContainer {
 
     init(store: Store<AppAction, AppState>,
-         locationAuthManager: LocationAuthManager,
+         locationAuthManager: CLLocationManagerAuthProtocol,
          userDefaultsService: UserDefaultsServiceProtocol) {
         self.locationAuthListener = LocationAuthListener(locationAuthManager: locationAuthManager)
         locationAuthListener.actionPublisher

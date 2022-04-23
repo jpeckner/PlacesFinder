@@ -27,9 +27,9 @@ import Shared
 import UIKit
 
 protocol HomePresenterDelegate: AnyObject {
+    // periphery:ignore:parameters homePresenter
     func homePresenter(_ homePresenter: HomePresenterProtocol,
-                       didSelectChildCoordinator index: Int,
-                       previousChildIndex: Int)
+                       didSelectChildCoordinator index: Int)
 }
 
 protocol HomePresenterProtocol: AnyObject, AutoMockable {
@@ -66,8 +66,7 @@ extension HomePresenter: TabSelectionViewControllerDelegate {
                         didSelectIndex index: Int,
                         previousIndex: Int) {
         delegate?.homePresenter(self,
-                                didSelectChildCoordinator: index,
-                                previousChildIndex: previousIndex)
+                                didSelectChildCoordinator: index)
     }
 
 }
