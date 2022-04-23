@@ -64,13 +64,13 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                 reducer: AppStateReducer.reduce,
                 initialState: stubState,
                 middleware: [
-                    SearchActivityMiddleware.buildInitialRequestMiddleware()
+                    Search.ActivityMiddleware.buildInitialRequestMiddleware()
                 ]
             )
         }
 
         func performTest() {
-            let dependencies = SearchActivityActionCreatorDependencies(
+            let dependencies = Search.ActivityActionCreatorDependencies(
                 placeLookupService: mockPlaceLookupService,
                 searchEntityModelBuilder: mockSearchEntityModelBuilder
             )

@@ -130,7 +130,7 @@ private extension SearchInputViewModel {
             return nil
         case let .dispatching(_, dispatcher):
             return {
-                dispatcher.dispatchEditEvent(.endedEditing)
+                dispatcher.value.dispatchEditEvent(.endedEditing)
             }
         }
     }
@@ -140,7 +140,7 @@ private extension SearchInputViewModel {
         case .nonDispatching:
             return nil
         case let .dispatching(_, dispatcher):
-            return dispatcher
+            return dispatcher.value
         }
     }
 

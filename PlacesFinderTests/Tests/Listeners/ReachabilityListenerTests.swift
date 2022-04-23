@@ -30,7 +30,6 @@ import SwiftDux
 
 class ReachabilityListenerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 

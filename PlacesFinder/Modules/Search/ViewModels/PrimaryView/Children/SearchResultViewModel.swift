@@ -28,12 +28,12 @@ import SwiftDux
 
 struct SearchResultViewModel: Equatable {
     let cellModel: SearchResultCellModel
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<AppAction, Never>>
-    private let detailEntityAction: IgnoredEquatable<AppAction>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
+    private let detailEntityAction: IgnoredEquatable<Search.Action>
 
     init(cellModel: SearchResultCellModel,
-         actionSubscriber: AnySubscriber<AppAction, Never>,
-         detailEntityAction: AppAction) {
+         actionSubscriber: AnySubscriber<Search.Action, Never>,
+         detailEntityAction: Search.Action) {
         self.cellModel = cellModel
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
@@ -57,12 +57,12 @@ protocol SearchResultViewModelBuilderProtocol: AutoMockable {
 
 class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
     private let resultCellModelBuilder: SearchResultCellModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
          copyFormatter: SearchCopyFormatterProtocol,
          resultCellModelBuilder: SearchResultCellModelBuilderProtocol) {

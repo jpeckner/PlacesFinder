@@ -1,5 +1,5 @@
 //
-//  AppAction.swift
+//  Search+Redux.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -24,18 +24,20 @@
 
 import SwiftDux
 
-enum AppAction: Action {
-    case appSkin(AppSkinAction)
-    case locationAuth(LocationAuthAction)
-    case reachability(ReachabilityAction)
-    case receiveState(StateReceiverBlock<AppState>)
-    case router(AppRouterAction)
-    case searchPreferences(SearchPreferencesAction)
-}
+enum Search {}
 
-extension AppAction {
+extension Search {
 
-    static func makeStateReceiverMiddleware() -> Middleware<AppAction, AppState> {
+    struct State: StateProtocol {
+        let searchActivityState: ActivityState
+    }
+
+    enum Action: SwiftDux.Action {
+        case searchActivity(ActivityAction)
+        case receiveState(StateReceiverBlock<Search.State>)
+    }
+
+    static func makeStateReceiverMiddleware() -> Middleware<Search.Action, Search.State> {
         return { _, stateProviderBlock in
             return { next in
                 return { action in
@@ -48,6 +50,34 @@ extension AppAction {
                 }
             }
         }
+    }
+
+    static func reduce(action: Action,
+                       currentState: Search.State) -> Search.State {
+        let searchActivityState = reduceSearchAction(action: action,
+                                                     currentState: currentState.searchActivityState)
+
+        return State(searchActivityState: searchActivityState)
+    }
+
+    private static func reduceSearchAction(action: Action,
+                                           currentState: Search.ActivityState) -> Search.ActivityState {
+        guard case let .searchActivity(searchActivityAction) = action else {
+            return currentState
+        }
+
+        return Search.ActivityReducer.reduce(action: searchActivityAction,
+                                             currentState: currentState)
+    }
+
+    typealias SearchStore = Store<Search.Action, Search.State>
+
+}
+
+extension Search.State {
+
+    init() {
+        self.searchActivityState = Search.ActivityState()
     }
 
 }

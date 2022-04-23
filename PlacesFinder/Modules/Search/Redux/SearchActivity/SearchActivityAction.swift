@@ -1,3 +1,4 @@
+//  swiftlint:disable:this file_name
 //
 //  SearchActivityAction.swift
 //  PlacesFinder
@@ -26,66 +27,72 @@ import Foundation
 import Shared
 import SwiftDux
 
-enum SearchPageRequestError: Error, Equatable {
-    case cannotRetryRequest(underlyingError: IgnoredEquatable<Error>)
-    case canRetryRequest(underlyingError: IgnoredEquatable<Error>)
+extension Search {
+
+    enum PageRequestError: Error, Equatable {
+        case cannotRetryRequest(underlyingError: IgnoredEquatable<Error>)
+        case canRetryRequest(underlyingError: IgnoredEquatable<Error>)
+    }
+
+    enum ActivityAction {
+        case startInitialRequest(
+            dependencies: ActivityActionCreatorDependencies,
+            searchParams: SearchParams,
+            locationUpdateRequestBlock: LocationUpdateRequestBlock
+        )
+
+        // Load state
+        case locationRequested(SearchParams)
+
+        case initialPageRequested(SearchParams)
+
+        case noResultsFound(SearchParams)
+
+        case startSubsequentRequest(
+            dependencies: ActivityActionCreatorDependencies,
+            searchParams: SearchParams,
+            previousResults: NonEmptyArray<SearchEntityModel>,
+            tokenContainer: PlaceLookupTokenAttemptsContainer
+        )
+
+        case subsequentRequest(
+            searchParams: SearchParams,
+            pageAction: IntermediateStepLoadAction<Search.PageRequestError>,
+            allEntities: NonEmptyArray<SearchEntityModel>,
+            nextRequestToken: PlaceLookupTokenAttemptsContainer?
+        )
+
+        case failure(
+            SearchParams,
+            underlyingError: IgnoredEquatable<Error>
+        )
+
+        // Input params
+        case updateInputEditing(SearchBarEditEvent)
+
+        // Detailed entity
+        case detailedEntity(SearchEntityModel)
+
+        case removeDetailedEntity
+    }
+
+    // MARK: Search.ActivityMiddleware
+
+    struct ActivityActionCreatorDependencies {
+        let placeLookupService: PlaceLookupServiceProtocol
+        let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
+    }
+
+    enum ActivityMiddleware {}
+
 }
 
-enum SearchActivityAction: Action {
-    case startInitialRequest(
-        dependencies: SearchActivityActionCreatorDependencies,
-        searchParams: SearchParams,
-        locationUpdateRequestBlock: LocationUpdateRequestBlock
-    )
+extension Search.ActivityMiddleware {
 
-    // Load state
-    case locationRequested(SearchParams)
-
-    case initialPageRequested(SearchParams)
-
-    case noResultsFound(SearchParams)
-
-    case startSubsequentRequest(
-        dependencies: SearchActivityActionCreatorDependencies,
-        searchParams: SearchParams,
-        previousResults: NonEmptyArray<SearchEntityModel>,
-        tokenContainer: PlaceLookupTokenAttemptsContainer
-    )
-
-    case subsequentRequest(
-        searchParams: SearchParams,
-        pageAction: IntermediateStepLoadAction<SearchPageRequestError>,
-        allEntities: NonEmptyArray<SearchEntityModel>,
-        nextRequestToken: PlaceLookupTokenAttemptsContainer?
-    )
-
-    case failure(
-        SearchParams,
-        underlyingError: IgnoredEquatable<Error>
-    )
-
-    // Input params
-    case updateInputEditing(SearchBarEditEvent)
-
-    // Detailed entity
-    case detailedEntity(SearchEntityModel)
-
-    case removeDetailedEntity
-}
-
-// MARK: SearchActivityMiddleware
-
-struct SearchActivityActionCreatorDependencies {
-    let placeLookupService: PlaceLookupServiceProtocol
-    let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
-}
-
-enum SearchActivityMiddleware {}
-
-extension SearchActivityMiddleware {
-
-    static func buildInitialRequestMiddleware() -> Middleware<AppAction, AppState> {
-        return { dispatch, stateReceiverBlock in
+    static func makeInitialRequestMiddleware<TAppStore: DispatchingStoreProtocol>(
+        appStore: TAppStore
+    ) -> Middleware<Search.Action, Search.State> where TAppStore.TAction == AppAction {
+        return { dispatch, _ in
             return { next in
                 return { action in
                     guard case let .searchActivity(searchActivityAction) = action,
@@ -99,23 +106,23 @@ extension SearchActivityMiddleware {
 
                     dispatch(.searchActivity(.locationRequested(searchParams)))
 
-                    stateReceiverBlock { appState in
+                    appStore.dispatch(.receiveState { appState in
                         requestLocation(appState.searchPreferencesState,
                                         dependencies: dependencies,
                                         searchParams: searchParams,
                                         locationUpdateRequestBlock: locationUpdateRequestBlock,
                                         dispatch: dispatch)
-                    }
+                    })
                 }
             }
         }
     }
 
     private static func requestLocation(_ preferencesState: SearchPreferencesState,
-                                        dependencies: SearchActivityActionCreatorDependencies,
+                                        dependencies: Search.ActivityActionCreatorDependencies,
                                         searchParams: SearchParams,
                                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock,
-                                        dispatch: @escaping DispatchFunction<AppAction>) {
+                                        dispatch: @escaping DispatchFunction<Search.Action>) {
         locationUpdateRequestBlock { result in
             switch result {
             case let .success(coordinate):
@@ -139,9 +146,9 @@ extension SearchActivityMiddleware {
     }
 
     private static func performInitialPageRequest(_ placeLookupParams: PlaceLookupParams,
-                                                  dependencies: SearchActivityActionCreatorDependencies,
+                                                  dependencies: Search.ActivityActionCreatorDependencies,
                                                   searchParams: SearchParams,
-                                                  dispatch: @escaping DispatchFunction<AppAction>) {
+                                                  dispatch: @escaping DispatchFunction<Search.Action>) {
         do {
             let placeLookupService = dependencies.placeLookupService
             let initialRequestToken = try placeLookupService.buildInitialPageRequestToken(placeLookupParams)
@@ -167,10 +174,10 @@ extension SearchActivityMiddleware {
         }
     }
 
-    private static func dispatchInitialPageSuccess(_ dependencies: SearchActivityActionCreatorDependencies,
+    private static func dispatchInitialPageSuccess(_ dependencies: Search.ActivityActionCreatorDependencies,
                                                    searchParams: SearchParams,
                                                    lookupResponse: PlaceLookupResponse,
-                                                   dispatch: @escaping DispatchFunction<AppAction>) {
+                                                   dispatch: @escaping DispatchFunction<Search.Action>) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
         guard let allEntities = NonEmptyArray(entityModels) else {
             dispatch(.searchActivity(.noResultsFound(searchParams)))
@@ -187,16 +194,16 @@ extension SearchActivityMiddleware {
 
     private static func dispatchInitialPageFailure(_ searchParams: SearchParams,
                                                    underlyingError: Error,
-                                                   dispatch: @escaping DispatchFunction<AppAction>) {
+                                                   dispatch: @escaping DispatchFunction<Search.Action>) {
         dispatch(.searchActivity(.failure(searchParams,
                                           underlyingError: IgnoredEquatable(underlyingError))))
     }
 
 }
 
-extension SearchActivityMiddleware {
+extension Search.ActivityMiddleware {
 
-    static func buildSubsequentRequestMiddleware() -> Middleware<AppAction, AppState> {
+    static func makeSubsequentRequestMiddleware() -> Middleware<Search.Action, Search.State> {
         return { dispatch, _ in
             return { next in
                 return { action in
@@ -240,9 +247,9 @@ extension SearchActivityMiddleware {
 
     private static func dispatchSubsequentPageSuccess(_ previousResults: NonEmptyArray<SearchEntityModel>,
                                                       lookupResponse: PlaceLookupResponse,
-                                                      dependencies: SearchActivityActionCreatorDependencies,
+                                                      dependencies: Search.ActivityActionCreatorDependencies,
                                                       searchParams: SearchParams,
-                                                      dispatch: @escaping DispatchFunction<AppAction>) {
+                                                      dispatch: @escaping DispatchFunction<Search.Action>) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
 
         dispatch(.searchActivity(.subsequentRequest(
@@ -257,10 +264,10 @@ extension SearchActivityMiddleware {
                                                     lastRequestTokenContainer: PlaceLookupTokenAttemptsContainer,
                                                     searchParams: SearchParams,
                                                     placeLookupServiceError: PlaceLookupServiceError,
-                                                    dispatch: @escaping DispatchFunction<AppAction>) {
+                                                    dispatch: @escaping DispatchFunction<Search.Action>) {
         let underlyingError = IgnoredEquatable<Error>(placeLookupServiceError)
         let isRequestRetriable = placeLookupServiceError.isRetriable
-        let pageError: SearchPageRequestError = isRequestRetriable ?
+        let pageError: Search.PageRequestError = isRequestRetriable ?
             .canRetryRequest(underlyingError: underlyingError)
             :
             .cannotRetryRequest(underlyingError: underlyingError)
@@ -276,7 +283,7 @@ extension SearchActivityMiddleware {
 
 }
 
-private extension SearchActivityMiddleware {
+private extension Search.ActivityMiddleware {
 
     static func tokenContainer(for lookupResponse: PlaceLookupResponse) -> PlaceLookupTokenAttemptsContainer? {
         let nextRequestToken = try? lookupResponse.nextRequestTokenResult?.get()

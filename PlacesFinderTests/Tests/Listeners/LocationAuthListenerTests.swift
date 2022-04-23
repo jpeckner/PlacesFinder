@@ -33,7 +33,6 @@ import SwiftDuxTestComponents
 
 class LocationAuthListenerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 

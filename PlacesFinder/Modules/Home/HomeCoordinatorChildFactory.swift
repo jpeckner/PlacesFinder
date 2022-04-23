@@ -32,7 +32,8 @@ import SwiftDux
 protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
-    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent,
+                          state: AppState) -> TabCoordinatorProtocol
 }
 
 class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
@@ -53,26 +54,42 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction ==
 
 extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
-    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent,
+                          state: AppState) -> TabCoordinatorProtocol {
         let immediateDescendent =
             HomeCoordinatorDescendent(destinationDescendent: destinationDescendent).immediateDescendent
 
         switch immediateDescendent {
         case .search:
-            return buildSearchCoordinator(immediateDescendent.tabItemProperties)
+            return buildSearchCoordinator(immediateDescendent.tabItemProperties,
+                                          state: state)
         case .settings:
             return buildSettingsCoordinator(immediateDescendent.tabItemProperties)
         }
     }
 
-    private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+    private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties,
+                                        state: AppState) -> TabCoordinatorProtocol {
+        let initialState = Search.State()
+        let searchStore = Search.SearchStore(
+            reducer: Search.reduce,
+            initialState: initialState,
+            middleware: [
+                Search.makeStateReceiverMiddleware(),
+                Search.ActivityMiddleware.makeInitialRequestMiddleware(appStore: store),
+                Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
+            ]
+        )
+
+        let searchActionSubscriber = AnySubscriber(ActionSubscriber(store: searchStore))
+
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
         let statePrism = SearchActivityStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
                                                   locationRequestHandler: serviceContainer.locationRequestHandler)
 
         let searchEntityModelBuilder = SearchEntityModelBuilder()
-        let actionCreatorDependencies = SearchActivityActionCreatorDependencies(
+        let actionCreatorDependencies = Search.ActivityActionCreatorDependencies(
             placeLookupService: serviceContainer.placeLookupService,
             searchEntityModelBuilder: searchEntityModelBuilder
         )
@@ -85,14 +102,14 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
         let lookupViewModelBuilder = SearchLookupViewModelBuilder(
-            actionSubscriber: actionSubscriber,
+            actionSubscriber: searchActionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
             contentViewModelBuilder: contentViewModelBuilder,
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
 
-        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: actionSubscriber,
+        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: searchActionSubscriber,
                                                                     actionPrism: actionPrism,
                                                                     urlOpenerService: serviceContainer.urlOpenerService,
                                                                     copyFormatter: serviceContainer.searchCopyFormatter)
@@ -102,7 +119,8 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
         let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
 
-        return SearchCoordinator(store: store,
+        return SearchCoordinator(appStore: store,
+                                 searchStore: searchStore,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  statePrism: statePrism,
@@ -156,7 +174,7 @@ private extension HomeCoordinatorImmediateDescendent {
 
 private extension SearchLookupViewModelBuilder {
 
-    convenience init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    convenience init(actionSubscriber: AnySubscriber<Search.Action, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,

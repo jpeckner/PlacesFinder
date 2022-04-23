@@ -28,14 +28,14 @@ import SwiftDux
 
 struct SearchResultsViewModel: Equatable {
     private let resultViewModels: NonEmptyArray<SearchResultViewModel>
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<AppAction, Never>>
-    private let refreshAction: IgnoredEquatable<AppAction>
-    private var nextRequestAction: IgnoredEquatable<AppAction>?
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
+    private let refreshAction: IgnoredEquatable<Search.Action>
+    private var nextRequestAction: IgnoredEquatable<Search.Action>?
 
     init(resultViewModels: NonEmptyArray<SearchResultViewModel>,
-         actionSubscriber: AnySubscriber<AppAction, Never>,
-         refreshAction: AppAction,
-         nextRequestAction: AppAction?) {
+         actionSubscriber: AnySubscriber<Search.Action, Never>,
+         refreshAction: Search.Action,
+         nextRequestAction: Search.Action?) {
         self.resultViewModels = resultViewModels
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.refreshAction = IgnoredEquatable(refreshAction)
@@ -95,7 +95,7 @@ protocol SearchResultsViewModelBuilderProtocol: AutoMockable {
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
-                        actionSubscriber: AnySubscriber<AppAction, Never>,
+                        actionSubscriber: AnySubscriber<Search.Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel
 }
 
@@ -115,7 +115,7 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
-                        actionSubscriber: AnySubscriber<AppAction, Never>,
+                        actionSubscriber: AnySubscriber<Search.Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         let resultViewModels: NonEmptyArray<SearchResultViewModel> = allEntities.withTransformation {
             resultViewModelBuilder.buildViewModel($0,

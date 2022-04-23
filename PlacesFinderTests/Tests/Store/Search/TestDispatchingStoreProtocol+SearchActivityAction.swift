@@ -38,7 +38,7 @@ extension TestDispatchingStoreProtocol {
         return submittedParams
     }
 
-    var dispatchedPageAction: IntermediateStepLoadAction<SearchPageRequestError>? {
+    var dispatchedPageAction: IntermediateStepLoadAction<Search.PageRequestError>? {
         let dispatchedAction = dispatchedActions.last as? SearchActivityAction
         guard case let .subsequentRequest(_, pageAction, _, _)? = dispatchedAction else {
             return nil

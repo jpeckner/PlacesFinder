@@ -59,11 +59,11 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
 
         describe("buildViewContext()") {
 
-            context("when SearchActivityState.detailedEntity is non-nil") {
+            context("when Search.ActivityState.detailedEntity is non-nil") {
                 let stubEntity = SearchEntityModel.stubValue()
-                let stubSearchActivityState = SearchActivityState(loadState: .idle,
-                                                                  inputParams: .stubValue(),
-                                                                  detailedEntity: stubEntity)
+                let stubSearchActivityState = Search.ActivityState(loadState: .idle,
+                                                                   inputParams: .stubValue(),
+                                                                   detailedEntity: stubEntity)
 
                 beforeEach {
                     result = sut.buildViewContext(stubSearchActivityState,
@@ -81,14 +81,14 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
                 }
             }
 
-            context("else when SearchActivityState.detailedEntity is non-nil") {
+            context("else when Search.ActivityState.detailedEntity is non-nil") {
                 let stubEntities = NonEmptyArray(with:
                     SearchEntityModel.stubValue(id: "stubID_0")
                 ).appendedWith([
                     SearchEntityModel.stubValue(id: "stubID_1"),
                     SearchEntityModel.stubValue(id: "stubID_2"),
                 ])
-                let stubSearchActivityState = SearchActivityState(
+                let stubSearchActivityState = Search.ActivityState(
                     loadState: .pagesReceived(.stubValue(),
                                               pageState: .success,
                                               allEntities: stubEntities,
@@ -113,7 +113,7 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
             }
 
             context("else") {
-                let stubSearchActivityState = SearchActivityState(
+                let stubSearchActivityState = Search.ActivityState(
                     loadState: .idle,
                     inputParams: .stubValue(),
                     detailedEntity: nil

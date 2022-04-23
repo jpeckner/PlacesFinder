@@ -30,7 +30,7 @@ enum SearchInputViewModel: Equatable {
     case nonDispatching(content: SearchInputContentViewModel)
 
     case dispatching(content: SearchInputContentViewModel,
-                     dispatcher: SearchInputDispatcher)
+                     dispatcher: IgnoredEquatable<SearchInputDispatcher>)
 }
 
 extension SearchInputViewModel {
@@ -45,33 +45,33 @@ extension SearchInputViewModel {
 
 }
 
-struct SearchInputDispatcher: Equatable {
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<AppAction, Never>>
-    private let actionPrism: IgnoredEquatable<SearchActivityActionPrismProtocol>
-    private let locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
+struct SearchInputDispatcher {
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
+    private let actionPrism: SearchActivityActionPrismProtocol
+    private let locationUpdateRequestBlock: LocationUpdateRequestBlock
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) {
-        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
-        self.actionPrism = IgnoredEquatable(actionPrism)
-        self.locationUpdateRequestBlock = IgnoredEquatable(locationUpdateRequestBlock)
+        self.actionSubscriber = actionSubscriber
+        self.actionPrism = actionPrism
+        self.locationUpdateRequestBlock = locationUpdateRequestBlock
     }
 }
 
 extension SearchInputDispatcher {
 
     func dispatchEditEvent(_ editEvent: SearchBarEditEvent) {
-        let action = actionPrism.value.updateEditingAction(editEvent)
-        _ = actionSubscriber.value.receive(action)
+        let action = actionPrism.updateEditingAction(editEvent)
+        _ = actionSubscriber.receive(action)
     }
 
     func dispatchSearchParams(_ params: SearchParams) {
-        let action = actionPrism.value.initialRequestAction(
+        let action = actionPrism.initialRequestAction(
             params,
-            locationUpdateRequestBlock: locationUpdateRequestBlock.value
+            locationUpdateRequestBlock: locationUpdateRequestBlock
         )
-        _ = actionSubscriber.value.receive(action)
+        _ = actionSubscriber.receive(action)
     }
 
 }
@@ -88,11 +88,11 @@ protocol SearchInputViewModelBuilderProtocol: AutoMockable {
 
 class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
@@ -114,7 +114,7 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         return .dispatching(content: contentViewModel,
-                            dispatcher: dispatcher)
+                            dispatcher: IgnoredEquatable(dispatcher))
     }
 
 }

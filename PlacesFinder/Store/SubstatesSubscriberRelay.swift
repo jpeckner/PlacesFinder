@@ -1,8 +1,8 @@
 //
-//  LocationAuthStatus.swift
+//  SubstatesSubscriberRelay.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,38 +22,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import CoreLocation
-import Shared
+import Combine
+import SwiftDux
 
-enum LocationAuthStatus {
-    case notDetermined
-    case locationServicesEnabled
-    case locationServicesDisabled
+struct SubstatesSubscriberRelayUpdate<TState: StateProtocol> {
+    let state: TState
+    let updatedSubstates: Set<PartialKeyPath<TState>>
 }
 
-protocol CLAuthorizationStatusProvider {
-    var authorizationStatus: CLAuthorizationStatus { get }
+class SubstatesSubscriberRelay<TStore: SubscribableStoreProtocol> {
+
+    private let subject = PassthroughSubject<SubstatesSubscriberRelayUpdate<TStore.TState>, Never>()
+
+    var publisher: AnyPublisher<SubstatesSubscriberRelayUpdate<TStore.TState>, Never> {
+        subject.eraseToAnyPublisher()
+    }
+
+    init(store: TStore,
+         equatableKeyPaths: Set<EquatableKeyPath<TStore.TState>>) {
+        store.subscribe(self,
+                        equatableKeyPaths: equatableKeyPaths)
+    }
+
 }
 
-extension CLLocationManager: CLAuthorizationStatusProvider {}
+extension SubstatesSubscriberRelay: SubstatesSubscriber {
 
-extension CLAuthorizationStatus {
+    typealias StoreState = TStore.TState
 
-    func authStatus(assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) -> LocationAuthStatus {
-        switch self {
-        case .notDetermined:
-            return .notDetermined
-        case .authorizedAlways:
-            assertionHandler.performAssertionFailure { "Unexpectedly received .authorizedAlways status" }
-            return .locationServicesEnabled
-        case .authorizedWhenInUse:
-            return .locationServicesEnabled
-        case .denied,
-             .restricted:
-            return .locationServicesDisabled
-        @unknown default:
-            fatalError("Unknown CLAuthorizationStatus case: \(self)")
-        }
+    func newState(state: StoreState, updatedSubstates: Set<PartialKeyPath<StoreState>>) {
+        let update = SubstatesSubscriberRelayUpdate(state: state,
+                                                    updatedSubstates: updatedSubstates)
+        subject.send(update)
     }
 
 }

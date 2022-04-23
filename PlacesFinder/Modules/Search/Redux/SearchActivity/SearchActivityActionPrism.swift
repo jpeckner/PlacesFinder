@@ -32,23 +32,23 @@ enum SearchActivityActionPrismError: Error {
 
 protocol SearchInitialActionPrismProtocol {
     func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> AppAction
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.Action
 }
 
 protocol SearchSubsequentActionPrismProtocol {
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> AppAction
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.Action
 }
 
 protocol SearchUpdateEditingActionPrismProtocol {
-    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> AppAction
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.Action
 }
 
 protocol SearchDetailsActionPrismProtocol {
-    var removeDetailedEntityAction: AppAction { get }
+    var removeDetailedEntityAction: Search.Action { get }
 
-    func detailEntityAction(_ entity: SearchEntityModel) -> AppAction
+    func detailEntityAction(_ entity: SearchEntityModel) -> Search.Action
 }
 
 protocol SearchActivityActionPrismProtocol: SearchInitialActionPrismProtocol,
@@ -59,9 +59,9 @@ protocol SearchActivityActionPrismProtocol: SearchInitialActionPrismProtocol,
 
 class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 
-    private let dependencies: SearchActivityActionCreatorDependencies
+    private let dependencies: Search.ActivityActionCreatorDependencies
 
-    init(dependencies: SearchActivityActionCreatorDependencies) {
+    init(dependencies: Search.ActivityActionCreatorDependencies) {
         self.dependencies = dependencies
     }
 
@@ -70,7 +70,7 @@ class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 extension SearchActivityActionPrism: SearchInitialActionPrismProtocol {
 
     func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> AppAction {
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.Action {
         return .searchActivity(.startInitialRequest(dependencies: dependencies,
                                                     searchParams: searchParams,
                                                     locationUpdateRequestBlock: locationUpdateRequestBlock))
@@ -82,7 +82,7 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> AppAction {
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.Action {
         let incrementedAttemptsCount = tokenContainer.numAttemptsSoFar + 1
         guard incrementedAttemptsCount <= tokenContainer.maxAttempts else {
             throw SearchActivityActionPrismError.attemptLimitsExceeded
@@ -102,7 +102,7 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
 extension SearchActivityActionPrism: SearchUpdateEditingActionPrismProtocol {
 
-    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> AppAction {
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.Action {
         return .searchActivity(.updateInputEditing(editEvent))
     }
 
@@ -110,11 +110,11 @@ extension SearchActivityActionPrism: SearchUpdateEditingActionPrismProtocol {
 
 extension SearchActivityActionPrism: SearchDetailsActionPrismProtocol {
 
-    func detailEntityAction(_ entity: SearchEntityModel) -> AppAction {
-        return .searchActivity(SearchActivityAction.detailedEntity(entity))
+    func detailEntityAction(_ entity: SearchEntityModel) -> Search.Action {
+        return .searchActivity(.detailedEntity(entity))
     }
 
-    var removeDetailedEntityAction: AppAction {
+    var removeDetailedEntityAction: Search.Action {
         return .searchActivity(.removeDetailedEntity)
     }
 

@@ -33,7 +33,7 @@ enum AppSkinAction {
 
 enum AppSkinMiddleware {
 
-    static func buildRequestSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
+    static func makeRequestSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
         return { dispatch, _ in
             return { next in
                 return { action in

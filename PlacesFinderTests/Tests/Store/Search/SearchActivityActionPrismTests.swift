@@ -51,7 +51,7 @@ class SearchActivityActionPrismTests: QuickSpec {
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
 
             prism = SearchActivityActionPrism(
-                dependencies: SearchActivityActionCreatorDependencies(
+                dependencies: Search.ActivityActionCreatorDependencies(
                     placeLookupService: mockPlaceLookupService,
                     searchEntityModelBuilder: mockSearchEntityModelBuilder
                 )
