@@ -37,21 +37,6 @@ extension Search {
         case receiveState(StateReceiverBlock<Search.State>)
     }
 
-    static func makeStateReceiverMiddleware() -> Middleware<Search.Action, Search.State> {
-        return { _, stateProviderBlock in
-            return { next in
-                return { action in
-                    guard case let .receiveState(receiverBlock) = action else {
-                        next(action)
-                        return
-                    }
-
-                    stateProviderBlock(receiverBlock)
-                }
-            }
-        }
-    }
-
     static func reduce(action: Action,
                        currentState: Search.State) -> Search.State {
         let searchActivityState = reduceSearchAction(action: action,

@@ -1,6 +1,5 @@
-//  swiftlint:disable:this file_name
 //
-//  SearchActivityAction.swift
+//  Search+ActivityAction.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2018 Justin Peckner
