@@ -78,7 +78,6 @@ extension SearchLookupParentController {
                              colorings: colorings)
     }
 
-    // swiftlint:disable function_body_length
     private func activateChildView(_ lookupViewModel: SearchLookupViewModel,
                                    appSkin: AppSkin) {
         switch lookupViewModel.child {
@@ -142,7 +141,6 @@ extension SearchLookupParentController {
                                          colorings: colorings)
         }
     }
-    // swiftlint:enable function_body_length
 
     private func existingChildController<T: UIViewController>() -> T? {
         return firstChild as? T

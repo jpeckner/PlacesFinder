@@ -57,7 +57,8 @@ protocol AppCoordinatorChildFactoryProtocol: AutoMockable {
     var launchStatePrism: LaunchStatePrismProtocol { get }
 
     func buildLaunchCoordinator() -> AppCoordinatorChildProtocol
-    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol
+    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent,
+                          state: AppState) -> AppCoordinatorChildProtocol
 }
 
 class AppCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
@@ -98,7 +99,8 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
                                  defaultLinkType: defaultLinkType)
     }
 
-    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
+    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent,
+                          state: AppState) -> AppCoordinatorChildProtocol {
         switch childType {
         case .search,
              .settings,
@@ -106,7 +108,8 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
             let childFactory = HomeCoordinatorChildFactory(store: store,
                                                            listenerContainer: listenerContainer,
                                                            serviceContainer: serviceContainer)
-            let childContainer = HomeCoordinatorChildContainer(childFactory: childFactory)
+            let childContainer = HomeCoordinatorChildContainer(childFactory: childFactory,
+                                                               state: state)
             let presenter = HomePresenter(orderedChildViewControllers: childContainer.orderedChildViewControllers)
 
             return HomeCoordinator(store: store,

@@ -37,21 +37,21 @@ enum SearchLookupChild: Equatable {
 // MARK: SearchLookupChildBuilder
 
 protocol SearchLookupChildBuilderProtocol: AutoMockable {
-    func buildChild(_ loadState: SearchLoadState,
+    func buildChild(_ loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
@@ -65,7 +65,7 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
-    func buildChild(_ loadState: SearchLoadState,
+    func buildChild(_ loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {

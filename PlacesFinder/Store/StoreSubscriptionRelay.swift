@@ -1,8 +1,8 @@
 //
-//  LocationAuthStatus.swift
+//  StoreSubscriptionRelay.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,38 +22,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import CoreLocation
-import Shared
+import Combine
+import SwiftDux
 
-enum LocationAuthStatus {
-    case notDetermined
-    case locationServicesEnabled
-    case locationServicesDisabled
+class StoreSubscriptionRelay<TStore: SubscribableStoreProtocol> {
+
+    private let subject = PassthroughSubject<TStore.TState, Never>()
+
+    var publisher: AnyPublisher<TStore.TState, Never> {
+        subject.eraseToAnyPublisher()
+    }
+
+    init(store: TStore) {
+        let subscription = StoreStateSubscription(subscriber: self) { _, _ in false }
+        store.subscribe(subscription)
+    }
+
 }
 
-protocol CLAuthorizationStatusProvider {
-    var authorizationStatus: CLAuthorizationStatus { get }
-}
+extension StoreSubscriptionRelay: StoreStateSubscriber {
 
-extension CLLocationManager: CLAuthorizationStatusProvider {}
+    typealias StoreState = TStore.TState
 
-extension CLAuthorizationStatus {
-
-    func authStatus(assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) -> LocationAuthStatus {
-        switch self {
-        case .notDetermined:
-            return .notDetermined
-        case .authorizedAlways:
-            assertionHandler.performAssertionFailure { "Unexpectedly received .authorizedAlways status" }
-            return .locationServicesEnabled
-        case .authorizedWhenInUse:
-            return .locationServicesEnabled
-        case .denied,
-             .restricted:
-            return .locationServicesDisabled
-        @unknown default:
-            fatalError("Unknown CLAuthorizationStatus case: \(self)")
-        }
+    func newState(state: StoreState) {
+        subject.send(state)
     }
 
 }

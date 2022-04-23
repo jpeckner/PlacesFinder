@@ -46,7 +46,7 @@ class SearchActivityStateTests: QuickSpec {
 
             context("when state.loadState == .idle") {
                 beforeEach {
-                    let state = SearchActivityState(
+                    let state = Search.ActivityState(
                         loadState: .idle,
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil
@@ -61,7 +61,7 @@ class SearchActivityStateTests: QuickSpec {
 
             context("else when state.loadState == .locationRequested") {
                 beforeEach {
-                    let state = SearchActivityState(
+                    let state = Search.ActivityState(
                         loadState: .locationRequested(stubSearchParams),
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil
@@ -76,7 +76,7 @@ class SearchActivityStateTests: QuickSpec {
 
             context("else when state.loadState == .initialPageRequested") {
                 beforeEach {
-                    let state = SearchActivityState(
+                    let state = Search.ActivityState(
                         loadState: .initialPageRequested(stubSearchParams),
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil
@@ -91,7 +91,7 @@ class SearchActivityStateTests: QuickSpec {
 
             context("else when state.loadState == .noResultsFound") {
                 beforeEach {
-                    let state = SearchActivityState(
+                    let state = Search.ActivityState(
                         loadState: .noResultsFound(stubSearchParams),
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil
@@ -106,8 +106,8 @@ class SearchActivityStateTests: QuickSpec {
 
             context("else when state.loadState == .pagesReceived") {
                 beforeEach {
-                    let state = SearchActivityState(
-                        loadState: SearchLoadState.pagesReceived(
+                    let state = Search.ActivityState(
+                        loadState: Search.LoadState.pagesReceived(
                             stubSearchParams,
                             pageState: .success,
                             allEntities: stubEntities,
@@ -128,7 +128,7 @@ class SearchActivityStateTests: QuickSpec {
             context("else when state.loadState == .failure") {
                 beforeEach {
                     let underlyingError = IgnoredEquatable<Error>(StubError.plainError)
-                    let state = SearchActivityState(
+                    let state = Search.ActivityState(
                         loadState: .failure(stubSearchParams, underlyingError: underlyingError),
                         inputParams: stubSearchInputParams,
                         detailedEntity: nil

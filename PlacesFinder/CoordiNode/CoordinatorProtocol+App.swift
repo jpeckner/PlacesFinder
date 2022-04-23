@@ -41,18 +41,6 @@ extension CoordinatorProtocol {
 
 extension DestinationCoordinatorProtocol {
 
-    func currentNavigatingToDestinationPayload<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
-                                                                          state: AppState) -> T? {
-        switch state.routerState.loadState {
-        case let .navigatingToDestination(_, linkType):
-            return linkType?.value as? T
-        case .idle,
-             .payloadRequested,
-             .waitingForPayloadToBeCleared:
-            return nil
-        }
-    }
-
     func currentPayloadToBeCleared<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
                                                               state: AppState) -> T? {
         switch state.routerState.loadState {

@@ -30,16 +30,15 @@ import SwiftDux
 
 class SearchLookupViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubInputParams = SearchInputParams.stubValue()
-        let stubSearchActivityState = SearchActivityState(loadState: .idle,
-                                                          inputParams: stubInputParams,
-                                                          detailedEntity: .stubValue())
+        let stubSearchActivityState = Search.ActivityState(loadState: .idle,
+                                                           inputParams: stubInputParams,
+                                                           detailedEntity: .stubValue())
 
         var mockActionSubscriber: MockSubscriber<Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!

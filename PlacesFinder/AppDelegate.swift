@@ -141,9 +141,8 @@ private extension Store where TAction == AppAction, TState == AppState {
             reducer: AppStateReducer.reduce,
             initialState: initialState,
             middleware: [
-                AppSkinMiddleware.buildRequestSkinMiddleware(skinService: skinService),
-                SearchActivityMiddleware.buildInitialRequestMiddleware(),
-                SearchActivityMiddleware.buildSubsequentRequestMiddleware()
+                AppAction.makeStateReceiverMiddleware(),
+                AppSkinMiddleware.makeRequestSkinMiddleware(skinService: skinService)
             ]
         )
     }
