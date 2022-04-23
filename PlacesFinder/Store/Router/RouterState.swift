@@ -70,7 +70,7 @@ enum RouterReducer<TLinkType: RouterLinkType> {
 
         switch routerAction {
         case let .setCurrentCoordinator(updatedCurrentNode):
-            return RouterState(loadState: loadStateAfterUpdating(updatedCurrentNode, currentState: currentState),
+            return RouterState(loadState: loadStateForSetCurrent(updatedCurrentNode, currentState: currentState),
                                currentNode: updatedCurrentNode)
         case let .setDestinationCoordinator(destinationNodeBox, linkType):
             return RouterState(loadState: .navigatingToDestination(destinationNodeBox, linkType: linkType),
@@ -87,7 +87,7 @@ enum RouterReducer<TLinkType: RouterLinkType> {
         }
     }
 
-    private static func loadStateAfterUpdating(
+    private static func loadStateForSetCurrent(
         _ updatedCurrentNode: NodeBox,
         currentState: RouterState<TLinkType>
     ) -> RouterState<TLinkType>.LoadState {
