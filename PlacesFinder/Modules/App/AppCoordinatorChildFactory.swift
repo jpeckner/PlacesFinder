@@ -52,13 +52,11 @@ protocol AppCoordinatorChildFactoryProtocol: AutoMockable {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
     var store: TStore { get }
-    var listenerContainer: ListenerContainer { get }
     var serviceContainer: ServiceContainer { get }
     var launchStatePrism: LaunchStatePrismProtocol { get }
 
     func buildLaunchCoordinator() -> AppCoordinatorChildProtocol
-    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent,
-                          state: AppState) -> AppCoordinatorChildProtocol
+    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol
 }
 
 class AppCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
@@ -93,14 +91,12 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
         return LaunchCoordinator(store: store,
                                  presenter: presenter,
                                  listenerContainer: listenerContainer,
-                                 serviceContainer: serviceContainer,
                                  statePrism: launchStatePrism,
                                  stylingsHandler: stylingsHandler,
                                  defaultLinkType: defaultLinkType)
     }
 
-    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent,
-                          state: AppState) -> AppCoordinatorChildProtocol {
+    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
         switch childType {
         case .search,
              .settings,
@@ -108,8 +104,7 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
             let childFactory = HomeCoordinatorChildFactory(store: store,
                                                            listenerContainer: listenerContainer,
                                                            serviceContainer: serviceContainer)
-            let childContainer = HomeCoordinatorChildContainer(childFactory: childFactory,
-                                                               state: state)
+            let childContainer = HomeCoordinatorChildContainer(childFactory: childFactory)
             let presenter = HomePresenter(orderedChildViewControllers: childContainer.orderedChildViewControllers)
 
             return HomeCoordinator(store: store,

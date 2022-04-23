@@ -59,16 +59,13 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
     private let resultCellModelBuilder: SearchResultCellModelBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
          resultCellModelBuilder: SearchResultCellModelBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
-        self.copyFormatter = copyFormatter
         self.resultCellModelBuilder = resultCellModelBuilder
     }
 

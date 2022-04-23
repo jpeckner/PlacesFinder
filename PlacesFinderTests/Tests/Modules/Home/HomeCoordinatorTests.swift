@@ -213,8 +213,7 @@ class HomeCoordinatorTests: QuickSpec {
                         context("when didSelectIndex() switches from index \(currentDescendentIdx) to index \(destinationDescedentIdx)") {
                             beforeEach {
                                 coordinator.homePresenter(mockPresenter,
-                                                          didSelectChildCoordinator: destinationDescedentIdx,
-                                                          previousChildIndex: currentDescendentIdx)
+                                                          didSelectChildCoordinator: destinationDescedentIdx)
                             }
 
                             it("activates the corresponding coordinator") {

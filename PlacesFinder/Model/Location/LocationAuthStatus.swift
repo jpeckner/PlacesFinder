@@ -31,12 +31,6 @@ enum LocationAuthStatus {
     case locationServicesDisabled
 }
 
-protocol CLAuthorizationStatusProvider {
-    var authorizationStatus: CLAuthorizationStatus { get }
-}
-
-extension CLLocationManager: CLAuthorizationStatusProvider {}
-
 extension CLAuthorizationStatus {
 
     func authStatus(assertionHandler: AssertionHandlerProtocol.Type = AssertionHandler.self) -> LocationAuthStatus {

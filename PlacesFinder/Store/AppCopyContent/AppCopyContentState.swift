@@ -30,6 +30,7 @@ struct AppCopyContentState: Equatable {
 
 enum AppCopyContentReducer {
 
+    // periphery:ignore:parameters action
     static func reduce(action: AppAction,
                        currentState: AppCopyContentState) -> AppCopyContentState {
         return currentState

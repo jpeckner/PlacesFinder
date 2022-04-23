@@ -1,6 +1,5 @@
-//  swiftlint:disable:this file_name
 //
-//  EquatableKeyPath+AppState.swift
+//  PlaceLookupPageRequestTokenResult.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -24,12 +23,10 @@
 //  SOFTWARE.
 
 import Foundation
-import SwiftDux
 
-extension Set where Element == EquatableKeyPath<AppState> {
-
-    var partialKeyPaths: Set<PartialKeyPath<AppState>> {
-        return Set<PartialKeyPath<AppState>>(map { $0.keyPath })
-    }
-
+enum PlaceLookupRequestBuilderError: Error, Equatable {
+    case invalidResultsPerPageAmount(acceptableRange: ClosedRange<Int>)
+    case invalidURL(components: URLComponents)
 }
+
+typealias PlaceLookupPageRequestTokenResult = Result<PlaceLookupPageRequestToken, PlaceLookupRequestBuilderError>

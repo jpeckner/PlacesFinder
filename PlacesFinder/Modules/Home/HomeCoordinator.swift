@@ -99,8 +99,7 @@ extension HomeCoordinator: AppRouterProtocol {
 extension HomeCoordinator: HomePresenterDelegate {
 
     func homePresenter(_ homePresenter: HomePresenterProtocol,
-                       didSelectChildCoordinator index: Int,
-                       previousChildIndex: Int) {
+                       didSelectChildCoordinator index: Int) {
         handleNewTabSet(destinationDescendent: HomeCoordinatorDestinationDescendent.allCases[index])
     }
 

@@ -29,9 +29,6 @@ typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceErro
 typealias PlaceLookupCompletion = (PlaceLookupResult) -> Void
 
 protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
-    func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
-                                      resultsPerPage: Int) throws -> PlaceLookupPageRequestToken
-
     func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken
 
     func requestPage(_ requestToken: PlaceLookupPageRequestToken,

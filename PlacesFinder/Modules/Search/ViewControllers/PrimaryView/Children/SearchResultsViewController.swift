@@ -26,6 +26,7 @@ import Shared
 import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject {
+    // periphery:ignore:parameters viewController
     func viewController(_ viewController: SearchResultsViewController,
                         didScroll deltaY: CGFloat)
 }

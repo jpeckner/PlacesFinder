@@ -29,6 +29,7 @@ import SwiftDux
 // MARK: AppRouterProtocol
 
 protocol AppRouterProtocol: RouterProtocol {
+    // periphery:ignore:parameters currentNode
     func createSubtree(from currentNode: NodeBox,
                        towards destinationDescendent: TDestinationDescendent,
                        state: AppState)
@@ -49,6 +50,7 @@ extension AppRouterProtocol {
 // MARK: AppDestinationRouterProtocol
 
 protocol AppDestinationRouterProtocol: AppRouterProtocol, DestinationRouterProtocol {
+    // periphery:ignore:parameters currentNode,state
     func closeAllSubtrees(currentNode: NodeBox,
                           state: AppState)
 }

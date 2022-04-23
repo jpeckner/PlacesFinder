@@ -7,9 +7,8 @@ struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtoc
     {% for case in enum.cases %}private let {{ case.name }}: TabCoordinatorProtocol
     {% endfor %}
 
-    init<TStore>(childFactory: TFactory, state: AppState) where TStore.TState == AppState, TFactory.TStore == TStore {
-        {% for case in enum.cases %}self.{{ case.name }} = childFactory.buildCoordinator(for: .{{ case.name }},
-                                                                                         state: state)
+    init<TStore>(childFactory: TFactory) where TStore.TState == AppState, TFactory.TStore == TStore {
+        {% for case in enum.cases %}self.{{ case.name }} = childFactory.buildCoordinator(for: .{{ case.name }})
         {% endfor %}
     }
 
