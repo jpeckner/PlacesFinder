@@ -151,7 +151,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
             appCopyContent: appCopyContent,
-            settingsChildRequestAction: requestLinkTypeAction(.settingsChild(SettingsChildLinkPayload()))
+            settingsChildRequestAction: .router(.setCurrentCoordinator(SettingsChildCoordinatorNode.nodeBox))
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
         presenter.loadSettingsView(viewModel,
