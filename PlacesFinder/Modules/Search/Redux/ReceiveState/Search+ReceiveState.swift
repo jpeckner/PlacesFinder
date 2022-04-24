@@ -35,7 +35,7 @@ extension Search {
                         return
                     }
 
-                    stateProviderBlock(receiverBlock)
+                    stateProviderBlock(receiverBlock.value)
                 }
             }
         }

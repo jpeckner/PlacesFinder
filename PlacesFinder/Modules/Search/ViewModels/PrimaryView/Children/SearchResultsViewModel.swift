@@ -133,8 +133,8 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
 
         return SearchResultsViewModel(resultViewModels: resultViewModels,
                                       actionSubscriber: actionSubscriber,
-                                      refreshAction: refreshAction,
-                                      nextRequestAction: nextRequestAction)
+                                      refreshAction: .searchActivity(refreshAction),
+                                      nextRequestAction: nextRequestAction.map { .searchActivity($0) })
     }
 
 }

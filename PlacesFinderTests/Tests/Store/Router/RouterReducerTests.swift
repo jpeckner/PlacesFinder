@@ -47,7 +47,8 @@ class RouterReducerTests: QuickSpec {
                 let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
 
                 beforeEach {
-                    result = RouterReducer.reduce(action: StubAction.genericAction,
+                    let action: AppAction = .appSkin(.startLoad)
+                    result = RouterReducer.reduce(action: action,
                                                   currentState: currentState)
                 }
 
@@ -64,7 +65,7 @@ class RouterReducerTests: QuickSpec {
                         let currentState = RouterState<StubLinkType>(loadState: .idle,
                                                                      currentNode: StubNode.nodeBox)
 
-                        result = RouterReducer.reduce(action: action,
+                        result = RouterReducer.reduce(routerAction: action,
                                                       currentState: currentState)
                     }
 
@@ -80,7 +81,7 @@ class RouterReducerTests: QuickSpec {
                         let currentState = RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
                                                                      currentNode: StubNode.nodeBox)
 
-                        result = RouterReducer.reduce(action: action,
+                        result = RouterReducer.reduce(routerAction: action,
                                                       currentState: currentState)
                     }
 
@@ -98,7 +99,7 @@ class RouterReducerTests: QuickSpec {
                             currentNode: StubNode.nodeBox
                         )
 
-                        result = RouterReducer.reduce(action: action,
+                        result = RouterReducer.reduce(routerAction: action,
                                                       currentState: currentState)
                     }
 
@@ -121,7 +122,7 @@ class RouterReducerTests: QuickSpec {
                                 currentNode: StubNode.nodeBox
                             )
 
-                            result = RouterReducer.reduce(action: action,
+                            result = RouterReducer.reduce(routerAction: action,
                                                           currentState: currentState)
                         }
 
@@ -143,7 +144,7 @@ class RouterReducerTests: QuickSpec {
                                 currentNode: StubNode.nodeBox
                             )
 
-                            result = RouterReducer.reduce(action: action,
+                            result = RouterReducer.reduce(routerAction: action,
                                                           currentState: currentState)
                         }
 
@@ -164,7 +165,7 @@ class RouterReducerTests: QuickSpec {
                                 currentNode: StubNode.nodeBox
                             )
 
-                            result = RouterReducer.reduce(action: action,
+                            result = RouterReducer.reduce(routerAction: action,
                                                           currentState: currentState)
                         }
 
@@ -187,7 +188,7 @@ class RouterReducerTests: QuickSpec {
                                                                         payload: stubLinkType)
                     let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
 
-                    result = RouterReducer.reduce(action: action,
+                    result = RouterReducer.reduce(routerAction: action,
                                                   currentState: currentState)
                 }
 
@@ -204,7 +205,7 @@ class RouterReducerTests: QuickSpec {
 
                 beforeEach {
                     let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
-                    result = RouterReducer.reduce(action: RouterAction.requestLink(stubLinkType),
+                    result = RouterReducer.reduce(routerAction: RouterAction.requestLink(stubLinkType),
                                                   currentState: currentState)
                 }
 
@@ -219,7 +220,7 @@ class RouterReducerTests: QuickSpec {
 
                 beforeEach {
                     let currentState = RouterState<StubLinkType>(currentNode: StubNode.nodeBox)
-                    result = RouterReducer.reduce(action: RouterAction<StubLinkType>.clearLink,
+                    result = RouterReducer.reduce(routerAction: RouterAction<StubLinkType>.clearLink,
                                                   currentState: currentState)
                 }
 

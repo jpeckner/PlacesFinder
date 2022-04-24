@@ -60,7 +60,6 @@ class LaunchCoordinatorTests: QuickSpec {
             coordinator = LaunchCoordinator(store: mockStore,
                                             presenter: mockLaunchPresenter,
                                             listenerContainer: mockListenerContainer,
-                                            serviceContainer: mockServiceContainer,
                                             statePrism: statePrism,
                                             stylingsHandler: mockStylingsHandler,
                                             defaultLinkType: stubDefaultLinkType)
@@ -103,7 +102,7 @@ class LaunchCoordinatorTests: QuickSpec {
                 }
 
                 it("dispatches the action returned by appSkinActionCreator.loadSkin()") {
-                    expect(mockStore.dispatchedActions.last as? AppSkinAction) == .startLoadSkin
+                    expect(mockStore.dispatchedActions.last as? AppSkinAction) == .startLoad
                 }
 
                 it("calls reachabilityListener.start()") {
@@ -150,7 +149,7 @@ class LaunchCoordinatorTests: QuickSpec {
 
             func verifyRequestLinkCalled(_ appLinkType: AppLinkType) {
                 let dispatchedAction = mockStore.dispatchedActions.last
-                expect(dispatchedAction as? AppRouterAction) == .requestLink(appLinkType)
+                expect(dispatchedAction) == .router(.requestLink(appLinkType))
             }
 
             context("when mockStatePrism.hasFinishedLaunching returns false") {

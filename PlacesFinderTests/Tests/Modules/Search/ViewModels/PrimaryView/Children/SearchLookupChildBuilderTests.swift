@@ -104,12 +104,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .instructions") {
-                    guard case let .instructions(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubInstructionsViewModel
+                    expect(result) == .instructions(stubInstructionsViewModel)
                 }
 
             }
@@ -122,10 +117,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .progress") {
-                    guard case .progress = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
+                    expect(result) == .progress
                 }
 
             }
@@ -138,10 +130,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .progress") {
-                    guard case .progress = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
+                    expect(result) == .progress
                 }
 
             }
@@ -170,12 +159,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .results") {
-                    guard case let .results(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubResultsViewModel
+                    expect(result) == .results(stubResultsViewModel)
                 }
 
             }
@@ -192,12 +176,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .noResults") {
-                    guard case let .noResults(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubNoResultsViewModel
+                    expect(result) == .noResults(stubNoResultsViewModel)
                 }
 
             }
@@ -224,12 +203,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .failure, containing expected values") {
-                    guard case let .failure(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubRetryViewModel
+                    expect(result) == .failure(stubRetryViewModel)
                 }
 
                 it("includes the Action returned by mockSearchActivityActionPrism") {

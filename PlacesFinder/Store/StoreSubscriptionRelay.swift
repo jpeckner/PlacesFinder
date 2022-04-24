@@ -27,6 +27,7 @@ import SwiftDux
 
 class StoreSubscriptionRelay<TStore: SubscribableStoreProtocol> {
 
+    let store: TStore
     private let subject = PassthroughSubject<TStore.TState, Never>()
 
     var publisher: AnyPublisher<TStore.TState, Never> {
@@ -34,6 +35,8 @@ class StoreSubscriptionRelay<TStore: SubscribableStoreProtocol> {
     }
 
     init(store: TStore) {
+        self.store = store
+
         let subscription = StoreStateSubscription(subscriber: self) { _, _ in false }
         store.subscribe(subscription)
     }

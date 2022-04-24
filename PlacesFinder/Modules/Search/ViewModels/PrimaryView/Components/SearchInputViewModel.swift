@@ -63,7 +63,7 @@ extension SearchInputDispatcher {
 
     func dispatchEditEvent(_ editEvent: SearchBarEditEvent) {
         let action = actionPrism.updateEditingAction(editEvent)
-        _ = actionSubscriber.receive(action)
+        _ = actionSubscriber.receive(.searchActivity(action))
     }
 
     func dispatchSearchParams(_ params: SearchParams) {
@@ -71,7 +71,7 @@ extension SearchInputDispatcher {
             params,
             locationUpdateRequestBlock: locationUpdateRequestBlock
         )
-        _ = actionSubscriber.receive(action)
+        _ = actionSubscriber.receive(.searchActivity(action))
     }
 
 }

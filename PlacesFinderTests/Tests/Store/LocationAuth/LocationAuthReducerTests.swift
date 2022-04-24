@@ -40,7 +40,8 @@ class LocationAuthReducerTests: QuickSpec {
                 let currentState = LocationAuthState(authStatus: .locationServicesEnabled)
 
                 beforeEach {
-                    result = LocationAuthReducer.reduce(action: StubAction.genericAction,
+                    let action: AppAction = .appSkin(.startLoad)
+                    result = LocationAuthReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
 
@@ -51,7 +52,7 @@ class LocationAuthReducerTests: QuickSpec {
 
             context("when the action is LocationAuthAction.notDetermined") {
                 beforeEach {
-                    let action = LocationAuthAction.notDetermined
+                    let action: AppAction = .locationAuth(.notDetermined)
                     let currentState = LocationAuthState(authStatus: .locationServicesDisabled)
                     result = LocationAuthReducer.reduce(action: action,
                                                         currentState: currentState)
@@ -64,8 +65,9 @@ class LocationAuthReducerTests: QuickSpec {
 
             context("when the action is LocationAuthAction.locationServicesEnabled") {
                 beforeEach {
+                    let action: AppAction = .locationAuth(.locationServicesEnabled)
                     let currentState = LocationAuthState(authStatus: .locationServicesDisabled)
-                    result = LocationAuthReducer.reduce(action: LocationAuthAction.locationServicesEnabled,
+                    result = LocationAuthReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
 
@@ -76,8 +78,9 @@ class LocationAuthReducerTests: QuickSpec {
 
             context("when the action is LocationAuthAction.locationServicesDisabled") {
                 beforeEach {
+                    let action: AppAction = .locationAuth(.locationServicesDisabled)
                     let currentState = LocationAuthState(authStatus: .locationServicesEnabled)
-                    result = LocationAuthReducer.reduce(action: LocationAuthAction.locationServicesDisabled,
+                    result = LocationAuthReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
 

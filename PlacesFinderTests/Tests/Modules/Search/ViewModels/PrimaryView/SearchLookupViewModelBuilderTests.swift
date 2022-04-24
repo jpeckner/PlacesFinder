@@ -70,8 +70,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
             mockChildBuilder.buildChildAppCopyContentLocationUpdateRequestBlockReturnValue = .progress
 
-            sut = SearchLookupViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
-                                               inputViewModelBuilder: mockInputViewModelBuilder,
+            sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
         }
 

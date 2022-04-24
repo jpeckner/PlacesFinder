@@ -22,19 +22,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Shared
 import SwiftDux
 
 enum Search {}
 
 extension Search {
 
+    static let appStoreKeyPaths: Set<EquatableKeyPath<AppState>> = [
+        EquatableKeyPath(\AppState.locationAuthState),
+        EquatableKeyPath(\AppState.reachabilityState),
+        EquatableKeyPath(\AppState.routerState)
+    ]
+
     struct State: StateProtocol {
         let searchActivityState: ActivityState
     }
 
-    enum Action: SwiftDux.Action {
+    enum Action: SwiftDux.Action, Equatable {
         case searchActivity(ActivityAction)
-        case receiveState(StateReceiverBlock<Search.State>)
+        case receiveState(IgnoredEquatable<StateReceiverBlock<Search.State>>)
     }
 
     static func reduce(action: Action,

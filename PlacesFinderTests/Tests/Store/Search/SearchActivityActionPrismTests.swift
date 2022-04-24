@@ -42,20 +42,20 @@ class SearchActivityActionPrismTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
+        var mockDependencies: Search.ActivityActionCreatorDependencies!
         var prism: SearchActivityActionPrism!
 
-        var result: Action!
+        var result: Search.ActivityAction!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
-
-            prism = SearchActivityActionPrism(
-                dependencies: Search.ActivityActionCreatorDependencies(
-                    placeLookupService: mockPlaceLookupService,
-                    searchEntityModelBuilder: mockSearchEntityModelBuilder
-                )
+            mockDependencies = Search.ActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
             )
+
+            prism = SearchActivityActionPrism(dependencies: mockDependencies)
         }
 
         describe("initialRequestAction()") {
@@ -64,13 +64,10 @@ class SearchActivityActionPrismTests: QuickSpec {
                 result = prism.initialRequestAction(stubSearchParams) { _ in }
             }
 
-            it("returns SearchActivityAction.startInitialRequest() with the args for the next page request") {
-                guard case let SearchActivityAction.startInitialRequest(_, searchParams, _)? = result else {
-                    fail("Unexpected value found")
-                    return
-                }
-
-                expect(searchParams) == stubSearchParams
+            it("returns Search.ActivityAction.startInitialRequest() with the args for the next page request") {
+                expect(result) == .startInitialRequest(dependencies: IgnoredEquatable(mockDependencies),
+                                                       searchParams: stubSearchParams,
+                                                       locationUpdateRequestBlock: IgnoredEquatable { _ in })
             }
 
         }
@@ -78,7 +75,7 @@ class SearchActivityActionPrismTests: QuickSpec {
         describe("subsequentRequestAction()") {
 
             var errorThrown: Error?
-            var result: SearchActivityAction?
+            var result: Search.ActivityAction?
 
             func performTest(maxAttempts: Int,
                              numAttemptsSoFar: Int) {
@@ -88,7 +85,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 errorThrown = errorThrownBy {
                     result = try prism.subsequentRequestAction(stubSearchParams,
                                                                allEntities: stubEntities,
-                                                               tokenContainer: tokenContainer) as? SearchActivityAction
+                                                               tokenContainer: tokenContainer)
                 }
             }
 
@@ -120,18 +117,11 @@ class SearchActivityActionPrismTests: QuickSpec {
                     expect(errorThrown).to(beNil())
                 }
 
-                it("returns SearchActivityAction.startSubsequentRequest() with the args for the next page request") {
-                    guard case let SearchActivityAction.startSubsequentRequest(_,
-                                                                               searchParams,
-                                                                               previousResults,
-                                                                               tokenContainer)? = result else {
-                        fail("Unexpected value found")
-                        return
-                    }
-
-                    expect(searchParams) == stubSearchParams
-                    expect(previousResults) == stubEntities
-                    expect(tokenContainer) == expectedTokenContainer
+                it("returns Search.ActivityAction.startSubsequentRequest() with the args for the next page request") {
+                    expect(result) == .startSubsequentRequest(dependencies: IgnoredEquatable(mockDependencies),
+                                                              searchParams: stubSearchParams,
+                                                              previousResults: stubEntities,
+                                                              tokenContainer: expectedTokenContainer)
                 }
 
             }
@@ -145,13 +135,8 @@ class SearchActivityActionPrismTests: QuickSpec {
                 result = prism.updateEditingAction(stubEditEvent)
             }
 
-            it("returns SearchActivityAction.updateInputEditing(editEvent:)") {
-                guard case let SearchActivityAction.updateInputEditing(editEvent)? = result else {
-                    fail("Unexpected value found")
-                    return
-                }
-
-                expect(editEvent) == stubEditEvent
+            it("returns Search.ActivityAction.updateInputEditing(editEvent:)") {
+                expect(result) == .updateInputEditing(stubEditEvent)
             }
         }
 
@@ -162,13 +147,8 @@ class SearchActivityActionPrismTests: QuickSpec {
                 result = prism.detailEntityAction(stubEntity)
             }
 
-            it("returns SearchActivityAction.detailedEntity(entity:)") {
-                guard case let SearchActivityAction.detailedEntity(entity)? = result else {
-                    fail("Unexpected value found")
-                    return
-                }
-
-                expect(entity) == stubEntity
+            it("returns Search.ActivityAction.detailedEntity(entity:)") {
+                expect(result) == .detailedEntity(stubEntity)
             }
         }
 
@@ -177,11 +157,8 @@ class SearchActivityActionPrismTests: QuickSpec {
                 result = prism.removeDetailedEntityAction
             }
 
-            it("returns SearchActivityAction.detailedEntity(entity:)") {
-                guard case SearchActivityAction.removeDetailedEntity? = result else {
-                    fail("Unexpected value found")
-                    return
-                }
+            it("returns Search.ActivityAction.detailedEntity(entity:)") {
+                expect(result) == .removeDetailedEntity
             }
         }
 

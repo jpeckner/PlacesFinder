@@ -33,11 +33,11 @@ extension Search {
         case canRetryRequest(underlyingError: IgnoredEquatable<Error>)
     }
 
-    enum ActivityAction {
+    enum ActivityAction: Equatable {
         case startInitialRequest(
-            dependencies: ActivityActionCreatorDependencies,
+            dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
             searchParams: SearchParams,
-            locationUpdateRequestBlock: LocationUpdateRequestBlock
+            locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
         )
 
         // Load state
@@ -48,7 +48,7 @@ extension Search {
         case noResultsFound(SearchParams)
 
         case startSubsequentRequest(
-            dependencies: ActivityActionCreatorDependencies,
+            dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
             searchParams: SearchParams,
             previousResults: NonEmptyArray<SearchEntityModel>,
             tokenContainer: PlaceLookupTokenAttemptsContainer
@@ -105,13 +105,13 @@ extension Search.ActivityMiddleware {
 
                     dispatch(.searchActivity(.locationRequested(searchParams)))
 
-                    appStore.dispatch(.receiveState { appState in
+                    appStore.dispatch(.receiveState(IgnoredEquatable { appState in
                         requestLocation(appState.searchPreferencesState,
-                                        dependencies: dependencies,
+                                        dependencies: dependencies.value,
                                         searchParams: searchParams,
-                                        locationUpdateRequestBlock: locationUpdateRequestBlock,
+                                        locationUpdateRequestBlock: locationUpdateRequestBlock.value,
                                         dispatch: dispatch)
-                    })
+                    }))
                 }
             }
         }
@@ -223,12 +223,12 @@ extension Search.ActivityMiddleware {
                         nextRequestToken: nil
                     )))
 
-                    dependencies.placeLookupService.requestPage(tokenContainer.token) { result in
+                    dependencies.value.placeLookupService.requestPage(tokenContainer.token) { result in
                         switch result {
                         case let .success(lookupResponse):
                             dispatchSubsequentPageSuccess(previousResults,
                                                           lookupResponse: lookupResponse,
-                                                          dependencies: dependencies,
+                                                          dependencies: dependencies.value,
                                                           searchParams: searchParams,
                                                           dispatch: dispatch)
                         case let .failure(error):

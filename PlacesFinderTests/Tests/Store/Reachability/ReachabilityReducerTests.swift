@@ -40,7 +40,8 @@ class ReachabilityReducerTests: QuickSpec {
                 let currentState = ReachabilityState(status: .unreachable)
 
                 beforeEach {
-                    result = ReachabilityReducer.reduce(action: StubAction.genericAction,
+                    let action: AppAction = .appSkin(.startLoad)
+                    result = ReachabilityReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
 
@@ -50,10 +51,10 @@ class ReachabilityReducerTests: QuickSpec {
             }
 
             context("else when the action is ReachabilityAction.unreachable") {
-                let currentState = ReachabilityState(status: .reachable(.wifi))
-
                 beforeEach {
-                    result = ReachabilityReducer.reduce(action: ReachabilityAction.unreachable,
+                    let action: AppAction = .reachability(.unreachable)
+                    let currentState = ReachabilityState(status: .reachable(.wifi))
+                    result = ReachabilityReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
 
@@ -68,7 +69,8 @@ class ReachabilityReducerTests: QuickSpec {
 
                 context("and the action is .wifi") {
                     beforeEach {
-                        result = ReachabilityReducer.reduce(action: ReachabilityAction.reachable(.wifi),
+                        let action: AppAction = .reachability(.reachable(.wifi))
+                        result = ReachabilityReducer.reduce(action: action,
                                                             currentState: currentState)
                     }
 
@@ -79,7 +81,8 @@ class ReachabilityReducerTests: QuickSpec {
 
                 context("else the action is .cellular") {
                     beforeEach {
-                        result = ReachabilityReducer.reduce(action: ReachabilityAction.reachable(.cellular),
+                        let action: AppAction = .reachability(.reachable(.cellular))
+                        result = ReachabilityReducer.reduce(action: action,
                                                             currentState: currentState)
                     }
 

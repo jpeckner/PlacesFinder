@@ -26,7 +26,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-enum AppSkinAction {
+enum AppSkinAction: Equatable {
     case startLoad
     case load(GuaranteedEntityAction<AppSkin>)
 }

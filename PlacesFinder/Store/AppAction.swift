@@ -22,13 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Shared
 import SwiftDux
 
-enum AppAction: Action {
+enum AppAction: Action, Equatable {
     case appSkin(AppSkinAction)
     case locationAuth(LocationAuthAction)
     case reachability(ReachabilityAction)
-    case receiveState(StateReceiverBlock<AppState>)
+    case receiveState(IgnoredEquatable<StateReceiverBlock<AppState>>)
     case router(AppRouterAction)
     case searchPreferences(SearchPreferencesAction)
 }
@@ -44,7 +45,7 @@ extension AppAction {
                         return
                     }
 
-                    stateProviderBlock(receiverBlock)
+                    stateProviderBlock(receiverBlock.value)
                 }
             }
         }

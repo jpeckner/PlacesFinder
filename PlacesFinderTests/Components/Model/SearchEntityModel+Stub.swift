@@ -49,8 +49,7 @@ extension SearchEntityModel {
                           dialablePhone: String? = "stubDialablePhone",
                           pricing: PlaceLookupPricing? = .stubValue(),
                           coordinate: PlaceLookupCoordinate? = .stubValue()) -> SearchEntityModel {
-        return SearchEntityModel(id: NonEmptyString.stubValue(id),
-                                 name: NonEmptyString.stubValue(name),
+        return SearchEntityModel(name: NonEmptyString.stubValue(name),
                                  url: url,
                                  ratings: ratings,
                                  image: image,

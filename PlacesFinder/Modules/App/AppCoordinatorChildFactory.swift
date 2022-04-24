@@ -47,7 +47,7 @@ extension LaunchCoordinator: AppCoordinatorChildProtocol {
 }
 
 // sourcery: genericTypes = "TStore: StoreProtocol"
-// sourcery: genericConstraints = "TStore.TState == AppState"
+// sourcery: genericConstraints = "TStore.TState == AppState, TStore.TAction == AppAction"
 protocol AppCoordinatorChildFactoryProtocol: AutoMockable {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
