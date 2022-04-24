@@ -116,10 +116,12 @@ class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
             entity.buildLocationSection(copyFormatter),
         ].compactMap { $0 }
 
-        return SearchDetailsViewModel(placeName: entity.name.value,
-                                      sections: sections,
-                                      actionSubscriber: actionSubscriber,
-                                      removeDetailedEntityAction: actionPrism.removeDetailedEntityAction)
+        return SearchDetailsViewModel(
+            placeName: entity.name.value,
+            sections: sections,
+            actionSubscriber: actionSubscriber,
+            removeDetailedEntityAction: .searchActivity(actionPrism.removeDetailedEntityAction)
+        )
     }
 
 }

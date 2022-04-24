@@ -32,6 +32,7 @@ struct SubstatesSubscriberRelayUpdate<TState: StateProtocol> {
 
 class SubstatesSubscriberRelay<TStore: SubscribableStoreProtocol> {
 
+    let store: TStore
     private let subject = PassthroughSubject<SubstatesSubscriberRelayUpdate<TStore.TState>, Never>()
 
     var publisher: AnyPublisher<SubstatesSubscriberRelayUpdate<TStore.TState>, Never> {
@@ -40,6 +41,8 @@ class SubstatesSubscriberRelay<TStore: SubscribableStoreProtocol> {
 
     init(store: TStore,
          equatableKeyPaths: Set<EquatableKeyPath<TStore.TState>>) {
+        self.store = store
+
         store.subscribe(self,
                         equatableKeyPaths: equatableKeyPaths)
     }

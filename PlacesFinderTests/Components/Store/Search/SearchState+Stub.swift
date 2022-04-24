@@ -1,8 +1,9 @@
+//  swiftlint:disable:this file_name
 //
-//  AppCopyContentReducerTests.swift
+//  SearchState+Stub.swift
 //  PlacesFinderTests
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,31 +23,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Nimble
-import Quick
-import SwiftDuxTestComponents
+import Foundation
 
-class AppCopyContentReducerTests: QuickSpec {
+extension Search.State {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    override func spec() {
-
-        describe("init()") {
-
-            let currentState = AppCopyContentState(copyContent: .stubValue())
-            var newState: AppCopyContentState!
-
-            beforeEach {
-                newState = AppCopyContentReducer.reduce(action: .appSkin(.startLoad),
-                                                        currentState: currentState)
-            }
-
-            it("returns the current state") {
-                expect(newState) == currentState
-            }
-
-        }
-
+    static func stub(searchActivityState: Search.ActivityState = .init()) -> Search.State {
+        Search.State(searchActivityState: searchActivityState)
     }
 
 }

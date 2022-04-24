@@ -30,10 +30,14 @@ import UIKit
 
 // sourcery: linkPayloadType = "EmptySearchLinkPayload"
 // sourcery: linkPayloadType = "SearchLinkPayload"
-class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == AppAction, TAppStore.TState == AppState {
+class SearchCoordinator<
+    TAppStore: StoreProtocol,
+    TSearchStore: StoreProtocol
+> where TAppStore.TAction == AppAction, TAppStore.TState == AppState,
+        TSearchStore.TAction == Search.Action, TSearchStore.TState == Search.State {
 
-    private let appStore: TAppStore
     private let appStoreRelay: SubstatesSubscriberRelay<TAppStore>
+    private let searchStoreRelay: StoreSubscriptionRelay<TSearchStore>
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let statePrism: SearchActivityStatePrismProtocol
@@ -43,13 +47,10 @@ class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == App
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
-    private let searchStore: Search.SearchStore
-    private let searchStoreRelay: StoreSubscriptionRelay<Search.SearchStore>
-
     private var cancellables: Set<Combine.AnyCancellable> = []
 
-    init(appStore: TAppStore,
-         searchStore: Search.SearchStore,
+    init(appStoreRelay: SubstatesSubscriberRelay<TAppStore>,
+         searchStoreRelay: StoreSubscriptionRelay<TSearchStore>,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          statePrism: SearchActivityStatePrismProtocol,
@@ -58,8 +59,8 @@ class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == App
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
          navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
-        self.appStore = appStore
-        self.searchStore = searchStore
+        self.appStoreRelay = appStoreRelay
+        self.searchStoreRelay = searchStoreRelay
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
         self.statePrism = statePrism
@@ -68,15 +69,6 @@ class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == App
         self.lookupViewModelBuilder = lookupViewModelBuilder
         self.detailsViewContextBuilder = detailsViewContextBuilder
         self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
-        self.appStoreRelay = SubstatesSubscriberRelay(
-            store: appStore,
-            equatableKeyPaths: [
-                EquatableKeyPath(\AppState.locationAuthState),
-                EquatableKeyPath(\AppState.reachabilityState),
-                EquatableKeyPath(\AppState.routerState)
-            ]
-        )
-        self.searchStoreRelay = StoreSubscriptionRelay(store: searchStore)
 
         setupStoreRelays()
     }
@@ -84,19 +76,19 @@ class SearchCoordinator<TAppStore: StoreProtocol> where TAppStore.TAction == App
     private func setupStoreRelays() {
         appStoreRelay.publisher
             .sink { [weak self] update in
-                self?.searchStore.dispatch(.receiveState { [weak self] searchState in
+                self?.searchStoreRelay.store.dispatch(.receiveState(IgnoredEquatable { [weak self] searchState in
                     self?.handleStateUpdate(appState: update.state,
                                             searchState: searchState)
-                })
+                }))
             }
             .store(in: &cancellables)
 
         searchStoreRelay.publisher
             .sink { [weak self] searchState in
-                self?.appStore.dispatch(.receiveState { [weak self] appState in
+                self?.appStoreRelay.store.dispatch(.receiveState(IgnoredEquatable { [weak self] appState in
                     self?.handleStateUpdate(appState: appState,
                                             searchState: searchState)
-                })
+                }))
             }
             .store(in: &cancellables)
     }
@@ -187,7 +179,7 @@ private extension SearchCoordinator {
         case .noInternet,
              .locationServicesDisabled:
             clearAllAssociatedLinkTypes(appState,
-                                        store: appStore)
+                                        store: appStoreRelay.store)
 
         case let .search(authType):
             switch authType.value {
@@ -203,12 +195,13 @@ private extension SearchCoordinator {
                 let searchLinkPayload = currentPayloadToBeCleared(SearchLinkPayload.self,
                                                                   state: appState)
                 clearAllAssociatedLinkTypes(appState,
-                                            store: appStore)
+                                            store: appStoreRelay.store)
 
                 searchLinkPayload.map { payload in
                     let params = SearchParams(keywords: payload.keywords)
-                    searchStore.dispatch(actionPrism.initialRequestAction(params,
-                                                                          locationUpdateRequestBlock: requestBlock))
+                    let action = actionPrism.initialRequestAction(params,
+                                                                  locationUpdateRequestBlock: requestBlock)
+                    searchStoreRelay.store.dispatch(.searchActivity(action))
                 }
             }
         }

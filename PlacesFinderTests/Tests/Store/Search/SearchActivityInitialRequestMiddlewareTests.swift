@@ -35,14 +35,16 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
         let timeout: TimeInterval = 2.0
 
-        let stubState = AppState.stubValue()
+        let stubAppState = AppState.stubValue()
+        let stubSearchState = Search.State.stub()
         let stubParams = PlaceLookupParams.stubValue(
-            radius: stubState.searchPreferencesState.stored.distance.distanceType.measurement,
-            sorting: stubState.searchPreferencesState.stored.sorting
+            radius: stubAppState.searchPreferencesState.stored.distance.distanceType.measurement,
+            sorting: stubAppState.searchPreferencesState.stored.sorting
         )
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
 
@@ -50,7 +52,8 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
         var mockLocationRequestReturnValue: LocationRequestResult!
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var mockStore: SpyingStore<AppAction, AppState>!
+        var mockAppStore: SpyingStore<AppAction, AppState>!
+        var mockSearchStore: SpyingStore<Search.Action, Search.State>!
 
         beforeEach {
             mockLocationRequestBlockCalled = false
@@ -60,11 +63,16 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
             mockPlaceLookupService.buildInitialPageRequestTokenReturnValue = PlaceLookupPageRequestToken.stubValue()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
 
-            mockStore = SpyingStore(
+            mockAppStore = SpyingStore(
                 reducer: AppStateReducer.reduce,
-                initialState: stubState,
+                initialState: stubAppState
+            )
+
+            mockSearchStore = SpyingStore(
+                reducer: Search.reduce,
+                initialState: stubSearchState,
                 middleware: [
-                    Search.ActivityMiddleware.buildInitialRequestMiddleware()
+                    Search.ActivityMiddleware.makeInitialRequestMiddleware(appStore: mockAppStore)
                 ]
             )
         }
@@ -74,13 +82,16 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                 placeLookupService: mockPlaceLookupService,
                 searchEntityModelBuilder: mockSearchEntityModelBuilder
             )
-            let action = SearchActivityAction.startInitialRequest(dependencies: dependencies,
-                                                                  searchParams: stubSearchParams) { resultBlock in
-                mockLocationRequestBlockCalled = true
-                resultBlock(mockLocationRequestReturnValue)
-            }
+            let action = Search.ActivityAction.startInitialRequest(
+                dependencies: IgnoredEquatable(dependencies),
+                searchParams: stubSearchParams,
+                locationUpdateRequestBlock: IgnoredEquatable { resultBlock in
+                    mockLocationRequestBlockCalled = true
+                    resultBlock(mockLocationRequestReturnValue)
+                }
+            )
 
-            mockStore.dispatch(action)
+            mockSearchStore.dispatch(.searchActivity(action))
         }
 
         func performTest(predicateBlock: @escaping (Any?, [String: Any]?) -> Bool) {
@@ -100,16 +111,10 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                 mockLocationRequestReturnValue = .failure(stubUnderlyingError)
             }
 
-            it("dispatches SearchActivityAction.locationRequested") {
+            it("dispatches Search.ActivityAction.locationRequested") {
                 performTest { _, _ -> Bool in
-                    let action = mockStore.dispatchedActions[1] as? SearchActivityAction
-                    guard case let .locationRequested(searchParams)? = action else {
-                        return false
-                    }
-
-                    expect(searchParams) == stubSearchParams
-
-                    return true
+                    let action = mockSearchStore.dispatchedActions[1]
+                    return action == .searchActivity(.locationRequested(stubSearchParams))
                 }
             }
 
@@ -124,16 +129,13 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                     mockLocationRequestReturnValue = .failure(stubUnderlyingError)
                 }
 
-                it("dispatches SearchActivityAction.failure") {
+                it("dispatches Search.ActivityAction.failure") {
                     performTest { _, _ -> Bool in
-                        let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                        guard case let .failure(searchParams, _)? = action else {
-                            return false
-                        }
-
-                        expect(searchParams) == stubSearchParams
-
-                        return true
+                        let action = mockSearchStore.dispatchedActions.last
+                        return action == .searchActivity(
+                            .failure(stubSearchParams,
+                                     underlyingError: IgnoredEquatable(stubUnderlyingError))
+                        )
                     }
                 }
             }
@@ -158,33 +160,23 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                             SharedTestComponents.StubError.thrownError
                     }
 
-                    it("dispatches SearchActivityAction.failure") {
+                    it("dispatches Search.ActivityAction.failure") {
                         performTest { _, _ -> Bool in
-                            let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                            guard case let .failure(searchParams, underlyingError)? = action else {
-                                return false
-                            }
-
-                            expect(searchParams) == stubSearchParams
-                            expect(underlyingError) == IgnoredEquatable(SharedTestComponents.StubError.thrownError)
-
-                            return true
+                            let action = mockSearchStore.dispatchedActions.last
+                            return action == .searchActivity(
+                                .failure(stubSearchParams,
+                                         underlyingError: IgnoredEquatable(stubUnderlyingError))
+                            )
                         }
                     }
                 }
 
                 context("else") {
 
-                    it("dispatches SearchActivityAction.initialPageRequested") {
+                    it("dispatches Search.ActivityAction.initialPageRequested") {
                         performTest { _, _ -> Bool in
-                            let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                            guard case let .initialPageRequested(searchParams)? = action else {
-                                return false
-                            }
-
-                            expect(searchParams) == stubSearchParams
-
-                            return true
+                            let action = mockSearchStore.dispatchedActions.last
+                            return action == .searchActivity(.initialPageRequested(stubSearchParams))
                         }
                     }
 
@@ -207,16 +199,13 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                 }
                             }
 
-                            it("dispatches SearchActivityAction.failure") {
+                            it("dispatches Search.ActivityAction.failure") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                                    guard case let .failure(searchParams, _)? = action else {
-                                        return false
-                                    }
-
-                                    expect(searchParams) == stubSearchParams
-
-                                    return true
+                                    let action = mockSearchStore.dispatchedActions.last
+                                    return action == .searchActivity(
+                                        .failure(stubSearchParams,
+                                                 underlyingError: IgnoredEquatable(stubUnderlyingError))
+                                    )
                                 }
                             }
                         }
@@ -238,16 +227,13 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                 }
                             }
 
-                            it("dispatches SearchActivityAction.failure") {
+                            it("dispatches Search.ActivityAction.failure") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                                    guard case let .failure(searchParams, _)? = action else {
-                                        return false
-                                    }
-
-                                    expect(searchParams) == stubSearchParams
-
-                                    return true
+                                    let action = mockSearchStore.dispatchedActions.last
+                                    return action == .searchActivity(
+                                        .failure(stubSearchParams,
+                                                 underlyingError: IgnoredEquatable(stubUnderlyingError))
+                                    )
                                 }
                             }
                         }
@@ -265,16 +251,10 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                 mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
                             }
 
-                            it("dispatches SearchActivityAction.noResultsFound") {
+                            it("dispatches Search.ActivityAction.noResultsFound") {
                                 performTest { _, _ -> Bool in
-                                    let action = mockStore.dispatchedActions.last as? SearchActivityAction
-                                    guard case let .noResultsFound(searchParams)? = action else {
-                                        return false
-                                    }
-
-                                    expect(searchParams) == stubSearchParams
-
-                                    return true
+                                    let action = mockSearchStore.dispatchedActions.last
+                                    return action == .searchActivity(.noResultsFound(stubSearchParams))
                                 }
                             }
                         }
@@ -305,16 +285,16 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches SearchActivityAction.subsequentRequest with .success...") {
-                                    expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
+                                it("dispatches Search.ActivityAction.subsequentRequest with .success...") {
+                                    expect(mockSearchStore.dispatchedPageAction).toEventually(equal(.success))
                                 }
 
                                 it("...and with the previous search params...") {
-                                    expect(mockStore.dispatchedSubmittedParams).toEventually(equal(stubSearchParams))
+                                    expect(mockSearchStore.dispatchedSubmittedParams).toEventually(equal(stubSearchParams))
                                 }
 
                                 it("...and with all entities received so far...") {
-                                    expect(mockStore.dispatchedEntities?.value).toEventually(equal(stubEntityModels))
+                                    expect(mockSearchStore.dispatchedEntities?.value).toEventually(equal(stubEntityModels))
                                 }
 
                                 it("...and the returned next request token, with numAttemptsSoFar == 0") {
@@ -323,7 +303,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                         maxAttempts: 3,
                                         numAttemptsSoFar: 0
                                     )
-                                    expect(mockStore.dispatchedNextRequestToken).toEventually(equal(expectedContainer))
+                                    expect(mockSearchStore.dispatchedNextRequestToken).toEventually(equal(expectedContainer))
                                 }
                             }
 
@@ -336,20 +316,20 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches SearchActivityAction.subsequentRequest with .success...") {
-                                    expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
+                                it("dispatches Search.ActivityAction.subsequentRequest with .success...") {
+                                    expect(mockSearchStore.dispatchedPageAction).toEventually(equal(.success))
                                 }
 
                                 it("...and with the previous search params...") {
-                                    expect(mockStore.dispatchedSubmittedParams).toEventually(equal(stubSearchParams))
+                                    expect(mockSearchStore.dispatchedSubmittedParams).toEventually(equal(stubSearchParams))
                                 }
 
                                 it("...and with all entities received so far...") {
-                                    expect(mockStore.dispatchedEntities?.value).toEventually(equal(stubEntityModels))
+                                    expect(mockSearchStore.dispatchedEntities?.value).toEventually(equal(stubEntityModels))
                                 }
 
                                 it("...and a nil value for the next request token") {
-                                    expect(mockStore.dispatchedNextRequestToken).toEventually(beNil())
+                                    expect(mockSearchStore.dispatchedNextRequestToken).toEventually(beNil())
                                 }
                             }
 

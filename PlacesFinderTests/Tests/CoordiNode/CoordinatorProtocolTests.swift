@@ -80,14 +80,14 @@ class CoordinatorProtocolTests: QuickSpec {
 
             let stubLinkType: AppLinkType = .emptySearch(EmptySearchLinkPayload())
 
-            var result: Action?
+            var result: AppAction?
 
             beforeEach {
                 result = StubSettingsCoordinator().requestLinkTypeAction(stubLinkType)
             }
 
             it("returns AppRouterAction.requestLink, containing the passed link") {
-                expect(result as? AppRouterAction) == .requestLink(stubLinkType)
+                expect(result) == .router(.requestLink(stubLinkType))
             }
 
         }

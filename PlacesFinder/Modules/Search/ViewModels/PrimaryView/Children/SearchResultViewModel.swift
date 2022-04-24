@@ -77,7 +77,7 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
         return SearchResultViewModel(cellModel: cellModel,
                                      actionSubscriber: actionSubscriber,
-                                     detailEntityAction: detailEntityAction)
+                                     detailEntityAction: .searchActivity(detailEntityAction))
     }
 
 }

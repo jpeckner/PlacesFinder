@@ -33,7 +33,7 @@ class SearchPreferencesActionCreatorTests: QuickSpec {
 
         describe("setMeasurementSystem()") {
 
-            var result: Action!
+            var result: SearchPreferencesAction!
 
             context("when the arg is .imperial") {
                 beforeEach {
@@ -41,7 +41,7 @@ class SearchPreferencesActionCreatorTests: QuickSpec {
                 }
 
                 it("returns SearchPreferencesAction.setDistance, with a distance of ten miles") {
-                    expect(result as? SearchPreferencesAction) == .setDistance(.imperial(.tenMiles))
+                    expect(result) == .setDistance(.imperial(.tenMiles))
                 }
             }
 
@@ -51,7 +51,7 @@ class SearchPreferencesActionCreatorTests: QuickSpec {
                 }
 
                 it("returns SearchPreferencesAction.setDistance, with a distance of twenty kilometers") {
-                    expect(result as? SearchPreferencesAction) == .setDistance(.metric(.twentyKilometers))
+                    expect(result) == .setDistance(.metric(.twentyKilometers))
                 }
             }
 

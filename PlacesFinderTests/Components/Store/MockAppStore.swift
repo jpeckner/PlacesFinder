@@ -25,3 +25,13 @@
 import SwiftDuxTestComponents
 
 typealias MockAppStore = MockStore<AppAction, AppState>
+
+extension MockAppStore {
+
+    var hasDispatchedRouterClearLinkAction: Bool {
+        dispatchedActions.contains { action in
+            action == .router(.clearLink)
+        }
+    }
+
+}

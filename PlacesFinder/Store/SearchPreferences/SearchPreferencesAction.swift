@@ -33,12 +33,12 @@ enum SearchPreferencesAction: Equatable {
 
 enum SearchPreferencesActionCreator {
 
-    static func setMeasurementSystem(_ system: MeasurementSystem) -> AppAction {
+    static func setMeasurementSystem(_ system: MeasurementSystem) -> SearchPreferencesAction {
         switch system {
         case .imperial:
-            return .searchPreferences(.setDistance(.imperial(.defaultDistance)))
+            return .setDistance(.imperial(.defaultDistance))
         case .metric:
-            return .searchPreferences(.setDistance(.metric(.defaultDistance)))
+            return .setDistance(.metric(.defaultDistance))
         }
     }
 

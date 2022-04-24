@@ -61,7 +61,6 @@ class SearchResultViewModelBuilderTests: QuickSpec {
 
             sut = SearchResultViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                actionPrism: mockSearchActivityActionPrism,
-                                               copyFormatter: mockFormatter,
                                                resultCellModelBuilder: mockResultCellModelBuilder)
         }
 

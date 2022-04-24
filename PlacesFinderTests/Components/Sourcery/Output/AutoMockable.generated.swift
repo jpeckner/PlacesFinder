@@ -26,7 +26,7 @@ import SharedTestComponents
 import SwiftDux
 import UIKit
 
-internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState {
+internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
     internal var store: TStore {
         get { return underlyingStore }
         set(value) { underlyingStore = value }
@@ -165,7 +165,7 @@ internal class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     }
 
 }
-internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.State == AppState {
+internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
 
     // MARK: - buildCoordinator
 
@@ -268,11 +268,11 @@ internal class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
 
 }
 internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
-    internal var actionPublisher: AnyPublisher<AppAction, Never> {
+    internal var actionPublisher: AnyPublisher<LocationAuthAction, Never> {
         get { return underlyingActionPublisher }
         set(value) { underlyingActionPublisher = value }
     }
-    internal var underlyingActionPublisher: AnyPublisher<AppAction, Never>!
+    internal var underlyingActionPublisher: AnyPublisher<LocationAuthAction, Never>!
 
     // MARK: - start
 
@@ -409,11 +409,11 @@ internal class ReachabilityProtocolMock: ReachabilityProtocol {
 
 }
 internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
-    internal var removeDetailedEntityAction: Search.Action {
+    internal var removeDetailedEntityAction: Search.ActivityAction {
         get { return underlyingRemoveDetailedEntityAction }
         set(value) { underlyingRemoveDetailedEntityAction = value }
     }
-    internal var underlyingRemoveDetailedEntityAction: Search.Action!
+    internal var underlyingRemoveDetailedEntityAction: Search.ActivityAction!
 
     // MARK: - detailEntityAction
 
@@ -422,10 +422,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return detailEntityActionCallsCount > 0
     }
     internal var detailEntityActionReceivedEntity: SearchEntityModel?
-    internal var detailEntityActionReturnValue: Search.Action!
-    internal var detailEntityActionClosure: ((SearchEntityModel) -> Search.Action)?
+    internal var detailEntityActionReturnValue: Search.ActivityAction!
+    internal var detailEntityActionClosure: ((SearchEntityModel) -> Search.ActivityAction)?
 
-    internal func detailEntityAction(_ entity: SearchEntityModel) -> Search.Action {
+    internal func detailEntityAction(_ entity: SearchEntityModel) -> Search.ActivityAction {
         detailEntityActionCallsCount += 1
         detailEntityActionReceivedEntity = entity
         return detailEntityActionClosure.map({ $0(entity) }) ?? detailEntityActionReturnValue
@@ -438,11 +438,11 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return initialRequestActionLocationUpdateRequestBlockCallsCount > 0
     }
     internal var initialRequestActionLocationUpdateRequestBlockReceivedArguments: (searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Search.Action!
-    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Search.Action)?
+    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Search.ActivityAction!
+    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Search.ActivityAction)?
 
     internal func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.Action {
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.ActivityAction {
         initialRequestActionLocationUpdateRequestBlockCallsCount += 1
         initialRequestActionLocationUpdateRequestBlockReceivedArguments = (searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock)
         return initialRequestActionLocationUpdateRequestBlockClosure.map({ $0(searchParams, locationUpdateRequestBlock) }) ?? initialRequestActionLocationUpdateRequestBlockReturnValue
@@ -456,12 +456,12 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return subsequentRequestActionAllEntitiesTokenContainerCallsCount > 0
     }
     internal var subsequentRequestActionAllEntitiesTokenContainerReceivedArguments: (searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
-    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Search.Action!
-    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Search.Action)?
+    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Search.ActivityAction!
+    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction)?
 
     internal func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.Action {
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
         subsequentRequestActionAllEntitiesTokenContainerCallsCount += 1
         subsequentRequestActionAllEntitiesTokenContainerReceivedArguments = (searchParams: searchParams, allEntities: allEntities, tokenContainer: tokenContainer)
         if let error = subsequentRequestActionAllEntitiesTokenContainerThrowableError { throw error }
@@ -475,10 +475,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return updateEditingActionCallsCount > 0
     }
     internal var updateEditingActionReceivedEditEvent: SearchBarEditEvent?
-    internal var updateEditingActionReturnValue: Search.Action!
-    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Search.Action)?
+    internal var updateEditingActionReturnValue: Search.ActivityAction!
+    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Search.ActivityAction)?
 
-    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.Action {
+    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.ActivityAction {
         updateEditingActionCallsCount += 1
         updateEditingActionReceivedEditEvent = editEvent
         return updateEditingActionClosure.map({ $0(editEvent) }) ?? updateEditingActionReturnValue

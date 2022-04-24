@@ -33,16 +33,14 @@ extension AppState {
         locationAuthState: LocationAuthState = .init(authStatus: .locationServicesDisabled),
         reachabilityState: ReachabilityState = .init(),
         routerState: RouterState<AppLinkType> = .init(currentNode: StubNode.nodeBox),
-        searchPreferencesState: SearchPreferencesState = SearchPreferencesState(usesMetricSystem: true),
-        searchActivityState: Search.ActivityState = .init()
+        searchPreferencesState: SearchPreferencesState = SearchPreferencesState(usesMetricSystem: true)
     ) -> AppState {
         return AppState(appCopyContentState: appCopyContentState,
                         appSkinState: appSkinState,
                         locationAuthState: locationAuthState,
                         reachabilityState: reachabilityState,
                         routerState: routerState,
-                        searchPreferencesState: searchPreferencesState,
-                        searchActivityState: searchActivityState)
+                        searchPreferencesState: searchPreferencesState)
     }
 
 }

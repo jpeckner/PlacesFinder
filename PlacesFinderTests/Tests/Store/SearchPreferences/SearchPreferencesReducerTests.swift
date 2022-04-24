@@ -45,7 +45,7 @@ class SearchPreferencesReducerTests: QuickSpec {
                 )
 
                 beforeEach {
-                    result = SearchPreferencesReducer.reduce(action: StubAction.genericAction,
+                    result = SearchPreferencesReducer.reduce(action: .appSkin(.startLoad),
                                                              currentState: currentState)
                 }
 
@@ -64,7 +64,7 @@ class SearchPreferencesReducerTests: QuickSpec {
 
                 beforeEach {
                     result = SearchPreferencesReducer.reduce(
-                        action: SearchPreferencesAction.setDistance(.imperial(.oneMile)),
+                        action: .searchPreferences(.setDistance(.imperial(.oneMile))),
                         currentState: currentState
                     )
                 }
@@ -89,7 +89,7 @@ class SearchPreferencesReducerTests: QuickSpec {
 
                 beforeEach {
                     result = SearchPreferencesReducer.reduce(
-                        action: SearchPreferencesAction.setSorting(.bestMatch),
+                        action: .searchPreferences(.setSorting(.bestMatch)),
                         currentState: currentState
                     )
                 }

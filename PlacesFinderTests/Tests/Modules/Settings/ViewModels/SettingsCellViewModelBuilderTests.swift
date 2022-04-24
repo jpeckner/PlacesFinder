@@ -34,10 +34,9 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementFormatter: MeasurementFormatterProtocolMock!
 
         var sut: SettingsCellViewModelBuilder!
@@ -98,7 +97,7 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                         it("dispatches the correct .setSorting action when dispatchAction() is called") {
                             expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                             results[caseIdx].dispatchAction()
-                            expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setDistance(currentDistance)
+                            expect(mockActionSubscriber.receivedInputs.first) == .setDistance(currentDistance)
                         }
 
                     }
@@ -157,7 +156,7 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     it("dispatches the correct .setSorting action when dispatchAction() is called") {
                         expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                         results[caseIdx].dispatchAction()
-                        expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setSorting(currentSortingCase)
+                        expect(mockActionSubscriber.receivedInputs.first) == .setSorting(currentSortingCase)
                     }
 
                 }

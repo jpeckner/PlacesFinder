@@ -32,7 +32,6 @@ import SwiftDuxTestComponents
 
 class SettingsViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable identifier_name
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
@@ -102,13 +101,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             it("returns a view model with a .measurementSystem header in index 0") {
                 let section = result.sections.value[0]
-
-                guard case let .measurementSystem(headerViewModel) = section.headerType else {
-                    fail("Unexpected value found: \(section.headerType)")
-                    return
-                }
-
-                expect(headerViewModel) == stubUnitsHeaderViewModel
+                expect(section.headerType) == .measurementSystem(stubUnitsHeaderViewModel)
             }
 
             it("returns a view model with the cellmodels returned by mockSettingsCellViewModelBuilder in index 0") {
@@ -118,13 +111,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             it("returns a view model with a .plain header in index 1") {
                 let section = result.sections.value[1]
-
-                guard case let .plain(headerViewModel) = section.headerType else {
-                    fail("Unexpected value found: \(section.headerType)")
-                    return
-                }
-
-                expect(headerViewModel) == stubPlainHeaderViewModel
+                expect(section.headerType) == .plain(stubPlainHeaderViewModel)
             }
 
             it("returns a view model with the cellmodels returned by mockSettingsCellViewModelBuilder in index 1") {

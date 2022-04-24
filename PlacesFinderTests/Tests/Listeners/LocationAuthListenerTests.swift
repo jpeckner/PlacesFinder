@@ -38,7 +38,7 @@ class LocationAuthListenerTests: QuickSpec {
 
         let dummyLocationManager = CLLocationManager()
 
-        var receivedActions: [Action]!
+        var receivedActions: [LocationAuthAction]!
         var cancellables: Set<AnyCancellable>!
         var mockLocationAuthManager: CLLocationManagerAuthProtocolMock!
         var listener: LocationAuthListener!
@@ -80,7 +80,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .notDetermined") {
-                    expect(receivedActions.last as? LocationAuthAction) == .notDetermined
+                    expect(receivedActions.last) == .notDetermined
                 }
             }
 
@@ -90,7 +90,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesEnabled") {
-                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesEnabled
+                    expect(receivedActions.last) == .locationServicesEnabled
                 }
             }
 
@@ -100,7 +100,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesEnabled") {
-                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesEnabled
+                    expect(receivedActions.last) == .locationServicesEnabled
                 }
             }
 
@@ -110,7 +110,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesDisabled") {
-                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesDisabled
+                    expect(receivedActions.last) == .locationServicesDisabled
                 }
             }
 
@@ -120,7 +120,7 @@ class LocationAuthListenerTests: QuickSpec {
                 }
 
                 it("dispatches .locationServicesDisabled") {
-                    expect(receivedActions.last as? LocationAuthAction) == .locationServicesDisabled
+                    expect(receivedActions.last) == .locationServicesDisabled
                 }
             }
 

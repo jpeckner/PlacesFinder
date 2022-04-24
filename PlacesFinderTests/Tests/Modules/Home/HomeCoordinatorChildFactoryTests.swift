@@ -49,7 +49,7 @@ class HomeCoordinatorChildFactoryTests: QuickSpec {
                 }
 
                 it("returns an instance of SearchCoordinator") {
-                    expect(result is SearchCoordinator<MockAppStore>) == true
+                    expect(result is SearchCoordinator<MockAppStore, MockSearchStore>) == true
                 }
 
             }

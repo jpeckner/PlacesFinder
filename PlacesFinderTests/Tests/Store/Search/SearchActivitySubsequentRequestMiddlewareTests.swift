@@ -37,7 +37,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
     // swiftlint:disable line_length
     override func spec() {
 
-        let stubState = AppState.stubValue()
+        let stubState = Search.State.stub()
         let stubParams = PlaceLookupParams.stubValue()
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
@@ -45,16 +45,16 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
-        var mockStore: SpyingStore<AppAction, AppState>!
+        var mockStore: SpyingStore<Search.Action, Search.State>!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             mockStore = SpyingStore(
-                reducer: AppStateReducer.reduce,
+                reducer: Search.reduce,
                 initialState: stubState,
                 middleware: [
-                    Search.ActivityMiddleware.buildSubsequentRequestMiddleware()
+                    Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
                 ]
             )
         }
@@ -64,12 +64,12 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                 placeLookupService: mockPlaceLookupService,
                 searchEntityModelBuilder: mockSearchEntityModelBuilder
             )
-            let action = SearchActivityAction.startSubsequentRequest(dependencies: dependencies,
-                                                                     searchParams: stubSearchParams,
-                                                                     previousResults: stubPreviousResults,
-                                                                     tokenContainer: stubTokenContainer)
+            let action = Search.ActivityAction.startSubsequentRequest(dependencies: IgnoredEquatable(dependencies),
+                                                                      searchParams: stubSearchParams,
+                                                                      previousResults: stubPreviousResults,
+                                                                      tokenContainer: stubTokenContainer)
 
-            mockStore.dispatch(action)
+            mockStore.dispatch(.searchActivity(action))
         }
 
         describe("requestSubsequentPage(:previousResults)") {
@@ -79,7 +79,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                     performTest()
                 }
 
-                it("dispatches SearchActivityAction.subsequentRequest with .inProgress") {
+                it("dispatches Search.ActivityAction.subsequentRequest with .inProgress") {
                     expect(mockStore.dispatchedPageAction) == .inProgress
                 }
 
@@ -185,7 +185,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             performTest()
                         }
 
-                        it("dispatches SearchActivityAction.subsequentRequest with .success") {
+                        it("dispatches Search.ActivityAction.subsequentRequest with .success") {
                             expect(mockStore.dispatchedPageAction) == .success
                         }
 
@@ -227,7 +227,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchActivityAction.subsequentRequest with .success") {
+                            it("dispatches Search.ActivityAction.subsequentRequest with .success") {
                                 expect(mockStore.dispatchedPageAction) == .success
                             }
 
@@ -257,7 +257,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches SearchActivityAction.subsequentRequest .success") {
+                            it("dispatches Search.ActivityAction.subsequentRequest .success") {
                                 expect(mockStore.dispatchedPageAction) == .success
                             }
 

@@ -66,7 +66,7 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
                         title: systemTitle,
                         selectionAction: IgnoredEquatable { [weak self] in
                             let action = SearchPreferencesActionCreator.setMeasurementSystem(system)
-                            _ = self?.actionSubscriber.receive(action)
+                            _ = self?.actionSubscriber.receive(.searchPreferences(action))
                         }
                     )
             }

@@ -28,7 +28,7 @@ import Shared
 import SwiftDux
 
 // sourcery: genericTypes = "TStore: StoreProtocol"
-// sourcery: genericConstraints = "TStore.State == AppState"
+// sourcery: genericConstraints = "TStore.TState == AppState, TStore.TAction == AppAction"
 protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
@@ -66,6 +66,11 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
     }
 
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        let appStoreRelay = SubstatesSubscriberRelay(
+            store: store,
+            equatableKeyPaths: Search.appStoreKeyPaths
+        )
+
         let initialState = Search.State()
         let searchStore = Search.SearchStore(
             reducer: Search.reduce,
@@ -76,6 +81,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
                 Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
             ]
         )
+        let searchStoreRelay = StoreSubscriptionRelay(store: searchStore)
 
         let searchActionSubscriber = AnySubscriber(ActionSubscriber(store: searchStore))
 
@@ -115,8 +121,8 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
         let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
 
-        return SearchCoordinator(appStore: store,
-                                 searchStore: searchStore,
+        return SearchCoordinator(appStoreRelay: appStoreRelay,
+                                 searchStoreRelay: searchStoreRelay,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  statePrism: statePrism,
