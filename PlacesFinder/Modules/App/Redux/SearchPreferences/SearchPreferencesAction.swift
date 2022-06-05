@@ -29,6 +29,7 @@ import SwiftDux
 enum SearchPreferencesAction: Equatable {
     case setDistance(SearchDistance)
     case setSorting(PlaceLookupSorting)
+    case showSettingsChild(SettingsChildLinkPayload)
 }
 
 enum SearchPreferencesActionCreator {
@@ -39,6 +40,25 @@ enum SearchPreferencesActionCreator {
             return .setDistance(.imperial(.defaultDistance))
         case .metric:
             return .setDistance(.metric(.defaultDistance))
+        }
+    }
+
+}
+
+extension AppAction {
+
+    static func makeSettingsChildRoutingMiddleware() -> Middleware<AppAction, AppState> {
+        return { dispatch, _ in
+            return { next in
+                return { action in
+                    guard case let .searchPreferences(.showSettingsChild(payload)) = action else {
+                        next(action)
+                        return
+                    }
+
+                    dispatch(.router(.requestLink(.settingsChild(payload))))
+                }
+            }
         }
     }
 

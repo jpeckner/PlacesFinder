@@ -75,18 +75,18 @@ extension Search {
         case removeDetailedEntity
     }
 
-    // MARK: Search.ActivityMiddleware
+}
+
+extension Search {
 
     struct ActivityActionCreatorDependencies {
         let placeLookupService: PlaceLookupServiceProtocol
         let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
     }
 
-    enum ActivityMiddleware {}
-
 }
 
-extension Search.ActivityMiddleware {
+extension Search {
 
     static func makeInitialRequestMiddleware<TAppStore: DispatchingStoreProtocol>(
         appStore: TAppStore
@@ -200,7 +200,7 @@ extension Search.ActivityMiddleware {
 
 }
 
-extension Search.ActivityMiddleware {
+extension Search {
 
     static func makeSubsequentRequestMiddleware() -> Middleware<Search.Action, Search.State> {
         return { dispatch, _ in
@@ -282,7 +282,7 @@ extension Search.ActivityMiddleware {
 
 }
 
-private extension Search.ActivityMiddleware {
+private extension Search {
 
     static func tokenContainer(for lookupResponse: PlaceLookupResponse) -> PlaceLookupTokenAttemptsContainer? {
         let nextRequestToken = try? lookupResponse.nextRequestTokenResult?.get()

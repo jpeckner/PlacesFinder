@@ -47,9 +47,9 @@ protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
+    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>) {
+    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>) {
         self.actionSubscriber = actionSubscriber
     }
 
@@ -66,7 +66,7 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
                         title: systemTitle,
                         selectionAction: IgnoredEquatable { [weak self] in
                             let action = SearchPreferencesActionCreator.setMeasurementSystem(system)
-                            _ = self?.actionSubscriber.receive(.searchPreferences(action))
+                            _ = self?.actionSubscriber.receive(action)
                         }
                     )
             }

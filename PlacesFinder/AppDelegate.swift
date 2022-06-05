@@ -143,7 +143,8 @@ private extension Store where TAction == AppAction, TState == AppState {
             initialState: initialState,
             middleware: [
                 AppAction.makeStateReceiverMiddleware(),
-                AppSkinMiddleware.makeRequestSkinMiddleware(skinService: skinService)
+                AppAction.makeRequestSkinMiddleware(skinService: skinService),
+                AppAction.makeSettingsChildRoutingMiddleware()
             ]
         )
     }

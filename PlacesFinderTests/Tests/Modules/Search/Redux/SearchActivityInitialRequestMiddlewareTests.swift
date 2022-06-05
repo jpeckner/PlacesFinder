@@ -72,7 +72,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                 reducer: Search.reduce,
                 initialState: stubSearchState,
                 middleware: [
-                    Search.ActivityMiddleware.makeInitialRequestMiddleware(appStore: mockAppStore)
+                    Search.makeInitialRequestMiddleware(appStore: mockAppStore)
                 ]
             )
         }

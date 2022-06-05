@@ -54,7 +54,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                 reducer: Search.reduce,
                 initialState: stubState,
                 middleware: [
-                    Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
+                    Search.makeSubsequentRequestMiddleware()
                 ]
             )
         }
