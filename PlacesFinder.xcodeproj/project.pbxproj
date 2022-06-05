@@ -1270,19 +1270,6 @@
 			path = Copy;
 			sourceTree = "<group>";
 		};
-		428581CCE78CD9E0575B0C61 /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				8D2E4B74C560704450355C83 /* AppCopyContent */,
-				5A3EB32D35BF65AD01C52782 /* LocationAuth */,
-				0B42983AEF8446AB85884E5B /* Reachability */,
-				68B3B3AA60549638874ED620 /* Router */,
-				CDEC5CD999D1B4829789F28D /* Search */,
-				83FFBF44E52D0FFFA85CED7B /* SearchPreferences */,
-			);
-			path = Store;
-			sourceTree = "<group>";
-		};
 		44F571661D57A07D1AE5846F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1448,22 +1435,14 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
-		689EA0871D2418F38BE8D00C /* Store */ = {
+		689EA0871D2418F38BE8D00C /* Redux */ = {
 			isa = PBXGroup;
 			children = (
-				3AA27B26FF1517A5E1BCBAEC /* AppCopyContent */,
-				AFF394EB601CEC92018EAB54 /* AppSkin */,
-				E170D2ADCEB5F8FCCEE9B98E /* LocationAuth */,
-				FDED2B7C9A02E17A0382EB75 /* Reachability */,
-				D858BADA019D9C41611CCA99 /* Router */,
-				2D105FA3BC9AC18BDD8BD19D /* SearchPreferences */,
 				CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */,
-				CAA5497527AB741600F09F8A /* AppAction.swift */,
-				917740B6A62EA050BACF1D8C /* AppState.swift */,
 				CA6D635C27E69594000866D5 /* StoreSubscriptionRelay.swift */,
 				CA6D635E27E695B4000866D5 /* SubstatesSubscriberRelay.swift */,
 			);
-			path = Store;
+			path = Redux;
 			sourceTree = "<group>";
 		};
 		68B3B3AA60549638874ED620 /* Router */ = {
@@ -1578,6 +1557,7 @@
 		774024B2FE87292A929B5259 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				CA9A3CE0284D46D000B65C4F /* Redux */,
 				C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */,
 				3EB78D865B34361E193BC4BD /* AppCoordinatorChildFactory.swift */,
 			);
@@ -1624,6 +1604,7 @@
 		81D137D795B4747F0A118ED8 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				C0110702FCBED25FFF0C88CB /* Redux */,
 				3FFB41A396BB348D3E29B118 /* ViewModels */,
 			);
 			path = Search;
@@ -1715,6 +1696,7 @@
 		913032A886E72DC830D58475 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CA9A3CE1284D470B00B65C4F /* App */,
 				81D137D795B4747F0A118ED8 /* Search */,
 				0629CD5B96FF5D20CDBF94FD /* Settings */,
 				20A3440E9DCD5CF3A8DECAB8 /* StubLinkType.swift */,
@@ -1748,7 +1730,6 @@
 				EC4A7ABE8C3161CE95D3FDCB /* Model */,
 				99F76E69A301F8F24C8852A6 /* Modules */,
 				6A28D1A91ED3AD7635FB4F81 /* Services */,
-				428581CCE78CD9E0575B0C61 /* Store */,
 				CDF51776CF27522D0C4CCCFA /* UI */,
 			);
 			path = Tests;
@@ -1796,16 +1777,6 @@
 				6DB426CBC6CFD247D55616D8 /* AppLinkTypeBuilderTests.swift */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		9A714A42C2AF5C4EFF5A67CA /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				C0110702FCBED25FFF0C88CB /* Search */,
-				4A27A0A36568B7B3B95FC167 /* AppState+Stub.swift */,
-				1F660EAC4A5CEA5344D7CB78 /* MockAppStore.swift */,
-			);
-			path = Store;
 			sourceTree = "<group>";
 		};
 		9AA77DC8324DF7D7AA2380E3 /* Views */ = {
@@ -1943,6 +1914,7 @@
 		BDAFCE5B3E6E1444F5EC8D1C /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				CDEC5CD999D1B4829789F28D /* Redux */,
 				1B5B5FE62E7CB809D9B2E2E5 /* ViewModels */,
 				283E6088B081A3B2D4560502 /* SearchCoordinatorTests.swift */,
 				BB75D8B9F5872DFC76763E14 /* SearchActivityStatePrismTests.swift */,
@@ -1958,14 +1930,14 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		C0110702FCBED25FFF0C88CB /* Search */ = {
+		C0110702FCBED25FFF0C88CB /* Redux */ = {
 			isa = PBXGroup;
 			children = (
 				CA8BCAF02814E27E006989CF /* MockSearchStore.swift */,
 				CA8BCAEE2814C5C6006989CF /* SearchState+Stub.swift */,
 				2C0D58E0E46F4A2583EFD2EE /* StubSearchActivityAction.swift */,
 			);
-			path = Search;
+			path = Redux;
 			sourceTree = "<group>";
 		};
 		C0C37922CA2561DA0C12C60C /* SecondaryView */ = {
@@ -2088,6 +2060,50 @@
 			path = ReceiveState;
 			sourceTree = "<group>";
 		};
+		CA9A3CE0284D46D000B65C4F /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				3AA27B26FF1517A5E1BCBAEC /* AppCopyContent */,
+				AFF394EB601CEC92018EAB54 /* AppSkin */,
+				E170D2ADCEB5F8FCCEE9B98E /* LocationAuth */,
+				FDED2B7C9A02E17A0382EB75 /* Reachability */,
+				D858BADA019D9C41611CCA99 /* Router */,
+				2D105FA3BC9AC18BDD8BD19D /* SearchPreferences */,
+				CAA5497527AB741600F09F8A /* AppAction.swift */,
+				917740B6A62EA050BACF1D8C /* AppState.swift */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
+		CA9A3CE1284D470B00B65C4F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CA9A3CE2284D474700B65C4F /* Redux */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CA9A3CE2284D474700B65C4F /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				4A27A0A36568B7B3B95FC167 /* AppState+Stub.swift */,
+				1F660EAC4A5CEA5344D7CB78 /* MockAppStore.swift */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
+		CA9A3CE3284D477D00B65C4F /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				8D2E4B74C560704450355C83 /* AppCopyContent */,
+				5A3EB32D35BF65AD01C52782 /* LocationAuth */,
+				0B42983AEF8446AB85884E5B /* Reachability */,
+				68B3B3AA60549638874ED620 /* Router */,
+				83FFBF44E52D0FFFA85CED7B /* SearchPreferences */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
 		CAA5496D27A8F95F00F09F8A /* Combine */ = {
 			isa = PBXGroup;
 			children = (
@@ -2104,9 +2120,9 @@
 				B3ECAEBA75393A73BA9D61E3 /* Listeners */,
 				72A6A1BEE0C5B30EF5259067 /* Model */,
 				7851B76283B8871A6CDC068C /* Modules */,
+				689EA0871D2418F38BE8D00C /* Redux */,
 				7DEDEA510A8AA3D267EDA3D2 /* Services */,
 				D6D8156880F991A15266A809 /* Sourcery */,
-				689EA0871D2418F38BE8D00C /* Store */,
 				5EFF062605DCC6C1503F45DE /* UI */,
 				4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */,
 				664F256C934B5B4A349BD9EF /* Assets.xcassets */,
@@ -2134,7 +2150,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		CDEC5CD999D1B4829789F28D /* Search */ = {
+		CDEC5CD999D1B4829789F28D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
 				797D4B7D98BE9E76E4871F08 /* SearchActivityInitialRequestMiddlewareTests.swift */,
@@ -2144,7 +2160,7 @@
 				B98C92D92983EBED05311A44 /* SearchActivityStateTests.swift */,
 				1DA4E3D46B78E975BC75AB3D /* TestDispatchingStoreProtocol+SearchActivityAction.swift */,
 			);
-			path = Search;
+			path = Redux;
 			sourceTree = "<group>";
 		};
 		CDF51776CF27522D0C4CCCFA /* UI */ = {
@@ -2158,6 +2174,7 @@
 		D0912F987C0E49062C5A2361 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				CA9A3CE3284D477D00B65C4F /* Redux */,
 				20AA98ED425B854B9136E7DC /* AppChildCoordinatorTests.swift */,
 				7BB82F102B92D500DD50D7D2 /* AppCoordinatorTests.swift */,
 			);
@@ -2237,7 +2254,6 @@
 				985BB76F71212AC3DB111C44 /* PlaceLookup */,
 				BA4D11F189695C7AF6FF3C0F /* Services */,
 				54BF37C45B354165C23C8B66 /* Sourcery */,
-				9A714A42C2AF5C4EFF5A67CA /* Store */,
 				5251B3FB43935A8AFF05F6D6 /* UI */,
 			);
 			path = Components;
