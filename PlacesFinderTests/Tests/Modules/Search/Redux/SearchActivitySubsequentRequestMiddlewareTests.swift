@@ -45,26 +45,27 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
+        var mockDependencies: Search.ActivityActionCreatorDependencies!
         var mockStore: SpyingStore<Search.Action, Search.State>!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
+            mockDependencies = Search.ActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
+            )
             mockStore = SpyingStore(
                 reducer: Search.reduce,
                 initialState: stubState,
                 middleware: [
-                    Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
+                    Search.makeSubsequentRequestMiddleware()
                 ]
             )
         }
 
         func performTest() {
-            let dependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
-            )
-            let action = Search.ActivityAction.startSubsequentRequest(dependencies: IgnoredEquatable(dependencies),
+            let action = Search.ActivityAction.startSubsequentRequest(dependencies: IgnoredEquatable(mockDependencies),
                                                                       searchParams: stubSearchParams,
                                                                       previousResults: stubPreviousResults,
                                                                       tokenContainer: stubTokenContainer)

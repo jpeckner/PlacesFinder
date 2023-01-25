@@ -24,6 +24,8 @@
 
 import Nimble
 import Quick
+import SwiftDux
+import SwiftDuxTestComponents
 
 class HomeCoordinatorChildFactoryTests: QuickSpec {
 
@@ -49,7 +51,7 @@ class HomeCoordinatorChildFactoryTests: QuickSpec {
                 }
 
                 it("returns an instance of SearchCoordinator") {
-                    expect(result is SearchCoordinator<MockAppStore, MockSearchStore>) == true
+                    expect(result is SearchCoordinator<MockAppStore, Store<Search.Action, Search.State>>) == true
                 }
 
             }

@@ -3,8 +3,8 @@ PODS:
   - CoordiNodeTestComponents (1.1.0):
     - CoordiNode (= 1.1.0)
   - Kingfisher (7.1.2)
-  - Nimble (9.2.1)
-  - Quick (4.0.0)
+  - Nimble (10.0.0)
+  - Quick (5.0.1)
   - ReachabilitySwift (5.0.0)
   - Shared (1.1.7)
   - SharedTestComponents (1.1.7):
@@ -75,7 +75,7 @@ CHECKOUT OPTIONS:
     :commit: 1120fbd992ec7f2fa4d4a7bdd83cc298ac191cde
     :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
-    :commit: 85d379e82e11cabd0446e86b1ade35c4d26629d3
+    :commit: 8dbfbd7930dfdb01ec9aa6974f6c1ff1a5bad744
     :git: https://github.com/jpeckner/SwiftDux.git
   SwiftDuxTestComponents:
     :commit: 85d379e82e11cabd0446e86b1ade35c4d26629d3
@@ -85,8 +85,8 @@ SPEC CHECKSUMS:
   CoordiNode: 87f7cfa179883fe299a63e857493e716b8bb32b8
   CoordiNodeTestComponents: c1c4a30db861e80e5564695c1b6f34aa0f0ffbdf
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
-  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
-  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Shared: d1cdb448344513e41c844b9620d947b18108beb0
   SharedTestComponents: 55ea877438f4ec1275fb5c2e5925936f9466c093

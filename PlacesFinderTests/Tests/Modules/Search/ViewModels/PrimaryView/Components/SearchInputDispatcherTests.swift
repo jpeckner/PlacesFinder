@@ -30,16 +30,11 @@ import SwiftDux
 
 class SearchInputDispatcherTests: QuickSpec {
 
-    private enum StubPrismAction: Action, Equatable {
-        case initialRequest(SearchParams)
-        case update(SearchBarEditEvent)
-    }
-
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockActionPrism: SearchActivityActionPrismProtocolMock!
 
         var locationBlockCalled: Bool!
@@ -49,9 +44,7 @@ class SearchInputDispatcherTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             mockActionPrism = SearchActivityActionPrismProtocolMock()
-            mockActionPrism.updateEditingActionClosure = {
-                StubPrismAction.update($0)
-            }
+            mockActionPrism.updateEditingActionClosure = { editEvent in .updateInputEditing(editEvent) }
 
             locationBlockCalled = false
             sut = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
@@ -74,7 +67,7 @@ class SearchInputDispatcherTests: QuickSpec {
                     }
 
                     it("dispatches the expected action") {
-                        expect(mockActionSubscriber.receivedInputs.first as? StubPrismAction) == .update(editEvent)
+                        expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(.updateInputEditing(editEvent))
                     }
                 }
 
@@ -88,7 +81,7 @@ class SearchInputDispatcherTests: QuickSpec {
 
             beforeEach {
                 mockActionPrism.initialRequestActionLocationUpdateRequestBlockClosure = { receivedSearchParams, _ in
-                    StubPrismAction.initialRequest(receivedSearchParams)
+                    .initialPageRequested(receivedSearchParams)
                 }
 
                 sut.dispatchSearchParams(stubParams)
@@ -103,7 +96,7 @@ class SearchInputDispatcherTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.first as? StubPrismAction) == .initialRequest(stubParams)
+                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(.initialPageRequested(stubParams))
             }
 
         }

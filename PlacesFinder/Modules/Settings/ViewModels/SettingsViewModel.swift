@@ -52,18 +52,17 @@ extension SettingsViewModel {
 
 protocol SettingsViewModelBuilderProtocol: AutoMockable {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: AppAction) -> SettingsViewModel
+                        appCopyContent: AppCopyContent) -> SettingsViewModel
 }
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
+    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
     private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
     private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
     private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<AppAction, Never>,
+    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
          measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
          plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
          settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
@@ -74,8 +73,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
     }
 
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: AppAction) -> SettingsViewModel {
+                        appCopyContent: AppCopyContent) -> SettingsViewModel {
         let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
@@ -86,7 +84,9 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                             copyContent: appCopyContent.settingsMeasurementSystem
                         )
                     ),
-                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(searchPreferencesState.stored.distance)
+                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(
+                        currentDistanceType: searchPreferencesState.stored.distance
+                    )
                 )
             )
             .appendedWith([
@@ -95,7 +95,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                         plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
                     ),
                     cells: settingsCellViewModelBuilder.buildSortingCellModels(
-                        searchPreferencesState.stored.sorting,
+                        currentSorting: searchPreferencesState.stored.sorting,
                         copyContent: appCopyContent.settingsSortPreference
                     )
                 )
@@ -110,7 +110,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                             title: appCopyContent.settingsChildMenu.ctaTitle,
                             isSelected: false,
                             actionSubscriber: actionSubscriber,
-                            action: settingsChildRequestAction
+                            action: .showSettingsChild(SettingsChildLinkPayload())
                         )
                     ]
                 )

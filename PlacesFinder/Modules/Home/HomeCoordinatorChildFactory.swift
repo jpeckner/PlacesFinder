@@ -39,7 +39,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction ==
     private let store: TStore
     private let listenerContainer: ListenerContainer
     private let serviceContainer: ServiceContainer
-    private let actionSubscriber: AnySubscriber<AppAction, Never>
 
     init(store: TStore,
          listenerContainer: ListenerContainer,
@@ -47,7 +46,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction ==
         self.store = store
         self.listenerContainer = listenerContainer
         self.serviceContainer = serviceContainer
-        self.actionSubscriber = AnySubscriber(ActionSubscriber(store: store))
     }
 }
 
@@ -77,8 +75,8 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             initialState: initialState,
             middleware: [
                 Search.makeStateReceiverMiddleware(),
-                Search.ActivityMiddleware.makeInitialRequestMiddleware(appStore: store),
-                Search.ActivityMiddleware.makeSubsequentRequestMiddleware()
+                Search.makeInitialRequestMiddleware(appStore: store),
+                Search.makeSubsequentRequestMiddleware()
             ]
         )
         let searchStoreRelay = StoreSubscriptionRelay(store: searchStore)
@@ -134,17 +132,29 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        // swiftlint:disable:next trailing_closure
+        let searchPreferencesActionSubscriber = AnySubscriber<SearchPreferencesAction, Never>(
+            receiveValue: { [weak store] searchPreferencesAction -> Subscribers.Demand in
+                store?.dispatch(.searchPreferences(searchPreferencesAction))
+                return .unlimited
+            }
+        )
+
         let presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
 
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(actionSubscriber: actionSubscriber)
+        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(
+            actionSubscriber: searchPreferencesActionSubscriber
+        )
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
-        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(actionSubscriber: actionSubscriber,
-                                                                        measurementFormatter: measurementFormatter)
+        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(
+            actionSubscriber: searchPreferencesActionSubscriber,
+            measurementFormatter: measurementFormatter
+        )
         let settingsViewModelBuilder = SettingsViewModelBuilder(
-            actionSubscriber: actionSubscriber,
+            actionSubscriber: searchPreferencesActionSubscriber,
             measurementSystemHeaderViewModelBuilder: unitsHeaderViewModelBuilder,
             plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
             settingsCellViewModelBuilder: settingsCellViewModelBuilder

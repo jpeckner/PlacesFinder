@@ -75,18 +75,18 @@ extension Search {
         case removeDetailedEntity
     }
 
-    // MARK: Search.ActivityMiddleware
+}
+
+extension Search {
 
     struct ActivityActionCreatorDependencies {
         let placeLookupService: PlaceLookupServiceProtocol
         let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
     }
 
-    enum ActivityMiddleware {}
-
 }
 
-extension Search.ActivityMiddleware {
+extension Search {
 
     static func makeInitialRequestMiddleware<TAppStore: DispatchingStoreProtocol>(
         appStore: TAppStore
@@ -94,10 +94,11 @@ extension Search.ActivityMiddleware {
         return { dispatch, _ in
             return { next in
                 return { action in
-                    guard case let .searchActivity(searchActivityAction) = action,
-                          case let .startInitialRequest(dependencies,
-                                                        searchParams,
-                                                        locationUpdateRequestBlock) = searchActivityAction
+                    guard case let .searchActivity(.startInitialRequest(
+                        dependencies,
+                        searchParams,
+                        locationUpdateRequestBlock
+                    )) = action
                     else {
                         next(action)
                         return
@@ -200,17 +201,18 @@ extension Search.ActivityMiddleware {
 
 }
 
-extension Search.ActivityMiddleware {
+extension Search {
 
     static func makeSubsequentRequestMiddleware() -> Middleware<Search.Action, Search.State> {
         return { dispatch, _ in
             return { next in
                 return { action in
-                    guard case let .searchActivity(searchActivityAction) = action,
-                          case let .startSubsequentRequest(dependencies,
-                                                           searchParams,
-                                                           previousResults,
-                                                           tokenContainer) = searchActivityAction
+                    guard case let .searchActivity(.startSubsequentRequest(
+                        dependencies,
+                        searchParams,
+                        previousResults,
+                        tokenContainer
+                    )) = action
                     else {
                         next(action)
                         return
@@ -282,7 +284,7 @@ extension Search.ActivityMiddleware {
 
 }
 
-private extension Search.ActivityMiddleware {
+private extension Search {
 
     static func tokenContainer(for lookupResponse: PlaceLookupResponse) -> PlaceLookupTokenAttemptsContainer? {
         let nextRequestToken = try? lookupResponse.nextRequestTokenResult?.get()

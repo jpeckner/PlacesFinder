@@ -52,6 +52,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
         var mockLocationRequestReturnValue: LocationRequestResult!
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
+        var mockDependencies: Search.ActivityActionCreatorDependencies!
         var mockAppStore: SpyingStore<AppAction, AppState>!
         var mockSearchStore: SpyingStore<Search.Action, Search.State>!
 
@@ -62,28 +63,31 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockPlaceLookupService.buildInitialPageRequestTokenReturnValue = PlaceLookupPageRequestToken.stubValue()
             mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
+            mockDependencies = Search.ActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
+            )
 
             mockAppStore = SpyingStore(
                 reducer: AppStateReducer.reduce,
-                initialState: stubAppState
+                initialState: stubAppState,
+                middleware: [
+                    AppAction.makeStateReceiverMiddleware()
+                ]
             )
 
             mockSearchStore = SpyingStore(
                 reducer: Search.reduce,
                 initialState: stubSearchState,
                 middleware: [
-                    Search.ActivityMiddleware.makeInitialRequestMiddleware(appStore: mockAppStore)
+                    Search.makeInitialRequestMiddleware(appStore: mockAppStore)
                 ]
             )
         }
 
         func performTest() {
-            let dependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
-            )
             let action = Search.ActivityAction.startInitialRequest(
-                dependencies: IgnoredEquatable(dependencies),
+                dependencies: IgnoredEquatable(mockDependencies),
                 searchParams: stubSearchParams,
                 locationUpdateRequestBlock: IgnoredEquatable { resultBlock in
                     mockLocationRequestBlockCalled = true

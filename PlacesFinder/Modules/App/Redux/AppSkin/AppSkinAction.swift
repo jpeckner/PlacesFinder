@@ -31,7 +31,7 @@ enum AppSkinAction: Equatable {
     case load(GuaranteedEntityAction<AppSkin>)
 }
 
-enum AppSkinMiddleware {
+extension AppAction {
 
     static func makeRequestSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
         return { dispatch, _ in

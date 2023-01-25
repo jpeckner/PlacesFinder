@@ -975,35 +975,35 @@ internal class SettingsCellViewModelBuilderProtocolMock: SettingsCellViewModelBu
 
     // MARK: - buildDistanceCellModels
 
-    internal var buildDistanceCellModelsCallsCount = 0
-    internal var buildDistanceCellModelsCalled: Bool {
-        return buildDistanceCellModelsCallsCount > 0
+    internal var buildDistanceCellModelsCurrentDistanceTypeCallsCount = 0
+    internal var buildDistanceCellModelsCurrentDistanceTypeCalled: Bool {
+        return buildDistanceCellModelsCurrentDistanceTypeCallsCount > 0
     }
-    internal var buildDistanceCellModelsReceivedDistance: SearchDistance?
-    internal var buildDistanceCellModelsReturnValue: [SettingsCellViewModel]!
-    internal var buildDistanceCellModelsClosure: ((SearchDistance) -> [SettingsCellViewModel])?
+    internal var buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType: SearchDistance?
+    internal var buildDistanceCellModelsCurrentDistanceTypeReturnValue: [SettingsCellViewModel]!
+    internal var buildDistanceCellModelsCurrentDistanceTypeClosure: ((SearchDistance) -> [SettingsCellViewModel])?
 
-    internal func buildDistanceCellModels(_ distance: SearchDistance) -> [SettingsCellViewModel] {
-        buildDistanceCellModelsCallsCount += 1
-        buildDistanceCellModelsReceivedDistance = distance
-        return buildDistanceCellModelsClosure.map({ $0(distance) }) ?? buildDistanceCellModelsReturnValue
+    internal func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
+        buildDistanceCellModelsCurrentDistanceTypeCallsCount += 1
+        buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType = currentDistanceType
+        return buildDistanceCellModelsCurrentDistanceTypeClosure.map({ $0(currentDistanceType) }) ?? buildDistanceCellModelsCurrentDistanceTypeReturnValue
     }
 
     // MARK: - buildSortingCellModels
 
-    internal var buildSortingCellModelsCopyContentCallsCount = 0
-    internal var buildSortingCellModelsCopyContentCalled: Bool {
-        return buildSortingCellModelsCopyContentCallsCount > 0
+    internal var buildSortingCellModelsCurrentSortingCopyContentCallsCount = 0
+    internal var buildSortingCellModelsCurrentSortingCopyContentCalled: Bool {
+        return buildSortingCellModelsCurrentSortingCopyContentCallsCount > 0
     }
-    internal var buildSortingCellModelsCopyContentReceivedArguments: (sorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
-    internal var buildSortingCellModelsCopyContentReturnValue: [SettingsCellViewModel]!
-    internal var buildSortingCellModelsCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
+    internal var buildSortingCellModelsCurrentSortingCopyContentReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
+    internal var buildSortingCellModelsCurrentSortingCopyContentReturnValue: [SettingsCellViewModel]!
+    internal var buildSortingCellModelsCurrentSortingCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
 
-    internal func buildSortingCellModels(_ sorting: PlaceLookupSorting,
+    internal func buildSortingCellModels(currentSorting: PlaceLookupSorting,
                                 copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        buildSortingCellModelsCopyContentCallsCount += 1
-        buildSortingCellModelsCopyContentReceivedArguments = (sorting: sorting, copyContent: copyContent)
-        return buildSortingCellModelsCopyContentClosure.map({ $0(sorting, copyContent) }) ?? buildSortingCellModelsCopyContentReturnValue
+        buildSortingCellModelsCurrentSortingCopyContentCallsCount += 1
+        buildSortingCellModelsCurrentSortingCopyContentReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent)
+        return buildSortingCellModelsCurrentSortingCopyContentClosure.map({ $0(currentSorting, copyContent) }) ?? buildSortingCellModelsCurrentSortingCopyContentReturnValue
     }
 
 }
@@ -1076,20 +1076,19 @@ internal class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderPro
 
     // MARK: - buildViewModel
 
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount = 0
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCalled: Bool {
-        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount > 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
+        return buildViewModelSearchPreferencesStateAppCopyContentCallsCount > 0
     }
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, settingsChildRequestAction: AppAction)?
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue: SettingsViewModel!
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure: ((SearchPreferencesState, AppCopyContent, AppAction) -> SettingsViewModel)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
+    internal var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
 
     internal func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: AppAction) -> SettingsViewModel {
-        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount += 1
-        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, settingsChildRequestAction: settingsChildRequestAction)
-        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure.map({ $0(searchPreferencesState, appCopyContent, settingsChildRequestAction) }) ?? buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue
+                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+        buildViewModelSearchPreferencesStateAppCopyContentCallsCount += 1
+        buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent)
+        return buildViewModelSearchPreferencesStateAppCopyContentClosure.map({ $0(searchPreferencesState, appCopyContent) }) ?? buildViewModelSearchPreferencesStateAppCopyContentReturnValue
     }
 
 }

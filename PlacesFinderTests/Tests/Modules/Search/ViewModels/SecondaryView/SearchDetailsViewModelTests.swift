@@ -45,7 +45,7 @@ class SearchDetailsViewModelTests: QuickSpec {
         let stubInfoSection = SearchDetailsViewModel.Section.info(stubInfoCellModels)
         let stubLocationSection = SearchDetailsViewModel.Section.location([.mapCoordinate(.stubValue())])
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var sut: SearchDetailsViewModel!
 
         beforeEach {
@@ -54,7 +54,7 @@ class SearchDetailsViewModelTests: QuickSpec {
             sut = SearchDetailsViewModel(placeName: "stubPlaceName",
                                          sections: [stubInfoSection, stubLocationSection],
                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                         removeDetailedEntityAction: StubViewModelAction.removeDetailedEntityAction)
+                                         removeDetailedEntityAction: .searchActivity(.removeDetailedEntity))
         }
 
         describe("sectionsCount") {

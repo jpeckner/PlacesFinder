@@ -30,8 +30,8 @@ import SwiftDuxTestComponents
 extension TestDispatchingStoreProtocol {
 
     var dispatchedSubmittedParams: SearchParams? {
-        let dispatchedAction = dispatchedActions.last as? Search.ActivityAction
-        guard case let .subsequentRequest(submittedParams, _, _, _)? = dispatchedAction else {
+        let dispatchedAction = dispatchedActions.last as? Search.Action
+        guard case let .searchActivity(.subsequentRequest(submittedParams, _, _, _))? = dispatchedAction else {
             return nil
         }
 
@@ -39,8 +39,8 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedPageAction: IntermediateStepLoadAction<Search.PageRequestError>? {
-        let dispatchedAction = dispatchedActions.last as? Search.ActivityAction
-        guard case let .subsequentRequest(_, pageAction, _, _)? = dispatchedAction else {
+        let dispatchedAction = dispatchedActions.last as? Search.Action
+        guard case let .searchActivity(.subsequentRequest(_, pageAction, _, _))? = dispatchedAction else {
             return nil
         }
 
@@ -48,8 +48,8 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedEntities: NonEmptyArray<SearchEntityModel>? {
-        let dispatchedAction = dispatchedActions.last as? Search.ActivityAction
-        guard case let .subsequentRequest(_, _, entities, _)? = dispatchedAction else {
+        let dispatchedAction = dispatchedActions.last as? Search.Action
+        guard case let .searchActivity(.subsequentRequest(_, _, entities, _))? = dispatchedAction else {
             return nil
         }
 
@@ -57,8 +57,8 @@ extension TestDispatchingStoreProtocol {
     }
 
     var dispatchedNextRequestToken: PlaceLookupTokenAttemptsContainer? {
-        let dispatchedAction = dispatchedActions.last as? Search.ActivityAction
-        guard case let .subsequentRequest(_, _, _, nextRequestToken)? = dispatchedAction else {
+        let dispatchedAction = dispatchedActions.last as? Search.Action
+        guard case let .searchActivity(.subsequentRequest(_, _, _, nextRequestToken))? = dispatchedAction else {
             return nil
         }
 
