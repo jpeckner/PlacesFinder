@@ -32,7 +32,7 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
    ```
    
    The `generate_placesfinder` lane auto-generates all of the Sourcery, CoordiNode, config, and other files for the app. After running it, you'll see your key inserted into AppConfig.plist (be careful not to commit it to Git).
-1. Open `PlacesFinder.xcworkspace` in Xcode 12.0 or later.
+1. Open `PlacesFinder.xcworkspace` in Xcode 13.3 or later.
 1. Build and run PlacesFinder; searching will correctly display results. (The app will also run without a valid API key, but searching won't work.)
 
    > NOTE: an app intended for App Store deployment (which PlacesFinder is not!) should NEVER bundle or be sent a globally-used private key. Instead, the app's own backend should manage private keys for external services such as Yelp, and provide authenticated client apps with limited-use tokens (such as OAuth tokens).
@@ -40,14 +40,15 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 ### Deep Linking
 
 PlacesFinder supports the following custom URL schemes for deep linking:
-* `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=your_search_string_here`: opens PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
+* `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=your_search_string_here`: opens/transitions PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
    * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Thai`
    * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Greek%20food`
-* `placesFinder://com.justinpeckner.PlacesFinder/settings`: opens PlacesFinder to the Settings tab
+* `placesFinder://com.justinpeckner.PlacesFinder/settings`: opens/transitions PlacesFinder to the Settings tab
+* `placesFinder://com.justinpeckner.PlacesFinder/settingsChild`: opens/transitions PlacesFinder to the Settings child presentation view
 
 To use a deep link scheme:
 1. Install PlacesFinder-Release scheme app on an iOS simulator or device. (Note: to use PlacesFinder-Debug scheme instead, replace the link's `placesFinder://` prefix with `placesFinder-dev://`).
-1. Optional: both URL schemes work even if PlacesFinder isn't currently launched, so kill the running instance of PlacesFinder if you'd like to try this out.
+1. Optional: the above URL schemes work even if PlacesFinder isn't currently launched, so kill the running instance of PlacesFinder if you'd like to try this out.
 1. Enter one of the URLs in Safari, and tap Go.
 1. Tap Open in Safari's confirmation dialog.
 1. PlacesFinder will open to the content specified by the link.
