@@ -2,49 +2,26 @@
 lane :ci_tests do
   ENV["TEST_PLACE_LOOKUP_PORT"] = ENV["TEST_PLACE_LOOKUP_PORT"] || "8080"
   baseURL = "http://localhost:" + ENV["TEST_PLACE_LOOKUP_PORT"]
-  regenerate_all_artifacts(baseURL, "None")
-
-  shared_ci
-  coordinode_ci
-  placesfinder_ci
-end
-
-private_lane :shared_ci do
   ENV["PLACE_LOOKUP_BASE_URL"] = PLACE_LOOKUP_BASE_URL
 
-  run_tests(
-    project: SHARED_PROJECT_PATH,
-    scheme: SHARED_RELEASE_SCHEME,
-    clean: true
-  )
-end
+  regenerate_all_artifacts(baseURL, "None")
 
-private_lane :coordinode_ci do
-  run_tests(
-    project: COORDINODE_PROJECT_PATH,
-    scheme: COORDINODE_RELEASE_SCHEME,
-    clean: true
-  )
-end
-
-private_lane :placesfinder_ci do
   add_localhost_ATS_exception
 
   run_tests(
-    workspace: PLACESFINDER_WORKSPACE,
+    workspace: PLACESFINDER_WORKSPACE_PATH,
     scheme: PLACESFINDER_RELEASE_SCHEME,
     clean: true
   )
 end
 
 private_lane :add_localhost_ATS_exception do
-  infoPlistPath = path_relative_to_root(PLACESFINDER_INFOPLIST_PATH)
   set_info_plist_value(
-    path: infoPlistPath, 
+    path: PLACESFINDER_INFOPLIST_PATH, 
     key: "NSAppTransportSecurity", 
     subkey: "NSExceptionDomains", 
     value: {},
-    output_file_name: infoPlistPath
+    output_file_name: PLACESFINDER_INFOPLIST_PATH
   )
   
   update_info_plist(

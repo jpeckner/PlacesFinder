@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "E5BB6D2E-2B58-4705-8C3F-143B631CA047",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PlacesFinder.xcodeproj",
+      "identifier" : "7DC2390BD2CAC7A8AA94B274",
+      "name" : "PlacesFinder"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:PlacesFinder.xcodeproj",
+        "identifier" : "E862C24CA0323107692499A1",
+        "name" : "PlacesFinderTests"
+      }
+    }
+  ],
+  "version" : 1
+}

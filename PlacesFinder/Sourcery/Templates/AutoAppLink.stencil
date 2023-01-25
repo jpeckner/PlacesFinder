@@ -1,0 +1,69 @@
+import CoordiNode
+import SwiftDux
+
+{% macro extractEnumCaseName linkPayloadType %}{% if linkPayloadType.annotations.enumCaseName %}{{ linkPayloadType.annotations.enumCaseName }}{% else %}No enumCaseName found for {{ linkPayloadType }}!{% endif %}{% endmacro %}
+
+{% macro buildDestinationNodeCases linkPayloadType %}
+        {% for type in types.classes where (type.based.DestinationCoordinatorProtocol or type.based.DestinationRouterProtocol) %}
+        {% for key,value in type.annotations where key == "linkPayloadType" %}
+        {% for payloadType in value|toArray %}
+        {% if payloadType == linkPayloadType.name %}
+        case .{% call extractEnumCaseName linkPayloadType %}:
+            return {{ type.name }}Node.destinationNodeBox
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+{% endmacro %}
+
+enum AppLinkType: Equatable {
+{% for type in types.all where type.based.AppLinkPayloadProtocol %}
+    case {% call extractEnumCaseName type %}({{ type.name }})
+{% endfor %}
+}
+
+extension AppLinkType {
+
+    var value: AppLinkPayloadProtocol {
+        switch self {
+        {% for type in types.all where type.based.AppLinkPayloadProtocol %}
+        case let .{% call extractEnumCaseName type %}(payload):
+            return payload
+        {% endfor %}
+        }
+    }
+
+}
+
+extension AppLinkType: LinkTypeProtocol {
+
+    // Note: each type implementing AppLinkPayloadProtocol must belong to exactly one DestinationCoordinatorProtocol's
+    // linkPayloadType annotation. A compiler error here means that's not currently the case.
+    var destinationNodeBox: DestinationNodeBox {
+        switch self {
+        {% for type in types.all where type.based.AppLinkPayloadProtocol %}
+        {% call buildDestinationNodeCases type %}
+        {% endfor %}
+        }
+    }
+
+}
+
+{% for type in types.classes where (type.based.DestinationCoordinatorProtocol or type.based.DestinationRouterProtocol) and type|annotated:"linkPayloadType" %}
+extension {{ type.name }} {
+
+    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
+        _ state: AppState,
+        store: TStore
+    ) where TStore.TAction == AppAction {
+        {% for key,value in type.annotations where key == "linkPayloadType" %}
+        {% for payloadType in value|toArray %}
+        clearPayloadTypeIfPresent({{ payloadType }}.self,
+                                  state: state,
+                                  store: store)
+        {% endfor %}
+        {% endfor %}
+    }
+
+}
+{% endfor %}

@@ -2,12 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PlacesFinder/PlacesFinder.xcodeproj">
+      location = "group:PlacesFinder.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Shared/Shared.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:CoordiNode/CoordiNode.xcodeproj">
+      location = "group:PlacesFinder-Debug.xctestplan">
    </FileRef>
 </Workspace>

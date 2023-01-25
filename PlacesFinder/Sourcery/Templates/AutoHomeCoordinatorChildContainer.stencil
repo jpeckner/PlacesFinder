@@ -1,0 +1,47 @@
+import SwiftDux
+import UIKit
+
+{% for enum in types.enums where enum.name == "HomeCoordinatorImmediateDescendent" %}
+
+struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtocol> {
+    {% for case in enum.cases %}private let {{ case.name }}: TabCoordinatorProtocol
+    {% endfor %}
+
+    init<TStore>(childFactory: TFactory) where TStore.TState == AppState, TFactory.TStore == TStore {
+        {% for case in enum.cases %}self.{{ case.name }} = childFactory.buildCoordinator(for: .{{ case.name }})
+        {% endfor %}
+    }
+
+    init(
+        {% for case in enum.cases %}
+        {{ case.name }}: TabCoordinatorProtocol{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ) {
+        {% for case in enum.cases %}
+        self.{{ case.name }} = {{ case.name }}
+        {% endfor %}
+    }
+}
+
+extension HomeCoordinatorChildContainer {
+
+    var orderedChildCoordinators: [TabCoordinatorProtocol] {
+        return HomeCoordinatorImmediateDescendent.allCases.map { coordinator(for: $0) }
+    }
+
+    var orderedChildViewControllers: [UIViewController] {
+        return orderedChildCoordinators.map { $0.rootViewController }
+    }
+
+    func coordinator(for childType: HomeCoordinatorImmediateDescendent) -> TabCoordinatorProtocol {
+        switch childType {
+        {% for case in enum.cases %}
+        case .{{ case.name }}:
+            return {{ case.name }}
+        {% endfor %}
+        }
+    }
+
+}
+
+{% endfor %}

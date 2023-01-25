@@ -1,4 +1,6 @@
 
+.DS_Store
+
 ##### Fastlane #####
 
 # fastlane specific
@@ -20,39 +22,27 @@ fastlane/Build
 
 ##### Generated project files #####
 
-PlacesFinder/PlacesFinder.xcodeproj
 PlacesFinder.xcworkspace/xcshareddata
 PlacesFinder.xcworkspace/xcuserdata
-PlacesFinder/**/Info.plist
-PlacesFinder/PlacesFinder/Config/AppConfig.plist
-PlacesFinder/PlacesFinder/Settings.bundle/Root.plist
-
-##### CoordiNodeGenerator #####
-
-PlacesFinder/PlacesFinder/CoordiNode/Output
+PlacesFinder/Settings.bundle/Root.plist
 
 ##### Slather #####
 
 Slather
 
-##### Sourcery #####
+##### Cocoapods #####
 
-PlacesFinder/PlacesFinder/Sourcery/Output
-
-##### Carthage #####
-
-Carthage
+Pods
 
 ##### Settings #####
 
-PlacesFinder/PlacesFinder/Settings.bundle/Licenses
+PlacesFinder/Settings.bundle/Licenses
 
 ##### Other #####
 Breakpoints_v2.xcbkptlist
 contents.xcworkspacedata
 IDEFindNavigatorScopes.plist
 IDEWorkspaceChecks.plist
-UserDefaultsServiceIntegrationTests.swift.plist
 UserInterfaceState.xcuserstate
 xcschememanagement.plistUserInterfaceState.xcuserstate
 xcschememanagement.plist

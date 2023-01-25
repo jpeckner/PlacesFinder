@@ -1,6 +1,8 @@
 disabled_rules: # rule identifiers to exclude from running
+  - implicit_return
+  - nesting
   - trailing_comma
-  - todo
+
 opt_in_rules: # some rules are only opt-in
   - anyobject_protocol
   - array_init
@@ -67,48 +69,46 @@ opt_in_rules: # some rules are only opt-in
   - untyped_error_in_catch
   - unused_capture_list
   - unused_import
-  - unused_private_declaration
   - vertical_parameter_alignment_on_call
   - xct_specific_matcher
   - yoda_condition
   # Find all the available rules by running:
   # swiftlint rules
+
 excluded: # paths to ignore during linting. Takes precedence over `included`.
-  - CoordiNode/Carthage
-  - CoordiNode/CoordiNode/OutdatedDependencies.swift
-  - PlacesFinder/Carthage
-  - PlacesFinder/PlacesFinder/CoordiNode/Output
-  - PlacesFinder/PlacesFinder/OutdatedDependencies.swift
-  - PlacesFinder/PlacesFinder/Sourcery/Output
-  - PlacesFinder/PlacesFinderTests/Components/AutoMockable.generated.swift
-  - PlacesFinder/PlacesFinderUITests/Carthage
-  - PlacesFinder/PlacesFinderUITests/Fakes
-  - Shared/Carthage
+  - Pods
+  - PlacesFinder/CoordiNode/Output
+  - PlacesFinder/OutdatedDependencies.swift
+  - PlacesFinder/Sourcery/Output
+  - PlacesFinderTests/Components/Sourcery/Output
+  - PlacesFinderUITests/Fakes
   - Shared/Shared/OutdatedDependencies.swift
   - Shared/Shared/Sourcery/Output
-  - Shared/SharedTestComponents/AutoMockable.generated.swift
+  - Shared/SharedTestComponents/Sourcery/Output
 
-# rules that have both warning and error levels, can set just the warning level
-# implicitly
 line_length: 120
-# they can set both implicitly with an array
+
 type_body_length:
-  - 300 # warning
-  - 400 # error
-# or they can set both explicitly
+  warning: 300
+  error: 400
+
 file_length:
   warning: 500
-  error: 1200
-# naming rules can set warnings/errors for min_length and max_length
-# additionally they can set excluded names
+  error: 600
+
+function_body_length:
+  warning: 60
+
 type_name:
   min_length: 4 # only warning
   max_length: # warning and error
     warning: 40
     error: 50
+
 identifier_name:
   min_length: # only min_length
     error: 3 # only error
+
 number_separator:
   minimum_length: 5
     
