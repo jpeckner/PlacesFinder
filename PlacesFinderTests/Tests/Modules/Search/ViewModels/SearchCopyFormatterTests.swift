@@ -29,7 +29,6 @@ import SharedTestComponents
 
 class SearchCopyFormatterTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
         let stubCopyContent = SearchResultsCopyContent.stubValue()

@@ -26,17 +26,12 @@ import SharedTestComponents
 import SwiftDux
 import UIKit
 
-internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.State == AppState {
+internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
     internal var store: TStore {
         get { return underlyingStore }
         set(value) { underlyingStore = value }
     }
     internal var underlyingStore: TStore!
-    internal var listenerContainer: ListenerContainer {
-        get { return underlyingListenerContainer }
-        set(value) { underlyingListenerContainer = value }
-    }
-    internal var underlyingListenerContainer: ListenerContainer!
     internal var serviceContainer: ServiceContainer {
         get { return underlyingServiceContainer }
         set(value) { underlyingServiceContainer = value }
@@ -170,7 +165,7 @@ internal class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     }
 
 }
-internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.State == AppState {
+internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
 
     // MARK: - buildCoordinator
 
@@ -273,11 +268,11 @@ internal class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
 
 }
 internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
-    internal var actionPublisher: AnyPublisher<Action, Never> {
+    internal var actionPublisher: AnyPublisher<LocationAuthAction, Never> {
         get { return underlyingActionPublisher }
         set(value) { underlyingActionPublisher = value }
     }
-    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
+    internal var underlyingActionPublisher: AnyPublisher<LocationAuthAction, Never>!
 
     // MARK: - start
 
@@ -329,25 +324,6 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
     // MARK: - buildInitialPageRequestToken
 
-    internal var buildInitialPageRequestTokenResultsPerPageThrowableError: Error?
-    internal var buildInitialPageRequestTokenResultsPerPageCallsCount = 0
-    internal var buildInitialPageRequestTokenResultsPerPageCalled: Bool {
-        return buildInitialPageRequestTokenResultsPerPageCallsCount > 0
-    }
-    internal var buildInitialPageRequestTokenResultsPerPageReceivedArguments: (placeLookupParams: PlaceLookupParams, resultsPerPage: Int)?
-    internal var buildInitialPageRequestTokenResultsPerPageReturnValue: PlaceLookupPageRequestToken!
-    internal var buildInitialPageRequestTokenResultsPerPageClosure: ((PlaceLookupParams, Int) throws -> PlaceLookupPageRequestToken)?
-
-    internal func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
-                                      resultsPerPage: Int) throws -> PlaceLookupPageRequestToken {
-        buildInitialPageRequestTokenResultsPerPageCallsCount += 1
-        buildInitialPageRequestTokenResultsPerPageReceivedArguments = (placeLookupParams: placeLookupParams, resultsPerPage: resultsPerPage)
-        if let error = buildInitialPageRequestTokenResultsPerPageThrowableError { throw error }
-        return try buildInitialPageRequestTokenResultsPerPageClosure.map({ try $0(placeLookupParams, resultsPerPage) }) ?? buildInitialPageRequestTokenResultsPerPageReturnValue
-    }
-
-    // MARK: - buildInitialPageRequestToken
-
     internal var buildInitialPageRequestTokenThrowableError: Error?
     internal var buildInitialPageRequestTokenCallsCount = 0
     internal var buildInitialPageRequestTokenCalled: Bool {
@@ -382,11 +358,6 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
 }
 internal class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
-    internal var actionPublisher: AnyPublisher<Action, Never> {
-        get { return underlyingActionPublisher }
-        set(value) { underlyingActionPublisher = value }
-    }
-    internal var underlyingActionPublisher: AnyPublisher<Action, Never>!
 
     // MARK: - start
 
@@ -438,11 +409,11 @@ internal class ReachabilityProtocolMock: ReachabilityProtocol {
 
 }
 internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
-    internal var removeDetailedEntityAction: Action {
+    internal var removeDetailedEntityAction: Search.ActivityAction {
         get { return underlyingRemoveDetailedEntityAction }
         set(value) { underlyingRemoveDetailedEntityAction = value }
     }
-    internal var underlyingRemoveDetailedEntityAction: Action!
+    internal var underlyingRemoveDetailedEntityAction: Search.ActivityAction!
 
     // MARK: - detailEntityAction
 
@@ -451,10 +422,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return detailEntityActionCallsCount > 0
     }
     internal var detailEntityActionReceivedEntity: SearchEntityModel?
-    internal var detailEntityActionReturnValue: Action!
-    internal var detailEntityActionClosure: ((SearchEntityModel) -> Action)?
+    internal var detailEntityActionReturnValue: Search.ActivityAction!
+    internal var detailEntityActionClosure: ((SearchEntityModel) -> Search.ActivityAction)?
 
-    internal func detailEntityAction(_ entity: SearchEntityModel) -> Action {
+    internal func detailEntityAction(_ entity: SearchEntityModel) -> Search.ActivityAction {
         detailEntityActionCallsCount += 1
         detailEntityActionReceivedEntity = entity
         return detailEntityActionClosure.map({ $0(entity) }) ?? detailEntityActionReturnValue
@@ -467,11 +438,11 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return initialRequestActionLocationUpdateRequestBlockCallsCount > 0
     }
     internal var initialRequestActionLocationUpdateRequestBlockReceivedArguments: (searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Action!
-    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Action)?
+    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Search.ActivityAction!
+    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Search.ActivityAction)?
 
     internal func initialRequestAction(_ searchParams: SearchParams,
-                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Action {
+                              locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.ActivityAction {
         initialRequestActionLocationUpdateRequestBlockCallsCount += 1
         initialRequestActionLocationUpdateRequestBlockReceivedArguments = (searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock)
         return initialRequestActionLocationUpdateRequestBlockClosure.map({ $0(searchParams, locationUpdateRequestBlock) }) ?? initialRequestActionLocationUpdateRequestBlockReturnValue
@@ -485,12 +456,12 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return subsequentRequestActionAllEntitiesTokenContainerCallsCount > 0
     }
     internal var subsequentRequestActionAllEntitiesTokenContainerReceivedArguments: (searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
-    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Action!
-    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Action)?
+    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Search.ActivityAction!
+    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction)?
 
     internal func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
-                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Action {
+                                 tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
         subsequentRequestActionAllEntitiesTokenContainerCallsCount += 1
         subsequentRequestActionAllEntitiesTokenContainerReceivedArguments = (searchParams: searchParams, allEntities: allEntities, tokenContainer: tokenContainer)
         if let error = subsequentRequestActionAllEntitiesTokenContainerThrowableError { throw error }
@@ -504,10 +475,10 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
         return updateEditingActionCallsCount > 0
     }
     internal var updateEditingActionReceivedEditEvent: SearchBarEditEvent?
-    internal var updateEditingActionReturnValue: Action!
-    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Action)?
+    internal var updateEditingActionReturnValue: Search.ActivityAction!
+    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Search.ActivityAction)?
 
-    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Action {
+    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.ActivityAction {
         updateEditingActionCallsCount += 1
         updateEditingActionReceivedEditEvent = editEvent
         return updateEditingActionClosure.map({ $0(editEvent) }) ?? updateEditingActionReturnValue
@@ -515,26 +486,22 @@ internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismP
 
 }
 internal class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
-    internal var presentationKeyPaths: Set<EquatableKeyPath<AppState>> {
-        get { return underlyingPresentationKeyPaths }
-        set(value) { underlyingPresentationKeyPaths = value }
-    }
-    internal var underlyingPresentationKeyPaths: Set<EquatableKeyPath<AppState>>!
 
     // MARK: - presentationType
 
-    internal var presentationTypeForCallsCount = 0
-    internal var presentationTypeForCalled: Bool {
-        return presentationTypeForCallsCount > 0
+    internal var presentationTypeLocationAuthStateReachabilityStateCallsCount = 0
+    internal var presentationTypeLocationAuthStateReachabilityStateCalled: Bool {
+        return presentationTypeLocationAuthStateReachabilityStateCallsCount > 0
     }
-    internal var presentationTypeForReceivedState: AppState?
-    internal var presentationTypeForReturnValue: SearchPresentationType!
-    internal var presentationTypeForClosure: ((AppState) -> SearchPresentationType)?
+    internal var presentationTypeLocationAuthStateReachabilityStateReceivedArguments: (locationAuthState: LocationAuthState, reachabilityState: ReachabilityState)?
+    internal var presentationTypeLocationAuthStateReachabilityStateReturnValue: SearchPresentationType!
+    internal var presentationTypeLocationAuthStateReachabilityStateClosure: ((LocationAuthState, ReachabilityState) -> SearchPresentationType)?
 
-    internal func presentationType(for state: AppState) -> SearchPresentationType {
-        presentationTypeForCallsCount += 1
-        presentationTypeForReceivedState = state
-        return presentationTypeForClosure.map({ $0(state) }) ?? presentationTypeForReturnValue
+    internal func presentationType(locationAuthState: LocationAuthState,
+                          reachabilityState: ReachabilityState) -> SearchPresentationType {
+        presentationTypeLocationAuthStateReachabilityStateCallsCount += 1
+        presentationTypeLocationAuthStateReachabilityStateReceivedArguments = (locationAuthState: locationAuthState, reachabilityState: reachabilityState)
+        return presentationTypeLocationAuthStateReachabilityStateClosure.map({ $0(locationAuthState, reachabilityState) }) ?? presentationTypeLocationAuthStateReachabilityStateReturnValue
     }
 
 }
@@ -652,11 +619,11 @@ internal class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewCon
     internal var buildViewContextAppCopyContentCalled: Bool {
         return buildViewContextAppCopyContentCallsCount > 0
     }
-    internal var buildViewContextAppCopyContentReceivedArguments: (searchActivityState: SearchActivityState, appCopyContent: AppCopyContent)?
+    internal var buildViewContextAppCopyContentReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent)?
     internal var buildViewContextAppCopyContentReturnValue: SearchDetailsViewContext?
-    internal var buildViewContextAppCopyContentClosure: ((SearchActivityState, AppCopyContent) -> SearchDetailsViewContext?)?
+    internal var buildViewContextAppCopyContentClosure: ((Search.ActivityState, AppCopyContent) -> SearchDetailsViewContext?)?
 
-    internal func buildViewContext(_ searchActivityState: SearchActivityState,
+    internal func buildViewContext(_ searchActivityState: Search.ActivityState,
                           appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
         buildViewContextAppCopyContentCallsCount += 1
         buildViewContextAppCopyContentReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent)
@@ -790,11 +757,11 @@ internal class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderPro
     internal var buildChildAppCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildChildAppCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockReceivedArguments: (loadState: SearchLoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildChildAppCopyContentLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal var buildChildAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupChild!
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockClosure: ((SearchLoadState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
+    internal var buildChildAppCopyContentLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
 
-    internal func buildChild(_ loadState: SearchLoadState,
+    internal func buildChild(_ loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         buildChildAppCopyContentLocationUpdateRequestBlockCallsCount += 1
@@ -811,11 +778,11 @@ internal class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBu
     internal var buildViewModelAppCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchActivityState: SearchActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockClosure: ((SearchActivityState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
+    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
 
-    internal func buildViewModel(_ searchActivityState: SearchActivityState,
+    internal func buildViewModel(_ searchActivityState: Search.ActivityState,
                         appCopyContent: AppCopyContent,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount += 1
@@ -968,15 +935,15 @@ internal class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModel
     internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
     internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
+    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Search.Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
 
     internal func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
-                        actionSubscriber: AnySubscriber<Action, Never>,
+                        actionSubscriber: AnySubscriber<Search.Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount += 1
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock)
@@ -1008,35 +975,35 @@ internal class SettingsCellViewModelBuilderProtocolMock: SettingsCellViewModelBu
 
     // MARK: - buildDistanceCellModels
 
-    internal var buildDistanceCellModelsCallsCount = 0
-    internal var buildDistanceCellModelsCalled: Bool {
-        return buildDistanceCellModelsCallsCount > 0
+    internal var buildDistanceCellModelsCurrentDistanceTypeCallsCount = 0
+    internal var buildDistanceCellModelsCurrentDistanceTypeCalled: Bool {
+        return buildDistanceCellModelsCurrentDistanceTypeCallsCount > 0
     }
-    internal var buildDistanceCellModelsReceivedDistance: SearchDistance?
-    internal var buildDistanceCellModelsReturnValue: [SettingsCellViewModel]!
-    internal var buildDistanceCellModelsClosure: ((SearchDistance) -> [SettingsCellViewModel])?
+    internal var buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType: SearchDistance?
+    internal var buildDistanceCellModelsCurrentDistanceTypeReturnValue: [SettingsCellViewModel]!
+    internal var buildDistanceCellModelsCurrentDistanceTypeClosure: ((SearchDistance) -> [SettingsCellViewModel])?
 
-    internal func buildDistanceCellModels(_ distance: SearchDistance) -> [SettingsCellViewModel] {
-        buildDistanceCellModelsCallsCount += 1
-        buildDistanceCellModelsReceivedDistance = distance
-        return buildDistanceCellModelsClosure.map({ $0(distance) }) ?? buildDistanceCellModelsReturnValue
+    internal func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
+        buildDistanceCellModelsCurrentDistanceTypeCallsCount += 1
+        buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType = currentDistanceType
+        return buildDistanceCellModelsCurrentDistanceTypeClosure.map({ $0(currentDistanceType) }) ?? buildDistanceCellModelsCurrentDistanceTypeReturnValue
     }
 
     // MARK: - buildSortingCellModels
 
-    internal var buildSortingCellModelsCopyContentCallsCount = 0
-    internal var buildSortingCellModelsCopyContentCalled: Bool {
-        return buildSortingCellModelsCopyContentCallsCount > 0
+    internal var buildSortingCellModelsCurrentSortingCopyContentCallsCount = 0
+    internal var buildSortingCellModelsCurrentSortingCopyContentCalled: Bool {
+        return buildSortingCellModelsCurrentSortingCopyContentCallsCount > 0
     }
-    internal var buildSortingCellModelsCopyContentReceivedArguments: (sorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
-    internal var buildSortingCellModelsCopyContentReturnValue: [SettingsCellViewModel]!
-    internal var buildSortingCellModelsCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
+    internal var buildSortingCellModelsCurrentSortingCopyContentReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
+    internal var buildSortingCellModelsCurrentSortingCopyContentReturnValue: [SettingsCellViewModel]!
+    internal var buildSortingCellModelsCurrentSortingCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
 
-    internal func buildSortingCellModels(_ sorting: PlaceLookupSorting,
+    internal func buildSortingCellModels(currentSorting: PlaceLookupSorting,
                                 copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        buildSortingCellModelsCopyContentCallsCount += 1
-        buildSortingCellModelsCopyContentReceivedArguments = (sorting: sorting, copyContent: copyContent)
-        return buildSortingCellModelsCopyContentClosure.map({ $0(sorting, copyContent) }) ?? buildSortingCellModelsCopyContentReturnValue
+        buildSortingCellModelsCurrentSortingCopyContentCallsCount += 1
+        buildSortingCellModelsCurrentSortingCopyContentReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent)
+        return buildSortingCellModelsCurrentSortingCopyContentClosure.map({ $0(currentSorting, copyContent) }) ?? buildSortingCellModelsCurrentSortingCopyContentReturnValue
     }
 
 }
@@ -1109,20 +1076,19 @@ internal class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderPro
 
     // MARK: - buildViewModel
 
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount = 0
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCalled: Bool {
-        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount > 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
+    internal var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
+        return buildViewModelSearchPreferencesStateAppCopyContentCallsCount > 0
     }
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, settingsChildRequestAction: Action)?
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue: SettingsViewModel!
-    internal var buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure: ((SearchPreferencesState, AppCopyContent, Action) -> SettingsViewModel)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
+    internal var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
+    internal var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
 
     internal func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        settingsChildRequestAction: Action) -> SettingsViewModel {
-        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionCallsCount += 1
-        buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, settingsChildRequestAction: settingsChildRequestAction)
-        return buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionClosure.map({ $0(searchPreferencesState, appCopyContent, settingsChildRequestAction) }) ?? buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue
+                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+        buildViewModelSearchPreferencesStateAppCopyContentCallsCount += 1
+        buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent)
+        return buildViewModelSearchPreferencesStateAppCopyContentClosure.map({ $0(searchPreferencesState, appCopyContent) }) ?? buildViewModelSearchPreferencesStateAppCopyContentReturnValue
     }
 
 }

@@ -34,10 +34,9 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
 
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementFormatter: MeasurementFormatterProtocolMock!
 
         var sut: SettingsCellViewModelBuilder!
@@ -66,11 +65,11 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
             }
 
             func testMeasurmentSystem(_ searchDistances: [SearchDistance]) {
-                for (caseIdx, currentDistance) in searchDistances.enumerated() {
-                    context("when the current search distance is .\(currentDistance)") {
+                for (caseIdx, currentDistanceType) in searchDistances.enumerated() {
+                    context("when the current search distance is .\(currentDistanceType)") {
 
                         beforeEach {
-                            results = sut.buildDistanceCellModels(currentDistance)
+                            results = sut.buildDistanceCellModels(currentDistanceType: currentDistanceType)
                         }
 
                         it("has exactly one cell model per sorting option") {
@@ -98,7 +97,7 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                         it("dispatches the correct .setSorting action when dispatchAction() is called") {
                             expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                             results[caseIdx].dispatchAction()
-                            expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setDistance(currentDistance)
+                            expect(mockActionSubscriber.receivedInputs.first) == .setDistance(currentDistanceType)
                         }
 
                     }
@@ -125,12 +124,12 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
 
             var results: [SettingsCellViewModel]!
 
-            for (caseIdx, currentSortingCase) in PlaceLookupSorting.allCases.enumerated() {
+            for (caseIdx, currentSorting) in PlaceLookupSorting.allCases.enumerated() {
 
-                context("when the current PlaceLookupSorting case is .\(currentSortingCase)") {
+                context("when the current PlaceLookupSorting case is .\(currentSorting)") {
 
                     beforeEach {
-                        results = sut.buildSortingCellModels(currentSortingCase,
+                        results = sut.buildSortingCellModels(currentSorting: currentSorting,
                                                              copyContent: stubCopyContent)
                     }
 
@@ -157,7 +156,7 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     it("dispatches the correct .setSorting action when dispatchAction() is called") {
                         expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                         results[caseIdx].dispatchAction()
-                        expect(mockActionSubscriber.receivedInputs.first as? SearchPreferencesAction) == .setSorting(currentSortingCase)
+                        expect(mockActionSubscriber.receivedInputs.first) == .setSorting(currentSorting)
                     }
 
                 }

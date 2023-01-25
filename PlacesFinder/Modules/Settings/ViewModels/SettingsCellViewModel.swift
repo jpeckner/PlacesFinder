@@ -30,13 +30,13 @@ import SwiftDux
 struct SettingsCellViewModel: Equatable {
     let title: String
     let isSelected: Bool
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
-    private let action: IgnoredEquatable<Action>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<SearchPreferencesAction, Never>>
+    private let action: IgnoredEquatable<SearchPreferencesAction>
 
     init(title: String,
          isSelected: Bool,
-         actionSubscriber: AnySubscriber<Action, Never>,
-         action: Action) {
+         actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
+         action: SearchPreferencesAction) {
         self.title = title
         self.isSelected = isSelected
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
@@ -55,9 +55,9 @@ extension SettingsCellViewModel {
 // MARK: SettingsCellViewModelBuilder
 
 protocol SettingsCellViewModelBuilderProtocol: AutoMockable {
-    func buildDistanceCellModels(_ distance: SearchDistance) -> [SettingsCellViewModel]
+    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel]
 
-    func buildSortingCellModels(_ sorting: PlaceLookupSorting,
+    func buildSortingCellModels(currentSorting: PlaceLookupSorting,
                                 copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel]
 }
 
@@ -65,10 +65,10 @@ class SettingsCellViewModelBuilder {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
     private let measurementFormatter: MeasurementFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
          measurementFormatter: MeasurementFormatterProtocol) {
         self.actionSubscriber = actionSubscriber
         self.measurementFormatter = measurementFormatter
@@ -78,32 +78,32 @@ class SettingsCellViewModelBuilder {
 
 extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
 
-    func buildDistanceCellModels(_ currentSearchDistance: SearchDistance) -> [SettingsCellViewModel] {
-        switch currentSearchDistance {
+    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
+        switch currentDistanceType {
         case let .imperial(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance) { .imperial($0) }
+            return buildModels(currentlySelectedDistance: currentlySelectedDistance) { .imperial($0) }
         case let .metric(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance) { .metric($0) }
+            return buildModels(currentlySelectedDistance: currentlySelectedDistance) { .metric($0) }
         }
     }
 
-    private func buildModels<T: SearchDistanceType>(_ currentlySelectedDistance: T,
+    private func buildModels<T: SearchDistanceType>(currentlySelectedDistance: T,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
-        return T.allCases.map {
-            SettingsCellViewModel(title: measurementFormatter.string(from: $0.measurement),
-                                  isSelected: currentlySelectedDistance == $0,
+        return T.allCases.map { distance in
+            SettingsCellViewModel(title: measurementFormatter.string(from: distance.measurement),
+                                  isSelected: currentlySelectedDistance == distance,
                                   actionSubscriber: actionSubscriber,
-                                  action: SearchPreferencesAction.setDistance(distanceBlock($0)))
+                                  action: .setDistance(distanceBlock(distance)))
         }
     }
 
-    func buildSortingCellModels(_ sorting: PlaceLookupSorting,
+    func buildSortingCellModels(currentSorting: PlaceLookupSorting,
                                 copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        return PlaceLookupSorting.allCases.map {
-            SettingsCellViewModel(title: copyContent.title($0),
-                                  isSelected: sorting == $0,
+        return PlaceLookupSorting.allCases.map { sorting in
+            SettingsCellViewModel(title: copyContent.title(sorting),
+                                  isSelected: currentSorting == sorting,
                                   actionSubscriber: actionSubscriber,
-                                  action: SearchPreferencesAction.setSorting($0))
+                                  action: .setSorting(sorting))
         }
     }
 

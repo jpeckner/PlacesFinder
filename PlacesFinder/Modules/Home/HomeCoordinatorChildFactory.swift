@@ -28,18 +28,17 @@ import Shared
 import SwiftDux
 
 // sourcery: genericTypes = "TStore: StoreProtocol"
-// sourcery: genericConstraints = "TStore.State == AppState"
+// sourcery: genericConstraints = "TStore.TState == AppState, TStore.TAction == AppAction"
 protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
-    associatedtype TStore: StoreProtocol where TStore.State == AppState
+    associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
 }
 
-class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == AppState {
+class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
     private let store: TStore
     private let listenerContainer: ListenerContainer
     private let serviceContainer: ServiceContainer
-    private let actionSubscriber: AnySubscriber<Action, Never>
 
     init(store: TStore,
          listenerContainer: ListenerContainer,
@@ -47,7 +46,6 @@ class HomeCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == A
         self.store = store
         self.listenerContainer = listenerContainer
         self.serviceContainer = serviceContainer
-        self.actionSubscriber = AnySubscriber(ActionSubscriber(store: store))
     }
 }
 
@@ -66,13 +64,32 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
     }
 
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        let appStoreRelay = SubstatesSubscriberRelay(
+            store: store,
+            equatableKeyPaths: Search.appStoreKeyPaths
+        )
+
+        let initialState = Search.State()
+        let searchStore = Search.SearchStore(
+            reducer: Search.reduce,
+            initialState: initialState,
+            middleware: [
+                Search.makeStateReceiverMiddleware(),
+                Search.makeInitialRequestMiddleware(appStore: store),
+                Search.makeSubsequentRequestMiddleware()
+            ]
+        )
+        let searchStoreRelay = StoreSubscriptionRelay(store: searchStore)
+
+        let searchActionSubscriber = AnySubscriber(ActionSubscriber(store: searchStore))
+
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
         let statePrism = SearchActivityStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
                                                   locationRequestHandler: serviceContainer.locationRequestHandler)
 
         let searchEntityModelBuilder = SearchEntityModelBuilder()
-        let actionCreatorDependencies = SearchActivityActionCreatorDependencies(
+        let actionCreatorDependencies = Search.ActivityActionCreatorDependencies(
             placeLookupService: serviceContainer.placeLookupService,
             searchEntityModelBuilder: searchEntityModelBuilder
         )
@@ -85,14 +102,14 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
         let lookupViewModelBuilder = SearchLookupViewModelBuilder(
-            actionSubscriber: actionSubscriber,
+            actionSubscriber: searchActionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
             contentViewModelBuilder: contentViewModelBuilder,
             instructionsViewModelBuilder: instructionsViewModelBuilder
         )
 
-        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: actionSubscriber,
+        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: searchActionSubscriber,
                                                                     actionPrism: actionPrism,
                                                                     urlOpenerService: serviceContainer.urlOpenerService,
                                                                     copyFormatter: serviceContainer.searchCopyFormatter)
@@ -102,7 +119,8 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
         let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
 
-        return SearchCoordinator(store: store,
+        return SearchCoordinator(appStoreRelay: appStoreRelay,
+                                 searchStoreRelay: searchStoreRelay,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  statePrism: statePrism,
@@ -114,17 +132,29 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
     }
 
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
+        // swiftlint:disable:next trailing_closure
+        let searchPreferencesActionSubscriber = AnySubscriber<SearchPreferencesAction, Never>(
+            receiveValue: { [weak store] searchPreferencesAction -> Subscribers.Demand in
+                store?.dispatch(.searchPreferences(searchPreferencesAction))
+                return .unlimited
+            }
+        )
+
         let presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
 
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(actionSubscriber: actionSubscriber)
+        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(
+            actionSubscriber: searchPreferencesActionSubscriber
+        )
         let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
-        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(actionSubscriber: actionSubscriber,
-                                                                        measurementFormatter: measurementFormatter)
+        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(
+            actionSubscriber: searchPreferencesActionSubscriber,
+            measurementFormatter: measurementFormatter
+        )
         let settingsViewModelBuilder = SettingsViewModelBuilder(
-            actionSubscriber: actionSubscriber,
+            actionSubscriber: searchPreferencesActionSubscriber,
             measurementSystemHeaderViewModelBuilder: unitsHeaderViewModelBuilder,
             plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
             settingsCellViewModelBuilder: settingsCellViewModelBuilder
@@ -156,7 +186,7 @@ private extension HomeCoordinatorImmediateDescendent {
 
 private extension SearchLookupViewModelBuilder {
 
-    convenience init(actionSubscriber: AnySubscriber<Action, Never>,
+    convenience init(actionSubscriber: AnySubscriber<Search.Action, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
@@ -168,7 +198,6 @@ private extension SearchLookupViewModelBuilder {
         let resultCellModelBuilder = SearchResultCellModelBuilder(copyFormatter: copyFormatter)
         let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                   actionPrism: actionPrism,
-                                                                  copyFormatter: copyFormatter,
                                                                   resultCellModelBuilder: resultCellModelBuilder)
         let resultsViewModelBuilder = SearchResultsViewModelBuilder(actionPrism: actionPrism,
                                                                     resultViewModelBuilder: resultViewModelBuilder)
@@ -182,8 +211,7 @@ private extension SearchLookupViewModelBuilder {
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
                                                     retryViewModelBuilder: retryViewModelBuilder)
 
-        self.init(actionPrism: actionPrism,
-                  inputViewModelBuilder: inputViewModelBuilder,
+        self.init(inputViewModelBuilder: inputViewModelBuilder,
                   childBuilder: childBuilder)
     }
 

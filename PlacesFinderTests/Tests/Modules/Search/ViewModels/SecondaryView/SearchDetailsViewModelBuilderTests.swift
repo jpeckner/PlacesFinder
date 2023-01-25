@@ -31,10 +31,6 @@ import SwiftDux
 
 class SearchDetailsViewModelBuilderTests: QuickSpec {
 
-    private enum StubViewModelAction: Action {
-        case removeDetailedEntityAction
-    }
-
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
@@ -43,7 +39,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
@@ -56,7 +52,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.removeDetailedEntityAction = StubViewModelAction.removeDetailedEntityAction
+            mockSearchActivityActionPrism.removeDetailedEntityAction = .removeDetailedEntity
 
             mockURLOpenerService = URLOpenerServiceProtocolMock()
 
@@ -255,7 +251,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .removeDetailedEntityAction
+                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(.removeDetailedEntity)
             }
         }
 

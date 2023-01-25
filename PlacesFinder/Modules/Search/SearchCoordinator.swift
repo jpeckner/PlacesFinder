@@ -22,6 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import CoordiNode
 import Shared
 import SwiftDux
@@ -29,9 +30,14 @@ import UIKit
 
 // sourcery: linkPayloadType = "EmptySearchLinkPayload"
 // sourcery: linkPayloadType = "SearchLinkPayload"
-class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class SearchCoordinator<
+    TAppStore: StoreProtocol,
+    TSearchStore: StoreProtocol
+> where TAppStore.TAction == AppAction, TAppStore.TState == AppState,
+        TSearchStore.TAction == Search.Action, TSearchStore.TState == Search.State {
 
-    private let store: TStore
+    private let appStoreRelay: SubstatesSubscriberRelay<TAppStore>
+    private let searchStoreRelay: StoreSubscriptionRelay<TSearchStore>
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let statePrism: SearchActivityStatePrismProtocol
@@ -41,7 +47,10 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
-    init(store: TStore,
+    private var cancellables: Set<Combine.AnyCancellable> = []
+
+    init(appStoreRelay: SubstatesSubscriberRelay<TAppStore>,
+         searchStoreRelay: StoreSubscriptionRelay<TSearchStore>,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          statePrism: SearchActivityStatePrismProtocol,
@@ -50,7 +59,8 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
          navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
-        self.store = store
+        self.appStoreRelay = appStoreRelay
+        self.searchStoreRelay = searchStoreRelay
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
         self.statePrism = statePrism
@@ -60,10 +70,37 @@ class SearchCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
         self.detailsViewContextBuilder = detailsViewContextBuilder
         self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
 
-        let keyPaths = statePrism.presentationKeyPaths.union([
-            EquatableKeyPath(\AppState.routerState),
-        ])
-        store.subscribe(self, equatableKeyPaths: keyPaths)
+        setupStoreRelays()
+    }
+
+    private func setupStoreRelays() {
+        appStoreRelay.publisher
+            .sink { [weak self] update in
+                self?.searchStoreRelay.store.dispatch(.receiveState(IgnoredEquatable { [weak self] searchState in
+                    self?.handleStateUpdate(appState: update.state,
+                                            searchState: searchState)
+                }))
+            }
+            .store(in: &cancellables)
+
+        searchStoreRelay.publisher
+            .sink { [weak self] searchState in
+                self?.appStoreRelay.store.dispatch(.receiveState(IgnoredEquatable { [weak self] appState in
+                    self?.handleStateUpdate(appState: appState,
+                                            searchState: searchState)
+                }))
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handleStateUpdate(appState: AppState,
+                                   searchState: Search.State) {
+        DispatchQueue.main.async { [weak self] in
+            self?.presentViews(appState: appState,
+                               searchState: searchState)
+
+            self?.processLinkPayload(appState: appState)
+        }
     }
 
 }
@@ -80,58 +117,48 @@ extension SearchCoordinator: TabCoordinatorProtocol {
 
 }
 
-extension SearchCoordinator: SubstatesSubscriber {
-
-    typealias StoreState = AppState
-
-    func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        presentViews(state,
-                     updatedSubstates: updatedSubstates)
-
-        processLinkPayload(state)
-    }
-
-}
-
 private extension SearchCoordinator {
 
-    func presentViews(_ state: AppState,
-                      updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        guard !updatedSubstates.isDisjoint(with: statePrism.presentationKeyPaths.partialKeyPaths) else { return }
-
-        let appCopyContent = state.appCopyContentState.copyContent
+    func presentViews(appState: AppState,
+                      searchState: Search.State) {
+        let appCopyContent = appState.appCopyContentState.copyContent
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
-        let appSkin = state.appSkinState.currentValue
+        let appSkin = appState.appSkinState.currentValue
+        let presentationType = statePrism.presentationType(locationAuthState: appState.locationAuthState,
+                                                           reachabilityState: appState.reachabilityState)
 
-        switch statePrism.presentationType(for: state) {
+        switch presentationType {
         case .noInternet:
             let viewModel = SearchNoInternetViewModel(copyContent: appCopyContent.searchNoInternet)
             presenter.loadNoInternetViews(viewModel,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)
+
         case .locationServicesDisabled:
             let viewModel = SearchLocationDisabledViewModel(urlOpenerService: urlOpenerService,
                                                             copyContent: appCopyContent.searchLocationDisabled)
             presenter.loadLocationServicesDisabledViews(viewModel,
                                                         titleViewModel: titleViewModel,
                                                         appSkin: appSkin)
+
         case let .search(authType):
             switch authType.value {
             case .locationServicesNotDetermined:
-                let searchLinkPayload = currentNavigatingToDestinationPayload(SearchLinkPayload.self,
-                                                                              state: state)
-                let viewModel = backgroundViewModelBuilder.buildViewModel(searchLinkPayload?.keywords,
-                                                                          appCopyContent: appCopyContent)
+                let viewModel = backgroundViewModelBuilder.buildViewModel(
+                    searchState.searchActivityState.inputParams.params?.keywords,
+                    appCopyContent: appCopyContent
+                )
                 presenter.loadSearchBackgroundView(viewModel,
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
+
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let viewModel = lookupViewModelBuilder.buildViewModel(
-                    state.searchActivityState,
+                    searchState.searchActivityState,
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
-                let detailsContext = detailsViewContextBuilder.buildViewContext(state.searchActivityState,
+                let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,
                                                                                 appCopyContent: appCopyContent)
 
                 presenter.loadSearchViews(viewModel,
@@ -146,27 +173,35 @@ private extension SearchCoordinator {
 
 private extension SearchCoordinator {
 
-    func processLinkPayload(_ state: AppState) {
-        switch statePrism.presentationType(for: state) {
+    func processLinkPayload(appState: AppState) {
+        switch statePrism.presentationType(locationAuthState: appState.locationAuthState,
+                                           reachabilityState: appState.reachabilityState) {
         case .noInternet,
              .locationServicesDisabled:
-            clearAllAssociatedLinkTypes(state, store: store)
+            clearAllAssociatedLinkTypes(appState,
+                                        store: appStoreRelay.store)
+
         case let .search(authType):
             switch authType.value {
             case let .locationServicesNotDetermined(authBlock):
-                guard isCurrentCoordinator(state) else { return }
+                // For clearer UX, only display the location auth block when this is the current coordinator
+                guard isCurrentCoordinator(appState) else {
+                    return
+                }
 
-                // Payload (if any for this coordinator) will be processed and cleared on the next state update
                 authBlock()
+
             case let .locationServicesEnabled(requestBlock):
                 let searchLinkPayload = currentPayloadToBeCleared(SearchLinkPayload.self,
-                                                                  state: state)
-                clearAllAssociatedLinkTypes(state, store: store)
+                                                                  state: appState)
+                clearAllAssociatedLinkTypes(appState,
+                                            store: appStoreRelay.store)
 
-                searchLinkPayload.map {
-                    let params = SearchParams(keywords: $0.keywords)
-                    store.dispatch(actionPrism.initialRequestAction(params,
-                                                                    locationUpdateRequestBlock: requestBlock))
+                searchLinkPayload.map { payload in
+                    let params = SearchParams(keywords: payload.keywords)
+                    let action = actionPrism.initialRequestAction(params,
+                                                                  locationUpdateRequestBlock: requestBlock)
+                    searchStoreRelay.store.dispatch(.searchActivity(action))
                 }
             }
         }

@@ -26,6 +26,7 @@ import Shared
 import UIKit
 
 protocol SettingsChildViewControllerDelegate: AnyObject {
+    // periphery:ignore:parameters viewController
     func viewControllerWasDismissed(_ viewController: SettingsChildViewController)
 }
 

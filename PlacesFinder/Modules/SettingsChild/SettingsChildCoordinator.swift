@@ -31,7 +31,7 @@ import UIKit
 struct SettingsChildLinkPayload: AppLinkPayloadProtocol, Equatable {}
 
 // sourcery: linkPayloadType = "SettingsChildLinkPayload"
-class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let viewController: SettingsChildViewController

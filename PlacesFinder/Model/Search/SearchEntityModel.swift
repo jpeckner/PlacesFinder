@@ -25,9 +25,7 @@
 import Foundation
 import Shared
 
-// swiftlint:disable identifier_name
 struct SearchEntityModel: Equatable {
-    let id: NonEmptyString
     let name: NonEmptyString
     let url: URL
     let ratings: SearchRatings

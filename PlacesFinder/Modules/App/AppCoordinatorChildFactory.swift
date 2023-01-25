@@ -47,12 +47,11 @@ extension LaunchCoordinator: AppCoordinatorChildProtocol {
 }
 
 // sourcery: genericTypes = "TStore: StoreProtocol"
-// sourcery: genericConstraints = "TStore.State == AppState"
+// sourcery: genericConstraints = "TStore.TState == AppState, TStore.TAction == AppAction"
 protocol AppCoordinatorChildFactoryProtocol: AutoMockable {
-    associatedtype TStore: StoreProtocol where TStore.State == AppState
+    associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
     var store: TStore { get }
-    var listenerContainer: ListenerContainer { get }
     var serviceContainer: ServiceContainer { get }
     var launchStatePrism: LaunchStatePrismProtocol { get }
 
@@ -60,7 +59,7 @@ protocol AppCoordinatorChildFactoryProtocol: AutoMockable {
     func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol
 }
 
-class AppCoordinatorChildFactory<TStore: StoreProtocol> where TStore.State == AppState {
+class AppCoordinatorChildFactory<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     let store: TStore
     let listenerContainer: ListenerContainer
@@ -92,7 +91,6 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
         return LaunchCoordinator(store: store,
                                  presenter: presenter,
                                  listenerContainer: listenerContainer,
-                                 serviceContainer: serviceContainer,
                                  statePrism: launchStatePrism,
                                  stylingsHandler: stylingsHandler,
                                  defaultLinkType: defaultLinkType)

@@ -25,9 +25,7 @@
 import Foundation
 import Shared
 
-struct AppSkinServiceErrorPayload: Decodable, Equatable {
-    let message: String
-}
+struct AppSkinServiceErrorPayload: Decodable, Equatable {}
 
 typealias AppSkinServiceCompletion = (Result<AppSkin, DecodableServiceError<AppSkinServiceErrorPayload>>) -> Void
 
@@ -35,13 +33,7 @@ protocol AppSkinServiceProtocol: AutoMockable {
     func fetchAppSkin(completion: @escaping AppSkinServiceCompletion)
 }
 
-private struct DecodableAppSkin: Decodable {
-    let colorings: AppColorings
-}
-
 class AppSkinService: AppSkinServiceProtocol {
-
-    private typealias AppColoringsCompletion = DecodableServiceCompletion<DecodableAppSkin, AppSkinServiceErrorPayload>
 
     func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
         // This previously fetched the skin from an API, but the introduction of Dark Mode in iOS 13 has mostly obviated

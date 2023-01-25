@@ -35,8 +35,7 @@ class SearchLookupView: UIView {
         return searchBarWrapper.view
     }
 
-    init(inputViewModel: SearchInputViewModel,
-         searchInputColorings: SearchInputViewColorings) {
+    init(inputViewModel: SearchInputViewModel) {
         self.inputViewModel = inputViewModel
         self.searchBarWrapper = SearchBarWrapper()
         self.childContainerView = SearchChildContainerView(coverTappedCallback: inputViewModel.coverTappedCallback)
@@ -46,8 +45,7 @@ class SearchLookupView: UIView {
         searchBarWrapper.delegate = self
         setupSubviews()
         setupConstraints()
-        configure(inputViewModel,
-                  colorings: searchInputColorings)
+        configure(inputViewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -74,8 +72,7 @@ class SearchLookupView: UIView {
 
 extension SearchLookupView {
 
-    func configure(_ inputViewModel: SearchInputViewModel,
-                   colorings: SearchInputViewColorings) {
+    func configure(_ inputViewModel: SearchInputViewModel) {
         self.inputViewModel = inputViewModel
 
         searchBarWrapper.configureText(inputViewModel.content.keywords?.value)
@@ -130,7 +127,7 @@ private extension SearchInputViewModel {
             return nil
         case let .dispatching(_, dispatcher):
             return {
-                dispatcher.dispatchEditEvent(.endedEditing)
+                dispatcher.value.dispatchEditEvent(.endedEditing)
             }
         }
     }
@@ -140,7 +137,7 @@ private extension SearchInputViewModel {
         case .nonDispatching:
             return nil
         case let .dispatching(_, dispatcher):
-            return dispatcher
+            return dispatcher.value
         }
     }
 

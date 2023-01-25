@@ -35,13 +35,13 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     private let sections: [Section]
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
-    private let removeDetailedEntityAction: IgnoredEquatable<Action>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
+    private let removeDetailedEntityAction: IgnoredEquatable<Search.Action>
 
     init(placeName: String,
          sections: [SearchDetailsViewModel.Section],
-         actionSubscriber: AnySubscriber<Action, Never>,
-         removeDetailedEntityAction: Action) {
+         actionSubscriber: AnySubscriber<Search.Action, Never>,
+         removeDetailedEntityAction: Search.Action) {
         self.placeName = placeName
         self.sections = sections
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
@@ -92,12 +92,12 @@ protocol SearchDetailsViewModelBuilderProtocol: AutoMockable {
 
 class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol) {
@@ -116,10 +116,12 @@ class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
             entity.buildLocationSection(copyFormatter),
         ].compactMap { $0 }
 
-        return SearchDetailsViewModel(placeName: entity.name.value,
-                                      sections: sections,
-                                      actionSubscriber: actionSubscriber,
-                                      removeDetailedEntityAction: actionPrism.removeDetailedEntityAction)
+        return SearchDetailsViewModel(
+            placeName: entity.name.value,
+            sections: sections,
+            actionSubscriber: actionSubscriber,
+            removeDetailedEntityAction: .searchActivity(actionPrism.removeDetailedEntityAction)
+        )
     }
 
 }

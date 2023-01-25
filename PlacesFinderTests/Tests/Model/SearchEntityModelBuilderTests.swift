@@ -31,7 +31,6 @@ import SwiftDuxTestComponents
 
 class SearchEntityModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
@@ -112,8 +111,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns the entity's values in SearchEntityModel") {
-                    expect(result) == SearchEntityModel(id: .stubValue("stubID"),
-                                                        name: .stubValue("stubEntityName"),
+                    expect(result) == SearchEntityModel(name: .stubValue("stubEntityName"),
                                                         url: .stubValue(),
                                                         ratings: .stubValue(average: .five, numRatings: 123),
                                                         image: .stubValue(),

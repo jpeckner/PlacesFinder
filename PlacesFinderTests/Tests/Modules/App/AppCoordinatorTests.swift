@@ -103,14 +103,14 @@ class AppCoordinatorTests: QuickSpec {
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
-            expect(dispatchedAction) == .setCurrentCoordinator(nodeBox)
+            let dispatchedAction = mockStore.dispatchedActions.last
+            expect(dispatchedAction) == .router(.setCurrentCoordinator(nodeBox))
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
                                                    linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
-            expect(dispatchedAction) == .setDestinationCoordinator(destinationNodeBox, payload: linkType)
+            let dispatchedAction = mockStore.dispatchedActions.last
+            expect(dispatchedAction) == .router(.setDestinationCoordinator(destinationNodeBox, payload: linkType))
         }
 
         func verifyCoordinatorWasActivated(_ childCoordinator: ChildCoordinatorProtocolMock,
@@ -228,7 +228,6 @@ class AppCoordinatorTests: QuickSpec {
                 context("when payloadBuilder.buildPayload() returns a non-nil value") {
 
                     beforeEach {
-                        mockStore.stubState = AppState.stubValue()
                         mockPayloadBuilder.buildPayloadReturnValue = stubLinkType
                         result = coordinator.handleURL(URL.stubValue())
                     }
@@ -238,8 +237,8 @@ class AppCoordinatorTests: QuickSpec {
                     }
 
                     it("dispatches RouterAction.requestLink with the payload") {
-                        let dispatchedAction = mockStore.dispatchedNonAsyncActions.last as? AppRouterAction
-                        expect(dispatchedAction) == .requestLink(stubLinkType)
+                        let dispatchedAction = mockStore.dispatchedActions.last
+                        expect(dispatchedAction) == .router(.requestLink(stubLinkType))
                     }
 
                 }

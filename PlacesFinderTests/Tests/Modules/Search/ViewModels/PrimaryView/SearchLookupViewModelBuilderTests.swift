@@ -30,18 +30,17 @@ import SwiftDux
 
 class SearchLookupViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubInputParams = SearchInputParams.stubValue()
-        let stubSearchActivityState = SearchActivityState(loadState: .idle,
-                                                          inputParams: stubInputParams,
-                                                          detailedEntity: .stubValue())
+        let stubSearchActivityState = Search.ActivityState(loadState: .idle,
+                                                           inputParams: stubInputParams,
+                                                           detailedEntity: .stubValue())
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var stubInputViewModel: SearchInputViewModel!
         var mockInputViewModelBuilder: SearchInputViewModelBuilderProtocolMock!
@@ -64,15 +63,14 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                                                    actionPrism: mockSearchActivityActionPrism,
                                                    locationUpdateRequestBlock: locationUpdateStub)
             stubInputViewModel = .dispatching(content: .stubValue(),
-                                              dispatcher: dispatcher)
+                                              dispatcher: IgnoredEquatable(dispatcher))
             mockInputViewModelBuilder = SearchInputViewModelBuilderProtocolMock()
             mockInputViewModelBuilder.buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
             mockChildBuilder.buildChildAppCopyContentLocationUpdateRequestBlockReturnValue = .progress
 
-            sut = SearchLookupViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
-                                               inputViewModelBuilder: mockInputViewModelBuilder,
+            sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
         }
 

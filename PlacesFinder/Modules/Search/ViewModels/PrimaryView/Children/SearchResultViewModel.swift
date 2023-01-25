@@ -28,12 +28,12 @@ import SwiftDux
 
 struct SearchResultViewModel: Equatable {
     let cellModel: SearchResultCellModel
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Action, Never>>
-    private let detailEntityAction: IgnoredEquatable<Action>
+    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
+    private let detailEntityAction: IgnoredEquatable<Search.Action>
 
     init(cellModel: SearchResultCellModel,
-         actionSubscriber: AnySubscriber<Action, Never>,
-         detailEntityAction: Action) {
+         actionSubscriber: AnySubscriber<Search.Action, Never>,
+         detailEntityAction: Search.Action) {
         self.cellModel = cellModel
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
@@ -57,18 +57,15 @@ protocol SearchResultViewModelBuilderProtocol: AutoMockable {
 
 class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Action, Never>
+    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
-    private let copyFormatter: SearchCopyFormatterProtocol
     private let resultCellModelBuilder: SearchResultCellModelBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<Action, Never>,
+    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
-         copyFormatter: SearchCopyFormatterProtocol,
          resultCellModelBuilder: SearchResultCellModelBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
-        self.copyFormatter = copyFormatter
         self.resultCellModelBuilder = resultCellModelBuilder
     }
 
@@ -80,7 +77,7 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
         return SearchResultViewModel(cellModel: cellModel,
                                      actionSubscriber: actionSubscriber,
-                                     detailEntityAction: detailEntityAction)
+                                     detailEntityAction: .searchActivity(detailEntityAction))
     }
 
 }

@@ -30,11 +30,10 @@ import SwiftDux
 
 class ReachabilityListenerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var receivedActions: [Action]!
+        var receivedActions: [ReachabilityAction]!
         var cancellables: Set<AnyCancellable>!
         var mockReachability: ReachabilityProtocolMock!
         var listener: ReachabilityListener!
@@ -113,7 +112,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.reachable(.wifi)") {
-                    expect(receivedActions.last as? ReachabilityAction) == .reachable(.wifi)
+                    expect(receivedActions.last) == .reachable(.wifi)
                 }
             }
 
@@ -123,7 +122,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.reachable(.cellular)") {
-                    expect(receivedActions.last as? ReachabilityAction) == .reachable(.cellular)
+                    expect(receivedActions.last) == .reachable(.cellular)
                 }
             }
 
@@ -133,7 +132,7 @@ class ReachabilityListenerTests: QuickSpec {
                 }
 
                 it("dispatches ReachabilityAction.unreachable") {
-                    expect(receivedActions.last as? ReachabilityAction) == .unreachable
+                    expect(receivedActions.last) == .unreachable
                 }
             }
 

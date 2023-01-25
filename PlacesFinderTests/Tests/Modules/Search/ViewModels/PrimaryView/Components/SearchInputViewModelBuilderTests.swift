@@ -37,7 +37,7 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         let stubInputCopyContent = SearchInputCopyContent.stubValue()
         let stubContentViewModel = SearchInputContentViewModel.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockContentViewModelBuilder: SearchInputContentViewModelBuilderProtocolMock!
 

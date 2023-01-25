@@ -24,7 +24,7 @@
 
 import Foundation
 
-struct PlaceLookupResponse: Equatable {
+struct PlaceLookupResponse {
     let page: PlaceLookupPage
     let nextRequestTokenResult: PlaceLookupPageRequestTokenResult?
 }

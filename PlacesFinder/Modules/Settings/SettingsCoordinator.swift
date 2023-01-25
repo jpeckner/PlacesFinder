@@ -29,7 +29,7 @@ import SwiftDux
 import UIKit
 
 // sourcery: linkPayloadType = "SettingsLinkPayload"
-class SettingsCoordinator<TStore: StoreProtocol> where TStore.State == AppState {
+class SettingsCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let presenter: SettingsPresenterProtocol
@@ -150,8 +150,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let appCopyContent = state.appCopyContentState.copyContent
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
-            appCopyContent: appCopyContent,
-            settingsChildRequestAction: requestLinkTypeAction(.settingsChild(SettingsChildLinkPayload()))
+            appCopyContent: appCopyContent
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
         presenter.loadSettingsView(viewModel,
@@ -174,13 +173,6 @@ private extension SettingsCoordinator {
 
     enum Child: Equatable {
         case settingsChild(IgnoredEquatable<SettingsChildCoordinator<TStore>>)
-
-        var rootViewController: UIViewController {
-            switch self {
-            case let .settingsChild(coordinator):
-                return coordinator.value.rootViewController
-            }
-        }
     }
 
 }

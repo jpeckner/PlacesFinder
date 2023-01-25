@@ -26,14 +26,4 @@ import Foundation
 
 struct DownloadedImageViewModel: Equatable {
     let url: URL
-    let placeholderName: String
-}
-
-extension DownloadedImageViewModel {
-
-    init(url: URL) {
-        self.init(url: url,
-                  placeholderName: "magnifying_glass")
-    }
-
 }

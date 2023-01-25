@@ -43,10 +43,17 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             SearchEntityModel.stubValue(id: "stubID_1"),
             SearchEntityModel.stubValue(id: "stubID_2"),
         ])
+        let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
+        var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
+        var mockDependencies: Search.ActivityActionCreatorDependencies!
+        var stubInitialRequestAction: Search.ActivityAction!
+        var stubSubsequentRequestAction: Search.ActivityAction!
+
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockResultViewModelBuilder: SearchResultViewModelBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
@@ -60,14 +67,32 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 let cellModel = SearchResultCellModel.stubValue(name: entityModel.name)
                 return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                        cellModel: cellModel,
-                                                       detailEntityAction: StubAction.genericAction)
+                                                       detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
             }
 
+            mockPlaceLookupService = PlaceLookupServiceProtocolMock()
+            mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
+            mockDependencies = Search.ActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
+            )
+
+            stubInitialRequestAction = .startInitialRequest(
+                dependencies: IgnoredEquatable(mockDependencies),
+                searchParams: stubSearchParams,
+                locationUpdateRequestBlock: IgnoredEquatable { _ in }
+            )
+
+            stubSubsequentRequestAction = .startSubsequentRequest(
+                dependencies: IgnoredEquatable(mockDependencies),
+                searchParams: stubSearchParams,
+                previousResults: stubPreviousResults,
+                tokenContainer: stubTokenContainer
+            )
+
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue =
-                StubSearchActivityAction.requestInitialPage
-            mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue =
-                StubSearchActivityAction.requestSubsequentPage
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
+            mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue = stubSubsequentRequestAction
 
             sut = SearchResultsViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
                                                 resultViewModelBuilder: mockResultViewModelBuilder)
@@ -120,13 +145,13 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             it("passes the expected action as refreshAction") {
                 expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchRefreshAction()
-                expect(mockActionSubscriber.receivedInputs.first as? StubSearchActivityAction) == .requestInitialPage
+                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubInitialRequestAction)
             }
 
             it("passes the expected action as nextRequestAction") {
                 expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchNextRequestAction()
-                expect(mockActionSubscriber.receivedInputs.first as? StubSearchActivityAction) == .requestSubsequentPage
+                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubSubsequentRequestAction)
             }
 
         }

@@ -27,19 +27,17 @@ import Shared
 import SwiftDux
 
 protocol ReachabilityListenerProtocol: AutoMockable {
-    var actionPublisher: AnyPublisher<Action, Never> { get }
-
     func start() throws
 }
 
 class ReachabilityListener: ReachabilityListenerProtocol {
 
-    var actionPublisher: AnyPublisher<Action, Never> {
+    var actionPublisher: AnyPublisher<ReachabilityAction, Never> {
         actionSubject.eraseToAnyPublisher()
     }
 
     private let reachability: ReachabilityProtocol
-    private let actionSubject = PassthroughSubject<Action, Never>()
+    private let actionSubject = PassthroughSubject<ReachabilityAction, Never>()
 
     init(reachability: ReachabilityProtocol) {
         self.reachability = reachability
@@ -49,9 +47,9 @@ class ReachabilityListener: ReachabilityListenerProtocol {
         reachability.setReachabilityCallback { [weak self] status in
             switch status {
             case .unreachable:
-                self?.actionSubject.send(ReachabilityAction.unreachable)
+                self?.actionSubject.send(.unreachable)
             case let .reachable(connectionType):
-                self?.actionSubject.send(ReachabilityAction.reachable(connectionType))
+                self?.actionSubject.send(.reachable(connectionType))
             }
         }
 

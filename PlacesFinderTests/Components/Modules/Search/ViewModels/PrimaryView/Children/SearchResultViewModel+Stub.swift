@@ -28,9 +28,11 @@ import SwiftDuxTestComponents
 
 extension SearchResultViewModel {
 
-    static func stubValue(actionSubscriber: AnySubscriber<Action, Never>,
-                          cellModel: SearchResultCellModel = .stubValue(),
-                          detailEntityAction: Action = StubAction.genericAction) -> SearchResultViewModel {
+    static func stubValue(
+        actionSubscriber: AnySubscriber<Search.Action, Never>,
+        cellModel: SearchResultCellModel = .stubValue(),
+        detailEntityAction: Search.Action = .searchActivity(.detailedEntity(.stubValue()))
+    ) -> SearchResultViewModel {
         return SearchResultViewModel(cellModel: cellModel,
                                      actionSubscriber: actionSubscriber,
                                      detailEntityAction: detailEntityAction)

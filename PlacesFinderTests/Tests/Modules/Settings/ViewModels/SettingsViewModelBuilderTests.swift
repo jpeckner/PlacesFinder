@@ -32,7 +32,6 @@ import SwiftDuxTestComponents
 
 class SettingsViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     // swiftlint:disable identifier_name
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
@@ -40,7 +39,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
         let stubUnitsHeaderViewModel = SettingsUnitsHeaderViewModel.stubValue()
         let stubPlainHeaderViewModel = SettingsPlainHeaderViewModel.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocolMock!
         var mockPlainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocolMock!
         var stubDistanceCellModels: [SettingsCellViewModel]!
@@ -64,17 +63,19 @@ class SettingsViewModelBuilderTests: QuickSpec {
                 SettingsCellViewModel(title: "stubDistanceCellModel",
                                       isSelected: false,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                      action: StubAction.genericAction)
+                                      action: .showSettingsChild(SettingsChildLinkPayload()))
             ]
             stubSortingCellModels = [
                 SettingsCellViewModel(title: "stubSortingCellModel",
                                       isSelected: false,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                      action: StubAction.genericAction)
+                                      action: .showSettingsChild(SettingsChildLinkPayload()))
             ]
             mockSettingsCellViewModelBuilder = SettingsCellViewModelBuilderProtocolMock()
-            mockSettingsCellViewModelBuilder.buildDistanceCellModelsReturnValue = stubDistanceCellModels
-            mockSettingsCellViewModelBuilder.buildSortingCellModelsCopyContentReturnValue = stubSortingCellModels
+            mockSettingsCellViewModelBuilder.buildDistanceCellModelsCurrentDistanceTypeReturnValue =
+                stubDistanceCellModels
+            mockSettingsCellViewModelBuilder.buildSortingCellModelsCurrentSortingCopyContentReturnValue =
+                stubSortingCellModels
 
             sut = SettingsViewModelBuilder(
                 actionSubscriber: AnySubscriber(mockActionSubscriber),
@@ -96,19 +97,12 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 result = sut.buildViewModel(searchPreferencesState: stubSearchPreferencesState,
-                                            appCopyContent: stubAppCopyContent,
-                                            settingsChildRequestAction: StubAction.genericAction)
+                                            appCopyContent: stubAppCopyContent)
             }
 
             it("returns a view model with a .measurementSystem header in index 0") {
                 let section = result.sections.value[0]
-
-                guard case let .measurementSystem(headerViewModel) = section.headerType else {
-                    fail("Unexpected value found: \(section.headerType)")
-                    return
-                }
-
-                expect(headerViewModel) == stubUnitsHeaderViewModel
+                expect(section.headerType) == .measurementSystem(stubUnitsHeaderViewModel)
             }
 
             it("returns a view model with the cellmodels returned by mockSettingsCellViewModelBuilder in index 0") {
@@ -118,13 +112,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             it("returns a view model with a .plain header in index 1") {
                 let section = result.sections.value[1]
-
-                guard case let .plain(headerViewModel) = section.headerType else {
-                    fail("Unexpected value found: \(section.headerType)")
-                    return
-                }
-
-                expect(headerViewModel) == stubPlainHeaderViewModel
+                expect(section.headerType) == .plain(stubPlainHeaderViewModel)
             }
 
             it("returns a view model with the cellmodels returned by mockSettingsCellViewModelBuilder in index 1") {

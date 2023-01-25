@@ -217,12 +217,12 @@ extension YelpLocation {
 
 // MARK: Yelp-specific error components
 
-private struct YelpErrorDetails: Decodable, Equatable {
+private struct YelpErrorDetails: Decodable {
     let code: String
     let description: String
 }
 
-private struct YelpErrorPayload: Decodable, Equatable {
+private struct YelpErrorPayload: Decodable {
     let error: YelpErrorDetails
 }
 

@@ -31,10 +31,6 @@ import SwiftDux
 
 class SearchLookupChildBuilderTests: QuickSpec {
 
-    private enum SearchActivityAction: Action {
-        case initialRequest
-    }
-
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
@@ -46,7 +42,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewModel: .stubValue())
         let stubRetryViewModel = SearchRetryViewModel(ctaViewModel: .stubValue())
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocolMock!
@@ -55,14 +51,24 @@ class SearchLookupChildBuilderTests: QuickSpec {
         var mockNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocolMock!
         var mockRetryViewModelBuilder: SearchRetryViewModelBuilderProtocolMock!
 
+        var stubStartInitialRequestAction: Search.ActivityAction!
+
         var sut: SearchLookupChildBuilder!
         var result: SearchLookupChild!
 
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
+            let mockPlaceLookupService = PlaceLookupServiceProtocolMock()
+            let mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
+            let mockDependencies = Search.ActivityActionCreatorDependencies(
+                placeLookupService: mockPlaceLookupService,
+                searchEntityModelBuilder: mockSearchEntityModelBuilder
+            )
+            stubStartInitialRequestAction = Search.ActivityAction.stubbedStartInitialRequestAction(dependencies: mockDependencies)
+
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = SearchActivityAction.initialRequest
+            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
             mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
@@ -104,12 +110,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .instructions") {
-                    guard case let .instructions(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubInstructionsViewModel
+                    expect(result) == .instructions(stubInstructionsViewModel)
                 }
 
             }
@@ -122,10 +123,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .progress") {
-                    guard case .progress = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
+                    expect(result) == .progress
                 }
 
             }
@@ -138,10 +136,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .progress") {
-                    guard case .progress = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
+                    expect(result) == .progress
                 }
 
             }
@@ -170,12 +165,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .results") {
-                    guard case let .results(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubResultsViewModel
+                    expect(result) == .results(stubResultsViewModel)
                 }
 
             }
@@ -192,12 +182,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .noResults") {
-                    guard case let .noResults(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubNoResultsViewModel
+                    expect(result) == .noResults(stubNoResultsViewModel)
                 }
 
             }
@@ -224,18 +209,13 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .failure, containing expected values") {
-                    guard case let .failure(viewModel) = result else {
-                        fail("Unexpected value found: \(String(describing: result))")
-                        return
-                    }
-
-                    expect(viewModel) == stubRetryViewModel
+                    expect(result) == .failure(stubRetryViewModel)
                 }
 
                 it("includes the Action returned by mockSearchActivityActionPrism") {
                     expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                     receivedCTABlock()
-                    expect(mockActionSubscriber.receivedInputs.first as? SearchActivityAction) == .initialRequest
+                    expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubStartInitialRequestAction)
                 }
 
             }

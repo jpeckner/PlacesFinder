@@ -33,6 +33,7 @@ struct ListenerContainer {
     let userDefaultsListener: UserDefaultsListenerProtocol
     private var cancellables: Set<AnyCancellable> = []
 
+    // periphery:ignore
     init(locationAuthListener: LocationAuthListenerProtocol,
          reachabilityListener: ReachabilityListenerProtocol?,
          userDefaultsListener: UserDefaultsListenerProtocol) {
@@ -44,12 +45,14 @@ struct ListenerContainer {
 
 extension ListenerContainer {
 
-    init(store: Store<AppState>,
+    init(store: Store<AppAction, AppState>,
          locationAuthManager: CLLocationManagerAuthProtocol,
          userDefaultsService: UserDefaultsServiceProtocol) {
         self.locationAuthListener = LocationAuthListener(locationAuthManager: locationAuthManager)
         locationAuthListener.actionPublisher
-            .sink(receiveValue: store.dispatch)
+            .sink { [weak store] locationAuthAction in
+                store?.dispatch(.locationAuth(locationAuthAction))
+            }
             .store(in: &cancellables)
 
         // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
@@ -61,7 +64,9 @@ extension ListenerContainer {
             self.reachabilityListener = reachabilityListener
 
             reachabilityListener.actionPublisher
-                .sink(receiveValue: store.dispatch)
+                .sink { [weak store] reachabilityAction in
+                    store?.dispatch(.reachability(reachabilityAction))
+                }
                 .store(in: &cancellables)
         } catch {
             self.reachabilityListener = nil

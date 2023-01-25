@@ -33,25 +33,13 @@ extension CoordinatorProtocol {
         return state.routerState.currentNode == Self.nodeBox
     }
 
-    func requestLinkTypeAction(_ linkType: AppLinkType) -> Action {
-        return AppRouterAction.requestLink(linkType)
+    func requestLinkTypeAction(_ linkType: AppLinkType) -> AppAction {
+        return .router(.requestLink(linkType))
     }
 
 }
 
 extension DestinationCoordinatorProtocol {
-
-    func currentNavigatingToDestinationPayload<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
-                                                                          state: AppState) -> T? {
-        switch state.routerState.loadState {
-        case let .navigatingToDestination(_, linkType):
-            return linkType?.value as? T
-        case .idle,
-             .payloadRequested,
-             .waitingForPayloadToBeCleared:
-            return nil
-        }
-    }
 
     func currentPayloadToBeCleared<T: AppLinkPayloadProtocol>(_ payloadType: T.Type,
                                                               state: AppState) -> T? {
@@ -66,14 +54,16 @@ extension DestinationCoordinatorProtocol {
     }
 
     @discardableResult
-    func clearPayloadTypeIfPresent<TPayload: AppLinkPayloadProtocol>(_ payloadType: TPayload.Type,
-                                                                     state: AppState,
-                                                                     store: DispatchingStoreProtocol) -> TPayload? {
+    func clearPayloadTypeIfPresent<TPayload: AppLinkPayloadProtocol, TStore: DispatchingStoreProtocol>(
+        _ payloadType: TPayload.Type,
+        state: AppState,
+        store: TStore
+    ) -> TPayload? where TStore.TAction == AppAction {
         guard let payload = currentPayloadToBeCleared(payloadType, state: state) else {
             return nil
         }
 
-        store.dispatch(AppRouterAction.clearLink)
+        store.dispatch(.router(.clearLink))
         return payload
     }
 

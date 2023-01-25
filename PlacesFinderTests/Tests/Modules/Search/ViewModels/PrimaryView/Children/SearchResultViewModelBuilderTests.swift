@@ -30,10 +30,6 @@ import SwiftDux
 
 class SearchResultViewModelBuilderTests: QuickSpec {
 
-    private enum StubViewModelAction: Action {
-        case detailEntity
-    }
-
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
@@ -41,10 +37,9 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         let stubResultCellModel = SearchResultCellModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockResultCellModelBuilder: SearchResultCellModelBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
-        var mockFormatter: SearchCopyFormatterProtocolMock!
 
         var sut: SearchResultViewModelBuilder!
 
@@ -55,13 +50,10 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             mockResultCellModelBuilder.buildViewModelResultsCopyContentReturnValue = stubResultCellModel
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.detailEntityActionReturnValue = StubViewModelAction.detailEntity
-
-            mockFormatter = SearchCopyFormatterProtocolMock()
+            mockSearchActivityActionPrism.detailEntityActionReturnValue = .detailedEntity(stubEntityModel)
 
             sut = SearchResultViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                actionPrism: mockSearchActivityActionPrism,
-                                               copyFormatter: mockFormatter,
                                                resultCellModelBuilder: mockResultCellModelBuilder)
         }
 
@@ -87,7 +79,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             it("includes the Action returned by mockSearchActivityActionPrism") {
                 expect(mockActionSubscriber.receivedInputs.isEmpty) == true
                 result.dispatchDetailEntityAction()
-                expect(mockActionSubscriber.receivedInputs.first as? StubViewModelAction) == .detailEntity
+                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(.detailedEntity(stubEntityModel))
             }
 
         }

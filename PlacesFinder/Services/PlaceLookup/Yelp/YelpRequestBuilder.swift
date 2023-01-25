@@ -37,7 +37,7 @@ class YelpRequestBuilder {
 
 }
 
-extension YelpRequestBuilder: PlaceLookupRequestBuilderProtocol {
+extension YelpRequestBuilder {
 
     func buildPageRequestToken(_ placeLookupParams: PlaceLookupParams,
                                startingIndex: Int,

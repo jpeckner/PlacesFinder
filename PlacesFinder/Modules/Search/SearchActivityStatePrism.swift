@@ -41,9 +41,8 @@ enum SearchPresentationType: Equatable {
 }
 
 protocol SearchActivityStatePrismProtocol: AutoMockable {
-    var presentationKeyPaths: Set<EquatableKeyPath<AppState>> { get }
-
-    func presentationType(for state: AppState) -> SearchPresentationType
+    func presentationType(locationAuthState: LocationAuthState,
+                          reachabilityState: ReachabilityState) -> SearchPresentationType
 }
 
 class SearchActivityStatePrism: SearchActivityStatePrismProtocol {
@@ -57,20 +56,13 @@ class SearchActivityStatePrism: SearchActivityStatePrismProtocol {
         self.locationRequestHandler = locationRequestHandler
     }
 
-    var presentationKeyPaths: Set<EquatableKeyPath<AppState>> {
-        return [
-            EquatableKeyPath(\AppState.locationAuthState),
-            EquatableKeyPath(\AppState.reachabilityState),
-            EquatableKeyPath(\AppState.searchActivityState),
-        ]
-    }
-
-    func presentationType(for state: AppState) -> SearchPresentationType {
-        if case .unreachable? = state.reachabilityState.status { return .noInternet }
+    func presentationType(locationAuthState: LocationAuthState,
+                          reachabilityState: ReachabilityState) -> SearchPresentationType {
+        if case .unreachable? = reachabilityState.status { return .noInternet }
 
         let locationAuthListener = self.locationAuthListener
         let locationRequestHandler = self.locationRequestHandler
-        switch state.locationAuthState.authStatus {
+        switch locationAuthState.authStatus {
         case .notDetermined:
             return .search(IgnoredEquatable(.locationServicesNotDetermined {
                 locationAuthListener.requestWhenInUseAuthorization()

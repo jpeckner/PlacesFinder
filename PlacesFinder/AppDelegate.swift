@@ -33,7 +33,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    typealias TChildFactory = AppCoordinatorChildFactory<Store<AppState>>
+    typealias TChildFactory = AppCoordinatorChildFactory<Store<AppAction, AppState>>
 
     let window: UIWindow
     private let appCoordinator: AppCoordinator<TChildFactory>
@@ -97,10 +97,10 @@ private extension AppDelegate.TChildFactory {
         let appCopyContent = AppCopyContent(displayName: appConfig.displayName)
         let locationAuthManager = CLLocationManager()
 
-        let store = Store<AppState>(userDefaultsService: userDefaultsService,
-                                    skinService: serviceContainer.appSkinService,
-                                    locationAuthManager: locationAuthManager,
-                                    appCopyContent: appCopyContent)
+        let store = Store<AppAction, AppState>(locationAuthManager: locationAuthManager,
+                                               skinService: serviceContainer.appSkinService,
+                                               userDefaultsService: userDefaultsService,
+                                               appCopyContent: appCopyContent)
 
         let listenerContainer = ListenerContainer(store: store,
                                                   locationAuthManager: locationAuthManager,
@@ -119,11 +119,12 @@ private extension AppDelegate.TChildFactory {
 
 // MARK: Store
 
-private extension Store where State == AppState {
+// periphery:ignore
+private extension Store where TAction == AppAction, TState == AppState {
 
-    convenience init(userDefaultsService: UserDefaultsServiceProtocol,
+    convenience init(locationAuthManager: CLLocationManager,
                      skinService: AppSkinServiceProtocol,
-                     locationAuthManager: CLLocationManager,
+                     userDefaultsService: UserDefaultsServiceProtocol,
                      appCopyContent: AppCopyContent) {
         let searchPreferencesState =
             (try? userDefaultsService.getSearchPreferences()).map { stored in
@@ -141,9 +142,9 @@ private extension Store where State == AppState {
             reducer: AppStateReducer.reduce,
             initialState: initialState,
             middleware: [
-                AppSkinMiddleware.loadSkinMiddleware(skinService: skinService),
-                SearchActivityMiddleware.buildInitialRequestMiddleware(),
-                SearchActivityMiddleware.buildSubsequentRequestMiddleware()
+                AppAction.makeStateReceiverMiddleware(),
+                AppAction.makeRequestSkinMiddleware(skinService: skinService),
+                AppAction.makeSettingsChildRoutingMiddleware()
             ]
         )
     }

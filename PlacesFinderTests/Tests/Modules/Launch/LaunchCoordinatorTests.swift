@@ -43,7 +43,6 @@ class LaunchCoordinatorTests: QuickSpec {
 
         var mockStore: MockAppStore!
         var mockListenerContainer: ListenerContainer!
-        var mockServiceContainer: ServiceContainer!
         var mockLaunchPresenter: LaunchPresenterProtocolMock!
         var mockStatePrism: LaunchStatePrismProtocolMock!
         var mockStylingsHandler: AppGlobalStylingsHandlerProtocolMock!
@@ -52,7 +51,6 @@ class LaunchCoordinatorTests: QuickSpec {
         func initCoordinator(statePrism: LaunchStatePrismProtocol) {
             mockStore = MockAppStore()
             mockListenerContainer = ListenerContainer.mockValue()
-            mockServiceContainer = ServiceContainer.mockValue()
             mockLaunchPresenter = LaunchPresenterProtocolMock()
             mockLaunchPresenter.rootViewController = stubRootViewController
             mockStylingsHandler = AppGlobalStylingsHandlerProtocolMock()
@@ -60,7 +58,6 @@ class LaunchCoordinatorTests: QuickSpec {
             coordinator = LaunchCoordinator(store: mockStore,
                                             presenter: mockLaunchPresenter,
                                             listenerContainer: mockListenerContainer,
-                                            serviceContainer: mockServiceContainer,
                                             statePrism: statePrism,
                                             stylingsHandler: mockStylingsHandler,
                                             defaultLinkType: stubDefaultLinkType)
@@ -103,7 +100,7 @@ class LaunchCoordinatorTests: QuickSpec {
                 }
 
                 it("dispatches the action returned by appSkinActionCreator.loadSkin()") {
-                    expect(mockStore.dispatchedNonAsyncActions.last as? AppSkinAction) == .startLoadSkin
+                    expect(mockStore.dispatchedActions.last) == .appSkin(.startLoad)
                 }
 
                 it("calls reachabilityListener.start()") {
@@ -149,8 +146,8 @@ class LaunchCoordinatorTests: QuickSpec {
         describe("StoreSubscriber") {
 
             func verifyRequestLinkCalled(_ appLinkType: AppLinkType) {
-                let dispatchedAction = mockStore.dispatchedNonAsyncActions.last
-                expect(dispatchedAction as? AppRouterAction) == .requestLink(appLinkType)
+                let dispatchedAction = mockStore.dispatchedActions.last
+                expect(dispatchedAction) == .router(.requestLink(appLinkType))
             }
 
             context("when mockStatePrism.hasFinishedLaunching returns false") {

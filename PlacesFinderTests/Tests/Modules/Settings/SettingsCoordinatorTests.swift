@@ -60,7 +60,7 @@ class SettingsCoordinatorTests: QuickSpec {
             mockServiceContainer = ServiceContainer.mockValue()
 
             mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue = stubSettingsViewModel
+            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
 
             mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
             mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
@@ -121,9 +121,7 @@ class SettingsCoordinatorTests: QuickSpec {
                     }
 
                     it("dispatches AppRouterAction.clearLink") {
-                        expect(mockStore.dispatchedNonAsyncActions.contains {
-                            ($0 as? AppRouterAction) == .clearLink
-                        }) == true
+                        expect(mockStore.hasDispatchedRouterClearLinkAction) == true
                     }
                 }
 

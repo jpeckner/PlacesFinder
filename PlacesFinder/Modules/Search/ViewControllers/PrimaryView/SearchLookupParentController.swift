@@ -33,8 +33,7 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
     init(viewModel: SearchLookupViewModel,
          appSkin: AppSkin) {
-        self.lookupView = SearchLookupView(inputViewModel: viewModel.searchInputViewModel,
-                                           searchInputColorings: appSkin.colorings.searchInput)
+        self.lookupView = SearchLookupView(inputViewModel: viewModel.searchInputViewModel)
 
         let searchBarView = lookupView.searchBarWrapperView
         self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
@@ -60,25 +59,21 @@ extension SearchLookupParentController {
                    appSkin: AppSkin) {
         self.viewColoring = appSkin.colorings.standard.viewColoring
 
-        configureLookupView(viewModel.searchInputViewModel,
-                            colorings: appSkin.colorings.searchInput)
+        configureLookupView(viewModel.searchInputViewModel)
 
         activateChildView(viewModel,
                           appSkin: appSkin)
     }
 
-    private func configureLookupView(_ viewModel: SearchInputViewModel,
-                                     colorings: SearchInputViewColorings) {
+    private func configureLookupView(_ viewModel: SearchInputViewModel) {
         searchBarHeightConstraint.constant =
             viewModel.content.isEditing ?
                 searchBarFullHeight
                 : searchBarHeightConstraint.constant
 
-        lookupView.configure(viewModel,
-                             colorings: colorings)
+        lookupView.configure(viewModel)
     }
 
-    // swiftlint:disable function_body_length
     private func activateChildView(_ lookupViewModel: SearchLookupViewModel,
                                    appSkin: AppSkin) {
         switch lookupViewModel.child {
@@ -142,7 +137,6 @@ extension SearchLookupParentController {
                                          colorings: colorings)
         }
     }
-    // swiftlint:enable function_body_length
 
     private func existingChildController<T: UIViewController>() -> T? {
         return firstChild as? T
