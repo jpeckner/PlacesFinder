@@ -13,7 +13,8 @@
       "containerPath" : "container:PlacesFinder.xcodeproj",
       "identifier" : "7DC2390BD2CAC7A8AA94B274",
       "name" : "PlacesFinder"
-    }
+    },
+    "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
