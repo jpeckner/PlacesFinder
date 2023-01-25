@@ -94,10 +94,11 @@ extension Search {
         return { dispatch, _ in
             return { next in
                 return { action in
-                    guard case let .searchActivity(searchActivityAction) = action,
-                          case let .startInitialRequest(dependencies,
-                                                        searchParams,
-                                                        locationUpdateRequestBlock) = searchActivityAction
+                    guard case let .searchActivity(.startInitialRequest(
+                        dependencies,
+                        searchParams,
+                        locationUpdateRequestBlock
+                    )) = action
                     else {
                         next(action)
                         return
@@ -206,11 +207,12 @@ extension Search {
         return { dispatch, _ in
             return { next in
                 return { action in
-                    guard case let .searchActivity(searchActivityAction) = action,
-                          case let .startSubsequentRequest(dependencies,
-                                                           searchParams,
-                                                           previousResults,
-                                                           tokenContainer) = searchActivityAction
+                    guard case let .searchActivity(.startSubsequentRequest(
+                        dependencies,
+                        searchParams,
+                        previousResults,
+                        tokenContainer
+                    )) = action
                     else {
                         next(action)
                         return

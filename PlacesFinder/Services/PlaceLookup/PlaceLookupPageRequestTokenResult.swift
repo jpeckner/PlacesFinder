@@ -24,7 +24,7 @@
 
 import Foundation
 
-enum PlaceLookupRequestBuilderError: Error, Equatable {
+enum PlaceLookupRequestBuilderError: Error {
     case invalidResultsPerPageAmount(acceptableRange: ClosedRange<Int>)
     case invalidURL(components: URLComponents)
 }

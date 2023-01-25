@@ -28,15 +28,12 @@ import SwiftDux
 
 extension SearchResultsViewModel {
 
-    enum StubActions: Action {
-        case refreshAction
-        case nextRequestAction
-    }
-
-    static func stubValue(actionSubscriber: AnySubscriber<AppAction, Never>,
-                          resultViewModels: NonEmptyArray<SearchResultViewModel>,
-                          refreshAction: Action = StubActions.refreshAction,
-                          nextRequestAction: Action? = StubActions.nextRequestAction) -> SearchResultsViewModel {
+    static func stubValue(
+        actionSubscriber: AnySubscriber<Search.Action, Never>,
+        resultViewModels: NonEmptyArray<SearchResultViewModel>,
+        refreshAction: Search.Action = .searchActivity(.stubbedStartInitialRequestAction()),
+        nextRequestAction: Search.Action? = .searchActivity(.stubbedStartSubsequentRequestAction())
+    ) -> SearchResultsViewModel {
         return SearchResultsViewModel(resultViewModels: resultViewModels,
                                       actionSubscriber: actionSubscriber,
                                       refreshAction: refreshAction,

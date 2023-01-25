@@ -80,14 +80,14 @@ class HomeCoordinatorTests: QuickSpec {
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
-            expect(dispatchedAction) == .setCurrentCoordinator(nodeBox)
+            let dispatchedAction = mockStore.dispatchedActions.last
+            expect(dispatchedAction) == .router(.setCurrentCoordinator(nodeBox))
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
                                                    linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedActions.last as? AppRouterAction
-            expect(dispatchedAction) == .setDestinationCoordinator(destinationNodeBox, payload: linkType)
+            let dispatchedAction = mockStore.dispatchedActions.last
+            expect(dispatchedAction) == .router(.setDestinationCoordinator(destinationNodeBox, payload: linkType))
         }
 
         func verifyCoordinatorWasActivated(_ childCoordinator: TabCoordinatorProtocol,

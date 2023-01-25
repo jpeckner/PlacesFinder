@@ -30,27 +30,24 @@ import SwiftDux
 
 class SearchResultsViewModelTests: QuickSpec {
 
-    private enum StubViewModelAction: Action, Equatable {
-        case refreshAction
-        case nextRequestAction
-        case detailEntity(String)
-    }
-
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable function_body_length
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        let stubbedRefreshAction = Search.ActivityAction.stubbedStartInitialRequestAction()
+        let stubbedNextRequestAction = Search.ActivityAction.stubbedStartSubsequentRequestAction()
+
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var stubResultViewModels: NonEmptyArray<SearchResultViewModel>!
         var result: SearchResultsViewModel!
 
         func buildViewModel(
             resultViewModels: NonEmptyArray<SearchResultViewModel>,
-            nextRequestAction: Action? = StubViewModelAction.nextRequestAction
+            nextRequestAction: Search.Action? = .searchActivity(.stubbedStartSubsequentRequestAction())
         ) -> SearchResultsViewModel {
             return SearchResultsViewModel(resultViewModels: resultViewModels,
                                           actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                          refreshAction: StubViewModelAction.refreshAction,
+                                          refreshAction: .searchActivity(stubbedRefreshAction),
                                           nextRequestAction: nextRequestAction)
         }
 
@@ -61,7 +58,7 @@ class SearchResultsViewModelTests: QuickSpec {
                 SearchResultViewModel.stubValue(
                     actionSubscriber: AnySubscriber(mockActionSubscriber),
                     cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
-                    detailEntityAction: StubViewModelAction.detailEntity("\(idx)")
+                    detailEntityAction: .searchActivity(.detailedEntity(SearchEntityModel.stubValue(id: "\(idx)")))
                 )
             })
         }
@@ -103,7 +100,7 @@ class SearchResultsViewModelTests: QuickSpec {
             context("when nextRequestAction is not nil") {
                 beforeEach {
                     result = buildViewModel(resultViewModels: stubResultViewModels,
-                                            nextRequestAction: StubViewModelAction.nextRequestAction)
+                                            nextRequestAction: .searchActivity(.stubbedStartInitialRequestAction()))
                 }
 
                 it("returns true") {
@@ -129,12 +126,12 @@ class SearchResultsViewModelTests: QuickSpec {
             context("when nextRequestAction is not nil") {
                 beforeEach {
                     result = buildViewModel(resultViewModels: stubResultViewModels,
-                                            nextRequestAction: StubViewModelAction.nextRequestAction)
+                                            nextRequestAction: .searchActivity(stubbedNextRequestAction))
                     result.dispatchNextRequestAction()
                 }
 
                 it("dispatches the expected action") {
-                    expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .nextRequestAction
+                    expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(stubbedNextRequestAction)
                 }
 
                 it("nils-out nextRequestAction") {
@@ -164,7 +161,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .refreshAction
+                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(stubbedRefreshAction)
             }
         }
 
@@ -175,7 +172,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.last as? StubViewModelAction) == .detailEntity("2")
+                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(.detailedEntity(.stubValue()))
             }
         }
 

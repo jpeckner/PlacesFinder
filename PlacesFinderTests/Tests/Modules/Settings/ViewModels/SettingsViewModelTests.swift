@@ -35,7 +35,7 @@ class SettingsViewModelTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var sut: SettingsViewModel!
 
         func buildSectionViewModels() -> NonEmptyArray<SettingsSectionViewModel> {
@@ -46,7 +46,7 @@ class SettingsViewModelTests: QuickSpec {
                         SettingsCellViewModel(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
                                               isSelected: cellIdx == 1,
                                               actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                              action: StubAction.genericAction)
+                                              action: .showSettingsChild(SettingsChildLinkPayload()))
                     }
                 )
             }

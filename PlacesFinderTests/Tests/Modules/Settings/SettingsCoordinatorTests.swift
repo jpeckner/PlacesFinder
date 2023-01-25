@@ -60,7 +60,7 @@ class SettingsCoordinatorTests: QuickSpec {
             mockServiceContainer = ServiceContainer.mockValue()
 
             mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentSettingsChildRequestActionReturnValue = stubSettingsViewModel
+            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
 
             mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
             mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()

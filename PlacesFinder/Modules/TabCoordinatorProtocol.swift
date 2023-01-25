@@ -25,7 +25,7 @@
 import Shared
 import UIKit
 
-protocol TabCoordinatorProtocol: AutoMockable {
+protocol TabCoordinatorProtocol: AnyObject, AutoMockable {
     var rootViewController: UIViewController { get }
 
     func relinquishActive(completion: (() -> Void)?)

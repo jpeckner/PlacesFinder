@@ -35,7 +35,7 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        var mockActionSubscriber: MockSubscriber<AppAction>!
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
 
         var sut: SettingsUnitsHeaderViewModelBuilder!
         var result: SettingsUnitsHeaderViewModel!
@@ -82,7 +82,7 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
                         actionBlock.value()
 
                         let dispatchedAction = mockActionSubscriber.receivedInputs.first
-                        expect(dispatchedAction) == .searchPreferences(.setDistance(.metric(.defaultDistance)))
+                        expect(dispatchedAction) == .setDistance(.metric(.defaultDistance))
                     }
                 }
 

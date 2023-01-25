@@ -114,7 +114,7 @@ class SearchCoordinatorTests: QuickSpec {
                     mockAppStoreRelay.store.receivedSubscriptions.last?.subscription
                     as? SubstatesSubscription<SubstatesSubscriberRelay<MockAppStore>>
 
-                expect(substatesSubscription?.subscribedPaths.count) == 4
+                expect(substatesSubscription?.subscribedPaths.count) == 3
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.locationAuthState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.reachabilityState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
@@ -138,21 +138,33 @@ class SearchCoordinatorTests: QuickSpec {
                 context("else when mockStatePrism.presentationType() returns .noInternet") {
 
                     func performTest(linkType: AppLinkType?) {
-                        let state = AppState.stubValue(
+                        let appState = AppState.stubValue(
                             routerState: RouterState(
                                 loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
                                 currentNode: StubNode.nodeBox
                             )
                         )
+
+                        let searchState = Search.State.stub()
+                        mockSearchStoreRelay.store.appendActionCallback = { action in
+                            switch action {
+                            case let .receiveState(stateReceiverBlock):
+                                stateReceiverBlock.value(searchState)
+
+                            case .searchActivity:
+                                fail("Unexpected action received: \(action)")
+                            }
+                        }
+
                         mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue = .noInternet
 
-                        mockAppStoreRelay.newState(state: state,
+                        mockAppStoreRelay.newState(state: appState,
                                                    updatedSubstates: [\AppState.routerState])
                     }
 
                     it("calls presenter.loadNoInternetViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled) == true
+                        expect(mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled).toEventually(beTrue())
                     }
 
                     context("when the state has a pending .search linkType") {
@@ -162,7 +174,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -173,7 +185,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -196,21 +208,34 @@ class SearchCoordinatorTests: QuickSpec {
                 context("else when mockStatePrism.presentationType() returns .locationServicesDisabled") {
 
                     func performTest(linkType: AppLinkType?) {
-                        let state = AppState.stubValue(
+                        let appState = AppState.stubValue(
                             routerState: RouterState(
                                 loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
                                 currentNode: StubNode.nodeBox
                             )
                         )
+
+                        let searchState = Search.State.stub()
+                        mockSearchStoreRelay.store.appendActionCallback = { action in
+                            switch action {
+                            case let .receiveState(stateReceiverBlock):
+                                stateReceiverBlock.value(searchState)
+
+                            case .searchActivity:
+                                fail("Unexpected action received: \(action)")
+                            }
+                        }
+
                         mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue = .locationServicesDisabled
 
-                        mockAppStoreRelay.newState(state: state,
+                        mockAppStoreRelay.newState(state: appState,
                                                    updatedSubstates: [\AppState.locationAuthState])
                     }
 
                     it("calls presenter.loadLocationServicesDisabledViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled) == true
+                        expect(mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled)
+                            .toEventually(beTrue())
                     }
 
                     context("when the state has a pending .search linkType") {
@@ -220,7 +245,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -231,7 +256,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -256,13 +281,26 @@ class SearchCoordinatorTests: QuickSpec {
 
                     func performTest(currentNode: NodeBox) {
                         blockCalled = false
-                        mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue =
-                            .search(IgnoredEquatable(.locationServicesNotDetermined { blockCalled = true }))
-                        let state = AppState.stubValue(
+
+                        let appState = AppState.stubValue(
                             routerState: RouterState(currentNode: currentNode)
                         )
 
-                        mockAppStoreRelay.newState(state: state,
+                        let searchState = Search.State.stub()
+                        mockSearchStoreRelay.store.appendActionCallback = { action in
+                            switch action {
+                            case let .receiveState(stateReceiverBlock):
+                                stateReceiverBlock.value(searchState)
+
+                            case .searchActivity:
+                                fail("Unexpected action received: \(action)")
+                            }
+                        }
+
+                        mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue =
+                            .search(IgnoredEquatable(.locationServicesNotDetermined { blockCalled = true }))
+
+                        mockAppStoreRelay.newState(state: appState,
                                                    updatedSubstates: [\AppState.routerState])
                     }
 
@@ -272,11 +310,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled) == true
+                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("invokes the provided authorization block") {
-                            expect(blockCalled) == true
+                            expect(blockCalled).toEventually(beTrue())
                         }
                     }
 
@@ -286,7 +324,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled) == true
+                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("does not invoke the provided authorization block") {
@@ -300,14 +338,27 @@ class SearchCoordinatorTests: QuickSpec {
                     func performTest(linkType: AppLinkType?) {
                         let loadState: RouterState.LoadState =
                             linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle
-                        let state = AppState.stubValue(
+                        let appState = AppState.stubValue(
                             routerState: RouterState(loadState: loadState,
                                                      currentNode: StubNode.nodeBox)
                         )
+
+                        let searchState = Search.State.stub()
+                        mockSearchStoreRelay.store.appendActionCallback = { action in
+                            print("Da action: \(action)")
+                            switch action {
+                            case let .receiveState(stateReceiverBlock):
+                                stateReceiverBlock.value(searchState)
+
+                            case .searchActivity:
+                                break
+                            }
+                        }
+
                         mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue =
                             .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
 
-                        mockAppStoreRelay.newState(state: state,
+                        mockAppStoreRelay.newState(state: appState,
                                                    updatedSubstates: [\AppState.routerState])
                     }
 
@@ -318,20 +369,20 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
 
                         it("calls actionCreator.requestInitialPage(:params)") {
-                            expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled) == true
+                            expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled).toEventually(beTrue())
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {
-                            let dispatchedAction = mockSearchStoreRelay.store.dispatchedActions.last
-                            expect(dispatchedAction) == .searchActivity(stubInitialRequestAction)
+                            expect(mockSearchStoreRelay.store.hasDispatchedSearchActivityAction(activityAction: stubInitialRequestAction))
+                                .toEventually(beTrue())
                         }
 
                     }
@@ -342,11 +393,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled) == true
+                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction) == true
+                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -356,6 +407,16 @@ class SearchCoordinatorTests: QuickSpec {
 
         }
 
+    }
+
+}
+
+private extension MockSearchStore {
+
+    func hasDispatchedSearchActivityAction(activityAction: Search.ActivityAction) -> Bool {
+        dispatchedActions.contains { action in
+            action == .searchActivity(activityAction)
+        }
     }
 
 }

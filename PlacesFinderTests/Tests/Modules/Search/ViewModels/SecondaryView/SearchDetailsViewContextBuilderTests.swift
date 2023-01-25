@@ -37,7 +37,7 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Action>!
+        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var stubDetailsViewModel: SearchDetailsViewModel!
         var mockDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocolMock!
 
@@ -47,10 +47,12 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            stubDetailsViewModel = SearchDetailsViewModel(placeName: "stubPlaceName",
-                                                          sections: [.info([.basicInfo(.stubValue())])],
-                                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                                          removeDetailedEntityAction: StubAction.genericAction)
+            stubDetailsViewModel = SearchDetailsViewModel(
+                placeName: "stubPlaceName",
+                sections: [.info([.basicInfo(.stubValue())])],
+                actionSubscriber: AnySubscriber(mockActionSubscriber),
+                removeDetailedEntityAction: .searchActivity(.removeDetailedEntity)
+            )
             mockDetailsViewModelBuilder = SearchDetailsViewModelBuilderProtocolMock()
             mockDetailsViewModelBuilder.buildViewModelResultsCopyContentReturnValue = stubDetailsViewModel
 
