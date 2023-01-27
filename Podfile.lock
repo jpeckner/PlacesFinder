@@ -2,15 +2,15 @@ PODS:
   - CoordiNode (1.1.1)
   - CoordiNodeTestComponents (1.1.1):
     - CoordiNode (= 1.1.1)
-  - Kingfisher (7.1.2)
-  - Nimble (10.0.0)
-  - Quick (5.0.1)
+  - Kingfisher (7.5.0)
+  - Nimble (11.2.1)
+  - Quick (6.1.0)
   - ReachabilitySwift (5.0.0)
   - Shared (1.1.8)
   - SharedTestComponents (1.1.8):
     - Shared (= 1.1.8)
-  - SkeletonView (1.29.1)
-  - SnapKit (5.0.1)
+  - SkeletonView (1.30.4)
+  - SnapKit (5.6.0)
   - SwiftDux (1.1.6)
   - SwiftDuxTestComponents (1.1.6):
     - SwiftDux (= 1.1.6)
@@ -84,14 +84,14 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CoordiNode: a814d1db0482fa5a2ba1777cb82d947c326cc369
   CoordiNodeTestComponents: b1f9da3a3537d7e4adc75e6b3c60b8aee6d79ee5
-  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
-  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  Kingfisher: b9c2a4a4af2990a768445c277359b27bde287d71
+  Nimble: 516ac503a0fafaa8e41dbb4a70a61be421fa893a
+  Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Shared: 30273025c28410f5bc3639db07512a0a636e6813
   SharedTestComponents: 81bbd2bd024c07278e299544a7b726d68a10a3e5
-  SkeletonView: e2667ec83098a438eff6279fbaa49d2865b7af23
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftDux: fe3e9c5ba3084335d984858e3480bce2463521c3
   SwiftDuxTestComponents: 1dafabf892f54fa36f6d3e9e8197157c0ca1f3f2
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
