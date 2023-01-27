@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2680,6 +2680,7 @@
 		};
 		C23D03EB93B65EB53136D0CA /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2694,7 +2695,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$PROJECT_DIR\"\nmint run realm/SwiftLint swiftlint\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\ncd \"$PROJECT_DIR\"\nmint run realm/SwiftLint swiftlint\n";
 		};
 		E1647C463E0AB33C3D7B64E6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
