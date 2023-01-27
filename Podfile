@@ -1,5 +1,5 @@
 
-platform :ios, '14.0'
+platform :ios, '15.0'
 ensure_bundler!
 
 def common_pods
