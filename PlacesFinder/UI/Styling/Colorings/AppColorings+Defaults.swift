@@ -28,66 +28,66 @@ extension AppColorings {
 
     static let defaultColorings = AppColorings(
         standard: AppStandardColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            titleTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            bodyTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            titleTextColoring: TextColoring(textColor: .label),
+            bodyTextColoring: TextColoring(textColor: .label)
         ),
         launch: LaunchViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             spinnerColor: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
         navBar: NavBarColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemGray5(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            iconTintColoring: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            backArrowTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            titleTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            viewColoring: ViewColoring(backgroundColor: .systemGray5),
+            iconTintColoring: FillColoring(color: .label),
+            backArrowTint: FillColoring(color: .label),
+            titleTextColoring: TextColoring(textColor: .label)
         ),
         searchCTA: SearchCTAViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            titleTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            bodyTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            titleTextColoring: TextColoring(textColor: .label),
+            bodyTextColoring: TextColoring(textColor: .label),
             ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
         ),
         searchDetails: SearchDetailsViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            bodyTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            phoneIconTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            bodyTextColoring: TextColoring(textColor: .label),
+            phoneIconTint: FillColoring(color: .label),
             disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
         searchInput: SearchInputViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGray),
             iconTintColoring: FillColoring(color: .systemGray),
-            textFieldViewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            placeholderColoring: TextColoring(textColor: .placeholderText(alternative: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))),
-            inputTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            cancelButtonTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            textFieldViewColoring: ViewColoring(backgroundColor: .systemBackground),
+            placeholderColoring: TextColoring(textColor: .placeholderText),
+            inputTextColoring: TextColoring(textColor: .label),
+            cancelButtonTextColoring: TextColoring(textColor: .label)
         ),
         searchProgress: SearchProgressViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             gradientFill: FillColoring(color: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
         ),
         searchResults: SearchResultsViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            bodyTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            bodyTextColoring: TextColoring(textColor: .label),
             disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)),
             refreshControlTint: FillColoring(color: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
         ),
         settingsChild: SettingsChildViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            titleTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            bodyTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            titleTextColoring: TextColoring(textColor: .label),
+            bodyTextColoring: TextColoring(textColor: .label),
             ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
         ),
         settings: SettingsViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             activeButtonTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1)),
-            cellTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            cellCheckmarkTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
-            headerTextColoring: TextColoring(textColor: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+            cellTextColoring: TextColoring(textColor: .label),
+            cellCheckmarkTint: FillColoring(color: .label),
+            headerTextColoring: TextColoring(textColor: .label)
         ),
         tabBar: TabBarColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemGray5(alternative: #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1))),
-            selectedItemTint: FillColoring(color: .label(alternative: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))),
+            viewColoring: ViewColoring(backgroundColor: .systemGray5),
+            selectedItemTint: FillColoring(color: .label),
             unselectedItemTint: FillColoring(color: .systemGray)
         )
     )
