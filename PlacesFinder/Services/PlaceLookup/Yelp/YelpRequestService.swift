@@ -40,7 +40,7 @@ class YelpRequestService: PlaceLookupServiceProtocol {
         self.requestBuilder = YelpRequestBuilder(config: config)
     }
 
-    func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams,
+    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams,
                                       resultsPerPage: Int) throws -> PlaceLookupPageRequestToken {
         let tokenResult = requestBuilder.buildPageRequestToken(placeLookupParams,
                                                                startingIndex: 0,
@@ -48,45 +48,44 @@ class YelpRequestService: PlaceLookupServiceProtocol {
         return try tokenResult.get()
     }
 
-    func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken {
-        return try buildInitialPageRequestToken(placeLookupParams,
+    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken {
+        return try buildInitialPageRequestToken(placeLookupParams: placeLookupParams,
                                                 resultsPerPage: YelpRequestService.maxResultsPerPage)
     }
 
-    func requestPage(_ requestToken: PlaceLookupPageRequestToken,
-                     completion: @escaping PlaceLookupCompletion) {
-        decodableService.performRequest(requestToken.urlRequest) { [weak self] (result: YelpServiceResult) in
-            switch result {
-            case let .success(yelpPageResponse):
-                self?.handleRequestSuccess(requestToken,
-                                           yelpPageResponse: yelpPageResponse,
-                                           completion: completion)
-            case let .failure(error):
-                switch error {
-                case let .errorPayloadReturned(yelpErrorPayload, urlResponse):
-                    completion(.failure(.errorPayloadReturned(yelpErrorPayload.placeLookupErrorPayload,
-                                                              urlResponse: urlResponse)))
-                case let .unexpected(decodingError):
-                    completion(.failure(.unexpectedDecodingError(underlyingError: decodingError)))
-                }
+    func requestPage(requestToken: PlaceLookupPageRequestToken) async throws -> PlaceLookupResult {
+        let result: YelpServiceResult = try await decodableService.performRequest(urlRequest: requestToken.urlRequest)
+
+        switch result {
+        case let .success(yelpPageResponse):
+            return handleRequestSuccess(requestToken: requestToken,
+                                        yelpPageResponse: yelpPageResponse)
+
+        case let .failure(error):
+            switch error {
+            case let .errorPayloadReturned(yelpErrorPayload, urlResponse):
+                return .failure(.errorPayloadReturned(yelpErrorPayload.placeLookupErrorPayload,
+                                                      urlResponse: urlResponse))
+
+            case let .unexpected(decodingError):
+                return .failure(.unexpectedDecodingError(underlyingError: decodingError))
             }
         }
     }
 
-    private func handleRequestSuccess(_ requestToken: PlaceLookupPageRequestToken,
-                                      yelpPageResponse: YelpPageResponse,
-                                      completion: @escaping PlaceLookupCompletion) {
+    private func handleRequestSuccess(requestToken: PlaceLookupPageRequestToken,
+                                      yelpPageResponse: YelpPageResponse) -> PlaceLookupResult {
         let page = yelpPageResponse.lookupPage
-        let nextRequestTokenResult = buildNextRequestToken(yelpPageResponse.total,
+        let nextRequestTokenResult = buildNextRequestToken(totalResults: yelpPageResponse.total,
                                                            previousToken: requestToken)
         let placeLookupResponse = PlaceLookupResponse(page: page,
                                                       nextRequestTokenResult: nextRequestTokenResult)
 
-        completion(.success(placeLookupResponse))
+        return .success(placeLookupResponse)
     }
 
     private func buildNextRequestToken(
-        _ totalResults: Int,
+        totalResults: Int,
         previousToken: PlaceLookupPageRequestToken
     ) -> PlaceLookupPageRequestTokenResult? {
         let nextStartingIndex = previousToken.startingIndex + previousToken.resultsPerPage

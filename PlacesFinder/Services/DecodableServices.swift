@@ -30,12 +30,9 @@ struct DecodableServices {
     let standardTimeoutDecodableService: DecodableService
 
     init() {
-        let responseQueue = DispatchQueue(label: "NetworkDataService.responseQueue")
         let decoder = JSONDecoder()
-
         let standardTimeoutSession = URLSession.shared
         self.standardTimeoutDecodableService = DecodableService(urlSession: standardTimeoutSession,
-                                                                responseQueue: responseQueue,
                                                                 decoder: decoder)
     }
 
@@ -44,11 +41,8 @@ struct DecodableServices {
 private extension DecodableService {
 
     convenience init(urlSession: URLSession,
-                     responseQueue: DispatchQueue,
                      decoder: DecoderProtocol) {
-        let networkDataService = NetworkDataService(urlSession: urlSession,
-                                                    responseQueue: responseQueue)
-        let httpService = HTTPService(networkDataService: networkDataService)
+        let httpService = HTTPService(urlSession: urlSession)
 
         self.init(httpService: httpService,
                   decoder: decoder)
