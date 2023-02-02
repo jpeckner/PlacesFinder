@@ -53,8 +53,8 @@ class YelpRequestService: PlaceLookupServiceProtocol {
                                                 resultsPerPage: YelpRequestService.maxResultsPerPage)
     }
 
-    func requestPage(requestToken: PlaceLookupPageRequestToken) async throws -> PlaceLookupResult {
-        let result: YelpServiceResult = try await decodableService.performRequest(urlRequest: requestToken.urlRequest)
+    func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult {
+        let result: YelpServiceResult = await decodableService.performRequest(urlRequest: requestToken.urlRequest)
 
         switch result {
         case let .success(yelpPageResponse):

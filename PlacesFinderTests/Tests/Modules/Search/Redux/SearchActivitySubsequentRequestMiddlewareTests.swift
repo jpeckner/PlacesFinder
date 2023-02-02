@@ -77,6 +77,9 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
             describe("dispatch .inProgress") {
                 beforeEach {
+                    mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
+                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
+
                     performTest()
                 }
 
@@ -100,9 +103,11 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
             describe("requestPage") {
 
                 it("calls mockPlaceLookupService.requestPage()") {
+                    mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
+                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
                     performTest()
 
-                    expect(mockPlaceLookupService.requestPageCompletionCalled) == true
+                    await expect(mockPlaceLookupService.requestPageRequestTokenCalled).toEventually(beTrue())
                 }
 
                 context("when mockPlaceLookupService.requestPage() calls back with .failure") {
@@ -113,16 +118,15 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                         )
 
                         beforeEach {
-                            mockPlaceLookupService.requestPageCompletionClosure = { _, callback in
-                                callback(.failure(stubUnderlyingError))
-                            }
+                            mockPlaceLookupService.requestPageRequestTokenReturnValue = .failure(stubUnderlyingError)
+
                             performTest()
                         }
 
                         it("dispatches .subsequentRequest(.failure), with an error of .cannotRetryRequest") {
-                            expect(mockStore.dispatchedPageAction) == .failure(
+                            await expect(mockStore.dispatchedPageAction).toEventually(equal(.failure(
                                 .cannotRetryRequest(underlyingError: IgnoredEquatable(stubUnderlyingError))
-                            )
+                            )))
                         }
 
                         it("...and with the previously received search params...") {
@@ -146,17 +150,15 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                                                                                                urlResponse: urlResponse)
 
                         beforeEach {
-                            mockPlaceLookupService.requestPageCompletionClosure = { _, callback in
-                                callback(.failure(stubUnderlyingError))
-                            }
+                            mockPlaceLookupService.requestPageRequestTokenReturnValue = .failure(stubUnderlyingError)
 
                             performTest()
                         }
 
                         it("dispatches .subsequentRequest(.failure), with an error of .canRetryRequest") {
-                            expect(mockStore.dispatchedPageAction) == .failure(.canRetryRequest(
+                            await expect(mockStore.dispatchedPageAction).toEventually(equal(.failure(.canRetryRequest(
                                 underlyingError: IgnoredEquatable(stubUnderlyingError)
-                            ))
+                            ))))
                         }
 
                         it("...and with the previously received search params...") {
@@ -168,7 +170,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                         }
 
                         it("...and the same request token used for the failing request") {
-                            expect(mockStore.dispatchedNextRequestToken) == stubTokenContainer
+                            await expect(mockStore.dispatchedNextRequestToken).toEventually(equal(stubTokenContainer))
                         }
                     }
 
@@ -178,16 +180,14 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
                     context("and no search results were found") {
                         beforeEach {
-                            mockPlaceLookupService.requestPageCompletionClosure = { _, callback in
-                                callback(.success(PlaceLookupResponse.stubValue()))
-                            }
+                            mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
                             mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
 
                             performTest()
                         }
 
                         it("dispatches Search.ActivityAction.subsequentRequest with .success") {
-                            expect(mockStore.dispatchedPageAction) == .success
+                            await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                         }
 
                         it("...and with the previously received search params...") {
@@ -219,17 +219,16 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             let stubNextRequestToken = PlaceLookupPageRequestToken.stubValue()
 
                             beforeEach {
-                                mockPlaceLookupService.requestPageCompletionClosure = { _, callback in
-                                    callback(.success(PlaceLookupResponse.stubValue(
+                                mockPlaceLookupService.requestPageRequestTokenReturnValue =
+                                    .success(PlaceLookupResponse.stubValue(
                                         nextRequestTokenResult: .success(stubNextRequestToken)
-                                    )))
-                                }
+                                    ))
 
                                 performTest()
                             }
 
                             it("dispatches Search.ActivityAction.subsequentRequest with .success") {
-                                expect(mockStore.dispatchedPageAction) == .success
+                                await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                             }
 
                             it("...and with the previously received search params...") {
@@ -237,29 +236,29 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             }
 
                             it("...and with all entities received so far...") {
-                                expect(mockStore.dispatchedEntities) == stubPreviousResults.appendedWith(stubReceivedEntityModels)
+                                await expect(mockStore.dispatchedEntities).toEventually(equal(stubPreviousResults.appendedWith(stubReceivedEntityModels)))
                             }
 
                             it("...and the returned next request token, with numAttemptsSoFar == 0") {
-                                expect(mockStore.dispatchedNextRequestToken) == PlaceLookupTokenAttemptsContainer(
+                                await expect(mockStore.dispatchedNextRequestToken).toEventually(equal(PlaceLookupTokenAttemptsContainer(
                                     token: stubNextRequestToken,
                                     maxAttempts: 3,
                                     numAttemptsSoFar: 0
-                                )
+                                )))
                             }
                         }
 
                         context("and a token for the next request is not returned") {
 
                             beforeEach {
-                                mockPlaceLookupService.requestPageCompletionClosure = { _, callback in
-                                    callback(.success(PlaceLookupResponse.stubValue(nextRequestTokenResult: nil)))
-                                }
+                                mockPlaceLookupService.requestPageRequestTokenReturnValue =
+                                    .success(PlaceLookupResponse.stubValue(nextRequestTokenResult: nil))
+
                                 performTest()
                             }
 
                             it("dispatches Search.ActivityAction.subsequentRequest .success") {
-                                expect(mockStore.dispatchedPageAction) == .success
+                                await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                             }
 
                             it("...and with the previously received search params...") {
@@ -267,7 +266,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             }
 
                             it("...and with all entities received so far...") {
-                                expect(mockStore.dispatchedEntities) == stubPreviousResults.appendedWith(stubReceivedEntityModels)
+                                await expect(mockStore.dispatchedEntities).toEventually(equal(stubPreviousResults.appendedWith(stubReceivedEntityModels)))
                             }
 
                             it("...and a nil value for the next request token") {

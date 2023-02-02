@@ -342,20 +342,18 @@ internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
     // MARK: - requestPage
 
-    internal var requestPageRequestTokenThrowableError: Error?
     internal var requestPageRequestTokenCallsCount = 0
     internal var requestPageRequestTokenCalled: Bool {
         return requestPageRequestTokenCallsCount > 0
     }
     internal var requestPageRequestTokenReceivedRequestToken: PlaceLookupPageRequestToken?
     internal var requestPageRequestTokenReturnValue: PlaceLookupResult!
-    internal var requestPageRequestTokenClosure: ((PlaceLookupPageRequestToken) throws -> PlaceLookupResult)?
+    internal var requestPageRequestTokenClosure: ((PlaceLookupPageRequestToken) -> PlaceLookupResult)?
 
-    internal func requestPage(requestToken: PlaceLookupPageRequestToken) throws -> PlaceLookupResult {
+    internal func requestPage(requestToken: PlaceLookupPageRequestToken) -> PlaceLookupResult {
         requestPageRequestTokenCallsCount += 1
         requestPageRequestTokenReceivedRequestToken = requestToken
-        if let error = requestPageRequestTokenThrowableError { throw error }
-        return try requestPageRequestTokenClosure.map({ try $0(requestToken) }) ?? requestPageRequestTokenReturnValue
+        return requestPageRequestTokenClosure.map({ $0(requestToken) }) ?? requestPageRequestTokenReturnValue
     }
 
 }

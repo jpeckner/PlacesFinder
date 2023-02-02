@@ -151,12 +151,15 @@ extension Search {
                                                   dispatch: @escaping DispatchFunction<Search.Action>) {
         do {
             let placeLookupService = dependencies.placeLookupService
-            let initialRequestToken = try placeLookupService.buildInitialPageRequestToken(placeLookupParams: placeLookupParams)
+            let initialRequestToken = try placeLookupService.buildInitialPageRequestToken(
+                placeLookupParams: placeLookupParams
+            )
 
             dispatch(.searchActivity(.initialPageRequested(searchParams)))
 
             Task {
-                let result = try await placeLookupService.requestPage(requestToken: initialRequestToken)
+                let result = await placeLookupService.requestPage(requestToken: initialRequestToken)
+
                 switch result {
                 case let .success(lookupResponse):
                     dispatchInitialPageSuccess(dependencies,
@@ -228,7 +231,10 @@ extension Search {
                     )))
 
                     Task {
-                        let result = try await dependencies.value.placeLookupService.requestPage(requestToken: tokenContainer.token)
+                        let result = await dependencies.value.placeLookupService.requestPage(
+                            requestToken: tokenContainer.token
+                        )
+
                         switch result {
                         case let .success(lookupResponse):
                             dispatchSubsequentPageSuccess(previousResults,

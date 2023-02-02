@@ -1,0 +1,7 @@
+schemes:
+- PlacesFinder-Debug
+
+targets:
+- PlacesFinder
+
+workspace: PlacesFinder.xcworkspace

@@ -164,7 +164,7 @@ class SearchCoordinatorTests: QuickSpec {
 
                     it("calls presenter.loadNoInternetViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled).toEventually(beTrue())
+                        await expect(mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled).toEventually(beTrue())
                     }
 
                     context("when the state has a pending .search linkType") {
@@ -174,7 +174,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -185,7 +185,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -234,7 +234,8 @@ class SearchCoordinatorTests: QuickSpec {
 
                     it("calls presenter.loadLocationServicesDisabledViews()") {
                         performTest(linkType: nil)
-                        expect(mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled)
+
+                        await expect(mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled)
                             .toEventually(beTrue())
                     }
 
@@ -245,7 +246,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -256,7 +257,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 
@@ -310,11 +311,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                            await expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("invokes the provided authorization block") {
-                            expect(blockCalled).toEventually(beTrue())
+                            await expect(blockCalled).toEventually(beTrue())
                         }
                     }
 
@@ -324,7 +325,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchBackgroundView()") {
-                            expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                            await expect(mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("does not invoke the provided authorization block") {
@@ -345,7 +346,6 @@ class SearchCoordinatorTests: QuickSpec {
 
                         let searchState = Search.State.stub()
                         mockSearchStoreRelay.store.appendActionCallback = { action in
-                            print("Da action: \(action)")
                             switch action {
                             case let .receiveState(stateReceiverBlock):
                                 stateReceiverBlock.value(searchState)
@@ -369,19 +369,19 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                            await expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
 
                         it("calls actionCreator.requestInitialPage(:params)") {
-                            expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled).toEventually(beTrue())
+                            await expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled).toEventually(beTrue())
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {
-                            expect(mockSearchStoreRelay.store.hasDispatchedSearchActivityAction(activityAction: stubInitialRequestAction))
+                            await expect(mockSearchStoreRelay.store.hasDispatchedSearchActivityAction(activityAction: stubInitialRequestAction))
                                 .toEventually(beTrue())
                         }
 
@@ -393,11 +393,11 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls presenter.loadSearchViews()") {
-                            expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                            await expect(mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                         }
 
                         it("dispatches AppRouterAction.clearLink") {
-                            expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
+                            await expect(mockAppStoreRelay.store.hasDispatchedRouterClearLinkAction).toEventually(beTrue())
                         }
                     }
 

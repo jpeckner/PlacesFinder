@@ -219,8 +219,6 @@ private class RatingsPricingView: UIView {
             make.top.equalTo(numRatingsLabel)
         }
 
-        apiLinkButton.contentEdgeInsets = .zero
-        apiLinkButton.imageEdgeInsets = .zero
         apiLinkButton.snp.makeConstraints { make in
             make.leading.equalTo(ratingStarsView.snp.trailing).offset(40.0)
             make.trailing.equalTo(self)

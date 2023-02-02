@@ -31,7 +31,7 @@ typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceErro
 protocol PlaceLookupServiceProtocol: AnyObject {
     func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken
 
-    func requestPage(requestToken: PlaceLookupPageRequestToken) async throws -> PlaceLookupResult
+    func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult
 }
 
 // MARK: PlaceLookupServiceError
