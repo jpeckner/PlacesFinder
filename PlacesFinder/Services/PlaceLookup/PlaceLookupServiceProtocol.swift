@@ -26,13 +26,12 @@ import Foundation
 import Shared
 
 typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceError>
-typealias PlaceLookupCompletion = (PlaceLookupResult) -> Void
 
-protocol PlaceLookupServiceProtocol: AnyObject, AutoMockable {
-    func buildInitialPageRequestToken(_ placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken
+// sourcery:AutoMockable
+protocol PlaceLookupServiceProtocol: AnyObject {
+    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken
 
-    func requestPage(_ requestToken: PlaceLookupPageRequestToken,
-                     completion: @escaping PlaceLookupCompletion)
+    func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult
 }
 
 // MARK: PlaceLookupServiceError

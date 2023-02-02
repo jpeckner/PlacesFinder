@@ -41,9 +41,7 @@ class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         tabBarAppearance.standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            tabBarAppearance.scrollEdgeAppearance = appearance
-        }
+        tabBarAppearance.scrollEdgeAppearance = appearance
 
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
             AppTextStyleClass.textInput.textLayout.font,

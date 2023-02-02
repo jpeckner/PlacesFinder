@@ -1,15 +1,15 @@
 
-platform :ios, '14.0'
+platform :ios, '15.0'
 ensure_bundler!
 
 def common_pods
-  pod 'CoordiNode', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'master'
+  pod 'CoordiNode', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
   pod 'Kingfisher'
   pod 'ReachabilitySwift'
   pod 'SkeletonView'
   pod 'SnapKit'
-  pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
-  pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
+  pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
+  pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
 end
 
 target 'PlacesFinder' do
@@ -22,11 +22,11 @@ target 'PlacesFinder' do
     
     common_pods
     
-    pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'master'
+    pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
     pod 'Nimble'
     pod 'Quick'
-    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
-    pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'master'
+    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
+    pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
   end
 
   target 'PlacesFinderIntegrationTests' do
@@ -36,7 +36,7 @@ target 'PlacesFinder' do
 
     pod 'Nimble'
     pod 'Quick'
-    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'master'
+    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
   end
 
   target 'PlacesFinderUITests' do

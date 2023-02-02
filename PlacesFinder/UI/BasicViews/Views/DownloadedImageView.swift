@@ -38,7 +38,7 @@ class DownloadedImageView: UIImageView {
         super.init(image: placeholderImage)
 
         self.contentMode = contentMode
-        tintColor = .label(alternative: .black)
+        tintColor = .label
     }
 
     required init?(coder aDecoder: NSCoder) {

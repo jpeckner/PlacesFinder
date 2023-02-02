@@ -69,6 +69,16 @@
                ReferencedContainer = "container:PlacesFinder.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E66ED37449AF9E57D7D0B3AA"
+               BuildableName = "PlacesFinderIntegrationTests.xctest"
+               BlueprintName = "PlacesFinderIntegrationTests"
+               ReferencedContainer = "container:PlacesFinder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

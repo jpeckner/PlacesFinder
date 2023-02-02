@@ -24,33 +24,48 @@
 
 import Nimble
 import Quick
+import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
 class HomeCoordinatorChildFactoryTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable force_try force_unwrapping
     override func spec() {
 
-        var sut: HomeCoordinatorChildFactory<MockAppStore>!
+        let resultStorage = AsyncStorage<TabCoordinatorProtocol>()
+        let sutStorage = AsyncStorage<HomeCoordinatorChildFactory<MockAppStore>>()
 
         beforeEach {
-            sut = HomeCoordinatorChildFactory(store: MockAppStore(),
-                                              listenerContainer: ListenerContainer.mockValue(),
-                                              serviceContainer: ServiceContainer.mockValue())
+            await resultStorage.setElement(nil)
+
+            let sut = HomeCoordinatorChildFactory(store: MockAppStore(),
+                                                  listenerContainer: ListenerContainer.mockValue(),
+                                                  serviceContainer: ServiceContainer.mockValue())
+            await sutStorage.setElement(sut)
         }
 
         describe("buildCoordinator") {
 
+            func performTest(descendent: HomeCoordinatorDestinationDescendent) async {
+                // Use @MainActor to avoid run-time warnings for UIKit code
+                Task { @MainActor in
+                    let coordinator = await sutStorage.element!.buildCoordinator(for: descendent)
+                    await resultStorage.setElement(coordinator)
+                }
+
+                // Give the above Task time to complete
+                try! await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+
             context("when the destinationDescendent arg is .search") {
 
-                var result: TabCoordinatorProtocol!
-
                 beforeEach {
-                    result = sut.buildCoordinator(for: .search)
+                    await performTest(descendent: .search)
                 }
 
                 it("returns an instance of SearchCoordinator") {
+                    let result = await resultStorage.element
                     expect(result is SearchCoordinator<MockAppStore, Store<Search.Action, Search.State>>) == true
                 }
 
@@ -58,13 +73,12 @@ class HomeCoordinatorChildFactoryTests: QuickSpec {
 
             context("else when the destinationDescendent arg is .settings") {
 
-                var result: TabCoordinatorProtocol!
-
                 beforeEach {
-                    result = sut.buildCoordinator(for: .settings)
+                    await performTest(descendent: .settings)
                 }
 
                 it("returns an instance of SettingsCoordinator") {
+                    let result = await resultStorage.element
                     expect(result is SettingsCoordinator<MockAppStore>) == true
                 }
 

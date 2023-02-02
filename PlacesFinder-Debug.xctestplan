@@ -23,6 +23,13 @@
         "identifier" : "E862C24CA0323107692499A1",
         "name" : "PlacesFinderTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PlacesFinder.xcodeproj",
+        "identifier" : "E66ED37449AF9E57D7D0B3AA",
+        "name" : "PlacesFinderIntegrationTests"
+      }
     }
   ],
   "version" : 1

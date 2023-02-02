@@ -33,13 +33,10 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
-        let urlString = ProcessInfo().environment["PLACE_LOOKUP_BASE_URL"]
+        let urlString = "https://api.yelp.com"
         let apiKeyString = ProcessInfo().environment["PLACE_LOOKUP_KEY"]
 
-        let responseQueue = DispatchQueue(label: "PlaceLookupServiceIntegrationTests")
-        let networkDataService = NetworkDataService(urlSession: URLSession.shared,
-                                                    responseQueue: responseQueue)
-        let httpService = HTTPService(networkDataService: networkDataService)
+        let httpService = HTTPService(urlSession: URLSession.shared)
         let decodableService = DecodableService(httpService: httpService,
                                                 decoder: JSONDecoder())
 
@@ -54,9 +51,7 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
         var nextRequestToken: PlaceLookupPageRequestToken!
 
         func setupTest(apiKey: String) {
-            guard let baseURLString = urlString,
-                let baseURL = URL(string: baseURLString)
-            else {
+            guard let baseURL = URL(string: urlString) else {
                 fail("Invalid value for baseURL: \(String(describing: urlString))")
                 return
             }
@@ -66,7 +61,7 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                                                    baseURL: baseURL)
                 placeLookupService = YelpRequestService(config: config,
                                                         decodableService: decodableService)
-                nextRequestToken = try placeLookupService.buildInitialPageRequestToken(params)
+                nextRequestToken = try placeLookupService.buildInitialPageRequestToken(placeLookupParams: params)
             } catch {
                 fail("Unexpected error: \(error)")
                 return
@@ -80,28 +75,29 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                 var pagesReturned: [PlaceLookupPage]!
 
                 beforeSuite {
+                    pagesReturned = []
+
                     guard let apiKey = apiKeyString else {
                         fail("Invalid value for apiKeyString: \(String(describing: apiKeyString))")
                         return
                     }
 
                     setupTest(apiKey: apiKey)
-                    pagesReturned = []
 
                     while let requestToken = nextRequestToken {
-                        waitUntil(timeout: .seconds(5)) { done in
-                            placeLookupService.requestPage(requestToken) { result in
-                                switch result {
-                                case let .success(response):
-                                    nextRequestToken = try? response.nextRequestTokenResult?.get()
-                                    pagesReturned.append(response.page)
-                                case let .failure(error):
-                                    nextRequestToken = nil  // Prevent infinite looping
-                                    fail("Unexpected error: \(error)")
-                                }
+                        await waitUntil(timeout: .seconds(5)) { done in
+                            let result = await placeLookupService.requestPage(requestToken: requestToken)
 
-                                done()
+                            switch result {
+                            case let .success(response):
+                                nextRequestToken = try? response.nextRequestTokenResult?.get()
+                                pagesReturned.append(response.page)
+                            case let .failure(error):
+                                nextRequestToken = nil  // Prevent infinite looping
+                                fail("Unexpected error: \(error)")
                             }
+
+                            done()
                         }
                     }
                 }
@@ -130,11 +126,9 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                 beforeSuite {
                     setupTest(apiKey: "")
 
-                    waitUntil(timeout: .seconds(5)) { done in
-                        placeLookupService.requestPage(nextRequestToken) { result in
-                            placeLookupResult = result
-                            done()
-                        }
+                    await waitUntil(timeout: .seconds(5)) { done in
+                        placeLookupResult = await placeLookupService.requestPage(requestToken: nextRequestToken)
+                        done()
                     }
                 }
 
