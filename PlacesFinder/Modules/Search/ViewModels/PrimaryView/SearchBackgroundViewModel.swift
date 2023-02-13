@@ -32,7 +32,8 @@ struct SearchBackgroundViewModel {
 
 // MARK: SearchBackgroundViewModelBuilder
 
-protocol SearchBackgroundViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchBackgroundViewModelBuilderProtocol {
     func buildViewModel(_ keywords: NonEmptyString?,
                         appCopyContent: AppCopyContent) -> SearchBackgroundViewModel
 }

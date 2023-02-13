@@ -32,7 +32,8 @@ protocol HomePresenterDelegate: AnyObject {
                        didSelectChildCoordinator index: Int)
 }
 
-protocol HomePresenterProtocol: AnyObject, AutoMockable {
+// sourcery: AutoMockable
+protocol HomePresenterProtocol: AnyObject {
     var delegate: HomePresenterDelegate? { get set }
     var rootViewController: UIViewController { get }
 

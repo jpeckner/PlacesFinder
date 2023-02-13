@@ -26,7 +26,8 @@ import Combine
 import Shared
 import SwiftDux
 
-protocol ReachabilityListenerProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol ReachabilityListenerProtocol {
     func start() throws
 }
 

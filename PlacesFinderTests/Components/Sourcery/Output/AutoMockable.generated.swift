@@ -1,22 +1,14 @@
 // Generated using Sourcery 1.9.2 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
+// swiftlint:disable line_length
+// swiftlint:disable variable_name
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import Foundation
+#if os(iOS) || os(tvOS) || os(watchOS)
+import UIKit
+#elseif os(OSX)
+import AppKit
+#endif
 
 import Combine
 import CoordiNode
@@ -26,1099 +18,1475 @@ import SharedTestComponents
 import SwiftDux
 import UIKit
 
-internal class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
-    internal var store: TStore {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
+
+
+    var store: TStore {
         get { return underlyingStore }
         set(value) { underlyingStore = value }
     }
-    internal var underlyingStore: TStore!
-    internal var serviceContainer: ServiceContainer {
+    var underlyingStore: TStore!
+    var serviceContainer: ServiceContainer {
         get { return underlyingServiceContainer }
         set(value) { underlyingServiceContainer = value }
     }
-    internal var underlyingServiceContainer: ServiceContainer!
-    internal var launchStatePrism: LaunchStatePrismProtocol {
+    var underlyingServiceContainer: ServiceContainer!
+    var launchStatePrism: LaunchStatePrismProtocol {
         get { return underlyingLaunchStatePrism }
         set(value) { underlyingLaunchStatePrism = value }
     }
-    internal var underlyingLaunchStatePrism: LaunchStatePrismProtocol!
+    var underlyingLaunchStatePrism: LaunchStatePrismProtocol!
 
-    // MARK: - buildLaunchCoordinator
+    //MARK: - buildLaunchCoordinator
 
-    internal var buildLaunchCoordinatorCallsCount = 0
-    internal var buildLaunchCoordinatorCalled: Bool {
+    var buildLaunchCoordinatorCallsCount = 0
+    var buildLaunchCoordinatorCalled: Bool {
         return buildLaunchCoordinatorCallsCount > 0
     }
-    internal var buildLaunchCoordinatorReturnValue: AppCoordinatorChildProtocol!
-    internal var buildLaunchCoordinatorClosure: (() -> AppCoordinatorChildProtocol)?
+    var buildLaunchCoordinatorReturnValue: AppCoordinatorChildProtocol!
+    var buildLaunchCoordinatorClosure: (() -> AppCoordinatorChildProtocol)?
 
-    internal func buildLaunchCoordinator() -> AppCoordinatorChildProtocol {
+    func buildLaunchCoordinator() -> AppCoordinatorChildProtocol {
         buildLaunchCoordinatorCallsCount += 1
-        return buildLaunchCoordinatorClosure.map({ $0() }) ?? buildLaunchCoordinatorReturnValue
+        if let buildLaunchCoordinatorClosure = buildLaunchCoordinatorClosure {
+            return buildLaunchCoordinatorClosure()
+        } else {
+            return buildLaunchCoordinatorReturnValue
+        }
     }
 
-    // MARK: - buildCoordinator
+    //MARK: - buildCoordinator
 
-    internal var buildCoordinatorForCallsCount = 0
-    internal var buildCoordinatorForCalled: Bool {
+    var buildCoordinatorForCallsCount = 0
+    var buildCoordinatorForCalled: Bool {
         return buildCoordinatorForCallsCount > 0
     }
-    internal var buildCoordinatorForReceivedChildType: AppCoordinatorDestinationDescendent?
-    internal var buildCoordinatorForReturnValue: AppCoordinatorChildProtocol!
-    internal var buildCoordinatorForClosure: ((AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol)?
+    var buildCoordinatorForReceivedChildType: AppCoordinatorDestinationDescendent?
+    var buildCoordinatorForReceivedInvocations: [AppCoordinatorDestinationDescendent] = []
+    var buildCoordinatorForReturnValue: AppCoordinatorChildProtocol!
+    var buildCoordinatorForClosure: ((AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol)?
 
-    internal func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
+    func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
         buildCoordinatorForCallsCount += 1
         buildCoordinatorForReceivedChildType = childType
-        return buildCoordinatorForClosure.map({ $0(childType) }) ?? buildCoordinatorForReturnValue
+        buildCoordinatorForReceivedInvocations.append(childType)
+        if let buildCoordinatorForClosure = buildCoordinatorForClosure {
+            return buildCoordinatorForClosure(childType)
+        } else {
+            return buildCoordinatorForReturnValue
+        }
     }
 
 }
-internal class AppGlobalStylingsHandlerProtocolMock: AppGlobalStylingsHandlerProtocol {
+class AppGlobalStylingsHandlerProtocolMock: AppGlobalStylingsHandlerProtocol {
 
-    // MARK: - apply
 
-    internal var applyCallsCount = 0
-    internal var applyCalled: Bool {
+
+    //MARK: - apply
+
+    var applyCallsCount = 0
+    var applyCalled: Bool {
         return applyCallsCount > 0
     }
-    internal var applyReceivedAppSkin: AppSkin?
-    internal var applyClosure: ((AppSkin) -> Void)?
+    var applyReceivedAppSkin: AppSkin?
+    var applyReceivedInvocations: [AppSkin] = []
+    var applyClosure: ((AppSkin) -> Void)?
 
-    internal func apply(_ appSkin: AppSkin) {
+    func apply(_ appSkin: AppSkin) {
         applyCallsCount += 1
         applyReceivedAppSkin = appSkin
+        applyReceivedInvocations.append(appSkin)
         applyClosure?(appSkin)
     }
 
 }
-internal class AppLinkTypeBuilderProtocolMock: AppLinkTypeBuilderProtocol {
+class AppLinkTypeBuilderProtocolMock: AppLinkTypeBuilderProtocol {
 
-    // MARK: - buildPayload
 
-    internal var buildPayloadCallsCount = 0
-    internal var buildPayloadCalled: Bool {
+
+    //MARK: - buildPayload
+
+    var buildPayloadCallsCount = 0
+    var buildPayloadCalled: Bool {
         return buildPayloadCallsCount > 0
     }
-    internal var buildPayloadReceivedUrl: URL?
-    internal var buildPayloadReturnValue: AppLinkType?
-    internal var buildPayloadClosure: ((URL) -> AppLinkType?)?
+    var buildPayloadReceivedUrl: URL?
+    var buildPayloadReceivedInvocations: [URL] = []
+    var buildPayloadReturnValue: AppLinkType?
+    var buildPayloadClosure: ((URL) -> AppLinkType?)?
 
-    internal func buildPayload(_ url: URL) -> AppLinkType? {
+    func buildPayload(_ url: URL) -> AppLinkType? {
         buildPayloadCallsCount += 1
         buildPayloadReceivedUrl = url
-        return buildPayloadClosure.map({ $0(url) }) ?? buildPayloadReturnValue
+        buildPayloadReceivedInvocations.append(url)
+        if let buildPayloadClosure = buildPayloadClosure {
+            return buildPayloadClosure(url)
+        } else {
+            return buildPayloadReturnValue
+        }
     }
 
 }
-internal class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
+class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
 
-    // MARK: - fetchAppSkin
 
-    internal var fetchAppSkinCompletionCallsCount = 0
-    internal var fetchAppSkinCompletionCalled: Bool {
+
+    //MARK: - fetchAppSkin
+
+    var fetchAppSkinCompletionCallsCount = 0
+    var fetchAppSkinCompletionCalled: Bool {
         return fetchAppSkinCompletionCallsCount > 0
     }
-    internal var fetchAppSkinCompletionReceivedCompletion: (AppSkinServiceCompletion)?
-    internal var fetchAppSkinCompletionClosure: ((@escaping AppSkinServiceCompletion) -> Void)?
+    var fetchAppSkinCompletionReceivedCompletion: (AppSkinServiceCompletion)?
+    var fetchAppSkinCompletionReceivedInvocations: [(AppSkinServiceCompletion)] = []
+    var fetchAppSkinCompletionClosure: ((@escaping AppSkinServiceCompletion) -> Void)?
 
-    internal func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
+    func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
         fetchAppSkinCompletionCallsCount += 1
         fetchAppSkinCompletionReceivedCompletion = completion
+        fetchAppSkinCompletionReceivedInvocations.append(completion)
         fetchAppSkinCompletionClosure?(completion)
     }
 
 }
-internal class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
-    internal var rootViewController: UIViewController {
+class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
+
+
+    var rootViewController: UIViewController {
         get { return underlyingRootViewController }
         set(value) { underlyingRootViewController = value }
     }
-    internal var underlyingRootViewController: UIViewController!
+    var underlyingRootViewController: UIViewController!
 
-    // MARK: - start
+    //MARK: - start
 
-    internal var startCallsCount = 0
-    internal var startCalled: Bool {
+    var startCallsCount = 0
+    var startCalled: Bool {
         return startCallsCount > 0
     }
-    internal var startReceivedCompletion: (() -> Void)?
-    internal var startClosure: ((() -> Void) -> Void)?
+    var startReceivedCompletion: ((() -> Void))?
+    var startReceivedInvocations: [((() -> Void))?] = []
+    var startClosure: (((() -> Void)?) -> Void)?
 
-    internal func start(_ completion: () -> Void) {
+    func start(_ completion: (() -> Void)?) {
         startCallsCount += 1
+        startReceivedCompletion = completion
+        startReceivedInvocations.append(completion)
         startClosure?(completion)
     }
 
-    // MARK: - finish
+    //MARK: - finish
 
-    internal var finishCallsCount = 0
-    internal var finishCalled: Bool {
+    var finishCallsCount = 0
+    var finishCalled: Bool {
         return finishCallsCount > 0
     }
-    internal var finishReceivedCompletion: ((() -> Void))?
-    internal var finishClosure: (((() -> Void)?) -> Void)?
+    var finishReceivedCompletion: ((() -> Void))?
+    var finishReceivedInvocations: [((() -> Void))?] = []
+    var finishClosure: (((() -> Void)?) -> Void)?
 
-    internal func finish(_ completion: (() -> Void)?) {
+    func finish(_ completion: (() -> Void)?) {
         finishCallsCount += 1
+        finishReceivedCompletion = completion
+        finishReceivedInvocations.append(completion)
         finishClosure?(completion)
     }
 
 }
-internal class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
+class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
 
-    // MARK: - buildCoordinator
 
-    internal var buildCoordinatorForCallsCount = 0
-    internal var buildCoordinatorForCalled: Bool {
+
+    //MARK: - buildCoordinator
+
+    var buildCoordinatorForCallsCount = 0
+    var buildCoordinatorForCalled: Bool {
         return buildCoordinatorForCallsCount > 0
     }
-    internal var buildCoordinatorForReceivedDestinationDescendent: HomeCoordinatorDestinationDescendent?
-    internal var buildCoordinatorForReturnValue: TabCoordinatorProtocol!
-    internal var buildCoordinatorForClosure: ((HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol)?
+    var buildCoordinatorForReceivedDestinationDescendent: HomeCoordinatorDestinationDescendent?
+    var buildCoordinatorForReceivedInvocations: [HomeCoordinatorDestinationDescendent] = []
+    var buildCoordinatorForReturnValue: TabCoordinatorProtocol!
+    var buildCoordinatorForClosure: ((HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol)?
 
-    internal func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
+    func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
         buildCoordinatorForCallsCount += 1
         buildCoordinatorForReceivedDestinationDescendent = destinationDescendent
-        return buildCoordinatorForClosure.map({ $0(destinationDescendent) }) ?? buildCoordinatorForReturnValue
+        buildCoordinatorForReceivedInvocations.append(destinationDescendent)
+        if let buildCoordinatorForClosure = buildCoordinatorForClosure {
+            return buildCoordinatorForClosure(destinationDescendent)
+        } else {
+            return buildCoordinatorForReturnValue
+        }
     }
 
 }
-internal class HomePresenterProtocolMock: HomePresenterProtocol {
-    internal var delegate: HomePresenterDelegate?
-    internal var rootViewController: UIViewController {
+class HomePresenterProtocolMock: HomePresenterProtocol {
+
+
+    var delegate: HomePresenterDelegate?
+    var rootViewController: UIViewController {
         get { return underlyingRootViewController }
         set(value) { underlyingRootViewController = value }
     }
-    internal var underlyingRootViewController: UIViewController!
+    var underlyingRootViewController: UIViewController!
 
-    // MARK: - setSelectedViewController
+    //MARK: - setSelectedViewController
 
-    internal var setSelectedViewControllerCallsCount = 0
-    internal var setSelectedViewControllerCalled: Bool {
+    var setSelectedViewControllerCallsCount = 0
+    var setSelectedViewControllerCalled: Bool {
         return setSelectedViewControllerCallsCount > 0
     }
-    internal var setSelectedViewControllerReceivedController: UIViewController?
-    internal var setSelectedViewControllerClosure: ((UIViewController) -> Void)?
+    var setSelectedViewControllerReceivedController: UIViewController?
+    var setSelectedViewControllerReceivedInvocations: [UIViewController] = []
+    var setSelectedViewControllerClosure: ((UIViewController) -> Void)?
 
-    internal func setSelectedViewController(_ controller: UIViewController) {
+    func setSelectedViewController(_ controller: UIViewController) {
         setSelectedViewControllerCallsCount += 1
         setSelectedViewControllerReceivedController = controller
+        setSelectedViewControllerReceivedInvocations.append(controller)
         setSelectedViewControllerClosure?(controller)
     }
 
 }
-internal class LaunchPresenterProtocolMock: LaunchPresenterProtocol {
-    internal var rootViewController: UIViewController {
+class LaunchPresenterProtocolMock: LaunchPresenterProtocol {
+
+
+    var rootViewController: UIViewController {
         get { return underlyingRootViewController }
         set(value) { underlyingRootViewController = value }
     }
-    internal var underlyingRootViewController: UIViewController!
+    var underlyingRootViewController: UIViewController!
 
-    // MARK: - startSpinner
+    //MARK: - startSpinner
 
-    internal var startSpinnerCallsCount = 0
-    internal var startSpinnerCalled: Bool {
+    var startSpinnerCallsCount = 0
+    var startSpinnerCalled: Bool {
         return startSpinnerCallsCount > 0
     }
-    internal var startSpinnerClosure: (() -> Void)?
+    var startSpinnerClosure: (() -> Void)?
 
-    internal func startSpinner() {
+    func startSpinner() {
         startSpinnerCallsCount += 1
         startSpinnerClosure?()
     }
 
-    // MARK: - animateOut
+    //MARK: - animateOut
 
-    internal var animateOutCallsCount = 0
-    internal var animateOutCalled: Bool {
+    var animateOutCallsCount = 0
+    var animateOutCalled: Bool {
         return animateOutCallsCount > 0
     }
-    internal var animateOutReceivedCompletion: ((() -> Void))?
-    internal var animateOutClosure: (((() -> Void)?) -> Void)?
+    var animateOutReceivedCompletion: ((() -> Void))?
+    var animateOutReceivedInvocations: [((() -> Void))?] = []
+    var animateOutClosure: (((() -> Void)?) -> Void)?
 
-    internal func animateOut(_ completion: (() -> Void)?) {
+    func animateOut(_ completion: (() -> Void)?) {
         animateOutCallsCount += 1
+        animateOutReceivedCompletion = completion
+        animateOutReceivedInvocations.append(completion)
         animateOutClosure?(completion)
     }
 
 }
-internal class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
-    internal var launchKeyPaths: Set<EquatableKeyPath<AppState>> {
+class LaunchStatePrismProtocolMock: LaunchStatePrismProtocol {
+
+
+    var launchKeyPaths: Set<EquatableKeyPath<AppState>> {
         get { return underlyingLaunchKeyPaths }
         set(value) { underlyingLaunchKeyPaths = value }
     }
-    internal var underlyingLaunchKeyPaths: Set<EquatableKeyPath<AppState>>!
+    var underlyingLaunchKeyPaths: Set<EquatableKeyPath<AppState>>!
 
-    // MARK: - hasFinishedLaunching
+    //MARK: - hasFinishedLaunching
 
-    internal var hasFinishedLaunchingCallsCount = 0
-    internal var hasFinishedLaunchingCalled: Bool {
+    var hasFinishedLaunchingCallsCount = 0
+    var hasFinishedLaunchingCalled: Bool {
         return hasFinishedLaunchingCallsCount > 0
     }
-    internal var hasFinishedLaunchingReceivedState: AppState?
-    internal var hasFinishedLaunchingReturnValue: Bool!
-    internal var hasFinishedLaunchingClosure: ((AppState) -> Bool)?
+    var hasFinishedLaunchingReceivedState: AppState?
+    var hasFinishedLaunchingReceivedInvocations: [AppState] = []
+    var hasFinishedLaunchingReturnValue: Bool!
+    var hasFinishedLaunchingClosure: ((AppState) -> Bool)?
 
-    internal func hasFinishedLaunching(_ state: AppState) -> Bool {
+    func hasFinishedLaunching(_ state: AppState) -> Bool {
         hasFinishedLaunchingCallsCount += 1
         hasFinishedLaunchingReceivedState = state
-        return hasFinishedLaunchingClosure.map({ $0(state) }) ?? hasFinishedLaunchingReturnValue
+        hasFinishedLaunchingReceivedInvocations.append(state)
+        if let hasFinishedLaunchingClosure = hasFinishedLaunchingClosure {
+            return hasFinishedLaunchingClosure(state)
+        } else {
+            return hasFinishedLaunchingReturnValue
+        }
     }
 
 }
-internal class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
-    internal var actionPublisher: AnyPublisher<LocationAuthAction, Never> {
+class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
+
+
+    var actionPublisher: AnyPublisher<LocationAuthAction, Never> {
         get { return underlyingActionPublisher }
         set(value) { underlyingActionPublisher = value }
     }
-    internal var underlyingActionPublisher: AnyPublisher<LocationAuthAction, Never>!
+    var underlyingActionPublisher: AnyPublisher<LocationAuthAction, Never>!
 
-    // MARK: - start
+    //MARK: - start
 
-    internal var startCallsCount = 0
-    internal var startCalled: Bool {
+    var startCallsCount = 0
+    var startCalled: Bool {
         return startCallsCount > 0
     }
-    internal var startClosure: (() -> Void)?
+    var startClosure: (() -> Void)?
 
-    internal func start() {
+    func start() {
         startCallsCount += 1
         startClosure?()
     }
 
-    // MARK: - requestWhenInUseAuthorization
+    //MARK: - requestWhenInUseAuthorization
 
-    internal var requestWhenInUseAuthorizationCallsCount = 0
-    internal var requestWhenInUseAuthorizationCalled: Bool {
+    var requestWhenInUseAuthorizationCallsCount = 0
+    var requestWhenInUseAuthorizationCalled: Bool {
         return requestWhenInUseAuthorizationCallsCount > 0
     }
-    internal var requestWhenInUseAuthorizationClosure: (() -> Void)?
+    var requestWhenInUseAuthorizationClosure: (() -> Void)?
 
-    internal func requestWhenInUseAuthorization() {
+    func requestWhenInUseAuthorization() {
         requestWhenInUseAuthorizationCallsCount += 1
         requestWhenInUseAuthorizationClosure?()
     }
 
 }
-internal class NavigationBarViewModelBuilderProtocolMock: NavigationBarViewModelBuilderProtocol {
+class NavigationBarViewModelBuilderProtocolMock: NavigationBarViewModelBuilderProtocol {
 
-    // MARK: - buildTitleViewModel
 
-    internal var buildTitleViewModelCopyContentCallsCount = 0
-    internal var buildTitleViewModelCopyContentCalled: Bool {
+
+    //MARK: - buildTitleViewModel
+
+    var buildTitleViewModelCopyContentCallsCount = 0
+    var buildTitleViewModelCopyContentCalled: Bool {
         return buildTitleViewModelCopyContentCallsCount > 0
     }
-    internal var buildTitleViewModelCopyContentReceivedCopyContent: DisplayNameCopyContent?
-    internal var buildTitleViewModelCopyContentReturnValue: NavigationBarTitleViewModel!
-    internal var buildTitleViewModelCopyContentClosure: ((DisplayNameCopyContent) -> NavigationBarTitleViewModel)?
+    var buildTitleViewModelCopyContentReceivedCopyContent: DisplayNameCopyContent?
+    var buildTitleViewModelCopyContentReceivedInvocations: [DisplayNameCopyContent] = []
+    var buildTitleViewModelCopyContentReturnValue: NavigationBarTitleViewModel!
+    var buildTitleViewModelCopyContentClosure: ((DisplayNameCopyContent) -> NavigationBarTitleViewModel)?
 
-    internal func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel {
+    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel {
         buildTitleViewModelCopyContentCallsCount += 1
         buildTitleViewModelCopyContentReceivedCopyContent = copyContent
-        return buildTitleViewModelCopyContentClosure.map({ $0(copyContent) }) ?? buildTitleViewModelCopyContentReturnValue
+        buildTitleViewModelCopyContentReceivedInvocations.append(copyContent)
+        if let buildTitleViewModelCopyContentClosure = buildTitleViewModelCopyContentClosure {
+            return buildTitleViewModelCopyContentClosure(copyContent)
+        } else {
+            return buildTitleViewModelCopyContentReturnValue
+        }
     }
 
 }
-internal class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
+class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
 
-    // MARK: - buildInitialPageRequestToken
 
-    internal var buildInitialPageRequestTokenPlaceLookupParamsThrowableError: Error?
-    internal var buildInitialPageRequestTokenPlaceLookupParamsCallsCount = 0
-    internal var buildInitialPageRequestTokenPlaceLookupParamsCalled: Bool {
+
+    //MARK: - buildInitialPageRequestToken
+
+    var buildInitialPageRequestTokenPlaceLookupParamsThrowableError: Error?
+    var buildInitialPageRequestTokenPlaceLookupParamsCallsCount = 0
+    var buildInitialPageRequestTokenPlaceLookupParamsCalled: Bool {
         return buildInitialPageRequestTokenPlaceLookupParamsCallsCount > 0
     }
-    internal var buildInitialPageRequestTokenPlaceLookupParamsReceivedPlaceLookupParams: PlaceLookupParams?
-    internal var buildInitialPageRequestTokenPlaceLookupParamsReturnValue: PlaceLookupPageRequestToken!
-    internal var buildInitialPageRequestTokenPlaceLookupParamsClosure: ((PlaceLookupParams) throws -> PlaceLookupPageRequestToken)?
+    var buildInitialPageRequestTokenPlaceLookupParamsReceivedPlaceLookupParams: PlaceLookupParams?
+    var buildInitialPageRequestTokenPlaceLookupParamsReceivedInvocations: [PlaceLookupParams] = []
+    var buildInitialPageRequestTokenPlaceLookupParamsReturnValue: PlaceLookupPageRequestToken!
+    var buildInitialPageRequestTokenPlaceLookupParamsClosure: ((PlaceLookupParams) throws -> PlaceLookupPageRequestToken)?
 
-    internal func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken {
+    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken {
         buildInitialPageRequestTokenPlaceLookupParamsCallsCount += 1
+        if let error = buildInitialPageRequestTokenPlaceLookupParamsThrowableError {
+            throw error
+        }
         buildInitialPageRequestTokenPlaceLookupParamsReceivedPlaceLookupParams = placeLookupParams
-        if let error = buildInitialPageRequestTokenPlaceLookupParamsThrowableError { throw error }
-        return try buildInitialPageRequestTokenPlaceLookupParamsClosure.map({ try $0(placeLookupParams) }) ?? buildInitialPageRequestTokenPlaceLookupParamsReturnValue
+        buildInitialPageRequestTokenPlaceLookupParamsReceivedInvocations.append(placeLookupParams)
+        if let buildInitialPageRequestTokenPlaceLookupParamsClosure = buildInitialPageRequestTokenPlaceLookupParamsClosure {
+            return try buildInitialPageRequestTokenPlaceLookupParamsClosure(placeLookupParams)
+        } else {
+            return buildInitialPageRequestTokenPlaceLookupParamsReturnValue
+        }
     }
 
-    // MARK: - requestPage
+    //MARK: - requestPage
 
-    internal var requestPageRequestTokenCallsCount = 0
-    internal var requestPageRequestTokenCalled: Bool {
+    var requestPageRequestTokenCallsCount = 0
+    var requestPageRequestTokenCalled: Bool {
         return requestPageRequestTokenCallsCount > 0
     }
-    internal var requestPageRequestTokenReceivedRequestToken: PlaceLookupPageRequestToken?
-    internal var requestPageRequestTokenReturnValue: PlaceLookupResult!
-    internal var requestPageRequestTokenClosure: ((PlaceLookupPageRequestToken) -> PlaceLookupResult)?
+    var requestPageRequestTokenReceivedRequestToken: PlaceLookupPageRequestToken?
+    var requestPageRequestTokenReceivedInvocations: [PlaceLookupPageRequestToken] = []
+    var requestPageRequestTokenReturnValue: PlaceLookupResult!
+    var requestPageRequestTokenClosure: ((PlaceLookupPageRequestToken) async -> PlaceLookupResult)?
 
-    internal func requestPage(requestToken: PlaceLookupPageRequestToken) -> PlaceLookupResult {
+    func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult {
         requestPageRequestTokenCallsCount += 1
         requestPageRequestTokenReceivedRequestToken = requestToken
-        return requestPageRequestTokenClosure.map({ $0(requestToken) }) ?? requestPageRequestTokenReturnValue
+        requestPageRequestTokenReceivedInvocations.append(requestToken)
+        if let requestPageRequestTokenClosure = requestPageRequestTokenClosure {
+            return await requestPageRequestTokenClosure(requestToken)
+        } else {
+            return requestPageRequestTokenReturnValue
+        }
     }
 
 }
-internal class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
+class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
 
-    // MARK: - start
 
-    internal var startThrowableError: Error?
-    internal var startCallsCount = 0
-    internal var startCalled: Bool {
+
+    //MARK: - start
+
+    var startThrowableError: Error?
+    var startCallsCount = 0
+    var startCalled: Bool {
         return startCallsCount > 0
     }
-    internal var startClosure: (() throws -> Void)?
+    var startClosure: (() throws -> Void)?
 
-    internal func start() throws {
+    func start() throws {
         startCallsCount += 1
-        if let error = startThrowableError { throw error }
+        if let error = startThrowableError {
+            throw error
+        }
         try startClosure?()
     }
 
 }
-internal class ReachabilityProtocolMock: ReachabilityProtocol {
+class ReachabilityProtocolMock: ReachabilityProtocol {
 
-    // MARK: - startNotifier
 
-    internal var startNotifierThrowableError: Error?
-    internal var startNotifierCallsCount = 0
-    internal var startNotifierCalled: Bool {
+
+    //MARK: - startNotifier
+
+    var startNotifierThrowableError: Error?
+    var startNotifierCallsCount = 0
+    var startNotifierCalled: Bool {
         return startNotifierCallsCount > 0
     }
-    internal var startNotifierClosure: (() throws -> Void)?
+    var startNotifierClosure: (() throws -> Void)?
 
-    internal func startNotifier() throws {
+    func startNotifier() throws {
         startNotifierCallsCount += 1
-        if let error = startNotifierThrowableError { throw error }
+        if let error = startNotifierThrowableError {
+            throw error
+        }
         try startNotifierClosure?()
     }
 
-    // MARK: - setReachabilityCallback
+    //MARK: - setReachabilityCallback
 
-    internal var setReachabilityCallbackCallbackCallsCount = 0
-    internal var setReachabilityCallbackCallbackCalled: Bool {
+    var setReachabilityCallbackCallbackCallsCount = 0
+    var setReachabilityCallbackCallbackCalled: Bool {
         return setReachabilityCallbackCallbackCallsCount > 0
     }
-    internal var setReachabilityCallbackCallbackReceivedCallback: ((ReachabilityStatus) -> Void)?
-    internal var setReachabilityCallbackCallbackClosure: ((@escaping (ReachabilityStatus) -> Void) -> Void)?
+    var setReachabilityCallbackCallbackReceivedCallback: ((ReachabilityStatus) -> Void)?
+    var setReachabilityCallbackCallbackReceivedInvocations: [((ReachabilityStatus) -> Void)] = []
+    var setReachabilityCallbackCallbackClosure: ((@escaping (ReachabilityStatus) -> Void) -> Void)?
 
-    internal func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void) {
+    func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void) {
         setReachabilityCallbackCallbackCallsCount += 1
         setReachabilityCallbackCallbackReceivedCallback = callback
+        setReachabilityCallbackCallbackReceivedInvocations.append(callback)
         setReachabilityCallbackCallbackClosure?(callback)
     }
 
 }
-internal class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
-    internal var removeDetailedEntityAction: Search.ActivityAction {
+class SearchActivityActionPrismProtocolMock: SearchActivityActionPrismProtocol {
+
+
+    var removeDetailedEntityAction: Search.ActivityAction {
         get { return underlyingRemoveDetailedEntityAction }
         set(value) { underlyingRemoveDetailedEntityAction = value }
     }
-    internal var underlyingRemoveDetailedEntityAction: Search.ActivityAction!
+    var underlyingRemoveDetailedEntityAction: Search.ActivityAction!
 
-    // MARK: - detailEntityAction
+    //MARK: - detailEntityAction
 
-    internal var detailEntityActionCallsCount = 0
-    internal var detailEntityActionCalled: Bool {
+    var detailEntityActionCallsCount = 0
+    var detailEntityActionCalled: Bool {
         return detailEntityActionCallsCount > 0
     }
-    internal var detailEntityActionReceivedEntity: SearchEntityModel?
-    internal var detailEntityActionReturnValue: Search.ActivityAction!
-    internal var detailEntityActionClosure: ((SearchEntityModel) -> Search.ActivityAction)?
+    var detailEntityActionReceivedEntity: SearchEntityModel?
+    var detailEntityActionReceivedInvocations: [SearchEntityModel] = []
+    var detailEntityActionReturnValue: Search.ActivityAction!
+    var detailEntityActionClosure: ((SearchEntityModel) -> Search.ActivityAction)?
 
-    internal func detailEntityAction(_ entity: SearchEntityModel) -> Search.ActivityAction {
+    func detailEntityAction(_ entity: SearchEntityModel) -> Search.ActivityAction {
         detailEntityActionCallsCount += 1
         detailEntityActionReceivedEntity = entity
-        return detailEntityActionClosure.map({ $0(entity) }) ?? detailEntityActionReturnValue
+        detailEntityActionReceivedInvocations.append(entity)
+        if let detailEntityActionClosure = detailEntityActionClosure {
+            return detailEntityActionClosure(entity)
+        } else {
+            return detailEntityActionReturnValue
+        }
     }
 
-    // MARK: - initialRequestAction
+    //MARK: - initialRequestAction
 
-    internal var initialRequestActionLocationUpdateRequestBlockCallsCount = 0
-    internal var initialRequestActionLocationUpdateRequestBlockCalled: Bool {
+    var initialRequestActionLocationUpdateRequestBlockCallsCount = 0
+    var initialRequestActionLocationUpdateRequestBlockCalled: Bool {
         return initialRequestActionLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var initialRequestActionLocationUpdateRequestBlockReceivedArguments: (searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var initialRequestActionLocationUpdateRequestBlockReturnValue: Search.ActivityAction!
-    internal var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Search.ActivityAction)?
+    var initialRequestActionLocationUpdateRequestBlockReceivedArguments: (searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var initialRequestActionLocationUpdateRequestBlockReceivedInvocations: [(searchParams: SearchParams, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var initialRequestActionLocationUpdateRequestBlockReturnValue: Search.ActivityAction!
+    var initialRequestActionLocationUpdateRequestBlockClosure: ((SearchParams, @escaping LocationUpdateRequestBlock) -> Search.ActivityAction)?
 
-    internal func initialRequestAction(_ searchParams: SearchParams, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.ActivityAction {
+    func initialRequestAction(_ searchParams: SearchParams, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.ActivityAction {
         initialRequestActionLocationUpdateRequestBlockCallsCount += 1
         initialRequestActionLocationUpdateRequestBlockReceivedArguments = (searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return initialRequestActionLocationUpdateRequestBlockClosure.map({ $0(searchParams, locationUpdateRequestBlock) }) ?? initialRequestActionLocationUpdateRequestBlockReturnValue
+        initialRequestActionLocationUpdateRequestBlockReceivedInvocations.append((searchParams: searchParams, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let initialRequestActionLocationUpdateRequestBlockClosure = initialRequestActionLocationUpdateRequestBlockClosure {
+            return initialRequestActionLocationUpdateRequestBlockClosure(searchParams, locationUpdateRequestBlock)
+        } else {
+            return initialRequestActionLocationUpdateRequestBlockReturnValue
+        }
     }
 
-    // MARK: - subsequentRequestAction
+    //MARK: - subsequentRequestAction
 
-    internal var subsequentRequestActionAllEntitiesTokenContainerThrowableError: Error?
-    internal var subsequentRequestActionAllEntitiesTokenContainerCallsCount = 0
-    internal var subsequentRequestActionAllEntitiesTokenContainerCalled: Bool {
+    var subsequentRequestActionAllEntitiesTokenContainerThrowableError: Error?
+    var subsequentRequestActionAllEntitiesTokenContainerCallsCount = 0
+    var subsequentRequestActionAllEntitiesTokenContainerCalled: Bool {
         return subsequentRequestActionAllEntitiesTokenContainerCallsCount > 0
     }
-    internal var subsequentRequestActionAllEntitiesTokenContainerReceivedArguments: (searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
-    internal var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Search.ActivityAction!
-    internal var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction)?
+    var subsequentRequestActionAllEntitiesTokenContainerReceivedArguments: (searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)?
+    var subsequentRequestActionAllEntitiesTokenContainerReceivedInvocations: [(searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer)] = []
+    var subsequentRequestActionAllEntitiesTokenContainerReturnValue: Search.ActivityAction!
+    var subsequentRequestActionAllEntitiesTokenContainerClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction)?
 
-    internal func subsequentRequestAction(_ searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
+    func subsequentRequestAction(_ searchParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
         subsequentRequestActionAllEntitiesTokenContainerCallsCount += 1
+        if let error = subsequentRequestActionAllEntitiesTokenContainerThrowableError {
+            throw error
+        }
         subsequentRequestActionAllEntitiesTokenContainerReceivedArguments = (searchParams: searchParams, allEntities: allEntities, tokenContainer: tokenContainer)
-        if let error = subsequentRequestActionAllEntitiesTokenContainerThrowableError { throw error }
-        return try subsequentRequestActionAllEntitiesTokenContainerClosure.map({ try $0(searchParams, allEntities, tokenContainer) }) ?? subsequentRequestActionAllEntitiesTokenContainerReturnValue
+        subsequentRequestActionAllEntitiesTokenContainerReceivedInvocations.append((searchParams: searchParams, allEntities: allEntities, tokenContainer: tokenContainer))
+        if let subsequentRequestActionAllEntitiesTokenContainerClosure = subsequentRequestActionAllEntitiesTokenContainerClosure {
+            return try subsequentRequestActionAllEntitiesTokenContainerClosure(searchParams, allEntities, tokenContainer)
+        } else {
+            return subsequentRequestActionAllEntitiesTokenContainerReturnValue
+        }
     }
 
-    // MARK: - updateEditingAction
+    //MARK: - updateEditingAction
 
-    internal var updateEditingActionCallsCount = 0
-    internal var updateEditingActionCalled: Bool {
+    var updateEditingActionCallsCount = 0
+    var updateEditingActionCalled: Bool {
         return updateEditingActionCallsCount > 0
     }
-    internal var updateEditingActionReceivedEditEvent: SearchBarEditEvent?
-    internal var updateEditingActionReturnValue: Search.ActivityAction!
-    internal var updateEditingActionClosure: ((SearchBarEditEvent) -> Search.ActivityAction)?
+    var updateEditingActionReceivedEditEvent: SearchBarEditEvent?
+    var updateEditingActionReceivedInvocations: [SearchBarEditEvent] = []
+    var updateEditingActionReturnValue: Search.ActivityAction!
+    var updateEditingActionClosure: ((SearchBarEditEvent) -> Search.ActivityAction)?
 
-    internal func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.ActivityAction {
+    func updateEditingAction(_ editEvent: SearchBarEditEvent) -> Search.ActivityAction {
         updateEditingActionCallsCount += 1
         updateEditingActionReceivedEditEvent = editEvent
-        return updateEditingActionClosure.map({ $0(editEvent) }) ?? updateEditingActionReturnValue
+        updateEditingActionReceivedInvocations.append(editEvent)
+        if let updateEditingActionClosure = updateEditingActionClosure {
+            return updateEditingActionClosure(editEvent)
+        } else {
+            return updateEditingActionReturnValue
+        }
     }
 
 }
-internal class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
+class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
 
-    // MARK: - presentationType
 
-    internal var presentationTypeLocationAuthStateReachabilityStateCallsCount = 0
-    internal var presentationTypeLocationAuthStateReachabilityStateCalled: Bool {
+
+    //MARK: - presentationType
+
+    var presentationTypeLocationAuthStateReachabilityStateCallsCount = 0
+    var presentationTypeLocationAuthStateReachabilityStateCalled: Bool {
         return presentationTypeLocationAuthStateReachabilityStateCallsCount > 0
     }
-    internal var presentationTypeLocationAuthStateReachabilityStateReceivedArguments: (locationAuthState: LocationAuthState, reachabilityState: ReachabilityState)?
-    internal var presentationTypeLocationAuthStateReachabilityStateReturnValue: SearchPresentationType!
-    internal var presentationTypeLocationAuthStateReachabilityStateClosure: ((LocationAuthState, ReachabilityState) -> SearchPresentationType)?
+    var presentationTypeLocationAuthStateReachabilityStateReceivedArguments: (locationAuthState: LocationAuthState, reachabilityState: ReachabilityState)?
+    var presentationTypeLocationAuthStateReachabilityStateReceivedInvocations: [(locationAuthState: LocationAuthState, reachabilityState: ReachabilityState)] = []
+    var presentationTypeLocationAuthStateReachabilityStateReturnValue: SearchPresentationType!
+    var presentationTypeLocationAuthStateReachabilityStateClosure: ((LocationAuthState, ReachabilityState) -> SearchPresentationType)?
 
-    internal func presentationType(locationAuthState: LocationAuthState, reachabilityState: ReachabilityState) -> SearchPresentationType {
+    func presentationType(locationAuthState: LocationAuthState, reachabilityState: ReachabilityState) -> SearchPresentationType {
         presentationTypeLocationAuthStateReachabilityStateCallsCount += 1
         presentationTypeLocationAuthStateReachabilityStateReceivedArguments = (locationAuthState: locationAuthState, reachabilityState: reachabilityState)
-        return presentationTypeLocationAuthStateReachabilityStateClosure.map({ $0(locationAuthState, reachabilityState) }) ?? presentationTypeLocationAuthStateReachabilityStateReturnValue
+        presentationTypeLocationAuthStateReachabilityStateReceivedInvocations.append((locationAuthState: locationAuthState, reachabilityState: reachabilityState))
+        if let presentationTypeLocationAuthStateReachabilityStateClosure = presentationTypeLocationAuthStateReachabilityStateClosure {
+            return presentationTypeLocationAuthStateReachabilityStateClosure(locationAuthState, reachabilityState)
+        } else {
+            return presentationTypeLocationAuthStateReachabilityStateReturnValue
+        }
     }
 
 }
-internal class SearchBackgroundViewModelBuilderProtocolMock: SearchBackgroundViewModelBuilderProtocol {
+class SearchBackgroundViewModelBuilderProtocolMock: SearchBackgroundViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelAppCopyContentCallsCount = 0
-    internal var buildViewModelAppCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelAppCopyContentCallsCount = 0
+    var buildViewModelAppCopyContentCalled: Bool {
         return buildViewModelAppCopyContentCallsCount > 0
     }
-    internal var buildViewModelAppCopyContentReceivedArguments: (keywords: NonEmptyString?, appCopyContent: AppCopyContent)?
-    internal var buildViewModelAppCopyContentReturnValue: SearchBackgroundViewModel!
-    internal var buildViewModelAppCopyContentClosure: ((NonEmptyString?, AppCopyContent) -> SearchBackgroundViewModel)?
+    var buildViewModelAppCopyContentReceivedArguments: (keywords: NonEmptyString?, appCopyContent: AppCopyContent)?
+    var buildViewModelAppCopyContentReceivedInvocations: [(keywords: NonEmptyString?, appCopyContent: AppCopyContent)] = []
+    var buildViewModelAppCopyContentReturnValue: SearchBackgroundViewModel!
+    var buildViewModelAppCopyContentClosure: ((NonEmptyString?, AppCopyContent) -> SearchBackgroundViewModel)?
 
-    internal func buildViewModel(_ keywords: NonEmptyString?, appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
+    func buildViewModel(_ keywords: NonEmptyString?, appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
         buildViewModelAppCopyContentCallsCount += 1
         buildViewModelAppCopyContentReceivedArguments = (keywords: keywords, appCopyContent: appCopyContent)
-        return buildViewModelAppCopyContentClosure.map({ $0(keywords, appCopyContent) }) ?? buildViewModelAppCopyContentReturnValue
+        buildViewModelAppCopyContentReceivedInvocations.append((keywords: keywords, appCopyContent: appCopyContent))
+        if let buildViewModelAppCopyContentClosure = buildViewModelAppCopyContentClosure {
+            return buildViewModelAppCopyContentClosure(keywords, appCopyContent)
+        } else {
+            return buildViewModelAppCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
+class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
 
-    // MARK: - formatAddress
 
-    internal var formatAddressCallsCount = 0
-    internal var formatAddressCalled: Bool {
+
+    //MARK: - formatAddress
+
+    var formatAddressCallsCount = 0
+    var formatAddressCalled: Bool {
         return formatAddressCallsCount > 0
     }
-    internal var formatAddressReceivedAddress: PlaceLookupAddressLines?
-    internal var formatAddressReturnValue: NonEmptyString!
-    internal var formatAddressClosure: ((PlaceLookupAddressLines) -> NonEmptyString)?
+    var formatAddressReceivedAddress: PlaceLookupAddressLines?
+    var formatAddressReceivedInvocations: [PlaceLookupAddressLines] = []
+    var formatAddressReturnValue: NonEmptyString!
+    var formatAddressClosure: ((PlaceLookupAddressLines) -> NonEmptyString)?
 
-    internal func formatAddress(_ address: PlaceLookupAddressLines) -> NonEmptyString {
+    func formatAddress(_ address: PlaceLookupAddressLines) -> NonEmptyString {
         formatAddressCallsCount += 1
         formatAddressReceivedAddress = address
-        return formatAddressClosure.map({ $0(address) }) ?? formatAddressReturnValue
+        formatAddressReceivedInvocations.append(address)
+        if let formatAddressClosure = formatAddressClosure {
+            return formatAddressClosure(address)
+        } else {
+            return formatAddressReturnValue
+        }
     }
 
-    // MARK: - formatCallablePhoneNumber
+    //MARK: - formatCallablePhoneNumber
 
-    internal var formatCallablePhoneNumberDisplayPhoneCallsCount = 0
-    internal var formatCallablePhoneNumberDisplayPhoneCalled: Bool {
+    var formatCallablePhoneNumberDisplayPhoneCallsCount = 0
+    var formatCallablePhoneNumberDisplayPhoneCalled: Bool {
         return formatCallablePhoneNumberDisplayPhoneCallsCount > 0
     }
-    internal var formatCallablePhoneNumberDisplayPhoneReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString)?
-    internal var formatCallablePhoneNumberDisplayPhoneReturnValue: String!
-    internal var formatCallablePhoneNumberDisplayPhoneClosure: ((SearchResultsCopyContent, NonEmptyString) -> String)?
+    var formatCallablePhoneNumberDisplayPhoneReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString)?
+    var formatCallablePhoneNumberDisplayPhoneReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString)] = []
+    var formatCallablePhoneNumberDisplayPhoneReturnValue: String!
+    var formatCallablePhoneNumberDisplayPhoneClosure: ((SearchResultsCopyContent, NonEmptyString) -> String)?
 
-    internal func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString) -> String {
+    func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString) -> String {
         formatCallablePhoneNumberDisplayPhoneCallsCount += 1
         formatCallablePhoneNumberDisplayPhoneReceivedArguments = (resultsCopyContent: resultsCopyContent, displayPhone: displayPhone)
-        return formatCallablePhoneNumberDisplayPhoneClosure.map({ $0(resultsCopyContent, displayPhone) }) ?? formatCallablePhoneNumberDisplayPhoneReturnValue
+        formatCallablePhoneNumberDisplayPhoneReceivedInvocations.append((resultsCopyContent: resultsCopyContent, displayPhone: displayPhone))
+        if let formatCallablePhoneNumberDisplayPhoneClosure = formatCallablePhoneNumberDisplayPhoneClosure {
+            return formatCallablePhoneNumberDisplayPhoneClosure(resultsCopyContent, displayPhone)
+        } else {
+            return formatCallablePhoneNumberDisplayPhoneReturnValue
+        }
     }
 
-    // MARK: - formatNonCallablePhoneNumber
+    //MARK: - formatNonCallablePhoneNumber
 
-    internal var formatNonCallablePhoneNumberCallsCount = 0
-    internal var formatNonCallablePhoneNumberCalled: Bool {
+    var formatNonCallablePhoneNumberCallsCount = 0
+    var formatNonCallablePhoneNumberCalled: Bool {
         return formatNonCallablePhoneNumberCallsCount > 0
     }
-    internal var formatNonCallablePhoneNumberReceivedDisplayPhone: NonEmptyString?
-    internal var formatNonCallablePhoneNumberReturnValue: String!
-    internal var formatNonCallablePhoneNumberClosure: ((NonEmptyString) -> String)?
+    var formatNonCallablePhoneNumberReceivedDisplayPhone: NonEmptyString?
+    var formatNonCallablePhoneNumberReceivedInvocations: [NonEmptyString] = []
+    var formatNonCallablePhoneNumberReturnValue: String!
+    var formatNonCallablePhoneNumberClosure: ((NonEmptyString) -> String)?
 
-    internal func formatNonCallablePhoneNumber(_ displayPhone: NonEmptyString) -> String {
+    func formatNonCallablePhoneNumber(_ displayPhone: NonEmptyString) -> String {
         formatNonCallablePhoneNumberCallsCount += 1
         formatNonCallablePhoneNumberReceivedDisplayPhone = displayPhone
-        return formatNonCallablePhoneNumberClosure.map({ $0(displayPhone) }) ?? formatNonCallablePhoneNumberReturnValue
+        formatNonCallablePhoneNumberReceivedInvocations.append(displayPhone)
+        if let formatNonCallablePhoneNumberClosure = formatNonCallablePhoneNumberClosure {
+            return formatNonCallablePhoneNumberClosure(displayPhone)
+        } else {
+            return formatNonCallablePhoneNumberReturnValue
+        }
     }
 
-    // MARK: - formatRatings
+    //MARK: - formatRatings
 
-    internal var formatRatingsNumRatingsCallsCount = 0
-    internal var formatRatingsNumRatingsCalled: Bool {
+    var formatRatingsNumRatingsCallsCount = 0
+    var formatRatingsNumRatingsCalled: Bool {
         return formatRatingsNumRatingsCallsCount > 0
     }
-    internal var formatRatingsNumRatingsReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, numRatings: Int)?
-    internal var formatRatingsNumRatingsReturnValue: String!
-    internal var formatRatingsNumRatingsClosure: ((SearchResultsCopyContent, Int) -> String)?
+    var formatRatingsNumRatingsReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, numRatings: Int)?
+    var formatRatingsNumRatingsReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, numRatings: Int)] = []
+    var formatRatingsNumRatingsReturnValue: String!
+    var formatRatingsNumRatingsClosure: ((SearchResultsCopyContent, Int) -> String)?
 
-    internal func formatRatings(_ resultsCopyContent: SearchResultsCopyContent, numRatings: Int) -> String {
+    func formatRatings(_ resultsCopyContent: SearchResultsCopyContent, numRatings: Int) -> String {
         formatRatingsNumRatingsCallsCount += 1
         formatRatingsNumRatingsReceivedArguments = (resultsCopyContent: resultsCopyContent, numRatings: numRatings)
-        return formatRatingsNumRatingsClosure.map({ $0(resultsCopyContent, numRatings) }) ?? formatRatingsNumRatingsReturnValue
+        formatRatingsNumRatingsReceivedInvocations.append((resultsCopyContent: resultsCopyContent, numRatings: numRatings))
+        if let formatRatingsNumRatingsClosure = formatRatingsNumRatingsClosure {
+            return formatRatingsNumRatingsClosure(resultsCopyContent, numRatings)
+        } else {
+            return formatRatingsNumRatingsReturnValue
+        }
     }
 
-    // MARK: - formatPricing
+    //MARK: - formatPricing
 
-    internal var formatPricingPricingCallsCount = 0
-    internal var formatPricingPricingCalled: Bool {
+    var formatPricingPricingCallsCount = 0
+    var formatPricingPricingCalled: Bool {
         return formatPricingPricingCallsCount > 0
     }
-    internal var formatPricingPricingReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing)?
-    internal var formatPricingPricingReturnValue: String!
-    internal var formatPricingPricingClosure: ((SearchResultsCopyContent, PlaceLookupPricing) -> String)?
+    var formatPricingPricingReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing)?
+    var formatPricingPricingReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing)] = []
+    var formatPricingPricingReturnValue: String!
+    var formatPricingPricingClosure: ((SearchResultsCopyContent, PlaceLookupPricing) -> String)?
 
-    internal func formatPricing(_ resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing) -> String {
+    func formatPricing(_ resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing) -> String {
         formatPricingPricingCallsCount += 1
         formatPricingPricingReceivedArguments = (resultsCopyContent: resultsCopyContent, pricing: pricing)
-        return formatPricingPricingClosure.map({ $0(resultsCopyContent, pricing) }) ?? formatPricingPricingReturnValue
+        formatPricingPricingReceivedInvocations.append((resultsCopyContent: resultsCopyContent, pricing: pricing))
+        if let formatPricingPricingClosure = formatPricingPricingClosure {
+            return formatPricingPricingClosure(resultsCopyContent, pricing)
+        } else {
+            return formatPricingPricingReturnValue
+        }
     }
 
 }
-internal class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewContextBuilderProtocol {
+class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewContextBuilderProtocol {
 
-    // MARK: - buildViewContext
 
-    internal var buildViewContextAppCopyContentCallsCount = 0
-    internal var buildViewContextAppCopyContentCalled: Bool {
+
+    //MARK: - buildViewContext
+
+    var buildViewContextAppCopyContentCallsCount = 0
+    var buildViewContextAppCopyContentCalled: Bool {
         return buildViewContextAppCopyContentCallsCount > 0
     }
-    internal var buildViewContextAppCopyContentReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent)?
-    internal var buildViewContextAppCopyContentReturnValue: SearchDetailsViewContext?
-    internal var buildViewContextAppCopyContentClosure: ((Search.ActivityState, AppCopyContent) -> SearchDetailsViewContext?)?
+    var buildViewContextAppCopyContentReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent)?
+    var buildViewContextAppCopyContentReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent)] = []
+    var buildViewContextAppCopyContentReturnValue: SearchDetailsViewContext?
+    var buildViewContextAppCopyContentClosure: ((Search.ActivityState, AppCopyContent) -> SearchDetailsViewContext?)?
 
-    internal func buildViewContext(_ searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
+    func buildViewContext(_ searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
         buildViewContextAppCopyContentCallsCount += 1
         buildViewContextAppCopyContentReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent)
-        return buildViewContextAppCopyContentClosure.map({ $0(searchActivityState, appCopyContent) }) ?? buildViewContextAppCopyContentReturnValue
+        buildViewContextAppCopyContentReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent))
+        if let buildViewContextAppCopyContentClosure = buildViewContextAppCopyContentClosure {
+            return buildViewContextAppCopyContentClosure(searchActivityState, appCopyContent)
+        } else {
+            return buildViewContextAppCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchDetailsViewModelBuilderProtocolMock: SearchDetailsViewModelBuilderProtocol {
+class SearchDetailsViewModelBuilderProtocolMock: SearchDetailsViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelResultsCopyContentCallsCount = 0
-    internal var buildViewModelResultsCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelResultsCopyContentCallsCount = 0
+    var buildViewModelResultsCopyContentCalled: Bool {
         return buildViewModelResultsCopyContentCallsCount > 0
     }
-    internal var buildViewModelResultsCopyContentReceivedArguments: (entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
-    internal var buildViewModelResultsCopyContentReturnValue: SearchDetailsViewModel!
-    internal var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchDetailsViewModel)?
+    var buildViewModelResultsCopyContentReceivedArguments: (entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
+    var buildViewModelResultsCopyContentReceivedInvocations: [(entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)] = []
+    var buildViewModelResultsCopyContentReturnValue: SearchDetailsViewModel!
+    var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchDetailsViewModel)?
 
-    internal func buildViewModel(_ entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel {
+    func buildViewModel(_ entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel {
         buildViewModelResultsCopyContentCallsCount += 1
         buildViewModelResultsCopyContentReceivedArguments = (entity: entity, resultsCopyContent: resultsCopyContent)
-        return buildViewModelResultsCopyContentClosure.map({ $0(entity, resultsCopyContent) }) ?? buildViewModelResultsCopyContentReturnValue
+        buildViewModelResultsCopyContentReceivedInvocations.append((entity: entity, resultsCopyContent: resultsCopyContent))
+        if let buildViewModelResultsCopyContentClosure = buildViewModelResultsCopyContentClosure {
+            return buildViewModelResultsCopyContentClosure(entity, resultsCopyContent)
+        } else {
+            return buildViewModelResultsCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol {
+class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol {
 
-    // MARK: - buildEntityModels
 
-    internal var buildEntityModelsCallsCount = 0
-    internal var buildEntityModelsCalled: Bool {
+
+    //MARK: - buildEntityModels
+
+    var buildEntityModelsCallsCount = 0
+    var buildEntityModelsCalled: Bool {
         return buildEntityModelsCallsCount > 0
     }
-    internal var buildEntityModelsReceivedEntities: [PlaceLookupEntity]?
-    internal var buildEntityModelsReturnValue: [SearchEntityModel]!
-    internal var buildEntityModelsClosure: (([PlaceLookupEntity]) -> [SearchEntityModel])?
+    var buildEntityModelsReceivedEntities: [PlaceLookupEntity]?
+    var buildEntityModelsReceivedInvocations: [[PlaceLookupEntity]] = []
+    var buildEntityModelsReturnValue: [SearchEntityModel]!
+    var buildEntityModelsClosure: (([PlaceLookupEntity]) -> [SearchEntityModel])?
 
-    internal func buildEntityModels(_ entities: [PlaceLookupEntity]) -> [SearchEntityModel] {
+    func buildEntityModels(_ entities: [PlaceLookupEntity]) -> [SearchEntityModel] {
         buildEntityModelsCallsCount += 1
         buildEntityModelsReceivedEntities = entities
-        return buildEntityModelsClosure.map({ $0(entities) }) ?? buildEntityModelsReturnValue
+        buildEntityModelsReceivedInvocations.append(entities)
+        if let buildEntityModelsClosure = buildEntityModelsClosure {
+            return buildEntityModelsClosure(entities)
+        } else {
+            return buildEntityModelsReturnValue
+        }
     }
 
-    // MARK: - buildEntityModel
+    //MARK: - buildEntityModel
 
-    internal var buildEntityModelCallsCount = 0
-    internal var buildEntityModelCalled: Bool {
+    var buildEntityModelCallsCount = 0
+    var buildEntityModelCalled: Bool {
         return buildEntityModelCallsCount > 0
     }
-    internal var buildEntityModelReceivedEntity: PlaceLookupEntity?
-    internal var buildEntityModelReturnValue: SearchEntityModel?
-    internal var buildEntityModelClosure: ((PlaceLookupEntity) -> SearchEntityModel?)?
+    var buildEntityModelReceivedEntity: PlaceLookupEntity?
+    var buildEntityModelReceivedInvocations: [PlaceLookupEntity] = []
+    var buildEntityModelReturnValue: SearchEntityModel?
+    var buildEntityModelClosure: ((PlaceLookupEntity) -> SearchEntityModel?)?
 
-    internal func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel? {
+    func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel? {
         buildEntityModelCallsCount += 1
         buildEntityModelReceivedEntity = entity
-        return buildEntityModelClosure.map({ $0(entity) }) ?? buildEntityModelReturnValue
+        buildEntityModelReceivedInvocations.append(entity)
+        if let buildEntityModelClosure = buildEntityModelClosure {
+            return buildEntityModelClosure(entity)
+        } else {
+            return buildEntityModelReturnValue
+        }
     }
 
 }
-internal class SearchInputContentViewModelBuilderProtocolMock: SearchInputContentViewModelBuilderProtocol {
+class SearchInputContentViewModelBuilderProtocolMock: SearchInputContentViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelKeywordsIsEditingCopyContentCallsCount = 0
-    internal var buildViewModelKeywordsIsEditingCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelKeywordsIsEditingCopyContentCallsCount = 0
+    var buildViewModelKeywordsIsEditingCopyContentCalled: Bool {
         return buildViewModelKeywordsIsEditingCopyContentCallsCount > 0
     }
-    internal var buildViewModelKeywordsIsEditingCopyContentReceivedArguments: (keywords: NonEmptyString?, isEditing: Bool, copyContent: SearchInputCopyContent)?
-    internal var buildViewModelKeywordsIsEditingCopyContentReturnValue: SearchInputContentViewModel!
-    internal var buildViewModelKeywordsIsEditingCopyContentClosure: ((NonEmptyString?, Bool, SearchInputCopyContent) -> SearchInputContentViewModel)?
+    var buildViewModelKeywordsIsEditingCopyContentReceivedArguments: (keywords: NonEmptyString?, isEditing: Bool, copyContent: SearchInputCopyContent)?
+    var buildViewModelKeywordsIsEditingCopyContentReceivedInvocations: [(keywords: NonEmptyString?, isEditing: Bool, copyContent: SearchInputCopyContent)] = []
+    var buildViewModelKeywordsIsEditingCopyContentReturnValue: SearchInputContentViewModel!
+    var buildViewModelKeywordsIsEditingCopyContentClosure: ((NonEmptyString?, Bool, SearchInputCopyContent) -> SearchInputContentViewModel)?
 
-    internal func buildViewModel(keywords: NonEmptyString?, isEditing: Bool, copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
+    func buildViewModel(keywords: NonEmptyString?, isEditing: Bool, copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
         buildViewModelKeywordsIsEditingCopyContentCallsCount += 1
         buildViewModelKeywordsIsEditingCopyContentReceivedArguments = (keywords: keywords, isEditing: isEditing, copyContent: copyContent)
-        return buildViewModelKeywordsIsEditingCopyContentClosure.map({ $0(keywords, isEditing, copyContent) }) ?? buildViewModelKeywordsIsEditingCopyContentReturnValue
+        buildViewModelKeywordsIsEditingCopyContentReceivedInvocations.append((keywords: keywords, isEditing: isEditing, copyContent: copyContent))
+        if let buildViewModelKeywordsIsEditingCopyContentClosure = buildViewModelKeywordsIsEditingCopyContentClosure {
+            return buildViewModelKeywordsIsEditingCopyContentClosure(keywords, isEditing, copyContent)
+        } else {
+            return buildViewModelKeywordsIsEditingCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchInputViewModelBuilderProtocolMock: SearchInputViewModelBuilderProtocol {
+class SearchInputViewModelBuilderProtocolMock: SearchInputViewModelBuilderProtocol {
 
-    // MARK: - buildDispatchingViewModel
 
-    internal var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCallsCount = 0
-    internal var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCalled: Bool {
+
+    //MARK: - buildDispatchingViewModel
+
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCallsCount = 0
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedArguments: (inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue: SearchInputViewModel!
-    internal var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure: ((SearchInputParams, SearchInputCopyContent, @escaping LocationUpdateRequestBlock) -> SearchInputViewModel)?
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedArguments: (inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedInvocations: [(inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue: SearchInputViewModel!
+    var buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure: ((SearchInputParams, SearchInputCopyContent, @escaping LocationUpdateRequestBlock) -> SearchInputViewModel)?
 
-    internal func buildDispatchingViewModel(_ inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchInputViewModel {
+    func buildDispatchingViewModel(_ inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchInputViewModel {
         buildDispatchingViewModelCopyContentLocationUpdateRequestBlockCallsCount += 1
         buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedArguments = (inputParams: inputParams, copyContent: copyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure.map({ $0(inputParams, copyContent, locationUpdateRequestBlock) }) ?? buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue
+        buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReceivedInvocations.append((inputParams: inputParams, copyContent: copyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure = buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure {
+            return buildDispatchingViewModelCopyContentLocationUpdateRequestBlockClosure(inputParams, copyContent, locationUpdateRequestBlock)
+        } else {
+            return buildDispatchingViewModelCopyContentLocationUpdateRequestBlockReturnValue
+        }
     }
 
 }
-internal class SearchInstructionsViewModelBuilderProtocolMock: SearchInstructionsViewModelBuilderProtocol {
+class SearchInstructionsViewModelBuilderProtocolMock: SearchInstructionsViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelCopyContentCallsCount = 0
-    internal var buildViewModelCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelCopyContentCallsCount = 0
+    var buildViewModelCopyContentCalled: Bool {
         return buildViewModelCopyContentCallsCount > 0
     }
-    internal var buildViewModelCopyContentReceivedCopyContent: SearchInstructionsCopyContent?
-    internal var buildViewModelCopyContentReturnValue: SearchInstructionsViewModel!
-    internal var buildViewModelCopyContentClosure: ((SearchInstructionsCopyContent) -> SearchInstructionsViewModel)?
+    var buildViewModelCopyContentReceivedCopyContent: SearchInstructionsCopyContent?
+    var buildViewModelCopyContentReceivedInvocations: [SearchInstructionsCopyContent] = []
+    var buildViewModelCopyContentReturnValue: SearchInstructionsViewModel!
+    var buildViewModelCopyContentClosure: ((SearchInstructionsCopyContent) -> SearchInstructionsViewModel)?
 
-    internal func buildViewModel(copyContent: SearchInstructionsCopyContent) -> SearchInstructionsViewModel {
+    func buildViewModel(copyContent: SearchInstructionsCopyContent) -> SearchInstructionsViewModel {
         buildViewModelCopyContentCallsCount += 1
         buildViewModelCopyContentReceivedCopyContent = copyContent
-        return buildViewModelCopyContentClosure.map({ $0(copyContent) }) ?? buildViewModelCopyContentReturnValue
+        buildViewModelCopyContentReceivedInvocations.append(copyContent)
+        if let buildViewModelCopyContentClosure = buildViewModelCopyContentClosure {
+            return buildViewModelCopyContentClosure(copyContent)
+        } else {
+            return buildViewModelCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderProtocol {
+class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderProtocol {
 
-    // MARK: - buildChild
 
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockCallsCount = 0
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockCalled: Bool {
+
+    //MARK: - buildChild
+
+    var buildChildAppCopyContentLocationUpdateRequestBlockCallsCount = 0
+    var buildChildAppCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildChildAppCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupChild!
-    internal var buildChildAppCopyContentLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
+    var buildChildAppCopyContentLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildChildAppCopyContentLocationUpdateRequestBlockReceivedInvocations: [(loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildChildAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupChild!
+    var buildChildAppCopyContentLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
 
-    internal func buildChild(_ loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
+    func buildChild(_ loadState: Search.LoadState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         buildChildAppCopyContentLocationUpdateRequestBlockCallsCount += 1
         buildChildAppCopyContentLocationUpdateRequestBlockReceivedArguments = (loadState: loadState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildChildAppCopyContentLocationUpdateRequestBlockClosure.map({ $0(loadState, appCopyContent, locationUpdateRequestBlock) }) ?? buildChildAppCopyContentLocationUpdateRequestBlockReturnValue
+        buildChildAppCopyContentLocationUpdateRequestBlockReceivedInvocations.append((loadState: loadState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildChildAppCopyContentLocationUpdateRequestBlockClosure = buildChildAppCopyContentLocationUpdateRequestBlockClosure {
+            return buildChildAppCopyContentLocationUpdateRequestBlockClosure(loadState, appCopyContent, locationUpdateRequestBlock)
+        } else {
+            return buildChildAppCopyContentLocationUpdateRequestBlockReturnValue
+        }
     }
 
 }
-internal class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBuilderProtocol {
+class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount = 0
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount = 0
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
-    internal var buildViewModelAppCopyContentLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
+    var buildViewModelAppCopyContentLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
 
-    internal func buildViewModel(_ searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
+    func buildViewModel(_ searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         buildViewModelAppCopyContentLocationUpdateRequestBlockCallsCount += 1
         buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildViewModelAppCopyContentLocationUpdateRequestBlockClosure.map({ $0(searchActivityState, appCopyContent, locationUpdateRequestBlock) }) ?? buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue
+        buildViewModelAppCopyContentLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildViewModelAppCopyContentLocationUpdateRequestBlockClosure = buildViewModelAppCopyContentLocationUpdateRequestBlockClosure {
+            return buildViewModelAppCopyContentLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, locationUpdateRequestBlock)
+        } else {
+            return buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue
+        }
     }
 
 }
-internal class SearchNoResultsFoundViewModelBuilderProtocolMock: SearchNoResultsFoundViewModelBuilderProtocol {
+class SearchNoResultsFoundViewModelBuilderProtocolMock: SearchNoResultsFoundViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelCallsCount = 0
-    internal var buildViewModelCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelCallsCount = 0
+    var buildViewModelCalled: Bool {
         return buildViewModelCallsCount > 0
     }
-    internal var buildViewModelReceivedCopyContent: SearchNoResultsCopyContent?
-    internal var buildViewModelReturnValue: SearchNoResultsFoundViewModel!
-    internal var buildViewModelClosure: ((SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel)?
+    var buildViewModelReceivedCopyContent: SearchNoResultsCopyContent?
+    var buildViewModelReceivedInvocations: [SearchNoResultsCopyContent] = []
+    var buildViewModelReturnValue: SearchNoResultsFoundViewModel!
+    var buildViewModelClosure: ((SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel)?
 
-    internal func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel {
+    func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel {
         buildViewModelCallsCount += 1
         buildViewModelReceivedCopyContent = copyContent
-        return buildViewModelClosure.map({ $0(copyContent) }) ?? buildViewModelReturnValue
+        buildViewModelReceivedInvocations.append(copyContent)
+        if let buildViewModelClosure = buildViewModelClosure {
+            return buildViewModelClosure(copyContent)
+        } else {
+            return buildViewModelReturnValue
+        }
     }
 
 }
-internal class SearchPresenterProtocolMock: SearchPresenterProtocol {
-    internal var rootViewController: UIViewController {
+class SearchPresenterProtocolMock: SearchPresenterProtocol {
+
+
+    var rootViewController: UIViewController {
         get { return underlyingRootViewController }
         set(value) { underlyingRootViewController = value }
     }
-    internal var underlyingRootViewController: UIViewController!
+    var underlyingRootViewController: UIViewController!
 
-    // MARK: - loadNoInternetViews
+    //MARK: - loadNoInternetViews
 
-    internal var loadNoInternetViewsTitleViewModelAppSkinCallsCount = 0
-    internal var loadNoInternetViewsTitleViewModelAppSkinCalled: Bool {
+    var loadNoInternetViewsTitleViewModelAppSkinCallsCount = 0
+    var loadNoInternetViewsTitleViewModelAppSkinCalled: Bool {
         return loadNoInternetViewsTitleViewModelAppSkinCallsCount > 0
     }
-    internal var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    internal var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    internal func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadNoInternetViewsTitleViewModelAppSkinCallsCount += 1
         loadNoInternetViewsTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
         loadNoInternetViewsTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
     }
 
-    // MARK: - loadLocationServicesDisabledViews
+    //MARK: - loadLocationServicesDisabledViews
 
-    internal var loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount = 0
-    internal var loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled: Bool {
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount = 0
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled: Bool {
         return loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount > 0
     }
-    internal var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    internal var loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure: ((SearchLocationDisabledViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure: ((SearchLocationDisabledViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    internal func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount += 1
         loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
         loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
     }
 
-    // MARK: - loadSearchBackgroundView
+    //MARK: - loadSearchBackgroundView
 
-    internal var loadSearchBackgroundViewTitleViewModelAppSkinCallsCount = 0
-    internal var loadSearchBackgroundViewTitleViewModelAppSkinCalled: Bool {
+    var loadSearchBackgroundViewTitleViewModelAppSkinCallsCount = 0
+    var loadSearchBackgroundViewTitleViewModelAppSkinCalled: Bool {
         return loadSearchBackgroundViewTitleViewModelAppSkinCallsCount > 0
     }
-    internal var loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments: (viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    internal var loadSearchBackgroundViewTitleViewModelAppSkinClosure: ((SearchBackgroundViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments: (viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadSearchBackgroundViewTitleViewModelAppSkinClosure: ((SearchBackgroundViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    internal func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadSearchBackgroundViewTitleViewModelAppSkinCallsCount += 1
         loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
         loadSearchBackgroundViewTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
     }
 
-    // MARK: - loadSearchViews
+    //MARK: - loadSearchViews
 
-    internal var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount = 0
-    internal var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled: Bool {
+    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount = 0
+    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled: Bool {
         return loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount > 0
     }
-    internal var loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    internal var loadSearchViewsDetailsViewContextTitleViewModelAppSkinClosure: ((SearchLookupViewModel, SearchDetailsViewContext?, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinClosure: ((SearchLookupViewModel, SearchDetailsViewContext?, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    internal func loadSearchViews(_ viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadSearchViews(_ viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount += 1
         loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin))
         loadSearchViewsDetailsViewContextTitleViewModelAppSkinClosure?(viewModel, detailsViewContext, titleViewModel, appSkin)
     }
 
 }
-internal class SearchResultCellModelBuilderProtocolMock: SearchResultCellModelBuilderProtocol {
+class SearchResultCellModelBuilderProtocolMock: SearchResultCellModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelResultsCopyContentCallsCount = 0
-    internal var buildViewModelResultsCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelResultsCopyContentCallsCount = 0
+    var buildViewModelResultsCopyContentCalled: Bool {
         return buildViewModelResultsCopyContentCallsCount > 0
     }
-    internal var buildViewModelResultsCopyContentReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
-    internal var buildViewModelResultsCopyContentReturnValue: SearchResultCellModel!
-    internal var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchResultCellModel)?
+    var buildViewModelResultsCopyContentReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
+    var buildViewModelResultsCopyContentReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)] = []
+    var buildViewModelResultsCopyContentReturnValue: SearchResultCellModel!
+    var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchResultCellModel)?
 
-    internal func buildViewModel(_ model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel {
+    func buildViewModel(_ model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel {
         buildViewModelResultsCopyContentCallsCount += 1
         buildViewModelResultsCopyContentReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent)
-        return buildViewModelResultsCopyContentClosure.map({ $0(model, resultsCopyContent) }) ?? buildViewModelResultsCopyContentReturnValue
+        buildViewModelResultsCopyContentReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent))
+        if let buildViewModelResultsCopyContentClosure = buildViewModelResultsCopyContentClosure {
+            return buildViewModelResultsCopyContentClosure(model, resultsCopyContent)
+        } else {
+            return buildViewModelResultsCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchResultViewModelBuilderProtocolMock: SearchResultViewModelBuilderProtocol {
+class SearchResultViewModelBuilderProtocolMock: SearchResultViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelResultsCopyContentCallsCount = 0
-    internal var buildViewModelResultsCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelResultsCopyContentCallsCount = 0
+    var buildViewModelResultsCopyContentCalled: Bool {
         return buildViewModelResultsCopyContentCallsCount > 0
     }
-    internal var buildViewModelResultsCopyContentReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
-    internal var buildViewModelResultsCopyContentReturnValue: SearchResultViewModel!
-    internal var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchResultViewModel)?
+    var buildViewModelResultsCopyContentReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
+    var buildViewModelResultsCopyContentReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)] = []
+    var buildViewModelResultsCopyContentReturnValue: SearchResultViewModel!
+    var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchResultViewModel)?
 
-    internal func buildViewModel(_ model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchResultViewModel {
+    func buildViewModel(_ model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchResultViewModel {
         buildViewModelResultsCopyContentCallsCount += 1
         buildViewModelResultsCopyContentReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent)
-        return buildViewModelResultsCopyContentClosure.map({ $0(model, resultsCopyContent) }) ?? buildViewModelResultsCopyContentReturnValue
+        buildViewModelResultsCopyContentReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent))
+        if let buildViewModelResultsCopyContentClosure = buildViewModelResultsCopyContentClosure {
+            return buildViewModelResultsCopyContentClosure(model, resultsCopyContent)
+        } else {
+            return buildViewModelResultsCopyContentReturnValue
+        }
     }
 
 }
-internal class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModelBuilderProtocol {
+class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount = 0
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount = 0
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
         return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount > 0
     }
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
-    internal var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Search.Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedInvocations: [(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
+    var buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Search.Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
 
-    internal func buildViewModel(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
+    func buildViewModel(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount += 1
         buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure.map({ $0(submittedParams, allEntities, tokenContainer, resultsCopyContent, actionSubscriber, locationUpdateRequestBlock) }) ?? buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
+        buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedInvocations.append((submittedParams: submittedParams, allEntities: allEntities, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure = buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure {
+            return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure(submittedParams, allEntities, tokenContainer, resultsCopyContent, actionSubscriber, locationUpdateRequestBlock)
+        } else {
+            return buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
+        }
     }
 
 }
-internal class SearchRetryViewModelBuilderProtocolMock: SearchRetryViewModelBuilderProtocol {
+class SearchRetryViewModelBuilderProtocolMock: SearchRetryViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelCtaBlockCallsCount = 0
-    internal var buildViewModelCtaBlockCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelCtaBlockCallsCount = 0
+    var buildViewModelCtaBlockCalled: Bool {
         return buildViewModelCtaBlockCallsCount > 0
     }
-    internal var buildViewModelCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, ctaBlock: SearchCTABlock)?
-    internal var buildViewModelCtaBlockReturnValue: SearchRetryViewModel!
-    internal var buildViewModelCtaBlockClosure: ((SearchRetryCopyContent, @escaping SearchCTABlock) -> SearchRetryViewModel)?
+    var buildViewModelCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, ctaBlock: SearchCTABlock)?
+    var buildViewModelCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, ctaBlock: SearchCTABlock)] = []
+    var buildViewModelCtaBlockReturnValue: SearchRetryViewModel!
+    var buildViewModelCtaBlockClosure: ((SearchRetryCopyContent, @escaping SearchCTABlock) -> SearchRetryViewModel)?
 
-    internal func buildViewModel(_ copyContent: SearchRetryCopyContent, ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
+    func buildViewModel(_ copyContent: SearchRetryCopyContent, ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
         buildViewModelCtaBlockCallsCount += 1
         buildViewModelCtaBlockReceivedArguments = (copyContent: copyContent, ctaBlock: ctaBlock)
-        return buildViewModelCtaBlockClosure.map({ $0(copyContent, ctaBlock) }) ?? buildViewModelCtaBlockReturnValue
+        buildViewModelCtaBlockReceivedInvocations.append((copyContent: copyContent, ctaBlock: ctaBlock))
+        if let buildViewModelCtaBlockClosure = buildViewModelCtaBlockClosure {
+            return buildViewModelCtaBlockClosure(copyContent, ctaBlock)
+        } else {
+            return buildViewModelCtaBlockReturnValue
+        }
     }
 
 }
-internal class SettingsCellViewModelBuilderProtocolMock: SettingsCellViewModelBuilderProtocol {
+class SettingsCellViewModelBuilderProtocolMock: SettingsCellViewModelBuilderProtocol {
 
-    // MARK: - buildDistanceCellModels
 
-    internal var buildDistanceCellModelsCurrentDistanceTypeCallsCount = 0
-    internal var buildDistanceCellModelsCurrentDistanceTypeCalled: Bool {
+
+    //MARK: - buildDistanceCellModels
+
+    var buildDistanceCellModelsCurrentDistanceTypeCallsCount = 0
+    var buildDistanceCellModelsCurrentDistanceTypeCalled: Bool {
         return buildDistanceCellModelsCurrentDistanceTypeCallsCount > 0
     }
-    internal var buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType: SearchDistance?
-    internal var buildDistanceCellModelsCurrentDistanceTypeReturnValue: [SettingsCellViewModel]!
-    internal var buildDistanceCellModelsCurrentDistanceTypeClosure: ((SearchDistance) -> [SettingsCellViewModel])?
+    var buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType: SearchDistance?
+    var buildDistanceCellModelsCurrentDistanceTypeReceivedInvocations: [SearchDistance] = []
+    var buildDistanceCellModelsCurrentDistanceTypeReturnValue: [SettingsCellViewModel]!
+    var buildDistanceCellModelsCurrentDistanceTypeClosure: ((SearchDistance) -> [SettingsCellViewModel])?
 
-    internal func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
+    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
         buildDistanceCellModelsCurrentDistanceTypeCallsCount += 1
         buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType = currentDistanceType
-        return buildDistanceCellModelsCurrentDistanceTypeClosure.map({ $0(currentDistanceType) }) ?? buildDistanceCellModelsCurrentDistanceTypeReturnValue
+        buildDistanceCellModelsCurrentDistanceTypeReceivedInvocations.append(currentDistanceType)
+        if let buildDistanceCellModelsCurrentDistanceTypeClosure = buildDistanceCellModelsCurrentDistanceTypeClosure {
+            return buildDistanceCellModelsCurrentDistanceTypeClosure(currentDistanceType)
+        } else {
+            return buildDistanceCellModelsCurrentDistanceTypeReturnValue
+        }
     }
 
-    // MARK: - buildSortingCellModels
+    //MARK: - buildSortingCellModels
 
-    internal var buildSortingCellModelsCurrentSortingCopyContentCallsCount = 0
-    internal var buildSortingCellModelsCurrentSortingCopyContentCalled: Bool {
+    var buildSortingCellModelsCurrentSortingCopyContentCallsCount = 0
+    var buildSortingCellModelsCurrentSortingCopyContentCalled: Bool {
         return buildSortingCellModelsCurrentSortingCopyContentCallsCount > 0
     }
-    internal var buildSortingCellModelsCurrentSortingCopyContentReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
-    internal var buildSortingCellModelsCurrentSortingCopyContentReturnValue: [SettingsCellViewModel]!
-    internal var buildSortingCellModelsCurrentSortingCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
+    var buildSortingCellModelsCurrentSortingCopyContentReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
+    var buildSortingCellModelsCurrentSortingCopyContentReceivedInvocations: [(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)] = []
+    var buildSortingCellModelsCurrentSortingCopyContentReturnValue: [SettingsCellViewModel]!
+    var buildSortingCellModelsCurrentSortingCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
 
-    internal func buildSortingCellModels(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
+    func buildSortingCellModels(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
         buildSortingCellModelsCurrentSortingCopyContentCallsCount += 1
         buildSortingCellModelsCurrentSortingCopyContentReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent)
-        return buildSortingCellModelsCurrentSortingCopyContentClosure.map({ $0(currentSorting, copyContent) }) ?? buildSortingCellModelsCurrentSortingCopyContentReturnValue
+        buildSortingCellModelsCurrentSortingCopyContentReceivedInvocations.append((currentSorting: currentSorting, copyContent: copyContent))
+        if let buildSortingCellModelsCurrentSortingCopyContentClosure = buildSortingCellModelsCurrentSortingCopyContentClosure {
+            return buildSortingCellModelsCurrentSortingCopyContentClosure(currentSorting, copyContent)
+        } else {
+            return buildSortingCellModelsCurrentSortingCopyContentReturnValue
+        }
     }
 
 }
-internal class SettingsPlainHeaderViewModelBuilderProtocolMock: SettingsPlainHeaderViewModelBuilderProtocol {
+class SettingsPlainHeaderViewModelBuilderProtocolMock: SettingsPlainHeaderViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelCallsCount = 0
-    internal var buildViewModelCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelCallsCount = 0
+    var buildViewModelCalled: Bool {
         return buildViewModelCallsCount > 0
     }
-    internal var buildViewModelReceivedTitle: String?
-    internal var buildViewModelReturnValue: SettingsPlainHeaderViewModel!
-    internal var buildViewModelClosure: ((String) -> SettingsPlainHeaderViewModel)?
+    var buildViewModelReceivedTitle: String?
+    var buildViewModelReceivedInvocations: [String] = []
+    var buildViewModelReturnValue: SettingsPlainHeaderViewModel!
+    var buildViewModelClosure: ((String) -> SettingsPlainHeaderViewModel)?
 
-    internal func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel {
+    func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel {
         buildViewModelCallsCount += 1
         buildViewModelReceivedTitle = title
-        return buildViewModelClosure.map({ $0(title) }) ?? buildViewModelReturnValue
+        buildViewModelReceivedInvocations.append(title)
+        if let buildViewModelClosure = buildViewModelClosure {
+            return buildViewModelClosure(title)
+        } else {
+            return buildViewModelReturnValue
+        }
     }
 
 }
-internal class SettingsPresenterProtocolMock: SettingsPresenterProtocol {
-    internal var rootNavController: UINavigationController {
+class SettingsPresenterProtocolMock: SettingsPresenterProtocol {
+
+
+    var rootNavController: UINavigationController {
         get { return underlyingRootNavController }
         set(value) { underlyingRootNavController = value }
     }
-    internal var underlyingRootNavController: UINavigationController!
+    var underlyingRootNavController: UINavigationController!
 
-    // MARK: - loadSettingsView
+    //MARK: - loadSettingsView
 
-    internal var loadSettingsViewTitleViewModelAppSkinCallsCount = 0
-    internal var loadSettingsViewTitleViewModelAppSkinCalled: Bool {
+    var loadSettingsViewTitleViewModelAppSkinCallsCount = 0
+    var loadSettingsViewTitleViewModelAppSkinCalled: Bool {
         return loadSettingsViewTitleViewModelAppSkinCallsCount > 0
     }
-    internal var loadSettingsViewTitleViewModelAppSkinReceivedArguments: (viewModel: SettingsViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    internal var loadSettingsViewTitleViewModelAppSkinClosure: ((SettingsViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSettingsViewTitleViewModelAppSkinReceivedArguments: (viewModel: SettingsViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadSettingsViewTitleViewModelAppSkinReceivedInvocations: [(viewModel: SettingsViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadSettingsViewTitleViewModelAppSkinClosure: ((SettingsViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    internal func loadSettingsView(_ viewModel: SettingsViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadSettingsView(_ viewModel: SettingsViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadSettingsViewTitleViewModelAppSkinCallsCount += 1
         loadSettingsViewTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadSettingsViewTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
         loadSettingsViewTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
     }
 
 }
-internal class SettingsUnitsHeaderViewModelBuilderProtocolMock: SettingsUnitsHeaderViewModelBuilderProtocol {
+class SettingsUnitsHeaderViewModelBuilderProtocolMock: SettingsUnitsHeaderViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelCurrentlyActiveSystemCopyContentCallsCount = 0
-    internal var buildViewModelCurrentlyActiveSystemCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelCurrentlyActiveSystemCopyContentCallsCount = 0
+    var buildViewModelCurrentlyActiveSystemCopyContentCalled: Bool {
         return buildViewModelCurrentlyActiveSystemCopyContentCallsCount > 0
     }
-    internal var buildViewModelCurrentlyActiveSystemCopyContentReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent)?
-    internal var buildViewModelCurrentlyActiveSystemCopyContentReturnValue: SettingsUnitsHeaderViewModel!
-    internal var buildViewModelCurrentlyActiveSystemCopyContentClosure: ((String, MeasurementSystem, SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel)?
+    var buildViewModelCurrentlyActiveSystemCopyContentReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent)?
+    var buildViewModelCurrentlyActiveSystemCopyContentReceivedInvocations: [(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent)] = []
+    var buildViewModelCurrentlyActiveSystemCopyContentReturnValue: SettingsUnitsHeaderViewModel!
+    var buildViewModelCurrentlyActiveSystemCopyContentClosure: ((String, MeasurementSystem, SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel)?
 
-    internal func buildViewModel(_ title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
+    func buildViewModel(_ title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
         buildViewModelCurrentlyActiveSystemCopyContentCallsCount += 1
         buildViewModelCurrentlyActiveSystemCopyContentReceivedArguments = (title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent)
-        return buildViewModelCurrentlyActiveSystemCopyContentClosure.map({ $0(title, currentlyActiveSystem, copyContent) }) ?? buildViewModelCurrentlyActiveSystemCopyContentReturnValue
+        buildViewModelCurrentlyActiveSystemCopyContentReceivedInvocations.append((title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent))
+        if let buildViewModelCurrentlyActiveSystemCopyContentClosure = buildViewModelCurrentlyActiveSystemCopyContentClosure {
+            return buildViewModelCurrentlyActiveSystemCopyContentClosure(title, currentlyActiveSystem, copyContent)
+        } else {
+            return buildViewModelCurrentlyActiveSystemCopyContentReturnValue
+        }
     }
 
 }
-internal class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderProtocol {
+class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderProtocol {
 
-    // MARK: - buildViewModel
 
-    internal var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
-    internal var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
+
+    //MARK: - buildViewModel
+
+    var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
+    var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
         return buildViewModelSearchPreferencesStateAppCopyContentCallsCount > 0
     }
-    internal var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
-    internal var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
-    internal var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
+    var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
+    var buildViewModelSearchPreferencesStateAppCopyContentReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)] = []
+    var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
+    var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
 
-    internal func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent) -> SettingsViewModel {
+    func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent) -> SettingsViewModel {
         buildViewModelSearchPreferencesStateAppCopyContentCallsCount += 1
         buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent)
-        return buildViewModelSearchPreferencesStateAppCopyContentClosure.map({ $0(searchPreferencesState, appCopyContent) }) ?? buildViewModelSearchPreferencesStateAppCopyContentReturnValue
+        buildViewModelSearchPreferencesStateAppCopyContentReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent))
+        if let buildViewModelSearchPreferencesStateAppCopyContentClosure = buildViewModelSearchPreferencesStateAppCopyContentClosure {
+            return buildViewModelSearchPreferencesStateAppCopyContentClosure(searchPreferencesState, appCopyContent)
+        } else {
+            return buildViewModelSearchPreferencesStateAppCopyContentReturnValue
+        }
     }
 
 }
-internal class TabCoordinatorProtocolMock: TabCoordinatorProtocol {
-    internal var rootViewController: UIViewController {
+class TabCoordinatorProtocolMock: TabCoordinatorProtocol {
+
+
+    var rootViewController: UIViewController {
         get { return underlyingRootViewController }
         set(value) { underlyingRootViewController = value }
     }
-    internal var underlyingRootViewController: UIViewController!
+    var underlyingRootViewController: UIViewController!
 
-    // MARK: - relinquishActive
+    //MARK: - relinquishActive
 
-    internal var relinquishActiveCompletionCallsCount = 0
-    internal var relinquishActiveCompletionCalled: Bool {
+    var relinquishActiveCompletionCallsCount = 0
+    var relinquishActiveCompletionCalled: Bool {
         return relinquishActiveCompletionCallsCount > 0
     }
-    internal var relinquishActiveCompletionReceivedCompletion: ((() -> Void))?
-    internal var relinquishActiveCompletionClosure: (((() -> Void)?) -> Void)?
+    var relinquishActiveCompletionReceivedCompletion: ((() -> Void))?
+    var relinquishActiveCompletionReceivedInvocations: [((() -> Void))?] = []
+    var relinquishActiveCompletionClosure: (((() -> Void)?) -> Void)?
 
-    internal func relinquishActive(completion: (() -> Void)?) {
+    func relinquishActive(completion: (() -> Void)?) {
         relinquishActiveCompletionCallsCount += 1
+        relinquishActiveCompletionReceivedCompletion = completion
+        relinquishActiveCompletionReceivedInvocations.append(completion)
         relinquishActiveCompletionClosure?(completion)
     }
 
 }
-internal class UserDefaultsListenerProtocolMock: UserDefaultsListenerProtocol {
+class UserDefaultsListenerProtocolMock: UserDefaultsListenerProtocol {
 
-    // MARK: - start
 
-    internal var startCallsCount = 0
-    internal var startCalled: Bool {
+
+    //MARK: - start
+
+    var startCallsCount = 0
+    var startCalled: Bool {
         return startCallsCount > 0
     }
-    internal var startClosure: (() -> Void)?
+    var startClosure: (() -> Void)?
 
-    internal func start() {
+    func start() {
         startCallsCount += 1
         startClosure?()
     }
 
 }
-internal class UserDefaultsServiceProtocolMock: UserDefaultsServiceProtocol {
+class UserDefaultsServiceProtocolMock: UserDefaultsServiceProtocol {
 
-    // MARK: - getSearchPreferences
 
-    internal var getSearchPreferencesThrowableError: Error?
-    internal var getSearchPreferencesCallsCount = 0
-    internal var getSearchPreferencesCalled: Bool {
+
+    //MARK: - getSearchPreferences
+
+    var getSearchPreferencesThrowableError: Error?
+    var getSearchPreferencesCallsCount = 0
+    var getSearchPreferencesCalled: Bool {
         return getSearchPreferencesCallsCount > 0
     }
-    internal var getSearchPreferencesReturnValue: StoredSearchPreferences!
-    internal var getSearchPreferencesClosure: (() throws -> StoredSearchPreferences)?
+    var getSearchPreferencesReturnValue: StoredSearchPreferences!
+    var getSearchPreferencesClosure: (() throws -> StoredSearchPreferences)?
 
-    internal func getSearchPreferences() throws -> StoredSearchPreferences {
+    func getSearchPreferences() throws -> StoredSearchPreferences {
         getSearchPreferencesCallsCount += 1
-        if let error = getSearchPreferencesThrowableError { throw error }
-        return try getSearchPreferencesClosure.map({ try $0() }) ?? getSearchPreferencesReturnValue
+        if let error = getSearchPreferencesThrowableError {
+            throw error
+        }
+        if let getSearchPreferencesClosure = getSearchPreferencesClosure {
+            return try getSearchPreferencesClosure()
+        } else {
+            return getSearchPreferencesReturnValue
+        }
     }
 
-    // MARK: - setSearchPreferences
+    //MARK: - setSearchPreferences
 
-    internal var setSearchPreferencesThrowableError: Error?
-    internal var setSearchPreferencesCallsCount = 0
-    internal var setSearchPreferencesCalled: Bool {
+    var setSearchPreferencesThrowableError: Error?
+    var setSearchPreferencesCallsCount = 0
+    var setSearchPreferencesCalled: Bool {
         return setSearchPreferencesCallsCount > 0
     }
-    internal var setSearchPreferencesReceivedSearchPreferences: StoredSearchPreferences?
-    internal var setSearchPreferencesClosure: ((StoredSearchPreferences) throws -> Void)?
+    var setSearchPreferencesReceivedSearchPreferences: StoredSearchPreferences?
+    var setSearchPreferencesReceivedInvocations: [StoredSearchPreferences] = []
+    var setSearchPreferencesClosure: ((StoredSearchPreferences) throws -> Void)?
 
-    internal func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws {
+    func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws {
         setSearchPreferencesCallsCount += 1
+        if let error = setSearchPreferencesThrowableError {
+            throw error
+        }
         setSearchPreferencesReceivedSearchPreferences = searchPreferences
-        if let error = setSearchPreferencesThrowableError { throw error }
+        setSearchPreferencesReceivedInvocations.append(searchPreferences)
         try setSearchPreferencesClosure?(searchPreferences)
     }
 

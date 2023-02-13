@@ -33,7 +33,8 @@ extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
 
 // MARK: SearchNoResultsFoundViewModelBuilder
 
-protocol SearchNoResultsFoundViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchNoResultsFoundViewModelBuilderProtocol {
     func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel
 }
 

@@ -25,7 +25,8 @@
 import Foundation
 import Shared
 
-protocol SearchCopyFormatterProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchCopyFormatterProtocol {
     func formatAddress(_ address: PlaceLookupAddressLines) -> NonEmptyString
 
     func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent,

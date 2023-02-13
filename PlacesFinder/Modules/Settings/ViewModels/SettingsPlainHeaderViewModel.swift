@@ -31,7 +31,8 @@ struct SettingsPlainHeaderViewModel: Equatable {
 
 // MARK: SettingsPlainHeaderViewModelBuilder
 
-protocol SettingsPlainHeaderViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SettingsPlainHeaderViewModelBuilderProtocol {
     func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel
 }
 

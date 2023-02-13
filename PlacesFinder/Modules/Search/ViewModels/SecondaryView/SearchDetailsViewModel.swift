@@ -85,7 +85,8 @@ extension SearchDetailsViewModel {
 
 // MARK: SearchDetailsViewModelBuilder
 
-protocol SearchDetailsViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchDetailsViewModelBuilderProtocol {
     func buildViewModel(_ entity: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel
 }

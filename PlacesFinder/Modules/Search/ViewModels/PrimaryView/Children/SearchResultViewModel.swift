@@ -50,7 +50,8 @@ extension SearchResultViewModel {
 
 // MARK: SearchResultViewModelBuilder
 
-protocol SearchResultViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchResultViewModelBuilderProtocol {
     func buildViewModel(_ model: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent) -> SearchResultViewModel
 }

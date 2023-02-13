@@ -75,12 +75,12 @@ class AppCoordinatorTests: QuickSpec {
             mockPayloadBuilder = AppLinkTypeBuilderProtocolMock()
 
             mockLaunchCoordinator = MockLaunchCoordinator()
-            mockLaunchCoordinator.startClosure = { completion in completion() }
+            mockLaunchCoordinator.startClosure = { completion in completion?() }
             mockLaunchCoordinator.rootViewController = dummyLaunchViewController
             mockLaunchCoordinator.finishClosure = { completion in completion?() }
 
             mockHomeCoordinator = MockHomeCoordinator()
-            mockHomeCoordinator.startClosure = { completion in completion() }
+            mockHomeCoordinator.startClosure = { completion in completion?() }
             mockHomeCoordinator.rootViewController = dummySearchRootController
 
             mockChildFactory.store = mockStore

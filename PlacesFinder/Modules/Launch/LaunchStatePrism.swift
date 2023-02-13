@@ -25,7 +25,8 @@
 import Shared
 import SwiftDux
 
-protocol LaunchStatePrismProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol LaunchStatePrismProtocol {
     var launchKeyPaths: Set<EquatableKeyPath<AppState>> { get }
 
     func hasFinishedLaunching(_ state: AppState) -> Bool

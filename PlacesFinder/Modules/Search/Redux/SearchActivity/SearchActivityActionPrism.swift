@@ -51,11 +51,11 @@ protocol SearchDetailsActionPrismProtocol {
     func detailEntityAction(_ entity: SearchEntityModel) -> Search.ActivityAction
 }
 
+// sourcery: AutoMockable
 protocol SearchActivityActionPrismProtocol: SearchInitialActionPrismProtocol,
                                     SearchSubsequentActionPrismProtocol,
                                     SearchUpdateEditingActionPrismProtocol,
-                                    SearchDetailsActionPrismProtocol,
-                                    AutoMockable {}
+                                    SearchDetailsActionPrismProtocol {}
 
 class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 

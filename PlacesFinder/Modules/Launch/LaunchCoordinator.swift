@@ -59,13 +59,13 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
 
     // MARK: start()
 
-    func start(_ completion: () -> Void) {
+    func start(_ completion: (() -> Void)?) {
         presenter.startSpinner()
 
         subscribeAndDispatchActions()
         startListeners()
 
-        completion()
+        completion?()
     }
 
     private func subscribeAndDispatchActions() {

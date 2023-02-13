@@ -40,7 +40,8 @@ enum SearchPresentationType: Equatable {
     case search(IgnoredEquatable<LocationServicesBlock>)
 }
 
-protocol SearchActivityStatePrismProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchActivityStatePrismProtocol {
     func presentationType(locationAuthState: LocationAuthState,
                           reachabilityState: ReachabilityState) -> SearchPresentationType
 }

@@ -50,7 +50,8 @@ extension SettingsViewModel {
 
 // MARK: SettingsViewModelBuilder
 
-protocol SettingsViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SettingsViewModelBuilderProtocol {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
                         appCopyContent: AppCopyContent) -> SettingsViewModel
 }

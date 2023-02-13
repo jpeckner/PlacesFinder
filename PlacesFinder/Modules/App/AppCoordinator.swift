@@ -68,8 +68,8 @@ extension AppCoordinator {
         let immediateDescendent = type(of: childCoordinator).appCoordinatorImmediateDescendent
         store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
 
-        childCoordinator.start {
-            mainWindow.rootViewController = childCoordinator.rootViewController
+        childCoordinator.start { [weak self] in
+            self?.mainWindow.rootViewController = self?.childCoordinator.rootViewController
         }
     }
 

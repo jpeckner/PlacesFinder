@@ -89,7 +89,8 @@ private extension SearchResultsViewModel {
 
 // MARK: SearchResultsViewModelBuilder
 
-protocol SearchResultsViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchResultsViewModelBuilderProtocol {
     // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,

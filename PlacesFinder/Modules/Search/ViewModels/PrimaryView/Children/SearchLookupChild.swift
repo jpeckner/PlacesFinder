@@ -36,7 +36,8 @@ enum SearchLookupChild: Equatable {
 
 // MARK: SearchLookupChildBuilder
 
-protocol SearchLookupChildBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchLookupChildBuilderProtocol {
     func buildChild(_ loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
