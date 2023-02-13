@@ -54,14 +54,12 @@ extension HomeCoordinator: ChildCoordinatorProtocol {
         return presenter.rootViewController
     }
 
-    func start(_ completion: (() -> Void)?) {
+    func start() {
         store.subscribe(self, keyPath: \AppState.routerState)
-        completion?()
     }
 
-    func finish(_ completion: (() -> Void)?) {
+    func finish() async {
         store.unsubscribe(self)
-        completion?()
     }
 
 }

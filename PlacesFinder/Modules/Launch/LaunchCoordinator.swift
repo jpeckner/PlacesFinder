@@ -59,13 +59,11 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
 
     // MARK: start()
 
-    func start(_ completion: (() -> Void)?) {
+    func start() {
         presenter.startSpinner()
 
         subscribeAndDispatchActions()
         startListeners()
-
-        completion?()
     }
 
     private func subscribeAndDispatchActions() {
@@ -81,9 +79,9 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
 
     // MARK: finish()
 
-    func finish(_ completion: (() -> Void)?) {
+    func finish() async {
         store.unsubscribe(self)
-        presenter.animateOut(completion)
+        await presenter.animateOut()
     }
 
 }

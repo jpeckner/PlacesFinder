@@ -45,8 +45,9 @@ private class MockLaunchCoordinator: ChildCoordinatorProtocolMock, AppCoordinato
 
 class AppCoordinatorTests: QuickSpec {
 
-    private typealias FactoryType = AppCoordinatorChildFactoryProtocolMock<MockAppStore>
+    private typealias TFactoryType = AppCoordinatorChildFactoryProtocolMock<MockAppStore>
 
+    // swiftlint:disable force_try
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
@@ -55,7 +56,7 @@ class AppCoordinatorTests: QuickSpec {
 
         var mockMainWindow: UIWindowProtocolMock!
         var mockStore: MockAppStore!
-        var mockChildFactory: FactoryType!
+        var mockChildFactory: TFactoryType!
         var mockAppRoutingHandler: AppRoutingHandlerProtocolMock!
         var mockPayloadBuilder: AppLinkTypeBuilderProtocolMock!
         var mockLaunchStatePrism: LaunchStatePrismProtocolMock!
@@ -66,7 +67,7 @@ class AppCoordinatorTests: QuickSpec {
         var mockHomeCoordinator: MockHomeCoordinator!
         let dummySearchRootController = UIViewController()
 
-        var coordinator: AppCoordinator<FactoryType>!
+        var coordinator: AppCoordinator<TFactoryType>!
 
         func initCoordinator(launchStatePrism: LaunchStatePrismProtocol) {
             mockMainWindow = UIWindowProtocolMock()
@@ -75,12 +76,10 @@ class AppCoordinatorTests: QuickSpec {
             mockPayloadBuilder = AppLinkTypeBuilderProtocolMock()
 
             mockLaunchCoordinator = MockLaunchCoordinator()
-            mockLaunchCoordinator.startClosure = { completion in completion?() }
             mockLaunchCoordinator.rootViewController = dummyLaunchViewController
-            mockLaunchCoordinator.finishClosure = { completion in completion?() }
+            mockLaunchCoordinator.finishClosure = {}
 
             mockHomeCoordinator = MockHomeCoordinator()
-            mockHomeCoordinator.startClosure = { completion in completion?() }
             mockHomeCoordinator.rootViewController = dummySearchRootController
 
             mockChildFactory.store = mockStore
@@ -104,13 +103,15 @@ class AppCoordinatorTests: QuickSpec {
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
             let dispatchedAction = mockStore.dispatchedActions.last
-            expect(dispatchedAction) == .router(.setCurrentCoordinator(nodeBox))
+            expect(dispatchedAction).toEventually(equal(.router(.setCurrentCoordinator(nodeBox))))
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
                                                    linkType: AppLinkType) {
             let dispatchedAction = mockStore.dispatchedActions.last
-            expect(dispatchedAction) == .router(.setDestinationCoordinator(destinationNodeBox, payload: linkType))
+            expect(dispatchedAction).toEventually(
+                equal(.router(.setDestinationCoordinator(destinationNodeBox, payload: linkType)))
+            )
         }
 
         func verifyCoordinatorWasActivated(_ childCoordinator: ChildCoordinatorProtocolMock,
@@ -118,8 +119,8 @@ class AppCoordinatorTests: QuickSpec {
                                            rootViewController: UIViewController) {
             verifySetCurrentCoordinatorCalled(nodeBox)
 
-            expect(childCoordinator.startCalled) == true
-            expect(mockMainWindow.rootViewController) === rootViewController
+            expect(childCoordinator.startCalled).toEventually(beTrue())
+            expect(mockMainWindow.rootViewController).toEventually(equal(rootViewController))
         }
 
         // MARK: Tests
@@ -141,7 +142,7 @@ class AppCoordinatorTests: QuickSpec {
             it("subscribes to its relevant key paths") {
                 let substatesSubscription =
                     mockStore.receivedSubscriptions.first?.subscription
-                        as? SubstatesSubscription<AppCoordinator<FactoryType>>
+                        as? SubstatesSubscription<AppCoordinator<TFactoryType>>
                 expect(substatesSubscription?.subscribedPaths.count) == 2
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.appSkinState)) == true
                 expect(substatesSubscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
@@ -159,6 +160,8 @@ class AppCoordinatorTests: QuickSpec {
                             coordinator.createSubtree(from: AppCoordinatorNode.nodeBox,
                                                       towards: destinationDescendent,
                                                       state: AppState.stubValue())
+
+                            try! await Task.sleep(nanoseconds: 100_000_000)
                         }
 
                         it("activates mockHomeCoordinator") {
@@ -180,10 +183,12 @@ class AppCoordinatorTests: QuickSpec {
                                 coordinator.switchSubtree(from: descendent,
                                                           towards: destinationDescendent,
                                                           state: AppState.stubValue())
+
+                                try! await Task.sleep(nanoseconds: 100_000_000)
                             }
 
                             it("deactivates the current child coordinator") {
-                                expect(mockLaunchCoordinator.finishCalled) == true
+                                await expect(mockLaunchCoordinator.finishCalled).toEventually(beTrue())
                             }
 
                             it("activates mockHomeCoordinator") {

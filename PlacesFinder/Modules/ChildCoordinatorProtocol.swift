@@ -29,6 +29,6 @@ import UIKit
 protocol ChildCoordinatorProtocol {
     var rootViewController: UIViewController { get }
 
-    func start(_ completion: (() -> Void)?)
-    func finish(_ completion: (() -> Void)?)
+    func start()
+    func finish() async
 }
