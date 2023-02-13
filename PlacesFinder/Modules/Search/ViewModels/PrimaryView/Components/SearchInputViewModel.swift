@@ -78,7 +78,8 @@ extension SearchInputDispatcher {
 
 // MARK: SearchInputViewModelBuilder
 
-protocol SearchInputViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchInputViewModelBuilderProtocol {
     func buildDispatchingViewModel(
         _ inputParams: SearchInputParams,
         copyContent: SearchInputCopyContent,

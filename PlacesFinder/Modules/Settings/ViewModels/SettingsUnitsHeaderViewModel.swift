@@ -39,7 +39,8 @@ struct SettingsUnitsHeaderViewModel: Equatable {
 
 // MARK: SettingsUnitsHeaderViewModelBuilder
 
-protocol SettingsUnitsHeaderViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SettingsUnitsHeaderViewModelBuilderProtocol {
     func buildViewModel(_ title: String,
                         currentlyActiveSystem: MeasurementSystem,
                         copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel

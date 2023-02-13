@@ -32,6 +32,7 @@ struct SearchDetailsMapCoordinateViewModel: Equatable {
     let regionRadius: PlaceLookupDistance
 }
 
+// sourcery: AutoCellType
 enum SearchDetailsMapSectionViewModel: Equatable {
     // sourcery: cellType = "SearchDetailsMapCell"
     case mapCoordinate(SearchDetailsMapCoordinateViewModel)

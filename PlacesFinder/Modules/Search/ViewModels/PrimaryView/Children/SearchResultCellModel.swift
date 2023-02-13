@@ -34,7 +34,8 @@ struct SearchResultCellModel: Equatable {
 
 // MARK: SearchResultCellModelBuilder
 
-protocol SearchResultCellModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchResultCellModelBuilderProtocol {
     func buildViewModel(_ model: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel
 }

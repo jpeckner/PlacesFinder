@@ -35,7 +35,7 @@ protocol SearchDetailsSectionProtocol {
                        colorings: SearchDetailsViewColorings) throws
 }
 
-extension SearchDetailsInfoSectionViewModel: SearchDetailsSectionProtocol, AutoCellType {
+extension SearchDetailsInfoSectionViewModel: SearchDetailsSectionProtocol {
 
     var isSelectable: Bool {
         switch self {
@@ -62,7 +62,7 @@ extension SearchDetailsInfoSectionViewModel: SearchDetailsSectionProtocol, AutoC
 
 }
 
-extension SearchDetailsMapSectionViewModel: SearchDetailsSectionProtocol, AutoCellType {
+extension SearchDetailsMapSectionViewModel: SearchDetailsSectionProtocol {
 
     var isSelectable: Bool {
         switch self {

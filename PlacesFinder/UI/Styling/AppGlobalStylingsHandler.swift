@@ -24,7 +24,8 @@
 
 import Shared
 
-protocol AppGlobalStylingsHandlerProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol AppGlobalStylingsHandlerProtocol {
     func apply(_ appSkin: AppSkin)
 }
 

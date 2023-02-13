@@ -27,7 +27,8 @@ import CoreLocation
 import Shared
 import SwiftDux
 
-protocol LocationAuthListenerProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol LocationAuthListenerProtocol {
     var actionPublisher: AnyPublisher<LocationAuthAction, Never> { get }
 
     func start()

@@ -34,7 +34,8 @@ extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
 
 // MARK: SearchInstructionsViewModelBuilder
 
-protocol SearchInstructionsViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchInstructionsViewModelBuilderProtocol {
     func buildViewModel(copyContent: SearchInstructionsCopyContent) -> SearchInstructionsViewModel
 }
 

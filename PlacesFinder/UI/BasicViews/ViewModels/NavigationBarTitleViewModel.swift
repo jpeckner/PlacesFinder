@@ -29,7 +29,8 @@ struct NavigationBarTitleViewModel: Equatable {
     let displayName: String
 }
 
-protocol NavigationBarViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol NavigationBarViewModelBuilderProtocol {
     func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel
 }
 

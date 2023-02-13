@@ -32,7 +32,8 @@ protocol LinkTypeProtocol {
 
 protocol AppLinkPayloadProtocol {}
 
-protocol AppLinkTypeBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol AppLinkTypeBuilderProtocol {
     func buildPayload(_ url: URL) -> AppLinkType?
 }
 

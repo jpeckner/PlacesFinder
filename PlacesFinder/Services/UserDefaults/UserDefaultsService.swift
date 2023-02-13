@@ -25,7 +25,8 @@
 import Foundation
 import Shared
 
-protocol UserDefaultsServiceProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol UserDefaultsServiceProtocol {
     func getSearchPreferences() throws -> StoredSearchPreferences
     func setSearchPreferences(_ searchPreferences: StoredSearchPreferences) throws
 }

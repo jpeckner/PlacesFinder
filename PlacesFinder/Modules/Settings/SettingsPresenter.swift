@@ -26,7 +26,8 @@ import Shared
 import SwiftDux
 import UIKit
 
-protocol SettingsPresenterProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SettingsPresenterProtocol {
     var rootNavController: UINavigationController { get }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,

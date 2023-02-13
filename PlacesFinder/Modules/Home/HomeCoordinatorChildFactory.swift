@@ -27,9 +27,10 @@ import CoordiNode
 import Shared
 import SwiftDux
 
+// sourcery: AutoMockable
 // sourcery: genericTypes = "TStore: StoreProtocol"
 // sourcery: genericConstraints = "TStore.TState == AppState, TStore.TAction == AppAction"
-protocol HomeCoordinatorChildFactoryProtocol: AutoMockable {
+protocol HomeCoordinatorChildFactoryProtocol {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol

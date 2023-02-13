@@ -33,7 +33,8 @@ struct SearchInputContentViewModel: Equatable {
 
 // MARK: SearchInputContentViewModelBuilder
 
-protocol SearchInputContentViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchInputContentViewModelBuilderProtocol {
     func buildViewModel(keywords: NonEmptyString?,
                         isEditing: Bool,
                         copyContent: SearchInputCopyContent) -> SearchInputContentViewModel

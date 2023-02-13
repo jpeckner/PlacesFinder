@@ -25,7 +25,8 @@
 import Shared
 import SwiftDux
 
-protocol UserDefaultsListenerProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol UserDefaultsListenerProtocol {
     func start()
 }
 

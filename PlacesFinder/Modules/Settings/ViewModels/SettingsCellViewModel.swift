@@ -54,7 +54,8 @@ extension SettingsCellViewModel {
 
 // MARK: SettingsCellViewModelBuilder
 
-protocol SettingsCellViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SettingsCellViewModelBuilderProtocol {
     func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel]
 
     func buildSortingCellModels(currentSorting: PlaceLookupSorting,

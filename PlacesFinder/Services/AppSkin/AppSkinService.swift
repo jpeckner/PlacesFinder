@@ -29,7 +29,8 @@ struct AppSkinServiceErrorPayload: Decodable, Equatable {}
 
 typealias AppSkinServiceCompletion = (Result<AppSkin, DecodableServiceError<AppSkinServiceErrorPayload>>) -> Void
 
-protocol AppSkinServiceProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol AppSkinServiceProtocol {
     func fetchAppSkin(completion: @escaping AppSkinServiceCompletion)
 }
 

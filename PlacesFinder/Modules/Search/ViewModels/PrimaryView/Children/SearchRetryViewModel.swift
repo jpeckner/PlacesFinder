@@ -33,7 +33,8 @@ extension SearchRetryCopyContent: SearchCTACopyProtocol {}
 
 // MARK: SearchRetryViewModelBuilder
 
-protocol SearchRetryViewModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchRetryViewModelBuilderProtocol {
     func buildViewModel(_ copyContent: SearchRetryCopyContent,
                         ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel
 }

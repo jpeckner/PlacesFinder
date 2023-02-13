@@ -36,7 +36,8 @@ enum ReachabilityStatus: Equatable {
     case reachable(ConnectionType)
 }
 
-protocol ReachabilityProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol ReachabilityProtocol {
     func startNotifier() throws
     func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void)
 }

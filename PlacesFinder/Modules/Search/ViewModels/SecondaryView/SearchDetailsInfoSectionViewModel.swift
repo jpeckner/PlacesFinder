@@ -40,6 +40,7 @@ struct SearchDetailsPhoneNumberViewModel: Equatable {
     let makeCallBlock: IgnoredEquatable<OpenURLBlock>?
 }
 
+// sourcery: AutoCellType
 enum SearchDetailsInfoSectionViewModel: Equatable {
     // sourcery: cellType = "SearchDetailsBasicInfoCell"
     case basicInfo(SearchDetailsBasicInfoViewModel)

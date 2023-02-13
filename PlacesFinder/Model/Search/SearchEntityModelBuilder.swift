@@ -24,7 +24,8 @@
 
 import Shared
 
-protocol SearchEntityModelBuilderProtocol: AutoMockable {
+// sourcery: AutoMockable
+protocol SearchEntityModelBuilderProtocol {
     func buildEntityModels(_ entities: [PlaceLookupEntity]) -> [SearchEntityModel]
 
     func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel?
