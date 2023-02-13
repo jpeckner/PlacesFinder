@@ -23,8 +23,8 @@ DEPENDENCIES:
   - Nimble
   - Quick
   - ReachabilitySwift
-  - Shared (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
-  - SharedTestComponents (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
+  - Shared (from `../Shared`)
+  - SharedTestComponents (from `../Shared`)
   - SkeletonView
   - SnapKit
   - SwiftDux (from `https://github.com/jpeckner/SwiftDux.git`, branch `develop`)
@@ -49,11 +49,9 @@ EXTERNAL SOURCES:
     :branch: develop
     :git: https://github.com/jpeckner/CoordiNode.git
   Shared:
-    :branch: develop
-    :git: https://github.com/jpeckner/Shared.git
+    :path: "../Shared"
   SharedTestComponents:
-    :branch: develop
-    :git: https://github.com/jpeckner/Shared.git
+    :path: "../Shared"
   SwiftDux:
     :branch: develop
     :git: https://github.com/jpeckner/SwiftDux.git
@@ -68,12 +66,6 @@ CHECKOUT OPTIONS:
   CoordiNodeTestComponents:
     :commit: 67ead5d20a1ee156573832c67758da857a48fe16
     :git: https://github.com/jpeckner/CoordiNode.git
-  Shared:
-    :commit: 423c08eb9cbbcd1d2030155b5ccc07abbce30e49
-    :git: https://github.com/jpeckner/Shared.git
-  SharedTestComponents:
-    :commit: 423c08eb9cbbcd1d2030155b5ccc07abbce30e49
-    :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
     :commit: 8c20ca612311be505620cb6e94dafec835bca017
     :git: https://github.com/jpeckner/SwiftDux.git
@@ -96,6 +88,6 @@ SPEC CHECKSUMS:
   SwiftDuxTestComponents: 1dafabf892f54fa36f6d3e9e8197157c0ca1f3f2
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
 
-PODFILE CHECKSUM: 59ff99ba52f13ce92ebd9eba697179f10d232fae
+PODFILE CHECKSUM: c8f84d42f039edfcfb3b7c65f52384ce8393b288
 
 COCOAPODS: 1.11.3

@@ -8,7 +8,7 @@ def common_pods
   pod 'ReachabilitySwift'
   pod 'SkeletonView'
   pod 'SnapKit'
-  pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
+  pod 'Shared', :path => '../Shared'
   pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
 end
 
@@ -25,7 +25,7 @@ target 'PlacesFinder' do
     pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
     pod 'Nimble'
     pod 'Quick'
-    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
+    pod 'SharedTestComponents', :path => '../Shared'
     pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
   end
 
@@ -36,7 +36,7 @@ target 'PlacesFinder' do
 
     pod 'Nimble'
     pod 'Quick'
-    pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
+    pod 'SharedTestComponents', :path => '../Shared'
   end
 
   target 'PlacesFinderUITests' do

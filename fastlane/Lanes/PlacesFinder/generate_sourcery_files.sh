@@ -9,13 +9,13 @@ rm -rf "$OUTPUT_DIR"
 mint run krzysztofzablocki/sourcery sourcery            \
   --sources PlacesFinder                                \
   --templates PlacesFinder/Sourcery/Templates           \
-  --templates Pods/Shared/Shared/Sourcery/Templates     \
+  --templates ../Shared/Shared/Sourcery/Templates       \
   --output "$OUTPUT_DIR"
 
 OUTPUT_DIR=$(pwd)/PlacesFinderTests/Components/Sourcery/Output
 rm -rf "$OUTPUT_DIR"
 mint run krzysztofzablocki/sourcery sourcery                                                            \
   --sources PlacesFinder                                                                                \
-  --templates Pods/SharedTestComponents/SharedTestComponents/Sourcery/Templates/AutoMockable.stencil    \
+  --templates ../Shared/SharedTestComponents/Sourcery/Templates/AutoMockable.stencil    \
   --args autoMockableImports="Combine",autoMockableImports="CoordiNode",autoMockableImports="Foundation",autoMockableImports="Shared",autoMockableImports="SharedTestComponents",autoMockableImports="SwiftDux",autoMockableImports="UIKit" \
   --output "$OUTPUT_DIR"
