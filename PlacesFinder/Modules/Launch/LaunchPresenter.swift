@@ -30,7 +30,7 @@ protocol LaunchPresenterProtocol {
     var rootViewController: UIViewController { get }
 
     func startSpinner()
-    func animateOut(_ completion: (() -> Void)?)
+    func animateOut() async
 }
 
 class LaunchPresenter: LaunchPresenterProtocol {
@@ -49,8 +49,8 @@ class LaunchPresenter: LaunchPresenterProtocol {
         launchViewController.startSpinner()
     }
 
-    func animateOut(_ completion: (() -> Void)?) {
-        launchViewController.animateOut(completion)
+    func animateOut() async {
+        await launchViewController.animateOut()
     }
 
 }

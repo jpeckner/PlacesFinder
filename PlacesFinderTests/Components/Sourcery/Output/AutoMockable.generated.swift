@@ -186,15 +186,11 @@ class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     var startCalled: Bool {
         return startCallsCount > 0
     }
-    var startReceivedCompletion: ((() -> Void))?
-    var startReceivedInvocations: [((() -> Void))?] = []
-    var startClosure: (((() -> Void)?) -> Void)?
+    var startClosure: (() -> Void)?
 
-    func start(_ completion: (() -> Void)?) {
+    func start() {
         startCallsCount += 1
-        startReceivedCompletion = completion
-        startReceivedInvocations.append(completion)
-        startClosure?(completion)
+        startClosure?()
     }
 
     //MARK: - finish
@@ -203,15 +199,11 @@ class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     var finishCalled: Bool {
         return finishCallsCount > 0
     }
-    var finishReceivedCompletion: ((() -> Void))?
-    var finishReceivedInvocations: [((() -> Void))?] = []
-    var finishClosure: (((() -> Void)?) -> Void)?
+    var finishClosure: (() async -> Void)?
 
-    func finish(_ completion: (() -> Void)?) {
+    func finish() async {
         finishCallsCount += 1
-        finishReceivedCompletion = completion
-        finishReceivedInvocations.append(completion)
-        finishClosure?(completion)
+        await finishClosure?()
     }
 
 }
@@ -298,15 +290,11 @@ class LaunchPresenterProtocolMock: LaunchPresenterProtocol {
     var animateOutCalled: Bool {
         return animateOutCallsCount > 0
     }
-    var animateOutReceivedCompletion: ((() -> Void))?
-    var animateOutReceivedInvocations: [((() -> Void))?] = []
-    var animateOutClosure: (((() -> Void)?) -> Void)?
+    var animateOutClosure: (() async -> Void)?
 
-    func animateOut(_ completion: (() -> Void)?) {
+    func animateOut() async {
         animateOutCallsCount += 1
-        animateOutReceivedCompletion = completion
-        animateOutReceivedInvocations.append(completion)
-        animateOutClosure?(completion)
+        await animateOutClosure?()
     }
 
 }

@@ -68,9 +68,8 @@ extension AppCoordinator {
         let immediateDescendent = type(of: childCoordinator).appCoordinatorImmediateDescendent
         store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
 
-        childCoordinator.start { [weak self] in
-            self?.mainWindow.rootViewController = self?.childCoordinator.rootViewController
-        }
+        childCoordinator.start()
+        mainWindow.rootViewController = childCoordinator.rootViewController
     }
 
 }
@@ -86,10 +85,11 @@ extension AppCoordinator: AppRouterProtocol {
     func switchSubtree(from currentNode: AppCoordinatorDescendent,
                        towards destinationDescendent: AppCoordinatorDestinationDescendent,
                        state: AppState) {
-        // Build the new child coordinator here, not inside finish(), to avoid a split-second empty view flash
+        // Build the new child coordinator here, not inside the Task, to avoid a split-second empty view flash
         let newChildCoordinator = childFactory.buildCoordinator(for: destinationDescendent)
 
-        childCoordinator.finish { [weak self] in
+        Task { @MainActor [weak self] in
+            await self?.childCoordinator.finish()
             self?.childCoordinator = newChildCoordinator
         }
     }

@@ -79,16 +79,11 @@ class LaunchCoordinatorTests: QuickSpec {
             }
 
             describe("start()") {
-                var completionCalled: Bool!
-
                 beforeEach {
                     let statePrism = LaunchStatePrism()
                     initCoordinator(statePrism: statePrism)
 
-                    completionCalled = false
-                    coordinator.start {
-                        completionCalled = true
-                    }
+                    coordinator.start()
                 }
 
                 it("subscribes to its relevant key paths") {
@@ -112,32 +107,15 @@ class LaunchCoordinatorTests: QuickSpec {
                     let listener = mockListenerContainer.userDefaultsListener as? UserDefaultsListenerProtocolMock
                     expect(listener?.startCalled) == true
                 }
-
-                it("executes the completion block") {
-                    expect(completionCalled) == true
-                }
             }
 
             describe("finish()") {
-                var completionCalled: Bool!
-
                 beforeEach {
-                    mockLaunchPresenter.animateOutClosure = { completionBlockReceived in
-                        completionBlockReceived?()
-                    }
-                    completionCalled = false
-
-                    coordinator.finish {
-                        completionCalled = true
-                    }
+                    await coordinator.finish()
                 }
 
                 it("unsubscribes from the store") {
                     expect(mockStore.receivedUnsubscribers.first as? LaunchCoordinator<MockAppStore>) === coordinator
-                }
-
-                it("passes the completion block to mockLaunchPresenter for execution") {
-                    expect(completionCalled) == true
                 }
             }
 

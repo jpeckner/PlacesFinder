@@ -48,8 +48,8 @@ extension LaunchViewController {
         launchView.startSpinner()
     }
 
-    func animateOut(_ completion: (() -> Void)?) {
-        launchView.animateOut(completion)
+    func animateOut() async {
+        await launchView.animateOut()
     }
 
 }

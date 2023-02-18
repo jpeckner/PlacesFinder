@@ -106,14 +106,8 @@ class HomeCoordinatorTests: QuickSpec {
             }
 
             describe("start()") {
-                var completionCalled: Bool!
-
                 beforeEach {
-                    completionCalled = false
-
-                    coordinator.start {
-                        completionCalled = true
-                    }
+                    coordinator.start()
                 }
 
                 it("subscribes to its relevant key paths") {
@@ -123,29 +117,15 @@ class HomeCoordinatorTests: QuickSpec {
                     expect(subscription?.subscribedPaths.count) == 1
                     expect(subscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
                 }
-
-                it("executes the completion block") {
-                    expect(completionCalled) == true
-                }
             }
 
             describe("finish()") {
-                var completionCalled: Bool!
-
                 beforeEach {
-                    completionCalled = false
-
-                    coordinator.finish {
-                        completionCalled = true
-                    }
+                    await coordinator.finish()
                 }
 
                 it("unsubscribes from the store") {
                     expect(mockStore.receivedUnsubscribers.first as? HomeCoordinator<TFactory>) === coordinator
-                }
-
-                it("passes the completion block to mockLaunchPresenter for execution") {
-                    expect(completionCalled) == true
                 }
             }
 

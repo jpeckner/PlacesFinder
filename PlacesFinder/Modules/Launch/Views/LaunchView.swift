@@ -102,13 +102,15 @@ extension LaunchView {
         activityIndicator.startAnimating()
     }
 
-    func animateOut(_ completion: (() -> Void)?) {
+    func animateOut() async {
         activityIndicator.stopAnimating()
 
-        performImageTightentingAnimation(completion)
+        await withCheckedContinuation { continuation in
+            performImageTightentingAnimation(continuation: continuation)
+        }
     }
 
-    private func performImageTightentingAnimation(_ allAnimationsComplete: (() -> Void)?) {
+    private func performImageTightentingAnimation(continuation: CheckedContinuation<Void, Never>) {
         UIView.animate(
             withDuration: 0.3,
             delay: 0.0,
@@ -117,12 +119,12 @@ extension LaunchView {
                 self.imageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
             },
             completion: { _ in
-                self.performImageExpansionAnimation(allAnimationsComplete)
+                self.performImageExpansionAnimation(continuation: continuation)
             }
         )
     }
 
-    private func performImageExpansionAnimation(_ allAnimationsComplete: (() -> Void)?) {
+    private func performImageExpansionAnimation(continuation: CheckedContinuation<Void, Never>) {
         UIView.animate(
             withDuration: 0.2,
             delay: 0.0,
@@ -132,7 +134,7 @@ extension LaunchView {
                 self.imageView.alpha = 0.0
             },
             completion: { _ in
-                allAnimationsComplete?()
+                continuation.resume()
             }
         )
     }
