@@ -2,7 +2,7 @@ PODS:
   - CoordiNode (1.1.1)
   - CoordiNodeTestComponents (1.1.1):
     - CoordiNode (= 1.1.1)
-  - Kingfisher (7.5.0)
+  - Kingfisher (7.6.1)
   - Nimble (11.2.1)
   - Quick (6.1.0)
   - ReachabilitySwift (5.0.0)
@@ -84,7 +84,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CoordiNode: a814d1db0482fa5a2ba1777cb82d947c326cc369
   CoordiNodeTestComponents: b1f9da3a3537d7e4adc75e6b3c60b8aee6d79ee5
-  Kingfisher: b9c2a4a4af2990a768445c277359b27bde287d71
+  Kingfisher: 93a3c6d0d551658a31e19f21747e1d15cb39d525
   Nimble: 516ac503a0fafaa8e41dbb4a70a61be421fa893a
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
