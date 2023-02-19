@@ -40,8 +40,8 @@ struct DecodableServices {
 
 private extension DecodableService {
 
-    convenience init(urlSession: URLSession,
-                     decoder: DecoderProtocol) {
+    init(urlSession: URLSession,
+         decoder: DecoderProtocol) {
         let httpService = HTTPService(urlSession: urlSession)
 
         self.init(httpService: httpService,
