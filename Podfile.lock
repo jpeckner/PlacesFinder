@@ -69,10 +69,10 @@ CHECKOUT OPTIONS:
     :commit: 67ead5d20a1ee156573832c67758da857a48fe16
     :git: https://github.com/jpeckner/CoordiNode.git
   Shared:
-    :commit: f76751187ff432792ee3fe5030e1d142948d2e5d
+    :commit: 9973842235ec46a228c62c0b43b9112bf66ddc1e
     :git: https://github.com/jpeckner/Shared.git
   SharedTestComponents:
-    :commit: f76751187ff432792ee3fe5030e1d142948d2e5d
+    :commit: 9973842235ec46a228c62c0b43b9112bf66ddc1e
     :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
     :commit: 8c20ca612311be505620cb6e94dafec835bca017
