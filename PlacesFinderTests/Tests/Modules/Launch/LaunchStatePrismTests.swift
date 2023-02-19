@@ -46,9 +46,11 @@ class LaunchStatePrismTests: QuickSpec {
 
             context("when state.appSkinState.hasCompletedLoading is true") {
                 beforeEach {
-                    let underlyingError = EquatableError(SharedTestComponents.StubError.plainError)
+                    let underlyingError = AppSkinServiceErrorPayload()
                     let state = AppState.stubValue(
-                        appSkinState: AppSkinState(loadState: .failure(.loadError(underlyingError: underlyingError)))
+                        appSkinState: AppSkinState(
+                            loadState: .failure(.errorPayloadReturned(underlyingError, .stubValue()))
+                        )
                     )
                     result = statePrism.hasFinishedLaunching(state)
                 }

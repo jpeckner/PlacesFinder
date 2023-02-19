@@ -29,9 +29,9 @@ struct AppSkinState: GuaranteedEntityState, Equatable {
     typealias TEntity = AppSkin
     static let fallbackValue = AppSkin(colorings: AppColorings.defaultColorings)
 
-    let loadState: GuaranteedEntityLoadState<TEntity>
+    let loadState: GuaranteedEntityLoadState<TEntity, AppSkinServiceError>
 
-    init(loadState: GuaranteedEntityLoadState<TEntity>) {
+    init(loadState: GuaranteedEntityLoadState<TEntity, AppSkinServiceError>) {
         self.loadState = loadState
     }
 }
