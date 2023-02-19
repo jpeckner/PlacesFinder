@@ -28,7 +28,7 @@ import SwiftDux
 
 enum AppSkinAction: Equatable {
     case startLoad
-    case load(GuaranteedEntityAction<AppSkin>)
+    case load(GuaranteedEntityAction<AppSkin, AppSkinServiceError>)
 }
 
 extension AppAction {
@@ -51,7 +51,7 @@ extension AppAction {
                         case let .success(appSkin):
                             dispatch(.appSkin(.load(.success(appSkin))))
                         case let .failure(error):
-                            dispatch(.appSkin(.load(.failure(.loadError(underlyingError: EquatableError(error))))))
+                            dispatch(.appSkin(.load(.failure(error))))
                         }
                     }
                 }

@@ -75,10 +75,10 @@ CHECKOUT OPTIONS:
     :commit: 9973842235ec46a228c62c0b43b9112bf66ddc1e
     :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
-    :commit: 8c20ca612311be505620cb6e94dafec835bca017
+    :commit: a3dbe4cc3c8d8b9e644021cf332f9253a8b86e8e
     :git: https://github.com/jpeckner/SwiftDux.git
   SwiftDuxTestComponents:
-    :commit: 8c20ca612311be505620cb6e94dafec835bca017
+    :commit: a3dbe4cc3c8d8b9e644021cf332f9253a8b86e8e
     :git: https://github.com/jpeckner/SwiftDux.git
 
 SPEC CHECKSUMS:

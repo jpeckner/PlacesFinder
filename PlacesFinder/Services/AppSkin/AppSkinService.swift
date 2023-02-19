@@ -25,9 +25,32 @@
 import Foundation
 import Shared
 
-struct AppSkinServiceErrorPayload: Decodable, Equatable {}
+public struct AppSkinServiceErrorPayload: Decodable, Equatable {}
 
-typealias AppSkinServiceCompletion = (Result<AppSkin, DecodableServiceError<AppSkinServiceErrorPayload>>) -> Void
+typealias AppSkinServiceError = DecodableServiceError<AppSkinServiceErrorPayload>
+
+typealias AppSkinServiceCompletion = (Result<AppSkin, AppSkinServiceError>) -> Void
+
+extension DecodableServiceError: Equatable where TErrorPayload == AppSkinServiceErrorPayload {
+
+    public static func == (
+        lhs: Shared.DecodableServiceError<TErrorPayload>,
+        rhs: Shared.DecodableServiceError<TErrorPayload>
+    ) -> Bool {
+        switch (lhs, rhs) {
+        case let (.errorPayloadReturned(lhsPayload, _), .errorPayloadReturned(rhsPayload, _)):
+            return lhsPayload == rhsPayload
+
+        case (.errorPayloadReturned, .unexpected),
+             (.unexpected, .errorPayloadReturned),
+             (.unexpected, .unexpected):
+            return false
+        }
+    }
+
+}
+
+// MARK: - AppSkinService
 
 // sourcery: AutoMockable
 protocol AppSkinServiceProtocol {
