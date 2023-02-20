@@ -46,7 +46,9 @@ extension AppAction {
 
                     dispatch(.appSkin(.load(.inProgress)))
 
-                    skinService.fetchAppSkin { result in
+                    Task {
+                        let result = await skinService.fetchAppSkin()
+
                         switch result {
                         case let .success(appSkin):
                             dispatch(.appSkin(.load(.success(appSkin))))
