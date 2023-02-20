@@ -86,7 +86,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
         let presenter = SearchPresenter(tabItemProperties: tabItemProperties)
 
-        let statePrism = SearchActivityStatePrism(locationAuthListener: listenerContainer.locationAuthListener,
+        let statePrism = SearchActivityStatePrism(locationAuthRequester: listenerContainer.locationAuthListener,
                                                   locationRequestHandler: serviceContainer.locationRequestHandler)
 
         let searchEntityModelBuilder = SearchEntityModelBuilder()

@@ -30,7 +30,7 @@ extension Search.ActivityAction {
     static func stubbedStartInitialRequestAction(
         dependencies: Search.ActivityActionCreatorDependencies = .stubValue(),
         searchParams: SearchParams = .stubValue(),
-        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock = { _ in }
+        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock = { .success(.stubValue()) }
     ) -> Search.ActivityAction {
         .startInitialRequest(
             dependencies: IgnoredEquatable(dependencies),

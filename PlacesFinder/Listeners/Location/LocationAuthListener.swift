@@ -27,12 +27,15 @@ import CoreLocation
 import Shared
 import SwiftDux
 
+protocol LocationAuthRequesterProtocol {
+    func requestWhenInUseAuthorization()
+}
+
 // sourcery: AutoMockable
-protocol LocationAuthListenerProtocol {
+protocol LocationAuthListenerProtocol: LocationAuthRequesterProtocol {
     var actionPublisher: AnyPublisher<LocationAuthAction, Never> { get }
 
     func start()
-    func requestWhenInUseAuthorization()
 }
 
 class LocationAuthListener: NSObject {

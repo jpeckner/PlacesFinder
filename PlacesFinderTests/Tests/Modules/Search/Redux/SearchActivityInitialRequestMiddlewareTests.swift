@@ -89,9 +89,9 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
             let action = Search.ActivityAction.startInitialRequest(
                 dependencies: IgnoredEquatable(mockDependencies),
                 searchParams: stubSearchParams,
-                locationUpdateRequestBlock: IgnoredEquatable { resultBlock in
+                locationUpdateRequestBlock: IgnoredEquatable {
                     mockLocationRequestBlockCalled = true
-                    resultBlock(mockLocationRequestReturnValue)
+                    return mockLocationRequestReturnValue
                 }
             )
 

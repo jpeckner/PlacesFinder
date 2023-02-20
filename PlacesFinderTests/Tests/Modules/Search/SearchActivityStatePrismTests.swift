@@ -41,8 +41,9 @@ class SearchActivityStatePrismTests: QuickSpec {
         beforeEach {
             mockLocationAuthListener = LocationAuthListenerProtocolMock()
             mockLocationRequestHandler = LocationRequestHandlerProtocolMock()
+            mockLocationRequestHandler.requestLocationReturnValue = .success(.stubValue())
 
-            statePrism = SearchActivityStatePrism(locationAuthListener: mockLocationAuthListener,
+            statePrism = SearchActivityStatePrism(locationAuthRequester: mockLocationAuthListener,
                                                   locationRequestHandler: mockLocationRequestHandler)
         }
 
@@ -67,7 +68,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .locationServicesDisabled),
-                        reachabilityState: ReachabilityState(status: nil)
+                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
                     )
                 }
 
@@ -80,7 +81,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .notDetermined),
-                        reachabilityState: ReachabilityState(status: nil)
+                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
                     )
                 }
 
@@ -102,7 +103,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .locationServicesEnabled),
-                        reachabilityState: ReachabilityState(status: nil)
+                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
                     )
                 }
 
@@ -115,7 +116,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                     }
 
                     expect(mockLocationRequestHandler.requestLocationCalled) == false
-                    block { _ in }
+                    _ = await block()
                     expect(mockLocationRequestHandler.requestLocationCalled) == true
                 }
             }

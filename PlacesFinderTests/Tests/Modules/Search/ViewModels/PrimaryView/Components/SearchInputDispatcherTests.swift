@@ -48,8 +48,9 @@ class SearchInputDispatcherTests: QuickSpec {
 
             locationBlockCalled = false
             sut = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                        actionPrism: mockActionPrism) { _ in
+                                        actionPrism: mockActionPrism) {
                 locationBlockCalled = true
+                return .success(.stubValue())
             }
         }
 
@@ -91,7 +92,8 @@ class SearchInputDispatcherTests: QuickSpec {
                 expect(mockActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments?.searchParams) == stubParams
 
                 expect(locationBlockCalled) == false
-                mockActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments?.locationUpdateRequestBlock { _ in }
+                _ = await mockActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments?
+                    .locationUpdateRequestBlock()
                 expect(locationBlockCalled) == true
             }
 

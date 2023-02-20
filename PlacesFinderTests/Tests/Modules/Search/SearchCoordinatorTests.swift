@@ -104,7 +104,7 @@ class SearchCoordinatorTests: QuickSpec {
 
         describe("init") {
             beforeEach {
-                let statePrism = SearchActivityStatePrism(locationAuthListener: LocationAuthListenerProtocolMock(),
+                let statePrism = SearchActivityStatePrism(locationAuthRequester: LocationAuthListenerProtocolMock(),
                                                           locationRequestHandler: LocationRequestHandlerProtocolMock())
                 initCoordinator(statePrism: statePrism)
             }
@@ -356,7 +356,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         mockStatePrism.presentationTypeLocationAuthStateReachabilityStateReturnValue =
-                            .search(IgnoredEquatable(.locationServicesEnabled { _ in }))
+                            .search(IgnoredEquatable(.locationServicesEnabled { .success(.stubValue()) }))
 
                         mockAppStoreRelay.newState(state: appState,
                                                    updatedSubstates: [\AppState.routerState])
