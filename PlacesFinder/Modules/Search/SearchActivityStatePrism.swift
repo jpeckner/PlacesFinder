@@ -27,7 +27,7 @@ import Shared
 import SwiftDux
 
 typealias LocationAuthRequestBlock = () -> Void
-typealias LocationUpdateRequestBlock = (@escaping (LocationRequestResult) -> Void) -> Void
+typealias LocationUpdateRequestBlock = () async -> LocationRequestResult
 
 enum SearchPresentationType: Equatable {
     enum LocationServicesBlock {
@@ -48,33 +48,37 @@ protocol SearchActivityStatePrismProtocol {
 
 class SearchActivityStatePrism: SearchActivityStatePrismProtocol {
 
-    let locationAuthListener: LocationAuthListenerProtocol
+    let locationAuthRequester: LocationAuthRequesterProtocol
     let locationRequestHandler: LocationRequestHandlerProtocol
 
-    init(locationAuthListener: LocationAuthListenerProtocol,
+    init(locationAuthRequester: LocationAuthRequesterProtocol,
          locationRequestHandler: LocationRequestHandlerProtocol) {
-        self.locationAuthListener = locationAuthListener
+        self.locationAuthRequester = locationAuthRequester
         self.locationRequestHandler = locationRequestHandler
     }
 
     func presentationType(locationAuthState: LocationAuthState,
                           reachabilityState: ReachabilityState) -> SearchPresentationType {
-        if case .unreachable? = reachabilityState.status { return .noInternet }
+        switch reachabilityState.status {
+        case .reachable:
+            switch locationAuthState.authStatus {
+            case .notDetermined:
+                return .search(IgnoredEquatable(
+                    .locationServicesNotDetermined(authBlock: locationAuthRequester.requestWhenInUseAuthorization))
+                )
+            case .locationServicesEnabled:
+                return .search(IgnoredEquatable(
+                    .locationServicesEnabled(requestBlock: locationRequestHandler.requestLocation))
+                )
+            case .locationServicesDisabled:
+                return .locationServicesDisabled
+            }
 
-        let locationAuthListener = self.locationAuthListener
-        let locationRequestHandler = self.locationRequestHandler
-        switch locationAuthState.authStatus {
-        case .notDetermined:
-            return .search(IgnoredEquatable(.locationServicesNotDetermined {
-                locationAuthListener.requestWhenInUseAuthorization()
-            }))
-        case .locationServicesEnabled:
-            return .search(IgnoredEquatable(.locationServicesEnabled { locationCallback in
-                locationRequestHandler.requestLocation(locationCallback)
-            }))
-        case .locationServicesDisabled:
-            return .locationServicesDisabled
+        case .unreachable,
+             .none:
+            return .noInternet
         }
+
     }
 
 }

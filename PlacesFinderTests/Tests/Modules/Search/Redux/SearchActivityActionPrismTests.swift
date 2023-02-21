@@ -61,13 +61,17 @@ class SearchActivityActionPrismTests: QuickSpec {
         describe("initialRequestAction()") {
 
             beforeEach {
-                result = prism.initialRequestAction(stubSearchParams) { _ in }
+                result = prism.initialRequestAction(stubSearchParams) {
+                    .success(.stubValue())
+                }
             }
 
             it("returns Search.ActivityAction.startInitialRequest() with the args for the next page request") {
-                expect(result) == .startInitialRequest(dependencies: IgnoredEquatable(mockDependencies),
-                                                       searchParams: stubSearchParams,
-                                                       locationUpdateRequestBlock: IgnoredEquatable { _ in })
+                expect(result) == .startInitialRequest(
+                    dependencies: IgnoredEquatable(mockDependencies),
+                    searchParams: stubSearchParams,
+                    locationUpdateRequestBlock: IgnoredEquatable { .success(.stubValue()) }
+                )
             }
 
         }

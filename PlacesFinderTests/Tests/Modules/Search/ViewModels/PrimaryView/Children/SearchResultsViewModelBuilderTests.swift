@@ -80,7 +80,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             stubInitialRequestAction = .startInitialRequest(
                 dependencies: IgnoredEquatable(mockDependencies),
                 searchParams: stubSearchParams,
-                locationUpdateRequestBlock: IgnoredEquatable { _ in }
+                locationUpdateRequestBlock: IgnoredEquatable { .success(.stubValue()) }
             )
 
             stubSubsequentRequestAction = .startSubsequentRequest(
@@ -109,8 +109,9 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                                             allEntities: stubEntities,
                                             tokenContainer: stubTokenContainer,
                                             resultsCopyContent: stubCopyContent,
-                                            actionSubscriber: AnySubscriber(mockActionSubscriber)) { _ in
+                                            actionSubscriber: AnySubscriber(mockActionSubscriber)) {
                     locationBlockCalled = true
+                    return .success(.stubValue())
                 }
             }
 
@@ -119,7 +120,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 expect(initialRequestReceivedArgs?.searchParams) == stubSearchParams
 
                 expect(locationBlockCalled) == false
-                initialRequestReceivedArgs?.locationUpdateRequestBlock { _ in }
+                _ = await initialRequestReceivedArgs?.locationUpdateRequestBlock()
                 expect(locationBlockCalled) == true
             }
 

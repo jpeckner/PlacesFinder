@@ -50,8 +50,9 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
         var sut: SearchLookupViewModelBuilder!
         var result: SearchLookupViewModel!
 
-        func locationUpdateStub(block: @escaping (LocationRequestResult) -> Void) {
+        func locationUpdateStub() async -> LocationRequestResult {
             locationBlockCalled = true
+            return .success(.stubValue())
         }
 
         beforeEach {
@@ -78,8 +79,9 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 result = sut.buildViewModel(stubSearchActivityState,
-                                            appCopyContent: stubAppCopyContent) { _ in
+                                            appCopyContent: stubAppCopyContent) {
                     locationBlockCalled = true
+                    return .success(.stubValue())
                 }
             }
 
@@ -89,7 +91,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                 expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
 
                 expect(locationBlockCalled) == false
-                receivedArgs?.locationUpdateRequestBlock { _ in }
+                _ = await receivedArgs?.locationUpdateRequestBlock()
                 expect(locationBlockCalled) == true
             }
 
@@ -99,7 +101,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                 expect(receivedArgs?.appCopyContent) == stubAppCopyContent
 
                 expect(locationBlockCalled) == false
-                receivedArgs?.locationUpdateRequestBlock { _ in }
+                _ = await receivedArgs?.locationUpdateRequestBlock()
                 expect(locationBlockCalled) == true
             }
 

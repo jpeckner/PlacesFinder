@@ -107,11 +107,15 @@ extension Search {
                     dispatch(.searchActivity(.locationRequested(searchParams)))
 
                     appStore.dispatch(.receiveState(IgnoredEquatable { appState in
-                        requestLocation(appState.searchPreferencesState,
-                                        dependencies: dependencies.value,
-                                        searchParams: searchParams,
-                                        locationUpdateRequestBlock: locationUpdateRequestBlock.value,
-                                        dispatch: dispatch)
+                        Task {
+                            await requestLocation(
+                                appState.searchPreferencesState,
+                                dependencies: dependencies.value,
+                                searchParams: searchParams,
+                                locationUpdateRequestBlock: locationUpdateRequestBlock.value,
+                                dispatch: dispatch
+                            )
+                        }
                     }))
                 }
             }
@@ -121,27 +125,27 @@ extension Search {
     private static func requestLocation(_ preferencesState: SearchPreferencesState,
                                         dependencies: Search.ActivityActionCreatorDependencies,
                                         searchParams: SearchParams,
-                                        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock,
-                                        dispatch: @escaping DispatchFunction<Search.Action>) {
-        locationUpdateRequestBlock { result in
-            switch result {
-            case let .success(coordinate):
-                let lookupParams = PlaceLookupParams(
-                    keywords: searchParams.keywords,
-                    coordinate: coordinate,
-                    radius: preferencesState.stored.distance.distanceType.measurement,
-                    sorting: preferencesState.stored.sorting
-                )
+                                        locationUpdateRequestBlock: LocationUpdateRequestBlock,
+                                        dispatch: @escaping DispatchFunction<Search.Action>) async {
+        let result = await locationUpdateRequestBlock()
 
-                performInitialPageRequest(lookupParams,
-                                          dependencies: dependencies,
-                                          searchParams: searchParams,
-                                          dispatch: dispatch)
-            case let .failure(error):
-                dispatchInitialPageFailure(searchParams,
-                                           underlyingError: error,
-                                           dispatch: dispatch)
-            }
+        switch result {
+        case let .success(coordinate):
+            let lookupParams = PlaceLookupParams(
+                keywords: searchParams.keywords,
+                coordinate: coordinate,
+                radius: preferencesState.stored.distance.distanceType.measurement,
+                sorting: preferencesState.stored.sorting
+            )
+
+            performInitialPageRequest(lookupParams,
+                                      dependencies: dependencies,
+                                      searchParams: searchParams,
+                                      dispatch: dispatch)
+        case let .failure(error):
+            dispatchInitialPageFailure(searchParams,
+                                       underlyingError: error,
+                                       dispatch: dispatch)
         }
     }
 

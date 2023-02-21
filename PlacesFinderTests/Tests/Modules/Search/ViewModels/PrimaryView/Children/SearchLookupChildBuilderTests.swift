@@ -100,8 +100,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .idle") {
 
                 beforeEach {
-                    result = sut.buildChild(.idle,
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .idle,
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("calls mockInstructionsViewModelBuilder with expected method and args") {
@@ -118,8 +122,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .locationRequested") {
 
                 beforeEach {
-                    result = sut.buildChild(.locationRequested(stubSearchParams),
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .locationRequested(stubSearchParams),
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("returns a value of .progress") {
@@ -131,8 +139,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .locationRequested") {
 
                 beforeEach {
-                    result = sut.buildChild(.initialPageRequested(stubSearchParams),
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .initialPageRequested(stubSearchParams),
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("returns a value of .progress") {
@@ -147,11 +159,15 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 let tokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 
                 beforeEach {
-                    result = sut.buildChild(.pagesReceived(stubSearchParams,
-                                                           pageState: .success,
-                                                           allEntities: stubEntities,
-                                                           nextRequestToken: tokenContainer),
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .pagesReceived(stubSearchParams,
+                                       pageState: .success,
+                                       allEntities: stubEntities,
+                                       nextRequestToken: tokenContainer),
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("calls mockResultsViewModelBuilder with expected method and args") {
@@ -173,8 +189,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
             context("when loadState is .noResultsFound") {
 
                 beforeEach {
-                    result = sut.buildChild(.noResultsFound(stubSearchParams),
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .noResultsFound(stubSearchParams),
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("calls mockNoResultsFoundViewModelBuilder with expected method and args") {
@@ -199,9 +219,13 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         return stubRetryViewModel
                     }
 
-                    result = sut.buildChild(.failure(stubSearchParams,
-                                                     underlyingError: IgnoredEquatable(StubError.plainError)),
-                                            appCopyContent: stubAppCopyContent) { _ in }
+                    result = sut.buildChild(
+                        .failure(stubSearchParams,
+                                 underlyingError: IgnoredEquatable(StubError.plainError)),
+                        appCopyContent: stubAppCopyContent
+                    ) {
+                        .success(.stubValue())
+                    }
                 }
 
                 it("calls mockRetryViewModelBuilder with expected method and args") {

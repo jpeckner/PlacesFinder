@@ -40,6 +40,7 @@ import UIKit
 
 
 
+
 class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordinatorChildFactoryProtocol where TStore.TState == AppState, TStore.TAction == AppAction {
 
 
@@ -155,19 +156,20 @@ class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
 
     //MARK: - fetchAppSkin
 
-    var fetchAppSkinCompletionCallsCount = 0
-    var fetchAppSkinCompletionCalled: Bool {
-        return fetchAppSkinCompletionCallsCount > 0
+    var fetchAppSkinCallsCount = 0
+    var fetchAppSkinCalled: Bool {
+        return fetchAppSkinCallsCount > 0
     }
-    var fetchAppSkinCompletionReceivedCompletion: (AppSkinServiceCompletion)?
-    var fetchAppSkinCompletionReceivedInvocations: [(AppSkinServiceCompletion)] = []
-    var fetchAppSkinCompletionClosure: ((@escaping AppSkinServiceCompletion) -> Void)?
+    var fetchAppSkinReturnValue: Result<AppSkin, AppSkinServiceError>!
+    var fetchAppSkinClosure: (() async -> Result<AppSkin, AppSkinServiceError>)?
 
-    func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
-        fetchAppSkinCompletionCallsCount += 1
-        fetchAppSkinCompletionReceivedCompletion = completion
-        fetchAppSkinCompletionReceivedInvocations.append(completion)
-        fetchAppSkinCompletionClosure?(completion)
+    func fetchAppSkin() async -> Result<AppSkin, AppSkinServiceError> {
+        fetchAppSkinCallsCount += 1
+        if let fetchAppSkinClosure = fetchAppSkinClosure {
+            return await fetchAppSkinClosure()
+        } else {
+            return fetchAppSkinReturnValue
+        }
     }
 
 }

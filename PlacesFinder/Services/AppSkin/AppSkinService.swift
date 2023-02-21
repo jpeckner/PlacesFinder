@@ -54,17 +54,17 @@ extension DecodableServiceError: Equatable where TErrorPayload == AppSkinService
 
 // sourcery: AutoMockable
 protocol AppSkinServiceProtocol {
-    func fetchAppSkin(completion: @escaping AppSkinServiceCompletion)
+    func fetchAppSkin() async -> Result<AppSkin, AppSkinServiceError>
 }
 
 class AppSkinService: AppSkinServiceProtocol {
 
-    func fetchAppSkin(completion: @escaping AppSkinServiceCompletion) {
+    func fetchAppSkin() async -> Result<AppSkin, AppSkinServiceError> {
         // This previously fetched the skin from an API, but the introduction of Dark Mode in iOS 13 has mostly obviated
         // the desire for custom skins in an app. However, the previous infrastructure remains in place as an example of
         // how to build a modular, multi-layered app architecture.
         let appSkin = AppSkin(colorings: AppColorings.defaultColorings)
-        completion(.success(appSkin))
+        return .success(appSkin)
     }
 
 }
