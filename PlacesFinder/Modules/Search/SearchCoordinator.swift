@@ -199,7 +199,7 @@ private extension SearchCoordinator {
 
                 searchLinkPayload.map { payload in
                     let params = SearchParams(keywords: payload.keywords)
-                    let action = actionPrism.initialRequestAction(params,
+                    let action = actionPrism.initialRequestAction(searchParams: params,
                                                                   locationUpdateRequestBlock: requestBlock)
                     searchStoreRelay.store.dispatch(.searchActivity(action))
                 }

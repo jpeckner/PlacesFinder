@@ -125,11 +125,11 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
                                                   resultsCopyContent: resultsCopyContent)
         }
 
-        let refreshAction = actionPrism.initialRequestAction(submittedParams,
+        let refreshAction = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                              locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         let nextRequestAction = tokenContainer.flatMap {
-            try? actionPrism.subsequentRequestAction(submittedParams,
+            try? actionPrism.subsequentRequestAction(searchParams: submittedParams,
                                                      allEntities: allEntities,
                                                      numPagesReceived: numPagesReceived,
                                                      tokenContainer: $0)

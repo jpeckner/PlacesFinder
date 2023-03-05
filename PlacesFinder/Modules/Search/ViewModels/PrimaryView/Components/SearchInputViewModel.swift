@@ -68,7 +68,7 @@ extension SearchInputDispatcher {
 
     func dispatchSearchParams(_ params: SearchParams) {
         let action = actionPrism.initialRequestAction(
-            params,
+            searchParams: params,
             locationUpdateRequestBlock: locationUpdateRequestBlock
         )
         _ = actionSubscriber.receive(.searchActivity(action))

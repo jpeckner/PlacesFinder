@@ -31,12 +31,12 @@ enum SearchActivityActionPrismError: Error {
 }
 
 protocol SearchInitialActionPrismProtocol {
-    func initialRequestAction(_ searchParams: SearchParams,
+    func initialRequestAction(searchParams: SearchParams,
                               locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> Search.ActivityAction
 }
 
 protocol SearchSubsequentActionPrismProtocol {
-    func subsequentRequestAction(_ searchParams: SearchParams,
+    func subsequentRequestAction(searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
                                  numPagesReceived: Int,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction
@@ -71,7 +71,7 @@ class SearchActivityActionPrism: SearchActivityActionPrismProtocol {
 extension SearchActivityActionPrism: SearchInitialActionPrismProtocol {
 
     func initialRequestAction(
-        _ searchParams: SearchParams,
+        searchParams: SearchParams,
         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
     ) -> Search.ActivityAction {
         return .startInitialRequest(dependencies: IgnoredEquatable(dependencies),
@@ -83,7 +83,7 @@ extension SearchActivityActionPrism: SearchInitialActionPrismProtocol {
 
 extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
-    func subsequentRequestAction(_ searchParams: SearchParams,
+    func subsequentRequestAction(searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
                                  numPagesReceived: Int,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
@@ -95,12 +95,15 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
         let updatedTokenContainer = PlaceLookupTokenAttemptsContainer(token: tokenContainer.token,
                                                                       maxAttempts: tokenContainer.maxAttempts,
                                                                       numAttemptsSoFar: incrementedAttemptsCount)
+        let startSubsequentRequestParams = Search.ActivityAction.StartSubsequentRequestParams(
+            searchParams: searchParams,
+            numPagesReceived: numPagesReceived,
+            previousResults: allEntities,
+            tokenContainer: updatedTokenContainer
+        )
 
         return .startSubsequentRequest(dependencies: IgnoredEquatable(dependencies),
-                                       searchParams: searchParams,
-                                       numPagesReceived: numPagesReceived,
-                                       previousResults: allEntities,
-                                       tokenContainer: updatedTokenContainer)
+                                       params: startSubsequentRequestParams)
     }
 
 }

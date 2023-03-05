@@ -34,6 +34,21 @@ extension Search {
     }
 
     enum ActivityAction: Equatable {
+        struct StartSubsequentRequestParams: Equatable {
+            let searchParams: SearchParams
+            let numPagesReceived: Int
+            let previousResults: NonEmptyArray<SearchEntityModel>
+            let tokenContainer: PlaceLookupTokenAttemptsContainer
+        }
+
+        struct UpdateRequestStatusParams: Equatable {
+            let searchParams: SearchParams
+            let pageAction: IntermediateStepLoadAction<Search.PageRequestError>
+            let numPagesReceived: Int
+            let allEntities: NonEmptyArray<SearchEntityModel>
+            let nextRequestToken: PlaceLookupTokenAttemptsContainer?
+        }
+
         case startInitialRequest(
             dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
             searchParams: SearchParams,
@@ -42,10 +57,7 @@ extension Search {
 
         case startSubsequentRequest(
             dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
-            searchParams: SearchParams,
-            numPagesReceived: Int,
-            previousResults: NonEmptyArray<SearchEntityModel>,
-            tokenContainer: PlaceLookupTokenAttemptsContainer
+            params: StartSubsequentRequestParams
         )
 
         // Load state
@@ -55,13 +67,7 @@ extension Search {
 
         case noResultsFound(SearchParams)
 
-        case updateRequestStatus(
-            searchParams: SearchParams,
-            pageAction: IntermediateStepLoadAction<Search.PageRequestError>,
-            numPagesReceived: Int,
-            allEntities: NonEmptyArray<SearchEntityModel>,
-            nextRequestToken: PlaceLookupTokenAttemptsContainer?
-        )
+        case updateRequestStatus(UpdateRequestStatusParams)
 
         case failure(
             SearchParams,
@@ -195,13 +201,14 @@ extension Search {
             return
         }
 
-        dispatch(.searchActivity(.updateRequestStatus(
+        let params = Search.ActivityAction.UpdateRequestStatusParams(
             searchParams: searchParams,
             pageAction: .success,
             numPagesReceived: 1,
             allEntities: allEntities,
             nextRequestToken: tokenContainer(for: lookupResponse)
-        )))
+        )
+        dispatch(.searchActivity(.updateRequestStatus(params)))
     }
 
     private static func dispatchInitialPageFailure(_ searchParams: SearchParams,
@@ -221,43 +228,36 @@ extension Search {
                 return { action in
                     guard case let .searchActivity(.startSubsequentRequest(
                         dependencies,
-                        searchParams,
-                        numPagesReceived,
-                        previousResults,
-                        tokenContainer
+                        startSubsequentRequestParams
                     )) = action
                     else {
                         next(action)
                         return
                     }
 
-                    dispatch(.searchActivity(.updateRequestStatus(
-                        searchParams: searchParams,
+                    let inProgressStatusParams = Search.ActivityAction.UpdateRequestStatusParams(
+                        searchParams: startSubsequentRequestParams.searchParams,
                         pageAction: .inProgress,
-                        numPagesReceived: numPagesReceived,
-                        allEntities: previousResults,
+                        numPagesReceived: startSubsequentRequestParams.numPagesReceived,
+                        allEntities: startSubsequentRequestParams.previousResults,
                         nextRequestToken: nil
-                    )))
+                    )
+                    dispatch(.searchActivity(.updateRequestStatus(inProgressStatusParams)))
 
                     Task {
                         let result = await dependencies.value.placeLookupService.requestPage(
-                            requestToken: tokenContainer.token
+                            requestToken: startSubsequentRequestParams.tokenContainer.token
                         )
 
                         switch result {
                         case let .success(lookupResponse):
-                            dispatchSubsequentPageSuccess(previousResults,
-                                                          lookupResponse: lookupResponse,
+                            dispatchSubsequentPageSuccess(lookupResponse: lookupResponse,
                                                           dependencies: dependencies.value,
-                                                          searchParams: searchParams,
-                                                          numPagesReceived: numPagesReceived,
+                                                          startSubsequentRequestParams: startSubsequentRequestParams,
                                                           dispatch: dispatch)
                         case let .failure(error):
-                            dispatchSubsequentPageError(previousResults,
-                                                        lastRequestTokenContainer: tokenContainer,
-                                                        searchParams: searchParams,
-                                                        numPagesReceived: numPagesReceived,
-                                                        placeLookupServiceError: error,
+                            dispatchSubsequentPageError(placeLookupServiceError: error,
+                                                        startSubsequentRequestParams: startSubsequentRequestParams,
                                                         dispatch: dispatch)
                         }
                     }
@@ -266,44 +266,45 @@ extension Search {
         }
     }
 
-    private static func dispatchSubsequentPageSuccess(_ previousResults: NonEmptyArray<SearchEntityModel>,
-                                                      lookupResponse: PlaceLookupResponse,
-                                                      dependencies: Search.ActivityActionCreatorDependencies,
-                                                      searchParams: SearchParams,
-                                                      numPagesReceived: Int,
-                                                      dispatch: @escaping DispatchFunction<Search.Action>) {
+    private static func dispatchSubsequentPageSuccess(
+        lookupResponse: PlaceLookupResponse,
+        dependencies: Search.ActivityActionCreatorDependencies,
+        startSubsequentRequestParams: Search.ActivityAction.StartSubsequentRequestParams,
+        dispatch: @escaping DispatchFunction<Search.Action>
+    ) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
-
-        dispatch(.searchActivity(.updateRequestStatus(
-            searchParams: searchParams,
+        let updateRequestStatusParams = Search.ActivityAction.UpdateRequestStatusParams(
+            searchParams: startSubsequentRequestParams.searchParams,
             pageAction: .success,
-            numPagesReceived: numPagesReceived + 1,
-            allEntities: previousResults.appendedWith(entityModels),
+            numPagesReceived: startSubsequentRequestParams.numPagesReceived + 1,
+            allEntities: startSubsequentRequestParams.previousResults.appendedWith(entityModels),
             nextRequestToken: tokenContainer(for: lookupResponse)
-        )))
+        )
+
+        dispatch(.searchActivity(.updateRequestStatus(updateRequestStatusParams)))
     }
 
-    private static func dispatchSubsequentPageError(_ previousResults: NonEmptyArray<SearchEntityModel>,
-                                                    lastRequestTokenContainer: PlaceLookupTokenAttemptsContainer,
-                                                    searchParams: SearchParams,
-                                                    numPagesReceived: Int,
-                                                    placeLookupServiceError: PlaceLookupServiceError,
-                                                    dispatch: @escaping DispatchFunction<Search.Action>) {
+    private static func dispatchSubsequentPageError(
+        placeLookupServiceError: PlaceLookupServiceError,
+        startSubsequentRequestParams: Search.ActivityAction.StartSubsequentRequestParams,
+        dispatch: @escaping DispatchFunction<Search.Action>
+    ) {
         let underlyingError = IgnoredEquatable<Error>(placeLookupServiceError)
         let isRequestRetriable = placeLookupServiceError.isRetriable
         let pageError: Search.PageRequestError = isRequestRetriable ?
             .canRetryRequest(underlyingError: underlyingError)
             :
             .cannotRetryRequest(underlyingError: underlyingError)
-        let nextRequestToken = isRequestRetriable ? lastRequestTokenContainer : nil
-
-        dispatch(.searchActivity(.updateRequestStatus(
-            searchParams: searchParams,
+        let nextRequestToken = isRequestRetriable ? startSubsequentRequestParams.tokenContainer : nil
+        let updateRequestStatusParams = Search.ActivityAction.UpdateRequestStatusParams(
+            searchParams: startSubsequentRequestParams.searchParams,
             pageAction: .failure(pageError),
-            numPagesReceived: numPagesReceived,
-            allEntities: previousResults,
+            numPagesReceived: startSubsequentRequestParams.numPagesReceived,
+            allEntities: startSubsequentRequestParams.previousResults,
             nextRequestToken: nextRequestToken
-        )))
+        )
+
+        dispatch(.searchActivity(.updateRequestStatus(updateRequestStatusParams)))
     }
 
 }

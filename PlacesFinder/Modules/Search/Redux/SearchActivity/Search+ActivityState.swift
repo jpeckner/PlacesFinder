@@ -45,7 +45,7 @@ extension Search {
         case noResultsFound(SearchParams)
 
         case pagesReceived(
-            SearchParams,
+            params: SearchParams,
             pageState: SearchPageState,
             numPagesReceived: Int,
             allEntities: NonEmptyArray<SearchEntityModel>,
@@ -154,19 +154,15 @@ extension Search {
                 )
             case .startSubsequentRequest:
                 return currentState
-            case let .updateRequestStatus(submittedParams,
-                                          pageAction,
-                                          numPagesReceived,
-                                          allEntities,
-                                          nextRequestToken):
-                let newPageState = SearchPageReducer.reduce(action: pageAction,
+            case let .updateRequestStatus(params):
+                let newPageState = SearchPageReducer.reduce(action: params.pageAction,
                                                             currentState: currentState.pageState)
-                let loadState: Search.LoadState = .pagesReceived(submittedParams,
+                let loadState: Search.LoadState = .pagesReceived(params: params.searchParams,
                                                                  pageState: newPageState,
-                                                                 numPagesReceived: numPagesReceived,
-                                                                 allEntities: allEntities,
-                                                                 nextRequestToken: nextRequestToken)
-                let inputParams = numPagesReceived == 1 ?
+                                                                 numPagesReceived: params.numPagesReceived,
+                                                                 allEntities: params.allEntities,
+                                                                 nextRequestToken: params.nextRequestToken)
+                let inputParams = params.numPagesReceived == 1 ?
                     SearchInputParams(params: currentState.inputParams.params,
                                       isEditing: false,
                                       isSearchInputVisible: true)

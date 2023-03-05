@@ -95,7 +95,7 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
             return .failure(retryViewModelBuilder.buildViewModel(appCopyContent.searchRetry) {
-                let action = actionPrism.initialRequestAction(submittedParams,
+                let action = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 _ = actionSubscriber.receive(.searchActivity(action))
             })
