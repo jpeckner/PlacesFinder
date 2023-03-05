@@ -98,14 +98,8 @@ extension SearchDetailsViewController {
         titleLabel.text = viewModel.placeName
         titleLabel.sizeToFit()
 
-        UIView.animate(
-            withDuration: 0,
-            animations: {
-                self.tableView.reloadData()
-            }, completion: { _ in
-                self.tableView.scrollToTop(animated: true)
-            }
-        )
+        tableView.reloadData()
+        tableView.scrollToTop(animated: true)
     }
 
 }

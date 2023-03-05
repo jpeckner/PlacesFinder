@@ -25,11 +25,11 @@
 import Foundation
 import Shared
 
+// Note: this needs to be declared public to avoid a compile error on `extension DecodableServiceError: Equatable` below
+// periphery:ignore
 public struct AppSkinServiceErrorPayload: Decodable, Equatable {}
 
 typealias AppSkinServiceError = DecodableServiceError<AppSkinServiceErrorPayload>
-
-typealias AppSkinServiceCompletion = (Result<AppSkin, AppSkinServiceError>) -> Void
 
 extension DecodableServiceError: Equatable where TErrorPayload == AppSkinServiceErrorPayload {
 

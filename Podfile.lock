@@ -2,7 +2,7 @@ PODS:
   - CoordiNode (1.1.1)
   - CoordiNodeTestComponents (1.1.1):
     - CoordiNode (= 1.1.1)
-  - Kingfisher (7.6.1)
+  - Kingfisher (7.6.2)
   - Nimble (11.2.1)
   - Quick (6.1.0)
   - ReachabilitySwift (5.0.0)
@@ -69,22 +69,22 @@ CHECKOUT OPTIONS:
     :commit: 67ead5d20a1ee156573832c67758da857a48fe16
     :git: https://github.com/jpeckner/CoordiNode.git
   Shared:
-    :commit: e61cc1336efcda62c939288f46314aeee7dc4d55
+    :commit: c330d7fd99b637da5df13414127ae8f83cc09e72
     :git: https://github.com/jpeckner/Shared.git
   SharedTestComponents:
-    :commit: e61cc1336efcda62c939288f46314aeee7dc4d55
+    :commit: c330d7fd99b637da5df13414127ae8f83cc09e72
     :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
-    :commit: a3dbe4cc3c8d8b9e644021cf332f9253a8b86e8e
+    :commit: 4a55c1319de65055fff6bd886e50e2fc4a36486b
     :git: https://github.com/jpeckner/SwiftDux.git
   SwiftDuxTestComponents:
-    :commit: a3dbe4cc3c8d8b9e644021cf332f9253a8b86e8e
+    :commit: 4a55c1319de65055fff6bd886e50e2fc4a36486b
     :git: https://github.com/jpeckner/SwiftDux.git
 
 SPEC CHECKSUMS:
   CoordiNode: a814d1db0482fa5a2ba1777cb82d947c326cc369
   CoordiNodeTestComponents: b1f9da3a3537d7e4adc75e6b3c60b8aee6d79ee5
-  Kingfisher: 93a3c6d0d551658a31e19f21747e1d15cb39d525
+  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   Nimble: 516ac503a0fafaa8e41dbb4a70a61be421fa893a
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -98,4 +98,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 59ff99ba52f13ce92ebd9eba697179f10d232fae
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
