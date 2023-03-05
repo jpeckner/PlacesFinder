@@ -131,7 +131,8 @@ extension Search {
         static func reduce(action: Search.ActivityAction,
                            currentState: Search.ActivityState) -> Search.ActivityState {
             switch action {
-            case .startInitialRequest:
+            case .startInitialRequest,
+                 .startSubsequentRequest:
                 return currentState
             case let .locationRequested(submittedParams):
                 return Search.ActivityState(
@@ -154,32 +155,10 @@ extension Search {
                     inputParams: currentState.inputParams,
                     detailedEntity: nil
                 )
-            case .startSubsequentRequest:
-                return currentState
-            case let .updateRequestStatus(params):
-                let newPageState = SearchPageReducer.reduce(action: params.pageAction,
-                                                            currentState: currentState.pageState)
-                let loadState: Search.LoadState = .pagesReceived(params: params.searchParams,
-                                                                 pageState: newPageState,
-                                                                 numPagesReceived: params.numPagesReceived,
-                                                                 allEntities: params.allEntities,
-                                                                 nextRequestToken: params.nextRequestToken)
-                let inputParams = params.numPagesReceived == 1 ?
-                    SearchInputParams(
-                        params: currentState.inputParams.params,
-                        barState: .isShowing(isEditing: false)
-                    )
-                    :
-                    SearchInputParams(
-                        params: currentState.inputParams.params,
-                        barState: .isHidden
-                    )
-
-                return Search.ActivityState(
-                    loadState: loadState,
-                    inputParams: inputParams,
-                    detailedEntity: currentState.detailedEntity
-                )
+            case let .updateRequestStatus(params, pageAction):
+                return reduceUpdateRequestStatus(currentState: currentState,
+                                                 params: params,
+                                                 pageAction: pageAction)
             case let .failure(submittedParams, searchError):
                 return Search.ActivityState(
                     loadState: .failure(submittedParams, underlyingError: searchError),
@@ -187,12 +166,8 @@ extension Search {
                     detailedEntity: nil
                 )
             case let .updateInputEditing(action):
-                return Search.ActivityState(
-                    loadState: currentState.loadState,
-                    inputParams: buildEditingInputParams(currentState: currentState,
-                                                         action: action),
-                    detailedEntity: currentState.detailedEntity
-                )
+                return reduceUpdateInputEditing(currentState: currentState,
+                                                action: action)
             case let .detailedEntity(entity):
                 return Search.ActivityState(
                     loadState: currentState.loadState,
@@ -208,25 +183,62 @@ extension Search {
             }
         }
 
-        private static func buildEditingInputParams(currentState: Search.ActivityState,
-                                                    action: SearchBarEditEvent) -> SearchInputParams {
+        private static func reduceUpdateRequestStatus(
+            currentState: Search.ActivityState,
+            params: Search.ActivityAction.UpdateRequestStatusParams,
+            pageAction: IntermediateStepLoadAction<Search.PageRequestError>
+        ) -> Search.ActivityState {
+            let newPageState = SearchPageReducer.reduce(action: pageAction,
+                                                        currentState: currentState.pageState)
+            let loadState: Search.LoadState = .pagesReceived(params: params.searchParams,
+                                                             pageState: newPageState,
+                                                             numPagesReceived: params.numPagesReceived,
+                                                             allEntities: params.allEntities,
+                                                             nextRequestToken: params.nextRequestToken)
+            let inputParams = params.numPagesReceived == 1 ?
+                SearchInputParams(
+                    params: currentState.inputParams.params,
+                    barState: .isShowing(isEditing: false)
+                )
+                :
+                SearchInputParams(
+                    params: currentState.inputParams.params,
+                    barState: .isHidden
+                )
+
+            return Search.ActivityState(
+                loadState: loadState,
+                inputParams: inputParams,
+                detailedEntity: currentState.detailedEntity
+            )
+        }
+
+        private static func reduceUpdateInputEditing(currentState: Search.ActivityState,
+                                                     action: SearchBarEditEvent) -> Search.ActivityState {
+            let inputParams: SearchInputParams
             switch action {
             case .beganEditing:
-                return SearchInputParams(
+                inputParams = SearchInputParams(
                     params: currentState.inputParams.params,
                     barState: .isShowing(isEditing: true)
                 )
             case .clearedInput:
-                return SearchInputParams(
+                inputParams = SearchInputParams(
                     params: nil,
                     barState: .isShowing(isEditing: true)
                 )
             case .endedEditing:
-                return SearchInputParams(
+                inputParams = SearchInputParams(
                     params: currentState.submittedParams,
                     barState: .isHidden
                 )
             }
+
+            return Search.ActivityState(
+                loadState: currentState.loadState,
+                inputParams: inputParams,
+                detailedEntity: currentState.detailedEntity
+            )
         }
 
     }
