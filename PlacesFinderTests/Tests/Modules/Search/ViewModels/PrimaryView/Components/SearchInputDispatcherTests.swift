@@ -81,7 +81,7 @@ class SearchInputDispatcherTests: QuickSpec {
             let stubParams = SearchParams.stubValue()
 
             beforeEach {
-                mockActionPrism.initialRequestActionLocationUpdateRequestBlockClosure = { receivedSearchParams, _ in
+                mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockClosure = { receivedSearchParams, _ in
                     .initialPageRequested(receivedSearchParams)
                 }
 
@@ -89,10 +89,10 @@ class SearchInputDispatcherTests: QuickSpec {
             }
 
             it("calls the action prism with expected method and args") {
-                expect(mockActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments?.searchParams) == stubParams
+                expect(mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments?  .searchParams) == stubParams
 
                 expect(locationBlockCalled) == false
-                _ = await mockActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments?
+                _ = await mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments?
                     .locationUpdateRequestBlock()
                 expect(locationBlockCalled) == true
             }

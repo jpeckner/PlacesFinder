@@ -68,7 +68,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             stubStartInitialRequestAction = Search.ActivityAction.stubbedStartInitialRequestAction(dependencies: mockDependencies)
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
+            mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
             mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
@@ -78,8 +78,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber)))
             )
             mockResultsViewModelBuilder = SearchResultsViewModelBuilderProtocolMock()
-            mockResultsViewModelBuilder
-                .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
+            mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
                 = stubResultsViewModel
 
             mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
@@ -160,8 +159,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .pagesReceived(stubSearchParams,
+                        .pagesReceived(params: stubSearchParams,
                                        pageState: .success,
+                                       numPagesReceived: 1,
                                        allEntities: stubEntities,
                                        nextRequestToken: tokenContainer),
                         appCopyContent: stubAppCopyContent
@@ -172,8 +172,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 it("calls mockResultsViewModelBuilder with expected method and args") {
                     let args =
-                        mockResultsViewModelBuilder
-                        .buildViewModelSubmittedParamsAllEntitiesTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
+                    mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
                     expect(args?.submittedParams) == stubSearchParams
                     expect(args?.allEntities) == stubEntities
                     expect(args?.tokenContainer) == tokenContainer

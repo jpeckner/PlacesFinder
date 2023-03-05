@@ -196,6 +196,7 @@ extension Search {
                                                              allEntities: params.allEntities,
                                                              nextRequestToken: params.nextRequestToken)
             let inputParams = params.numPagesReceived == 1 ?
+                // Ensure that the search bar is visible right after starting a new search
                 SearchInputParams(
                     params: currentState.inputParams.params,
                     barState: .isShowing(isEditing: false)

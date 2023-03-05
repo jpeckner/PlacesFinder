@@ -50,7 +50,7 @@ class SearchInputViewModelBuilderTests: QuickSpec {
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
 
             mockContentViewModelBuilder = SearchInputContentViewModelBuilderProtocolMock()
-            mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReturnValue = stubContentViewModel
+            mockContentViewModelBuilder.buildViewModelKeywordsBarStateCopyContentReturnValue = stubContentViewModel
 
             sut = SearchInputViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                               actionPrism: mockSearchActivityActionPrism,
@@ -61,7 +61,7 @@ class SearchInputViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 result = sut.buildDispatchingViewModel(
-                    stubInputParams,
+                    inputParams: stubInputParams,
                     copyContent: stubInputCopyContent
                 ) {
                     .success(.stubValue())
@@ -69,9 +69,9 @@ class SearchInputViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockContentViewModelBuilder with expected method and args") {
-                let receivedArgs = mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReceivedArguments
+                let receivedArgs = mockContentViewModelBuilder.buildViewModelKeywordsBarStateCopyContentReceivedArguments
                 expect(receivedArgs?.keywords) == stubInputParams.params?.keywords
-                expect(receivedArgs?.isEditing) == stubInputParams.isEditing
+                expect(receivedArgs?.barState) == stubInputParams.barState
                 expect(receivedArgs?.copyContent) == stubInputCopyContent
             }
 

@@ -27,10 +27,10 @@ import Shared
 extension SearchInputContentViewModel {
 
     static func stubValue(keywords: NonEmptyString? = nil,
-                          isEditing: Bool = false,
+                          barState: SearchInputParams.BarState = .isHidden,
                           placeholder: String = "stubPlaceholder") -> SearchInputContentViewModel {
         return SearchInputContentViewModel(keywords: keywords,
-                                           isEditing: isEditing,
+                                           barState: barState,
                                            placeholder: placeholder)
     }
 

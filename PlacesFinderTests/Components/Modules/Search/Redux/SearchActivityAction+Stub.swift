@@ -25,6 +25,42 @@
 
 import Shared
 
+extension Search.ActivityAction.StartSubsequentRequestParams {
+
+    static func stubValue(
+        searchParams: SearchParams = .stubValue(),
+        numPagesReceived: Int = 0,
+        previousResults: NonEmptyArray<SearchEntityModel> = .init(with: .stubValue()),
+        tokenContainer: PlaceLookupTokenAttemptsContainer = .stubValue()
+    ) -> Self {
+        Self(
+            searchParams: searchParams,
+            numPagesReceived: numPagesReceived,
+            previousResults: previousResults,
+            tokenContainer: tokenContainer
+        )
+    }
+
+}
+
+extension Search.ActivityAction.UpdateRequestStatusParams {
+
+    static func stubValue(
+        searchParams: SearchParams = .stubValue(),
+        numPagesReceived: Int = 0,
+        allEntities: NonEmptyArray<SearchEntityModel> = .init(with: .stubValue()),
+        nextRequestToken: PlaceLookupTokenAttemptsContainer? = nil
+    ) -> Self {
+        Self(
+            searchParams: searchParams,
+            numPagesReceived: numPagesReceived,
+            allEntities: allEntities,
+            nextRequestToken: nextRequestToken
+        )
+    }
+
+}
+
 extension Search.ActivityAction {
 
     static func stubbedStartInitialRequestAction(
@@ -41,15 +77,11 @@ extension Search.ActivityAction {
 
     static func stubbedStartSubsequentRequestAction(
         dependencies: Search.ActivityActionCreatorDependencies = .stubValue(),
-        searchParams: SearchParams = .stubValue(),
-        previousResults: NonEmptyArray<SearchEntityModel> = .init(with: .stubValue()),
-        tokenContainer: PlaceLookupTokenAttemptsContainer = .stubValue()
+        params: Search.ActivityAction.StartSubsequentRequestParams = .stubValue()
     ) -> Search.ActivityAction {
         .startSubsequentRequest(
             dependencies: IgnoredEquatable(dependencies),
-            searchParams: searchParams,
-            previousResults: previousResults,
-            tokenContainer: tokenContainer
+            params: params
         )
     }
 

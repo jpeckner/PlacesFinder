@@ -36,7 +36,7 @@ class SearchActivityStateTests: QuickSpec {
 
         let stubSearchParams = SearchParams.stubValue()
         let stubSearchInputParams = SearchInputParams(params: stubSearchParams,
-                                                      isEditing: false)
+                                                      barState: .isShowing(isEditing: false))
         let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 
@@ -108,8 +108,9 @@ class SearchActivityStateTests: QuickSpec {
                 beforeEach {
                     let state = Search.ActivityState(
                         loadState: Search.LoadState.pagesReceived(
-                            stubSearchParams,
+                            params: stubSearchParams,
                             pageState: .success,
+                            numPagesReceived: 1,
                             allEntities: stubEntities,
                             nextRequestToken: stubTokenContainer
                         ),

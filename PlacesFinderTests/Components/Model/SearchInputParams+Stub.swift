@@ -36,9 +36,9 @@ extension SearchParams {
 extension SearchInputParams {
 
     static func stubValue(params: SearchParams? = .stubValue(),
-                          isEditing: Bool = false) -> SearchInputParams {
+                          barState: BarState = .isHidden) -> SearchInputParams {
         return SearchInputParams(params: params,
-                                 isEditing: isEditing)
+                                 barState: barState)
     }
 
 }
