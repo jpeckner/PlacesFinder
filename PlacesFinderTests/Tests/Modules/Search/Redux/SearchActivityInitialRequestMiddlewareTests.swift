@@ -283,7 +283,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches Search.ActivityAction.subsequentRequest with .success...") {
+                                it("dispatches Search.ActivityAction.updateRequestStatus with .success...") {
                                     await expect(mockSearchStore.dispatchedPageAction).toEventually(equal(.success))
                                 }
 
@@ -313,7 +313,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                     performTest()
                                 }
 
-                                it("dispatches Search.ActivityAction.subsequentRequest with .success...") {
+                                it("dispatches Search.ActivityAction.updateRequestStatus with .success...") {
                                     await expect(mockSearchStore.dispatchedPageAction).toEventually(equal(.success))
                                 }
 

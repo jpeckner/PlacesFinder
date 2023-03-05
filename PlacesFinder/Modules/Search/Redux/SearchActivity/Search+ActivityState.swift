@@ -47,6 +47,7 @@ extension Search {
         case pagesReceived(
             SearchParams,
             pageState: SearchPageState,
+            numPagesReceived: Int,
             allEntities: NonEmptyArray<SearchEntityModel>,
             nextRequestToken: PlaceLookupTokenAttemptsContainer?
         )
@@ -70,13 +71,14 @@ extension Search.ActivityState {
     init() {
         self.loadState = .idle
         self.inputParams = SearchInputParams(params: nil,
-                                             isEditing: false)
+                                             isEditing: false,
+                                             isSearchInputVisible: true)
         self.detailedEntity = nil
     }
 
     var entities: NonEmptyArray<SearchEntityModel>? {
         switch loadState {
-        case let .pagesReceived(_, _, allEntities, _):
+        case let .pagesReceived(_, _, _, allEntities, _):
             return allEntities
         case .idle,
              .locationRequested,
@@ -96,7 +98,7 @@ private extension Search.ActivityState {
         case let .locationRequested(params),
              let .initialPageRequested(params),
              let .noResultsFound(params),
-             let .pagesReceived(params, _, _, _),
+             let .pagesReceived(params, _, _, _, _),
              let .failure(params, _):
             return params
         case .idle:
@@ -106,7 +108,7 @@ private extension Search.ActivityState {
 
     var pageState: SearchPageState? {
         switch loadState {
-        case let .pagesReceived(_, pageState, _, _):
+        case let .pagesReceived(_, pageState, _, _, _):
             return pageState
         case .idle,
              .locationRequested,
@@ -134,7 +136,8 @@ extension Search {
                 return Search.ActivityState(
                     loadState: .locationRequested(submittedParams),
                     inputParams: SearchInputParams(params: submittedParams,
-                                                   isEditing: false),
+                                                   isEditing: false,
+                                                   isSearchInputVisible: true),
                     detailedEntity: nil
                 )
             case let .initialPageRequested(submittedParams):
@@ -151,17 +154,30 @@ extension Search {
                 )
             case .startSubsequentRequest:
                 return currentState
-            case let .subsequentRequest(submittedParams, pageAction, allEntities, nextRequestToken):
+            case let .updateRequestStatus(submittedParams,
+                                          pageAction,
+                                          numPagesReceived,
+                                          allEntities,
+                                          nextRequestToken):
                 let newPageState = SearchPageReducer.reduce(action: pageAction,
                                                             currentState: currentState.pageState)
                 let loadState: Search.LoadState = .pagesReceived(submittedParams,
                                                                  pageState: newPageState,
+                                                                 numPagesReceived: numPagesReceived,
                                                                  allEntities: allEntities,
                                                                  nextRequestToken: nextRequestToken)
+                let inputParams = numPagesReceived == 1 ?
+                    SearchInputParams(params: currentState.inputParams.params,
+                                      isEditing: false,
+                                      isSearchInputVisible: true)
+                    :
+                    SearchInputParams(params: currentState.inputParams.params,
+                                      isEditing: false,
+                                      isSearchInputVisible: false)
 
                 return Search.ActivityState(
                     loadState: loadState,
-                    inputParams: currentState.inputParams,
+                    inputParams: inputParams,
                     detailedEntity: currentState.detailedEntity
                 )
             case let .failure(submittedParams, searchError):
@@ -173,7 +189,8 @@ extension Search {
             case let .updateInputEditing(action):
                 return Search.ActivityState(
                     loadState: currentState.loadState,
-                    inputParams: buildInputParams(currentState, action: action),
+                    inputParams: buildEditingInputParams(currentState: currentState,
+                                                         action: action),
                     detailedEntity: currentState.detailedEntity
                 )
             case let .detailedEntity(entity):
@@ -191,18 +208,21 @@ extension Search {
             }
         }
 
-        private static func buildInputParams(_ currentState: Search.ActivityState,
-                                             action: SearchBarEditEvent) -> SearchInputParams {
+        private static func buildEditingInputParams(currentState: Search.ActivityState,
+                                                    action: SearchBarEditEvent) -> SearchInputParams {
             switch action {
             case .beganEditing:
                 return SearchInputParams(params: currentState.inputParams.params,
-                                         isEditing: true)
+                                         isEditing: true,
+                                         isSearchInputVisible: true)
             case .clearedInput:
                 return SearchInputParams(params: nil,
-                                         isEditing: true)
+                                         isEditing: true,
+                                         isSearchInputVisible: true)
             case .endedEditing:
                 return SearchInputParams(params: currentState.submittedParams,
-                                         isEditing: false)
+                                         isEditing: false,
+                                         isSearchInputVisible: false)
             }
         }
 

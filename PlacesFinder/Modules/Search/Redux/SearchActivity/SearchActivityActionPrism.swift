@@ -38,6 +38,7 @@ protocol SearchInitialActionPrismProtocol {
 protocol SearchSubsequentActionPrismProtocol {
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
+                                 numPagesReceived: Int,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction
 }
 
@@ -84,6 +85,7 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
     func subsequentRequestAction(_ searchParams: SearchParams,
                                  allEntities: NonEmptyArray<SearchEntityModel>,
+                                 numPagesReceived: Int,
                                  tokenContainer: PlaceLookupTokenAttemptsContainer) throws -> Search.ActivityAction {
         let incrementedAttemptsCount = tokenContainer.numAttemptsSoFar + 1
         guard incrementedAttemptsCount <= tokenContainer.maxAttempts else {
@@ -96,6 +98,7 @@ extension SearchActivityActionPrism: SearchSubsequentActionPrismProtocol {
 
         return .startSubsequentRequest(dependencies: IgnoredEquatable(dependencies),
                                        searchParams: searchParams,
+                                       numPagesReceived: numPagesReceived,
                                        previousResults: allEntities,
                                        tokenContainer: updatedTokenContainer)
     }

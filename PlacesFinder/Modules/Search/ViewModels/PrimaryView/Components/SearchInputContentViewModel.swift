@@ -28,6 +28,7 @@ import Shared
 struct SearchInputContentViewModel: Equatable {
     let keywords: NonEmptyString?
     let isEditing: Bool
+    let isSearchInputVisible: Bool
     let placeholder: String
 }
 
@@ -37,6 +38,7 @@ struct SearchInputContentViewModel: Equatable {
 protocol SearchInputContentViewModelBuilderProtocol {
     func buildViewModel(keywords: NonEmptyString?,
                         isEditing: Bool,
+                        isSearchInputVisible: Bool,
                         copyContent: SearchInputCopyContent) -> SearchInputContentViewModel
 }
 
@@ -44,9 +46,11 @@ class SearchInputContentViewModelBuilder: SearchInputContentViewModelBuilderProt
 
     func buildViewModel(keywords: NonEmptyString?,
                         isEditing: Bool,
+                        isSearchInputVisible: Bool,
                         copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
         return SearchInputContentViewModel(keywords: keywords,
                                            isEditing: isEditing,
+                                           isSearchInputVisible: isSearchInputVisible,
                                            placeholder: copyContent.placeholder)
     }
 

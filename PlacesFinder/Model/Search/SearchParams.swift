@@ -32,4 +32,5 @@ struct SearchParams: Equatable {
 struct SearchInputParams: Equatable {
     let params: SearchParams?
     let isEditing: Bool
+    let isSearchInputVisible: Bool
 }

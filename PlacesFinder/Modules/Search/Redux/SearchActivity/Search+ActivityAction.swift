@@ -40,6 +40,14 @@ extension Search {
             locationUpdateRequestBlock: IgnoredEquatable<LocationUpdateRequestBlock>
         )
 
+        case startSubsequentRequest(
+            dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
+            searchParams: SearchParams,
+            numPagesReceived: Int,
+            previousResults: NonEmptyArray<SearchEntityModel>,
+            tokenContainer: PlaceLookupTokenAttemptsContainer
+        )
+
         // Load state
         case locationRequested(SearchParams)
 
@@ -47,16 +55,10 @@ extension Search {
 
         case noResultsFound(SearchParams)
 
-        case startSubsequentRequest(
-            dependencies: IgnoredEquatable<ActivityActionCreatorDependencies>,
-            searchParams: SearchParams,
-            previousResults: NonEmptyArray<SearchEntityModel>,
-            tokenContainer: PlaceLookupTokenAttemptsContainer
-        )
-
-        case subsequentRequest(
+        case updateRequestStatus(
             searchParams: SearchParams,
             pageAction: IntermediateStepLoadAction<Search.PageRequestError>,
+            numPagesReceived: Int,
             allEntities: NonEmptyArray<SearchEntityModel>,
             nextRequestToken: PlaceLookupTokenAttemptsContainer?
         )
@@ -193,9 +195,10 @@ extension Search {
             return
         }
 
-        dispatch(.searchActivity(.subsequentRequest(
+        dispatch(.searchActivity(.updateRequestStatus(
             searchParams: searchParams,
             pageAction: .success,
+            numPagesReceived: 1,
             allEntities: allEntities,
             nextRequestToken: tokenContainer(for: lookupResponse)
         )))
@@ -219,6 +222,7 @@ extension Search {
                     guard case let .searchActivity(.startSubsequentRequest(
                         dependencies,
                         searchParams,
+                        numPagesReceived,
                         previousResults,
                         tokenContainer
                     )) = action
@@ -227,9 +231,10 @@ extension Search {
                         return
                     }
 
-                    dispatch(.searchActivity(.subsequentRequest(
+                    dispatch(.searchActivity(.updateRequestStatus(
                         searchParams: searchParams,
                         pageAction: .inProgress,
+                        numPagesReceived: numPagesReceived,
                         allEntities: previousResults,
                         nextRequestToken: nil
                     )))
@@ -245,11 +250,13 @@ extension Search {
                                                           lookupResponse: lookupResponse,
                                                           dependencies: dependencies.value,
                                                           searchParams: searchParams,
+                                                          numPagesReceived: numPagesReceived,
                                                           dispatch: dispatch)
                         case let .failure(error):
                             dispatchSubsequentPageError(previousResults,
                                                         lastRequestTokenContainer: tokenContainer,
                                                         searchParams: searchParams,
+                                                        numPagesReceived: numPagesReceived,
                                                         placeLookupServiceError: error,
                                                         dispatch: dispatch)
                         }
@@ -263,12 +270,14 @@ extension Search {
                                                       lookupResponse: PlaceLookupResponse,
                                                       dependencies: Search.ActivityActionCreatorDependencies,
                                                       searchParams: SearchParams,
+                                                      numPagesReceived: Int,
                                                       dispatch: @escaping DispatchFunction<Search.Action>) {
         let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
 
-        dispatch(.searchActivity(.subsequentRequest(
+        dispatch(.searchActivity(.updateRequestStatus(
             searchParams: searchParams,
             pageAction: .success,
+            numPagesReceived: numPagesReceived + 1,
             allEntities: previousResults.appendedWith(entityModels),
             nextRequestToken: tokenContainer(for: lookupResponse)
         )))
@@ -277,6 +286,7 @@ extension Search {
     private static func dispatchSubsequentPageError(_ previousResults: NonEmptyArray<SearchEntityModel>,
                                                     lastRequestTokenContainer: PlaceLookupTokenAttemptsContainer,
                                                     searchParams: SearchParams,
+                                                    numPagesReceived: Int,
                                                     placeLookupServiceError: PlaceLookupServiceError,
                                                     dispatch: @escaping DispatchFunction<Search.Action>) {
         let underlyingError = IgnoredEquatable<Error>(placeLookupServiceError)
@@ -287,9 +297,10 @@ extension Search {
             .cannotRetryRequest(underlyingError: underlyingError)
         let nextRequestToken = isRequestRetriable ? lastRequestTokenContainer : nil
 
-        dispatch(.searchActivity(.subsequentRequest(
+        dispatch(.searchActivity(.updateRequestStatus(
             searchParams: searchParams,
             pageAction: .failure(pageError),
+            numPagesReceived: numPagesReceived,
             allEntities: previousResults,
             nextRequestToken: nextRequestToken
         )))

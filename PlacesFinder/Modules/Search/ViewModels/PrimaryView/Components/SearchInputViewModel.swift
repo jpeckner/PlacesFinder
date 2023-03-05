@@ -81,7 +81,7 @@ extension SearchInputDispatcher {
 // sourcery: AutoMockable
 protocol SearchInputViewModelBuilderProtocol {
     func buildDispatchingViewModel(
-        _ inputParams: SearchInputParams,
+        inputParams: SearchInputParams,
         copyContent: SearchInputCopyContent,
         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
     ) -> SearchInputViewModel
@@ -102,13 +102,16 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
     }
 
     func buildDispatchingViewModel(
-        _ inputParams: SearchInputParams,
+        inputParams: SearchInputParams,
         copyContent: SearchInputCopyContent,
         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
     ) -> SearchInputViewModel {
-        let contentViewModel = contentViewModelBuilder.buildViewModel(keywords: inputParams.params?.keywords,
-                                                                      isEditing: inputParams.isEditing,
-                                                                      copyContent: copyContent)
+        let contentViewModel = contentViewModelBuilder.buildViewModel(
+            keywords: inputParams.params?.keywords,
+            isEditing: inputParams.isEditing,
+            isSearchInputVisible: inputParams.isSearchInputVisible,
+            copyContent: copyContent
+        )
 
         let dispatcher = SearchInputDispatcher(actionSubscriber: actionSubscriber,
                                                actionPrism: actionPrism,

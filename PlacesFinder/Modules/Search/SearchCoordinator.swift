@@ -154,7 +154,7 @@ private extension SearchCoordinator {
 
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let viewModel = lookupViewModelBuilder.buildViewModel(
-                    searchState.searchActivityState,
+                    searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
