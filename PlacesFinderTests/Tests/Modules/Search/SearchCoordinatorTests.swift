@@ -69,7 +69,7 @@ class SearchCoordinatorTests: QuickSpec {
             mockSearchPresenter.rootViewController = stubNavController
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
+            mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
 
             mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
             mockSearchBackgroundViewModelBuilder.buildViewModelAppCopyContentReturnValue = SearchBackgroundViewModel.stubValue()
@@ -77,7 +77,7 @@ class SearchCoordinatorTests: QuickSpec {
             let lookupViewModel = SearchLookupViewModel(searchInputViewModel: .nonDispatching(content: .stubValue()),
                                                         child: .progress)
             mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
-            mockSearchLookupViewModelBuilder.buildViewModelAppCopyContentLocationUpdateRequestBlockReturnValue = lookupViewModel
+            mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentLocationUpdateRequestBlockReturnValue = lookupViewModel
 
             mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
@@ -377,7 +377,7 @@ class SearchCoordinatorTests: QuickSpec {
                         }
 
                         it("calls actionCreator.requestInitialPage(:params)") {
-                            await expect(mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockCalled).toEventually(beTrue())
+                            await expect(mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockCalled).toEventually(beTrue())
                         }
 
                         it("dispatches the action returned by actionCreator.requestInitialPage(:params)") {

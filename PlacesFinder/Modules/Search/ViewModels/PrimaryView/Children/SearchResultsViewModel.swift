@@ -94,6 +94,7 @@ protocol SearchResultsViewModelBuilderProtocol {
     // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
+                        numPagesReceived: Int,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
                         actionSubscriber: AnySubscriber<Search.Action, Never>,
@@ -114,6 +115,7 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
     // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
+                        numPagesReceived: Int,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
                         actionSubscriber: AnySubscriber<Search.Action, Never>,
@@ -123,12 +125,13 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
                                                   resultsCopyContent: resultsCopyContent)
         }
 
-        let refreshAction = actionPrism.initialRequestAction(submittedParams,
+        let refreshAction = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                              locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         let nextRequestAction = tokenContainer.flatMap {
-            try? actionPrism.subsequentRequestAction(submittedParams,
+            try? actionPrism.subsequentRequestAction(searchParams: submittedParams,
                                                      allEntities: allEntities,
+                                                     numPagesReceived: numPagesReceived,
                                                      tokenContainer: $0)
         }
 

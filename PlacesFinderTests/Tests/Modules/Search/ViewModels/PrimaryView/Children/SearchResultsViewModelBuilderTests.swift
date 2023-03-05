@@ -85,14 +85,17 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
             stubSubsequentRequestAction = .startSubsequentRequest(
                 dependencies: IgnoredEquatable(mockDependencies),
-                searchParams: stubSearchParams,
-                previousResults: stubPreviousResults,
-                tokenContainer: stubTokenContainer
+                params: Search.ActivityAction.StartSubsequentRequestParams(
+                    searchParams: stubSearchParams,
+                    numPagesReceived: 1,
+                    previousResults: stubPreviousResults,
+                    tokenContainer: stubTokenContainer
+                )
             )
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-            mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
-            mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReturnValue = stubSubsequentRequestAction
+            mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
+            mockSearchActivityActionPrism.subsequentRequestActionSearchParamsAllEntitiesNumPagesReceivedTokenContainerReturnValue = stubSubsequentRequestAction
 
             sut = SearchResultsViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
                                                 resultViewModelBuilder: mockResultViewModelBuilder)
@@ -107,6 +110,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 locationBlockCalled = false
                 result = sut.buildViewModel(submittedParams: stubSearchParams,
                                             allEntities: stubEntities,
+                                            numPagesReceived: 1,
                                             tokenContainer: stubTokenContainer,
                                             resultsCopyContent: stubCopyContent,
                                             actionSubscriber: AnySubscriber(mockActionSubscriber)) {
@@ -116,7 +120,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockSearchActivityActionPrism to build refreshAction") {
-                let initialRequestReceivedArgs = mockSearchActivityActionPrism.initialRequestActionLocationUpdateRequestBlockReceivedArguments
+                let initialRequestReceivedArgs = mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments
                 expect(initialRequestReceivedArgs?.searchParams) == stubSearchParams
 
                 expect(locationBlockCalled) == false
@@ -125,7 +129,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockSearchActivityActionPrism to build nextRequestAction") {
-                let initialRequestReceivedArgs = mockSearchActivityActionPrism.subsequentRequestActionAllEntitiesTokenContainerReceivedArguments
+                let initialRequestReceivedArgs = mockSearchActivityActionPrism.subsequentRequestActionSearchParamsAllEntitiesNumPagesReceivedTokenContainerReceivedArguments
                 expect(initialRequestReceivedArgs?.searchParams) == stubSearchParams
                 expect(initialRequestReceivedArgs?.allEntities) == stubEntities
                 expect(initialRequestReceivedArgs?.tokenContainer) == stubTokenContainer

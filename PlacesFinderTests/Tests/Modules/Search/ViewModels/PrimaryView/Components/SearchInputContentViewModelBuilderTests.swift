@@ -45,13 +45,13 @@ class SearchInputContentViewModelBuilderTests: QuickSpec {
             beforeEach {
                 let copyContent = SearchInputCopyContent.stubValue()
                 result = sut.buildViewModel(keywords: stubKeywords,
-                                            isEditing: false,
+                                            barState: .isShowing(isEditing: false),
                                             copyContent: copyContent)
             }
 
             it("returns its expected value") {
                 expect(result) == SearchInputContentViewModel(keywords: stubKeywords,
-                                                              isEditing: false,
+                                                              barState: .isShowing(isEditing: false),
                                                               placeholder: "stubPlaceholder")
             }
         }

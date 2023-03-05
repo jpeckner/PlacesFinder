@@ -53,7 +53,7 @@ class SearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
                         appCopyContent: AppCopyContent) -> SearchBackgroundViewModel {
         let contentViewModel = contentViewModelBuilder.buildViewModel(
             keywords: keywords,
-            isEditing: false,
+            barState: .isShowing(isEditing: false),
             copyContent: appCopyContent.searchInput
         )
 

@@ -61,7 +61,7 @@ class SearchActivityActionPrismTests: QuickSpec {
         describe("initialRequestAction()") {
 
             beforeEach {
-                result = prism.initialRequestAction(stubSearchParams) {
+                result = prism.initialRequestAction(searchParams: stubSearchParams) {
                     .success(.stubValue())
                 }
             }
@@ -87,8 +87,9 @@ class SearchActivityActionPrismTests: QuickSpec {
                                                                        maxAttempts: maxAttempts,
                                                                        numAttemptsSoFar: numAttemptsSoFar)
                 errorThrown = errorThrownBy {
-                    result = try prism.subsequentRequestAction(stubSearchParams,
+                    result = try prism.subsequentRequestAction(searchParams: stubSearchParams,
                                                                allEntities: stubEntities,
+                                                               numPagesReceived: 1,
                                                                tokenContainer: tokenContainer)
                 }
             }
@@ -122,10 +123,15 @@ class SearchActivityActionPrismTests: QuickSpec {
                 }
 
                 it("returns Search.ActivityAction.startSubsequentRequest() with the args for the next page request") {
-                    expect(result) == .startSubsequentRequest(dependencies: IgnoredEquatable(mockDependencies),
-                                                              searchParams: stubSearchParams,
-                                                              previousResults: stubEntities,
-                                                              tokenContainer: expectedTokenContainer)
+                    expect(result) == .startSubsequentRequest(
+                        dependencies: IgnoredEquatable(mockDependencies),
+                        params: .stubValue(
+                            searchParams: stubSearchParams,
+                            numPagesReceived: 1,
+                            previousResults: stubEntities,
+                            tokenContainer: expectedTokenContainer
+                        )
+                    )
                 }
 
             }

@@ -78,10 +78,11 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         case .locationRequested,
              .initialPageRequested:
             return .progress
-        case let .pagesReceived(submittedParams, _, allEntities, tokenContainer):
+        case let .pagesReceived(submittedParams, _, numPagesReceived, allEntities, tokenContainer):
             return .results(resultsViewModelBuilder.buildViewModel(
                 submittedParams: submittedParams,
                 allEntities: allEntities,
+                numPagesReceived: numPagesReceived,
                 tokenContainer: tokenContainer,
                 resultsCopyContent: appCopyContent.searchResults,
                 actionSubscriber: actionSubscriber,
@@ -94,7 +95,7 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
             return .failure(retryViewModelBuilder.buildViewModel(appCopyContent.searchRetry) {
-                let action = actionPrism.initialRequestAction(submittedParams,
+                let action = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 _ = actionSubscriber.receive(.searchActivity(action))
             })

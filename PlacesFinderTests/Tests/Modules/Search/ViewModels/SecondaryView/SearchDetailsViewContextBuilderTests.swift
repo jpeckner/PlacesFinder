@@ -91,8 +91,9 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
                     SearchEntityModel.stubValue(id: "stubID_2"),
                 ])
                 let stubSearchActivityState = Search.ActivityState(
-                    loadState: .pagesReceived(.stubValue(),
+                    loadState: .pagesReceived(params: .stubValue(),
                                               pageState: .success,
+                                              numPagesReceived: 1,
                                               allEntities: stubEntities,
                                               nextRequestToken: nil),
                     inputParams: .stubValue(),

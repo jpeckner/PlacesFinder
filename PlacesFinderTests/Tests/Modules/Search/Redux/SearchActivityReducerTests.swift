@@ -39,10 +39,18 @@ class SearchActivityReducerTests: QuickSpec {
             let stubParams = PlaceLookupParams.stubValue()
             let stubSearchParams = SearchParams(keywords: stubParams.keywords)
             let stubSearchInputParams = SearchInputParams(params: stubSearchParams,
-                                                          isEditing: false)
+                                                          barState: .isShowing(isEditing: false))
+
             let stubDetailsViewModel = SearchEntityModel.stubValue()
             let stubEntities = NonEmptyArray(with: SearchEntityModel.stubValue())
             let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
+
+            let stubUpdateRequestParams = Search.ActivityAction.UpdateRequestStatusParams(
+                searchParams: stubSearchParams,
+                numPagesReceived: 1,
+                allEntities: stubEntities,
+                nextRequestToken: stubTokenContainer
+            )
 
             var result: Search.ActivityState!
 
@@ -50,7 +58,7 @@ class SearchActivityReducerTests: QuickSpec {
                 let currentState = Search.ActivityState(
                     loadState: .idle,
                     inputParams: SearchInputParams(params: stubSearchParams,
-                                                   isEditing: true),
+                                                   barState: .isShowing(isEditing: true)),
                     detailedEntity: stubDetailsViewModel
                 )
 
@@ -116,13 +124,14 @@ class SearchActivityReducerTests: QuickSpec {
                 }
             }
 
-            context("else when the action is Search.ActivityAction.subsequentRequest") {
+            context("else when the action is Search.ActivityAction.updateRequestStatus") {
 
                 func verifyResult(expectedPageState: SearchPageState,
                                   expectedEntities: NonEmptyArray<SearchEntityModel>,
                                   expectedToken: PlaceLookupTokenAttemptsContainer) {
-                    expect(result.loadState) == .pagesReceived(stubSearchParams,
+                    expect(result.loadState) == .pagesReceived(params: stubSearchParams,
                                                                pageState: expectedPageState,
+                                                               numPagesReceived: 1,
                                                                allEntities: expectedEntities,
                                                                nextRequestToken: expectedToken)
 
@@ -137,11 +146,9 @@ class SearchActivityReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        let action = Search.ActivityAction.subsequentRequest(
-                            searchParams: stubSearchParams,
-                            pageAction: .success,
-                            allEntities: stubEntities,
-                            nextRequestToken: stubTokenContainer
+                        let action = Search.ActivityAction.updateRequestStatus(
+                            params: stubUpdateRequestParams,
+                            pageAction: .success
                         )
                         result = Search.ActivityReducer.reduce(action: action,
                                                                currentState: currentState)
@@ -156,8 +163,9 @@ class SearchActivityReducerTests: QuickSpec {
 
                 context("else and the pageAction is .inProgress") {
                     let currentLoadState = Search.LoadState.pagesReceived(
-                        stubSearchParams,
+                        params: stubSearchParams,
                         pageState: .success,
+                        numPagesReceived: 1,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
                     )
@@ -168,11 +176,9 @@ class SearchActivityReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        let action = Search.ActivityAction.subsequentRequest(
-                            searchParams: stubSearchParams,
-                            pageAction: .inProgress,
-                            allEntities: stubEntities,
-                            nextRequestToken: stubTokenContainer
+                        let action = Search.ActivityAction.updateRequestStatus(
+                            params: stubUpdateRequestParams,
+                            pageAction: .inProgress
                         )
                         result = Search.ActivityReducer.reduce(action: action,
                                                                currentState: currentState)
@@ -187,8 +193,9 @@ class SearchActivityReducerTests: QuickSpec {
 
                 context("and the pageAction is .success") {
                     let currentLoadState = Search.LoadState.pagesReceived(
-                        stubSearchParams,
+                        params: stubSearchParams,
                         pageState: .success,
+                        numPagesReceived: 1,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
                     )
@@ -199,11 +206,9 @@ class SearchActivityReducerTests: QuickSpec {
                     )
 
                     beforeEach {
-                        let action = Search.ActivityAction.subsequentRequest(
-                            searchParams: stubSearchParams,
-                            pageAction: .success,
-                            allEntities: stubEntities,
-                            nextRequestToken: stubTokenContainer
+                        let action = Search.ActivityAction.updateRequestStatus(
+                            params: stubUpdateRequestParams,
+                            pageAction: .success
                         )
                         result = Search.ActivityReducer.reduce(action: action,
                                                                currentState: currentState)
@@ -218,8 +223,9 @@ class SearchActivityReducerTests: QuickSpec {
 
                 context("and the pageAction is .failure") {
                     let currentLoadState = Search.LoadState.pagesReceived(
-                        stubSearchParams,
+                        params: stubSearchParams,
                         pageState: .success,
+                        numPagesReceived: 1,
                         allEntities: stubEntities,
                         nextRequestToken: stubTokenContainer
                     )
@@ -232,11 +238,9 @@ class SearchActivityReducerTests: QuickSpec {
                     let pageError = Search.PageRequestError.cannotRetryRequest(underlyingError: underlyingError)
 
                     beforeEach {
-                        let action = Search.ActivityAction.subsequentRequest(
-                            searchParams: stubSearchParams,
-                            pageAction: .failure(pageError),
-                            allEntities: stubEntities,
-                            nextRequestToken: stubTokenContainer
+                        let action = Search.ActivityAction.updateRequestStatus(
+                            params: stubUpdateRequestParams,
+                            pageAction: .failure(pageError)
                         )
                         result = Search.ActivityReducer.reduce(action: action,
                                                                currentState: currentState)
@@ -283,7 +287,7 @@ class SearchActivityReducerTests: QuickSpec {
                 context("and the editEvent is .beganEditing") {
 
                     let currentInputParams = SearchInputParams(params: stubSearchParams,
-                                                               isEditing: false)
+                                                               barState: .isShowing(isEditing: false))
                     let currentState = Search.ActivityState(
                         loadState: .idle,
                         inputParams: currentInputParams,
@@ -301,7 +305,7 @@ class SearchActivityReducerTests: QuickSpec {
                         expect(result) == Search.ActivityState(
                             loadState: .idle,
                             inputParams: SearchInputParams(params: stubSearchParams,
-                                                           isEditing: true),
+                                                           barState: .isShowing(isEditing: true)),
                             detailedEntity: nil
                         )
                     }
@@ -311,7 +315,7 @@ class SearchActivityReducerTests: QuickSpec {
                 context("and the editEvent is .clearedInput") {
 
                     let currentInputParams = SearchInputParams(params: stubSearchParams,
-                                                               isEditing: false)
+                                                               barState: .isShowing(isEditing: false))
                     let currentState = Search.ActivityState(
                         loadState: .idle,
                         inputParams: currentInputParams,
@@ -329,7 +333,7 @@ class SearchActivityReducerTests: QuickSpec {
                         expect(result) == Search.ActivityState(
                             loadState: .idle,
                             inputParams: SearchInputParams(params: nil,
-                                                           isEditing: true),
+                                                           barState: .isShowing(isEditing: true)),
                             detailedEntity: nil
                         )
                     }
@@ -340,7 +344,7 @@ class SearchActivityReducerTests: QuickSpec {
 
                     let currentParams = SearchParams.stubValue(keywords: NonEmptyString.stubValue())
                     let currentInputParams = SearchInputParams(params: currentParams,
-                                                               isEditing: true)
+                                                               barState: .isShowing(isEditing: false))
                     let currentState = Search.ActivityState(
                         loadState: .noResultsFound(stubSearchParams),
                         inputParams: currentInputParams,
@@ -358,7 +362,7 @@ class SearchActivityReducerTests: QuickSpec {
                         expect(result) == Search.ActivityState(
                             loadState: .noResultsFound(stubSearchParams),
                             inputParams: SearchInputParams(params: stubSearchParams,
-                                                           isEditing: false),
+                                                           barState: .isHidden),
                             detailedEntity: nil
                         )
                     }

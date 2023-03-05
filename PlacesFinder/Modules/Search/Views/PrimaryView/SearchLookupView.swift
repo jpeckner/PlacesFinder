@@ -77,14 +77,9 @@ extension SearchLookupView {
 
         searchBarWrapper.configureText(inputViewModel.content.keywords?.value)
         searchBarWrapper.configurePlaceholder(inputViewModel.content.placeholder)
-        searchBarWrapper.isFirstResponder = inputViewModel.content.isEditing
+        searchBarWrapper.isFirstResponder = inputViewModel.content.barState.isEditing
 
-        childContainerView.configureCoverView(inputViewModel.content.isEditing)
-
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
-            AppTextStyleClass.textInput.textLayout.font,
-            forKey: .font
-        )
+        childContainerView.configureCoverView(inputViewModel.content.barState.isEditing)
     }
 
     func setChildView(_ childView: UIView) {

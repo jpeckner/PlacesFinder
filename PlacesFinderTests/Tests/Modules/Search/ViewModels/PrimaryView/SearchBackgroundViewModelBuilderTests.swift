@@ -47,7 +47,7 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
 
         beforeEach {
             mockContentViewModelBuilder = SearchInputContentViewModelBuilderProtocolMock()
-            mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReturnValue = stubContentViewModel
+            mockContentViewModelBuilder.buildViewModelKeywordsBarStateCopyContentReturnValue = stubContentViewModel
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
             mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
@@ -64,9 +64,9 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockContentViewModelBuilder with expected method and args") {
-                let receivedArgs = mockContentViewModelBuilder.buildViewModelKeywordsIsEditingCopyContentReceivedArguments
+                let receivedArgs = mockContentViewModelBuilder.buildViewModelKeywordsBarStateCopyContentReceivedArguments
                 expect(receivedArgs?.keywords) == stubKeywords
-                expect(receivedArgs?.isEditing) == false
+                expect(receivedArgs?.barState) == .isShowing(isEditing: false)
                 expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
             }
 

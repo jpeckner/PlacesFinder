@@ -27,7 +27,7 @@ import Shared
 
 struct SearchInputContentViewModel: Equatable {
     let keywords: NonEmptyString?
-    let isEditing: Bool
+    let barState: SearchInputParams.BarState
     let placeholder: String
 }
 
@@ -36,17 +36,17 @@ struct SearchInputContentViewModel: Equatable {
 // sourcery: AutoMockable
 protocol SearchInputContentViewModelBuilderProtocol {
     func buildViewModel(keywords: NonEmptyString?,
-                        isEditing: Bool,
+                        barState: SearchInputParams.BarState,
                         copyContent: SearchInputCopyContent) -> SearchInputContentViewModel
 }
 
 class SearchInputContentViewModelBuilder: SearchInputContentViewModelBuilderProtocol {
 
     func buildViewModel(keywords: NonEmptyString?,
-                        isEditing: Bool,
+                        barState: SearchInputParams.BarState,
                         copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
         return SearchInputContentViewModel(keywords: keywords,
-                                           isEditing: isEditing,
+                                           barState: barState,
                                            placeholder: copyContent.placeholder)
     }
 

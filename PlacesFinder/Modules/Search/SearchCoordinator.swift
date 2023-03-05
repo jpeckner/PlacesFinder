@@ -154,7 +154,7 @@ private extension SearchCoordinator {
 
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let viewModel = lookupViewModelBuilder.buildViewModel(
-                    searchState.searchActivityState,
+                    searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
@@ -199,7 +199,7 @@ private extension SearchCoordinator {
 
                 searchLinkPayload.map { payload in
                     let params = SearchParams(keywords: payload.keywords)
-                    let action = actionPrism.initialRequestAction(params,
+                    let action = actionPrism.initialRequestAction(searchParams: params,
                                                                   locationUpdateRequestBlock: requestBlock)
                     searchStoreRelay.store.dispatch(.searchActivity(action))
                 }

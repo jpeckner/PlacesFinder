@@ -65,10 +65,14 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
         }
 
         func performTest() {
-            let action = Search.ActivityAction.startSubsequentRequest(dependencies: IgnoredEquatable(mockDependencies),
-                                                                      searchParams: stubSearchParams,
-                                                                      previousResults: stubPreviousResults,
-                                                                      tokenContainer: stubTokenContainer)
+            let action = Search.ActivityAction.startSubsequentRequest(
+                dependencies: IgnoredEquatable(mockDependencies),
+                params: .stubValue(
+                    searchParams: stubSearchParams,
+                    previousResults: stubPreviousResults,
+                    tokenContainer: stubTokenContainer
+                )
+            )
 
             mockStore.dispatch(.searchActivity(action))
         }
@@ -83,7 +87,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                     performTest()
                 }
 
-                it("dispatches Search.ActivityAction.subsequentRequest with .inProgress") {
+                it("dispatches Search.ActivityAction.updateRequestStatus with .inProgress") {
                     expect(mockStore.dispatchedPageAction) == .inProgress
                 }
 
@@ -123,7 +127,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             performTest()
                         }
 
-                        it("dispatches .subsequentRequest(.failure), with an error of .cannotRetryRequest") {
+                        it("dispatches .updateRequestStatus(.failure), with an error of .cannotRetryRequest") {
                             await expect(mockStore.dispatchedPageAction).toEventually(equal(.failure(
                                 .cannotRetryRequest(underlyingError: IgnoredEquatable(stubUnderlyingError))
                             )))
@@ -155,7 +159,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             performTest()
                         }
 
-                        it("dispatches .subsequentRequest(.failure), with an error of .canRetryRequest") {
+                        it("dispatches .updateRequestStatus(.failure), with an error of .canRetryRequest") {
                             await expect(mockStore.dispatchedPageAction).toEventually(equal(.failure(.canRetryRequest(
                                 underlyingError: IgnoredEquatable(stubUnderlyingError)
                             ))))
@@ -186,7 +190,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             performTest()
                         }
 
-                        it("dispatches Search.ActivityAction.subsequentRequest with .success") {
+                        it("dispatches Search.ActivityAction.updateRequestStatus with .success") {
                             await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                         }
 
@@ -227,7 +231,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches Search.ActivityAction.subsequentRequest with .success") {
+                            it("dispatches Search.ActivityAction.updateRequestStatus with .success") {
                                 await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                             }
 
@@ -257,7 +261,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                                 performTest()
                             }
 
-                            it("dispatches Search.ActivityAction.subsequentRequest .success") {
+                            it("dispatches Search.ActivityAction.updateRequestStatus .success") {
                                 await expect(mockStore.dispatchedPageAction).toEventually(equal(.success))
                             }
 
