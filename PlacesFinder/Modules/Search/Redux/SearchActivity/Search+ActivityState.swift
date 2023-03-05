@@ -70,9 +70,10 @@ extension Search.ActivityState {
 
     init() {
         self.loadState = .idle
-        self.inputParams = SearchInputParams(params: nil,
-                                             isEditing: false,
-                                             isSearchInputVisible: true)
+        self.inputParams = SearchInputParams(
+            params: nil,
+            barState: .isShowing(isEditing: false)
+        )
         self.detailedEntity = nil
     }
 
@@ -135,9 +136,10 @@ extension Search {
             case let .locationRequested(submittedParams):
                 return Search.ActivityState(
                     loadState: .locationRequested(submittedParams),
-                    inputParams: SearchInputParams(params: submittedParams,
-                                                   isEditing: false,
-                                                   isSearchInputVisible: true),
+                    inputParams: SearchInputParams(
+                        params: submittedParams,
+                        barState: .isShowing(isEditing: false)
+                    ),
                     detailedEntity: nil
                 )
             case let .initialPageRequested(submittedParams):
@@ -163,13 +165,15 @@ extension Search {
                                                                  allEntities: params.allEntities,
                                                                  nextRequestToken: params.nextRequestToken)
                 let inputParams = params.numPagesReceived == 1 ?
-                    SearchInputParams(params: currentState.inputParams.params,
-                                      isEditing: false,
-                                      isSearchInputVisible: true)
+                    SearchInputParams(
+                        params: currentState.inputParams.params,
+                        barState: .isShowing(isEditing: false)
+                    )
                     :
-                    SearchInputParams(params: currentState.inputParams.params,
-                                      isEditing: false,
-                                      isSearchInputVisible: false)
+                    SearchInputParams(
+                        params: currentState.inputParams.params,
+                        barState: .isHidden
+                    )
 
                 return Search.ActivityState(
                     loadState: loadState,
@@ -208,17 +212,20 @@ extension Search {
                                                     action: SearchBarEditEvent) -> SearchInputParams {
             switch action {
             case .beganEditing:
-                return SearchInputParams(params: currentState.inputParams.params,
-                                         isEditing: true,
-                                         isSearchInputVisible: true)
+                return SearchInputParams(
+                    params: currentState.inputParams.params,
+                    barState: .isShowing(isEditing: true)
+                )
             case .clearedInput:
-                return SearchInputParams(params: nil,
-                                         isEditing: true,
-                                         isSearchInputVisible: true)
+                return SearchInputParams(
+                    params: nil,
+                    barState: .isShowing(isEditing: true)
+                )
             case .endedEditing:
-                return SearchInputParams(params: currentState.submittedParams,
-                                         isEditing: false,
-                                         isSearchInputVisible: false)
+                return SearchInputParams(
+                    params: currentState.submittedParams,
+                    barState: .isHidden
+                )
             }
         }
 

@@ -66,10 +66,9 @@ extension SearchLookupParentController {
     }
 
     private func configureLookupView(_ viewModel: SearchInputViewModel) {
-        searchBarHeightConstraint.constant =
-            viewModel.content.isSearchInputVisible ?
-                searchBarFullHeight
-                : searchBarHeightConstraint.constant
+        searchBarHeightConstraint.constant = viewModel.content.barState.isSearchInputVisible ?
+            searchBarFullHeight
+            : searchBarHeightConstraint.constant
 
         lookupView.configure(viewModel)
     }

@@ -108,8 +108,7 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
     ) -> SearchInputViewModel {
         let contentViewModel = contentViewModelBuilder.buildViewModel(
             keywords: inputParams.params?.keywords,
-            isEditing: inputParams.isEditing,
-            isSearchInputVisible: inputParams.isSearchInputVisible,
+            barState: inputParams.barState,
             copyContent: copyContent
         )
 

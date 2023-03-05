@@ -30,7 +30,35 @@ struct SearchParams: Equatable {
 }
 
 struct SearchInputParams: Equatable {
+    enum BarState: Equatable {
+        case isShowing(isEditing: Bool)
+        case isHidden
+    }
+
     let params: SearchParams?
-    let isEditing: Bool
-    let isSearchInputVisible: Bool
+    let barState: BarState
+}
+
+extension SearchInputParams.BarState {
+
+    var isEditing: Bool {
+        switch self {
+        case let .isShowing(isEditing):
+            return isEditing
+
+        case .isHidden:
+            return false
+        }
+    }
+
+    var isSearchInputVisible: Bool {
+        switch self {
+        case .isShowing:
+            return true
+
+        case .isHidden:
+            return false
+        }
+    }
+
 }
