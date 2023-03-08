@@ -69,7 +69,7 @@ class AppCoordinatorTests: QuickSpec {
 
         var coordinator: AppCoordinator<TFactoryType>!
 
-        func initCoordinator(launchStatePrism: LaunchStatePrismProtocol) {
+        @MainActor func initCoordinator(launchStatePrism: LaunchStatePrismProtocol) {
             mockMainWindow = UIWindowProtocolMock()
             mockStore = MockAppStore()
             mockChildFactory = AppCoordinatorChildFactoryProtocolMock()
@@ -98,7 +98,7 @@ class AppCoordinatorTests: QuickSpec {
             mockLaunchStatePrism = LaunchStatePrismProtocolMock()
             mockLaunchStatePrism.underlyingLaunchKeyPaths = []
 
-            initCoordinator(launchStatePrism: mockLaunchStatePrism)
+            await initCoordinator(launchStatePrism: mockLaunchStatePrism)
         }
 
         func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
@@ -129,8 +129,8 @@ class AppCoordinatorTests: QuickSpec {
 
             beforeEach {
                 let launchStatePrism = LaunchStatePrism()
-                initCoordinator(launchStatePrism: launchStatePrism)
-                coordinator.start()
+                await initCoordinator(launchStatePrism: launchStatePrism)
+                await coordinator.start()
             }
 
             it("activates the coordinator returned by mockChildFactory.buildLaunchCoordinator()") {
@@ -157,9 +157,11 @@ class AppCoordinatorTests: QuickSpec {
                 for destinationDescendent in AppCoordinatorDestinationDescendent.allCases {
                     context("when createSubtree() is called to route towards \(destinationDescendent)") {
                         beforeEach {
-                            coordinator.createSubtree(from: AppCoordinatorNode.nodeBox,
-                                                      towards: destinationDescendent,
-                                                      state: AppState.stubValue())
+                            await coordinator.createSubtree(
+                                from: AppCoordinatorNode.nodeBox,
+                                towards: destinationDescendent,
+                                state: AppState.stubValue()
+                            )
 
                             try! await Task.sleep(nanoseconds: 100_000_000)
                         }
@@ -180,9 +182,11 @@ class AppCoordinatorTests: QuickSpec {
                     for destinationDescendent in AppCoordinatorDestinationDescendent.allCases {
                         context("when switchSubtree() switches from \(descendent) to \(destinationDescendent)") {
                             beforeEach {
-                                coordinator.switchSubtree(from: descendent,
-                                                          towards: destinationDescendent,
-                                                          state: AppState.stubValue())
+                                await coordinator.switchSubtree(
+                                    from: descendent,
+                                    towards: destinationDescendent,
+                                    state: AppState.stubValue()
+                                )
 
                                 try! await Task.sleep(nanoseconds: 100_000_000)
                             }
@@ -208,20 +212,28 @@ class AppCoordinatorTests: QuickSpec {
 
             describe("handleURL()") {
 
-                var result: Bool!
+                var resultStorage: AsyncStorage<Bool>!
 
                 context("when payloadBuilder.buildPayload() returns nil") {
                     var verificationBlock: NoDispatchVerificationBlock!
 
                     beforeEach {
+                        let constCoordinator = coordinator
+
                         mockPayloadBuilder.buildPayloadReturnValue = nil
+                        let storage = AsyncStorage<Bool>()
+                        resultStorage = storage
 
                         verificationBlock = self.verifyNoDispatches(from: mockStore) {
-                            result = coordinator.handleURL(URL.stubValue())
+                            Task {
+                                await storage.setElement(constCoordinator?.handleURL(URL.stubValue()))
+                            }
                         }
+                        try! await Task.sleep(nanoseconds: 100_000_000)
                     }
 
                     it("returns false") {
+                        let result = await resultStorage.element
                         expect(result) == false
                     }
 
@@ -234,10 +246,13 @@ class AppCoordinatorTests: QuickSpec {
 
                     beforeEach {
                         mockPayloadBuilder.buildPayloadReturnValue = stubLinkType
-                        result = coordinator.handleURL(URL.stubValue())
+                        resultStorage = AsyncStorage<Bool>()
+
+                        await resultStorage.setElement(coordinator.handleURL(URL.stubValue()))
                     }
 
                     it("returns true") {
+                        let result = await resultStorage.element
                         expect(result) == true
                     }
 
@@ -273,7 +288,8 @@ class AppCoordinatorTests: QuickSpec {
                     }
 
                     it("calls mockAppRoutingHandler.determineRouting()") {
-                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
+                        await expect(mockAppRoutingHandler.determineRoutingUpdatedRoutingSubstatesRouterCalled)
+                            .toEventually(beTrue())
                     }
 
                     it("does not dispatch an action") {
@@ -291,10 +307,12 @@ class AppCoordinatorTests: QuickSpec {
 
                         coordinator.newState(state: appState,
                                              updatedSubstates: [])
+                        try! await Task.sleep(nanoseconds: 100_000_000)
                     }
 
                     it("calls mockAppRoutingHandler.determineRouting()") {
-                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
+                        await expect(mockAppRoutingHandler.determineRoutingUpdatedRoutingSubstatesRouterCalled)
+                            .toEventually(beTrue())
                     }
 
                     it("dispatches setDestinationCoordinator with the payload's destinationNodeBox") {
@@ -320,7 +338,8 @@ class AppCoordinatorTests: QuickSpec {
                     }
 
                     it("calls mockAppRoutingHandler.determineRouting()") {
-                        expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
+                        await expect(mockAppRoutingHandler.determineRoutingUpdatedRoutingSubstatesRouterCalled)
+                            .toEventually(beTrue())
                     }
 
                     it("does not dispatch an action") {

@@ -27,7 +27,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct AppState: StateProtocol, Equatable {
+struct AppState: StateProtocol, Equatable, Sendable {
     let appCopyContentState: AppCopyContentState
     let appSkinState: AppSkinState
     let locationAuthState: LocationAuthState

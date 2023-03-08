@@ -8,7 +8,7 @@ enum LaunchCoordinatorNode: NodeProtocol {}
 extension LaunchCoordinator: CoordinatorProtocol {}
 
 extension LaunchCoordinator {
-    static var nodeBox: NodeBox {
+    nonisolated static var nodeBox: NodeBox {
         return LaunchCoordinatorNode.nodeBox
     }
 }

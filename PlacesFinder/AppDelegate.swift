@@ -91,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate.TChildFactory {
 
+    @MainActor
     convenience init(appConfig: AppConfig) {
         let serviceContainer = ServiceContainer(appConfig: appConfig)
         let userDefaultsService = UserDefaultsService(userDefaults: .standard)
@@ -155,6 +156,7 @@ private extension Store where TAction == AppAction, TState == AppState {
 
 private extension ServiceContainer {
 
+    @MainActor
     init(appConfig: AppConfig) {
         let routingHandler = RoutingHandler()
         let destinationRoutingHandler = DestinationRoutingHandler()

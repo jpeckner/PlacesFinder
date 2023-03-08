@@ -35,84 +35,112 @@ class HomeCoordinatorTests: QuickSpec {
 
     private typealias TFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
 
+    // swiftlint:disable force_try
+    // swiftlint:disable force_unwrapping
     // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
-        let dummyRootViewController = UIViewController()
-        let dummySearchRootController = UIViewController()
-        let dummySettingsRootController = UIViewController()
+        struct Dependencies {
+            let dummyRootViewController = UIViewController()
+            let dummySearchRootController = UIViewController()
+            let dummySettingsRootController = UIViewController()
 
-        var mockStore: MockAppStore!
-        var mockSearchCoordinator: TabCoordinatorProtocolMock!
-        var mockSettingsCoordinator: TabCoordinatorProtocolMock!
-        var stubChildContainer: HomeCoordinatorChildContainer<TFactory>!
-        var mockPresenter: HomePresenterProtocolMock!
-        var mockAppRoutingHandler: AppRoutingHandlerProtocolMock!
-        var coordinator: HomeCoordinator<TFactory>!
+            let mockStore = MockAppStore()
+            let mockAppRoutingHandler = AppRoutingHandlerProtocolMock()
+            let mockSearchCoordinator = TabCoordinatorProtocolMock()
+            let mockSettingsCoordinator = TabCoordinatorProtocolMock()
 
-        beforeEach {
-            mockStore = MockAppStore()
+            let stubChildContainer: HomeCoordinatorChildContainer<TFactory>
+            let mockPresenter: HomePresenterProtocolMock
 
-            mockSearchCoordinator = TabCoordinatorProtocolMock()
-            mockSearchCoordinator.rootViewController = dummySearchRootController
-            mockSearchCoordinator.relinquishActiveCompletionClosure = { completion in
-                completion?()
+            @MainActor
+            init() {
+                self.mockPresenter = HomePresenterProtocolMock()
+                self.stubChildContainer = HomeCoordinatorChildContainer(search: mockSearchCoordinator,
+                                                                        settings: mockSettingsCoordinator)
+
+                mockSearchCoordinator.rootViewController = dummySearchRootController
+                mockSearchCoordinator.relinquishActiveCompletionClosure = { completion in
+                    completion?()
+                }
+
+                mockSettingsCoordinator.rootViewController = dummySettingsRootController
+                mockSettingsCoordinator.relinquishActiveCompletionClosure = { completion in
+                    completion?()
+                }
+
+                mockPresenter.rootViewController = dummyRootViewController
             }
-            mockSettingsCoordinator = TabCoordinatorProtocolMock()
-            mockSettingsCoordinator.rootViewController = dummySettingsRootController
-            mockSettingsCoordinator.relinquishActiveCompletionClosure = { completion in
-                completion?()
-            }
-            stubChildContainer = HomeCoordinatorChildContainer(search: mockSearchCoordinator,
-                                                               settings: mockSettingsCoordinator)
-
-            mockPresenter = HomePresenterProtocolMock()
-            mockPresenter.rootViewController = dummyRootViewController
-
-            mockAppRoutingHandler = AppRoutingHandlerProtocolMock()
-
-            coordinator = HomeCoordinator(store: mockStore,
-                                          childContainer: stubChildContainer,
-                                          presenter: mockPresenter,
-                                          appRoutingHandler: mockAppRoutingHandler)
         }
 
-        func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedActions.last
-            expect(dispatchedAction) == .router(.setCurrentCoordinator(nodeBox))
+        struct TestData {
+            let dependencies: Dependencies
+            let coordinator: HomeCoordinator<TFactory>
+        }
+
+        let testStorage = AsyncStorage<TestData>()
+
+        beforeEach {
+            Task { @MainActor in
+                let dependencies = Dependencies()
+                let coordinator = HomeCoordinator(
+                    store: dependencies.mockStore,
+                    childContainer: dependencies.stubChildContainer,
+                    presenter: dependencies.mockPresenter,
+                    appRoutingHandler: dependencies.mockAppRoutingHandler
+                )
+
+                let testData = TestData(dependencies: dependencies,
+                                        coordinator: coordinator)
+                await testStorage.setElement(testData)
+            }
+
+            try! await Task.sleep(nanoseconds: 100_000_000)
         }
 
         func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
-                                                   linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedActions.last
+                                                   linkType: AppLinkType) async {
+            let testData = await testStorage.element!
+            let dispatchedAction = testData.dependencies.mockStore.dispatchedActions.last
             expect(dispatchedAction) == .router(.setDestinationCoordinator(destinationNodeBox, payload: linkType))
         }
 
+        @MainActor
         func verifyCoordinatorWasActivated(_ childCoordinator: TabCoordinatorProtocol,
-                                           with nodeBox: NodeBox) {
-            verifySetCurrentCoordinatorCalled(nodeBox)
+                                           with nodeBox: NodeBox) async {
+            let testData = await testStorage.element!
+            let dispatchedAction = testData.dependencies.mockStore.dispatchedActions.last
+            expect(dispatchedAction) == .router(.setCurrentCoordinator(nodeBox))
 
-            expect(mockPresenter.setSelectedViewControllerReceivedController) === childCoordinator.rootViewController
+            expect(testData.dependencies.mockPresenter.setSelectedViewControllerReceivedController) ===
+                childCoordinator.rootViewController
         }
 
         describe("ChildCoordinatorProtocol") {
 
             describe("rootViewController") {
                 it("returns presenter.rootNavController") {
-                    expect(coordinator.rootViewController) == mockPresenter.rootViewController
+                    Task { @MainActor in
+                        let testData = await testStorage.element!
+                        expect(testData.coordinator.rootViewController) ==
+                            testData.dependencies.mockPresenter.rootViewController
+                    }
+
+                    try! await Task.sleep(nanoseconds: 100_000_000)
                 }
             }
 
             describe("start()") {
                 beforeEach {
-                    coordinator.start()
+                    let testData = await testStorage.element!
+                    await testData.coordinator.start()
                 }
 
                 it("subscribes to its relevant key paths") {
+                    let testData = await testStorage.element!
                     let subscription =
-                        mockStore.receivedSubscriptions.first?.subscription
+                        testData.dependencies.mockStore.receivedSubscriptions.first?.subscription
                         as? SubstatesSubscription<HomeCoordinator<TFactory>>
                     expect(subscription?.subscribedPaths.count) == 1
                     expect(subscription?.subscribedPaths.keys.contains(\AppState.routerState)) == true
@@ -121,11 +149,13 @@ class HomeCoordinatorTests: QuickSpec {
 
             describe("finish()") {
                 beforeEach {
-                    await coordinator.finish()
+                    let testData = await testStorage.element!
+                    await testData.coordinator.finish()
                 }
 
                 it("unsubscribes from the store") {
-                    expect(mockStore.receivedUnsubscribers.first as? HomeCoordinator<TFactory>) === coordinator
+                    let testData = await testStorage.element!
+                    expect(testData.dependencies.mockStore.receivedUnsubscribers.first as? HomeCoordinator<TFactory>) === testData.coordinator
                 }
             }
 
@@ -141,14 +171,20 @@ class HomeCoordinatorTests: QuickSpec {
 
                     context("when createSubtree() is called to route towards \(destinationDescendent)") {
                         beforeEach {
-                            coordinator.createSubtree(from: HomeCoordinatorNode.nodeBox,
-                                                      towards: destinationDescendent,
-                                                      state: AppState.stubValue())
+                            let testData = await testStorage.element!
+                            await testData.coordinator.createSubtree(
+                                from: HomeCoordinatorNode.nodeBox,
+                                towards: destinationDescendent,
+                                state: AppState.stubValue()
+                            )
                         }
 
                         it("activates the corresponding coordinator") {
-                            verifyCoordinatorWasActivated(stubChildContainer.coordinator(for: immediateDescendent),
-                                                          with: immediateDescendent.nodeBox)
+                            let testData = await testStorage.element!
+                            await verifyCoordinatorWasActivated(
+                                testData.dependencies.stubChildContainer.coordinator(for: immediateDescendent),
+                                with: immediateDescendent.nodeBox
+                            )
                         }
                     }
                 }
@@ -164,14 +200,20 @@ class HomeCoordinatorTests: QuickSpec {
 
                         context("when switchSubtree() switches from \(currentDescendent) to \(destinationDescendent)") {
                             beforeEach {
-                                coordinator.switchSubtree(from: currentDescendent,
-                                                          towards: destinationDescendent,
-                                                          state: AppState.stubValue())
+                                let testData = await testStorage.element!
+                                await testData.coordinator.switchSubtree(
+                                    from: currentDescendent,
+                                    towards: destinationDescendent,
+                                    state: AppState.stubValue()
+                                )
                             }
 
                             it("activates the corresponding coordinator") {
-                                verifyCoordinatorWasActivated(stubChildContainer.coordinator(for: immediateDescendent),
-                                                              with: immediateDescendent.nodeBox)
+                                let testData = await testStorage.element!
+                                await verifyCoordinatorWasActivated(
+                                    testData.dependencies.stubChildContainer.coordinator(for: immediateDescendent),
+                                    with: immediateDescendent.nodeBox
+                                )
                             }
                         }
                     }
@@ -192,13 +234,19 @@ class HomeCoordinatorTests: QuickSpec {
 
                         context("when didSelectIndex() switches from index \(currentDescendentIdx) to index \(destinationDescedentIdx)") {
                             beforeEach {
-                                coordinator.homePresenter(mockPresenter,
-                                                          didSelectChildCoordinator: destinationDescedentIdx)
+                                let testData = await testStorage.element!
+                                await testData.coordinator.homePresenter(
+                                    testData.dependencies.mockPresenter,
+                                    didSelectChildCoordinator: destinationDescedentIdx
+                                )
                             }
 
                             it("activates the corresponding coordinator") {
-                                verifyCoordinatorWasActivated(stubChildContainer.coordinator(for: immediateDescendent),
-                                                              with: immediateDescendent.nodeBox)
+                                let testData = await testStorage.element!
+                                await verifyCoordinatorWasActivated(
+                                    testData.dependencies.stubChildContainer.coordinator(for: immediateDescendent),
+                                    with: immediateDescendent.nodeBox
+                                )
                             }
                         }
                     }
@@ -213,12 +261,15 @@ class HomeCoordinatorTests: QuickSpec {
             describe("newState()") {
 
                 beforeEach {
-                    coordinator.newState(state: .stubValue(),
-                                         updatedSubstates: [])
+                    let testData = await testStorage.element!
+                    testData.coordinator.newState(state: .stubValue(),
+                                                  updatedSubstates: [])
                 }
 
                 it("calls mockAppRoutingHandler.determineRouting()") {
-                    expect(mockAppRoutingHandler.determineRoutingUpdatedSubstatesRouterCalled) == true
+                    let testData = await testStorage.element!
+                    await expect(testData.dependencies.mockAppRoutingHandler
+                        .determineRoutingUpdatedRoutingSubstatesRouterCalled).toEventually(beTrue())
                 }
 
             }

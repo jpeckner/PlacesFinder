@@ -24,6 +24,6 @@
 
 import Foundation
 
-struct AppSkin: Equatable {
+struct AppSkin: Equatable, Sendable {
     let colorings: AppColorings
 }

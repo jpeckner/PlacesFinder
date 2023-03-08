@@ -27,6 +27,7 @@ import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject {
     // periphery:ignore:parameters viewController
+    @MainActor
     func viewController(_ viewController: SearchResultsViewController,
                         didScroll deltaY: CGFloat)
 }

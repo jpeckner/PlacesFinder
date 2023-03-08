@@ -27,7 +27,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-typealias RouterLinkType = LinkTypeProtocol & Equatable
+typealias RouterLinkType = LinkTypeProtocol & Equatable & Sendable
 
 enum RouterAction<TLinkType: RouterLinkType>: Equatable {
     case setCurrentCoordinator(NodeBox)

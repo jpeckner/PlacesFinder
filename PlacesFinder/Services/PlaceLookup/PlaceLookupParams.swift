@@ -36,7 +36,10 @@ enum PlaceLookupSorting: String, CaseIterable, Codable {
     case reviewCount
 }
 
-struct PlaceLookupParams: Equatable {
+// Using `@unchecked Sendable` is needed to supress this non-sensical warning:
+//    Stored property 'radius' of 'Sendable'-conforming struct 'PlaceLookupParams' has non-sendable type
+//    'PlaceLookupDistance' (aka 'Measurement<UnitLength>')
+struct PlaceLookupParams: Equatable, @unchecked Sendable {
     let keywords: NonEmptyString
     let coordinate: PlaceLookupCoordinate
     let radius: PlaceLookupDistance

@@ -41,9 +41,8 @@ extension DecodableServiceError: Equatable where TErrorPayload == AppSkinService
         case let (.errorPayloadReturned(lhsPayload, _), .errorPayloadReturned(rhsPayload, _)):
             return lhsPayload == rhsPayload
 
-        case (.errorPayloadReturned, .unexpected),
-             (.unexpected, .errorPayloadReturned),
-             (.unexpected, .unexpected):
+        case (.errorPayloadReturned, _),
+             (.unexpected, _):
             return false
         }
     }
@@ -53,11 +52,11 @@ extension DecodableServiceError: Equatable where TErrorPayload == AppSkinService
 // MARK: - AppSkinService
 
 // sourcery: AutoMockable
-protocol AppSkinServiceProtocol {
+protocol AppSkinServiceProtocol: Sendable {
     func fetchAppSkin() async -> Result<AppSkin, AppSkinServiceError>
 }
 
-class AppSkinService: AppSkinServiceProtocol {
+actor AppSkinService: AppSkinServiceProtocol {
 
     func fetchAppSkin() async -> Result<AppSkin, AppSkinServiceError> {
         // This previously fetched the skin from an API, but the introduction of Dark Mode in iOS 13 has mostly obviated

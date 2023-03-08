@@ -24,7 +24,7 @@
 
 import Shared
 
-struct AppCopyContent: Equatable {
+struct AppCopyContent: Equatable, Sendable {
     let displayName: DisplayNameCopyContent
     let searchInput: SearchInputCopyContent
     let searchInstructions: SearchInstructionsCopyContent
@@ -40,77 +40,77 @@ struct AppCopyContent: Equatable {
     let settingsChildView: SettingsChildViewCopyContent
 }
 
-struct DisplayNameCopyContent: Equatable {
+struct DisplayNameCopyContent: Equatable, Sendable {
     let name: NonEmptyString
 }
 
-struct SearchInputCopyContent: Equatable {
+struct SearchInputCopyContent: Equatable, Sendable {
     let placeholder: String
 }
 
-struct SearchInstructionsCopyContent: Equatable {
+struct SearchInstructionsCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String
     let resultsSource: String
 }
 
-struct SearchLocationDisabledCopyContent: Equatable {
+struct SearchLocationDisabledCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
 }
 
-struct SearchNoInternetCopyContent: Equatable {
+struct SearchNoInternetCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String
 }
 
-struct SearchNoResultsCopyContent: Equatable {
+struct SearchNoResultsCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String
 }
 
-struct SearchResultsCopyContent: Equatable {
+struct SearchResultsCopyContent: Equatable, Sendable {
     let currencySymbol: String
     let callNumberFormatString: String
     let numRatingsSingularFormatString: String
     let numRatingsPluralFormatString: String
 }
 
-struct SearchRetryCopyContent: Equatable {
+struct SearchRetryCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String
     let ctaTitle: String
 }
 
-struct SettingsHeadersCopyContent: Equatable {
+struct SettingsHeadersCopyContent: Equatable, Sendable {
     let distanceSectionTitle: String
     let sortSectionTitle: String
 }
 
-struct SettingsSortPreferenceCopyContent: Equatable {
+struct SettingsSortPreferenceCopyContent: Equatable, Sendable {
     let bestMatchTitle: String
     let distanceTitle: String
     let ratingTitle: String
     let reviewCountTitle: String
 }
 
-struct SettingsMeasurementSystemCopyContent: Equatable {
+struct SettingsMeasurementSystemCopyContent: Equatable, Sendable {
     let imperial: String
     let metric: String
 }
 
-struct SettingsChildMenuCopyContent: Equatable {
+struct SettingsChildMenuCopyContent: Equatable, Sendable {
     let sectionTitle: String
     let ctaTitle: String
 }
 
-struct SettingsChildViewCopyContent: Equatable {
+struct SettingsChildViewCopyContent: Equatable, Sendable {
     let iconImageName: String
     let title: String
     let description: String

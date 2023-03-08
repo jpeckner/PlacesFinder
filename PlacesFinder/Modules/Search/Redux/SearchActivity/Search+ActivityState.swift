@@ -35,7 +35,7 @@ typealias SearchPageReducer = IntermediateStepLoadReducer<Search.PageRequestErro
 
 extension Search {
 
-    enum LoadState: Equatable {
+    enum LoadState: Equatable, Sendable {
         case idle
 
         case locationRequested(SearchParams)
@@ -58,7 +58,7 @@ extension Search {
         )
     }
 
-    struct ActivityState: Equatable {
+    struct ActivityState: Equatable, Sendable {
         let loadState: Search.LoadState
         let inputParams: SearchInputParams
         let detailedEntity: SearchEntityModel?

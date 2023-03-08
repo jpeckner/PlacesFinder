@@ -30,21 +30,40 @@ import CoordiNodeTestComponents
 // swiftlint:disable line_length
 internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
 
-    // MARK: - determineRouting<TRouter: RouterProtocol>
+    // MARK: - determineRouting<TRouter: AppRouterProtocol>
 
-    internal var determineRoutingUpdatedSubstatesRouterCallsCount = 0
-    internal var determineRoutingUpdatedSubstatesRouterCalled: Bool {
-        return determineRoutingUpdatedSubstatesRouterCallsCount > 0
+    var determineRoutingUpdatedRoutingSubstatesRouterCallsCount = 0
+    var determineRoutingUpdatedRoutingSubstatesRouterCalled: Bool {
+        return determineRoutingUpdatedRoutingSubstatesRouterCallsCount > 0
     }
-    internal var determineRoutingUpdatedSubstatesRouterReceivedArguments: (state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>, router: CoordinatorProtocol)?
-    internal var determineRoutingUpdatedSubstatesRouterClosure: ((AppState, Set<PartialKeyPath<AppState>>, CoordinatorProtocol) -> Void)?
+    var determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppRouterProtocol)?
+    var determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppRouterProtocol)] = []
+    var determineRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, UpdatedRoutingSubstates, any AppRouterProtocol) -> Void)?
 
-    internal func determineRouting<TRouter: RouterProtocol>(_ state: AppState,
-                                                            updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                            router: TRouter) {
-        determineRoutingUpdatedSubstatesRouterCallsCount += 1
-        determineRoutingUpdatedSubstatesRouterReceivedArguments = (state: state, updatedSubstates: updatedSubstates, router: router)
-        determineRoutingUpdatedSubstatesRouterClosure?(state, updatedSubstates, router)
+    @MainActor
+    func determineRouting<TRouter: AppRouterProtocol>(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: TRouter) {
+        determineRoutingUpdatedRoutingSubstatesRouterCallsCount += 1
+        determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router)
+        determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router))
+        determineRoutingUpdatedRoutingSubstatesRouterClosure?(state, updatedRoutingSubstates, router)
+    }
+
+    // MARK: - determineRouting<TDestRouter: AppDestinationRouterProtocol>
+
+    var determineDestRoutingUpdatedRoutingSubstatesRouterCallsCount = 0
+    var determineDestRoutingUpdatedRoutingSubstatesRouterCalled: Bool {
+        return determineDestRoutingUpdatedRoutingSubstatesRouterCallsCount > 0
+    }
+    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppDestinationRouterProtocol)?
+    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppDestinationRouterProtocol)] = []
+    var determineDestRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, UpdatedRoutingSubstates, any AppDestinationRouterProtocol) -> Void)?
+
+    @MainActor
+    func determineRouting<TDestRouter: AppDestinationRouterProtocol>(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: TDestRouter) {
+        determineDestRoutingUpdatedRoutingSubstatesRouterCallsCount += 1
+        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router)
+        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router))
+        determineDestRoutingUpdatedRoutingSubstatesRouterClosure?(state, updatedRoutingSubstates, router)
     }
 
 }

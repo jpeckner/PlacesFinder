@@ -3,17 +3,17 @@
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
-//  
+//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
 //  furnished to do so, subject to the following conditions:
-//  
+//
 //  The above copyright notice and this permission notice shall be included in all
 //  copies or substantial portions of the Software.
-//  
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,50 +33,74 @@ import SwiftDuxTestComponents
 
 class SettingsCoordinatorTests: QuickSpec {
 
+    // swiftlint:disable force_try
+    // swiftlint:disable force_unwrapping
     // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable line_length
     override func spec() {
 
-        let stubSettingsViewModel: SettingsViewModel = {
-            let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue())
-            return SettingsViewModel(sections: sections)
-        }()
-        let stubNavController = UINavigationController()
+        struct Dependencies {
+            let stubSettingsViewModel: SettingsViewModel = {
+                let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue())
+                return SettingsViewModel(sections: sections)
+            }()
+            let stubNavController = UINavigationController()
 
-        var mockStore: MockAppStore!
-        var mockServiceContainer: ServiceContainer!
-        var mockSettingsPresenter: SettingsPresenterProtocolMock!
-        var mockSettingsViewModelBuilder: SettingsViewModelBuilderProtocolMock!
-        var mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock!
+            let mockStore: MockAppStore
+            let mockServiceContainer: ServiceContainer
+            let mockSettingsPresenter: SettingsPresenterProtocolMock
+            let mockSettingsViewModelBuilder: SettingsViewModelBuilderProtocolMock
+            let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
 
-        var coordinator: SettingsCoordinator<MockAppStore>!
+            @MainActor
+            init() {
+                mockStore = MockAppStore()
+                mockSettingsPresenter = SettingsPresenterProtocolMock()
+                mockSettingsPresenter.rootNavController = stubNavController
+
+                mockServiceContainer = ServiceContainer.mockValue()
+
+                mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
+                mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
+
+                mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
+                mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
+            }
+        }
+
+        struct TestData {
+            let dependencies: Dependencies
+            let coordinator: SettingsCoordinator<MockAppStore>
+        }
+
+        let testStorage = AsyncStorage<TestData>()
 
         beforeEach {
-            mockStore = MockAppStore()
-            mockSettingsPresenter = SettingsPresenterProtocolMock()
-            mockSettingsPresenter.rootNavController = stubNavController
+            Task { @MainActor in
+                let dependencies = Dependencies()
+                let coordinator = SettingsCoordinator(
+                    store: dependencies.mockStore,
+                    presenter: dependencies.mockSettingsPresenter,
+                    serviceContainer: dependencies.mockServiceContainer,
+                    settingsViewModelBuilder: dependencies.mockSettingsViewModelBuilder,
+                    navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder
+                )
+                let testData = TestData(dependencies: dependencies,
+                                        coordinator: coordinator)
 
-            mockServiceContainer = ServiceContainer.mockValue()
+                await testStorage.setElement(testData)
+            }
 
-            mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-            mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
-
-            mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
-            mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
-
-            coordinator = SettingsCoordinator(store: mockStore,
-                                              presenter: mockSettingsPresenter,
-                                              serviceContainer: mockServiceContainer,
-                                              settingsViewModelBuilder: mockSettingsViewModelBuilder,
-                                              navigationBarViewModelBuilder: mockNavigationBarViewModelBuilder)
+            try! await Task.sleep(nanoseconds: 100_000_000)
         }
 
         describe("init") {
 
             it("subscribes to its relevant key paths") {
+                let testData = await testStorage.element!
                 let substatesSubscription =
-                    mockStore.receivedSubscriptions.last?.subscription
+                    testData.dependencies.mockStore.receivedSubscriptions.last?.subscription
                     as? SubstatesSubscription<SettingsCoordinator<MockAppStore>>
 
                 expect(substatesSubscription?.subscribedPaths.count) == 2
@@ -89,7 +113,12 @@ class SettingsCoordinatorTests: QuickSpec {
 
             describe("rootViewController") {
                 it("returns presenter.rootNavController") {
-                    expect(coordinator.rootViewController) === stubNavController
+                    Task { @MainActor in
+                        let testData = await testStorage.element!
+                        expect(testData.coordinator.rootViewController) === testData.dependencies.stubNavController
+                    }
+
+                    try! await Task.sleep(nanoseconds: 100_000_000)
                 }
             }
 
@@ -99,29 +128,40 @@ class SettingsCoordinatorTests: QuickSpec {
 
             describe("newState()") {
 
-                func performTest(linkType: AppLinkType?) {
+                @Sendable func performTest(linkType: AppLinkType?) async {
+                    let testData = await testStorage.element!
+
                     let state = AppState.stubValue(
                         routerState: RouterState(loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
                                                  currentNode: StubNode.nodeBox)
                     )
 
-                    coordinator.newState(state: state,
-                                         updatedSubstates: [])
+                    testData.coordinator.newState(state: state,
+                                                  updatedSubstates: [])
                 }
 
                 it("calls presenter.loadSettingsView()") {
-                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == false
-                    performTest(linkType: nil)
-                    expect(mockSettingsPresenter.loadSettingsViewTitleViewModelAppSkinCalled) == true
+                    let testData = await testStorage.element!
+                    let presenter = testData.dependencies.mockSettingsPresenter
+
+                    Task { @MainActor in
+                        expect(presenter.loadSettingsViewTitleViewModelAppSkinCalled) == false
+                        await performTest(linkType: nil)
+                        await expect(presenter.loadSettingsViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                    }
+
+                    try! await Task.sleep(nanoseconds: 100_000_000)
                 }
 
                 context("when the state has a pending linkType of type SettingsLinkPayload") {
                     beforeEach {
-                        performTest(linkType: .settings(SettingsLinkPayload()))
+                        await performTest(linkType: .settings(SettingsLinkPayload()))
                     }
 
                     it("dispatches AppRouterAction.clearLink") {
-                        expect(mockStore.hasDispatchedRouterClearLinkAction) == true
+                        let testData = await testStorage.element!
+                        await expect(testData.dependencies.mockStore.hasDispatchedRouterClearLinkAction)
+                            .toEventually(beTrue())
                     }
                 }
 
@@ -129,9 +169,14 @@ class SettingsCoordinatorTests: QuickSpec {
                     var verificationBlock: NoDispatchVerificationBlock!
 
                     beforeEach {
-                        verificationBlock = self.verifyNoDispatches(from: mockStore) {
-                            performTest(linkType: .emptySearch(EmptySearchLinkPayload()))
+                        let testData = await testStorage.element!
+                        verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                            Task {
+                                await performTest(linkType: .emptySearch(EmptySearchLinkPayload()))
+                            }
                         }
+
+                        try! await Task.sleep(nanoseconds: 100_000_000)
                     }
 
                     it("does not dispatch an action") {
@@ -143,9 +188,14 @@ class SettingsCoordinatorTests: QuickSpec {
                     var verificationBlock: NoDispatchVerificationBlock!
 
                     beforeEach {
-                        verificationBlock = self.verifyNoDispatches(from: mockStore) {
-                            performTest(linkType: nil)
+                        let testData = await testStorage.element!
+                        verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                            Task {
+                                await performTest(linkType: nil)
+                            }
                         }
+
+                        try! await Task.sleep(nanoseconds: 100_000_000)
                     }
 
                     it("does not dispatch an action") {

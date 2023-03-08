@@ -25,13 +25,31 @@
 import CoordiNode
 
 protocol AppRoutingHandlerProtocol {
-    func determineRouting<TRouter: AppRouterProtocol>(_ state: AppState,
-                                                      updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                      router: TRouter)
+    @MainActor
+    func determineRouting<TRouter: AppRouterProtocol>(
+        state: AppState,
+        updatedRoutingSubstates: UpdatedRoutingSubstates,
+        router: TRouter
+    )
 
-    func determineRouting<TRouter: AppDestinationRouterProtocol>(_ state: AppState,
-                                                                 updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                                 router: TRouter)
+    @MainActor
+    func determineRouting<TDestRouter: AppDestinationRouterProtocol>(
+        state: AppState,
+        updatedRoutingSubstates: UpdatedRoutingSubstates,
+        router: TDestRouter
+    )
+}
+
+// UpdatedRoutingSubstates is necessary to workaround the fact the PartielKeyPath currently doesn't conform to Sendable.
+// Feel free to refactor-out UpdatedRoutingSubstates if that is ever fixed. More info:
+// https://github.com/apple/swift/issues/57560
+struct UpdatedRoutingSubstates: Sendable {
+    // swiftlint:disable:next strict_fileprivate
+    fileprivate let didUpdateRouterState: Bool
+
+    init(updatedSubstates: Set<PartialKeyPath<AppState>>) {
+        self.didUpdateRouterState = updatedSubstates.contains(\AppState.routerState)
+    }
 }
 
 class AppRoutingHandler: AppRoutingHandlerProtocol {
@@ -45,10 +63,10 @@ class AppRoutingHandler: AppRoutingHandlerProtocol {
         self.destinationRoutingHandler = destinationRoutingHandler
     }
 
-    func determineRouting<TRouter: AppRouterProtocol>(_ state: AppState,
-                                                      updatedSubstates: Set<PartialKeyPath<AppState>>,
+    func determineRouting<TRouter: AppRouterProtocol>(state: AppState,
+                                                      updatedRoutingSubstates: UpdatedRoutingSubstates,
                                                       router: TRouter) {
-        guard updatedSubstates.contains(\AppState.routerState),
+        guard updatedRoutingSubstates.didUpdateRouterState,
               let destinationNodeBox = state.routerState.destinationNodeBox,
               let destinationDescendent = TRouter.TDestinationDescendent(destinationNodeBox: destinationNodeBox)
         else { return }
@@ -70,10 +88,12 @@ class AppRoutingHandler: AppRoutingHandlerProtocol {
         }
     }
 
-    func determineRouting<TRouter: AppDestinationRouterProtocol>(_ state: AppState,
-                                                                 updatedSubstates: Set<PartialKeyPath<AppState>>,
-                                                                 router: TRouter) {
-        guard updatedSubstates.contains(\AppState.routerState),
+    func determineRouting<TDestRouter: AppDestinationRouterProtocol>(
+        state: AppState,
+        updatedRoutingSubstates: UpdatedRoutingSubstates,
+        router: TDestRouter
+    ) {
+        guard updatedRoutingSubstates.didUpdateRouterState,
               let destinationNodeBox = state.routerState.destinationNodeBox
         else { return }
 

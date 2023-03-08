@@ -5,7 +5,7 @@ import SwiftDux
 
 
 
-enum AppLinkType: Equatable {
+enum AppLinkType: Equatable, Sendable {
     case emptySearch(EmptySearchLinkPayload)
     case search(SearchLinkPayload)
     case settingsChild(SettingsChildLinkPayload)

@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-struct SearchEntityModel: Equatable {
+struct SearchEntityModel: Equatable, Sendable {
     let name: NonEmptyString
     let url: URL
     let ratings: SearchRatings

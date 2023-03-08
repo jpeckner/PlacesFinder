@@ -24,8 +24,7 @@
 
 import Foundation
 
-class YelpRequestBuilder {
-
+final class YelpRequestBuilder: Sendable {
     static let searchPath = "/v3/businesses/search"
     static let maxResultsPerPage: Int = 50
 
@@ -34,7 +33,6 @@ class YelpRequestBuilder {
     init(config: YelpRequestConfig) {
         self.config = config
     }
-
 }
 
 extension YelpRequestBuilder {

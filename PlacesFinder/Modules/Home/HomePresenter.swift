@@ -28,18 +28,20 @@ import UIKit
 
 protocol HomePresenterDelegate: AnyObject {
     // periphery:ignore:parameters homePresenter
+    @MainActor
     func homePresenter(_ homePresenter: HomePresenterProtocol,
                        didSelectChildCoordinator index: Int)
 }
 
 // sourcery: AutoMockable
-protocol HomePresenterProtocol: AnyObject {
+@MainActor protocol HomePresenterProtocol: AnyObject {
     var delegate: HomePresenterDelegate? { get set }
     var rootViewController: UIViewController { get }
 
     func setSelectedViewController(_ controller: UIViewController)
 }
 
+@MainActor
 class HomePresenter: HomePresenterProtocol {
 
     weak var delegate: HomePresenterDelegate?

@@ -8,7 +8,7 @@ enum AppCoordinatorNode: NodeProtocol {}
 extension AppCoordinator: RouterProtocol, RootCoordinatorProtocol {}
 
 extension AppCoordinator {
-    static var nodeBox: NodeBox {
+    nonisolated static var nodeBox: NodeBox {
         return AppCoordinatorNode.nodeBox
     }
 }

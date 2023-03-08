@@ -3,6 +3,7 @@ import UIKit
 
 {% for enum in types.enums where enum.name == "HomeCoordinatorImmediateDescendent" %}
 
+@MainActor
 struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtocol> {
     {% for case in enum.cases %}private let {{ case.name }}: TabCoordinatorProtocol
     {% endfor %}

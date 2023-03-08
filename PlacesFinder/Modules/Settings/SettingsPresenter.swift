@@ -27,7 +27,7 @@ import SwiftDux
 import UIKit
 
 // sourcery: AutoMockable
-protocol SettingsPresenterProtocol {
+@MainActor protocol SettingsPresenterProtocol {
     var rootNavController: UINavigationController { get }
 
     func loadSettingsView(_ viewModel: SettingsViewModel,
@@ -35,6 +35,7 @@ protocol SettingsPresenterProtocol {
                           appSkin: AppSkin)
 }
 
+@MainActor
 class SettingsPresenter: SettingsPresenterProtocol {
 
     let rootNavController: UINavigationController

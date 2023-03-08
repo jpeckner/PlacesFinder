@@ -48,13 +48,11 @@ class HomeCoordinatorChildFactoryTests: QuickSpec {
         describe("buildCoordinator") {
 
             func performTest(descendent: HomeCoordinatorDestinationDescendent) async {
-                // Use @MainActor to avoid run-time warnings for UIKit code
                 Task { @MainActor in
                     let coordinator = await sutStorage.element!.buildCoordinator(for: descendent)
                     await resultStorage.setElement(coordinator)
                 }
 
-                // Give the above Task time to complete
                 try! await Task.sleep(nanoseconds: 1_000_000_000)
             }
 

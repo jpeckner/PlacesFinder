@@ -52,9 +52,11 @@ class AppRoutingHandlerTests: QuickSpec {
             context("when updatedSubstates does not contain AppState.routerState") {
                 beforeEach {
                     let stubState = AppState.stubValue()
-                    appRoutingHandler.determineRouting(stubState,
-                                                       updatedSubstates: [],
-                                                       router: stubRouter)
+                    await appRoutingHandler.determineRouting(
+                        state: stubState,
+                        updatedRoutingSubstates: .init(updatedSubstates: []),
+                        router: stubRouter
+                    )
                 }
 
                 it("does not call mockRoutingHandler.determineRouting()") {
@@ -65,9 +67,11 @@ class AppRoutingHandlerTests: QuickSpec {
             context("else when the state's destinationNodeBox value is nil") {
                 beforeEach {
                     let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
-                    appRoutingHandler.determineRouting(stubState,
-                                                       updatedSubstates: [\AppState.routerState],
-                                                       router: stubRouter)
+                    await appRoutingHandler.determineRouting(
+                        state: stubState,
+                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
+                        router: stubRouter
+                    )
                 }
 
                 it("does not call mockRoutingHandler.determineRouting()") {
@@ -83,9 +87,11 @@ class AppRoutingHandlerTests: QuickSpec {
                     )
                     let stubState = AppState.stubValue(routerState: routerState)
 
-                    appRoutingHandler.determineRouting(stubState,
-                                                       updatedSubstates: [\AppState.routerState],
-                                                       router: stubRouter)
+                    await appRoutingHandler.determineRouting(
+                        state: stubState,
+                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
+                        router: stubRouter
+                    )
                 }
 
                 it("does not call mockRoutingHandler.determineRouting()") {
@@ -101,10 +107,13 @@ class AppRoutingHandlerTests: QuickSpec {
                 )
                 let stubAppState = AppState.stubValue(routerState: routerState)
 
+                @MainActor
                 func executeTest() {
-                    appRoutingHandler.determineRouting(stubAppState,
-                                                       updatedSubstates: [\AppState.routerState],
-                                                       router: stubRouter)
+                    appRoutingHandler.determineRouting(
+                        state: stubAppState,
+                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
+                        router: stubRouter
+                    )
                 }
 
                 context("when mockRoutingHandler.determineRouting() returns .createSubtree") {
@@ -117,7 +126,7 @@ class AppRoutingHandlerTests: QuickSpec {
                             destinationDescendent: stubDestination
                         )
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls stubRouter.createSubtree()") {
@@ -137,7 +146,7 @@ class AppRoutingHandlerTests: QuickSpec {
                             destinationDescendent: stubDestination
                         )
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls stubRouter.createSubtree()") {
@@ -151,7 +160,7 @@ class AppRoutingHandlerTests: QuickSpec {
                     beforeEach {
                         mockRoutingHandler.determineRoutingFromToForReturnValue = nil
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls nothing on stubRouter") {
@@ -179,9 +188,11 @@ class AppRoutingHandlerTests: QuickSpec {
             context("when updatedSubstates does not contain AppState.routerState") {
                 beforeEach {
                     let stubState = AppState.stubValue()
-                    appRoutingHandler.determineRouting(stubState,
-                                                       updatedSubstates: [],
-                                                       router: stubDestinationRouter)
+                    await appRoutingHandler.determineRouting(
+                        state: stubState,
+                        updatedRoutingSubstates: .init(updatedSubstates: []),
+                        router: stubDestinationRouter
+                    )
                 }
 
                 it("does not call mockRoutingHandler.determineRouting()") {
@@ -192,9 +203,11 @@ class AppRoutingHandlerTests: QuickSpec {
             context("else when the state's destinationNodeBox value is nil") {
                 beforeEach {
                     let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
-                    appRoutingHandler.determineRouting(stubState,
-                                                       updatedSubstates: [\AppState.routerState],
-                                                       router: stubDestinationRouter)
+                    await appRoutingHandler.determineRouting(
+                        state: stubState,
+                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
+                        router: stubDestinationRouter
+                    )
                 }
 
                 it("does not call mockRoutingHandler.determineRouting()") {
@@ -210,10 +223,13 @@ class AppRoutingHandlerTests: QuickSpec {
                 )
                 let stubAppState = AppState.stubValue(routerState: routerState)
 
+                @MainActor
                 func executeTest() {
-                    appRoutingHandler.determineRouting(stubAppState,
-                                                       updatedSubstates: [\AppState.routerState],
-                                                       router: stubDestinationRouter)
+                    appRoutingHandler.determineRouting(
+                        state: stubAppState,
+                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
+                        router: stubDestinationRouter
+                    )
                 }
 
                 context("when mockRoutingHandler.determineRouting() returns .createSubtree") {
@@ -226,7 +242,7 @@ class AppRoutingHandlerTests: QuickSpec {
                             destinationDescendent: stubDestination
                         )
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls stubRouter.createSubtree()") {
@@ -246,7 +262,7 @@ class AppRoutingHandlerTests: QuickSpec {
                             destinationDescendent: stubDestination
                         )
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls stubRouter.createSubtree()") {
@@ -264,7 +280,7 @@ class AppRoutingHandlerTests: QuickSpec {
                             currentNode: stubCurrentNode
                         )
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls stubRouter.createSubtree()") {
@@ -277,7 +293,7 @@ class AppRoutingHandlerTests: QuickSpec {
                     beforeEach {
                         mockRoutingHandler.determineRoutingFromToForReturnValue = nil
 
-                        executeTest()
+                        await executeTest()
                     }
 
                     it("calls nothing on stubDestinationRouter") {

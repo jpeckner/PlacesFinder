@@ -26,6 +26,7 @@ import UIKit
 
 extension AppSkin {
 
+    @MainActor
     var backButtonItem: UIBarButtonItem {
         let imageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "left_arrow"))
         imageView.contentMode = .scaleAspectFit

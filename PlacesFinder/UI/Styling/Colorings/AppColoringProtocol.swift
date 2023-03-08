@@ -42,14 +42,14 @@ protocol AppStandardColoringsProtocol {
 }
 
 // sourcery: fieldName = "standard"
-struct AppStandardColorings: AppColoringProtocol, AppStandardColoringsProtocol {
+struct AppStandardColorings: AppColoringProtocol, AppStandardColoringsProtocol, Sendable {
     let viewColoring: ViewColoring
     let titleTextColoring: TextColoring
     let bodyTextColoring: TextColoring
 }
 
 // sourcery: fieldName = "navBar"
-struct NavBarColorings: AppColoringProtocol {
+struct NavBarColorings: AppColoringProtocol, Sendable {
     let viewColoring: ViewColoring
     let iconTintColoring: FillColoring
     let backArrowTint: FillColoring
@@ -57,7 +57,7 @@ struct NavBarColorings: AppColoringProtocol {
 }
 
 // sourcery: fieldName = "tabBar"
-struct TabBarColorings: AppColoringProtocol {
+struct TabBarColorings: AppColoringProtocol, Sendable {
     let viewColoring: ViewColoring
     let selectedItemTint: FillColoring
     let unselectedItemTint: FillColoring

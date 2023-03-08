@@ -25,7 +25,7 @@
 import Shared
 
 // sourcery: AutoMockable
-protocol SearchEntityModelBuilderProtocol {
+protocol SearchEntityModelBuilderProtocol: Sendable {
     func buildEntityModels(_ entities: [PlaceLookupEntity]) -> [SearchEntityModel]
 
     func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel?
@@ -41,7 +41,7 @@ extension SearchEntityModelBuilderProtocol {
 
 // MARK: SearchEntityModelBuilder
 
-class SearchEntityModelBuilder: SearchEntityModelBuilderProtocol {
+final class SearchEntityModelBuilder: SearchEntityModelBuilderProtocol {
 
     func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel? {
         guard let isPermanentlyClosed = entity.isPermanentlyClosed,

@@ -26,8 +26,8 @@ import CoordiNode
 import Foundation
 import SwiftDux
 
-struct RouterState<TLinkType: RouterLinkType>: Equatable {
-    enum LoadState: Equatable {
+struct RouterState<TLinkType: RouterLinkType>: Equatable, Sendable {
+    enum LoadState: Equatable, Sendable {
         case idle
         case payloadRequested(TLinkType)
         case navigatingToDestination(DestinationNodeBox, linkType: TLinkType?)

@@ -24,14 +24,14 @@
 
 import Foundation
 
-struct PlaceLookupPageRequestToken: Equatable {
+struct PlaceLookupPageRequestToken: Equatable, Sendable {
     let placeLookupParams: PlaceLookupParams
     let urlRequest: URLRequest
     let startingIndex: Int
     let resultsPerPage: Int
 }
 
-struct PlaceLookupTokenAttemptsContainer: Equatable {
+struct PlaceLookupTokenAttemptsContainer: Equatable, Sendable {
     let token: PlaceLookupPageRequestToken
     let maxAttempts: Int
     let numAttemptsSoFar: Int
