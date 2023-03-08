@@ -33,7 +33,7 @@ enum AppSkinAction: Equatable {
 
 extension AppAction {
 
-    static func makeRequestSkinMiddleware(skinService: AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
+    static func makeRequestSkinMiddleware(skinService: any AppSkinServiceProtocol) -> Middleware<AppAction, AppState> {
         return { dispatch, _ in
             return { next in
                 return { action in

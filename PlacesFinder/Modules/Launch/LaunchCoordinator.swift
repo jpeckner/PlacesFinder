@@ -93,8 +93,12 @@ extension LaunchCoordinator: SubstatesSubscriber {
     func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
         guard statePrism.hasFinishedLaunching(state) else { return }
 
-        stylingsHandler.apply(state.appSkinState.currentValue)
         requestDefaultLinkTypeIfNeeded(state)
+
+        let stylingsHandler = self.stylingsHandler
+        Task { @MainActor in
+            stylingsHandler.apply(state.appSkinState.currentValue)
+        }
     }
 
     private func requestDefaultLinkTypeIfNeeded(_ state: AppState) {

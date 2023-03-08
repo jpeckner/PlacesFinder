@@ -4,6 +4,7 @@ import SwiftDux
 import UIKit
 
 
+@MainActor
 struct HomeCoordinatorChildContainer<TFactory: HomeCoordinatorChildFactoryProtocol> {
     private let search: TabCoordinatorProtocol
     private let settings: TabCoordinatorProtocol

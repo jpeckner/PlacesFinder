@@ -2,7 +2,7 @@
 // DO NOT EDIT
 import Foundation
 
-struct AppColorings: Decodable, Equatable {
+struct AppColorings: Decodable, Equatable, Sendable {
     let standard: AppStandardColorings
     let launch: LaunchViewColorings
     let navBar: NavBarColorings

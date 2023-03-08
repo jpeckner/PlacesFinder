@@ -8,7 +8,7 @@ enum HomeCoordinatorNode: NodeProtocol {}
 extension HomeCoordinator: RouterProtocol {}
 
 extension HomeCoordinator {
-    static var nodeBox: NodeBox {
+    nonisolated static var nodeBox: NodeBox {
         return HomeCoordinatorNode.nodeBox
     }
 }

@@ -26,7 +26,7 @@ import Shared
 import UIKit
 
 // sourcery: AutoMockable
-protocol SearchPresenterProtocol {
+@MainActor protocol SearchPresenterProtocol {
     var rootViewController: UIViewController { get }
 
     func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,

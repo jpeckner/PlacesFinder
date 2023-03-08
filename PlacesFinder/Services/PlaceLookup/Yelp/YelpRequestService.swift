@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-class YelpRequestService: PlaceLookupServiceProtocol {
+actor YelpRequestService: PlaceLookupServiceProtocol {
 
     private typealias YelpServiceResult = DecodableServiceResult<YelpPageResponse, YelpErrorPayload>
 
@@ -40,15 +40,19 @@ class YelpRequestService: PlaceLookupServiceProtocol {
         self.requestBuilder = YelpRequestBuilder(config: config)
     }
 
-    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams,
-                                      resultsPerPage: Int) throws -> PlaceLookupPageRequestToken {
+    nonisolated func buildInitialPageRequestToken(
+        placeLookupParams: PlaceLookupParams,
+        resultsPerPage: Int
+    ) throws -> PlaceLookupPageRequestToken {
         let tokenResult = requestBuilder.buildPageRequestToken(placeLookupParams,
                                                                startingIndex: 0,
                                                                resultsPerPage: resultsPerPage)
         return try tokenResult.get()
     }
 
-    func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken {
+    nonisolated func buildInitialPageRequestToken(
+        placeLookupParams: PlaceLookupParams
+    ) throws -> PlaceLookupPageRequestToken {
         return try buildInitialPageRequestToken(placeLookupParams: placeLookupParams,
                                                 resultsPerPage: YelpRequestService.maxResultsPerPage)
     }

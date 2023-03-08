@@ -38,6 +38,7 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
 
     private let dismissalSubject: PassthroughSubject<Void, Never>
 
+    @MainActor
     init(store: TStore,
          state: AppState) {
         let dismissalSubject = PassthroughSubject<Void, Never>()

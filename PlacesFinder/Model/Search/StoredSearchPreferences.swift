@@ -24,7 +24,7 @@
 
 import Foundation
 
-struct StoredSearchPreferences: Equatable, Codable {
+struct StoredSearchPreferences: Equatable, Codable, Sendable {
     let distance: SearchDistance
     let sorting: PlaceLookupSorting
 }

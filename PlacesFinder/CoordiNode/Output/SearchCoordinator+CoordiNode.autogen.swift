@@ -8,7 +8,7 @@ enum SearchCoordinatorNode: DestinationNodeProtocol {}
 extension SearchCoordinator: DestinationCoordinatorProtocol {}
 
 extension SearchCoordinator {
-    static var destinationNodeBox: DestinationNodeBox {
+    nonisolated static var destinationNodeBox: DestinationNodeBox {
         return SearchCoordinatorNode.destinationNodeBox
     }
 }

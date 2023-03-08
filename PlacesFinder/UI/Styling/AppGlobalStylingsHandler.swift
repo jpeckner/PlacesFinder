@@ -25,12 +25,14 @@
 import Shared
 
 // sourcery: AutoMockable
-protocol AppGlobalStylingsHandlerProtocol {
+protocol AppGlobalStylingsHandlerProtocol: Sendable {
+    @MainActor
     func apply(_ appSkin: AppSkin)
 }
 
-class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
+final class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
 
+    @MainActor
     func apply(_ appSkin: AppSkin) {
         let navBarAppearance = UINavigationBar.appearance()
         navBarAppearance.barTintColor = appSkin.colorings.navBar.viewColoring.backgroundColor

@@ -8,7 +8,7 @@ enum SettingsChildCoordinatorNode: DestinationNodeProtocol {}
 extension SettingsChildCoordinator: DestinationCoordinatorProtocol {}
 
 extension SettingsChildCoordinator {
-    static var destinationNodeBox: DestinationNodeBox {
+    nonisolated static var destinationNodeBox: DestinationNodeBox {
         return SettingsChildCoordinatorNode.destinationNodeBox
     }
 }

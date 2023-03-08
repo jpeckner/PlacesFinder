@@ -16,7 +16,7 @@ import SwiftDux
         {% endfor %}
 {% endmacro %}
 
-enum AppLinkType: Equatable {
+enum AppLinkType: Equatable, Sendable {
 {% for type in types.all where type.based.AppLinkPayloadProtocol %}
     case {% call extractEnumCaseName type %}({{ type.name }})
 {% endfor %}

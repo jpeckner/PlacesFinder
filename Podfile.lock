@@ -63,10 +63,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CoordiNode:
-    :commit: 67ead5d20a1ee156573832c67758da857a48fe16
+    :commit: 04c4bd916b55917b1874d5f78e69d30d39155689
     :git: https://github.com/jpeckner/CoordiNode.git
   CoordiNodeTestComponents:
-    :commit: 67ead5d20a1ee156573832c67758da857a48fe16
+    :commit: 04c4bd916b55917b1874d5f78e69d30d39155689
     :git: https://github.com/jpeckner/CoordiNode.git
   Shared:
     :commit: c330d7fd99b637da5df13414127ae8f83cc09e72

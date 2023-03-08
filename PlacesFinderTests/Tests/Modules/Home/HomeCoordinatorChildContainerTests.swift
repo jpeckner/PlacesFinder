@@ -24,26 +24,49 @@
 
 import Nimble
 import Quick
+import SharedTestComponents
 import UIKit
 
 class HomeCoordinatorChildContainerTests: QuickSpec {
 
+    // swiftlint:disable force_try
+    // swiftlint:disable force_unwrapping
+    // swiftlint:disable function_body_length
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
-        let stubSearchRootController = UIViewController()
-        let stubSearchCoordinator = TabCoordinatorProtocolMock()
-        stubSearchCoordinator.rootViewController = stubSearchRootController
+        typealias ChildContainerType = HomeCoordinatorChildContainer<HomeCoordinatorChildFactoryProtocolMock<MockAppStore>>
 
-        let stubSettingsRootController = UIViewController()
-        let stubSettingsCoordinator = TabCoordinatorProtocolMock()
-        stubSettingsCoordinator.rootViewController = stubSettingsRootController
+        struct Dependencies {
+            let stubSearchRootController = UIViewController()
+            let stubSearchCoordinator = TabCoordinatorProtocolMock()
+            let stubSettingsRootController = UIViewController()
+            let stubSettingsCoordinator = TabCoordinatorProtocolMock()
 
-        var sut: HomeCoordinatorChildContainer<HomeCoordinatorChildFactoryProtocolMock<MockAppStore>>!
+            @MainActor init() {
+                stubSearchCoordinator.rootViewController = stubSearchRootController
+                stubSettingsCoordinator.rootViewController = stubSettingsRootController
+            }
+        }
+
+        struct TestData {
+            let sut: ChildContainerType
+            let dependencies: Dependencies
+        }
+
+        let testStorage = AsyncStorage<TestData>()
 
         beforeEach {
-            sut = HomeCoordinatorChildContainer(search: stubSearchCoordinator,
-                                                settings: stubSettingsCoordinator)
+            Task { @MainActor in
+                let dependencies = Dependencies()
+                let sut = ChildContainerType(search: dependencies.stubSearchCoordinator,
+                                             settings: dependencies.stubSettingsCoordinator)
+                let testData = TestData(sut: sut,
+                                        dependencies: dependencies)
+                await testStorage.setElement(testData)
+            }
+            try! await Task.sleep(nanoseconds: 100_000_000)
         }
 
         describe("init(childFactory:)") {
@@ -54,19 +77,25 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
                 receivedArgs = []
 
                 let mockFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>()
+                let dependencies = await testStorage.element!.dependencies
+
                 mockFactory.buildCoordinatorForClosure = {
                     receivedArgs.append($0)
 
                     switch $0 {
                     case .search:
-                        return stubSearchCoordinator
+                        return dependencies.stubSearchCoordinator
                     case .settings,
                          .settingsChild:
-                        return stubSettingsCoordinator
+                        return dependencies.stubSettingsCoordinator
                     }
                 }
 
-                sut = HomeCoordinatorChildContainer(childFactory: mockFactory)
+                let updatedTestData = await TestData(
+                    sut: HomeCoordinatorChildContainer(childFactory: mockFactory),
+                    dependencies: dependencies
+                )
+                await testStorage.setElement(updatedTestData)
             }
 
             it("calls mockFactory.buildCoordinator() for each immediate child coordinator") {
@@ -77,9 +106,13 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
             }
 
             it("assigns each child property to the expected coordinator") {
-                expect(sut.coordinator(for: .search)) === stubSearchCoordinator
+                let testData = await testStorage.element!
 
-                expect(sut.coordinator(for: .settings)) === stubSettingsCoordinator
+                let searchResult = await testData.sut.coordinator(for: .search)
+                expect(searchResult) === testData.dependencies.stubSearchCoordinator
+
+                let settingsResult = await testData.sut.coordinator(for: .settings)
+                expect(settingsResult) === testData.dependencies.stubSettingsCoordinator
             }
 
         }
@@ -87,9 +120,13 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
         describe("init(search:settings:)") {
 
             it("assigns each child property to the expected coordinator") {
-                expect(sut.coordinator(for: .search)) === stubSearchCoordinator
+                let testData = await testStorage.element!
 
-                expect(sut.coordinator(for: .settings)) === stubSettingsCoordinator
+                let searchResult = await testData.sut.coordinator(for: .search)
+                expect(searchResult) === testData.dependencies.stubSearchCoordinator
+
+                let settingsResult = await testData.sut.coordinator(for: .settings)
+                expect(settingsResult) === testData.dependencies.stubSettingsCoordinator
             }
 
         }
@@ -97,11 +134,12 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
         describe("orderedChildCoordinators") {
 
             it("returns the coordinators in the expected order") {
-                let coordinators = sut.orderedChildCoordinators
+                let testData = await testStorage.element!
+                let coordinators = await testData.sut.orderedChildCoordinators
 
                 expect(coordinators.count) == 2
-                expect(coordinators[0]) === stubSearchCoordinator
-                expect(coordinators[1]) === stubSettingsCoordinator
+                expect(coordinators[0]) === testData.dependencies.stubSearchCoordinator
+                expect(coordinators[1]) === testData.dependencies.stubSettingsCoordinator
             }
 
         }
@@ -109,21 +147,17 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
         describe("orderedChildViewControllers") {
 
             it("returns the coordinators' view controllers in the expected order") {
-                let viewControllers = sut.orderedChildViewControllers
+                let testData = await testStorage.element!
+                let viewControllers = await testData.sut.orderedChildViewControllers
 
                 expect(viewControllers.count) == 2
-                expect(viewControllers[0]) === stubSearchRootController
-                expect(viewControllers[1]) === stubSettingsRootController
+                expect(viewControllers[0]) === testData.dependencies.stubSearchRootController
+                expect(viewControllers[1]) === testData.dependencies.stubSettingsRootController
             }
 
         }
 
         describe("coordinator(childType:)") {
-
-            let expectedResults: [HomeCoordinatorImmediateDescendent: TabCoordinatorProtocol] = [
-                .search: stubSearchCoordinator,
-                .settings: stubSettingsCoordinator,
-            ]
 
             for descendent in HomeCoordinatorImmediateDescendent.allCases {
 
@@ -131,10 +165,16 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
                     var result: TabCoordinatorProtocol!
 
                     beforeEach {
-                        result = sut.coordinator(for: descendent)
+                        result = await testStorage.element!.sut.coordinator(for: descendent)
                     }
 
                     it("returns the expected coordinator") {
+                        let testData = await testStorage.element!
+                        let expectedResults: [HomeCoordinatorImmediateDescendent: TabCoordinatorProtocol] = [
+                            .search: testData.dependencies.stubSearchCoordinator,
+                            .settings: testData.dependencies.stubSettingsCoordinator,
+                        ]
+
                         expect(result) === expectedResults[descendent]
                     }
                 }

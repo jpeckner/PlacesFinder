@@ -31,6 +31,7 @@ protocol SearchDetailsSectionProtocol {
     var cellType: UITableViewCell.Type { get }
     var isSelectable: Bool { get }
 
+    @MainActor
     func configureCell(_ cell: UITableViewCell,
                        colorings: SearchDetailsViewColorings) throws
 }

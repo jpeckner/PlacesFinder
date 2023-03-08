@@ -24,7 +24,7 @@
 
 import SwiftDux
 
-struct AppCopyContentState: Equatable {
+struct AppCopyContentState: Equatable, Sendable {
     let copyContent: AppCopyContent
 }
 

@@ -69,6 +69,7 @@ class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordina
     var buildLaunchCoordinatorReturnValue: AppCoordinatorChildProtocol!
     var buildLaunchCoordinatorClosure: (() -> AppCoordinatorChildProtocol)?
 
+    @MainActor
     func buildLaunchCoordinator() -> AppCoordinatorChildProtocol {
         buildLaunchCoordinatorCallsCount += 1
         if let buildLaunchCoordinatorClosure = buildLaunchCoordinatorClosure {
@@ -89,6 +90,7 @@ class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordina
     var buildCoordinatorForReturnValue: AppCoordinatorChildProtocol!
     var buildCoordinatorForClosure: ((AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol)?
 
+    @MainActor
     func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol {
         buildCoordinatorForCallsCount += 1
         buildCoordinatorForReceivedChildType = childType
@@ -101,7 +103,7 @@ class AppCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: AppCoordina
     }
 
 }
-class AppGlobalStylingsHandlerProtocolMock: AppGlobalStylingsHandlerProtocol {
+class AppGlobalStylingsHandlerProtocolMock: AppGlobalStylingsHandlerProtocol, @unchecked Sendable {
 
 
 
@@ -115,6 +117,7 @@ class AppGlobalStylingsHandlerProtocolMock: AppGlobalStylingsHandlerProtocol {
     var applyReceivedInvocations: [AppSkin] = []
     var applyClosure: ((AppSkin) -> Void)?
 
+    @MainActor
     func apply(_ appSkin: AppSkin) {
         applyCallsCount += 1
         applyReceivedAppSkin = appSkin
@@ -150,7 +153,7 @@ class AppLinkTypeBuilderProtocolMock: AppLinkTypeBuilderProtocol {
     }
 
 }
-class AppSkinServiceProtocolMock: AppSkinServiceProtocol {
+class AppSkinServiceProtocolMock: AppSkinServiceProtocol, @unchecked Sendable {
 
 
 
@@ -190,6 +193,7 @@ class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     }
     var startClosure: (() -> Void)?
 
+    @MainActor
     func start() {
         startCallsCount += 1
         startClosure?()
@@ -203,6 +207,7 @@ class ChildCoordinatorProtocolMock: ChildCoordinatorProtocol {
     }
     var finishClosure: (() async -> Void)?
 
+    @MainActor
     func finish() async {
         finishCallsCount += 1
         await finishClosure?()
@@ -224,6 +229,7 @@ class HomeCoordinatorChildFactoryProtocolMock<TStore: StoreProtocol>: HomeCoordi
     var buildCoordinatorForReturnValue: TabCoordinatorProtocol!
     var buildCoordinatorForClosure: ((HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol)?
 
+    @MainActor
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol {
         buildCoordinatorForCallsCount += 1
         buildCoordinatorForReceivedDestinationDescendent = destinationDescendent
@@ -395,7 +401,7 @@ class NavigationBarViewModelBuilderProtocolMock: NavigationBarViewModelBuilderPr
     }
 
 }
-class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol {
+class PlaceLookupServiceProtocolMock: PlaceLookupServiceProtocol, @unchecked Sendable {
 
 
 
@@ -834,7 +840,7 @@ class SearchDetailsViewModelBuilderProtocolMock: SearchDetailsViewModelBuilderPr
     }
 
 }
-class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol {
+class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol, @unchecked Sendable {
 
 
 
@@ -1407,6 +1413,7 @@ class TabCoordinatorProtocolMock: TabCoordinatorProtocol {
     var relinquishActiveCompletionReceivedInvocations: [((() -> Void))?] = []
     var relinquishActiveCompletionClosure: (((() -> Void)?) -> Void)?
 
+    @MainActor
     func relinquishActive(completion: (() -> Void)?) {
         relinquishActiveCompletionCallsCount += 1
         relinquishActiveCompletionReceivedCompletion = completion

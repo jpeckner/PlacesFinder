@@ -35,7 +35,7 @@ extension Search {
         EquatableKeyPath(\AppState.routerState)
     ]
 
-    struct State: StateProtocol {
+    struct State: StateProtocol, Sendable {
         let searchActivityState: ActivityState
     }
 

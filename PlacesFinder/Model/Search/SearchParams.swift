@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-struct SearchParams: Equatable {
+struct SearchParams: Equatable, Sendable {
     let keywords: NonEmptyString
 }
 

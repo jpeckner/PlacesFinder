@@ -125,7 +125,8 @@ extension SearchDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellViewModel = viewModel.cellViewModel(sectionIndex: indexPath.section,
                                                     rowIndex: indexPath.row)
-        let cell = tableView.dequeueReusableCell(withCellType: cellViewModel.cellType, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withCellType: cellViewModel.cellType,
+                                                 for: indexPath)
 
         AssertionHandler.assertIfErrorThrown {
             try cellViewModel.configureCell(cell,

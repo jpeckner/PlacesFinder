@@ -30,7 +30,7 @@ import UIKit
 
 // sourcery: linkPayloadType = "EmptySearchLinkPayload"
 // sourcery: linkPayloadType = "SearchLinkPayload"
-class SearchCoordinator<
+@MainActor class SearchCoordinator<
     TAppStore: StoreProtocol,
     TSearchStore: StoreProtocol
 > where TAppStore.TAction == AppAction, TAppStore.TState == AppState,
@@ -95,11 +95,11 @@ class SearchCoordinator<
 
     private func handleStateUpdate(appState: AppState,
                                    searchState: Search.State) {
-        DispatchQueue.main.async { [weak self] in
-            self?.presentViews(appState: appState,
-                               searchState: searchState)
+        Task { @MainActor in
+            presentViews(appState: appState,
+                         searchState: searchState)
 
-            self?.processLinkPayload(appState: appState)
+            processLinkPayload(appState: appState)
         }
     }
 

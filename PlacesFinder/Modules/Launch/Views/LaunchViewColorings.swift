@@ -26,7 +26,7 @@ import Shared
 import UIKit
 
 // sourcery: fieldName = "launch"
-struct LaunchViewColorings: AppColoringProtocol {
+struct LaunchViewColorings: AppColoringProtocol, Sendable {
     let viewColoring: ViewColoring
     let spinnerColor: FillColoring
 }

@@ -26,7 +26,7 @@ import Shared
 import UIKit
 
 // sourcery: AutoMockable
-protocol LaunchPresenterProtocol {
+@MainActor protocol LaunchPresenterProtocol {
     var rootViewController: UIViewController { get }
 
     func startSpinner()

@@ -27,7 +27,7 @@ import Shared
 import SwiftDux
 
 protocol AppCoordinatorChildProtocol: ChildCoordinatorProtocol {
-    static var appCoordinatorImmediateDescendent: AppCoordinatorImmediateDescendent { get }
+    nonisolated static var appCoordinatorImmediateDescendent: AppCoordinatorImmediateDescendent { get }
 }
 
 extension HomeCoordinator: AppCoordinatorChildProtocol {
@@ -56,7 +56,10 @@ protocol AppCoordinatorChildFactoryProtocol {
     var serviceContainer: ServiceContainer { get }
     var launchStatePrism: LaunchStatePrismProtocol { get }
 
+    @MainActor
     func buildLaunchCoordinator() -> AppCoordinatorChildProtocol
+
+    @MainActor
     func buildCoordinator(for childType: AppCoordinatorDestinationDescendent) -> AppCoordinatorChildProtocol
 }
 

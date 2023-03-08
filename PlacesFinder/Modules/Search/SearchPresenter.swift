@@ -26,6 +26,7 @@ import Shared
 import SwiftDux
 import UIKit
 
+@MainActor
 class SearchPresenter: SearchPresenterProtocol {
 
     private let searchContainerViewController: SearchContainerViewController

@@ -33,6 +33,7 @@ import SwiftDux
 protocol HomeCoordinatorChildFactoryProtocol {
     associatedtype TStore: StoreProtocol where TStore.TAction == AppAction, TStore.TState == AppState
 
+    @MainActor
     func buildCoordinator(for destinationDescendent: HomeCoordinatorDestinationDescendent) -> TabCoordinatorProtocol
 }
 
@@ -64,6 +65,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         }
     }
 
+    @MainActor
     private func buildSearchCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         let appStoreRelay = SubstatesSubscriberRelay(
             store: store,
@@ -132,6 +134,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
                                  navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
 
+    @MainActor
     private func buildSettingsCoordinator(_ tabItemProperties: TabItemProperties) -> TabCoordinatorProtocol {
         // swiftlint:disable:next trailing_closure
         let searchPreferencesActionSubscriber = AnySubscriber<SearchPreferencesAction, Never>(

@@ -29,7 +29,7 @@ protocol SearchDistanceTypeProtocol {
     var measurement: Measurement<UnitLength> { get }
 }
 
-enum SearchDistance: Equatable, AutoCodable {
+enum SearchDistance: Equatable, AutoCodable, Sendable {
     case imperial(SearchDistanceImperial)
     case metric(SearchDistanceMetric)
 }

@@ -27,11 +27,13 @@ import Foundation
 import Shared
 import SwiftDux
 
+@MainActor
 class AppCoordinator<TFactory: AppCoordinatorChildFactoryProtocol> {
 
     private let mainWindow: UIWindowProtocol
     private let childFactory: TFactory
     private let payloadBuilder: AppLinkTypeBuilderProtocol
+
     private var childCoordinator: AppCoordinatorChildProtocol {
         didSet {
             didSetChildCoordinator()
@@ -114,13 +116,17 @@ extension AppCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 
-    func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        dispatchDestinationForLinkType(state)
+    nonisolated func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
+        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
 
-        let routingHandler = childFactory.serviceContainer.appRoutingHandler
-        routingHandler.determineRouting(state,
-                                        updatedSubstates: updatedSubstates,
-                                        router: self)
+        Task { @MainActor in
+            dispatchDestinationForLinkType(state)
+
+            let routingHandler = childFactory.serviceContainer.appRoutingHandler
+            routingHandler.determineRouting(state: state,
+                                            updatedRoutingSubstates: updatedRoutingSubstates,
+                                            router: self)
+        }
     }
 
     private func dispatchDestinationForLinkType(_ state: AppState) {

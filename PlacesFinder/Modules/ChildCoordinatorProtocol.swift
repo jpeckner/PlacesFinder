@@ -27,8 +27,12 @@ import UIKit
 
 // sourcery: AutoMockable
 protocol ChildCoordinatorProtocol {
+    @MainActor
     var rootViewController: UIViewController { get }
 
+    @MainActor
     func start()
+
+    @MainActor
     func finish() async
 }

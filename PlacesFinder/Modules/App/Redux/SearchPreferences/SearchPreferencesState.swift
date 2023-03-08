@@ -26,7 +26,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SearchPreferencesState: Equatable {
+struct SearchPreferencesState: Equatable, Sendable {
     let stored: StoredSearchPreferences
 }
 

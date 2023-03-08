@@ -151,6 +151,7 @@ extension SearchLookupParentController {
 
 extension SearchLookupParentController: SearchResultsViewControllerDelegate {
 
+    @MainActor
     func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
         let updatedHeight = deltaY > 0 ?
             // Prevent setting constant < 0

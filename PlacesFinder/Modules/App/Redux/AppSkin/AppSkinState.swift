@@ -25,7 +25,7 @@
 import Foundation
 import SwiftDux
 
-struct AppSkinState: GuaranteedEntityState, Equatable {
+struct AppSkinState: GuaranteedEntityState, Equatable, Sendable {
     typealias TEntity = AppSkin
     static let fallbackValue = AppSkin(colorings: AppColorings.defaultColorings)
 

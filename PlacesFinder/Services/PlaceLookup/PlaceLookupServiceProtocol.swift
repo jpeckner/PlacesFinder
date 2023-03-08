@@ -28,7 +28,7 @@ import Shared
 typealias PlaceLookupResult = Result<PlaceLookupResponse, PlaceLookupServiceError>
 
 // sourcery:AutoMockable
-protocol PlaceLookupServiceProtocol: AnyObject {
+protocol PlaceLookupServiceProtocol: AnyObject, Sendable {
     func buildInitialPageRequestToken(placeLookupParams: PlaceLookupParams) throws -> PlaceLookupPageRequestToken
 
     func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult

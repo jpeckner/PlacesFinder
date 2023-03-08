@@ -29,7 +29,8 @@ import SwiftDux
 import UIKit
 
 // sourcery: linkPayloadType = "SettingsLinkPayload"
-class SettingsCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
+@MainActor class SettingsCoordinator<TStore: StoreProtocol>
+    where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
     private let presenter: SettingsPresenterProtocol
@@ -138,15 +139,20 @@ extension SettingsCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 
-    func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        presentViews(state,
-                     updatedSubstates: updatedSubstates)
+    nonisolated func newState(state: AppState,
+                              updatedSubstates: Set<PartialKeyPath<AppState>>) {
+        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
 
-        processLinkPayload(state)
+        Task { @MainActor in
+            presentViews(state,
+                         updatedRoutingSubstates: updatedRoutingSubstates)
+
+            processLinkPayload(state)
+        }
     }
 
     private func presentViews(_ state: AppState,
-                              updatedSubstates: Set<PartialKeyPath<AppState>>) {
+                              updatedRoutingSubstates: UpdatedRoutingSubstates) {
         let appCopyContent = state.appCopyContentState.copyContent
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
@@ -157,8 +163,8 @@ extension SettingsCoordinator: SubstatesSubscriber {
                                    titleViewModel: titleViewModel,
                                    appSkin: state.appSkinState.currentValue)
 
-        serviceContainer.appRoutingHandler.determineRouting(state,
-                                                            updatedSubstates: updatedSubstates,
+        serviceContainer.appRoutingHandler.determineRouting(state: state,
+                                                            updatedRoutingSubstates: updatedRoutingSubstates,
                                                             router: self)
     }
 

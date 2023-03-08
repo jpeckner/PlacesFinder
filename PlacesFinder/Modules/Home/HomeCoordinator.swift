@@ -27,6 +27,7 @@ import Shared
 import SwiftDux
 import UIKit
 
+@MainActor
 class HomeCoordinator<TFactory: HomeCoordinatorChildFactoryProtocol> {
 
     private let store: TFactory.TStore
@@ -107,10 +108,14 @@ extension HomeCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 
-    func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        appRoutingHandler.determineRouting(state,
-                                           updatedSubstates: updatedSubstates,
-                                           router: self)
+    nonisolated func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
+        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
+
+        Task { @MainActor in
+            appRoutingHandler.determineRouting(state: state,
+                                               updatedRoutingSubstates: updatedRoutingSubstates,
+                                               router: self)
+        }
     }
 
 }
