@@ -22,20 +22,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
-import UIKit
+import SwiftUI
 
-class SearchRetryViewController: SingleContentViewController {
+class SearchRetryViewController: UIHostingController<SearchCTAView> {
 
     private let ctaView: SearchCTAView
 
-    init(viewModel: SearchRetryViewModel,
-         colorings: SearchCTAViewColorings) {
-        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel,
-                                     colorings: colorings)
+    init(viewModel: SearchRetryViewModel) {
+        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel)
 
-        super.init(contentView: ctaView,
-                   viewColoring: colorings.viewColoring)
+        super.init(rootView: ctaView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,10 +42,8 @@ class SearchRetryViewController: SingleContentViewController {
 
 extension SearchRetryViewController {
 
-    func configure(_ viewModel: SearchRetryViewModel,
-                   colorings: SearchCTAViewColorings) {
-        ctaView.configure(viewModel.ctaViewModel,
-                          colorings: colorings)
+    func configure(viewModel: SearchRetryViewModel) {
+        ctaView.viewModel.value = viewModel.ctaViewModel
     }
 
 }

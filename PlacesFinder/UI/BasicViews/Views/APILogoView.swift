@@ -23,26 +23,30 @@
 //  SOFTWARE.
 
 import Shared
+import SwiftUI
 import UIKit
 
-class APILogoView: UIImageView {
+struct APILogoView: View {
 
-    static let widthToHeightRatio: CGFloat = #imageLiteral(resourceName: "Yelp_trademark_RGB").widthToHeightRatio
+    // Per https://www.yelp.com/brand#content - "We require that our logo be shown no smaller than...64dp in width
+    // for screens."
     static let minWidth: CGFloat = 64.0
+    static let widthToHeightRatio: CGFloat = #imageLiteral(resourceName: "Yelp_trademark_RGB").widthToHeightRatio
 
-    init(viewColoring: ViewColoring) {
-        let apiLogo = viewColoring.apiLogo
+    private let viewColoring: ViewColoring
+    private let additionalWidth: CGFloat
 
-        super.init(image: apiLogo)
-
-        // Per https://www.yelp.com/brand#content - "We require that our logo be shown no smaller than...64dp in width
-        // for screens."
-        widthAnchor.constraint(greaterThanOrEqualToConstant: APILogoView.minWidth).isActive = true
-        alignProportions(with: apiLogo)
+    init(viewColoring: ViewColoring,
+         additionalWidth: CGFloat = .zero) {
+        self.viewColoring = viewColoring
+        self.additionalWidth = additionalWidth
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    var body: some View {
+        Image(uiImage: viewColoring.apiLogo)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: APILogoView.minWidth + additionalWidth)
     }
 
 }

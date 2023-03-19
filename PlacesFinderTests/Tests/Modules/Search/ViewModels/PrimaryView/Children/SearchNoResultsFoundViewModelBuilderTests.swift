@@ -45,11 +45,15 @@ class SearchNoResultsFoundViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(stubCopyContent)
+                result = sut.buildViewModel(copyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.standard)
             }
 
             it("returns the expected infoViewModel") {
-                expect(result.messageViewModel) == SearchMessageViewModel(copyContent: stubCopyContent)
+                expect(result.messageViewModel) == SearchMessageViewModel(
+                    copyContent: stubCopyContent,
+                    colorings: AppColorings.defaultColorings.standard
+                )
             }
 
         }

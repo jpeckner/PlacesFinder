@@ -38,8 +38,10 @@ enum SearchLookupChild: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchLookupChildBuilderProtocol {
-    func buildChild(_ loadState: Search.LoadState,
+    func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
+                    standardColorings: AppStandardColorings,
+                    searchCTAColorings: SearchCTAViewColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
@@ -66,13 +68,16 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
-    func buildChild(_ loadState: Search.LoadState,
+    func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
+                    standardColorings: AppStandardColorings,
+                    searchCTAColorings: SearchCTAViewColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
             let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
-                copyContent: appCopyContent.searchInstructions
+                copyContent: appCopyContent.searchInstructions,
+                colorings: standardColorings
             )
             return .instructions(instructionsViewModel)
         case .locationRequested,
@@ -89,12 +94,16 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
                 locationUpdateRequestBlock: locationUpdateRequestBlock
             ))
         case .noResultsFound:
-            let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(appCopyContent.searchNoResults)
+            let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(
+                copyContent: appCopyContent.searchNoResults,
+                colorings: standardColorings
+            )
             return .noResults(noResultsViewModel)
         case let .failure(submittedParams, _):
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
-            return .failure(retryViewModelBuilder.buildViewModel(appCopyContent.searchRetry) {
+            return .failure(retryViewModelBuilder.buildViewModel(copyContent: appCopyContent.searchRetry,
+                                                                 colorings: searchCTAColorings) {
                 let action = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 _ = actionSubscriber.receive(.searchActivity(action))

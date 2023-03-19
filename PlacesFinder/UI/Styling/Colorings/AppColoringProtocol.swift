@@ -35,7 +35,7 @@ import Shared
 // possibility of incompatible colors, it does greatly reduce the risk.
 protocol AppColoringProtocol: Decodable, Equatable {}
 
-protocol AppStandardColoringsProtocol {
+protocol AppStandardColoringsProtocol: Equatable {
     var viewColoring: ViewColoring { get }
     var titleTextColoring: TextColoring { get }
     var bodyTextColoring: TextColoring { get }

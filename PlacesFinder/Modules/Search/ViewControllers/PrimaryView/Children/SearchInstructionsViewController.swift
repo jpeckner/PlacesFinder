@@ -22,36 +22,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
-import UIKit
+import SwiftUI
 
-class SearchInstructionsViewController: SingleContentViewController {
+class SearchInstructionsViewController: UIHostingController<SearchInstructionsView> {
 
-    private let instructionsView: SearchInstructionsView
+    let instructionsView: SearchInstructionsView
 
-    init(viewModel: SearchInstructionsViewModel,
-         colorings: AppStandardColorings) {
-        self.instructionsView = SearchInstructionsView(viewModel: viewModel,
-                                                       colorings: colorings)
+    init(viewModel: SearchInstructionsViewModel) {
+        self.instructionsView = SearchInstructionsView(viewModel: viewModel)
 
-        super.init(contentView: instructionsView,
-                   viewColoring: colorings.viewColoring)
+        super.init(rootView: instructionsView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchInstructionsViewController {
-
-    func configure(_ viewModel: SearchInstructionsViewModel,
-                   colorings: AppStandardColorings) {
-        viewColoring = colorings.viewColoring
-
-        instructionsView.configure(viewModel,
-                                   colorings: colorings)
     }
 
 }

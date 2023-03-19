@@ -108,7 +108,8 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
             }
 
             child = .settingsChild(IgnoredEquatable(SettingsChildCoordinator(store: store,
-                                                                             state: state)))
+                                                                             state: state,
+                                                                             skin: state.appSkinState.currentValue)))
         }
     }
 

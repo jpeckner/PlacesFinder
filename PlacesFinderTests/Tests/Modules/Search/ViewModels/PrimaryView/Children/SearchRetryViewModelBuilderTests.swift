@@ -50,13 +50,16 @@ class SearchRetryViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 hasTriggeredCTABlock = false
-                result = sut.buildViewModel(stubCopyContent) {
+                result = sut.buildViewModel(copyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.searchCTA) {
                     hasTriggeredCTABlock = true
                 }
             }
 
             it("returns the expected infoViewModel") {
-                expect(result.ctaViewModel.infoViewModel) == stubCopyContent.staticInfoViewModel
+                expect(result.ctaViewModel.infoViewModel) == stubCopyContent.staticInfoViewModel(
+                    colorings: AppColorings.defaultColorings.searchCTA
+                )
             }
 
             it("returns the expected ctaTitle") {

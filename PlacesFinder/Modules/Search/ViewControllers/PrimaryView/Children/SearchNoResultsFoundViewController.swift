@@ -23,19 +23,16 @@
 //  SOFTWARE.
 
 import Shared
-import UIKit
+import SwiftUI
 
-class SearchNoResultsFoundViewController: SingleContentViewController {
+class SearchNoResultsFoundViewController: UIHostingController<StaticInfoSUIView<AppStandardColorings>> {
 
-    private let messageView: SearchMessageView
+    private let messageView: StaticInfoSUIView<AppStandardColorings>
 
-    init(viewModel: SearchNoResultsFoundViewModel,
-         colorings: AppStandardColorings) {
-        self.messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
-                                             colorings: colorings)
+    init(viewModel: SearchNoResultsFoundViewModel) {
+        self.messageView = StaticInfoSUIView(viewModel: viewModel.messageViewModel.infoViewModel)
 
-        super.init(contentView: messageView,
-                   viewColoring: colorings.viewColoring)
+        super.init(rootView: messageView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,10 +43,8 @@ class SearchNoResultsFoundViewController: SingleContentViewController {
 
 extension SearchNoResultsFoundViewController {
 
-    func configure(_ viewModel: SearchNoResultsFoundViewModel,
-                   colorings: AppStandardColorings) {
-        messageView.configure(viewModel.messageViewModel,
-                              colorings: colorings)
+    func configure(viewModel: SearchNoResultsFoundViewModel) {
+        messageView.viewModel.value = viewModel.messageViewModel.infoViewModel
     }
 
 }

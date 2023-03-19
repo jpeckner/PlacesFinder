@@ -28,12 +28,9 @@ import SwiftUI
 struct SettingsChildView: View {
 
     private let viewModel: SettingsChildViewModel
-    private let colorings: SettingsChildViewColorings
 
-    init(viewModel: SettingsChildViewModel,
-         colorings: SettingsChildViewColorings) {
+    init(viewModel: SettingsChildViewModel) {
         self.viewModel = viewModel
-        self.colorings = colorings
     }
 
     var body: some View {
@@ -41,10 +38,7 @@ struct SettingsChildView: View {
             alignment: .center,
             spacing: 16
         ) {
-            StaticInfoSUIView(
-                viewModel: viewModel.infoViewModel,
-                colorings: colorings
-            )
+            StaticInfoSUIView(viewModel: viewModel.infoViewModel)
 
             Button(
                 viewModel.ctaTitle,
@@ -52,7 +46,7 @@ struct SettingsChildView: View {
             )
             .modifier(
                 textStyleClass: .ctaButton,
-                textColoring: colorings.ctaTextColoring
+                textColoring: viewModel.infoViewModel.colorings.ctaTextColoring
             )
 
             Spacer()
@@ -74,11 +68,12 @@ struct SettingsChildView_Previews: PreviewProvider {
         return SettingsChildView(
             // swiftlint:disable:next trailing_closure
             viewModel: SettingsChildViewModel(
-                infoViewModel: appCopyContent.settingsChildView.staticInfoViewModel,
+                infoViewModel: appCopyContent.settingsChildView.staticInfoViewModel(
+                    colorings: appColorings.settingsChild
+                ),
                 ctaTitle: "Dismiss",
                 ctaBlock: {}
-            ),
-            colorings: appColorings.settingsChild
+            )
         )
     }
 

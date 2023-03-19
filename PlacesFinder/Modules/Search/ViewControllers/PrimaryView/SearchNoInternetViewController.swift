@@ -23,19 +23,17 @@
 //  SOFTWARE.
 
 import Shared
-import UIKit
+import SwiftUI
 
-class SearchNoInternetViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
+class SearchNoInternetViewController: UIHostingController<StaticInfoSUIView<AppStandardColorings>>,
+                                      SearchPrimaryViewControllerProtocol {
 
-    private let messageView: SearchMessageView
+    private let messageView: StaticInfoSUIView<AppStandardColorings>
 
-    init(viewModel: SearchNoInternetViewModel,
-         colorings: AppStandardColorings) {
-        self.messageView = SearchMessageView(viewModel: viewModel.messageViewModel,
-                                             colorings: colorings)
+    init(viewModel: SearchNoInternetViewModel) {
+        self.messageView = StaticInfoSUIView(viewModel: viewModel.messageViewModel.infoViewModel)
 
-        super.init(contentView: messageView,
-                   viewColoring: colorings.viewColoring)
+        super.init(rootView: messageView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,12 +44,8 @@ class SearchNoInternetViewController: SingleContentViewController, SearchPrimary
 
 extension SearchNoInternetViewController {
 
-    func configure(_ viewModel: SearchNoInternetViewModel,
-                   colorings: AppStandardColorings) {
-        viewColoring = colorings.viewColoring
-
-        messageView.configure(viewModel.messageViewModel,
-                              colorings: colorings)
+    func configure(viewModel: SearchNoInternetViewModel) {
+        messageView.viewModel.value = viewModel.messageViewModel.infoViewModel
     }
 
 }

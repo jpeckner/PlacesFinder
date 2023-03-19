@@ -55,8 +55,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel,
-                                     colorings: appSkin.colorings.standard)
+        existingController.configure(viewModel: viewModel)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -75,8 +74,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel,
-                                     colorings: appSkin.colorings.searchCTA)
+        existingController.configure(viewModel: viewModel)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -182,8 +180,7 @@ private extension SearchPresenter {
     func buildNoInternetViewController(_ viewModel: SearchNoInternetViewModel,
                                        titleViewModel: NavigationBarTitleViewModel,
                                        appSkin: AppSkin) -> SearchNoInternetViewController {
-        let controller = SearchNoInternetViewController(viewModel: viewModel,
-                                                        colorings: appSkin.colorings.standard)
+        let controller = SearchNoInternetViewController(viewModel: viewModel)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller
@@ -194,8 +191,7 @@ private extension SearchPresenter {
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLocationDisabledViewController {
-        let controller = SearchLocationDisabledViewController(viewModel: viewModel,
-                                                              colorings: appSkin.colorings.searchCTA)
+        let controller = SearchLocationDisabledViewController(viewModel: viewModel)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

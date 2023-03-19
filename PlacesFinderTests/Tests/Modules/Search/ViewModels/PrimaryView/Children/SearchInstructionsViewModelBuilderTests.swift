@@ -40,14 +40,20 @@ class SearchInstructionsViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(copyContent: SearchInstructionsCopyContent.stubValue())
+                result = sut.buildViewModel(
+                    copyContent: SearchInstructionsCopyContent.stubValue(),
+                    colorings: AppColorings.defaultColorings.standard
+                )
             }
 
             it("returns its expected value") {
                 expect(result) == SearchInstructionsViewModel(
-                    infoViewModel: StaticInfoViewModel(imageName: "stubIconImageName",
-                                                       title: "stubTitle",
-                                                       description: "stubDescription"),
+                    infoViewModel: StaticInfoViewModel(
+                        imageName: "stubIconImageName",
+                        title: "stubTitle",
+                        description: "stubDescription",
+                        colorings: AppColorings.defaultColorings.standard
+                    ),
                     resultsSource: "stubResultsSource"
                 )
             }

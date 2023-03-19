@@ -24,11 +24,14 @@
 
 import Shared
 
+// swiftlint:disable line_length
 extension SearchCTAViewModel {
 
-    static func stubValue(infoViewModel: StaticInfoViewModel = .stubValue(),
-                          ctaTitle: String = "stubCTATitle",
-                          ctaBlock: SearchCTABlock? = nil) -> SearchCTAViewModel {
+    static func stubValue(
+        infoViewModel: StaticInfoViewModel<SearchCTAViewColorings> = .stubValue(colorings: AppColorings.defaultColorings.searchCTA),
+        ctaTitle: String = "stubCTATitle",
+        ctaBlock: SearchCTABlock? = nil
+    ) -> SearchCTAViewModel {
         return SearchCTAViewModel(infoViewModel: infoViewModel,
                                   ctaTitle: ctaTitle,
                                   ctaBlock: ctaBlock.map { IgnoredEquatable($0) })

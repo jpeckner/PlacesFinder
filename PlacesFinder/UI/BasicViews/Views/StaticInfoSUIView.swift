@@ -25,37 +25,34 @@
 import Shared
 import SwiftUI
 
-struct StaticInfoSUIView: View {
+struct StaticInfoSUIView<TColorings: AppStandardColoringsProtocol>: View {
 
-    private let viewModel: StaticInfoViewModel
-    private let colorings: AppStandardColoringsProtocol
+    @ObservedObject var viewModel: ValueObservable<StaticInfoViewModel<TColorings>>
 
-    init(viewModel: StaticInfoViewModel,
-         colorings: AppStandardColoringsProtocol) {
-        self.viewModel = viewModel
-        self.colorings = colorings
+    init(viewModel: StaticInfoViewModel<TColorings>) {
+        self.viewModel = ValueObservable(viewModel)
     }
 
     var body: some View {
         VStack {
-            Image(viewModel.imageName)
+            Image(viewModel.value.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 160)
 
-            Text(viewModel.title)
+            Text(viewModel.value.title)
                 .modifier(
                     textStyleClass: .title,
-                    textColoring: colorings.titleTextColoring
+                    textColoring: viewModel.value.colorings.titleTextColoring
                 )
                 .scaledToFit()
                 .minimumScaleFactor(0.25)
                 .lineLimit(1)
 
-            Text(viewModel.description)
+            Text(viewModel.value.description)
                 .modifier(
                     textStyleClass: .body,
-                    textColoring: colorings.bodyTextColoring
+                    textColoring: viewModel.value.colorings.bodyTextColoring
                 )
         }
         .padding(EdgeInsets(uniformInset: 16))
@@ -73,8 +70,7 @@ struct StaticInfoSUIView_Previews: PreviewProvider {
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
         return StaticInfoSUIView(
-            viewModel: appCopyContent.settingsChildView.staticInfoViewModel,
-            colorings: appColorings.standard
+            viewModel: appCopyContent.settingsChildView.staticInfoViewModel(colorings: appColorings.standard)
         )
     }
 

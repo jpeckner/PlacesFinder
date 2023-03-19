@@ -23,76 +23,53 @@
 //  SOFTWARE.
 
 import Shared
-import SnapKit
-import UIKit
+import SwiftUI
 
-class SearchCTAView: UIView {
+struct SearchCTAView: View {
 
-    let staticInfoView: StaticInfoView
-    let ctaButton: ActionableButton
+    @ObservedObject var viewModel: ValueObservable<SearchCTAViewModel>
 
-    init(viewModel: SearchCTAViewModel,
-         colorings: SearchCTAViewColorings) {
-        self.staticInfoView = StaticInfoView(viewModel: viewModel.infoViewModel,
-                                             colorings: colorings)
-        self.ctaButton = ActionableButton(touchUpInsideCallback: viewModel.ctaBlock?.value ?? {})
-
-        super.init(frame: .zero)
-
-        setupSubviews()
-        setupConstraints()
-        configure(viewModel,
-                  colorings: colorings)
+    init(viewModel: SearchCTAViewModel) {
+        self.viewModel = ValueObservable(viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var body: some View {
+        VStack {
+            StaticInfoSUIView(viewModel: viewModel.value.infoViewModel)
 
-    private func setupSubviews() {
-        addSubview(staticInfoView)
-        addSubview(ctaButton)
-    }
-
-    private func setupConstraints() {
-        configureMargins(top: 24.0,
-                         leading: 16.0,
-                         bottom: 8.0,
-                         trailing: 16.0)
-
-        staticInfoView.snp.makeConstraints { make in
-            make.leading.equalTo(snp.leadingMargin)
-            make.trailing.equalTo(snp.trailingMargin)
-            make.top.equalTo(snp.topMargin)
-        }
-
-        ctaButton.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.leading.greaterThanOrEqualTo(snp.leadingMargin)
-            make.trailing.lessThanOrEqualTo(snp.trailingMargin)
-            make.top.equalTo(staticInfoView.snp.bottom).offset(8.0)
-            make.bottom.lessThanOrEqualTo(snp.bottomMargin)
+            if let action = viewModel.value.ctaBlock {
+                Button(
+                    viewModel.value.ctaTitle,
+                    action: action.value
+                )
+                .modifier(
+                    textStyleClass: .ctaButton,
+                    textColoring: viewModel.value.infoViewModel.colorings.ctaTextColoring
+                )
+            }
         }
     }
 
 }
 
-extension SearchCTAView {
+#if DEBUG
 
-    func configure(_ viewModel: SearchCTAViewModel,
-                   colorings: SearchCTAViewColorings) {
-        staticInfoView.configure(viewModel.infoViewModel,
-                                 colorings: colorings)
+struct SearchCTAView_Previews: PreviewProvider {
 
-        if let ctaBlock = viewModel.ctaBlock {
-            ctaButton.touchUpInsideCallback = ctaBlock.value
-            ctaButton.setTitle(viewModel.ctaTitle, for: .normal)
-            ctaButton.configure(.ctaButton,
-                                textColoring: colorings.ctaTextColoring)
-            ctaButton.isHidden = false
-        } else {
-            ctaButton.isHidden = true
-        }
+    static var previews: some View {
+        // swiftlint:disable:next force_try
+        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+        let appColorings = AppColorings.defaultColorings
+
+        return SearchCTAView(
+            // swiftlint:disable:next trailing_closure
+            viewModel: appCopyContent.searchRetry.ctaViewModel(
+                colorings: appColorings.searchCTA,
+                ctaBlock: {}
+            )
+        )
     }
 
 }
+
+#endif

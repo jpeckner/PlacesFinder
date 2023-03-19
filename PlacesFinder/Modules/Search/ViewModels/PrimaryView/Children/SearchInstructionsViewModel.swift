@@ -26,7 +26,7 @@ import Foundation
 import Shared
 
 struct SearchInstructionsViewModel: Equatable {
-    let infoViewModel: StaticInfoViewModel
+    let infoViewModel: StaticInfoViewModel<AppStandardColorings>
     let resultsSource: String
 }
 
@@ -36,14 +36,18 @@ extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
 
 // sourcery: AutoMockable
 protocol SearchInstructionsViewModelBuilderProtocol {
-    func buildViewModel(copyContent: SearchInstructionsCopyContent) -> SearchInstructionsViewModel
+    func buildViewModel(copyContent: SearchInstructionsCopyContent,
+                        colorings: AppStandardColorings) -> SearchInstructionsViewModel
 }
 
 class SearchInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol {
 
-    func buildViewModel(copyContent: SearchInstructionsCopyContent) -> SearchInstructionsViewModel {
-        return SearchInstructionsViewModel(infoViewModel: copyContent.staticInfoViewModel,
-                                           resultsSource: copyContent.resultsSource)
+    func buildViewModel(copyContent: SearchInstructionsCopyContent,
+                        colorings: AppStandardColorings) -> SearchInstructionsViewModel {
+        return SearchInstructionsViewModel(
+            infoViewModel: copyContent.staticInfoViewModel(colorings: colorings),
+            resultsSource: copyContent.resultsSource
+        )
     }
 
 }

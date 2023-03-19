@@ -81,14 +81,14 @@ class SearchCoordinatorTests: QuickSpec {
                     stubInitialRequestAction
 
                 self.mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
-                mockSearchBackgroundViewModelBuilder.buildViewModelAppCopyContentReturnValue = SearchBackgroundViewModel.stubValue()
+                mockSearchBackgroundViewModelBuilder.buildViewModelKeywordsAppCopyContentColoringsReturnValue = SearchBackgroundViewModel.stubValue()
 
                 let lookupViewModel = SearchLookupViewModel(
                     searchInputViewModel: .nonDispatching(content: .stubValue()),
                     child: .progress
                 )
                 self.mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
-                mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentLocationUpdateRequestBlockReturnValue = lookupViewModel
+                mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue = lookupViewModel
 
                 self.mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 

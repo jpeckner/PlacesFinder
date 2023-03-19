@@ -24,10 +24,11 @@
 
 import Foundation
 
-struct StaticInfoViewModel: Equatable {
+struct StaticInfoViewModel<TColorings: AppStandardColoringsProtocol>: Equatable {
     let imageName: String
     let title: String
     let description: String
+    let colorings: TColorings
 }
 
 protocol StaticInfoCopyProtocol {
@@ -38,10 +39,15 @@ protocol StaticInfoCopyProtocol {
 
 extension StaticInfoCopyProtocol {
 
-    var staticInfoViewModel: StaticInfoViewModel {
-        return StaticInfoViewModel(imageName: iconImageName,
-                                   title: title,
-                                   description: description)
+    func staticInfoViewModel<TColorings: AppStandardColoringsProtocol>(
+        colorings: TColorings
+    ) -> StaticInfoViewModel<TColorings> {
+        StaticInfoViewModel(
+            imageName: iconImageName,
+            title: title,
+            description: description,
+            colorings: colorings
+        )
     }
 
 }

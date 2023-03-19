@@ -40,21 +40,21 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
 
     @MainActor
     init(store: TStore,
-         state: AppState) {
+         state: AppState,
+         skin: AppSkin) {
         let dismissalSubject = PassthroughSubject<Void, Never>()
 
         self.store = store
 
         let viewModel = SettingsChildViewModel(
-            infoViewModel: state.appCopyContentState.copyContent.settingsChildView.staticInfoViewModel,
+            infoViewModel: state.appCopyContentState.copyContent.settingsChildView.staticInfoViewModel(
+                colorings: skin.colorings.settingsChild
+            ),
             ctaTitle: state.appCopyContentState.copyContent.settingsChildView.ctaTitle
         ) {
             dismissalSubject.send()
         }
-        let view = SettingsChildView(
-            viewModel: viewModel,
-            colorings: state.appSkinState.currentValue.colorings.settingsChild
-        )
+        let view = SettingsChildView(viewModel: viewModel)
         self.viewController = UIHostingController(rootView: view)
 
         self.dismissalSubject = dismissalSubject
