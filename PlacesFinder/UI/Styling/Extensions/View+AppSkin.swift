@@ -1,8 +1,8 @@
 //
-//  UILabel+AppSkin.swift
+//  View+AppSkin.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2018 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,16 @@
 
 import Shared
 import SwiftUI
-import UIKit
 
-extension StyledLabel {
+extension View {
 
-    convenience init(textStyleClass: AppTextStyleClass,
-                     textColoring: TextColoring,
-                     numberOfLines: Int = 0) {
-        self.init(textLayout: textStyleClass.textLayout,
-                  textColoring: textColoring,
-                  numberOfLines: numberOfLines)
-    }
-
-}
-
-extension UILabel {
-
-    func configure(_ textStyleClass: AppTextStyleClass,
-                   textColoring: TextColoring) {
-        applyTextLayout(textStyleClass.textLayout)
-        applyTextColoring(textColoring)
+    func modifier(
+        textStyleClass: AppTextStyleClass,
+        textColoring: TextColoring
+    ) -> some View {
+        font(Font(textStyleClass.textLayout.font.ctFont))
+        .multilineTextAlignment(textStyleClass.textLayout.alignment.textAlignment)
+        .foregroundColor(textColoring.color)
     }
 
 }
