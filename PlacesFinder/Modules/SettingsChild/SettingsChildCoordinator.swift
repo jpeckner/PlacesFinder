@@ -25,7 +25,7 @@
 import Combine
 import Shared
 import SwiftDux
-import UIKit
+import SwiftUI
 
 // sourcery: enumCaseName = "settingsChild"
 struct SettingsChildLinkPayload: AppLinkPayloadProtocol, Equatable {}
@@ -34,7 +34,7 @@ struct SettingsChildLinkPayload: AppLinkPayloadProtocol, Equatable {}
 class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
-    private let viewController: SettingsChildViewController
+    private let viewController: UIHostingController<SettingsChildView>
 
     private let dismissalSubject: PassthroughSubject<Void, Never>
 
@@ -51,15 +51,15 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
         ) {
             dismissalSubject.send()
         }
-        self.viewController = SettingsChildViewController(
+        let view = SettingsChildView(
             viewModel: viewModel,
             colorings: state.appSkinState.currentValue.colorings.settingsChild
         )
+        self.viewController = UIHostingController(rootView: view)
 
         self.dismissalSubject = dismissalSubject
 
         store.subscribe(self, keyPath: \.routerState)
-        viewController.delegate = self
     }
 
 }
@@ -69,14 +69,6 @@ extension SettingsChildCoordinator {
     var rootViewController: UIViewController { viewController }
 
     var dismissal: AnyPublisher<Void, Never> { dismissalSubject.eraseToAnyPublisher() }
-
-}
-
-extension SettingsChildCoordinator: SettingsChildViewControllerDelegate {
-
-    func viewControllerWasDismissed(_ viewController: SettingsChildViewController) {
-        dismissalSubject.send()
-    }
 
 }
 

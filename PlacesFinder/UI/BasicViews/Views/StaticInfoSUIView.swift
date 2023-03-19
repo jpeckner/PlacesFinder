@@ -1,8 +1,8 @@
 //
-//  SettingsChildView.swift
+//  StaticInfoSUIView.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2022 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,60 +25,56 @@
 import Shared
 import SwiftUI
 
-struct SettingsChildView: View {
+struct StaticInfoSUIView: View {
 
-    private let viewModel: SettingsChildViewModel
-    private let colorings: SettingsChildViewColorings
+    private let viewModel: StaticInfoViewModel
+    private let colorings: AppStandardColoringsProtocol
 
-    init(viewModel: SettingsChildViewModel,
-         colorings: SettingsChildViewColorings) {
+    init(viewModel: StaticInfoViewModel,
+         colorings: AppStandardColoringsProtocol) {
         self.viewModel = viewModel
         self.colorings = colorings
     }
 
     var body: some View {
-        VStack(
-            alignment: .center,
-            spacing: 16
-        ) {
-            StaticInfoSUIView(
-                viewModel: viewModel.infoViewModel,
-                colorings: colorings
-            )
+        VStack {
+            Image(viewModel.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 160)
 
-            Button(
-                viewModel.ctaTitle,
-                action: viewModel.ctaBlock
-            )
-            .modifier(
-                textStyleClass: .ctaButton,
-                textColoring: colorings.ctaTextColoring
-            )
+            Text(viewModel.title)
+                .modifier(
+                    textStyleClass: .title,
+                    textColoring: colorings.titleTextColoring
+                )
+                .scaledToFit()
+                .minimumScaleFactor(0.25)
+                .lineLimit(1)
 
-            Spacer()
-                .frame(height: 120)
+            Text(viewModel.description)
+                .modifier(
+                    textStyleClass: .body,
+                    textColoring: colorings.bodyTextColoring
+                )
         }
+        .padding(EdgeInsets(uniformInset: 16))
+        .frame(alignment: .center)
     }
 
 }
 
 #if DEBUG
 
-struct SettingsChildView_Previews: PreviewProvider {
+struct StaticInfoSUIView_Previews: PreviewProvider {
 
     static var previews: some View {
         // swiftlint:disable:next force_try
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
-
-        return SettingsChildView(
-            // swiftlint:disable:next trailing_closure
-            viewModel: SettingsChildViewModel(
-                infoViewModel: appCopyContent.settingsChildView.staticInfoViewModel,
-                ctaTitle: "Dismiss",
-                ctaBlock: {}
-            ),
-            colorings: appColorings.settingsChild
+        return StaticInfoSUIView(
+            viewModel: appCopyContent.settingsChildView.staticInfoViewModel,
+            colorings: appColorings.standard
         )
     }
 

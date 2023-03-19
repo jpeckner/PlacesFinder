@@ -483,6 +483,8 @@
 		CA6D635B27E6955B000866D5 /* Search+Redux.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635A27E6955B000866D5 /* Search+Redux.swift */; };
 		CA6D635D27E69594000866D5 /* StoreSubscriptionRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635C27E69594000866D5 /* StoreSubscriptionRelay.swift */; };
 		CA6D635F27E695B4000866D5 /* SubstatesSubscriberRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635E27E695B4000866D5 /* SubstatesSubscriberRelay.swift */; };
+		CA76D68729C78EDD0018308D /* StaticInfoSUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68629C78EDD0018308D /* StaticInfoSUIView.swift */; };
+		CA76D68929C78F7B0018308D /* View+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68829C78F7B0018308D /* View+AppSkin.swift */; };
 		CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		CA784C712794F82B00FE76CC /* SettingsChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* SettingsChildView.swift */; };
 		CA784C732794F85100FE76CC /* SettingsChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */; };
@@ -491,7 +493,6 @@
 		CA784C8227961FC400FE76CC /* SettingsChildCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76E4278A401B00847AA2 /* SettingsChildCoordinator.swift */; };
 		CA784C8327961FD800FE76CC /* SettingsChildViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C752796083C00FE76CC /* SettingsChildViewColorings.swift */; };
 		CA784C8427961FE000FE76CC /* SettingsChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */; };
-		CA784C8527961FF800FE76CC /* SettingsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */; };
 		CA784C862796200A00FE76CC /* SettingsChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* SettingsChildView.swift */; };
 		CA784C8C27963C6700FE76CC /* AppRootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8B27963C6700FE76CC /* AppRootCoordinatorMock.swift */; };
 		CA784C8E279644D200FE76CC /* AppSecondChildCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */; };
@@ -510,7 +511,6 @@
 		CA9A3CE4284D7E5500B65C4F /* SettingsChildCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76E4278A401B00847AA2 /* SettingsChildCoordinator.swift */; };
 		CA9A3CE5284D7E6400B65C4F /* SettingsChildViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C752796083C00FE76CC /* SettingsChildViewColorings.swift */; };
 		CA9A3CE6284D7E6F00B65C4F /* SettingsChildCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76FF278A41BB00847AA2 /* SettingsChildCoordinator+CoordiNode.autogen.swift */; };
-		CA9A3CE7284D7E9000B65C4F /* SettingsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */; };
 		CA9A3CE8284D7E9C00B65C4F /* SettingsChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */; };
 		CA9A3CE9284D7EDE00B65C4F /* SettingsChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* SettingsChildView.swift */; };
 		CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */; };
@@ -518,7 +518,6 @@
 		CAA5497327AA1C2800F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497627AB741600F09F8A /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497527AB741600F09F8A /* AppAction.swift */; };
-		CABEED5F278EB32E00F18456 /* SettingsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
 		CC97A27F7A7C2A97FDFC5B52 /* SearchActivityStatePrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB75D8B9F5872DFC76763E14 /* SearchActivityStatePrismTests.swift */; };
@@ -887,6 +886,8 @@
 		CA6D635A27E6955B000866D5 /* Search+Redux.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search+Redux.swift"; sourceTree = "<group>"; };
 		CA6D635C27E69594000866D5 /* StoreSubscriptionRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionRelay.swift; sourceTree = "<group>"; };
 		CA6D635E27E695B4000866D5 /* SubstatesSubscriberRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstatesSubscriberRelay.swift; sourceTree = "<group>"; };
+		CA76D68629C78EDD0018308D /* StaticInfoSUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoSUIView.swift; sourceTree = "<group>"; };
+		CA76D68829C78F7B0018308D /* View+AppSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppSkin.swift"; sourceTree = "<group>"; };
 		CA784C702794F82B00FE76CC /* SettingsChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildView.swift; sourceTree = "<group>"; };
 		CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewModel.swift; sourceTree = "<group>"; };
 		CA784C752796083C00FE76CC /* SettingsChildViewColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewColorings.swift; sourceTree = "<group>"; };
@@ -899,7 +900,6 @@
 		CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497527AB741600F09F8A /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
-		CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewController.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CCA50B284C64F4468E1A3201 /* SearchResultsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsViewModel+Stub.swift"; sourceTree = "<group>"; };
@@ -1147,6 +1147,7 @@
 				E34AA94422964B8FCA8F972D /* AppSkin+UIBarButtonItem.swift */,
 				DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */,
 				55681DB11347069A8DFC1781 /* UILabel+AppSkin.swift */,
+				CA76D68829C78F7B0018308D /* View+AppSkin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1811,6 +1812,7 @@
 				A4D9906D7E327D706C3F1D31 /* RatingStarsView.swift */,
 				30C1005075D620BB367842E9 /* SearchRatingValue+Image.swift */,
 				2955490E81A2E483914AEDE0 /* StaticInfoView.swift */,
+				CA76D68629C78EDD0018308D /* StaticInfoSUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2008,7 +2010,6 @@
 			isa = PBXGroup;
 			children = (
 				CA784C742796082D00FE76CC /* Styling */,
-				CA784C6D2794F72E00FE76CC /* ViewControllers */,
 				CA784C6F2794F74A00FE76CC /* ViewModels */,
 				CA784C6E2794F73B00FE76CC /* Views */,
 				CA3F76E4278A401B00847AA2 /* SettingsChildCoordinator.swift */,
@@ -2024,14 +2025,6 @@
 				834C3A4BC027A5F3E5DF69E1 /* SearchActivityActionPrism.swift */,
 			);
 			path = SearchActivity;
-			sourceTree = "<group>";
-		};
-		CA784C6D2794F72E00FE76CC /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				CABEED5E278EB32E00F18456 /* SettingsChildViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		CA784C6E2794F73B00FE76CC /* Views */ = {
@@ -2886,7 +2879,6 @@
 				29EDDB04E2AAE6625BAA62FD /* UserDefaultsService.swift in Sources */,
 				04B64ADAF28903319BCA8A77 /* YelpRequestBuilder.swift in Sources */,
 				CA5F84A027E7B60E00EEF854 /* ReachabilityState.swift in Sources */,
-				CA9A3CE7284D7E9000B65C4F /* SettingsChildViewController.swift in Sources */,
 				D2E2735528FFC8F69082F105 /* YelpRequestConfig.swift in Sources */,
 				D7606BA36A14E50837BCEE6B /* YelpRequestService.swift in Sources */,
 				ABF54122F84C89EF0E7DAEFF /* YelpRequestServiceIntegrationTests.swift in Sources */,
@@ -2925,6 +2917,7 @@
 				EE5E4AE2F02E4C7572F135F7 /* AppDelegate.swift in Sources */,
 				B325B5865837E65D9F95C92B /* AppGlobalStylingsHandler.swift in Sources */,
 				470380BD2A4B4227A5CA33E9 /* AppLinkTypeBuilder.swift in Sources */,
+				CA76D68929C78F7B0018308D /* View+AppSkin.swift in Sources */,
 				68D7B57DC94CD933E8EFC1B5 /* AppRoutingHandler.swift in Sources */,
 				1D9051AF593B774AC559F4D4 /* AppSkin+UIBarButtonItem.swift in Sources */,
 				CEC3036E1D510AE33D686FAC /* AppSkin.swift in Sources */,
@@ -3042,6 +3035,7 @@
 				5F3799A065982925ED37268A /* SearchResultCell.swift in Sources */,
 				6A67B7AA982F25B566810904 /* SearchResultCellModel.swift in Sources */,
 				E118C1B5D8B84AE2B8C79FFD /* SearchResultViewModel.swift in Sources */,
+				CA76D68729C78EDD0018308D /* StaticInfoSUIView.swift in Sources */,
 				D7B16EB7146F1F7F99111E05 /* SearchResultsViewController.swift in Sources */,
 				26B70F64F0E37B9A4CBEF9DE /* SearchResultsViewModel.swift in Sources */,
 				9F4AAB0BBF5BE1534BD8D106 /* SearchRetryViewController.swift in Sources */,
@@ -3055,7 +3049,6 @@
 				E38F351564F40CDAB667B931 /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */,
 				638FA65C7C27E6B0A6AA96FD /* SettingsCoordinator.swift in Sources */,
 				B94C94663A518DAE803BE610 /* SettingsLinkPayload.swift in Sources */,
-				CABEED5F278EB32E00F18456 /* SettingsChildViewController.swift in Sources */,
 				A44168292967A1F6AE9B5B47 /* SettingsMeasurementSystemHeaderView.swift in Sources */,
 				CA8BCAE42814A4D4006989CF /* Search+ReceiveState.swift in Sources */,
 				CA784C762796083C00FE76CC /* SettingsChildViewColorings.swift in Sources */,
@@ -3219,7 +3212,6 @@
 				A2042EC44B2856D6DD522534 /* SearchDetailsViewModel+Stub.swift in Sources */,
 				8FD6CE27E86A28DD108EF2F7 /* SearchDetailsViewModel.swift in Sources */,
 				CA5F849D27E7B4C300EEF854 /* ReachabilityAction.swift in Sources */,
-				CA784C8527961FF800FE76CC /* SettingsChildViewController.swift in Sources */,
 				2BB2BA49585883412616EBC1 /* SearchDetailsViewModelBuilderTests.swift in Sources */,
 				936AB9C7B62A900A07E56FEA /* SearchDetailsViewModelTests.swift in Sources */,
 				0BA2C04AC001A6C8266C8E9E /* SearchDistance.swift in Sources */,
