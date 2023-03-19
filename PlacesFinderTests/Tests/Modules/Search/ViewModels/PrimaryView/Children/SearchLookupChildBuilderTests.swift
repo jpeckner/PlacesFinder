@@ -71,7 +71,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
-            mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
+            mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubInstructionsViewModel
 
             stubResultsViewModel = .stubValue(
                 actionSubscriber: AnySubscriber(mockActionSubscriber),
@@ -100,15 +100,16 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .idle,
-                        appCopyContent: stubAppCopyContent
+                        loadState: .idle,
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }
                 }
 
                 it("calls mockInstructionsViewModelBuilder with expected method and args") {
-                    expect(mockInstructionsViewModelBuilder.buildViewModelCopyContentReceivedCopyContent)
+                    expect(mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReceivedArguments?.copyContent)
                         == stubAppCopyContent.searchInstructions
                 }
 
@@ -122,8 +123,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .locationRequested(stubSearchParams),
-                        appCopyContent: stubAppCopyContent
+                        loadState: .locationRequested(stubSearchParams),
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }
@@ -139,8 +141,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .initialPageRequested(stubSearchParams),
-                        appCopyContent: stubAppCopyContent
+                        loadState: .initialPageRequested(stubSearchParams),
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }
@@ -159,12 +162,15 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .pagesReceived(params: stubSearchParams,
-                                       pageState: .success,
-                                       numPagesReceived: 1,
-                                       allEntities: stubEntities,
-                                       nextRequestToken: tokenContainer),
-                        appCopyContent: stubAppCopyContent
+                        loadState: .pagesReceived(
+                            params: stubSearchParams,
+                            pageState: .success,
+                            numPagesReceived: 1,
+                            allEntities: stubEntities,
+                            nextRequestToken: tokenContainer
+                        ),
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }
@@ -189,8 +195,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 beforeEach {
                     result = sut.buildChild(
-                        .noResultsFound(stubSearchParams),
-                        appCopyContent: stubAppCopyContent
+                        loadState: .noResultsFound(stubSearchParams),
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }
@@ -219,9 +226,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     }
 
                     result = sut.buildChild(
-                        .failure(stubSearchParams,
-                                 underlyingError: IgnoredEquatable(StubError.plainError)),
-                        appCopyContent: stubAppCopyContent
+                        loadState: .failure(
+                            stubSearchParams,
+                            underlyingError: IgnoredEquatable(StubError.plainError)
+                        ),
+                        appCopyContent: stubAppCopyContent,
+                        colorings: AppColorings.defaultColorings.standard
                     ) {
                         .success(.stubValue())
                     }

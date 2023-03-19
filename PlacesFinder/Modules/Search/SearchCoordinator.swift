@@ -145,8 +145,9 @@ private extension SearchCoordinator {
             switch authType.value {
             case .locationServicesNotDetermined:
                 let viewModel = backgroundViewModelBuilder.buildViewModel(
-                    searchState.searchActivityState.inputParams.params?.keywords,
-                    appCopyContent: appCopyContent
+                    keywords: searchState.searchActivityState.inputParams.params?.keywords,
+                    appCopyContent: appCopyContent,
+                    colorings: appSkin.colorings.standard
                 )
                 presenter.loadSearchBackgroundView(viewModel,
                                                    titleViewModel: titleViewModel,
@@ -156,6 +157,7 @@ private extension SearchCoordinator {
                 let viewModel = lookupViewModelBuilder.buildViewModel(
                     searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
+                    colorings: appSkin.colorings.standard,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
                 let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,

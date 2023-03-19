@@ -77,17 +77,14 @@ extension SearchLookupParentController {
                                    appSkin: AppSkin) {
         switch lookupViewModel.child {
         case let .instructions(viewModel):
-            let colorings = appSkin.colorings.standard
             guard let existingController: SearchInstructionsViewController = existingChildController() else {
                 setSingleChildController(
-                    SearchInstructionsViewController(viewModel: viewModel,
-                                                     colorings: colorings)
+                    SearchInstructionsViewController(viewModel: viewModel)
                 )
                 return
             }
 
-            existingController.configure(viewModel,
-                                         colorings: colorings)
+            existingController.instructionsView.viewModel.value = viewModel
         case .progress:
             let colorings = appSkin.colorings.searchProgress
             guard let existingController: SearchProgressViewController = existingChildController() else {

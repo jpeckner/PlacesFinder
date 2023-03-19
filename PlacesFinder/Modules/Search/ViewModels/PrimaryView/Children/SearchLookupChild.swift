@@ -38,8 +38,9 @@ enum SearchLookupChild: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchLookupChildBuilderProtocol {
-    func buildChild(_ loadState: Search.LoadState,
+    func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
+                    colorings: AppStandardColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
@@ -66,13 +67,15 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
-    func buildChild(_ loadState: Search.LoadState,
+    func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
+                    colorings: AppStandardColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
             let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
-                copyContent: appCopyContent.searchInstructions
+                copyContent: appCopyContent.searchInstructions,
+                colorings: colorings
             )
             return .instructions(instructionsViewModel)
         case .locationRequested,

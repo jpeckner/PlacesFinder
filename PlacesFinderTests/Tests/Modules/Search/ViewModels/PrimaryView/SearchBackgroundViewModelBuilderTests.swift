@@ -50,7 +50,7 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
             mockContentViewModelBuilder.buildViewModelKeywordsBarStateCopyContentReturnValue = stubContentViewModel
 
             mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
-            mockInstructionsViewModelBuilder.buildViewModelCopyContentReturnValue = stubInstructionsViewModel
+            mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubInstructionsViewModel
 
             sut = SearchBackgroundViewModelBuilder(contentViewModelBuilder: mockContentViewModelBuilder,
                                                    instructionsViewModelBuilder: mockInstructionsViewModelBuilder)
@@ -59,8 +59,9 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(stubKeywords,
-                                            appCopyContent: stubAppCopyContent)
+                result = sut.buildViewModel(keywords: stubKeywords,
+                                            appCopyContent: stubAppCopyContent,
+                                            colorings: AppColorings.defaultColorings.standard)
             }
 
             it("calls mockContentViewModelBuilder with expected method and args") {
@@ -71,7 +72,7 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockInstructionsViewModelBuilder with expected method and args") {
-                expect(mockInstructionsViewModelBuilder.buildViewModelCopyContentReceivedCopyContent) == stubAppCopyContent.searchInstructions
+                expect(mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchInstructions
             }
 
             it("returns the expected value") {

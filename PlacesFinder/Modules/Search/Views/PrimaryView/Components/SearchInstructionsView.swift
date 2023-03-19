@@ -23,118 +23,56 @@
 //  SOFTWARE.
 
 import Shared
-import UIKit
+import SwiftUI
 
-class SearchInstructionsView: UIView {
+struct SearchInstructionsView: View {
 
-    private let staticInfoView: StaticInfoView
-    private let resultsSourceView: ResultsSourceView
+    @ObservedObject var viewModel: ValueObservable<SearchInstructionsViewModel>
 
-    init(viewModel: SearchInstructionsViewModel,
-         colorings: AppStandardColorings) {
-        self.staticInfoView = StaticInfoView(viewModel: viewModel.infoViewModel,
-                                             colorings: colorings)
-        self.resultsSourceView = ResultsSourceView(viewModel: viewModel,
-                                                   colorings: colorings)
-
-        super.init(frame: .zero)
-
-        setupSubviews()
-        setupConstraints()
+    init(viewModel: SearchInstructionsViewModel) {
+        self.viewModel = ValueObservable(viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var body: some View {
+        VStack {
+            StaticInfoSUIView(
+                viewModel: viewModel.value.infoViewModel,
+                colorings: viewModel.value.colorings
+            )
 
-    private func setupSubviews() {
-        addSubview(staticInfoView)
-        addSubview(resultsSourceView)
-    }
+            HStack(spacing: .zero) {
+                Text(viewModel.value.resultsSource)
+                    .modifier(
+                        textStyleClass: .sourceAPILabel,
+                        textColoring: viewModel.value.colorings.bodyTextColoring
+                    )
+                    // Padding is needed to align this text with image text
+                    .padding([.top], 4)
 
-    private func setupConstraints() {
-        configureMargins(top: 24.0,
-                         leading: 16.0,
-                         bottom: 8.0,
-                         trailing: 16.0)
-
-        staticInfoView.snp.makeConstraints { make in
-            make.leading.equalTo(snp.leadingMargin)
-            make.trailing.equalTo(snp.trailingMargin)
-            make.top.equalTo(snp.topMargin)
-        }
-
-        resultsSourceView.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.leading.greaterThanOrEqualTo(snp.leadingMargin)
-            make.trailing.lessThanOrEqualTo(snp.trailingMargin)
-            make.top.equalTo(staticInfoView.snp.bottom)
-            make.bottom.lessThanOrEqualTo(snp.bottomMargin)
+                APILogoView(viewColoring: viewModel.value.colorings.viewColoring)
+            }
         }
     }
 
 }
 
-extension SearchInstructionsView {
+#if DEBUG
 
-    func configure(_ viewModel: SearchInstructionsViewModel,
-                   colorings: AppStandardColorings) {
-        staticInfoView.configure(viewModel.infoViewModel,
-                                 colorings: colorings)
-        resultsSourceView.configure(viewModel)
+struct SearchInstructionsView_Previews: PreviewProvider {
+
+    static var previews: some View {
+        // swiftlint:disable:next force_try
+        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+        let appColorings = AppColorings.defaultColorings
+        return SearchInstructionsView(
+            viewModel: SearchInstructionsViewModel(
+                infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel,
+                resultsSource: appCopyContent.searchInstructions.resultsSource,
+                colorings: appColorings.standard
+            )
+        )
     }
 
 }
 
-private class ResultsSourceView: UIView {
-
-    private let label: StyledLabel
-    private let logoView: APILogoView
-
-    init(viewModel: SearchInstructionsViewModel,
-         colorings: AppStandardColorings) {
-        self.label = StyledLabel(textStyleClass: .sourceAPILabel,
-                                 textColoring: colorings.bodyTextColoring)
-        self.logoView = APILogoView(viewColoring: colorings.viewColoring)
-
-        super.init(frame: .zero)
-
-        setupSubviews()
-        setupConstraints()
-        configure(viewModel)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupSubviews() {
-        addSubview(label)
-        addSubview(logoView)
-    }
-
-    private func setupConstraints() {
-        label.setContentHuggingPriority(.required, for: .vertical)
-        label.snp.makeConstraints { make in
-            make.leading.equalTo(self)
-            make.centerY.equalTo(self).offset(2.0)
-            make.top.greaterThanOrEqualTo(self)
-            make.bottom.lessThanOrEqualTo(self)
-        }
-
-        logoView.snp.makeConstraints { make in
-            make.leading.equalTo(label.snp.trailing)
-            make.trailing.top.bottom.equalTo(self)
-            make.width.equalTo(APILogoView.minWidth)
-        }
-    }
-
-}
-
-private extension ResultsSourceView {
-
-    func configure(_ viewModel: SearchInstructionsViewModel) {
-        label.text = viewModel.resultsSource
-    }
-
-}
+#endif

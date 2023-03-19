@@ -33,8 +33,7 @@ class SearchBackgroundViewController: SingleContentViewController, SearchPrimary
     init(viewModel: SearchBackgroundViewModel,
          appSkin: AppSkin) {
         self.lookupView = SearchLookupView(inputViewModel: .nonDispatching(content: viewModel.contentViewModel))
-        self.childController = SearchInstructionsViewController(viewModel: viewModel.instructionsViewModel,
-                                                                colorings: appSkin.colorings.standard)
+        self.childController = SearchInstructionsViewController(viewModel: viewModel.instructionsViewModel)
 
         super.init(contentView: lookupView,
                    viewColoring: appSkin.colorings.standard.viewColoring)
@@ -58,8 +57,7 @@ extension SearchBackgroundViewController {
 
         lookupView.configure(.nonDispatching(content: viewModel.contentViewModel))
 
-        childController.configure(viewModel.instructionsViewModel,
-                                  colorings: appSkin.colorings.standard)
+        childController.instructionsView.viewModel.value = viewModel.instructionsViewModel
     }
 
 }
