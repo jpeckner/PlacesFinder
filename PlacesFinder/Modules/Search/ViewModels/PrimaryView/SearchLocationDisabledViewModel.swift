@@ -34,8 +34,12 @@ extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
 extension SearchLocationDisabledViewModel {
 
     init(urlOpenerService: URLOpenerServiceProtocol,
-         copyContent: SearchLocationDisabledCopyContent) {
-        self.ctaViewModel = copyContent.ctaViewModel(ctaBlock: urlOpenerService.openSettingsBlock)
+         copyContent: SearchLocationDisabledCopyContent,
+         colorings: SearchCTAViewColorings) {
+        self.ctaViewModel = copyContent.ctaViewModel(
+            colorings: colorings,
+            ctaBlock: urlOpenerService.openSettingsBlock
+        )
     }
 
 }

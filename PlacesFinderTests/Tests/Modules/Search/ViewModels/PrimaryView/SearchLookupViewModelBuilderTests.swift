@@ -69,7 +69,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockInputViewModelBuilder.buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
-            mockChildBuilder.buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue = .progress
+            mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue = .progress
 
             sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
@@ -78,9 +78,12 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel(searchActivityState: stubSearchActivityState,
-                                            appCopyContent: stubAppCopyContent,
-                                            colorings: AppColorings.defaultColorings.standard) {
+                result = sut.buildViewModel(
+                    searchActivityState: stubSearchActivityState,
+                    appCopyContent: stubAppCopyContent,
+                    standardColorings: AppColorings.defaultColorings.standard,
+                    searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                ) {
                     locationBlockCalled = true
                     return .success(.stubValue())
                 }
@@ -97,7 +100,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockChildBuilder with expected method and args") {
-                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedArguments
+                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments
                 expect(receivedArgs?.loadState) == stubSearchActivityState.loadState
                 expect(receivedArgs?.appCopyContent) == stubAppCopyContent
 

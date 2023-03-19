@@ -22,19 +22,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
+import SwiftUI
 
-class SearchLocationDisabledViewController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
+class SearchLocationDisabledViewController: UIHostingController<SearchCTAView>, SearchPrimaryViewControllerProtocol {
 
     private let ctaView: SearchCTAView
 
-    init(viewModel: SearchLocationDisabledViewModel,
-         colorings: SearchCTAViewColorings) {
-        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel,
-                                     colorings: colorings)
+    init(viewModel: SearchLocationDisabledViewModel) {
+        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel)
 
-        super.init(contentView: ctaView,
-                   viewColoring: colorings.viewColoring)
+        super.init(rootView: ctaView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,12 +42,8 @@ class SearchLocationDisabledViewController: SingleContentViewController, SearchP
 
 extension SearchLocationDisabledViewController {
 
-    func configure(_ viewModel: SearchLocationDisabledViewModel,
-                   colorings: SearchCTAViewColorings) {
-        viewColoring = colorings.viewColoring
-
-        ctaView.configure(viewModel.ctaViewModel,
-                          colorings: colorings)
+    func configure(viewModel: SearchLocationDisabledViewModel) {
+        ctaView.viewModel.value = viewModel.ctaViewModel
     }
 
 }

@@ -976,23 +976,23 @@ class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderProtocol {
 
     //MARK: - buildChild
 
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount = 0
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockCalled: Bool {
-        return buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount > 0
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount = 0
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCalled: Bool {
+        return buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedInvocations: [(loadState: Search.LoadState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue: SearchLookupChild!
-    var buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, AppStandardColorings, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedInvocations: [(loadState: Search.LoadState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue: SearchLookupChild!
+    var buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, AppStandardColorings, SearchCTAViewColorings, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
 
-    func buildChild(loadState: Search.LoadState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
-        buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount += 1
-        buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedArguments = (loadState: loadState, appCopyContent: appCopyContent, colorings: colorings, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedInvocations.append((loadState: loadState, appCopyContent: appCopyContent, colorings: colorings, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockClosure = buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockClosure {
-            return buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockClosure(loadState, appCopyContent, colorings, locationUpdateRequestBlock)
+    func buildChild(loadState: Search.LoadState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
+        buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount += 1
+        buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments = (loadState: loadState, appCopyContent: appCopyContent, standardColorings: standardColorings, searchCTAColorings: searchCTAColorings, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedInvocations.append((loadState: loadState, appCopyContent: appCopyContent, standardColorings: standardColorings, searchCTAColorings: searchCTAColorings, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure = buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure {
+            return buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure(loadState, appCopyContent, standardColorings, searchCTAColorings, locationUpdateRequestBlock)
         } else {
-            return buildChildLoadStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue
+            return buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue
         }
     }
 
@@ -1003,23 +1003,23 @@ class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBuilderProt
 
     //MARK: - buildViewModel
 
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount = 0
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockCalled: Bool {
-        return buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount > 0
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount = 0
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCalled: Bool {
+        return buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
-    var buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, AppStandardColorings, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
+    var buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, AppStandardColorings, SearchCTAViewColorings, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
 
-    func buildViewModel(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: AppStandardColorings, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
-        buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockCallsCount += 1
-        buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, colorings: colorings, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, colorings: colorings, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockClosure = buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockClosure {
-            return buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, colorings, locationUpdateRequestBlock)
+    func buildViewModel(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, standardColorings: AppStandardColorings, searchCTAColorings: SearchCTAViewColorings, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
+        buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockCallsCount += 1
+        buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, standardColorings: standardColorings, searchCTAColorings: searchCTAColorings, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, standardColorings: standardColorings, searchCTAColorings: searchCTAColorings, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure = buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure {
+            return buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, standardColorings, searchCTAColorings, locationUpdateRequestBlock)
         } else {
-            return buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue
+            return buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue
         }
     }
 
@@ -1030,23 +1030,23 @@ class SearchNoResultsFoundViewModelBuilderProtocolMock: SearchNoResultsFoundView
 
     //MARK: - buildViewModel
 
-    var buildViewModelCallsCount = 0
-    var buildViewModelCalled: Bool {
-        return buildViewModelCallsCount > 0
+    var buildViewModelCopyContentColoringsCallsCount = 0
+    var buildViewModelCopyContentColoringsCalled: Bool {
+        return buildViewModelCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelReceivedCopyContent: SearchNoResultsCopyContent?
-    var buildViewModelReceivedInvocations: [SearchNoResultsCopyContent] = []
-    var buildViewModelReturnValue: SearchNoResultsFoundViewModel!
-    var buildViewModelClosure: ((SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel)?
+    var buildViewModelCopyContentColoringsReceivedArguments: (copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)?
+    var buildViewModelCopyContentColoringsReceivedInvocations: [(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)] = []
+    var buildViewModelCopyContentColoringsReturnValue: SearchNoResultsFoundViewModel!
+    var buildViewModelCopyContentColoringsClosure: ((SearchNoResultsCopyContent, AppStandardColorings) -> SearchNoResultsFoundViewModel)?
 
-    func buildViewModel(_ copyContent: SearchNoResultsCopyContent) -> SearchNoResultsFoundViewModel {
-        buildViewModelCallsCount += 1
-        buildViewModelReceivedCopyContent = copyContent
-        buildViewModelReceivedInvocations.append(copyContent)
-        if let buildViewModelClosure = buildViewModelClosure {
-            return buildViewModelClosure(copyContent)
+    func buildViewModel(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel {
+        buildViewModelCopyContentColoringsCallsCount += 1
+        buildViewModelCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
+        buildViewModelCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
+        if let buildViewModelCopyContentColoringsClosure = buildViewModelCopyContentColoringsClosure {
+            return buildViewModelCopyContentColoringsClosure(copyContent, colorings)
         } else {
-            return buildViewModelReturnValue
+            return buildViewModelCopyContentColoringsReturnValue
         }
     }
 
@@ -1216,23 +1216,23 @@ class SearchRetryViewModelBuilderProtocolMock: SearchRetryViewModelBuilderProtoc
 
     //MARK: - buildViewModel
 
-    var buildViewModelCtaBlockCallsCount = 0
-    var buildViewModelCtaBlockCalled: Bool {
-        return buildViewModelCtaBlockCallsCount > 0
+    var buildViewModelCopyContentColoringsCtaBlockCallsCount = 0
+    var buildViewModelCopyContentColoringsCtaBlockCalled: Bool {
+        return buildViewModelCopyContentColoringsCtaBlockCallsCount > 0
     }
-    var buildViewModelCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, ctaBlock: SearchCTABlock)?
-    var buildViewModelCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, ctaBlock: SearchCTABlock)] = []
-    var buildViewModelCtaBlockReturnValue: SearchRetryViewModel!
-    var buildViewModelCtaBlockClosure: ((SearchRetryCopyContent, @escaping SearchCTABlock) -> SearchRetryViewModel)?
+    var buildViewModelCopyContentColoringsCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)?
+    var buildViewModelCopyContentColoringsCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)] = []
+    var buildViewModelCopyContentColoringsCtaBlockReturnValue: SearchRetryViewModel!
+    var buildViewModelCopyContentColoringsCtaBlockClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, @escaping SearchCTABlock) -> SearchRetryViewModel)?
 
-    func buildViewModel(_ copyContent: SearchRetryCopyContent, ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
-        buildViewModelCtaBlockCallsCount += 1
-        buildViewModelCtaBlockReceivedArguments = (copyContent: copyContent, ctaBlock: ctaBlock)
-        buildViewModelCtaBlockReceivedInvocations.append((copyContent: copyContent, ctaBlock: ctaBlock))
-        if let buildViewModelCtaBlockClosure = buildViewModelCtaBlockClosure {
-            return buildViewModelCtaBlockClosure(copyContent, ctaBlock)
+    func buildViewModel(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
+        buildViewModelCopyContentColoringsCtaBlockCallsCount += 1
+        buildViewModelCopyContentColoringsCtaBlockReceivedArguments = (copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock)
+        buildViewModelCopyContentColoringsCtaBlockReceivedInvocations.append((copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock))
+        if let buildViewModelCopyContentColoringsCtaBlockClosure = buildViewModelCopyContentColoringsCtaBlockClosure {
+            return buildViewModelCopyContentColoringsCtaBlockClosure(copyContent, colorings, ctaBlock)
         } else {
-            return buildViewModelCtaBlockReturnValue
+            return buildViewModelCopyContentColoringsCtaBlockReturnValue
         }
     }
 

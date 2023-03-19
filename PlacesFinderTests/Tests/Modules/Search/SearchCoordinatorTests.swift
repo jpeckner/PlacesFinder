@@ -88,7 +88,7 @@ class SearchCoordinatorTests: QuickSpec {
                     child: .progress
                 )
                 self.mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
-                mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentColoringsLocationUpdateRequestBlockReturnValue = lookupViewModel
+                mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue = lookupViewModel
 
                 self.mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 

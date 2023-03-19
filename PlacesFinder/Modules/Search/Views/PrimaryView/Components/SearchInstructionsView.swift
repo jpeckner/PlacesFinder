@@ -35,21 +35,18 @@ struct SearchInstructionsView: View {
 
     var body: some View {
         VStack {
-            StaticInfoSUIView(
-                viewModel: viewModel.value.infoViewModel,
-                colorings: viewModel.value.colorings
-            )
+            StaticInfoSUIView(viewModel: viewModel.value.infoViewModel)
 
             HStack(spacing: .zero) {
                 Text(viewModel.value.resultsSource)
                     .modifier(
                         textStyleClass: .sourceAPILabel,
-                        textColoring: viewModel.value.colorings.bodyTextColoring
+                        textColoring: viewModel.value.infoViewModel.colorings.bodyTextColoring
                     )
                     // Padding is needed to align this text with image text
                     .padding([.top], 4)
 
-                APILogoView(viewColoring: viewModel.value.colorings.viewColoring)
+                APILogoView(viewColoring: viewModel.value.infoViewModel.colorings.viewColoring)
             }
         }
     }
@@ -66,9 +63,8 @@ struct SearchInstructionsView_Previews: PreviewProvider {
         let appColorings = AppColorings.defaultColorings
         return SearchInstructionsView(
             viewModel: SearchInstructionsViewModel(
-                infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel,
-                resultsSource: appCopyContent.searchInstructions.resultsSource,
-                colorings: appColorings.standard
+                infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard),
+                resultsSource: appCopyContent.searchInstructions.resultsSource
             )
         )
     }

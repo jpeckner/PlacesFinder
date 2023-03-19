@@ -108,29 +108,23 @@ extension SearchLookupParentController {
             existingController.configure(viewModel,
                                          colorings: colorings)
         case let .noResults(viewModel):
-            let colorings = appSkin.colorings.standard
             guard let existingController: SearchNoResultsFoundViewController = existingChildController() else {
                 setSingleChildController(
-                    SearchNoResultsFoundViewController(viewModel: viewModel,
-                                                       colorings: colorings)
+                    SearchNoResultsFoundViewController(viewModel: viewModel)
                 )
                 return
             }
 
-            existingController.configure(viewModel,
-                                         colorings: colorings)
+            existingController.configure(viewModel: viewModel)
         case let .failure(viewModel):
-            let colorings = appSkin.colorings.searchCTA
             guard let existingController: SearchRetryViewController = existingChildController() else {
                 setSingleChildController(
-                    SearchRetryViewController(viewModel: viewModel,
-                                              colorings: colorings)
+                    SearchRetryViewController(viewModel: viewModel)
                 )
                 return
             }
 
-            existingController.configure(viewModel,
-                                         colorings: colorings)
+            existingController.configure(viewModel: viewModel)
         }
     }
 

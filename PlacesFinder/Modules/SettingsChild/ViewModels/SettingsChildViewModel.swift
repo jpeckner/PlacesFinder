@@ -27,7 +27,7 @@ import Foundation
 struct SettingsChildViewModel {
     typealias CTABlock = () -> Void
 
-    let infoViewModel: StaticInfoViewModel
+    let infoViewModel: StaticInfoViewModel<SettingsChildViewColorings>
     let ctaTitle: String
     let ctaBlock: CTABlock
 }

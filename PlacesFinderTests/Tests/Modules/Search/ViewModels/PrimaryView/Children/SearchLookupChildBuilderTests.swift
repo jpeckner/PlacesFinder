@@ -82,7 +82,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 = stubResultsViewModel
 
             mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
-            mockNoResultsFoundViewModelBuilder.buildViewModelReturnValue = stubNoResultsViewModel
+            mockNoResultsFoundViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubNoResultsViewModel
 
             mockRetryViewModelBuilder = SearchRetryViewModelBuilderProtocolMock()
 
@@ -102,7 +102,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .idle,
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }
@@ -125,7 +126,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .locationRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }
@@ -143,7 +145,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .initialPageRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }
@@ -170,7 +173,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                             nextRequestToken: tokenContainer
                         ),
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }
@@ -197,14 +201,15 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .noResultsFound(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }
                 }
 
                 it("calls mockNoResultsFoundViewModelBuilder with expected method and args") {
-                    expect(mockNoResultsFoundViewModelBuilder.buildViewModelReceivedCopyContent) == stubAppCopyContent.searchNoResults
+                    expect(mockNoResultsFoundViewModelBuilder.buildViewModelCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchNoResults
                 }
 
                 it("returns a value of .noResults") {
@@ -219,9 +224,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 var receivedCTABlock: SearchCTABlock!
 
                 beforeEach {
-                    mockRetryViewModelBuilder.buildViewModelCtaBlockClosure = {
+                    mockRetryViewModelBuilder.buildViewModelCopyContentColoringsCtaBlockClosure = {
                         receivedCopyContent = $0
-                        receivedCTABlock = $1
+                        receivedCTABlock = $2
                         return stubRetryViewModel
                     }
 
@@ -231,7 +236,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                             underlyingError: IgnoredEquatable(StubError.plainError)
                         ),
                         appCopyContent: stubAppCopyContent,
-                        colorings: AppColorings.defaultColorings.standard
+                        standardColorings: AppColorings.defaultColorings.standard,
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
                     ) {
                         .success(.stubValue())
                     }

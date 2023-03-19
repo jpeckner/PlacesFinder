@@ -26,12 +26,18 @@ import Foundation
 
 extension StaticInfoViewModel {
 
-    static func stubValue(imageName: String = "stubStaticInfoImageName",
-                          title: String = "stubStaticInfoTitle",
-                          description: String = "stubStaticInfoDescription") -> StaticInfoViewModel {
-        return StaticInfoViewModel(imageName: imageName,
-                                   title: title,
-                                   description: description)
+    static func stubValue<TColorings: AppStandardColoringsProtocol>(
+        colorings: TColorings,
+        imageName: String = "stubStaticInfoImageName",
+        title: String = "stubStaticInfoTitle",
+        description: String = "stubStaticInfoDescription"
+    ) -> StaticInfoViewModel<TColorings> {
+        StaticInfoViewModel<TColorings>(
+            imageName: imageName,
+            title: title,
+            description: description,
+            colorings: colorings
+        )
     }
 
 }

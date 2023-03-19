@@ -129,14 +129,18 @@ private extension SearchCoordinator {
 
         switch presentationType {
         case .noInternet:
-            let viewModel = SearchNoInternetViewModel(copyContent: appCopyContent.searchNoInternet)
+            let viewModel = SearchNoInternetViewModel(
+                copyContent: appCopyContent.searchNoInternet,
+                colorings: appSkin.colorings.standard
+            )
             presenter.loadNoInternetViews(viewModel,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)
 
         case .locationServicesDisabled:
             let viewModel = SearchLocationDisabledViewModel(urlOpenerService: urlOpenerService,
-                                                            copyContent: appCopyContent.searchLocationDisabled)
+                                                            copyContent: appCopyContent.searchLocationDisabled,
+                                                            colorings: appSkin.colorings.searchCTA)
             presenter.loadLocationServicesDisabledViews(viewModel,
                                                         titleViewModel: titleViewModel,
                                                         appSkin: appSkin)
@@ -157,7 +161,8 @@ private extension SearchCoordinator {
                 let viewModel = lookupViewModelBuilder.buildViewModel(
                     searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
-                    colorings: appSkin.colorings.standard,
+                    standardColorings: appSkin.colorings.standard,
+                    searchCTAColorings: appSkin.colorings.searchCTA,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
                 let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,

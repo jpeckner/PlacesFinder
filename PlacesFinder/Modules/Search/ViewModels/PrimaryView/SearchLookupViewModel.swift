@@ -35,7 +35,8 @@ struct SearchLookupViewModel: Equatable {
 protocol SearchLookupViewModelBuilderProtocol {
     func buildViewModel(searchActivityState: Search.ActivityState,
                         appCopyContent: AppCopyContent,
-                        colorings: AppStandardColorings,
+                        standardColorings: AppStandardColorings,
+                        searchCTAColorings: SearchCTAViewColorings,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
 }
 
@@ -52,7 +53,8 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
 
     func buildViewModel(searchActivityState: Search.ActivityState,
                         appCopyContent: AppCopyContent,
-                        colorings: AppStandardColorings,
+                        standardColorings: AppStandardColorings,
+                        searchCTAColorings: SearchCTAViewColorings,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
             inputParams: searchActivityState.inputParams,
@@ -62,7 +64,8 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
 
         let child = childBuilder.buildChild(loadState: searchActivityState.loadState,
                                             appCopyContent: appCopyContent,
-                                            colorings: colorings,
+                                            standardColorings: standardColorings,
+                                            searchCTAColorings: searchCTAColorings,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         return SearchLookupViewModel(searchInputViewModel: searchInputViewModel,

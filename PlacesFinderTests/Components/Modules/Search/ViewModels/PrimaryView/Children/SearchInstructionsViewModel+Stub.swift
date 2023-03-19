@@ -24,16 +24,16 @@
 
 import Foundation
 
+// swiftlint:disable line_length
 extension SearchInstructionsViewModel {
 
     static func stubValue(
-        infoViewModel: StaticInfoViewModel = .stubValue(),
+        infoViewModel: StaticInfoViewModel<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
         resultsSource: String = "stubResultsSource",
         colorings: AppStandardColorings = AppColorings.defaultColorings.standard
     ) -> SearchInstructionsViewModel {
         return SearchInstructionsViewModel(infoViewModel: infoViewModel,
-                                           resultsSource: resultsSource,
-                                           colorings: colorings)
+                                           resultsSource: resultsSource)
     }
 
 }

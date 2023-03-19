@@ -32,8 +32,12 @@ extension SearchNoInternetCopyContent: StaticInfoCopyProtocol {}
 
 extension SearchNoInternetViewModel {
 
-    init(copyContent: SearchNoInternetCopyContent) {
-        self.messageViewModel = SearchMessageViewModel(copyContent: copyContent)
+    init(copyContent: SearchNoInternetCopyContent,
+         colorings: AppStandardColorings) {
+        self.messageViewModel = SearchMessageViewModel(
+            copyContent: copyContent,
+            colorings: colorings
+        )
     }
 
 }

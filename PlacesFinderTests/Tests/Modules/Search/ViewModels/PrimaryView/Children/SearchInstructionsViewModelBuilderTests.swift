@@ -48,11 +48,13 @@ class SearchInstructionsViewModelBuilderTests: QuickSpec {
 
             it("returns its expected value") {
                 expect(result) == SearchInstructionsViewModel(
-                    infoViewModel: StaticInfoViewModel(imageName: "stubIconImageName",
-                                                       title: "stubTitle",
-                                                       description: "stubDescription"),
-                    resultsSource: "stubResultsSource",
-                    colorings: AppColorings.defaultColorings.standard
+                    infoViewModel: StaticInfoViewModel(
+                        imageName: "stubIconImageName",
+                        title: "stubTitle",
+                        description: "stubDescription",
+                        colorings: AppColorings.defaultColorings.standard
+                    ),
+                    resultsSource: "stubResultsSource"
                 )
             }
 
