@@ -69,7 +69,10 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     context("when the current search distance is .\(currentDistanceType)") {
 
                         beforeEach {
-                            results = sut.buildDistanceCellModels(currentDistanceType: currentDistanceType)
+                            results = sut.buildDistanceCellModels(
+                                currentDistanceType: currentDistanceType,
+                                colorings: AppColorings.defaultColorings.settings.cellColorings
+                            )
                         }
 
                         it("has exactly one cell model per sorting option") {
@@ -129,8 +132,11 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                 context("when the current PlaceLookupSorting case is .\(currentSorting)") {
 
                     beforeEach {
-                        results = sut.buildSortingCellModels(currentSorting: currentSorting,
-                                                             copyContent: stubCopyContent)
+                        results = sut.buildSortingCellModels(
+                            currentSorting: currentSorting,
+                            copyContent: stubCopyContent,
+                            colorings: AppColorings.defaultColorings.settings.cellColorings
+                        )
                     }
 
                     it("has exactly one cell model per sorting option") {

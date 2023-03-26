@@ -26,12 +26,10 @@ import SwiftUI
 
 class SearchInstructionsViewController: UIHostingController<SearchInstructionsView> {
 
-    let instructionsView: SearchInstructionsView
-
     init(viewModel: SearchInstructionsViewModel) {
-        self.instructionsView = SearchInstructionsView(viewModel: viewModel)
+        let rootView = SearchInstructionsView(viewModel: viewModel)
 
-        super.init(rootView: instructionsView)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {

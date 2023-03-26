@@ -32,6 +32,7 @@ import SwiftDuxTestComponents
 
 class SettingsViewModelBuilderTests: QuickSpec {
 
+    // swiftlint:disable function_body_length
     // swiftlint:disable identifier_name
     // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
@@ -53,28 +54,30 @@ class SettingsViewModelBuilderTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             mockMeasurementSystemHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilderProtocolMock()
-            mockMeasurementSystemHeaderViewModelBuilder.buildViewModelCurrentlyActiveSystemCopyContentReturnValue =
-                stubUnitsHeaderViewModel
+            mockMeasurementSystemHeaderViewModelBuilder
+                .buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReturnValue = stubUnitsHeaderViewModel
 
             mockPlainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilderProtocolMock()
-            mockPlainHeaderViewModelBuilder.buildViewModelReturnValue = stubPlainHeaderViewModel
+            mockPlainHeaderViewModelBuilder.buildViewModelTitleColoringsReturnValue = stubPlainHeaderViewModel
 
             stubDistanceCellModels = [
                 SettingsCellViewModel(title: "stubDistanceCellModel",
                                       isSelected: false,
+                                      colorings: AppColorings.defaultColorings.settings.cellColorings,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
                                       action: .showSettingsChild(SettingsChildLinkPayload()))
             ]
             stubSortingCellModels = [
                 SettingsCellViewModel(title: "stubSortingCellModel",
                                       isSelected: false,
+                                      colorings: AppColorings.defaultColorings.settings.cellColorings,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
                                       action: .showSettingsChild(SettingsChildLinkPayload()))
             ]
             mockSettingsCellViewModelBuilder = SettingsCellViewModelBuilderProtocolMock()
-            mockSettingsCellViewModelBuilder.buildDistanceCellModelsCurrentDistanceTypeReturnValue =
+            mockSettingsCellViewModelBuilder.buildDistanceCellModelsCurrentDistanceTypeColoringsReturnValue =
                 stubDistanceCellModels
-            mockSettingsCellViewModelBuilder.buildSortingCellModelsCurrentSortingCopyContentReturnValue =
+            mockSettingsCellViewModelBuilder.buildSortingCellModelsCurrentSortingCopyContentColoringsReturnValue =
                 stubSortingCellModels
 
             sut = SettingsViewModelBuilder(
@@ -97,7 +100,8 @@ class SettingsViewModelBuilderTests: QuickSpec {
 
             beforeEach {
                 result = sut.buildViewModel(searchPreferencesState: stubSearchPreferencesState,
-                                            appCopyContent: stubAppCopyContent)
+                                            appCopyContent: stubAppCopyContent,
+                                            colorings: AppColorings.defaultColorings.settings)
             }
 
             it("returns a view model with a .measurementSystem header in index 0") {

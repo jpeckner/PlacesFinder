@@ -1243,45 +1243,45 @@ class SettingsCellViewModelBuilderProtocolMock: SettingsCellViewModelBuilderProt
 
     //MARK: - buildDistanceCellModels
 
-    var buildDistanceCellModelsCurrentDistanceTypeCallsCount = 0
-    var buildDistanceCellModelsCurrentDistanceTypeCalled: Bool {
-        return buildDistanceCellModelsCurrentDistanceTypeCallsCount > 0
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsCallsCount = 0
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsCalled: Bool {
+        return buildDistanceCellModelsCurrentDistanceTypeColoringsCallsCount > 0
     }
-    var buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType: SearchDistance?
-    var buildDistanceCellModelsCurrentDistanceTypeReceivedInvocations: [SearchDistance] = []
-    var buildDistanceCellModelsCurrentDistanceTypeReturnValue: [SettingsCellViewModel]!
-    var buildDistanceCellModelsCurrentDistanceTypeClosure: ((SearchDistance) -> [SettingsCellViewModel])?
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsReceivedArguments: (currentDistanceType: SearchDistance, colorings: SettingsCellColorings)?
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsReceivedInvocations: [(currentDistanceType: SearchDistance, colorings: SettingsCellColorings)] = []
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsReturnValue: [SettingsCellViewModel]!
+    var buildDistanceCellModelsCurrentDistanceTypeColoringsClosure: ((SearchDistance, SettingsCellColorings) -> [SettingsCellViewModel])?
 
-    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
-        buildDistanceCellModelsCurrentDistanceTypeCallsCount += 1
-        buildDistanceCellModelsCurrentDistanceTypeReceivedCurrentDistanceType = currentDistanceType
-        buildDistanceCellModelsCurrentDistanceTypeReceivedInvocations.append(currentDistanceType)
-        if let buildDistanceCellModelsCurrentDistanceTypeClosure = buildDistanceCellModelsCurrentDistanceTypeClosure {
-            return buildDistanceCellModelsCurrentDistanceTypeClosure(currentDistanceType)
+    func buildDistanceCellModels(currentDistanceType: SearchDistance, colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
+        buildDistanceCellModelsCurrentDistanceTypeColoringsCallsCount += 1
+        buildDistanceCellModelsCurrentDistanceTypeColoringsReceivedArguments = (currentDistanceType: currentDistanceType, colorings: colorings)
+        buildDistanceCellModelsCurrentDistanceTypeColoringsReceivedInvocations.append((currentDistanceType: currentDistanceType, colorings: colorings))
+        if let buildDistanceCellModelsCurrentDistanceTypeColoringsClosure = buildDistanceCellModelsCurrentDistanceTypeColoringsClosure {
+            return buildDistanceCellModelsCurrentDistanceTypeColoringsClosure(currentDistanceType, colorings)
         } else {
-            return buildDistanceCellModelsCurrentDistanceTypeReturnValue
+            return buildDistanceCellModelsCurrentDistanceTypeColoringsReturnValue
         }
     }
 
     //MARK: - buildSortingCellModels
 
-    var buildSortingCellModelsCurrentSortingCopyContentCallsCount = 0
-    var buildSortingCellModelsCurrentSortingCopyContentCalled: Bool {
-        return buildSortingCellModelsCurrentSortingCopyContentCallsCount > 0
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsCallsCount = 0
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsCalled: Bool {
+        return buildSortingCellModelsCurrentSortingCopyContentColoringsCallsCount > 0
     }
-    var buildSortingCellModelsCurrentSortingCopyContentReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)?
-    var buildSortingCellModelsCurrentSortingCopyContentReceivedInvocations: [(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent)] = []
-    var buildSortingCellModelsCurrentSortingCopyContentReturnValue: [SettingsCellViewModel]!
-    var buildSortingCellModelsCurrentSortingCopyContentClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel])?
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings)?
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsReceivedInvocations: [(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings)] = []
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsReturnValue: [SettingsCellViewModel]!
+    var buildSortingCellModelsCurrentSortingCopyContentColoringsClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent, SettingsCellColorings) -> [SettingsCellViewModel])?
 
-    func buildSortingCellModels(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
-        buildSortingCellModelsCurrentSortingCopyContentCallsCount += 1
-        buildSortingCellModelsCurrentSortingCopyContentReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent)
-        buildSortingCellModelsCurrentSortingCopyContentReceivedInvocations.append((currentSorting: currentSorting, copyContent: copyContent))
-        if let buildSortingCellModelsCurrentSortingCopyContentClosure = buildSortingCellModelsCurrentSortingCopyContentClosure {
-            return buildSortingCellModelsCurrentSortingCopyContentClosure(currentSorting, copyContent)
+    func buildSortingCellModels(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
+        buildSortingCellModelsCurrentSortingCopyContentColoringsCallsCount += 1
+        buildSortingCellModelsCurrentSortingCopyContentColoringsReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent, colorings: colorings)
+        buildSortingCellModelsCurrentSortingCopyContentColoringsReceivedInvocations.append((currentSorting: currentSorting, copyContent: copyContent, colorings: colorings))
+        if let buildSortingCellModelsCurrentSortingCopyContentColoringsClosure = buildSortingCellModelsCurrentSortingCopyContentColoringsClosure {
+            return buildSortingCellModelsCurrentSortingCopyContentColoringsClosure(currentSorting, copyContent, colorings)
         } else {
-            return buildSortingCellModelsCurrentSortingCopyContentReturnValue
+            return buildSortingCellModelsCurrentSortingCopyContentColoringsReturnValue
         }
     }
 
@@ -1292,23 +1292,23 @@ class SettingsPlainHeaderViewModelBuilderProtocolMock: SettingsPlainHeaderViewMo
 
     //MARK: - buildViewModel
 
-    var buildViewModelCallsCount = 0
-    var buildViewModelCalled: Bool {
-        return buildViewModelCallsCount > 0
+    var buildViewModelTitleColoringsCallsCount = 0
+    var buildViewModelTitleColoringsCalled: Bool {
+        return buildViewModelTitleColoringsCallsCount > 0
     }
-    var buildViewModelReceivedTitle: String?
-    var buildViewModelReceivedInvocations: [String] = []
-    var buildViewModelReturnValue: SettingsPlainHeaderViewModel!
-    var buildViewModelClosure: ((String) -> SettingsPlainHeaderViewModel)?
+    var buildViewModelTitleColoringsReceivedArguments: (title: String, colorings: SettingsHeaderViewColorings)?
+    var buildViewModelTitleColoringsReceivedInvocations: [(title: String, colorings: SettingsHeaderViewColorings)] = []
+    var buildViewModelTitleColoringsReturnValue: SettingsPlainHeaderViewModel!
+    var buildViewModelTitleColoringsClosure: ((String, SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel)?
 
-    func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel {
-        buildViewModelCallsCount += 1
-        buildViewModelReceivedTitle = title
-        buildViewModelReceivedInvocations.append(title)
-        if let buildViewModelClosure = buildViewModelClosure {
-            return buildViewModelClosure(title)
+    func buildViewModel(title: String, colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel {
+        buildViewModelTitleColoringsCallsCount += 1
+        buildViewModelTitleColoringsReceivedArguments = (title: title, colorings: colorings)
+        buildViewModelTitleColoringsReceivedInvocations.append((title: title, colorings: colorings))
+        if let buildViewModelTitleColoringsClosure = buildViewModelTitleColoringsClosure {
+            return buildViewModelTitleColoringsClosure(title, colorings)
         } else {
-            return buildViewModelReturnValue
+            return buildViewModelTitleColoringsReturnValue
         }
     }
 
@@ -1346,23 +1346,23 @@ class SettingsUnitsHeaderViewModelBuilderProtocolMock: SettingsUnitsHeaderViewMo
 
     //MARK: - buildViewModel
 
-    var buildViewModelCurrentlyActiveSystemCopyContentCallsCount = 0
-    var buildViewModelCurrentlyActiveSystemCopyContentCalled: Bool {
-        return buildViewModelCurrentlyActiveSystemCopyContentCallsCount > 0
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsCallsCount = 0
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsCalled: Bool {
+        return buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelCurrentlyActiveSystemCopyContentReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent)?
-    var buildViewModelCurrentlyActiveSystemCopyContentReceivedInvocations: [(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent)] = []
-    var buildViewModelCurrentlyActiveSystemCopyContentReturnValue: SettingsUnitsHeaderViewModel!
-    var buildViewModelCurrentlyActiveSystemCopyContentClosure: ((String, MeasurementSystem, SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel)?
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings)?
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReceivedInvocations: [(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings)] = []
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReturnValue: SettingsUnitsHeaderViewModel!
+    var buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsClosure: ((String, MeasurementSystem, SettingsMeasurementSystemCopyContent, SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel)?
 
-    func buildViewModel(_ title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
-        buildViewModelCurrentlyActiveSystemCopyContentCallsCount += 1
-        buildViewModelCurrentlyActiveSystemCopyContentReceivedArguments = (title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent)
-        buildViewModelCurrentlyActiveSystemCopyContentReceivedInvocations.append((title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent))
-        if let buildViewModelCurrentlyActiveSystemCopyContentClosure = buildViewModelCurrentlyActiveSystemCopyContentClosure {
-            return buildViewModelCurrentlyActiveSystemCopyContentClosure(title, currentlyActiveSystem, copyContent)
+    func buildViewModel(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel {
+        buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsCallsCount += 1
+        buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReceivedArguments = (title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent, colorings: colorings)
+        buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReceivedInvocations.append((title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent, colorings: colorings))
+        if let buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsClosure = buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsClosure {
+            return buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsClosure(title, currentlyActiveSystem, copyContent, colorings)
         } else {
-            return buildViewModelCurrentlyActiveSystemCopyContentReturnValue
+            return buildViewModelTitleCurrentlyActiveSystemCopyContentColoringsReturnValue
         }
     }
 
@@ -1373,23 +1373,23 @@ class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderProtocol {
 
     //MARK: - buildViewModel
 
-    var buildViewModelSearchPreferencesStateAppCopyContentCallsCount = 0
-    var buildViewModelSearchPreferencesStateAppCopyContentCalled: Bool {
-        return buildViewModelSearchPreferencesStateAppCopyContentCallsCount > 0
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount = 0
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsCalled: Bool {
+        return buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)?
-    var buildViewModelSearchPreferencesStateAppCopyContentReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent)] = []
-    var buildViewModelSearchPreferencesStateAppCopyContentReturnValue: SettingsViewModel!
-    var buildViewModelSearchPreferencesStateAppCopyContentClosure: ((SearchPreferencesState, AppCopyContent) -> SettingsViewModel)?
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings)?
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings)] = []
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReturnValue: SettingsViewModel!
+    var buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure: ((SearchPreferencesState, AppCopyContent, SettingsViewColorings) -> SettingsViewModel)?
 
-    func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent) -> SettingsViewModel {
-        buildViewModelSearchPreferencesStateAppCopyContentCallsCount += 1
-        buildViewModelSearchPreferencesStateAppCopyContentReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent)
-        buildViewModelSearchPreferencesStateAppCopyContentReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent))
-        if let buildViewModelSearchPreferencesStateAppCopyContentClosure = buildViewModelSearchPreferencesStateAppCopyContentClosure {
-            return buildViewModelSearchPreferencesStateAppCopyContentClosure(searchPreferencesState, appCopyContent)
+    func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings) -> SettingsViewModel {
+        buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount += 1
+        buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, colorings: colorings)
+        buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, colorings: colorings))
+        if let buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure = buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure {
+            return buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure(searchPreferencesState, appCopyContent, colorings)
         } else {
-            return buildViewModelSearchPreferencesStateAppCopyContentReturnValue
+            return buildViewModelSearchPreferencesStateAppCopyContentColoringsReturnValue
         }
     }
 

@@ -42,7 +42,10 @@ class SettingsSectionViewModelTests: QuickSpec {
 
                 context("when the HeaderType is .plain") {
                     beforeEach {
-                        let headerViewModel = SettingsPlainHeaderViewModel(title: "stubHeaderViewModel1")
+                        let headerViewModel = SettingsPlainHeaderViewModel(
+                            title: "stubHeaderViewModel1",
+                            colorings: AppColorings.defaultColorings.settings.headerColorings
+                        )
                         sut = .plain(headerViewModel)
                     }
 
@@ -53,8 +56,11 @@ class SettingsSectionViewModelTests: QuickSpec {
 
                 context("when the HeaderType is .plain") {
                     beforeEach {
-                        let headerViewModel = SettingsUnitsHeaderViewModel(title: "stubHeaderViewModel2",
-                                                                           systemOptions: [])
+                        let headerViewModel = SettingsUnitsHeaderViewModel(
+                            title: "stubHeaderViewModel2",
+                            systemOptions: [],
+                            colorings: AppColorings.defaultColorings.settings.headerColorings
+                        )
                         sut = .measurementSystem(headerViewModel)
                     }
 

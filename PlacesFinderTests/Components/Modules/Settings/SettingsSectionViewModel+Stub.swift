@@ -26,9 +26,12 @@ import Foundation
 
 extension SettingsSectionViewModel {
 
-    static func stubValue(headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
+    // swiftlint:disable:next identifier_name
+    static func stubValue(id: SettingsSectionViewModel.SectionID,
+                          headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
                           cells: [SettingsCellViewModel] = []) -> SettingsSectionViewModel {
-        return SettingsSectionViewModel(headerType: headerType,
+        return SettingsSectionViewModel(id: id,
+                                        headerType: headerType,
                                         cells: cells)
     }
 
@@ -36,8 +39,12 @@ extension SettingsSectionViewModel {
 
 extension SettingsPlainHeaderViewModel {
 
-    static func stubValue(title: String = "stubTitle") -> SettingsPlainHeaderViewModel {
-        return SettingsPlainHeaderViewModel(title: title)
+    static func stubValue(
+        title: String = "stubTitle",
+        colorings: SettingsHeaderViewColorings = AppColorings.defaultColorings.settings.headerColorings
+    ) -> SettingsPlainHeaderViewModel {
+        return SettingsPlainHeaderViewModel(title: title,
+                                            colorings: colorings)
     }
 
 }
@@ -46,10 +53,12 @@ extension SettingsUnitsHeaderViewModel {
 
     static func stubValue(
         title: String = "stubUnitsHeaderTitle",
-        systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] = []
+        systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] = [],
+        colorings: SettingsHeaderViewColorings = AppColorings.defaultColorings.settings.headerColorings
     ) -> SettingsUnitsHeaderViewModel {
         return SettingsUnitsHeaderViewModel(title: title,
-                                            systemOptions: systemOptions)
+                                            systemOptions: systemOptions,
+                                            colorings: colorings)
     }
 
 }

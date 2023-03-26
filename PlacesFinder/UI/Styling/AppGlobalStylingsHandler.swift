@@ -34,22 +34,40 @@ final class AppGlobalStylingsHandler: AppGlobalStylingsHandlerProtocol {
 
     @MainActor
     func apply(_ appSkin: AppSkin) {
+        configureNavBarAppearance(appSkin: appSkin)
+        configureTabBarAppearance(appSkin: appSkin)
+        configureSearchBarAppearance()
+    }
+
+    private func configureNavBarAppearance(appSkin: AppSkin) {
         let navBarAppearance = UINavigationBar.appearance()
         navBarAppearance.barTintColor = appSkin.colorings.navBar.viewColoring.backgroundColor
 
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        navBarAppearance.standardAppearance = appearance
+        navBarAppearance.scrollEdgeAppearance = appearance
+    }
+
+    private func configureTabBarAppearance(appSkin: AppSkin) {
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.tintColor = appSkin.colorings.tabBar.selectedItemTint.color
         tabBarAppearance.unselectedItemTintColor = appSkin.colorings.tabBar.unselectedItemTint.color
         tabBarAppearance.barTintColor = appSkin.colorings.tabBar.viewColoring.backgroundColor
+
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         tabBarAppearance.standardAppearance = appearance
         tabBarAppearance.scrollEdgeAppearance = appearance
+    }
 
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes.updateValue(
-            AppTextStyleClass.textInput.textLayout.font,
-            forKey: .font
-        )
+    private func configureSearchBarAppearance() {
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+            .defaultTextAttributes
+            .updateValue(
+                AppTextStyleClass.textInput.textLayout.font,
+                forKey: .font
+            )
     }
 
 }

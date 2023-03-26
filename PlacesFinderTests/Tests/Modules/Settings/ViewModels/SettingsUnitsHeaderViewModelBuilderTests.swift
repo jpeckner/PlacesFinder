@@ -49,9 +49,10 @@ class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
         describe("buildViewModel()") {
 
             beforeEach {
-                result = sut.buildViewModel("stubTitle",
+                result = sut.buildViewModel(title: "stubTitle",
                                             currentlyActiveSystem: .imperial,
-                                            copyContent: SettingsMeasurementSystemCopyContent.stubValue())
+                                            copyContent: SettingsMeasurementSystemCopyContent.stubValue(),
+                                            colorings: AppColorings.defaultColorings.settings.headerColorings)
             }
 
             it("returns a viewmodel with the expected title...") {

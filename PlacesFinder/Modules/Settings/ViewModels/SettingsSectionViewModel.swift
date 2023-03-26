@@ -26,12 +26,20 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SettingsSectionViewModel {
+struct SettingsSectionViewModel: Identifiable {
+    enum SectionID {
+        case searchDistance
+        case sortBy
+        case settingsChild
+    }
+
     enum HeaderType: Equatable {
         case plain(SettingsPlainHeaderViewModel)
         case measurementSystem(SettingsUnitsHeaderViewModel)
     }
 
+    // swiftlint:disable:next identifier_name
+    let id: SectionID
     let headerType: HeaderType
     let cells: [SettingsCellViewModel]
 }

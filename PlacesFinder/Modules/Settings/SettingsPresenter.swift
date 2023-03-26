@@ -24,6 +24,7 @@
 
 import Shared
 import SwiftDux
+import SwiftUI
 import UIKit
 
 // sourcery: AutoMockable
@@ -56,8 +57,7 @@ class SettingsPresenter: SettingsPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel,
-                                     colorings: appSkin.colorings.settings)
+        existingController.configure(viewModel: viewModel)
     }
 
 }
@@ -75,8 +75,7 @@ private extension SettingsPresenter {
     func buildSettingsViewController(_ viewModel: SettingsViewModel,
                                      titleViewModel: NavigationBarTitleViewModel,
                                      appSkin: AppSkin) -> SettingsViewController {
-        let controller = SettingsViewController(viewModel: viewModel,
-                                                colorings: appSkin.colorings.settings)
+        let controller = SettingsViewController(viewModel: viewModel)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

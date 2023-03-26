@@ -27,19 +27,25 @@ import Shared
 
 struct SettingsPlainHeaderViewModel: Equatable {
     let title: String
+    let colorings: SettingsHeaderViewColorings
 }
 
 // MARK: SettingsPlainHeaderViewModelBuilder
 
 // sourcery: AutoMockable
 protocol SettingsPlainHeaderViewModelBuilderProtocol {
-    func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel
+    func buildViewModel(title: String,
+                        colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel
 }
 
 class SettingsPlainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol {
 
-    func buildViewModel(_ title: String) -> SettingsPlainHeaderViewModel {
-        return SettingsPlainHeaderViewModel(title: title)
+    func buildViewModel(title: String,
+                        colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel {
+        SettingsPlainHeaderViewModel(
+            title: title,
+            colorings: colorings
+        )
     }
 
 }

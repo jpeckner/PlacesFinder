@@ -41,10 +41,12 @@ class SettingsViewModelTests: QuickSpec {
         func buildSectionViewModels() -> NonEmptyArray<SettingsSectionViewModel> {
             let sections = [0, 1, 2].map { sectionIdx in
                 SettingsSectionViewModel.stubValue(
+                    id: .searchDistance,
                     headerType: .plain(.stubValue(title: "stubSection\(sectionIdx)Title")),
                     cells: [0, 1, 2].map { cellIdx in
                         SettingsCellViewModel(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
                                               isSelected: cellIdx == 1,
+                                              colorings: AppColorings.defaultColorings.settings.cellColorings,
                                               actionSubscriber: AnySubscriber(mockActionSubscriber),
                                               action: .showSettingsChild(SettingsChildLinkPayload()))
                     }
@@ -58,7 +60,8 @@ class SettingsViewModelTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             let sections = buildSectionViewModels()
-            sut = SettingsViewModel(sections: sections)
+            sut = SettingsViewModel(sections: sections,
+                                    colorings: AppColorings.defaultColorings.settings)
         }
 
         describe("tableModel") {

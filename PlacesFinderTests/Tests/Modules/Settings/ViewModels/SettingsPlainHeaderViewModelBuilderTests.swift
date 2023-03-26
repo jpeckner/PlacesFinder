@@ -42,7 +42,8 @@ class SettingsPlainHeaderViewModelBuilderTests: QuickSpec {
             let stubTitle = "stubPlainHeaderTitle"
 
             beforeEach {
-                result = sut.buildViewModel(stubTitle)
+                result = sut.buildViewModel(title: stubTitle,
+                                            colorings: AppColorings.defaultColorings.settings.headerColorings)
             }
 
             it("returns a viewmodel with the expected title") {

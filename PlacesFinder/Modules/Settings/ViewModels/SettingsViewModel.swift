@@ -29,6 +29,7 @@ import SwiftDux
 
 struct SettingsViewModel {
     let sections: NonEmptyArray<SettingsSectionViewModel>
+    let colorings: SettingsViewColorings
 }
 
 extension SettingsViewModel {
@@ -53,7 +54,8 @@ extension SettingsViewModel {
 // sourcery: AutoMockable
 protocol SettingsViewModelBuilderProtocol {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent) -> SettingsViewModel
+                        appCopyContent: AppCopyContent,
+                        colorings: SettingsViewColorings) -> SettingsViewModel
 }
 
 class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
@@ -74,42 +76,56 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
     }
 
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent) -> SettingsViewModel {
+                        appCopyContent: AppCopyContent,
+                        colorings: SettingsViewColorings) -> SettingsViewModel {
         let sections =
             NonEmptyArray(with:
                 SettingsSectionViewModel(
+                    id: .searchDistance,
                     headerType: .measurementSystem(
                         measurementSystemHeaderViewModelBuilder.buildViewModel(
-                            appCopyContent.settingsHeaders.distanceSectionTitle,
+                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.stored.distance.system,
-                            copyContent: appCopyContent.settingsMeasurementSystem
+                            copyContent: appCopyContent.settingsMeasurementSystem,
+                            colorings: colorings.headerColorings
                         )
                     ),
                     cells: settingsCellViewModelBuilder.buildDistanceCellModels(
-                        currentDistanceType: searchPreferencesState.stored.distance
+                        currentDistanceType: searchPreferencesState.stored.distance,
+                        colorings: colorings.cellColorings
                     )
                 )
             )
             .appendedWith([
                 SettingsSectionViewModel(
+                    id: .sortBy,
                     headerType: .plain(
-                        plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsHeaders.sortSectionTitle)
+                        plainHeaderViewModelBuilder.buildViewModel(
+                            title: appCopyContent.settingsHeaders.sortSectionTitle,
+                            colorings: colorings.headerColorings
+                        )
                     ),
                     cells: settingsCellViewModelBuilder.buildSortingCellModels(
                         currentSorting: searchPreferencesState.stored.sorting,
-                        copyContent: appCopyContent.settingsSortPreference
+                        copyContent: appCopyContent.settingsSortPreference,
+                        colorings: colorings.cellColorings
                     )
                 )
             ])
             .appendedWith([
                 SettingsSectionViewModel(
+                    id: .settingsChild,
                     headerType: .plain(
-                        plainHeaderViewModelBuilder.buildViewModel(appCopyContent.settingsChildMenu.sectionTitle)
+                        plainHeaderViewModelBuilder.buildViewModel(
+                            title: appCopyContent.settingsChildMenu.sectionTitle,
+                            colorings: colorings.headerColorings
+                        )
                     ),
                     cells: [
                         SettingsCellViewModel(
                             title: appCopyContent.settingsChildMenu.ctaTitle,
                             isSelected: false,
+                            colorings: colorings.cellColorings,
                             actionSubscriber: actionSubscriber,
                             action: .showSettingsChild(SettingsChildLinkPayload())
                         )
@@ -117,7 +133,10 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                 )
             ])
 
-        return SettingsViewModel(sections: sections)
+        return SettingsViewModel(
+            sections: sections,
+            colorings: colorings
+        )
     }
 
 }
