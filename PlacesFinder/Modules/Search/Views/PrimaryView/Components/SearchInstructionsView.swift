@@ -35,7 +35,7 @@ struct SearchInstructionsView: View {
 
     var body: some View {
         VStack {
-            StaticInfoSUIView(viewModel: viewModel.value.infoViewModel)
+            StaticInfoView(viewModel: viewModel.value.infoViewModel)
 
             HStack(spacing: .zero) {
                 Text(viewModel.value.resultsSource)

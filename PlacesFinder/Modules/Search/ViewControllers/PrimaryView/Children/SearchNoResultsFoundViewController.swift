@@ -25,12 +25,12 @@
 import Shared
 import SwiftUI
 
-class SearchNoResultsFoundViewController: UIHostingController<StaticInfoSUIView<AppStandardColorings>> {
+class SearchNoResultsFoundViewController: UIHostingController<StaticInfoView<AppStandardColorings>> {
 
-    private let messageView: StaticInfoSUIView<AppStandardColorings>
+    private let messageView: StaticInfoView<AppStandardColorings>
 
     init(viewModel: SearchNoResultsFoundViewModel) {
-        self.messageView = StaticInfoSUIView(viewModel: viewModel.messageViewModel.infoViewModel)
+        self.messageView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
 
         super.init(rootView: messageView)
     }

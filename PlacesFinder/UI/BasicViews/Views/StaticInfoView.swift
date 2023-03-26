@@ -1,5 +1,5 @@
 //
-//  StaticInfoSUIView.swift
+//  StaticInfoView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2023 Justin Peckner
@@ -25,7 +25,7 @@
 import Shared
 import SwiftUI
 
-struct StaticInfoSUIView<TColorings: AppStandardColoringsProtocol>: View {
+struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 
     @ObservedObject var viewModel: ValueObservable<StaticInfoViewModel<TColorings>>
 
@@ -63,13 +63,13 @@ struct StaticInfoSUIView<TColorings: AppStandardColoringsProtocol>: View {
 
 #if DEBUG
 
-struct StaticInfoSUIView_Previews: PreviewProvider {
+struct StaticInfoView_Previews: PreviewProvider {
 
     static var previews: some View {
         // swiftlint:disable:next force_try
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
-        return StaticInfoSUIView(
+        return StaticInfoView(
             viewModel: appCopyContent.settingsChildView.staticInfoViewModel(colorings: appColorings.standard)
         )
     }
