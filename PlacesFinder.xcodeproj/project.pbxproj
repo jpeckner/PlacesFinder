@@ -29,7 +29,6 @@
 		0A1C6370E661CFDFC1309272 /* SearchRetryViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A1CAEE428545798F715245 /* SearchRetryViewModelBuilderTests.swift */; };
 		0A724E39A9A51C37E41669B7 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC69B4B508408EA5ACD274D0 /* AppConfig.swift */; };
 		0AEE6249DC3256D10687E368 /* AutoAppColorings.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */; };
-		0B8106623A44A752709CB0AA /* SettingsMeasurementSystemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */; };
 		0BA2C04AC001A6C8266C8E9E /* SearchDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09569D5707768CA771A0564 /* SearchDistance.swift */; };
 		0BBE7CCFF41BA3F178184DBC /* PlaceLookupPageRequestTokenResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1139F22E04648626B0DA1F2E /* PlaceLookupPageRequestTokenResult.swift */; };
 		0C19E7C5046D4F007710D4E9 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */; };
@@ -227,7 +226,6 @@
 		6130147C97F838132BB5519D /* DownloadedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558148E9224B4F5D251A44E /* DownloadedImageView.swift */; };
 		617F515C0BD91C7443CE9BE7 /* SearchDetailsMapSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9912A0DE6911F8217574DCDD /* SearchDetailsMapSectionViewModel.swift */; };
 		61E46EB6F6D2F47761CF6A1F /* SearchDetailsViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DBA960C25CAFEC63D7BF2F /* SearchDetailsViewContext.swift */; };
-		6320B36EA5EBEF45BE075EA1 /* SettingsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE07EC66DAAEDAEF8A4824B /* SettingsSectionHeaderView.swift */; };
 		63300046589FBF95DAE8752D /* ReachabilityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED821C78F2C88DFCDF02B8D /* ReachabilityProtocol.swift */; };
 		6330C59DAFFB779E0C8AAF51 /* AppRoutingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351B757574D52CBFE17B2EA2 /* AppRoutingHandler.swift */; };
 		638FA65C7C27E6B0A6AA96FD /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */; };
@@ -348,7 +346,6 @@
 		9C68A7B7650CD9DFFBAC7DE1 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0912F2A532B16E253A6B9E0 /* LaunchViewController.swift */; };
 		9C7BE44313D35092037B9649 /* TabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E04ABD7FCF9A719BCFFA93B /* TabCoordinatorProtocol.swift */; };
 		9CE386219E254CA8323B392D /* LocationAuthListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F493F2ED91C8A96126F81 /* LocationAuthListener.swift */; };
-		9D9A8439A4357EB72B1A4869 /* SettingsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE07EC66DAAEDAEF8A4824B /* SettingsSectionHeaderView.swift */; };
 		9E110788508B29C43D50C794 /* SettingsUnitsHeaderViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4F211A48D9CAE203B6539A /* SettingsUnitsHeaderViewModelBuilderTests.swift */; };
 		9E4F057036859001C0028F45 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */; };
 		9F01B0B7AD9F8AF75D4B3C98 /* SearchBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935259BC1F38C6E3208BB06 /* SearchBackgroundViewController.swift */; };
@@ -364,7 +361,6 @@
 		A37AC6A1D5B2353FEEA00334 /* MeasurementFormatterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */; };
 		A3B458806629E23E3AB79F35 /* SearchCopyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64638B8A363ADA77F021686C /* SearchCopyFormatter.swift */; };
 		A429F3208BFD8F524B8B1557 /* AppSkin+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34AA94422964B8FCA8F972D /* AppSkin+UIBarButtonItem.swift */; };
-		A44168292967A1F6AE9B5B47 /* SettingsMeasurementSystemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */; };
 		A44B4F557CAD39CCD78966F2 /* HttpServer+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01549EBE9F0E1C12F4A416 /* HttpServer+Search.swift */; };
 		A48237102AA304C125CC3BBD /* YelpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E979DAF934F98AF614BB58 /* YelpRequestBuilder.swift */; };
 		A4D4AB833E2AF325DA75477D /* SearchActivityActionPrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D445CADEBB61BCFAFA05FC /* SearchActivityActionPrismTests.swift */; };
@@ -390,7 +386,6 @@
 		AF2DCD12CF7DA59012CFC9C9 /* SearchInputDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CDF01F0970A48199997C70 /* SearchInputDispatcherTests.swift */; };
 		AF951D661FAD27757B12217D /* AppCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA91DF17B485F196486C0380 /* AppCoordinator+CoordiNode.autogen.swift */; };
 		AFA063D15E402068CAE09DE0 /* ListenerContainer+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52124374E34FF143C2C045F6 /* ListenerContainer+Mock.swift */; };
-		B006F64083A26C146216EF70 /* SettingsMeasurementSystemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */; };
 		B033EEF3A580DB808FC138A2 /* SettingsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBEF10B69FF1F77397E551 /* SettingsSectionViewModelTests.swift */; };
 		B09BB16B40E07CE921BFF6ED /* AutoHomeCoordinatorChildContainer.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 5596D36AFDBA7C57646BCC6A /* AutoHomeCoordinatorChildContainer.stencil */; };
 		B0BA68448C4EBE7E17890DAA /* Search+ActivityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640BA02BE4C40B7703E4684 /* Search+ActivityState.swift */; };
@@ -418,7 +413,6 @@
 		B99579EE4F202F0F8C1D7086 /* SearchRatingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E54C382059E8456E5EC6183 /* SearchRatingValue.swift */; };
 		B9C88065279DDF788B8AB1C6 /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388792B263033570D84E0515 /* ServiceContainer.swift */; };
 		BAAD6804D7693DD0C736E64F /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442CE2BA208FFA59637F12D /* SettingsCoordinator+CoordiNode.autogen.swift */; };
-		BACAEC99F0BE42673D8EADC8 /* SettingsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE07EC66DAAEDAEF8A4824B /* SettingsSectionHeaderView.swift */; };
 		BB1F8D8CDAC157A21F2CE11B /* TabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E04ABD7FCF9A719BCFFA93B /* TabCoordinatorProtocol.swift */; };
 		BBB8064399BFF6B8CEDE626A /* AutoSearchDetailsSections.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD40BB03C665E74B17642051 /* AutoSearchDetailsSections.generated.swift */; };
 		BBE52C830246DEDCAA01F950 /* SearchActivityStatePrism.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B49EE3ADC9DD680E08BD4 /* SearchActivityStatePrism.swift */; };
@@ -477,8 +471,11 @@
 		CA6D635B27E6955B000866D5 /* Search+Redux.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635A27E6955B000866D5 /* Search+Redux.swift */; };
 		CA6D635D27E69594000866D5 /* StoreSubscriptionRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635C27E69594000866D5 /* StoreSubscriptionRelay.swift */; };
 		CA6D635F27E695B4000866D5 /* SubstatesSubscriberRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6D635E27E695B4000866D5 /* SubstatesSubscriberRelay.swift */; };
+		CA748FFC29D0C3FB00D67F32 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68A29C79F970018308D /* SettingsView.swift */; };
+		CA748FFD29D0C3FC00D67F32 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68A29C79F970018308D /* SettingsView.swift */; };
 		CA76D68729C78EDD0018308D /* StaticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68629C78EDD0018308D /* StaticInfoView.swift */; };
 		CA76D68929C78F7B0018308D /* View+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68829C78F7B0018308D /* View+AppSkin.swift */; };
+		CA76D68B29C79F970018308D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68A29C79F970018308D /* SettingsView.swift */; };
 		CA76D68C29C7BC360018308D /* StaticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68629C78EDD0018308D /* StaticInfoView.swift */; };
 		CA76D68D29C7BC510018308D /* StaticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68629C78EDD0018308D /* StaticInfoView.swift */; };
 		CA76D68E29C7BD1C0018308D /* View+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68829C78F7B0018308D /* View+AppSkin.swift */; };
@@ -829,7 +826,6 @@
 		9B3C2A58BEF46DEF9ADD54B2 /* SearchPreferencesActionCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesActionCreatorTests.swift; sourceTree = "<group>"; };
 		9BD0E88B2828B57760F35D8B /* AppCopyContent+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCopyContent+Stub.swift"; sourceTree = "<group>"; };
 		9C804D267C64E8881315107B /* SearchNoInternetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoInternetViewModel.swift; sourceTree = "<group>"; };
-		9FE07EC66DAAEDAEF8A4824B /* SettingsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionHeaderView.swift; sourceTree = "<group>"; };
 		A163DA02FAD3A6EB097081AE /* AppRoutingHandlerProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoutingHandlerProtocolMock.swift; sourceTree = "<group>"; };
 		A1B76BA2F2ADDB4276137A73 /* SearchCTAViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchCTAViewModel+Stub.swift"; sourceTree = "<group>"; };
 		A28526B39037CBF87ADDEA15 /* LaunchCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
@@ -843,7 +839,6 @@
 		A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContainerSplitControllers.swift; sourceTree = "<group>"; };
 		A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		A9E979DAF934F98AF614BB58 /* YelpRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestBuilder.swift; sourceTree = "<group>"; };
-		AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMeasurementSystemHeaderView.swift; sourceTree = "<group>"; };
 		ACE0FF6E52942753A0C91734 /* SearchDetailsViewContextBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewContextBuilderTests.swift; sourceTree = "<group>"; };
 		AE0A66EF4BD61A417B69236D /* HomeCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		AED821C78F2C88DFCDF02B8D /* ReachabilityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityProtocol.swift; sourceTree = "<group>"; };
@@ -884,6 +879,7 @@
 		CA6D635E27E695B4000866D5 /* SubstatesSubscriberRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstatesSubscriberRelay.swift; sourceTree = "<group>"; };
 		CA76D68629C78EDD0018308D /* StaticInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoView.swift; sourceTree = "<group>"; };
 		CA76D68829C78F7B0018308D /* View+AppSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppSkin.swift"; sourceTree = "<group>"; };
+		CA76D68A29C79F970018308D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CA784C702794F82B00FE76CC /* SettingsChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildView.swift; sourceTree = "<group>"; };
 		CA784C722794F85100FE76CC /* SettingsChildViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewModel.swift; sourceTree = "<group>"; };
 		CA784C752796083C00FE76CC /* SettingsChildViewColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChildViewColorings.swift; sourceTree = "<group>"; };
@@ -2265,8 +2261,7 @@
 		EF05640EB3FEF02B20681AFF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AAF434E308C3FEF492A7B85C /* SettingsMeasurementSystemHeaderView.swift */,
-				9FE07EC66DAAEDAEF8A4824B /* SettingsSectionHeaderView.swift */,
+				CA76D68A29C79F970018308D /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2849,17 +2844,16 @@
 				2E40835A52A76F3BA2E66132 /* SearchRetryViewModel.swift in Sources */,
 				B0BA68448C4EBE7E17890DAA /* Search+ActivityState.swift in Sources */,
 				0F520E32DAD80220934CFD30 /* SearchActivityStatePrism.swift in Sources */,
+				CA748FFC29D0C3FB00D67F32 /* SettingsView.swift in Sources */,
 				064CE6C52A821BE6BE87460A /* ServiceContainer.swift in Sources */,
 				FCFDBA5CAA9D642D50C0BD44 /* SettingsCellViewModel.swift in Sources */,
 				5F11ED763C9FD4A383726528 /* SettingsViewColorings.swift in Sources */,
 				803FAD1F969AF32881D8F923 /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */,
 				6109C9A86911D60EE47940D0 /* SettingsCoordinator.swift in Sources */,
 				902EA1C2A7F4FE683D02F82C /* SettingsLinkPayload.swift in Sources */,
-				B006F64083A26C146216EF70 /* SettingsMeasurementSystemHeaderView.swift in Sources */,
 				CA9A3CE5284D7E6400B65C4F /* SettingsChildViewColorings.swift in Sources */,
 				5C691D75FD70552344BD813C /* SettingsPlainHeaderViewModel.swift in Sources */,
 				6880E4C835A5E53F9AAC97FF /* SettingsPresenter.swift in Sources */,
-				9D9A8439A4357EB72B1A4869 /* SettingsSectionHeaderView.swift in Sources */,
 				04BF6BB87DE6C232DAB8D35D /* SettingsSectionViewModel.swift in Sources */,
 				D4C2C1E57EDBAFF2EE46AB51 /* SettingsUnitsHeaderViewModel.swift in Sources */,
 				4806220153E4F289411A23BA /* SettingsViewController.swift in Sources */,
@@ -2923,6 +2917,7 @@
 				6B8FCB0BB1B36A62A14DE8EB /* AppTextStyleClass.swift in Sources */,
 				5F591C7F9D407C551978ECDB /* AutoAppColorings.generated.swift in Sources */,
 				CA3F7700278A41BB00847AA2 /* SettingsChildCoordinator+CoordiNode.autogen.swift in Sources */,
+				CA76D68B29C79F970018308D /* SettingsView.swift in Sources */,
 				5FD849A245B2E0566BB39056 /* AutoAppLink.generated.swift in Sources */,
 				C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */,
 				12DEF7F6F6752E372A823C90 /* AutoCodable.generated.swift in Sources */,
@@ -3042,12 +3037,10 @@
 				E38F351564F40CDAB667B931 /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */,
 				638FA65C7C27E6B0A6AA96FD /* SettingsCoordinator.swift in Sources */,
 				B94C94663A518DAE803BE610 /* SettingsLinkPayload.swift in Sources */,
-				A44168292967A1F6AE9B5B47 /* SettingsMeasurementSystemHeaderView.swift in Sources */,
 				CA8BCAE42814A4D4006989CF /* Search+ReceiveState.swift in Sources */,
 				CA784C762796083C00FE76CC /* SettingsChildViewColorings.swift in Sources */,
 				FF9BF767F04B922626A7E9C7 /* SettingsPlainHeaderViewModel.swift in Sources */,
 				10B5CCEBDA2F952784FA7302 /* SettingsPresenter.swift in Sources */,
-				BACAEC99F0BE42673D8EADC8 /* SettingsSectionHeaderView.swift in Sources */,
 				469C572856AF93B9B44590A4 /* SettingsSectionViewModel.swift in Sources */,
 				B3242E759DFA67D62C1EA0D2 /* SettingsUnitsHeaderViewModel.swift in Sources */,
 				7192B1725084AD44661324B0 /* SettingsViewController.swift in Sources */,
@@ -3162,6 +3155,7 @@
 				9321924247899DF84E457122 /* ReachabilityListenerTests.swift in Sources */,
 				42E06CD8626A10FD2DBCDFF2 /* ReachabilityProtocol.swift in Sources */,
 				A14EA5C803A0721DEC154D10 /* ReachabilityReducerTests.swift in Sources */,
+				CA748FFD29D0C3FC00D67F32 /* SettingsView.swift in Sources */,
 				50840ECD1AED7C5ED65222EC /* RouterAction.swift in Sources */,
 				27E1142747A35AD659642783 /* RouterProtocol+App.swift in Sources */,
 				1190DB7CC500F774C23F65A0 /* RouterReducerTests.swift in Sources */,
@@ -3298,12 +3292,10 @@
 				CF3F5424656B8019DE8F67B4 /* SettingsCoordinator.swift in Sources */,
 				0C9E99EE2268FD950BCCB370 /* SettingsCoordinatorTests.swift in Sources */,
 				4C5A547E540D72EB416E7E48 /* SettingsLinkPayload.swift in Sources */,
-				0B8106623A44A752709CB0AA /* SettingsMeasurementSystemHeaderView.swift in Sources */,
 				3BBED3D62B809804BF6EEB50 /* SettingsPlainHeaderViewModel.swift in Sources */,
 				6B2F07986874DA31645D6F87 /* SettingsPlainHeaderViewModelBuilderTests.swift in Sources */,
 				CA784C8C27963C6700FE76CC /* AppRootCoordinatorMock.swift in Sources */,
 				74ACCD51A6C8347AC6B22866 /* SettingsPresenter.swift in Sources */,
-				6320B36EA5EBEF45BE075EA1 /* SettingsSectionHeaderView.swift in Sources */,
 				49DEFBF43D4247B3B98B80D1 /* SettingsSectionViewModel+Stub.swift in Sources */,
 				B8610BF5E846D190E63628A2 /* SettingsSectionViewModel.swift in Sources */,
 				CA784C862796200A00FE76CC /* SettingsChildView.swift in Sources */,

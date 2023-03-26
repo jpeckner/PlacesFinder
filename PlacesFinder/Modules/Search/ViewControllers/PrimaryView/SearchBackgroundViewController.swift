@@ -57,7 +57,7 @@ extension SearchBackgroundViewController {
 
         lookupView.configure(.nonDispatching(content: viewModel.contentViewModel))
 
-        childController.instructionsView.viewModel.value = viewModel.instructionsViewModel
+        childController.rootView.viewModel.value = viewModel.instructionsViewModel
     }
 
 }

@@ -44,6 +44,7 @@ class SettingsCellViewModelTests: QuickSpec {
 
             sut = SettingsCellViewModel(title: "",
                                         isSelected: false,
+                                        colorings: AppColorings.defaultColorings.settings.cellColorings,
                                         actionSubscriber: AnySubscriber(mockActionSubscriber),
                                         action: .showSettingsChild(SettingsChildLinkPayload()))
         }

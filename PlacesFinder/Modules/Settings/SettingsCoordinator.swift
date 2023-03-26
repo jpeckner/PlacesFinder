@@ -155,14 +155,17 @@ extension SettingsCoordinator: SubstatesSubscriber {
     private func presentViews(_ state: AppState,
                               updatedRoutingSubstates: UpdatedRoutingSubstates) {
         let appCopyContent = state.appCopyContentState.copyContent
+        let appSkin = state.appSkinState.currentValue
+
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
-            appCopyContent: appCopyContent
+            appCopyContent: appCopyContent,
+            colorings: appSkin.colorings.settings
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
         presenter.loadSettingsView(viewModel,
                                    titleViewModel: titleViewModel,
-                                   appSkin: state.appSkinState.currentValue)
+                                   appSkin: appSkin)
 
         serviceContainer.appRoutingHandler.determineRouting(state: state,
                                                             updatedRoutingSubstates: updatedRoutingSubstates,

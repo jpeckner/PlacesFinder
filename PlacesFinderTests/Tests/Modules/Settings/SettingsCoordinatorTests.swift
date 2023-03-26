@@ -42,8 +42,11 @@ class SettingsCoordinatorTests: QuickSpec {
 
         struct Dependencies {
             let stubSettingsViewModel: SettingsViewModel = {
-                let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue())
-                return SettingsViewModel(sections: sections)
+                let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue(id: .searchDistance))
+                return SettingsViewModel(
+                    sections: sections,
+                    colorings: AppColorings.defaultColorings.settings
+                )
             }()
             let stubNavController = UINavigationController()
 
@@ -62,7 +65,7 @@ class SettingsCoordinatorTests: QuickSpec {
                 mockServiceContainer = ServiceContainer.mockValue()
 
                 mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-                mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentReturnValue = stubSettingsViewModel
+                mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentColoringsReturnValue = stubSettingsViewModel
 
                 mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
                 mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()

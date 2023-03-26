@@ -27,12 +27,10 @@ import SwiftUI
 
 class SearchNoResultsFoundViewController: UIHostingController<StaticInfoView<AppStandardColorings>> {
 
-    private let messageView: StaticInfoView<AppStandardColorings>
-
     init(viewModel: SearchNoResultsFoundViewModel) {
-        self.messageView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
+        let rootView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
 
-        super.init(rootView: messageView)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +42,7 @@ class SearchNoResultsFoundViewController: UIHostingController<StaticInfoView<App
 extension SearchNoResultsFoundViewController {
 
     func configure(viewModel: SearchNoResultsFoundViewModel) {
-        messageView.viewModel.value = viewModel.messageViewModel.infoViewModel
+        rootView.viewModel.value = viewModel.messageViewModel.infoViewModel
     }
 
 }

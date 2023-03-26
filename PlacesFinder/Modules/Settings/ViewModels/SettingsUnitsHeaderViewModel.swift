@@ -35,15 +35,17 @@ struct SettingsUnitsHeaderViewModel: Equatable {
 
     let title: String
     let systemOptions: [SystemOption]
+    let colorings: SettingsHeaderViewColorings
 }
 
 // MARK: SettingsUnitsHeaderViewModelBuilder
 
 // sourcery: AutoMockable
 protocol SettingsUnitsHeaderViewModelBuilderProtocol {
-    func buildViewModel(_ title: String,
+    func buildViewModel(title: String,
                         currentlyActiveSystem: MeasurementSystem,
-                        copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel
+                        copyContent: SettingsMeasurementSystemCopyContent,
+                        colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel
 }
 
 class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
@@ -54,9 +56,10 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
         self.actionSubscriber = actionSubscriber
     }
 
-    func buildViewModel(_ title: String,
+    func buildViewModel(title: String,
                         currentlyActiveSystem: MeasurementSystem,
-                        copyContent: SettingsMeasurementSystemCopyContent) -> SettingsUnitsHeaderViewModel {
+                        copyContent: SettingsMeasurementSystemCopyContent,
+                        colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel {
         let systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] =
             MeasurementSystem.allCases.map { system in
                 let systemTitle = copyContent.title(system)
@@ -73,7 +76,8 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
             }
 
         return SettingsUnitsHeaderViewModel(title: title,
-                                            systemOptions: systemOptions)
+                                            systemOptions: systemOptions,
+                                            colorings: colorings)
     }
 
 }

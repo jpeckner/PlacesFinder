@@ -84,7 +84,7 @@ extension SearchLookupParentController {
                 return
             }
 
-            existingController.instructionsView.viewModel.value = viewModel
+            existingController.rootView.viewModel.value = viewModel
         case .progress:
             let colorings = appSkin.colorings.searchProgress
             guard let existingController: SearchProgressViewController = existingChildController() else {

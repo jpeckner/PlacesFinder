@@ -37,7 +37,7 @@ extension AppColorings {
             spinnerColor: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
         navBar: NavBarColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemGray5),
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             iconTintColoring: FillColoring(color: .label),
             backArrowTint: FillColoring(color: .label),
             titleTextColoring: TextColoring(textColor: .label)
@@ -79,11 +79,16 @@ extension AppColorings {
             ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
         ),
         settings: SettingsViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
-            activeButtonTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1)),
-            cellTextColoring: TextColoring(textColor: .label),
-            cellCheckmarkTint: FillColoring(color: .label),
-            headerTextColoring: TextColoring(textColor: .label)
+            viewColoring: ViewColoring(backgroundColor: .systemGroupedBackground),
+            cellColorings: SettingsCellColorings(
+                viewColoring: ViewColoring(backgroundColor: .secondarySystemGroupedBackground),
+                textColoring: TextColoring(textColor: .label),
+                checkmarkTint: FillColoring(color: .label)
+            ),
+            headerColorings: SettingsHeaderViewColorings(
+                textColoring: TextColoring(textColor: .label),
+                activeButtonTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
+            )
         ),
         tabBar: TabBarColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGray5),

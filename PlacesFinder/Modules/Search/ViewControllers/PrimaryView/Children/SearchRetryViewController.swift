@@ -26,12 +26,10 @@ import SwiftUI
 
 class SearchRetryViewController: UIHostingController<SearchCTAView> {
 
-    private let ctaView: SearchCTAView
-
     init(viewModel: SearchRetryViewModel) {
-        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel)
+        let rootView = SearchCTAView(viewModel: viewModel.ctaViewModel)
 
-        super.init(rootView: ctaView)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +41,7 @@ class SearchRetryViewController: UIHostingController<SearchCTAView> {
 extension SearchRetryViewController {
 
     func configure(viewModel: SearchRetryViewModel) {
-        ctaView.viewModel.value = viewModel.ctaViewModel
+        rootView.viewModel.value = viewModel.ctaViewModel
     }
 
 }

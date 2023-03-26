@@ -26,12 +26,10 @@ import SwiftUI
 
 class SearchLocationDisabledViewController: UIHostingController<SearchCTAView>, SearchPrimaryViewControllerProtocol {
 
-    private let ctaView: SearchCTAView
-
     init(viewModel: SearchLocationDisabledViewModel) {
-        self.ctaView = SearchCTAView(viewModel: viewModel.ctaViewModel)
+        let rootView = SearchCTAView(viewModel: viewModel.ctaViewModel)
 
-        super.init(rootView: ctaView)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +41,7 @@ class SearchLocationDisabledViewController: UIHostingController<SearchCTAView>, 
 extension SearchLocationDisabledViewController {
 
     func configure(viewModel: SearchLocationDisabledViewModel) {
-        ctaView.viewModel.value = viewModel.ctaViewModel
+        rootView.viewModel.value = viewModel.ctaViewModel
     }
 
 }

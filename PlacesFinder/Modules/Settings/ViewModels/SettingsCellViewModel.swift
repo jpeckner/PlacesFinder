@@ -30,18 +30,28 @@ import SwiftDux
 struct SettingsCellViewModel: Equatable {
     let title: String
     let isSelected: Bool
+    let colorings: SettingsCellColorings
     private let actionSubscriber: IgnoredEquatable<AnySubscriber<SearchPreferencesAction, Never>>
     private let action: IgnoredEquatable<SearchPreferencesAction>
 
     init(title: String,
          isSelected: Bool,
+         colorings: SettingsCellColorings,
          actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
          action: SearchPreferencesAction) {
         self.title = title
         self.isSelected = isSelected
+        self.colorings = colorings
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.action = IgnoredEquatable(action)
     }
+}
+
+extension SettingsCellViewModel: Identifiable {
+
+    // swiftlint:disable:next identifier_name
+    var id: String { title }
+
 }
 
 extension SettingsCellViewModel {
@@ -56,10 +66,12 @@ extension SettingsCellViewModel {
 
 // sourcery: AutoMockable
 protocol SettingsCellViewModelBuilderProtocol {
-    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel]
+    func buildDistanceCellModels(currentDistanceType: SearchDistance,
+                                 colorings: SettingsCellColorings) -> [SettingsCellViewModel]
 
     func buildSortingCellModels(currentSorting: PlaceLookupSorting,
-                                copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel]
+                                copyContent: SettingsSortPreferenceCopyContent,
+                                colorings: SettingsCellColorings) -> [SettingsCellViewModel]
 }
 
 class SettingsCellViewModelBuilder {
@@ -79,30 +91,46 @@ class SettingsCellViewModelBuilder {
 
 extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
 
-    func buildDistanceCellModels(currentDistanceType: SearchDistance) -> [SettingsCellViewModel] {
+    func buildDistanceCellModels(currentDistanceType: SearchDistance,
+                                 colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
         switch currentDistanceType {
         case let .imperial(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance: currentlySelectedDistance) { .imperial($0) }
+            return buildModels(
+                currentlySelectedDistance: currentlySelectedDistance,
+                colorings: colorings
+            ) {
+                .imperial($0)
+            }
+
         case let .metric(currentlySelectedDistance):
-            return buildModels(currentlySelectedDistance: currentlySelectedDistance) { .metric($0) }
+            return buildModels(
+                currentlySelectedDistance: currentlySelectedDistance,
+                colorings: colorings
+            ) {
+                .metric($0)
+            }
         }
     }
 
     private func buildModels<T: SearchDistanceType>(currentlySelectedDistance: T,
+                                                    colorings: SettingsCellColorings,
                                                     distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
         return T.allCases.map { distance in
             SettingsCellViewModel(title: measurementFormatter.string(from: distance.measurement),
                                   isSelected: currentlySelectedDistance == distance,
+                                  colorings: colorings,
                                   actionSubscriber: actionSubscriber,
                                   action: .setDistance(distanceBlock(distance)))
         }
     }
 
     func buildSortingCellModels(currentSorting: PlaceLookupSorting,
-                                copyContent: SettingsSortPreferenceCopyContent) -> [SettingsCellViewModel] {
+                                copyContent: SettingsSortPreferenceCopyContent,
+                                colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
         return PlaceLookupSorting.allCases.map { sorting in
             SettingsCellViewModel(title: copyContent.title(sorting),
                                   isSelected: currentSorting == sorting,
+                                  colorings: colorings,
                                   actionSubscriber: actionSubscriber,
                                   action: .setSorting(sorting))
         }
