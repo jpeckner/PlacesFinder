@@ -35,7 +35,7 @@ struct SearchCTAView: View {
 
     var body: some View {
         VStack {
-            StaticInfoSUIView(viewModel: viewModel.value.infoViewModel)
+            StaticInfoView(viewModel: viewModel.value.infoViewModel)
 
             if let action = viewModel.value.ctaBlock {
                 Button(

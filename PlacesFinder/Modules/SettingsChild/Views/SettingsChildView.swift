@@ -38,7 +38,7 @@ struct SettingsChildView: View {
             alignment: .center,
             spacing: 16
         ) {
-            StaticInfoSUIView(viewModel: viewModel.infoViewModel)
+            StaticInfoView(viewModel: viewModel.infoViewModel)
 
             Button(
                 viewModel.ctaTitle,

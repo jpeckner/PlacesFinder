@@ -25,13 +25,13 @@
 import Shared
 import SwiftUI
 
-class SearchNoInternetViewController: UIHostingController<StaticInfoSUIView<AppStandardColorings>>,
+class SearchNoInternetViewController: UIHostingController<StaticInfoView<AppStandardColorings>>,
                                       SearchPrimaryViewControllerProtocol {
 
-    private let messageView: StaticInfoSUIView<AppStandardColorings>
+    private let messageView: StaticInfoView<AppStandardColorings>
 
     init(viewModel: SearchNoInternetViewModel) {
-        self.messageView = StaticInfoSUIView(viewModel: viewModel.messageViewModel.infoViewModel)
+        self.messageView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
 
         super.init(rootView: messageView)
     }
