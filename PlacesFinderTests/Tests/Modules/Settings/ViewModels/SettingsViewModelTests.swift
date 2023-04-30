@@ -67,21 +67,14 @@ class SettingsViewModelTests: QuickSpec {
         describe("tableModel") {
 
             it("returns a viewmodel with the expected number of sections") {
-                expect(sut.tableModel.sectionModels.count) == 3
+                expect(sut.sections.value.count) == 3
             }
 
             it("returns a viewmodel with the expected contents in each section") {
-                for (sectionIdx, section) in sut.tableModel.sectionModels.enumerated() {
-                    expect(section.title) == "stubSection\(sectionIdx)Title"
-
+                for (sectionIdx, section) in sut.sections.value.enumerated() {
                     for cellIdx in [0, 1, 2] {
-                        let groupedCellModel = section.cellModels[cellIdx]
-                        guard case let .basic(basicCellModel) = groupedCellModel else {
-                            fail("Unexpected value found: \(groupedCellModel)")
-                            return
-                        }
-
-                        expect(basicCellModel.title) == "stubSection\(sectionIdx)Cell\(cellIdx)"
+                        let cellModel = section.cells[cellIdx]
+                        expect(cellModel.title) == "stubSection\(sectionIdx)Cell\(cellIdx)"
                     }
                 }
             }
