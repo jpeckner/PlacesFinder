@@ -96,17 +96,13 @@ extension SearchLookupParentController {
 
             existingController.configure(colorings)
         case let .results(viewModel):
-            let colorings = appSkin.colorings.searchResults
             guard let existingController: SearchResultsViewController = existingChildController() else {
-                let resultsController = SearchResultsViewController(viewModel: viewModel,
-                                                                    colorings: colorings)
-                resultsController.delegate = self
+                let resultsController = SearchResultsViewController(viewModel: viewModel)
                 setSingleChildController(resultsController)
                 return
             }
 
-            existingController.configure(viewModel,
-                                         colorings: colorings)
+            existingController.configure(viewModel: viewModel)
         case let .noResults(viewModel):
             guard let existingController: SearchNoResultsFoundViewController = existingChildController() else {
                 setSingleChildController(
@@ -136,21 +132,6 @@ extension SearchLookupParentController {
         setSingleChildController(controller) {
             lookupView.setChildView($0)
         }
-    }
-
-}
-
-extension SearchLookupParentController: SearchResultsViewControllerDelegate {
-
-    @MainActor
-    func viewController(_ viewController: SearchResultsViewController, didScroll deltaY: CGFloat) {
-        let updatedHeight = deltaY > 0 ?
-            // Prevent setting constant < 0
-            max(0.0, searchBarHeightConstraint.constant - deltaY)
-            // Prevent setting constant > inputViewOriginalHeight
-            : min(searchBarFullHeight, searchBarHeightConstraint.constant - deltaY)
-
-        searchBarHeightConstraint.constant = updatedHeight
     }
 
 }

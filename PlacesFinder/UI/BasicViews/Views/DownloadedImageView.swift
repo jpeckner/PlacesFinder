@@ -24,7 +24,29 @@
 
 import Kingfisher
 import Shared
+import SwiftUI
 import UIKit
+
+struct DownloadedImageViewSUI: View {
+
+    private let imageURL: URL
+    private let placeholderImage: Image
+
+    init(imageURL: URL,
+         placeholderImage: Image = Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))) {
+        self.imageURL = imageURL
+        self.placeholderImage = placeholderImage
+    }
+
+    var body: some View {
+        KFImage(imageURL)
+            .placeholder { _ in
+                placeholderImage
+            }
+            .resizable()
+    }
+
+}
 
 class DownloadedImageView: UIImageView {
 

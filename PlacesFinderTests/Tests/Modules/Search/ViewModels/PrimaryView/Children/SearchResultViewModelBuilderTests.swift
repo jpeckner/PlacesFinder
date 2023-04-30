@@ -31,6 +31,7 @@ import SwiftDux
 class SearchResultViewModelBuilderTests: QuickSpec {
 
     // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
         let stubEntityModel = SearchEntityModel.stubValue()
@@ -47,7 +48,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             mockResultCellModelBuilder = SearchResultCellModelBuilderProtocolMock()
-            mockResultCellModelBuilder.buildViewModelResultsCopyContentReturnValue = stubResultCellModel
+            mockResultCellModelBuilder.buildViewModelModelResultsCopyContentColoringsReturnValue = stubResultCellModel
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.detailEntityActionReturnValue = .detailedEntity(stubEntityModel)
@@ -62,12 +63,13 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             var result: SearchResultViewModel!
 
             beforeEach {
-                result = sut.buildViewModel(stubEntityModel,
-                                            resultsCopyContent: stubCopyContent)
+                result = sut.buildViewModel(model: stubEntityModel,
+                                            resultsCopyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockResultCellModelBuilder with expected method and args") {
-                let receivedArgs = mockResultCellModelBuilder.buildViewModelResultsCopyContentReceivedArguments
+                let receivedArgs = mockResultCellModelBuilder.buildViewModelModelResultsCopyContentColoringsReceivedArguments
                 expect(receivedArgs?.model) == stubEntityModel
                 expect(receivedArgs?.resultsCopyContent) == stubCopyContent
             }

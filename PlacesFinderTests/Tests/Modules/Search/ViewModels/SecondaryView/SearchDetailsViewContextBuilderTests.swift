@@ -85,10 +85,10 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
 
             context("else when Search.ActivityState.detailedEntity is non-nil") {
                 let stubEntities = NonEmptyArray(with:
-                    SearchEntityModel.stubValue(id: "stubID_0")
+                    SearchEntityModel.stubValue(id: .stubValue("stubID_0"))
                 ).appendedWith([
-                    SearchEntityModel.stubValue(id: "stubID_1"),
-                    SearchEntityModel.stubValue(id: "stubID_2"),
+                    SearchEntityModel.stubValue(id: .stubValue("stubID_1")),
+                    SearchEntityModel.stubValue(id: .stubValue("stubID_2")),
                 ])
                 let stubSearchActivityState = Search.ActivityState(
                     loadState: .pagesReceived(params: .stubValue(),

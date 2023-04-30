@@ -74,11 +74,11 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubInstructionsViewModel
 
             stubResultsViewModel = .stubValue(
-                actionSubscriber: AnySubscriber(mockActionSubscriber),
-                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber)))
+                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))),
+                actionSubscriber: AnySubscriber(mockActionSubscriber)
             )
             mockResultsViewModelBuilder = SearchResultsViewModelBuilderProtocolMock()
-            mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
+            mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
                 = stubResultsViewModel
 
             mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
@@ -103,7 +103,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         loadState: .idle,
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }
@@ -127,7 +128,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         loadState: .locationRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }
@@ -146,7 +148,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         loadState: .initialPageRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }
@@ -174,7 +177,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         ),
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }
@@ -182,7 +186,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
                 it("calls mockResultsViewModelBuilder with expected method and args") {
                     let args =
-                    mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
+                    mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
                     expect(args?.submittedParams) == stubSearchParams
                     expect(args?.allEntities) == stubEntities
                     expect(args?.tokenContainer) == tokenContainer
@@ -202,7 +206,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         loadState: .noResultsFound(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }
@@ -237,7 +242,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
                         ),
                         appCopyContent: stubAppCopyContent,
                         standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                        resultsViewColorings: AppColorings.defaultColorings.searchResults
                     ) {
                         .success(.stubValue())
                     }

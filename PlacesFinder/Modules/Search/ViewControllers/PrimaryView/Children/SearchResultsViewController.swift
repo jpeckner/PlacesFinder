@@ -23,139 +23,66 @@
 //  SOFTWARE.
 
 import Shared
-import UIKit
+import SwiftUI
 
-protocol SearchResultsViewControllerDelegate: AnyObject {
-    // periphery:ignore:parameters viewController
-    @MainActor
-    func viewController(_ viewController: SearchResultsViewController,
-                        didScroll deltaY: CGFloat)
+struct SearchResultsView: View {
+
+    @ObservedObject var viewModel: ValueObservable<SearchResultsViewModel>
+
+    var body: some View {
+        List(viewModel.value.resultViewModels.value.indexed, id: \.element.cellModel.id) { index, resultViewModel in
+            Button(
+                action: {
+                    viewModel.value.dispatchDetailsAction(rowIndex: index)
+                },
+                label: {
+                    SearchResultCell(cellModel: ValueObservable(resultViewModel.cellModel))
+                        .onAppear {
+                            dispatchRequestIfApplicable(currentIndex: index)
+                        }
+                }
+            )
+        }
+        .listStyle(PlainListStyle())
+        .showVerticalScrollIndicators(false)
+        .refreshable {
+            // Add a slight delay to keep the refresh control from disappearing too fast (which is jarring)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                viewModel.value.dispatchRefreshAction()
+            }
+        }
+    }
+
+    private func dispatchRequestIfApplicable(currentIndex: Int) {
+        guard viewModel.value.hasNextRequestAction,
+              currentIndex >= viewModel.value.resultViewModels.value.count - 30
+        else {
+            return
+        }
+
+        viewModel.value.dispatchNextRequestAction()
+    }
+
 }
 
-class SearchResultsViewController: SingleContentViewController {
+class SearchResultsViewController: UIHostingController<SearchResultsView> {
 
-    weak var delegate: SearchResultsViewControllerDelegate?
-    private var viewModel: SearchResultsViewModel
-    private var colorings: SearchResultsViewColorings
-    private let tableView: UITableView
-    private let refreshControl: UIRefreshControl
+    init(viewModel: SearchResultsViewModel) {
+        let rootView = SearchResultsView(viewModel: ValueObservable(viewModel))
 
-    private var previousContentOffsetY: CGFloat = 0.0
-
-    init(viewModel: SearchResultsViewModel,
-         colorings: SearchResultsViewColorings) {
-        self.viewModel = viewModel
-        self.colorings = colorings
-        self.tableView = UITableView()
-        self.refreshControl = UIRefreshControl()
-
-        super.init(contentView: tableView,
-                   viewColoring: colorings.viewColoring)
-
-        setupTableView()
-        configure(viewModel,
-                  colorings: colorings)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupTableView() {
-        tableView.performStandardSetup(
-            cellTypes: [
-                SearchResultCell.self,
-            ],
-            dataSource: self,
-            delegate: self
-        )
-
-        tableView.prefetchDataSource = self
-        tableView.allowsSelection = true
-        tableView.refreshControl = refreshControl
-    }
-
 }
 
 extension SearchResultsViewController {
 
-    func configure(_ viewModel: SearchResultsViewModel,
-                   colorings: SearchResultsViewColorings) {
-        self.viewModel = viewModel
-        self.colorings = colorings
-
-        refreshControl.tintColor = colorings.refreshControlTint.color
-
-        tableView.reloadData()
-    }
-
-}
-
-extension SearchResultsViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellViewModelCount
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withCellType: SearchResultCell.self, for: indexPath)
-
-        AssertionHandler.assertIfErrorThrown {
-            let resultCell: SearchResultCell = try CastingFunctions.cast(cell)
-            let cellViewModel = viewModel.cellViewModel(rowIndex: indexPath.row)
-            resultCell.configure(cellViewModel,
-                                 colorings: colorings)
-        }
-
-        cell.makeTransparent()
-
-        return cell
-    }
-
-}
-
-extension SearchResultsViewController: UITableViewDataSourcePrefetching {
-
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard viewModel.hasNextRequestAction,
-            isCloseEnoughToBottomForNextRequest(indexPaths)
-        else { return }
-
-        viewModel.dispatchNextRequestAction()
-    }
-
-    private func isCloseEnoughToBottomForNextRequest(_ indexPaths: [IndexPath]) -> Bool {
-        return indexPaths.contains { $0.row >= viewModel.cellViewModelCount - 30 }
-    }
-
-}
-
-extension SearchResultsViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        viewModel.dispatchDetailsAction(rowIndex: indexPath.row)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !scrollView.isBouncingTop,
-            !scrollView.isBouncingBottom
-        else { return }
-
-        let yOffset = scrollView.contentOffset.y
-        delegate?.viewController(self, didScroll: yOffset - previousContentOffsetY)
-        previousContentOffsetY = yOffset
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard refreshControl.isRefreshing else { return }
-
-        tableView.setContentOffset(.zero, animated: true)
-        refreshControl.endRefreshing()
-
-        viewModel.dispatchRefreshAction()
+    func configure(viewModel: SearchResultsViewModel) {
+        rootView.viewModel.value = viewModel
     }
 
 }

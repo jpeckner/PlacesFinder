@@ -69,7 +69,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockInputViewModelBuilder.buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
-            mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReturnValue = .progress
+            mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsResultsViewColoringsLocationUpdateRequestBlockReturnValue = .progress
 
             sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
@@ -82,7 +82,8 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                     searchActivityState: stubSearchActivityState,
                     appCopyContent: stubAppCopyContent,
                     standardColorings: AppColorings.defaultColorings.standard,
-                    searchCTAColorings: AppColorings.defaultColorings.searchCTA
+                    searchCTAColorings: AppColorings.defaultColorings.searchCTA,
+                    resultsViewColorings: AppColorings.defaultColorings.searchResults
                 ) {
                     locationBlockCalled = true
                     return .success(.stubValue())
@@ -100,7 +101,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockChildBuilder with expected method and args") {
-                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsLocationUpdateRequestBlockReceivedArguments
+                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsResultsViewColoringsLocationUpdateRequestBlockReceivedArguments
                 expect(receivedArgs?.loadState) == stubSearchActivityState.loadState
                 expect(receivedArgs?.appCopyContent) == stubAppCopyContent
 

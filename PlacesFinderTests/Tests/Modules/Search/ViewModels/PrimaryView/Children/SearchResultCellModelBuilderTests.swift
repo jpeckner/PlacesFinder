@@ -48,8 +48,9 @@ class SearchResultCellModelBuilderTests: QuickSpec {
             var result: SearchResultCellModel!
 
             beforeEach {
-                result = sut.buildViewModel(stubEntityModel,
-                                            resultsCopyContent: stubCopyContent)
+                result = sut.buildViewModel(model: stubEntityModel,
+                                            resultsCopyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockFormatter with expected method and args") {

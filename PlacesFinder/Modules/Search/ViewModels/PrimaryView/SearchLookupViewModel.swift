@@ -33,10 +33,12 @@ struct SearchLookupViewModel: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchLookupViewModelBuilderProtocol {
+    // swiftlint:disable:next function_parameter_count
     func buildViewModel(searchActivityState: Search.ActivityState,
                         appCopyContent: AppCopyContent,
                         standardColorings: AppStandardColorings,
                         searchCTAColorings: SearchCTAViewColorings,
+                        resultsViewColorings: SearchResultsViewColorings,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
 }
 
@@ -51,10 +53,12 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
         self.childBuilder = childBuilder
     }
 
+    // swiftlint:disable:next function_parameter_count
     func buildViewModel(searchActivityState: Search.ActivityState,
                         appCopyContent: AppCopyContent,
                         standardColorings: AppStandardColorings,
                         searchCTAColorings: SearchCTAViewColorings,
+                        resultsViewColorings: SearchResultsViewColorings,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
         let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
             inputParams: searchActivityState.inputParams,
@@ -66,6 +70,7 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
                                             appCopyContent: appCopyContent,
                                             standardColorings: standardColorings,
                                             searchCTAColorings: searchCTAColorings,
+                                            resultsViewColorings: resultsViewColorings,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 
         return SearchLookupViewModel(searchInputViewModel: searchInputViewModel,

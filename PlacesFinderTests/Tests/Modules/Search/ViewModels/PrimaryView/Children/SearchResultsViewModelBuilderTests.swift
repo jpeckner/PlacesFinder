@@ -38,10 +38,10 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
         let stubSearchParams = SearchParams.stubValue()
         let stubEntities = NonEmptyArray(with:
-            SearchEntityModel.stubValue(id: "stubID_0")
+            SearchEntityModel.stubValue(id: .stubValue("stubID_0"))
         ).appendedWith([
-            SearchEntityModel.stubValue(id: "stubID_1"),
-            SearchEntityModel.stubValue(id: "stubID_2"),
+            SearchEntityModel.stubValue(id: .stubValue("stubID_1")),
+            SearchEntityModel.stubValue(id: .stubValue("stubID_2")),
         ])
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
@@ -63,7 +63,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
-            mockResultViewModelBuilder.buildViewModelResultsCopyContentClosure = { entityModel, _ in
+            mockResultViewModelBuilder.buildViewModelModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
                 let cellModel = SearchResultCellModel.stubValue(name: entityModel.name)
                 return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                        cellModel: cellModel,
@@ -110,6 +110,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 locationBlockCalled = false
                 result = sut.buildViewModel(submittedParams: stubSearchParams,
                                             allEntities: stubEntities,
+                                            colorings: AppColorings.defaultColorings.searchResults,
                                             numPagesReceived: 1,
                                             tokenContainer: stubTokenContainer,
                                             resultsCopyContent: stubCopyContent,
@@ -136,14 +137,15 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             }
 
             it("inits a viewmodel with the entities as transformed by mockResultViewModelBuilder") {
-                let expectedViewModels = stubEntities.withTransformation {
-                    mockResultViewModelBuilder.buildViewModel($0,
-                                                              resultsCopyContent: stubCopyContent)
+                let expectedViewModels = stubEntities.withTransformation { model in
+                    mockResultViewModelBuilder.buildViewModel(model: model,
+                                                              resultsCopyContent: stubCopyContent,
+                                                              colorings: AppColorings.defaultColorings.searchResults)
                 }
 
-                expect(result.cellViewModelCount) == 3
+                expect(result.resultViewModels.value.count) == 3
                 for idx in 0..<3 {
-                    expect(result.cellViewModel(rowIndex: idx)) == expectedViewModels.value[idx].cellModel
+                    expect(result.resultViewModels.value[idx].cellModel) == expectedViewModels.value[idx].cellModel
                 }
             }
 

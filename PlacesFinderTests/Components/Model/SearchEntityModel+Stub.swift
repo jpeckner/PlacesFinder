@@ -39,7 +39,7 @@ extension SearchRatings {
 extension SearchEntityModel {
 
     // swiftlint:disable identifier_name
-    static func stubValue(id: String = "stubID",
+    static func stubValue(id: NonEmptyString = NonEmptyString.stubValue("stubID"),
                           name: String = "stubName",
                           url: URL = .stubValue(),
                           ratings: SearchRatings = .stubValue(),
@@ -49,7 +49,8 @@ extension SearchEntityModel {
                           dialablePhone: String? = "stubDialablePhone",
                           pricing: PlaceLookupPricing? = .stubValue(),
                           coordinate: PlaceLookupCoordinate? = .stubValue()) -> SearchEntityModel {
-        return SearchEntityModel(name: NonEmptyString.stubValue(name),
+        return SearchEntityModel(id: id,
+                                 name: NonEmptyString.stubValue(name),
                                  url: url,
                                  ratings: ratings,
                                  image: image,

@@ -52,8 +52,9 @@ extension SearchResultViewModel {
 
 // sourcery: AutoMockable
 protocol SearchResultViewModelBuilderProtocol {
-    func buildViewModel(_ model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultViewModel
+    func buildViewModel(model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent,
+                        colorings: SearchResultsViewColorings) -> SearchResultViewModel
 }
 
 class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
@@ -70,10 +71,12 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
         self.resultCellModelBuilder = resultCellModelBuilder
     }
 
-    func buildViewModel(_ model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultViewModel {
-        let cellModel = resultCellModelBuilder.buildViewModel(model,
-                                                              resultsCopyContent: resultsCopyContent)
+    func buildViewModel(model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent,
+                        colorings: SearchResultsViewColorings) -> SearchResultViewModel {
+        let cellModel = resultCellModelBuilder.buildViewModel(model: model,
+                                                              resultsCopyContent: resultsCopyContent,
+                                                              colorings: colorings)
         let detailEntityAction = actionPrism.detailEntityAction(model)
 
         return SearchResultViewModel(cellModel: cellModel,
