@@ -163,6 +163,7 @@ private extension SearchCoordinator {
                     appCopyContent: appCopyContent,
                     standardColorings: appSkin.colorings.standard,
                     searchCTAColorings: appSkin.colorings.searchCTA,
+                    resultsViewColorings: appSkin.colorings.searchResults,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
                 let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,

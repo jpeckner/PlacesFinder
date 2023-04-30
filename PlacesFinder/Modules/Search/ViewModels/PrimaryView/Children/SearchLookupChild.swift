@@ -38,10 +38,12 @@ enum SearchLookupChild: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchLookupChildBuilderProtocol {
+    // swiftlint:disable:next function_parameter_count
     func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     standardColorings: AppStandardColorings,
                     searchCTAColorings: SearchCTAViewColorings,
+                    resultsViewColorings: SearchResultsViewColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
@@ -68,10 +70,12 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
+    // swiftlint:disable:next function_parameter_count
     func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
                     standardColorings: AppStandardColorings,
                     searchCTAColorings: SearchCTAViewColorings,
+                    resultsViewColorings: SearchResultsViewColorings,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
@@ -87,6 +91,7 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             return .results(resultsViewModelBuilder.buildViewModel(
                 submittedParams: submittedParams,
                 allEntities: allEntities,
+                colorings: resultsViewColorings,
                 numPagesReceived: numPagesReceived,
                 tokenContainer: tokenContainer,
                 resultsCopyContent: appCopyContent.searchResults,

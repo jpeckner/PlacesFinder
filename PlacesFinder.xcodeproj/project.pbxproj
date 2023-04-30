@@ -512,6 +512,9 @@
 		CAA5497327AA1C2800F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
 		CAA5497627AB741600F09F8A /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497527AB741600F09F8A /* AppAction.swift */; };
+		CAE5DDFA29FF24E4005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
+		CAE5DDFB29FF2962005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
+		CAE5DDFC29FF2963005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
 		CC97A27F7A7C2A97FDFC5B52 /* SearchActivityStatePrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB75D8B9F5872DFC76763E14 /* SearchActivityStatePrismTests.swift */; };
@@ -890,6 +893,7 @@
 		CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497527AB741600F09F8A /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
+		CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollIndicators.swift"; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CCA50B284C64F4468E1A3201 /* SearchResultsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsViewModel+Stub.swift"; sourceTree = "<group>"; };
@@ -1386,6 +1390,7 @@
 				940F23D5864943959C7A60EE /* BasicViews */,
 				41A74F7741AC30CC5041B8D1 /* Copy */,
 				844A52711810D07222CF9FCF /* Styling */,
+				CAE5DDF829FF24C9005A10B0 /* SwiftUI */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2098,6 +2103,14 @@
 			path = Combine;
 			sourceTree = "<group>";
 		};
+		CAE5DDF829FF24C9005A10B0 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		CAFB9897706B627156818B78 /* PlacesFinder */ = {
 			isa = PBXGroup;
 			children = (
@@ -2711,6 +2724,7 @@
 				9E4F057036859001C0028F45 /* AppCoordinator.swift in Sources */,
 				F4EEB5645C6573ACE646067A /* AppCoordinatorChildFactory.swift in Sources */,
 				5871934F62A81B63DA450610 /* AppCopyContent+Defaults.swift in Sources */,
+				CAE5DDFB29FF2962005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				EE2CD551F796BE690C554C1E /* AppCopyContent.swift in Sources */,
 				7893CC96E376D7FA9E97DC95 /* AppCopyContentState.swift in Sources */,
 				CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */,
@@ -3035,6 +3049,7 @@
 				638FA65C7C27E6B0A6AA96FD /* SettingsCoordinator.swift in Sources */,
 				B94C94663A518DAE803BE610 /* SettingsLinkPayload.swift in Sources */,
 				CA8BCAE42814A4D4006989CF /* Search+ReceiveState.swift in Sources */,
+				CAE5DDFA29FF24E4005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				CA784C762796083C00FE76CC /* SettingsChildViewColorings.swift in Sources */,
 				FF9BF767F04B922626A7E9C7 /* SettingsPlainHeaderViewModel.swift in Sources */,
 				10B5CCEBDA2F952784FA7302 /* SettingsPresenter.swift in Sources */,
@@ -3249,6 +3264,7 @@
 				C0B9F33959D91411C2B8EF66 /* SearchProgressCell.swift in Sources */,
 				43BF3EAB6AD1A21DEE9B2738 /* SearchProgressViewController.swift in Sources */,
 				5C7F91BDFB7EDD025740B207 /* SearchRatingValue+Image.swift in Sources */,
+				CAE5DDFC29FF2963005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */,
 				EE381F0DD8CFE8D8D1DD63E4 /* SearchRatingValue.swift in Sources */,
 				19128C842DD3171E639D0380 /* SearchRatingValueTests.swift in Sources */,

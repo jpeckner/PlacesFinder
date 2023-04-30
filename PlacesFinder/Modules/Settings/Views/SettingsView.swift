@@ -41,7 +41,7 @@ struct SettingsView: View {
                         SettingsCell(
                             viewModel: cellViewModel
                         )
-                        .contentShape(Rectangle())
+                        .contentShape(Rectangle())  // Necessary for `onTapGesture` to work on the entire cell
                         .onTapGesture {
                             cellViewModel.dispatchAction()
                         }

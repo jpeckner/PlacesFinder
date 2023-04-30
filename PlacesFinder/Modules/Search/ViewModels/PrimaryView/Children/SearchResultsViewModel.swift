@@ -27,32 +27,23 @@ import Shared
 import SwiftDux
 
 struct SearchResultsViewModel: Equatable {
-    private let resultViewModels: NonEmptyArray<SearchResultViewModel>
+    let resultViewModels: NonEmptyArray<SearchResultViewModel>
+    let colorings: SearchResultsViewColorings
     private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
     private let refreshAction: IgnoredEquatable<Search.Action>
     private var nextRequestAction: IgnoredEquatable<Search.Action>?
 
     init(resultViewModels: NonEmptyArray<SearchResultViewModel>,
+         colorings: SearchResultsViewColorings,
          actionSubscriber: AnySubscriber<Search.Action, Never>,
          refreshAction: Search.Action,
          nextRequestAction: Search.Action?) {
         self.resultViewModels = resultViewModels
+        self.colorings = colorings
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.refreshAction = IgnoredEquatable(refreshAction)
         self.nextRequestAction = nextRequestAction.map { IgnoredEquatable($0) }
     }
-}
-
-extension SearchResultsViewModel {
-
-    var cellViewModelCount: Int {
-        return resultViewModels.value.count
-    }
-
-    func cellViewModel(rowIndex: Int) -> SearchResultCellModel {
-        return resultViewModel(rowIndex: rowIndex).cellModel
-    }
-
 }
 
 extension SearchResultsViewModel {
@@ -94,6 +85,7 @@ protocol SearchResultsViewModelBuilderProtocol {
     // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
+                        colorings: SearchResultsViewColorings,
                         numPagesReceived: Int,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
@@ -115,14 +107,16 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
     // swiftlint:disable:next function_parameter_count
     func buildViewModel(submittedParams: SearchParams,
                         allEntities: NonEmptyArray<SearchEntityModel>,
+                        colorings: SearchResultsViewColorings,
                         numPagesReceived: Int,
                         tokenContainer: PlaceLookupTokenAttemptsContainer?,
                         resultsCopyContent: SearchResultsCopyContent,
                         actionSubscriber: AnySubscriber<Search.Action, Never>,
                         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
         let resultViewModels: NonEmptyArray<SearchResultViewModel> = allEntities.withTransformation {
-            resultViewModelBuilder.buildViewModel($0,
-                                                  resultsCopyContent: resultsCopyContent)
+            resultViewModelBuilder.buildViewModel(model: $0,
+                                                  resultsCopyContent: resultsCopyContent,
+                                                  colorings: colorings)
         }
 
         let refreshAction = actionPrism.initialRequestAction(searchParams: submittedParams,
@@ -136,6 +130,7 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
         }
 
         return SearchResultsViewModel(resultViewModels: resultViewModels,
+                                      colorings: colorings,
                                       actionSubscriber: actionSubscriber,
                                       refreshAction: .searchActivity(refreshAction),
                                       nextRequestAction: nextRequestAction.map { .searchActivity($0) })

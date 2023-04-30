@@ -30,8 +30,9 @@ import SwiftDux
 
 class SearchResultsViewModelTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     // swiftlint:disable function_body_length
+    // swiftlint:disable implicitly_unwrapped_optional
+    // swiftlint:disable line_length
     override func spec() {
 
         let stubbedRefreshAction = Search.ActivityAction.stubbedStartInitialRequestAction()
@@ -46,6 +47,7 @@ class SearchResultsViewModelTests: QuickSpec {
             nextRequestAction: Search.Action? = .searchActivity(.stubbedStartSubsequentRequestAction())
         ) -> SearchResultsViewModel {
             return SearchResultsViewModel(resultViewModels: resultViewModels,
+                                          colorings: AppColorings.defaultColorings.searchResults,
                                           actionSubscriber: AnySubscriber(mockActionSubscriber),
                                           refreshAction: .searchActivity(stubbedRefreshAction),
                                           nextRequestAction: nextRequestAction)
@@ -58,7 +60,7 @@ class SearchResultsViewModelTests: QuickSpec {
                 SearchResultViewModel.stubValue(
                     actionSubscriber: AnySubscriber(mockActionSubscriber),
                     cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
-                    detailEntityAction: .searchActivity(.detailedEntity(SearchEntityModel.stubValue(id: "\(idx)")))
+                    detailEntityAction: .searchActivity(.detailedEntity(.stubValue(id: .stubValue("stubID_\(idx)"))))
                 )
             })
         }
@@ -67,18 +69,18 @@ class SearchResultsViewModelTests: QuickSpec {
 
             it("returns the number of cell view-models") {
                 result = buildViewModel(resultViewModels: stubResultViewModels)
-                expect(result.cellViewModelCount) == 3
+                expect(result.resultViewModels.value.count) == 3
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
                     SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))
                 ]))
-                expect(result.cellViewModelCount) == 4
+                expect(result.resultViewModels.value.count) == 4
 
                 result = buildViewModel(resultViewModels: stubResultViewModels.appendedWith([
                     SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber)),
                     SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))
                 ]))
-                expect(result.cellViewModelCount) == 5
+                expect(result.resultViewModels.value.count) == 5
             }
 
         }
@@ -90,7 +92,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("returns the view-model at the specified index") {
-                expect(result.cellViewModel(rowIndex: 2)) == stubResultViewModels.value[2].cellModel
+                expect(result.resultViewModels.value[2].cellModel) == stubResultViewModels.value[2].cellModel
             }
 
         }
@@ -172,7 +174,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(.detailedEntity(.stubValue()))
+                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(.detailedEntity(.stubValue(id: .stubValue("stubID_2"))))
             }
         }
 

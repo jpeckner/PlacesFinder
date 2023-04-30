@@ -26,6 +26,8 @@ import Foundation
 import Shared
 
 struct SearchEntityModel: Equatable, Sendable {
+    // swiftlint:disable:next identifier_name
+    let id: NonEmptyString
     let name: NonEmptyString
     let url: URL
     let ratings: SearchRatings

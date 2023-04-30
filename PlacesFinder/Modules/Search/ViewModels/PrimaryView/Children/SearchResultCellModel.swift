@@ -26,18 +26,22 @@ import Foundation
 import Shared
 
 struct SearchResultCellModel: Equatable {
+    // swiftlint:disable:next identifier_name
+    let id: NonEmptyString
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue
     let pricing: String?
     let image: DownloadedImageViewModel
+    let colorings: SearchResultsViewColorings
 }
 
 // MARK: SearchResultCellModelBuilder
 
 // sourcery: AutoMockable
 protocol SearchResultCellModelBuilderProtocol {
-    func buildViewModel(_ model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel
+    func buildViewModel(model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent,
+                        colorings: SearchResultsViewColorings) -> SearchResultCellModel
 }
 
 class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
@@ -48,13 +52,16 @@ class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
         self.copyFormatter = copyFormatter
     }
 
-    func buildViewModel(_ model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchResultCellModel {
-        return SearchResultCellModel(
+    func buildViewModel(model: SearchEntityModel,
+                        resultsCopyContent: SearchResultsCopyContent,
+                        colorings: SearchResultsViewColorings) -> SearchResultCellModel {
+        SearchResultCellModel(
+            id: model.id,
             name: model.name,
             ratingsAverage: model.ratings.average,
             pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
-            image: DownloadedImageViewModel(url: model.image)
+            image: DownloadedImageViewModel(url: model.image),
+            colorings: colorings
         )
     }
 

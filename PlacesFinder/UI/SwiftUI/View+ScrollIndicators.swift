@@ -1,8 +1,8 @@
 //
-//  SearchResultCellModel+Stub.swift
-//  PlacesFinderTests
+//  View+ScrollIndicators.swift
+//  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
-import SharedTestComponents
+import SwiftUI
 
-extension SearchResultCellModel {
+// NOTE: once the minimum iOS version for this app is set to iOS 16, delete `ListVerticalScrollIndicatorsModifier` and
+// `func showVerticalScrollIndicators()` , and use `scrollIndicators()` directly instead
 
-    static func stubValue(
-        // swiftlint:disable:next identifier_name
-        id: NonEmptyString = .stubValue(),
-        name: NonEmptyString = .stubValue(),
-        ratingsAverage: SearchRatingValue = .three,
-        pricing: String? = nil,
-        image: DownloadedImageViewModel = DownloadedImageViewModel(url: .stubValue()),
-        colorings: SearchResultsViewColorings = AppColorings.defaultColorings.searchResults
-    ) -> SearchResultCellModel {
-        return SearchResultCellModel(id: id,
-                                     name: name,
-                                     ratingsAverage: ratingsAverage,
-                                     pricing: pricing,
-                                     image: image,
-                                     colorings: colorings)
+@available(iOS 16, *)
+struct ListVerticalScrollIndicatorsModifier: ViewModifier {
+    let showsVerticalScrollIndicators: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .scrollIndicators(
+                showsVerticalScrollIndicators ? .visible : .hidden,
+                axes: [.vertical]
+            )
+    }
+}
+
+// Need to extend `View` itself; extending `List` results in build errors due to the type of `some View` not being known
+extension View {
+
+    @ViewBuilder
+    func showVerticalScrollIndicators(_ showIndicators: Bool) -> some View {
+        if #available(iOS 16, *) {
+            self.modifier(ListVerticalScrollIndicatorsModifier(showsVerticalScrollIndicators: showIndicators))
+        } else {
+            self
+        }
     }
 
 }

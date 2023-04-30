@@ -23,82 +23,52 @@
 //  SOFTWARE.
 
 import Shared
-import SnapKit
-import UIKit
+import SwiftUI
 
-class SearchResultCell: SearchCellBase {
+struct SearchResultCell: View {
 
-    private let thumbnailImageView: DownloadedImageView
-    private let ratingStarsView: RatingStarsView
-    private let pricingLabel: StyledLabel
+    @ObservedObject var cellModel: ValueObservable<SearchResultCellModel>
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.thumbnailImageView = DownloadedImageView(contentMode: .scaleToFill)
-        self.ratingStarsView = RatingStarsView()
-        self.pricingLabel = StyledLabel()
+    var body: some View {
+        HStack {
+            DownloadedImageViewSUI(imageURL: cellModel.value.image.url)
+                .aspectRatio(1, contentMode: .fit)
+                .cornerRadius(4)
 
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+            VStack(alignment: .leading) {
+                Text(cellModel.value.name.value)
+                    .modifier(
+                        textStyleClass: .cellText,
+                        textColoring: cellModel.value.colorings.bodyTextColoring
+                    )
 
-        setupThumbnailView()
-        setupDetailsView()
-    }
+                HStack {
+                    Image(uiImage: cellModel.value.ratingsAverage.starsImage)
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+                    Spacer()
 
-    private func setupThumbnailView() {
-        thumbnailContainerView.addSubview(thumbnailImageView)
-        thumbnailImageView.fitFully(to: thumbnailContainerView)
-        thumbnailImageView.contentMode = .scaleAspectFill
-    }
+                    cellModel.value.pricing.map { pricing in
+                        Text(pricing)
+                            .modifier(
+                                textStyleClass: .pricingLabel,
+                                textColoring: cellModel.value.colorings.bodyTextColoring
+                            )
+                    }
+                }
+            }
 
-    private func setupDetailsView() {
-        detailsContainerView.addSubview(ratingStarsView)
-        detailsContainerView.addSubview(pricingLabel)
+            Spacer(minLength: 16)
 
-        ratingStarsView.snp.makeConstraints { make in
-            make.leading.equalTo(detailsContainerView)
-            make.top.bottom.equalTo(detailsContainerView)
+            Image(uiImage: Constants.disclosureArrow)
+                .resizable()
+                .frame(width: 12, widthToHeightRatio: Constants.disclosureArrow.widthToHeightRatio)
+                .foregroundColor(Color(uiColor: cellModel.value.colorings.disclosureArrowTint.color))
         }
-
-        pricingLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(ratingStarsView.snp.trailing).offset(8.0)
-            make.trailing.equalTo(detailsContainerView)
-            make.top.bottom.equalTo(detailsContainerView)
-        }
-        pricingLabel.adjustFontSizeToFitWidth()
+        .frame(height: 68)
     }
 
-}
-
-extension SearchResultCell {
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        thumbnailImageView.cancelImageDownload()
-    }
-
-}
-
-extension SearchResultCell {
-
-    func configure(_ cellModel: SearchResultCellModel,
-                   colorings: SearchResultsViewColorings) {
-        thumbnailImageView.configure(cellModel.image)
-
-        nameLabel.text = cellModel.name.value
-        nameLabel.configure(.cellText,
-                            textColoring: colorings.bodyTextColoring)
-
-        ratingStarsView.configure(cellModel.ratingsAverage)
-
-        pricingLabel.text = cellModel.pricing
-        pricingLabel.configure(.pricingLabel,
-                               textColoring: colorings.bodyTextColoring)
-
-        disclosureImageView.tintColor = colorings.disclosureArrowTint.color
+    private enum Constants {
+        static let disclosureArrow = #imageLiteral(resourceName: "right_arrow").withRenderingMode(.alwaysTemplate)
     }
 
 }

@@ -111,7 +111,8 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns the entity's values in SearchEntityModel") {
-                    expect(result) == SearchEntityModel(name: .stubValue("stubEntityName"),
+                    expect(result) == SearchEntityModel(id: stubEntity.id,
+                                                        name: .stubValue("stubEntityName"),
                                                         url: .stubValue(),
                                                         ratings: .stubValue(average: .five, numRatings: 123),
                                                         image: .stubValue(),
