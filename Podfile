@@ -1,5 +1,7 @@
 
-platform :ios, '15.0'
+$minIOSVersion = '15.0'
+
+platform :ios, $minIOSVersion
 ensure_bundler!
 
 def common_pods
@@ -47,4 +49,12 @@ target 'PlacesFinder' do
     pod 'Swifter'
   end
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $minIOSVersion
+    end
+  end
 end
