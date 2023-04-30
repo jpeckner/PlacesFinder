@@ -9,7 +9,6 @@ rm -rf "$OUTPUT_DIR"
 mint run krzysztofzablocki/sourcery sourcery            \
   --sources PlacesFinder                                \
   --templates PlacesFinder/Sourcery/Templates           \
-  --templates Pods/Shared/Shared/Sourcery/Templates     \
   --output "$OUTPUT_DIR"
 
 OUTPUT_DIR=$(pwd)/PlacesFinderTests/Components/Sourcery/Output

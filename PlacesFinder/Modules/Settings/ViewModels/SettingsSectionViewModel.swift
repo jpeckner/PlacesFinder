@@ -43,16 +43,3 @@ struct SettingsSectionViewModel: Identifiable {
     let headerType: HeaderType
     let cells: [SettingsCellViewModel]
 }
-
-extension SettingsSectionViewModel.HeaderType {
-
-    var title: String {
-        switch self {
-        case let .plain(viewModel):
-            return viewModel.title
-        case let .measurementSystem(viewModel):
-            return viewModel.title
-        }
-    }
-
-}

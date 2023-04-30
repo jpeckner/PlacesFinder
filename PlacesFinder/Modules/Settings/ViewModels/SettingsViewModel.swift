@@ -32,23 +32,6 @@ struct SettingsViewModel {
     let colorings: SettingsViewColorings
 }
 
-extension SettingsViewModel {
-
-    var tableModel: GroupedTableViewModel {
-        return GroupedTableViewModel(sectionModels: sections.value.map {
-            GroupedTableViewSectionModel(
-                title: $0.headerType.title,
-                cellModels: $0.cells.map {
-                    .basic(GroupedTableBasicCellViewModel(title: $0.title,
-                                                          image: nil,
-                                                          accessoryType: $0.isSelected ? .checkmark : .none))
-                }
-            )
-        })
-    }
-
-}
-
 // MARK: SettingsViewModelBuilder
 
 // sourcery: AutoMockable
