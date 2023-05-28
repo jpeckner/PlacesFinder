@@ -34,10 +34,7 @@ struct SettingsChildView: View {
     }
 
     var body: some View {
-        VStack(
-            alignment: .center,
-            spacing: 16
-        ) {
+        VStack(spacing: 16) {
             StaticInfoView(viewModel: viewModel.infoViewModel)
 
             Button(

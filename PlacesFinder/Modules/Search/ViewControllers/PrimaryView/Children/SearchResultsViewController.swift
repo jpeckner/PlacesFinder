@@ -44,7 +44,7 @@ struct SearchResultsView: View {
             )
         }
         .listStyle(PlainListStyle())
-        .showVerticalScrollIndicators(false)
+        .showVerticalScrollIndicatorsiOS16Min(false)
         .refreshable {
             // Add a slight delay to keep the refresh control from disappearing too fast (which is jarring)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

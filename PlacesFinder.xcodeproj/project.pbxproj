@@ -515,6 +515,12 @@
 		CAE5DDFA29FF24E4005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
 		CAE5DDFB29FF2962005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
 		CAE5DDFC29FF2963005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
+		CAE6DE752A23D45500358D89 /* View+ScrollBounceBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */; };
+		CAE6DE792A23F9CB00358D89 /* VerticallyCenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */; };
+		CAE6DE7C2A23FA8A00358D89 /* VerticallyCenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */; };
+		CAE6DE7D2A23FA8B00358D89 /* VerticallyCenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */; };
+		CAE6DE7E2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */; };
+		CAE6DE7F2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */; };
 		CB3DF4FA6E86066A7520766F /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
 		CC97A27F7A7C2A97FDFC5B52 /* SearchActivityStatePrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB75D8B9F5872DFC76763E14 /* SearchActivityStatePrismTests.swift */; };
@@ -894,6 +900,8 @@
 		CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSubscriber.swift; sourceTree = "<group>"; };
 		CAA5497527AB741600F09F8A /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
 		CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollIndicators.swift"; sourceTree = "<group>"; };
+		CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollBounceBehavior.swift"; sourceTree = "<group>"; };
+		CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredScrollView.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CCA50B284C64F4468E1A3201 /* SearchResultsViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsViewModel+Stub.swift"; sourceTree = "<group>"; };
@@ -2106,9 +2114,27 @@
 		CAE5DDF829FF24C9005A10B0 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */,
+				CAE6DE7A2A23F9E000358D89 /* Extensions */,
+				CAE6DE7B2A23F9EE00358D89 /* Views */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		CAE6DE7A2A23F9E000358D89 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */,
+				CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CAE6DE7B2A23F9EE00358D89 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CAFB9897706B627156818B78 /* PlacesFinder */ = {
@@ -2844,6 +2870,7 @@
 				7EC35DFDF49A2E32DAC24723 /* SearchProgressCell.swift in Sources */,
 				55A46D6393B97480B5C99210 /* SearchProgressViewController.swift in Sources */,
 				CA8BCAEB2814B79C006989CF /* Search+ReceiveState.swift in Sources */,
+				CAE6DE7C2A23FA8A00358D89 /* VerticallyCenteredScrollView.swift in Sources */,
 				976C1429955E1532C6DD66C8 /* SearchRatingValue+Image.swift in Sources */,
 				86469AB9EED0A1371A5A0C59 /* SearchRatingValue.swift in Sources */,
 				E1B4DE63A3AAD2D467D9D4EB /* SearchResultCell.swift in Sources */,
@@ -2873,6 +2900,7 @@
 				9C7BE44313D35092037B9649 /* TabCoordinatorProtocol.swift in Sources */,
 				19884E79FC3BA3D4A689EF26 /* UIButton+AppSkin.swift in Sources */,
 				F0D0729C64B74E9E902AF3EC /* UILabel+AppSkin.swift in Sources */,
+				CAE6DE7E2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */,
 				DA61B86197265E68C9BD0D54 /* UIView+Skeleton.swift in Sources */,
 				8F92EAF9F0635B6064619569 /* UserDefaultsListener.swift in Sources */,
 				29EDDB04E2AAE6625BAA62FD /* UserDefaultsService.swift in Sources */,
@@ -2938,6 +2966,7 @@
 				5104E3A08BF84F6F9EFF8BED /* ChildCoordinatorProtocol.swift in Sources */,
 				CA784C712794F82B00FE76CC /* SettingsChildView.swift in Sources */,
 				362877375C1D0A4616B475B4 /* CoordinatorProtocol+App.swift in Sources */,
+				CAE6DE752A23D45500358D89 /* View+ScrollBounceBehavior.swift in Sources */,
 				6BBBD0B0E40CE56CD10B7293 /* DecodableServices.swift in Sources */,
 				EE1F3C7CCE4FF6EC4F7DE386 /* DownloadedImageView.swift in Sources */,
 				3D2D64EBBD67E0C506F76571 /* DownloadedImageViewModel.swift in Sources */,
@@ -3033,6 +3062,7 @@
 				B99579EE4F202F0F8C1D7086 /* SearchRatingValue.swift in Sources */,
 				5F3799A065982925ED37268A /* SearchResultCell.swift in Sources */,
 				6A67B7AA982F25B566810904 /* SearchResultCellModel.swift in Sources */,
+				CAE6DE792A23F9CB00358D89 /* VerticallyCenteredScrollView.swift in Sources */,
 				E118C1B5D8B84AE2B8C79FFD /* SearchResultViewModel.swift in Sources */,
 				CA76D68729C78EDD0018308D /* StaticInfoView.swift in Sources */,
 				D7B16EB7146F1F7F99111E05 /* SearchResultsViewController.swift in Sources */,
@@ -3093,6 +3123,7 @@
 				BC561AAE2FA6253E92B7437F /* AppCopyContentState.swift in Sources */,
 				C3857883C46A1B6CD58E4888 /* AppDelegate.swift in Sources */,
 				39A4A0A6DF3501E7CD145F1B /* AppGlobalStylingsHandler.swift in Sources */,
+				CAE6DE7D2A23FA8B00358D89 /* VerticallyCenteredScrollView.swift in Sources */,
 				FD515DEC0DBFF9E1EC3D2F64 /* AppLinkTypeBuilder.swift in Sources */,
 				81FDD95461B234B240DD3FAE /* AppLinkTypeBuilderTests.swift in Sources */,
 				A90AE2B9CA819FBDB19C9606 /* AppRoutingHandler.swift in Sources */,
@@ -3249,6 +3280,7 @@
 				CA8BCAE82814A7F9006989CF /* SubstatesSubscriberRelay.swift in Sources */,
 				06425F1FFFFBC816C24D4A00 /* SearchMessageViewModel.swift in Sources */,
 				DB13F15EF99BE9257AD775E3 /* SearchNoInternetViewController.swift in Sources */,
+				CAE6DE7F2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */,
 				68B759FBB19C9B972BDD402F /* SearchNoInternetViewModel.swift in Sources */,
 				CD4333BA6AC27EBB316447F7 /* SearchNoResultsFoundViewController.swift in Sources */,
 				2615B7222A503EAA3B119593 /* SearchNoResultsFoundViewModel.swift in Sources */,

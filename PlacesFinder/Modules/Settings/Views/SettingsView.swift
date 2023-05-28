@@ -51,6 +51,8 @@ struct SettingsView: View {
         }
         .listStyle(.grouped)
         .background(Color(viewModel.value.colorings.viewColoring.backgroundColor))
+        .showVerticalScrollIndicatorsiOS16Min(false)
+        .scrollBounceBasedOnSizeiOS16_4Min()
     }
 
     private func header(_ sectionViewModel: SettingsSectionViewModel) -> some View {
@@ -95,26 +97,24 @@ private struct SettingsMeasurementSystemHeaderView: View {
     let viewModel: SettingsUnitsHeaderViewModel
 
     var body: some View {
-        ZStack {
+        HStack {
+            Text(viewModel.title)
+                .modifier(
+                    textStyleClass: .tableHeader,
+                    textColoring: viewModel.colorings.textColoring
+                )
+
+            Spacer()
+
             HStack {
-                Text(viewModel.title)
-                    .modifier(
-                        textStyleClass: .tableHeader,
-                        textColoring: viewModel.colorings.textColoring
-                    )
+                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index -> AnyView in
+                    AnyView(Group {
+                        if index > 0 {
+                            AnyView(Text("|"))
+                        }
 
-                Spacer()
-
-                HStack {
-                    ForEach(0..<viewModel.systemOptions.count, id: \.self) { index -> AnyView in
-                        AnyView(Group {
-                            if index > 0 {
-                                AnyView(Text("|"))
-                            }
-
-                            self.systemOptionElement(index: index)
-                        })
-                    }
+                        self.systemOptionElement(index: index)
+                    })
                 }
             }
         }

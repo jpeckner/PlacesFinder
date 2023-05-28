@@ -1,5 +1,5 @@
 //
-//  View+ScrollIndicators.swift
+//  VerticallyCenteredScrollView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2023 Justin Peckner
@@ -24,32 +24,17 @@
 
 import SwiftUI
 
-// NOTE: once the minimum iOS version for this app is set to iOS 16, delete `ListVerticalScrollIndicatorsModifier` and
-// `func showVerticalScrollIndicators()` , and use `scrollIndicators()` directly instead
+// Copied from https://stackoverflow.com/a/69695324/1342984
+struct VerticallyCenteredScrollView<Content>: View where Content: View {
+    @ViewBuilder let content: Content
 
-@available(iOS 16, *)
-struct ListVerticalScrollIndicatorsModifier: ViewModifier {
-    let showsVerticalScrollIndicators: Bool
-
-    func body(content: Content) -> some View {
-        content
-            .scrollIndicators(
-                showsVerticalScrollIndicators ? .visible : .hidden,
-                axes: [.vertical]
-            )
-    }
-}
-
-// Need to extend `View` itself; extending `List` results in build errors due to the type of `some View` not being known
-extension View {
-
-    @ViewBuilder
-    func showVerticalScrollIndicators(_ showIndicators: Bool) -> some View {
-        if #available(iOS 16, *) {
-            self.modifier(ListVerticalScrollIndicatorsModifier(showsVerticalScrollIndicators: showIndicators))
-        } else {
-            self
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollView(.vertical) {
+                content
+                    .frame(width: geometry.size.width)
+                    .frame(minHeight: geometry.size.height)
+            }
         }
     }
-
 }
