@@ -34,8 +34,9 @@ struct SearchInstructionsView: View {
     }
 
     var body: some View {
-        VStack {
+        VerticallyCenteredScrollView {
             StaticInfoView(viewModel: viewModel.value.infoViewModel)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
 
             HStack(spacing: .zero) {
                 Text(viewModel.value.resultsSource)
@@ -49,6 +50,7 @@ struct SearchInstructionsView: View {
                 APILogoView(viewColoring: viewModel.value.infoViewModel.colorings.viewColoring)
             }
         }
+        .scrollBounceBasedOnSizeiOS16_4Min()
     }
 
 }

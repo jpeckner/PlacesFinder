@@ -34,8 +34,9 @@ struct SearchCTAView: View {
     }
 
     var body: some View {
-        VStack {
+        VerticallyCenteredScrollView {
             StaticInfoView(viewModel: viewModel.value.infoViewModel)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
 
             if let action = viewModel.value.ctaBlock {
                 Button(
@@ -48,6 +49,7 @@ struct SearchCTAView: View {
                 )
             }
         }
+        .scrollBounceBasedOnSizeiOS16_4Min()
     }
 
 }
