@@ -8,7 +8,7 @@ def common_pods
   pod 'CoordiNode', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
   pod 'Kingfisher'
   pod 'ReachabilitySwift'
-  pod 'SkeletonView'
+  pod 'SkeletonUI'
   pod 'SnapKit'
   pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
   pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'

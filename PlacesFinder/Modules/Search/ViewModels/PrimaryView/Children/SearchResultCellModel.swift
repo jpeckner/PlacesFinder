@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-struct SearchResultCellModel: Equatable {
+struct SearchResultCellModel: Identifiable, Equatable {
     // swiftlint:disable:next identifier_name
     let id: NonEmptyString
     let name: NonEmptyString

@@ -55,6 +55,7 @@ struct SearchInputViewColorings: AppColoringProtocol {
 struct SearchProgressViewColorings: AppColoringProtocol {
     let viewColoring: ViewColoring
     let gradientFill: FillColoring
+    let gradientBackground: FillColoring
 }
 
 // sourcery: fieldName = "searchResults"
