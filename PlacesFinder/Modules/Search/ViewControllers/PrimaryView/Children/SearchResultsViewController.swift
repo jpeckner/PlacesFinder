@@ -65,6 +65,8 @@ struct SearchResultsView: View {
 
 }
 
+// MARK: - SearchResultsViewController
+
 class SearchResultsViewController: UIHostingController<SearchResultsView> {
 
     init(viewModel: SearchResultsViewModel) {

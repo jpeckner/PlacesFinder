@@ -23,79 +23,92 @@
 //  SOFTWARE.
 
 import Shared
-import SkeletonView
-import UIKit
+import SkeletonUI
+import SwiftUI
 
-class SearchProgressViewController: SingleContentViewController {
+struct SearchProgressView: View {
 
-    private let tableView: UITableView
-    private var gradient: SkeletonGradient
+    @ObservedObject var colorings: ValueObservable<SearchProgressViewColorings>
+
+    var body: some View {
+        SkeletonList(with: [EmptyProgressItem](), quantity: 10) { loading, _ in
+            HStack {
+                Rectangle()
+                    .skeleton(with: loading)
+                    .shape(type: .rectangle)
+                    .appearance(type: appearanceType)
+                    .frame(idealWidth: 64)
+                    .aspectRatio(1, contentMode: .fit)
+                    .cornerRadius(4)
+
+                VStack(alignment: .leading) {
+                    Text("")
+                        .skeleton(with: loading)
+                        .shape(type: .rectangle)
+                        .appearance(type: appearanceType)
+                        .cornerRadius(4)
+
+                    HStack {
+                        Rectangle()
+                            .skeleton(with: loading)
+                            .shape(type: .rectangle)
+                            .appearance(type: appearanceType)
+                            .frame(width: 120)
+                            .cornerRadius(4)
+
+                        Spacer()
+
+                        Text("")
+                            .skeleton(with: loading)
+                            .shape(type: .rectangle)
+                            .appearance(type: appearanceType)
+                            .frame(width: 44)
+                            .cornerRadius(4)
+                    }
+                }
+            }
+            .frame(height: 68)
+        }
+        .listStyle(PlainListStyle())
+        .showVerticalScrollIndicatorsiOS16Min(false)
+    }
+
+    private var appearanceType: AppearanceType {
+        .gradient(
+            color: Color(colorings.value.gradientFill.color),
+            background: Color(colorings.value.gradientBackground.color)
+        )
+    }
+
+}
+
+// MARK: - SearchProgressViewController
+
+class SearchProgressViewController: UIHostingController<SearchProgressView> {
 
     init(colorings: SearchProgressViewColorings) {
-        self.tableView = UITableView()
-        self.gradient = SkeletonGradient(baseColor: colorings.gradientFill.color)
+        let rootView = SearchProgressView(colorings: ValueObservable(colorings))
 
-        super.init(contentView: tableView,
-                   viewColoring: colorings.viewColoring)
-
-        setupTableView()
-        configure(colorings)
+        super.init(rootView: rootView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupTableView() {
-        tableView.performStandardSetup(
-            cellTypes: [
-                SearchProgressCell.self
-            ],
-            dataSource: self,
-            delegate: self
-        )
-
-        tableView.isScrollEnabled = false
-        tableView.allowsSelection = false
-    }
-
 }
 
 extension SearchProgressViewController {
 
-    func configure(_ colorings: SearchProgressViewColorings) {
-        self.gradient = SkeletonGradient(baseColor: colorings.gradientFill.color)
-
-        tableView.reloadData()
+    func configure(colorings: SearchProgressViewColorings) {
+        rootView.colorings.value = colorings
     }
 
 }
 
-extension SearchProgressViewController: SkeletonTableViewDataSource {
+// MARK: - Helper components
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withCellType: SearchProgressCell.self, for: indexPath)
-        cell.makeTransparent()
-        return cell
-    }
-
-    func collectionSkeletonView(_ skeletonView: UITableView,
-                                cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return SearchProgressCell.cellIdentifier
-    }
-
-}
-
-extension SearchProgressViewController: SkeletonTableViewDelegate {
-
-    func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
-        cell.showAnimatedGradientSkeleton(usingGradient: gradient)
-    }
-
+private struct EmptyProgressItem: Identifiable {
+    // swiftlint:disable:next identifier_name
+    let id = UUID()
 }

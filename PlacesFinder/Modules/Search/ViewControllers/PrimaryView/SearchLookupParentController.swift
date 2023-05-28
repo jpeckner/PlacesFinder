@@ -94,7 +94,7 @@ extension SearchLookupParentController {
                 return
             }
 
-            existingController.configure(colorings)
+            existingController.configure(colorings: colorings)
         case let .results(viewModel):
             guard let existingController: SearchResultsViewController = existingChildController() else {
                 let resultsController = SearchResultsViewController(viewModel: viewModel)
