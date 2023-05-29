@@ -60,8 +60,6 @@ extension LaunchCoordinator: ChildCoordinatorProtocol {
     // MARK: start()
 
     func start() {
-        presenter.startSpinner()
-
         subscribeAndDispatchActions()
         startListeners()
     }

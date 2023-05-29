@@ -22,18 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
-import UIKit
+import SwiftUI
 
-class LaunchViewController: SingleContentViewController {
-
-    private let launchView: LaunchView
+class LaunchViewController: UIHostingController<LaunchView> {
 
     init(appSkin: AppSkin) {
-        self.launchView = LaunchView(colorings: appSkin.colorings.launch)
+        let launchView = LaunchView(colorings: appSkin.colorings.launch)
 
-        super.init(contentView: launchView,
-                   viewColoring: appSkin.colorings.launch.viewColoring)
+        super.init(rootView: launchView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,12 +40,8 @@ class LaunchViewController: SingleContentViewController {
 
 extension LaunchViewController {
 
-    func startSpinner() {
-        launchView.startSpinner()
-    }
-
     func animateOut() async {
-        await launchView.animateOut()
+        await rootView.animateOut()
     }
 
 }

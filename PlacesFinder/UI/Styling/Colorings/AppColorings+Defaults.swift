@@ -34,7 +34,7 @@ extension AppColorings {
         ),
         launch: LaunchViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground),
-            spinnerColor: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
+            spinnerColor: FillColoring(color: .systemGray)
         ),
         navBar: NavBarColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground),
