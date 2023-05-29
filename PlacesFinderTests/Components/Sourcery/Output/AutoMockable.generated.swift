@@ -279,19 +279,6 @@ class LaunchPresenterProtocolMock: LaunchPresenterProtocol {
     }
     var underlyingRootViewController: UIViewController!
 
-    //MARK: - startSpinner
-
-    var startSpinnerCallsCount = 0
-    var startSpinnerCalled: Bool {
-        return startSpinnerCallsCount > 0
-    }
-    var startSpinnerClosure: (() -> Void)?
-
-    func startSpinner() {
-        startSpinnerCallsCount += 1
-        startSpinnerClosure?()
-    }
-
     //MARK: - animateOut
 
     var animateOutCallsCount = 0

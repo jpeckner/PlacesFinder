@@ -29,7 +29,6 @@ import UIKit
 @MainActor protocol LaunchPresenterProtocol {
     var rootViewController: UIViewController { get }
 
-    func startSpinner()
     func animateOut() async
 }
 
@@ -43,10 +42,6 @@ class LaunchPresenter: LaunchPresenterProtocol {
 
     init(appSkin: AppSkin) {
         self.launchViewController = LaunchViewController(appSkin: appSkin)
-    }
-
-    func startSpinner() {
-        launchViewController.startSpinner()
     }
 
     func animateOut() async {

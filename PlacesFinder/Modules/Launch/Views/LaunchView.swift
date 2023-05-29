@@ -22,121 +22,161 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SnapKit
-import UIKit
+import Shared
+import SwiftUI
 
-class LaunchView: UIView {
+struct LaunchView: View {
 
-    private let topPaddingView: UIView
-    private let imageView: UIImageView
-    private let centerYPaddingView: UIView
-    private let activityIndicator: UIActivityIndicatorView
-
-    init(colorings: LaunchViewColorings) {
-        self.topPaddingView = UIView()
-        self.imageView = UIImageView(image: #imageLiteral(resourceName: "app_icon"))
-        self.centerYPaddingView = UIView()
-        self.activityIndicator = UIActivityIndicatorView(style: .large)
-
-        super.init(frame: .zero)
-
-        setupSubviews()
-        setupConstraints()
-        setupStyling(colorings)
+    private enum ProgressState {
+        case loading
+        case completing(continuation: CheckedContinuation<Void, Never>)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    let colorings: LaunchViewColorings
+    @ObservedObject private var state = ValueObservable(ProgressState.loading)
+
+    var body: some View {
+        GeometryReader { geometry in
+            switch state.value {
+            case .loading:
+                LoadingLaunchView(
+                    geometry: geometry,
+                    colorings: colorings
+                )
+
+            case let .completing(continuation):
+                CompletingLaunchView(
+                    geometry: geometry,
+                    continuation: continuation
+                )
+            }
+        }
+        .background(Color(colorings.viewColoring.backgroundColor))
     }
 
-    private func setupSubviews() {
-        addSubview(topPaddingView)
-        addSubview(imageView)
-        addSubview(centerYPaddingView)
-        addSubview(activityIndicator)
-    }
-
-    private func setupConstraints() {
-        topPaddingView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(self)
-            make.height.equalTo(self).multipliedBy(0.25)
+    func animateOut() async {
+        await withCheckedContinuation { continuation in
+            state.value = .completing(continuation: continuation)
         }
-
-        imageView.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.top.equalTo(topPaddingView.snp.bottom)
-
-            make.width.equalTo(self).multipliedBy(0.3).priority(999)
-            make.width.lessThanOrEqualTo(200.0)
-            make.height.equalTo(imageView.snp.width)
-        }
-
-        centerYPaddingView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self)
-            make.top.equalTo(self.snp.centerY)
-            make.height.equalTo(self).multipliedBy(0.15)
-        }
-
-        activityIndicator.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.top.equalTo(centerYPaddingView.snp.bottom)
-
-            make.width.equalTo(self).multipliedBy(0.125).priority(999)
-            make.width.lessThanOrEqualTo(88.0)
-            make.height.equalTo(activityIndicator.snp.width)
-        }
-    }
-
-    private func setupStyling(_ colorings: LaunchViewColorings) {
-        imageView.contentMode = .scaleAspectFit
-
-        activityIndicator.color = colorings.spinnerColor.color
-        activityIndicator.hidesWhenStopped = true
     }
 
 }
 
-extension LaunchView {
+// MARK: - Components
 
-    func startSpinner() {
-        activityIndicator.startAnimating()
+private struct LoadingLaunchView: View {
+
+    let geometry: GeometryProxy
+    let colorings: LaunchViewColorings
+
+    var body: some View {
+        Image(uiImage: Constants.appIcon)
+            .resizable()
+            .frame(
+                width: geometry.appIconDimension,
+                height: geometry.appIconDimension
+            )
+            .aspectRatio(1, contentMode: .fill)
+            .position(geometry.appIconCenter)
+
+        ProgressView()
+            .position(geometry.progressViewPosition)
+            .tint(Color(colorings.spinnerColor.color))
     }
 
-    func animateOut() async {
-        activityIndicator.stopAnimating()
+}
 
-        await withCheckedContinuation { continuation in
-            performImageTightentingAnimation(continuation: continuation)
-        }
+private struct CompletingLaunchView: View {
+
+    private enum AnimationConstants {
+        static let firstAnimationDuration: TimeInterval = 0.3
+        static let secondAnimationDuration: TimeInterval = 0.2
+        static let totalAnimationDuration = firstAnimationDuration + secondAnimationDuration
     }
 
-    private func performImageTightentingAnimation(continuation: CheckedContinuation<Void, Never>) {
-        UIView.animate(
-            withDuration: 0.3,
-            delay: 0.0,
-            options: [.curveLinear],
-            animations: {
-                self.imageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-            },
-            completion: { _ in
-                self.performImageExpansionAnimation(continuation: continuation)
+    private let geometry: GeometryProxy
+    private let continuation: CheckedContinuation<Void, Never>
+    @State private var completingImageWidth: CGFloat
+    @State private var completingImageHeight: CGFloat
+    @State private var completingImageAlpha: CGFloat
+
+    init(geometry: GeometryProxy,
+         continuation: CheckedContinuation<Void, Never>) {
+        self.geometry = geometry
+        self.continuation = continuation
+        self._completingImageWidth = State(initialValue: geometry.appIconDimension)
+        self._completingImageHeight = State(initialValue: geometry.appIconDimension)
+        self._completingImageAlpha = State(initialValue: 1.0)
+    }
+
+    var body: some View {
+        Image(uiImage: Constants.appIcon)
+            .resizable()
+            .frame(
+                width: completingImageWidth,
+                height: completingImageHeight
+            )
+            .position(geometry.appIconCenter)
+            .opacity(completingImageAlpha)
+            .onAppear {
+                withAnimation(.linear(duration: AnimationConstants.firstAnimationDuration)) {
+                    let scaledDimension = geometry.appIconDimension * 0.7
+                    completingImageWidth = scaledDimension
+                    completingImageHeight = scaledDimension
+                }
+
+                withAnimation(
+                    .easeIn(duration: AnimationConstants.secondAnimationDuration)
+                    .delay(AnimationConstants.firstAnimationDuration)
+                ) {
+                    let scaledDimension = geometry.appIconDimension * 10.0
+                    completingImageWidth = scaledDimension
+                    completingImageHeight = scaledDimension
+                    completingImageAlpha = 0.0
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + AnimationConstants.totalAnimationDuration) {
+                    continuation.resume()
+                }
             }
+    }
+
+}
+
+private extension GeometryProxy {
+
+    private enum LayoutConstants {
+        static let percentTopToAppIconTop: CGFloat = 0.25
+        static let percentAppIconBottomToProgressViewTop: CGFloat = 0.15
+    }
+
+    var appIconDimension: CGFloat {
+        size.width * 0.3
+    }
+
+    var appIconCenter: CGPoint {
+        CGPoint(
+            x: size.width / 2,
+            y: (
+                size.height * LayoutConstants.percentTopToAppIconTop
+                + appIconDimension / 2
+            )
         )
     }
 
-    private func performImageExpansionAnimation(continuation: CheckedContinuation<Void, Never>) {
-        UIView.animate(
-            withDuration: 0.2,
-            delay: 0.0,
-            options: [.curveEaseIn],
-            animations: {
-                self.imageView.transform = CGAffineTransform(scaleX: 10, y: 10)
-                self.imageView.alpha = 0.0
-            },
-            completion: { _ in
-                continuation.resume()
-            }
+    var progressViewPosition: CGPoint {
+        CGPoint(
+            x: size.width / 2,
+            y: (
+                size.height * LayoutConstants.percentTopToAppIconTop
+                + appIconDimension
+                + size.height * LayoutConstants.percentAppIconBottomToProgressViewTop
+            )
         )
     }
 
+}
+
+private enum Constants {
+    static let appIcon = #imageLiteral(resourceName: "app_icon")
 }
