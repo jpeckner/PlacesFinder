@@ -93,8 +93,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel,
-                                     appSkin: appSkin)
+        existingController.configure(viewModel: viewModel)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -126,8 +125,7 @@ class SearchPresenter: SearchPresenterProtocol {
                                                    appSkin: appSkin)
         }
 
-        existingController.configure(viewModel,
-                                     appSkin: appSkin)
+        existingController.configure(viewModel: viewModel)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
         return existingController
@@ -200,8 +198,7 @@ private extension SearchPresenter {
     func buildSearchBackgroundViewController(_ viewModel: SearchBackgroundViewModel,
                                              titleViewModel: NavigationBarTitleViewModel,
                                              appSkin: AppSkin) -> SearchBackgroundViewController {
-        let controller = SearchBackgroundViewController(viewModel: viewModel,
-                                                        appSkin: appSkin)
+        let controller = SearchBackgroundViewController(viewModel: viewModel)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller
@@ -212,8 +209,7 @@ private extension SearchPresenter {
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
-        let controller = SearchLookupParentController(viewModel: viewModel,
-                                                      appSkin: appSkin)
+        let controller = SearchLookupParentController(viewModel: viewModel)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         controller.navigationItem.backBarButtonItem = appSkin.backButtonItem

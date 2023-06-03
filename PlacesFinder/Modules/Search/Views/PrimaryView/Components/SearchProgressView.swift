@@ -1,5 +1,5 @@
 //
-//  SearchProgressViewController.swift
+//  SearchProgressView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -28,7 +28,11 @@ import SwiftUI
 
 struct SearchProgressView: View {
 
-    @ObservedObject var colorings: ValueObservable<SearchProgressViewColorings>
+    @ObservedObject var viewModel: ValueObservable<SearchProgressViewModel>
+
+    init(viewModel: SearchProgressViewModel) {
+        self.viewModel = ValueObservable(viewModel)
+    }
 
     var body: some View {
         SkeletonList(with: [EmptyProgressItem](), quantity: 10) { loading, _ in
@@ -75,33 +79,9 @@ struct SearchProgressView: View {
 
     private var appearanceType: AppearanceType {
         .gradient(
-            color: Color(colorings.value.gradientFill.color),
-            background: Color(colorings.value.gradientBackground.color)
+            color: Color(viewModel.value.colorings.gradientFill.color),
+            background: Color(viewModel.value.colorings.gradientBackground.color)
         )
-    }
-
-}
-
-// MARK: - SearchProgressViewController
-
-class SearchProgressViewController: UIHostingController<SearchProgressView> {
-
-    init(colorings: SearchProgressViewColorings) {
-        let rootView = SearchProgressView(colorings: ValueObservable(colorings))
-
-        super.init(rootView: rootView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchProgressViewController {
-
-    func configure(colorings: SearchProgressViewColorings) {
-        rootView.colorings.value = colorings
     }
 
 }

@@ -44,6 +44,8 @@ struct SearchResultCell: View {
 
                 HStack {
                     Image(uiImage: cellModel.value.ratingsAverage.starsImage)
+                        .resizable()
+                        .frame(width: 120, height: 22)
 
                     Spacer()
 

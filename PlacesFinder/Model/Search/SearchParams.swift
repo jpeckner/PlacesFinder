@@ -51,14 +51,4 @@ extension SearchInputParams.BarState {
         }
     }
 
-    var isSearchInputVisible: Bool {
-        switch self {
-        case .isShowing:
-            return true
-
-        case .isHidden:
-            return false
-        }
-    }
-
 }

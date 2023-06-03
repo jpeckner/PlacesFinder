@@ -28,7 +28,7 @@ import SwiftDux
 
 enum SearchLookupChild: Equatable {
     case instructions(SearchInstructionsViewModel)
-    case progress
+    case progress(SearchProgressViewModel)
     case results(SearchResultsViewModel)
     case noResults(SearchNoResultsFoundViewModel)
     case failure(SearchRetryViewModel)
@@ -38,12 +38,9 @@ enum SearchLookupChild: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchLookupChildBuilderProtocol {
-    // swiftlint:disable:next function_parameter_count
     func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
-                    standardColorings: AppStandardColorings,
-                    searchCTAColorings: SearchCTAViewColorings,
-                    resultsViewColorings: SearchResultsViewColorings,
+                    appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
 
@@ -70,28 +67,26 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         self.retryViewModelBuilder = retryViewModelBuilder
     }
 
-    // swiftlint:disable:next function_parameter_count
     func buildChild(loadState: Search.LoadState,
                     appCopyContent: AppCopyContent,
-                    standardColorings: AppStandardColorings,
-                    searchCTAColorings: SearchCTAViewColorings,
-                    resultsViewColorings: SearchResultsViewColorings,
+                    appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
             let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
                 copyContent: appCopyContent.searchInstructions,
-                colorings: standardColorings
+                colorings: appSkin.colorings.standard
             )
             return .instructions(instructionsViewModel)
         case .locationRequested,
              .initialPageRequested:
-            return .progress
+            let progressViewModel = SearchProgressViewModel(colorings: appSkin.colorings.searchProgress)
+            return .progress(progressViewModel)
         case let .pagesReceived(submittedParams, _, numPagesReceived, allEntities, tokenContainer):
             return .results(resultsViewModelBuilder.buildViewModel(
                 submittedParams: submittedParams,
                 allEntities: allEntities,
-                colorings: resultsViewColorings,
+                colorings: appSkin.colorings.searchResults,
                 numPagesReceived: numPagesReceived,
                 tokenContainer: tokenContainer,
                 resultsCopyContent: appCopyContent.searchResults,
@@ -101,14 +96,14 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         case .noResultsFound:
             let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(
                 copyContent: appCopyContent.searchNoResults,
-                colorings: standardColorings
+                colorings: appSkin.colorings.standard
             )
             return .noResults(noResultsViewModel)
         case let .failure(submittedParams, _):
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
             return .failure(retryViewModelBuilder.buildViewModel(copyContent: appCopyContent.searchRetry,
-                                                                 colorings: searchCTAColorings) {
+                                                                 colorings: appSkin.colorings.searchCTA) {
                 let action = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 _ = actionSubscriber.receive(.searchActivity(action))

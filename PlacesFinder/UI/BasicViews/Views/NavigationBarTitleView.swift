@@ -23,7 +23,6 @@
 //  SOFTWARE.
 
 import Shared
-import SnapKit
 import UIKit
 
 class NavigationBarTitleView: UIView {

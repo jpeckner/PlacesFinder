@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import Shared
+import SnapKit
 import UIKit
 
 class SearchDetailsBasicInfoCell: UITableViewCell {

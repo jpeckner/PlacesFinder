@@ -161,9 +161,7 @@ private extension SearchCoordinator {
                 let viewModel = lookupViewModelBuilder.buildViewModel(
                     searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
-                    standardColorings: appSkin.colorings.standard,
-                    searchCTAColorings: appSkin.colorings.searchCTA,
-                    resultsViewColorings: appSkin.colorings.searchResults,
+                    appSkin: appSkin,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
                 let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,

@@ -102,9 +102,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .idle,
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
@@ -127,16 +125,14 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .locationRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
                 }
 
                 it("returns a value of .progress") {
-                    expect(result) == .progress
+                    expect(result) == .progress(.stubValue())
                 }
 
             }
@@ -147,16 +143,14 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .initialPageRequested(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
                 }
 
                 it("returns a value of .progress") {
-                    expect(result) == .progress
+                    expect(result) == .progress(.stubValue())
                 }
 
             }
@@ -176,9 +170,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                             nextRequestToken: tokenContainer
                         ),
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
@@ -205,9 +197,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     result = sut.buildChild(
                         loadState: .noResultsFound(stubSearchParams),
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
@@ -241,9 +231,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                             underlyingError: IgnoredEquatable(StubError.plainError)
                         ),
                         appCopyContent: stubAppCopyContent,
-                        standardColorings: AppColorings.defaultColorings.standard,
-                        searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                        resultsViewColorings: AppColorings.defaultColorings.searchResults
+                        appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
                     }
