@@ -1,8 +1,8 @@
 //
-//  SearchNoResultsFoundViewController.swift
+//  SearchBackgroundView.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,24 +25,24 @@
 import Shared
 import SwiftUI
 
-class SearchNoResultsFoundViewController: UIHostingController<StaticInfoView<AppStandardColorings>> {
+struct SearchBackgroundView: View {
 
-    init(viewModel: SearchNoResultsFoundViewModel) {
-        let rootView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
+    @ObservedObject var viewModel: ValueObservable<SearchBackgroundViewModel>
+    private let searchBar = UISearchBar()
 
-        super.init(rootView: rootView)
+    init(viewModel: SearchBackgroundViewModel) {
+        self.viewModel = ValueObservable(viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var body: some View {
+        VStack {
+            SearchLookupSearchBar(
+                viewModel: viewModel.value.contentViewModel,
+                searchBar: searchBar
+            )
 
-}
-
-extension SearchNoResultsFoundViewController {
-
-    func configure(viewModel: SearchNoResultsFoundViewModel) {
-        rootView.viewModel.value = viewModel.messageViewModel.infoViewModel
+            SearchInstructionsView(viewModel: viewModel.value.instructionsViewModel)
+        }
     }
 
 }

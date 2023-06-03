@@ -1,8 +1,8 @@
 //
-//  SearchBackgroundViewController.swift
-//  PlacesFinder
+//  AppSkin+Stub.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +22,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-class SearchBackgroundViewController: UIHostingController<SearchBackgroundView>, SearchPrimaryViewControllerProtocol {
+extension AppSkin {
 
-    private let backgroundView: SearchBackgroundView
-
-    init(viewModel: SearchBackgroundViewModel) {
-        self.backgroundView = SearchBackgroundView(viewModel: viewModel)
-
-        super.init(rootView: backgroundView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchBackgroundViewController {
-
-    func configure(viewModel: SearchBackgroundViewModel) {
-        rootView.viewModel.value = viewModel
+    static func stubValue(colorings: AppColorings = .defaultColorings) -> AppSkin {
+        AppSkin(colorings: colorings)
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  SearchResultsViewController.swift
+//  SearchResultsView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -28,6 +28,10 @@ import SwiftUI
 struct SearchResultsView: View {
 
     @ObservedObject var viewModel: ValueObservable<SearchResultsViewModel>
+
+    init(viewModel: SearchResultsViewModel) {
+        self.viewModel = ValueObservable(viewModel)
+    }
 
     var body: some View {
         List(viewModel.value.resultViewModels.value.indexed, id: \.element.cellModel.id) { index, resultViewModel in
@@ -61,30 +65,6 @@ struct SearchResultsView: View {
         }
 
         viewModel.value.dispatchNextRequestAction()
-    }
-
-}
-
-// MARK: - SearchResultsViewController
-
-class SearchResultsViewController: UIHostingController<SearchResultsView> {
-
-    init(viewModel: SearchResultsViewModel) {
-        let rootView = SearchResultsView(viewModel: ValueObservable(viewModel))
-
-        super.init(rootView: rootView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchResultsViewController {
-
-    func configure(viewModel: SearchResultsViewModel) {
-        rootView.viewModel.value = viewModel
     }
 
 }

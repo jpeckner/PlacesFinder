@@ -45,6 +45,30 @@ extension SearchInputViewModel {
 
 }
 
+extension SearchInputViewModel {
+
+    var coverTappedCallback: (() -> Void)? {
+        switch self {
+        case .nonDispatching:
+            return nil
+        case let .dispatching(_, dispatcher):
+            return {
+                dispatcher.value.dispatchEditEvent(.endedEditing)
+            }
+        }
+    }
+
+    var dispatcher: SearchInputDispatcher? {
+        switch self {
+        case .nonDispatching:
+            return nil
+        case let .dispatching(_, dispatcher):
+            return dispatcher.value
+        }
+    }
+
+}
+
 struct SearchInputDispatcher {
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol

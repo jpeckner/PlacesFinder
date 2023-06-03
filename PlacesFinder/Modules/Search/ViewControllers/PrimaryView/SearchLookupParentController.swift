@@ -22,29 +22,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Combine
 import Shared
-import UIKit
+import SwiftUI
 
-class SearchLookupParentController: SingleContentViewController, SearchPrimaryViewControllerProtocol {
+class SearchLookupParentController: UIHostingController<SearchLookupParentView>, SearchPrimaryViewControllerProtocol {
 
-    private let lookupView: SearchLookupView
-    private let searchBarFullHeight: CGFloat
-    private let searchBarHeightConstraint: NSLayoutConstraint
+    private let eventPublisher = SearchBarEventPublisher()
+    private var cancellables: Set<AnyCancellable> = []
 
-    init(viewModel: SearchLookupViewModel,
-         appSkin: AppSkin) {
-        self.lookupView = SearchLookupView(inputViewModel: viewModel.searchInputViewModel)
+    private var viewModel: SearchLookupViewModel
 
-        let searchBarView = lookupView.searchBarWrapperView
-        self.searchBarFullHeight = searchBarView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        self.searchBarHeightConstraint = searchBarView.heightAnchor.constraint(equalToConstant: searchBarFullHeight)
-        searchBarHeightConstraint.isActive = true
+    init(viewModel: SearchLookupViewModel) {
+        self.viewModel = viewModel
 
-        super.init(contentView: lookupView,
-                   viewColoring: appSkin.colorings.standard.viewColoring)
+        let searchBar = UISearchBar()
+        searchBar.configureWithDefaults()
+        searchBar.delegate = eventPublisher
 
-        configure(viewModel,
-                  appSkin: appSkin)
+        let lookupView = SearchLookupParentView(
+            viewModel: viewModel,
+            searchBar: searchBar
+        )
+
+        super.init(rootView: lookupView)
+
+        subscribeToSearchEvents()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,83 +58,48 @@ class SearchLookupParentController: SingleContentViewController, SearchPrimaryVi
 
 extension SearchLookupParentController {
 
-    func configure(_ viewModel: SearchLookupViewModel,
-                   appSkin: AppSkin) {
-        self.viewColoring = appSkin.colorings.standard.viewColoring
-
-        configureLookupView(viewModel.searchInputViewModel)
-
-        activateChildView(viewModel,
-                          appSkin: appSkin)
+    func configure(viewModel: SearchLookupViewModel) {
+        rootView.viewModel.value = viewModel
     }
 
-    private func configureLookupView(_ viewModel: SearchInputViewModel) {
-        searchBarHeightConstraint.constant = viewModel.content.barState.isSearchInputVisible ?
-            searchBarFullHeight
-            : searchBarHeightConstraint.constant
+}
 
-        lookupView.configure(viewModel)
+private extension SearchLookupParentController {
+
+    func subscribeToSearchEvents() {
+        eventPublisher.eventPublisher
+            .sink { [weak self] event in
+                self?.handleSearchBarEvent(event: event)
+            }
+            .store(in: &cancellables)
+
+        eventPublisher.searchBarSubmitPublisher
+            .sink { [weak self] searchText in
+                self?.handleSearchBarSubmit(text: searchText)
+            }
+            .store(in: &cancellables)
     }
 
-    private func activateChildView(_ lookupViewModel: SearchLookupViewModel,
-                                   appSkin: AppSkin) {
-        switch lookupViewModel.child {
-        case let .instructions(viewModel):
-            guard let existingController: SearchInstructionsViewController = existingChildController() else {
-                setSingleChildController(
-                    SearchInstructionsViewController(viewModel: viewModel)
-                )
-                return
-            }
+    func handleSearchBarEvent(event: SearchBarEditEvent) {
+        viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(event)
+    }
 
-            existingController.rootView.viewModel.value = viewModel
-        case .progress:
-            let colorings = appSkin.colorings.searchProgress
-            guard let existingController: SearchProgressViewController = existingChildController() else {
-                setSingleChildController(
-                    SearchProgressViewController(colorings: colorings)
-                )
-                return
-            }
-
-            existingController.configure(colorings: colorings)
-        case let .results(viewModel):
-            guard let existingController: SearchResultsViewController = existingChildController() else {
-                let resultsController = SearchResultsViewController(viewModel: viewModel)
-                setSingleChildController(resultsController)
-                return
-            }
-
-            existingController.configure(viewModel: viewModel)
-        case let .noResults(viewModel):
-            guard let existingController: SearchNoResultsFoundViewController = existingChildController() else {
-                setSingleChildController(
-                    SearchNoResultsFoundViewController(viewModel: viewModel)
-                )
-                return
-            }
-
-            existingController.configure(viewModel: viewModel)
-        case let .failure(viewModel):
-            guard let existingController: SearchRetryViewController = existingChildController() else {
-                setSingleChildController(
-                    SearchRetryViewController(viewModel: viewModel)
-                )
-                return
-            }
-
-            existingController.configure(viewModel: viewModel)
+    func handleSearchBarSubmit(text: String?) {
+        guard let text = text,
+            !text.isEmpty
+        else {
+            AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return nil text" }
+            viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            return
         }
-    }
 
-    private func existingChildController<T: UIViewController>() -> T? {
-        return firstChild as? T
-    }
-
-    private func setSingleChildController(_ controller: UIViewController) {
-        setSingleChildController(controller) {
-            lookupView.setChildView($0)
+        guard let nonEmptyText = try? NonEmptyString(text.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            return
         }
+
+        let params = SearchParams(keywords: nonEmptyText)
+        viewModel.searchInputViewModel.dispatcher?.dispatchSearchParams(params)
     }
 
 }

@@ -1,8 +1,8 @@
 //
-//  SearchInstructionsViewController.swift
-//  PlacesFinder
+//  SearchProgressViewModel+Stub.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-class SearchInstructionsViewController: UIHostingController<SearchInstructionsView> {
+extension SearchProgressViewModel {
 
-    init(viewModel: SearchInstructionsViewModel) {
-        let rootView = SearchInstructionsView(viewModel: viewModel)
-
-        super.init(rootView: rootView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    static func stubValue(
+        colorings: SearchProgressViewColorings = AppColorings.defaultColorings.searchProgress
+    ) -> SearchProgressViewModel {
+        SearchProgressViewModel(colorings: colorings)
     }
 
 }

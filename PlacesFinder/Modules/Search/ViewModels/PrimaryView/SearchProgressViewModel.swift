@@ -1,8 +1,8 @@
 //
-//  SearchRetryViewController.swift
+//  SearchProgressViewModel.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-class SearchRetryViewController: UIHostingController<SearchCTAView> {
-
-    init(viewModel: SearchRetryViewModel) {
-        let rootView = SearchCTAView(viewModel: viewModel.ctaViewModel)
-
-        super.init(rootView: rootView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchRetryViewController {
-
-    func configure(viewModel: SearchRetryViewModel) {
-        rootView.viewModel.value = viewModel.ctaViewModel
-    }
-
+struct SearchProgressViewModel: Equatable {
+    let colorings: SearchProgressViewColorings
 }

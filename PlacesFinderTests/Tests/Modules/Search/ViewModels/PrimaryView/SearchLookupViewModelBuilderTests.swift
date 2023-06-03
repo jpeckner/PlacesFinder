@@ -69,7 +69,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             mockInputViewModelBuilder.buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
-            mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsResultsViewColoringsLocationUpdateRequestBlockReturnValue = .progress
+            mockChildBuilder.buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = .progress(.stubValue())
 
             sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
                                                childBuilder: mockChildBuilder)
@@ -81,9 +81,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                 result = sut.buildViewModel(
                     searchActivityState: stubSearchActivityState,
                     appCopyContent: stubAppCopyContent,
-                    standardColorings: AppColorings.defaultColorings.standard,
-                    searchCTAColorings: AppColorings.defaultColorings.searchCTA,
-                    resultsViewColorings: AppColorings.defaultColorings.searchResults
+                    appSkin: .stubValue()
                 ) {
                     locationBlockCalled = true
                     return .success(.stubValue())
@@ -101,7 +99,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             }
 
             it("calls mockChildBuilder with expected method and args") {
-                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentStandardColoringsSearchCTAColoringsResultsViewColoringsLocationUpdateRequestBlockReceivedArguments
+                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments
                 expect(receivedArgs?.loadState) == stubSearchActivityState.loadState
                 expect(receivedArgs?.appCopyContent) == stubAppCopyContent
 
@@ -112,7 +110,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
 
             it("returns the expected value") {
                 expect(result.searchInputViewModel) == stubInputViewModel
-                expect(result.child) == .progress
+                expect(result.child) == .progress(.stubValue())
             }
 
         }
