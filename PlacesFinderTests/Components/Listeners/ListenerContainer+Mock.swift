@@ -28,7 +28,7 @@ extension ListenerContainer {
 
     static func mockValue(
         locationAuthListener: LocationAuthListenerProtocol = LocationAuthListenerProtocolMock(),
-        reachabilityListener: ReachabilityListenerProtocol? = ReachabilityListenerProtocolMock(),
+        reachabilityListener: ReachabilityListenerProtocol = ReachabilityListenerProtocolMock(),
         userDefaultsListener: UserDefaultsListenerProtocol = UserDefaultsListenerProtocolMock()
     ) -> ListenerContainer {
         return ListenerContainer(locationAuthListener: locationAuthListener,
