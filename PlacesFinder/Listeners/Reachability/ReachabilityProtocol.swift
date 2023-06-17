@@ -23,44 +23,38 @@
 //  SOFTWARE.
 
 import Foundation
-import Reachability
+import Network
 import Shared
 
-enum ConnectionType {
-    case cellular
-    case wifi
-}
-
-enum ReachabilityStatus: Equatable {
+enum ReachabilityStatus {
+    case reachable
     case unreachable
-    case reachable(ConnectionType)
 }
 
 // sourcery: AutoMockable
 protocol ReachabilityProtocol {
-    func startNotifier() throws
+    func start(queue: DispatchQueue)
     func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void)
 }
 
-// MARK: Extend Reachability library
+// MARK: Extend NWPathMonitor
 
-extension Reachability: ReachabilityProtocol {
+extension NWPathMonitor: ReachabilityProtocol {
 
     func setReachabilityCallback(callback: @escaping (ReachabilityStatus) -> Void) {
-        whenReachable = {
-            switch $0.connection {
-            case .none,
-                 .unavailable:
-                callback(.unreachable)
-            case .cellular:
-                callback(.reachable(.cellular))
-            case .wifi:
-                callback(.reachable(.wifi))
-            }
-        }
+        self.pathUpdateHandler = { path in
+            switch path.status {
+            case .satisfied:
+                callback(.reachable)
 
-        whenUnreachable = { _ in
-            callback(.unreachable)
+            case .requiresConnection,
+                 .unsatisfied:
+                callback(.unreachable)
+
+            @unknown default:
+                AssertionHandler.performAssertionFailure { "Unknown enum case: \(path.status)" }
+                callback(.unreachable)
+            }
         }
     }
 

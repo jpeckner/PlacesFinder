@@ -25,7 +25,6 @@
 import CoordiNode
 import CoreLocation
 import Foundation
-import Reachability
 import Shared
 import SwiftDux
 import UIKit

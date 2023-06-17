@@ -7,7 +7,6 @@ ensure_bundler!
 def common_pods
   pod 'CoordiNode', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
   pod 'Kingfisher'
-  pod 'ReachabilitySwift'
   pod 'SkeletonUI'
   pod 'SnapKit'
   pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'

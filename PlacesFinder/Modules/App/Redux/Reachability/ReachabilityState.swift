@@ -45,10 +45,11 @@ enum ReachabilityReducer {
         }
 
         switch reachabilityAction {
+        case .reachable:
+            return ReachabilityState(status: .reachable)
+
         case .unreachable:
             return ReachabilityState(status: .unreachable)
-        case let .reachable(connectionType):
-            return ReachabilityState(status: .reachable(connectionType))
         }
     }
 

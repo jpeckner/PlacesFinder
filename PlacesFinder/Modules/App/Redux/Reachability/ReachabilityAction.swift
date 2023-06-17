@@ -24,7 +24,7 @@
 
 import SwiftDux
 
-enum ReachabilityAction: Equatable {
+enum ReachabilityAction {
     case unreachable
-    case reachable(ConnectionType)
+    case reachable
 }
