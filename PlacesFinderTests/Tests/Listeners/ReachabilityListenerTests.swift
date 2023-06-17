@@ -53,41 +53,16 @@ class ReachabilityListenerTests: QuickSpec {
 
         describe("start()") {
 
-            var errorThrown: Error?
-
-            func performTest(errorToThrow: Error?) {
-                mockReachability.startNotifierThrowableError = errorToThrow
-                errorThrown = errorThrownBy { try listener.start() }
+            beforeEach {
+                listener.start()
             }
 
             it("calls reachability.setReachabilityCallback()") {
-                performTest(errorToThrow: StubError.thrownError)
                 expect(mockReachability.setReachabilityCallbackCallbackCalled) == true
             }
 
-            it("calls reachability.startNotifier()") {
-                performTest(errorToThrow: StubError.thrownError)
-                expect(mockReachability.startNotifierCalled) == true
-            }
-
-            context("when startNotifier() throws an error") {
-                beforeEach {
-                    performTest(errorToThrow: StubError.thrownError)
-                }
-
-                it("rethrows the error") {
-                    expect(errorThrown as? StubError) == .thrownError
-                }
-            }
-
-            context("when startNotifier() does not throw an error") {
-                beforeEach {
-                    performTest(errorToThrow: nil)
-                }
-
-                it("does not throw an error") {
-                    expect(errorThrown).to(beNil())
-                }
+            it("calls reachability.start()") {
+                expect(mockReachability.startQueueCalled) == true
             }
 
         }
@@ -99,30 +74,26 @@ class ReachabilityListenerTests: QuickSpec {
                     callback(reachibilityStatus)
                 }
 
-                do {
-                    try listener.start()
-                } catch {
-                    fail("Unexpected error: \(error)")
+                listener.start()
+            }
+
+            context("when the reachability object calls back with .reachable") {
+                beforeEach {
+                    performTest(reachibilityStatus: .reachable)
+                }
+
+                it("dispatches ReachabilityAction.reachable") {
+                    expect(receivedActions.last) == .reachable
                 }
             }
 
-            context("when the reachability object calls back with .reachable(.wifi)") {
+            context("else when the reachability object calls back with .reachable") {
                 beforeEach {
-                    performTest(reachibilityStatus: .reachable(.wifi))
+                    performTest(reachibilityStatus: .reachable)
                 }
 
-                it("dispatches ReachabilityAction.reachable(.wifi)") {
-                    expect(receivedActions.last) == .reachable(.wifi)
-                }
-            }
-
-            context("else when the reachability object calls back with .reachable(.cellular)") {
-                beforeEach {
-                    performTest(reachibilityStatus: .reachable(.cellular))
-                }
-
-                it("dispatches ReachabilityAction.reachable(.cellular)") {
-                    expect(receivedActions.last) == .reachable(.cellular)
+                it("dispatches ReachabilityAction.reachable)") {
+                    expect(receivedActions.last) == .reachable
                 }
             }
 

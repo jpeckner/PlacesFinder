@@ -5,7 +5,6 @@ PODS:
   - Kingfisher (7.7.0)
   - Nimble (12.0.0)
   - Quick (6.1.0)
-  - ReachabilitySwift (5.0.0)
   - Shared (1.1.8)
   - SharedTestComponents (1.1.8):
     - Shared (= 1.1.8)
@@ -22,7 +21,6 @@ DEPENDENCIES:
   - Kingfisher
   - Nimble
   - Quick
-  - ReachabilitySwift
   - Shared (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
   - SharedTestComponents (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
   - SkeletonUI
@@ -36,7 +34,6 @@ SPEC REPOS:
     - Kingfisher
     - Nimble
     - Quick
-    - ReachabilitySwift
     - SkeletonUI
     - SnapKit
     - Swifter
@@ -87,7 +84,6 @@ SPEC CHECKSUMS:
   Kingfisher: f043ac666dfc96c1f37604f93effb45a7ee3a3e1
   Nimble: 02a4990866e51868303a466970cd1c81bb84a192
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Shared: c38157cd542c241e331e6c149af96fa58c0bb2b4
   SharedTestComponents: 06972ad043fc9feca9bf0e9ff35b77a6073db953
   SkeletonUI: a5514a3877d39f28229c852a567660d0f7542330
@@ -96,6 +92,6 @@ SPEC CHECKSUMS:
   SwiftDuxTestComponents: 1dafabf892f54fa36f6d3e9e8197157c0ca1f3f2
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
 
-PODFILE CHECKSUM: 5c1b5458d266cfa5077f5188f142e4ce76ff4e4f
+PODFILE CHECKSUM: 52ba2861f28e819c662ab34ca59bec4a9430b887
 
 COCOAPODS: 1.12.1

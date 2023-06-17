@@ -68,7 +68,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .locationServicesDisabled),
-                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
+                        reachabilityState: ReachabilityState(status: .reachable)
                     )
                 }
 
@@ -81,7 +81,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .notDetermined),
-                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
+                        reachabilityState: ReachabilityState(status: .reachable)
                     )
                 }
 
@@ -103,7 +103,7 @@ class SearchActivityStatePrismTests: QuickSpec {
                 beforeEach {
                     result = statePrism.presentationType(
                         locationAuthState: LocationAuthState(authStatus: .locationServicesEnabled),
-                        reachabilityState: ReachabilityState(status: .reachable(.cellular))
+                        reachabilityState: ReachabilityState(status: .reachable)
                     )
                 }
 

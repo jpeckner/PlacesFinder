@@ -2446,9 +2446,6 @@
 					739B620DC2A5B044969F0B97 = {
 						TestTargetID = 7DC2390BD2CAC7A8AA94B274;
 					};
-					7DC2390BD2CAC7A8AA94B274 = {
-						DevelopmentTeam = ER3Y6PM2YR;
-					};
 				};
 			};
 			buildConfigurationList = 0EB66900C69ACD986F955538 /* Build configuration list for PBXProject "PlacesFinder" */;
@@ -3549,6 +3546,7 @@
 			baseConfigurationReference = A69EA999B0F89F38C6FF532E /* Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3600,6 +3598,7 @@
 			baseConfigurationReference = 7AC75B7F78A371D9C457E9DD /* Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

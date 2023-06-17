@@ -447,19 +447,15 @@ class ReachabilityListenerProtocolMock: ReachabilityListenerProtocol {
 
     //MARK: - start
 
-    var startThrowableError: Error?
     var startCallsCount = 0
     var startCalled: Bool {
         return startCallsCount > 0
     }
-    var startClosure: (() throws -> Void)?
+    var startClosure: (() -> Void)?
 
-    func start() throws {
+    func start() {
         startCallsCount += 1
-        if let error = startThrowableError {
-            throw error
-        }
-        try startClosure?()
+        startClosure?()
     }
 
 }
@@ -467,21 +463,21 @@ class ReachabilityProtocolMock: ReachabilityProtocol {
 
 
 
-    //MARK: - startNotifier
+    //MARK: - start
 
-    var startNotifierThrowableError: Error?
-    var startNotifierCallsCount = 0
-    var startNotifierCalled: Bool {
-        return startNotifierCallsCount > 0
+    var startQueueCallsCount = 0
+    var startQueueCalled: Bool {
+        return startQueueCallsCount > 0
     }
-    var startNotifierClosure: (() throws -> Void)?
+    var startQueueReceivedQueue: DispatchQueue?
+    var startQueueReceivedInvocations: [DispatchQueue] = []
+    var startQueueClosure: ((DispatchQueue) -> Void)?
 
-    func startNotifier() throws {
-        startNotifierCallsCount += 1
-        if let error = startNotifierThrowableError {
-            throw error
-        }
-        try startNotifierClosure?()
+    func start(queue: DispatchQueue) {
+        startQueueCallsCount += 1
+        startQueueReceivedQueue = queue
+        startQueueReceivedInvocations.append(queue)
+        startQueueClosure?(queue)
     }
 
     //MARK: - setReachabilityCallback

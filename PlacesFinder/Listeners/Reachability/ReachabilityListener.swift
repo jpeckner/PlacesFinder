@@ -23,12 +23,13 @@
 //  SOFTWARE.
 
 import Combine
+import Network
 import Shared
 import SwiftDux
 
 // sourcery: AutoMockable
 protocol ReachabilityListenerProtocol {
-    func start() throws
+    func start()
 }
 
 class ReachabilityListener: ReachabilityListenerProtocol {
@@ -38,23 +39,26 @@ class ReachabilityListener: ReachabilityListenerProtocol {
     }
 
     private let reachability: ReachabilityProtocol
+    private let statusUpdateQueue: DispatchQueue
     private let actionSubject = PassthroughSubject<ReachabilityAction, Never>()
 
     init(reachability: ReachabilityProtocol) {
         self.reachability = reachability
+        self.statusUpdateQueue = DispatchQueue(label: "ReachabilityListener.statusUpdateQueue")
     }
 
-    func start() throws {
+    func start() {
         reachability.setReachabilityCallback { [weak self] status in
             switch status {
+            case .reachable:
+                self?.actionSubject.send(.reachable)
+
             case .unreachable:
                 self?.actionSubject.send(.unreachable)
-            case let .reachable(connectionType):
-                self?.actionSubject.send(.reachable(connectionType))
             }
         }
 
-        try reachability.startNotifier()
+        reachability.start(queue: statusUpdateQueue)
     }
 
 }

@@ -23,19 +23,19 @@
 //  SOFTWARE.
 
 import Combine
-import Reachability
+import Network
 import Shared
 import SwiftDux
 
 struct ListenerContainer {
     let locationAuthListener: LocationAuthListenerProtocol
-    let reachabilityListener: ReachabilityListenerProtocol?
+    let reachabilityListener: ReachabilityListenerProtocol
     let userDefaultsListener: UserDefaultsListenerProtocol
     private var cancellables: Set<AnyCancellable> = []
 
     // periphery:ignore
     init(locationAuthListener: LocationAuthListenerProtocol,
-         reachabilityListener: ReachabilityListenerProtocol?,
+         reachabilityListener: ReachabilityListenerProtocol,
          userDefaultsListener: UserDefaultsListenerProtocol) {
         self.locationAuthListener = locationAuthListener
         self.reachabilityListener = reachabilityListener
@@ -55,25 +55,19 @@ extension ListenerContainer {
             }
             .store(in: &cancellables)
 
-        // Use of the Reachability library enhances the app experience (it allows us to show a "No internet" message
-        // rather than a less specific error), but the app still functions correctly on the off-chance that
-        // Reachability.init() returns nil.
-        do {
-            let reachability = try Reachability()
-            let reachabilityListener = ReachabilityListener(reachability: reachability)
-            self.reachabilityListener = reachabilityListener
+        let reachability = NWPathMonitor()
+        let reachabilityListener = ReachabilityListener(reachability: reachability)
+        self.reachabilityListener = reachabilityListener
+        reachabilityListener.actionPublisher
+            .sink { [weak store] reachabilityAction in
+                store?.dispatch(.reachability(reachabilityAction))
+            }
+            .store(in: &cancellables)
 
-            reachabilityListener.actionPublisher
-                .sink { [weak store] reachabilityAction in
-                    store?.dispatch(.reachability(reachabilityAction))
-                }
-                .store(in: &cancellables)
-        } catch {
-            self.reachabilityListener = nil
-        }
-
-        self.userDefaultsListener = UserDefaultsListener(store: store,
-                                                         userDefaultsService: userDefaultsService)
+        self.userDefaultsListener = UserDefaultsListener(
+            store: store,
+            userDefaultsService: userDefaultsService
+        )
     }
 
 }

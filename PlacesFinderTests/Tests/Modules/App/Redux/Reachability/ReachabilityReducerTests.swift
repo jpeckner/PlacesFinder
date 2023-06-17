@@ -53,7 +53,7 @@ class ReachabilityReducerTests: QuickSpec {
             context("else when the action is ReachabilityAction.unreachable") {
                 beforeEach {
                     let action: AppAction = .reachability(.unreachable)
-                    let currentState = ReachabilityState(status: .reachable(.wifi))
+                    let currentState = ReachabilityState(status: .reachable)
                     result = ReachabilityReducer.reduce(action: action,
                                                         currentState: currentState)
                 }
@@ -67,28 +67,16 @@ class ReachabilityReducerTests: QuickSpec {
 
                 let currentState = ReachabilityState(status: .unreachable)
 
-                context("and the action is .wifi") {
-                    beforeEach {
-                        let action: AppAction = .reachability(.reachable(.wifi))
-                        result = ReachabilityReducer.reduce(action: action,
-                                                            currentState: currentState)
-                    }
-
-                    it("returns a state with status == .reachable, type == .wifi") {
-                        expect(result) == ReachabilityState(status: .reachable(.wifi))
-                    }
+                beforeEach {
+                    let action: AppAction = .reachability(.reachable)
+                    result = ReachabilityReducer.reduce(
+                        action: action,
+                        currentState: currentState
+                    )
                 }
 
-                context("else the action is .cellular") {
-                    beforeEach {
-                        let action: AppAction = .reachability(.reachable(.cellular))
-                        result = ReachabilityReducer.reduce(action: action,
-                                                            currentState: currentState)
-                    }
-
-                    it("returns a state with status == .reachable, type == .cellular") {
-                        expect(result) == ReachabilityState(status: .reachable(.cellular))
-                    }
+                it("returns a state with status == .reachable") {
+                    expect(result) == ReachabilityState(status: .reachable)
                 }
 
             }
