@@ -35,8 +35,11 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
 
     private let store: TStore
     private let viewController: UIHostingController<SettingsChildView>
-
     private let dismissalSubject: PassthroughSubject<Void, Never>
+    // swiftlint:disable:next weak_delegate
+    private let presentationControllerDelegate = PresentationControllerDelegate()
+
+    private var cancellables: Set<AnyCancellable> = []
 
     @MainActor
     init(store: TStore,
@@ -60,6 +63,12 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
         self.dismissalSubject = dismissalSubject
 
         store.subscribe(self, keyPath: \.routerState)
+        viewController.presentationController?.delegate = presentationControllerDelegate
+        presentationControllerDelegate.dismissal
+            .sink { _ in
+                dismissalSubject.send()
+            }
+            .store(in: &cancellables)
     }
 
 }

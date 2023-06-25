@@ -79,6 +79,8 @@ extension SettingsCoordinator: TabCoordinatorProtocol {
     func relinquishActive(completion: (() -> Void)?) {
         switch child {
         case .settingsChild:
+            // SettingsChild has a modal that presents over the tab bar, so it needs to be dismissed here before
+            // switching to another coordinator that's at/above SettingsCoordinator
             settingsChildDismissalActions.removeAll()
             settingsChildDisposedSubject
                 .sink {
@@ -179,6 +181,8 @@ extension SettingsCoordinator: SubstatesSubscriber {
 
 }
 
+// MARK: - Private SettingsCoordinator extensions
+
 private extension SettingsCoordinator {
 
     enum Child: Equatable {
@@ -218,6 +222,8 @@ private extension SettingsCoordinator {
     }
 
 }
+
+// MARK: - Private RouterState extension
 
 private extension RouterState {
 

@@ -70,9 +70,9 @@ extension AppDestinationRouterProtocol {
 
 extension RootCoordinatorProtocol {
 
-    // Only the RootCoordinatorProtocol, which controls the entire app, can dispatch setDestinationCoordinator.
-    // Otherwise, any coordinator could effectively steer the app to any other, which would negate the purpose of
-    // CoordiNode's routing system.
+    // Coordinators other than the app's top-level coordinator can *request* to route to another coordinator (by using
+    // `.payloadRequested`), but it's up to the RootCoordinatorProtocol to decide when and how to actually make
+    // the change by dispatching `.setDestinationCoordinator`.
     func setLinkDestinationAction(_ state: AppState) -> AppAction? {
         switch state.routerState.loadState {
         case let .payloadRequested(linkType):
