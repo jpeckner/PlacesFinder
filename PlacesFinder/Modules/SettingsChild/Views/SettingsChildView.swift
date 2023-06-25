@@ -37,15 +37,6 @@ struct SettingsChildView: View {
         VStack(spacing: 16) {
             StaticInfoView(viewModel: viewModel.infoViewModel)
 
-            Button(
-                viewModel.ctaTitle,
-                action: viewModel.ctaBlock
-            )
-            .modifier(
-                textStyleClass: .ctaButton,
-                textColoring: viewModel.infoViewModel.colorings.ctaTextColoring
-            )
-
             Spacer()
                 .frame(height: 120)
         }
@@ -57,22 +48,21 @@ struct SettingsChildView: View {
 
 struct SettingsChildView_Previews: PreviewProvider {
 
+    // swiftlint:disable force_try
     static var previews: some View {
-        // swiftlint:disable:next force_try
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
 
         return SettingsChildView(
-            // swiftlint:disable:next trailing_closure
             viewModel: SettingsChildViewModel(
-                infoViewModel: appCopyContent.settingsChildView.staticInfoViewModel(
-                    colorings: appColorings.settingsChild
-                ),
-                ctaTitle: "Dismiss",
-                ctaBlock: {}
+                copyContent: appCopyContent.settingsChildView,
+                colorings: appColorings.settingsChild,
+                appDisplayName: try! NonEmptyString("PlacesFinder"),
+                appVersion: try! NonEmptyString("1.2.3")
             )
         )
     }
+    // swiftlint:enable force_try
 
 }
 

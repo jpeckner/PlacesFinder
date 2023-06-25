@@ -26,6 +26,7 @@ import CoordiNode
 import Shared
 
 struct ServiceContainer {
+    let appConfig: AppConfig
     let appRoutingHandler: AppRoutingHandlerProtocol
     let appSkinService: AppSkinServiceProtocol
     let locationRequestHandler: LocationRequestHandlerProtocol

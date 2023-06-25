@@ -112,7 +112,6 @@ struct SettingsChildMenuCopyContent: Equatable, Sendable {
 
 struct SettingsChildViewCopyContent: Equatable, Sendable {
     let iconImageName: String
-    let title: String
-    let description: String
-    let ctaTitle: String
+    let titleFormat: String
+    let descriptionFormat: String
 }

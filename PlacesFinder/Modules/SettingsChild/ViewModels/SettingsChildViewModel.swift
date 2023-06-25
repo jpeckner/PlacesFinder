@@ -22,14 +22,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import Shared
 
 struct SettingsChildViewModel {
-    typealias CTABlock = () -> Void
-
     let infoViewModel: StaticInfoViewModel<SettingsChildViewColorings>
-    let ctaTitle: String
-    let ctaBlock: CTABlock
-}
 
-extension SettingsChildViewCopyContent: StaticInfoCopyProtocol {}
+    init(copyContent: SettingsChildViewCopyContent,
+         colorings: SettingsChildViewColorings,
+         appDisplayName: NonEmptyString,
+         appVersion: NonEmptyString) {
+        let titleFormatted = String(
+            format: copyContent.titleFormat,
+            appDisplayName.value
+        )
+
+        let descriptionFormatted = String(
+            format: copyContent.descriptionFormat,
+            appVersion.value,
+            Calendar.current.component(.year, from: Date())
+        )
+
+        self.infoViewModel = StaticInfoViewModel(
+            imageName: copyContent.iconImageName,
+            title: titleFormatted,
+            description: descriptionFormatted,
+            colorings: colorings
+        )
+    }
+}

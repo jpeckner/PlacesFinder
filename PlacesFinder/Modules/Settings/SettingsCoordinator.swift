@@ -109,9 +109,15 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
                 return
             }
 
-            child = .settingsChild(IgnoredEquatable(SettingsChildCoordinator(store: store,
-                                                                             state: state,
-                                                                             skin: state.appSkinState.currentValue)))
+            child = .settingsChild(IgnoredEquatable(
+                SettingsChildCoordinator(
+                    store: store,
+                    state: state,
+                    skin: state.appSkinState.currentValue,
+                    appDisplayName: serviceContainer.appConfig.displayName,
+                    appVersion: serviceContainer.appConfig.version
+                )
+            ))
         }
     }
 

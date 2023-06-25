@@ -157,6 +157,8 @@ private extension ServiceContainer {
 
     @MainActor
     init(appConfig: AppConfig) {
+        self.appConfig = appConfig
+
         let routingHandler = RoutingHandler()
         let destinationRoutingHandler = DestinationRoutingHandler()
         self.appRoutingHandler = AppRoutingHandler(routingHandler: routingHandler,

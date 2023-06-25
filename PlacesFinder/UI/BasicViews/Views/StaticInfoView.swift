@@ -70,7 +70,7 @@ struct StaticInfoView_Previews: PreviewProvider {
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
         return StaticInfoView(
-            viewModel: appCopyContent.settingsChildView.staticInfoViewModel(colorings: appColorings.standard)
+            viewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard)
         )
     }
 
