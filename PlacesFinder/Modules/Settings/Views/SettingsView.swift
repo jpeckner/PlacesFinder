@@ -55,20 +55,21 @@ struct SettingsView: View {
         .scrollBounceBasedOnSizeiOS16_4Min()
     }
 
+    @ViewBuilder
     private func header(_ sectionViewModel: SettingsSectionViewModel) -> some View {
         switch sectionViewModel.headerType {
         case let .plain(headerViewModel):
-            return AnyView(
-                SettingsPlainSystemHeaderView(
-                    viewModel: headerViewModel
-                )
+            SettingsPlainSystemHeaderView(
+                viewModel: headerViewModel
             )
+
         case let .measurementSystem(headerViewModel):
-            return AnyView(
-                SettingsMeasurementSystemHeaderView(
-                    viewModel: headerViewModel
-                )
+            SettingsMeasurementSystemHeaderView(
+                viewModel: headerViewModel
             )
+
+        case .none:
+            EmptyView()
         }
     }
 
@@ -107,41 +108,42 @@ private struct SettingsMeasurementSystemHeaderView: View {
             Spacer()
 
             HStack {
-                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index -> AnyView in
-                    AnyView(Group {
+                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index in
+                    Group {
                         if index > 0 {
-                            AnyView(Text("|"))
+                            Text("|")
                         }
 
-                        self.systemOptionElement(index: index)
-                    })
+                        systemOptionElement(index: index)
+                    }
                 }
             }
         }
     }
 
+    @ViewBuilder
     private func systemOptionElement(index: Int) -> some View {
-        switch self.viewModel.systemOptions[index] {
+        switch viewModel.systemOptions[index] {
         case let .selectable(title, selectionAction):
-            return AnyView(
-                Button(action: {
+            Button(
+                action: {
                     selectionAction.value()
-                }, label: {
+                },
+                label: {
                     Text(title)
                         .modifier(
                             textStyleClass: .tableHeaderSelectableOption,
                             textColoring: viewModel.colorings.activeButtonTextColoring
                         )
-                })
+                }
             )
+
         case let .nonSelectable(title):
-            return AnyView(
-                Text(title)
-                    .modifier(
-                        textStyleClass: .tableHeaderNonSelectableOption,
-                        textColoring: viewModel.colorings.textColoring
-                    )
-            )
+            Text(title)
+                .modifier(
+                    textStyleClass: .tableHeaderNonSelectableOption,
+                    textColoring: viewModel.colorings.textColoring
+                )
         }
     }
 

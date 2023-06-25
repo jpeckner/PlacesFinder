@@ -106,8 +106,7 @@ struct SettingsMeasurementSystemCopyContent: Equatable, Sendable {
 }
 
 struct SettingsChildMenuCopyContent: Equatable, Sendable {
-    let sectionTitle: String
-    let ctaTitle: String
+    let ctaTitleFormat: String
 }
 
 struct SettingsChildViewCopyContent: Equatable, Sendable {

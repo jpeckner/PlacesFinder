@@ -38,6 +38,7 @@ struct SettingsViewModel {
 protocol SettingsViewModelBuilderProtocol {
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
                         appCopyContent: AppCopyContent,
+                        appDisplayName: NonEmptyString,
                         colorings: SettingsViewColorings) -> SettingsViewModel
 }
 
@@ -60,6 +61,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
 
     func buildViewModel(searchPreferencesState: SearchPreferencesState,
                         appCopyContent: AppCopyContent,
+                        appDisplayName: NonEmptyString,
                         colorings: SettingsViewColorings) -> SettingsViewModel {
         let sections =
             NonEmptyArray(with:
@@ -98,15 +100,13 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
             .appendedWith([
                 SettingsSectionViewModel(
                     id: .settingsChild,
-                    headerType: .plain(
-                        plainHeaderViewModelBuilder.buildViewModel(
-                            title: appCopyContent.settingsChildMenu.sectionTitle,
-                            colorings: colorings.headerColorings
-                        )
-                    ),
+                    headerType: nil,
                     cells: [
                         SettingsCellViewModel(
-                            title: appCopyContent.settingsChildMenu.ctaTitle,
+                            title: String(
+                                format: appCopyContent.settingsChildMenu.ctaTitleFormat,
+                                appDisplayName.value
+                            ),
                             isSelected: false,
                             colorings: colorings.cellColorings,
                             actionSubscriber: actionSubscriber,

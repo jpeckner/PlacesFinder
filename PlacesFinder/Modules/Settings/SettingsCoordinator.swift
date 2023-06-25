@@ -168,6 +168,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
             appCopyContent: appCopyContent,
+            appDisplayName: serviceContainer.appConfig.displayName,
             colorings: appSkin.colorings.settings
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)

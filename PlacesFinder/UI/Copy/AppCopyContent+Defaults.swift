@@ -81,8 +81,7 @@ extension AppCopyContent {
             metric: "Metric"
         )
         self.settingsChildMenu = SettingsChildMenuCopyContent(
-            sectionTitle: "CHILD PLACEHOLDER",
-            ctaTitle: "Tap here for child test"
+            ctaTitleFormat: "About %@"
         )
         self.settingsChildView = SettingsChildViewCopyContent(
             iconImageName: "gear",
