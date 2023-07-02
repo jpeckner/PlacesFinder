@@ -101,6 +101,7 @@ class SettingsViewModelBuilderTests: QuickSpec {
             beforeEach {
                 result = sut.buildViewModel(searchPreferencesState: stubSearchPreferencesState,
                                             appCopyContent: stubAppCopyContent,
+                                            appDisplayName: AppBundleInfo.stubValue().displayName,
                                             colorings: AppColorings.defaultColorings.settings)
             }
 

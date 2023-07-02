@@ -431,6 +431,9 @@
 		C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
 		C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */; };
 		C9E3A8ADEC285EE33D2A4009 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
+		CA3521872A5209A400228276 /* PresentationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */; };
+		CA3521882A5209A500228276 /* PresentationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */; };
+		CA35218A2A5209D800228276 /* AppBundleInfo+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3521892A5209D800228276 /* AppBundleInfo+Stub.swift */; };
 		CA35218C2A520AD900228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
 		CA35218D2A520B6100228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
 		CA35218E2A520B6100228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
@@ -860,6 +863,7 @@
 		C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModel.swift; sourceTree = "<group>"; };
 		C9FE8D9DEAE96F59628080B5 /* SearchPreferencesReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesReducerTests.swift; sourceTree = "<group>"; };
+		CA3521892A5209D800228276 /* AppBundleInfo+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppBundleInfo+Stub.swift"; sourceTree = "<group>"; };
 		CA35218B2A520AD900228276 /* AppBundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundleInfo.swift; sourceTree = "<group>"; };
 		CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppCoordinator.swift; sourceTree = "<group>"; };
 		CA3F76FF278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AboutAppCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
@@ -1881,6 +1885,7 @@
 		BA4D11F189695C7AF6FF3C0F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CA3521892A5209D800228276 /* AppBundleInfo+Stub.swift */,
 				E283C2AC52A43F5563C70BB1 /* ServiceContainer+Mock.swift */,
 			);
 			path = Services;
@@ -2879,6 +2884,7 @@
 				6109C9A86911D60EE47940D0 /* SettingsCoordinator.swift in Sources */,
 				902EA1C2A7F4FE683D02F82C /* SettingsLinkPayload.swift in Sources */,
 				CA9A3CE5284D7E6400B65C4F /* AboutAppViewColorings.swift in Sources */,
+				CA3521872A5209A400228276 /* PresentationControllerDelegate.swift in Sources */,
 				5C691D75FD70552344BD813C /* SettingsPlainHeaderViewModel.swift in Sources */,
 				6880E4C835A5E53F9AAC97FF /* SettingsPresenter.swift in Sources */,
 				04BF6BB87DE6C232DAB8D35D /* SettingsSectionViewModel.swift in Sources */,
@@ -3183,6 +3189,7 @@
 				5DE394A3506F766F130B2520 /* PlaceLookupResponse.swift in Sources */,
 				C88DCAC4E35BB710752FC559 /* PlaceLookupServiceProtocol.swift in Sources */,
 				243BA764AB07FCE1F33D6C52 /* RatingStarsView.swift in Sources */,
+				CA3521882A5209A500228276 /* PresentationControllerDelegate.swift in Sources */,
 				00EC301780249D11A5323D66 /* ReachabilityListener.swift in Sources */,
 				9321924247899DF84E457122 /* ReachabilityListenerTests.swift in Sources */,
 				42E06CD8626A10FD2DBCDFF2 /* ReachabilityProtocol.swift in Sources */,
@@ -3338,6 +3345,7 @@
 				0D86847F5B2561A58269E92F /* StaticInfoViewModel+Stub.swift in Sources */,
 				D44C74BA2C6EE16C837B331B /* StaticInfoViewModel.swift in Sources */,
 				E31378CA29AE8617F73EF14D /* StubLinkType.swift in Sources */,
+				CA35218A2A5209D800228276 /* AppBundleInfo+Stub.swift in Sources */,
 				BB1F8D8CDAC157A21F2CE11B /* TabCoordinatorProtocol.swift in Sources */,
 				C7ECBED9BE63B2F987CFAA7C /* UIButton+AppSkin.swift in Sources */,
 				0CD2A285DE0AF42B17ECB9F3 /* UILabel+AppSkin.swift in Sources */,
