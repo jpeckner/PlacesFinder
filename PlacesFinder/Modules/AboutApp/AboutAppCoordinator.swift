@@ -1,5 +1,5 @@
 //
-//  SettingsChildCoordinator.swift
+//  AboutAppCoordinator.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -27,44 +27,53 @@ import Shared
 import SwiftDux
 import SwiftUI
 
-// sourcery: enumCaseName = "settingsChild"
-struct SettingsChildLinkPayload: AppLinkPayloadProtocol, Equatable {}
+// sourcery: enumCaseName = "aboutApp"
+struct AboutAppLinkPayload: AppLinkPayloadProtocol, Equatable {}
 
-// sourcery: linkPayloadType = "SettingsChildLinkPayload"
-class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
+// sourcery: linkPayloadType = "AboutAppLinkPayload"
+class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
-    private let viewController: UIHostingController<SettingsChildView>
-
+    private let viewController: UIHostingController<AboutAppView>
     private let dismissalSubject: PassthroughSubject<Void, Never>
+    // swiftlint:disable:next weak_delegate
+    private let presentationControllerDelegate = PresentationControllerDelegate()
+
+    private var cancellables: Set<AnyCancellable> = []
 
     @MainActor
     init(store: TStore,
          state: AppState,
-         skin: AppSkin) {
+         skin: AppSkin,
+         appDisplayName: NonEmptyString,
+         appVersion: NonEmptyString) {
         let dismissalSubject = PassthroughSubject<Void, Never>()
 
         self.store = store
 
-        let viewModel = SettingsChildViewModel(
-            infoViewModel: state.appCopyContentState.copyContent.settingsChildView.staticInfoViewModel(
-                colorings: skin.colorings.settingsChild
-            ),
-            ctaTitle: state.appCopyContentState.copyContent.settingsChildView.ctaTitle
-        ) {
-            dismissalSubject.send()
-        }
-        let view = SettingsChildView(viewModel: viewModel)
+        let viewModel = AboutAppViewModel(
+            copyContent: state.appCopyContentState.copyContent.aboutAppView,
+            colorings: skin.colorings.aboutApp,
+            appDisplayName: appDisplayName,
+            appVersion: appVersion
+        )
+        let view = AboutAppView(viewModel: viewModel)
         self.viewController = UIHostingController(rootView: view)
 
         self.dismissalSubject = dismissalSubject
 
         store.subscribe(self, keyPath: \.routerState)
+        viewController.presentationController?.delegate = presentationControllerDelegate
+        presentationControllerDelegate.dismissal
+            .sink { _ in
+                dismissalSubject.send()
+            }
+            .store(in: &cancellables)
     }
 
 }
 
-extension SettingsChildCoordinator {
+extension AboutAppCoordinator {
 
     var rootViewController: UIViewController { viewController }
 
@@ -72,7 +81,7 @@ extension SettingsChildCoordinator {
 
 }
 
-extension SettingsChildCoordinator: SubstatesSubscriber {
+extension AboutAppCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 

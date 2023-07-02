@@ -1,8 +1,8 @@
 //
-//  SettingsChildViewColorings.swift
-//  PlacesFinder
+//  AppConfig+Stub.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2022 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
 import Shared
+import SharedTestComponents
 
-// sourcery: fieldName = "settingsChild"
-struct SettingsChildViewColorings: AppColoringProtocol, AppStandardColoringsProtocol {
-    let viewColoring: ViewColoring
-    let titleTextColoring: TextColoring
-    let bodyTextColoring: TextColoring
-    let ctaTextColoring: TextColoring
+extension AppBundleInfo {
+
+    static func stubValue(
+        displayName: NonEmptyString = .stubValue("displayNameStub"),
+        version: NonEmptyString = .stubValue("versionStub")
+    ) -> AppBundleInfo {
+        AppBundleInfo(
+            displayName: displayName,
+            version: version
+        )
+    }
+
 }

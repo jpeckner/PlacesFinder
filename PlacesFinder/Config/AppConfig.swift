@@ -27,11 +27,12 @@ import Shared
 
 enum AppConfigError: Error {
     case displayNameNotFound
+    case appVersionNotFound
     case configEntryNotFound
 }
 
 struct AppConfig {
-    let displayName: NonEmptyString
+    let bundleInfo: AppBundleInfo
     let yelpRequestConfig: YelpRequestConfig
 }
 
@@ -41,11 +42,21 @@ extension AppConfig {
         guard let displayNameValue = bundle.infoDictionary?["CFBundleDisplayName"] as? String else {
             throw AppConfigError.displayNameNotFound
         }
-        self.displayName = try NonEmptyString(displayNameValue)
+
+        guard let versionValue = bundle.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            throw AppConfigError.appVersionNotFound
+        }
+
+        self.bundleInfo = AppBundleInfo(
+            displayName: try NonEmptyString(displayNameValue),
+            version: try NonEmptyString(versionValue)
+        )
 
         let decodableConfig = try bundle.decodeAppConfig()
-        self.yelpRequestConfig = try YelpRequestConfig(apiKey: decodableConfig.placeLookup.apiKey,
-                                                       baseURL: decodableConfig.placeLookup.baseURL)
+        self.yelpRequestConfig = try YelpRequestConfig(
+            apiKey: decodableConfig.placeLookup.apiKey,
+            baseURL: decodableConfig.placeLookup.baseURL
+        )
     }
 
 }

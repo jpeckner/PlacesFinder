@@ -1,8 +1,8 @@
 //
-//  ServiceContainer.swift
+//  PresentationControllerDelegate.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2018 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import CoordiNode
-import Shared
+import Combine
+import UIKit
 
-struct ServiceContainer {
-    let appBundleInfo: AppBundleInfo
-    let appRoutingHandler: AppRoutingHandlerProtocol
-    let appSkinService: AppSkinServiceProtocol
-    let locationRequestHandler: LocationRequestHandlerProtocol
-    let placeLookupService: PlaceLookupServiceProtocol
-    let searchCopyFormatter: SearchCopyFormatterProtocol
-    let urlOpenerService: URLOpenerServiceProtocol
+class PresentationControllerDelegate: NSObject {
+
+    var dismissal: AnyPublisher<UIPresentationController, Never> { dismissalSubject.eraseToAnyPublisher() }
+
+    private let dismissalSubject = PassthroughSubject<UIPresentationController, Never>()
+
+}
+
+extension PresentationControllerDelegate: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        dismissalSubject.send(presentationController)
+    }
+
 }

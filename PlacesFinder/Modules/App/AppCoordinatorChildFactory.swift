@@ -104,7 +104,7 @@ extension AppCoordinatorChildFactory: AppCoordinatorChildFactoryProtocol {
         switch childType {
         case .search,
              .settings,
-             .settingsChild:
+             .aboutApp:
             let childFactory = HomeCoordinatorChildFactory(store: store,
                                                            listenerContainer: listenerContainer,
                                                            serviceContainer: serviceContainer)

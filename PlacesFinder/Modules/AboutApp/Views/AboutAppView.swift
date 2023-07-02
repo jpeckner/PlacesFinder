@@ -1,5 +1,5 @@
 //
-//  SettingsChildView.swift
+//  AboutAppView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -25,26 +25,25 @@
 import Shared
 import SwiftUI
 
-struct SettingsChildView: View {
+struct AboutAppView: View {
 
-    private let viewModel: SettingsChildViewModel
+    private let viewModel: AboutAppViewModel
 
-    init(viewModel: SettingsChildViewModel) {
+    init(viewModel: AboutAppViewModel) {
         self.viewModel = viewModel
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            StaticInfoView(viewModel: viewModel.infoViewModel)
+        VStack {
+            Spacer()
+                .frame(height: 8)
 
-            Button(
-                viewModel.ctaTitle,
-                action: viewModel.ctaBlock
-            )
-            .modifier(
-                textStyleClass: .ctaButton,
-                textColoring: viewModel.infoViewModel.colorings.ctaTextColoring
-            )
+            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                .frame(width: 32, height: 4)
+
+            Spacer()
+
+            StaticInfoView(viewModel: viewModel.infoViewModel)
 
             Spacer()
                 .frame(height: 120)
@@ -55,24 +54,23 @@ struct SettingsChildView: View {
 
 #if DEBUG
 
-struct SettingsChildView_Previews: PreviewProvider {
+struct AboutAppView_Previews: PreviewProvider {
 
+    // swiftlint:disable force_try
     static var previews: some View {
-        // swiftlint:disable:next force_try
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
 
-        return SettingsChildView(
-            // swiftlint:disable:next trailing_closure
-            viewModel: SettingsChildViewModel(
-                infoViewModel: appCopyContent.settingsChildView.staticInfoViewModel(
-                    colorings: appColorings.settingsChild
-                ),
-                ctaTitle: "Dismiss",
-                ctaBlock: {}
+        return AboutAppView(
+            viewModel: AboutAppViewModel(
+                copyContent: appCopyContent.aboutAppView,
+                colorings: appColorings.aboutApp,
+                appDisplayName: try! NonEmptyString("PlacesFinder"),
+                appVersion: try! NonEmptyString("1.2.3")
             )
         )
     }
+    // swiftlint:enable force_try
 
 }
 

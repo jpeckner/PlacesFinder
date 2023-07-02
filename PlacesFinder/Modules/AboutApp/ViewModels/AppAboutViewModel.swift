@@ -1,8 +1,8 @@
 //
-//  ServiceContainer.swift
+//  AboutAppViewModel.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2018 Justin Peckner
+//  Copyright (c) 2022 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import CoordiNode
 import Shared
 
-struct ServiceContainer {
-    let appBundleInfo: AppBundleInfo
-    let appRoutingHandler: AppRoutingHandlerProtocol
-    let appSkinService: AppSkinServiceProtocol
-    let locationRequestHandler: LocationRequestHandlerProtocol
-    let placeLookupService: PlaceLookupServiceProtocol
-    let searchCopyFormatter: SearchCopyFormatterProtocol
-    let urlOpenerService: URLOpenerServiceProtocol
+struct AboutAppViewModel {
+    let infoViewModel: StaticInfoViewModel<AboutAppViewColorings>
+
+    init(copyContent: AboutAppViewCopyContent,
+         colorings: AboutAppViewColorings,
+         appDisplayName: NonEmptyString,
+         appVersion: NonEmptyString) {
+        let titleFormatted = String(
+            format: copyContent.titleFormat,
+            appDisplayName.value
+        )
+
+        let descriptionFormatted = String(
+            format: copyContent.descriptionFormat,
+            appVersion.value,
+            Calendar.current.component(.year, from: Date())
+        )
+
+        self.infoViewModel = StaticInfoViewModel(
+            imageName: copyContent.iconImageName,
+            title: titleFormatted,
+            description: descriptionFormatted,
+            colorings: colorings
+        )
+    }
 }

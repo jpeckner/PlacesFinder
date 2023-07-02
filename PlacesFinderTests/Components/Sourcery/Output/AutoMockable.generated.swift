@@ -1356,23 +1356,23 @@ class SettingsViewModelBuilderProtocolMock: SettingsViewModelBuilderProtocol {
 
     //MARK: - buildViewModel
 
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount = 0
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsCalled: Bool {
-        return buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount > 0
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount = 0
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCalled: Bool {
+        return buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount > 0
     }
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings)?
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings)] = []
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsReturnValue: SettingsViewModel!
-    var buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure: ((SearchPreferencesState, AppCopyContent, SettingsViewColorings) -> SettingsViewModel)?
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)?
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)] = []
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue: SettingsViewModel!
+    var buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure: ((SearchPreferencesState, AppCopyContent, NonEmptyString, SettingsViewColorings) -> SettingsViewModel)?
 
-    func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, colorings: SettingsViewColorings) -> SettingsViewModel {
-        buildViewModelSearchPreferencesStateAppCopyContentColoringsCallsCount += 1
-        buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, colorings: colorings)
-        buildViewModelSearchPreferencesStateAppCopyContentColoringsReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, colorings: colorings))
-        if let buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure = buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure {
-            return buildViewModelSearchPreferencesStateAppCopyContentColoringsClosure(searchPreferencesState, appCopyContent, colorings)
+    func buildViewModel(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings) -> SettingsViewModel {
+        buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount += 1
+        buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, appDisplayName: appDisplayName, colorings: colorings)
+        buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, appDisplayName: appDisplayName, colorings: colorings))
+        if let buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure = buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure {
+            return buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure(searchPreferencesState, appCopyContent, appDisplayName, colorings)
         } else {
-            return buildViewModelSearchPreferencesStateAppCopyContentColoringsReturnValue
+            return buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue
         }
     }
 

@@ -1,8 +1,8 @@
 //
-//  SettingsChildViewModel.swift
+//  AppBundleInfo.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2022 Justin Peckner
+//  Copyright (c) 2023 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import Shared
 
-struct SettingsChildViewModel {
-    typealias CTABlock = () -> Void
-
-    let infoViewModel: StaticInfoViewModel<SettingsChildViewColorings>
-    let ctaTitle: String
-    let ctaBlock: CTABlock
+struct AppBundleInfo {
+    let displayName: NonEmptyString
+    let version: NonEmptyString
 }
-
-extension SettingsChildViewCopyContent: StaticInfoCopyProtocol {}

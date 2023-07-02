@@ -21,7 +21,7 @@ extension SettingsCoordinator {
 // MARK: SettingsCoordinatorDescendent
 
 enum SettingsCoordinatorDescendent: CaseIterable {
-    case settingsChild
+    case aboutApp
 }
 
 extension SettingsCoordinatorDescendent: DescendentProtocol {
@@ -38,22 +38,22 @@ extension SettingsCoordinatorDescendent: DescendentProtocol {
 
     init(destinationDescendent: SettingsCoordinatorDestinationDescendent) {
         switch destinationDescendent {
-        case .settingsChild:
-            self = .settingsChild
+        case .aboutApp:
+            self = .aboutApp
         }
     }
 
     var nodeBox: NodeBox {
         switch self {
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.nodeBox
+        case .aboutApp:
+            return AboutAppCoordinatorNode.nodeBox
         }
     }
 
     var immediateDescendent: SettingsCoordinatorImmediateDescendent {
         switch self {
-        case .settingsChild:
-            return .settingsChild
+        case .aboutApp:
+            return .aboutApp
         }
     }
 
@@ -62,7 +62,7 @@ extension SettingsCoordinatorDescendent: DescendentProtocol {
 // MARK: SettingsCoordinatorImmediateDescendent
 
 enum SettingsCoordinatorImmediateDescendent: CaseIterable {
-    case settingsChild
+    case aboutApp
 }
 
 extension SettingsCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
@@ -79,8 +79,8 @@ extension SettingsCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
 
     var nodeBox: NodeBox {
         switch self {
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.nodeBox
+        case .aboutApp:
+            return AboutAppCoordinatorNode.nodeBox
         }
     }
 
@@ -89,7 +89,7 @@ extension SettingsCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
 // MARK: SettingsCoordinatorDestinationDescendent
 
 enum SettingsCoordinatorDestinationDescendent: CaseIterable {
-    case settingsChild
+    case aboutApp
 }
 
 extension SettingsCoordinatorDestinationDescendent: DestinationDescendentProtocol {
@@ -106,8 +106,8 @@ extension SettingsCoordinatorDestinationDescendent: DestinationDescendentProtoco
 
     var destinationNodeBox: DestinationNodeBox {
         switch self {
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.destinationNodeBox
+        case .aboutApp:
+            return AboutAppCoordinatorNode.destinationNodeBox
         }
     }
 

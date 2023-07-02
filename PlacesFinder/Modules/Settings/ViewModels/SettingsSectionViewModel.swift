@@ -30,7 +30,7 @@ struct SettingsSectionViewModel: Identifiable {
     enum SectionID {
         case searchDistance
         case sortBy
-        case settingsChild
+        case aboutApp
     }
 
     enum HeaderType: Equatable {
@@ -40,6 +40,6 @@ struct SettingsSectionViewModel: Identifiable {
 
     // swiftlint:disable:next identifier_name
     let id: SectionID
-    let headerType: HeaderType
+    let headerType: HeaderType?
     let cells: [SettingsCellViewModel]
 }

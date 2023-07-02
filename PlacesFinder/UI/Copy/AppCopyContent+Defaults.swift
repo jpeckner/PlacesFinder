@@ -80,15 +80,17 @@ extension AppCopyContent {
             imperial: "U.S",
             metric: "Metric"
         )
-        self.settingsChildMenu = SettingsChildMenuCopyContent(
-            sectionTitle: "CHILD PLACEHOLDER",
-            ctaTitle: "Tap here for child test"
+        self.aboutAppMenu = AboutAppMenuCopyContent(
+            ctaTitleFormat: "About %@"
         )
-        self.settingsChildView = SettingsChildViewCopyContent(
-            iconImageName: "gear",
-            title: "Under Construction",
-            description: "Placeholder for a potential future view",
-            ctaTitle: "Dismiss"
+        self.aboutAppView = AboutAppViewCopyContent(
+            iconImageName: "app_icon",
+            titleFormat: "About %@",
+            descriptionFormat: """
+            Version %@
+
+            Copyright (c) %d Justin Peckner. Distributed under the MIT License.
+            """
         )
     }
 
