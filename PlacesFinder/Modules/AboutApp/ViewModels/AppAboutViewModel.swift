@@ -1,5 +1,5 @@
 //
-//  SettingsChildViewColorings.swift
+//  AboutAppViewModel.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -22,13 +22,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
 import Shared
 
-// sourcery: fieldName = "settingsChild"
-struct SettingsChildViewColorings: AppColoringProtocol, AppStandardColoringsProtocol {
-    let viewColoring: ViewColoring
-    let titleTextColoring: TextColoring
-    let bodyTextColoring: TextColoring
-    let ctaTextColoring: TextColoring
+struct AboutAppViewModel {
+    let infoViewModel: StaticInfoViewModel<AboutAppViewColorings>
+
+    init(copyContent: AboutAppViewCopyContent,
+         colorings: AboutAppViewColorings,
+         appDisplayName: NonEmptyString,
+         appVersion: NonEmptyString) {
+        let titleFormatted = String(
+            format: copyContent.titleFormat,
+            appDisplayName.value
+        )
+
+        let descriptionFormatted = String(
+            format: copyContent.descriptionFormat,
+            appVersion.value,
+            Calendar.current.component(.year, from: Date())
+        )
+
+        self.infoViewModel = StaticInfoViewModel(
+            imageName: copyContent.iconImageName,
+            title: titleFormatted,
+            description: descriptionFormatted,
+            colorings: colorings
+        )
+    }
 }

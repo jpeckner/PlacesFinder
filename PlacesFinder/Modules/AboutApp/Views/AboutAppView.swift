@@ -1,5 +1,5 @@
 //
-//  SettingsChildView.swift
+//  AboutAppView.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -25,11 +25,11 @@
 import Shared
 import SwiftUI
 
-struct SettingsChildView: View {
+struct AboutAppView: View {
 
-    private let viewModel: SettingsChildViewModel
+    private let viewModel: AboutAppViewModel
 
-    init(viewModel: SettingsChildViewModel) {
+    init(viewModel: AboutAppViewModel) {
         self.viewModel = viewModel
     }
 
@@ -54,17 +54,17 @@ struct SettingsChildView: View {
 
 #if DEBUG
 
-struct SettingsChildView_Previews: PreviewProvider {
+struct AboutAppView_Previews: PreviewProvider {
 
     // swiftlint:disable force_try
     static var previews: some View {
         let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
         let appColorings = AppColorings.defaultColorings
 
-        return SettingsChildView(
-            viewModel: SettingsChildViewModel(
-                copyContent: appCopyContent.settingsChildView,
-                colorings: appColorings.settingsChild,
+        return AboutAppView(
+            viewModel: AboutAppViewModel(
+                copyContent: appCopyContent.aboutAppView,
+                colorings: appColorings.aboutApp,
                 appDisplayName: try! NonEmptyString("PlacesFinder"),
                 appVersion: try! NonEmptyString("1.2.3")
             )

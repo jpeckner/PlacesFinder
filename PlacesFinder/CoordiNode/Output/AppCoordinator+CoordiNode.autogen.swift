@@ -25,7 +25,7 @@ enum AppCoordinatorDescendent: CaseIterable {
     case home
     case search
     case settings
-    case settingsChild
+    case aboutApp
 }
 
 extension AppCoordinatorDescendent: DescendentProtocol {
@@ -46,8 +46,8 @@ extension AppCoordinatorDescendent: DescendentProtocol {
             self = .search
         case .settings:
             self = .settings
-        case .settingsChild:
-            self = .settingsChild
+        case .aboutApp:
+            self = .aboutApp
         }
     }
 
@@ -61,8 +61,8 @@ extension AppCoordinatorDescendent: DescendentProtocol {
             return SearchCoordinatorNode.nodeBox
         case .settings:
             return SettingsCoordinatorNode.nodeBox
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.nodeBox
+        case .aboutApp:
+            return AboutAppCoordinatorNode.nodeBox
         }
     }
 
@@ -76,7 +76,7 @@ extension AppCoordinatorDescendent: DescendentProtocol {
             return .home
         case .settings:
             return .home
-        case .settingsChild:
+        case .aboutApp:
             return .home
         }
     }
@@ -118,7 +118,7 @@ extension AppCoordinatorImmediateDescendent: ImmediateDescendentProtocol {
 enum AppCoordinatorDestinationDescendent: CaseIterable {
     case search
     case settings
-    case settingsChild
+    case aboutApp
 }
 
 extension AppCoordinatorDestinationDescendent: DestinationDescendentProtocol {
@@ -139,8 +139,8 @@ extension AppCoordinatorDestinationDescendent: DestinationDescendentProtocol {
             return SearchCoordinatorNode.destinationNodeBox
         case .settings:
             return SettingsCoordinatorNode.destinationNodeBox
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.destinationNodeBox
+        case .aboutApp:
+            return AboutAppCoordinatorNode.destinationNodeBox
         }
     }
 

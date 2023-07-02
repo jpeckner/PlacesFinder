@@ -65,14 +65,14 @@ class SettingsViewModelBuilderTests: QuickSpec {
                                       isSelected: false,
                                       colorings: AppColorings.defaultColorings.settings.cellColorings,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                      action: .showSettingsChild(SettingsChildLinkPayload()))
+                                      action: .showAboutApp(AboutAppLinkPayload()))
             ]
             stubSortingCellModels = [
                 SettingsCellViewModel(title: "stubSortingCellModel",
                                       isSelected: false,
                                       colorings: AppColorings.defaultColorings.settings.cellColorings,
                                       actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                      action: .showSettingsChild(SettingsChildLinkPayload()))
+                                      action: .showAboutApp(AboutAppLinkPayload()))
             ]
             mockSettingsCellViewModelBuilder = SettingsCellViewModelBuilderProtocolMock()
             mockSettingsCellViewModelBuilder.buildDistanceCellModelsCurrentDistanceTypeColoringsReturnValue =

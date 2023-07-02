@@ -27,6 +27,12 @@ import Shared
 extension AppColorings {
 
     static let defaultColorings = AppColorings(
+        aboutApp: AboutAppViewColorings(
+            viewColoring: ViewColoring(backgroundColor: .systemBackground),
+            titleTextColoring: TextColoring(textColor: .label),
+            bodyTextColoring: TextColoring(textColor: .label),
+            ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
+        ),
         standard: AppStandardColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground),
             titleTextColoring: TextColoring(textColor: .label),
@@ -72,12 +78,6 @@ extension AppColorings {
             bodyTextColoring: TextColoring(textColor: .label),
             disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)),
             refreshControlTint: FillColoring(color: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
-        ),
-        settingsChild: SettingsChildViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
-            titleTextColoring: TextColoring(textColor: .label),
-            bodyTextColoring: TextColoring(textColor: .label),
-            ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
         ),
         settings: SettingsViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGroupedBackground),

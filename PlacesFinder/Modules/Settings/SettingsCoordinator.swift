@@ -38,8 +38,8 @@ import UIKit
     private let settingsViewModelBuilder: SettingsViewModelBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
-    private let settingsChildDisposedSubject = PassthroughSubject<Void, Never>()
-    private var settingsChildDismissalActions: Set<AnyCancellable> = []
+    private let aboutAppDisposedSubject = PassthroughSubject<Void, Never>()
+    private var aboutAppDismissalActions: Set<AnyCancellable> = []
 
     private var child: Child? {
         didSet {
@@ -78,15 +78,15 @@ extension SettingsCoordinator: TabCoordinatorProtocol {
 
     func relinquishActive(completion: (() -> Void)?) {
         switch child {
-        case .settingsChild:
-            // SettingsChild has a modal that presents over the tab bar, so it needs to be dismissed here before
+        case .aboutApp:
+            // AboutApp has a modal that presents over the tab bar, so it needs to be dismissed here before
             // switching to another coordinator that's at/above SettingsCoordinator
-            settingsChildDismissalActions.removeAll()
-            settingsChildDisposedSubject
+            aboutAppDismissalActions.removeAll()
+            aboutAppDisposedSubject
                 .sink {
                     completion?()
                 }
-                .store(in: &settingsChildDismissalActions)
+                .store(in: &aboutAppDismissalActions)
 
             child = nil
         case .none:
@@ -102,15 +102,15 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
                        towards destinationDescendent: SettingsCoordinatorDestinationDescendent,
                        state: AppState) {
         switch destinationDescendent {
-        case .settingsChild:
+        case .aboutApp:
             // Don't present the modal until this tab is actually visible; otherwise, it's been observed that the modal
             // doesn't dispatch callbacks as expected upon dismissal
             guard state.routerState.isSettingsActive else {
                 return
             }
 
-            child = .settingsChild(IgnoredEquatable(
-                SettingsChildCoordinator(
+            child = .aboutApp(IgnoredEquatable(
+                AboutAppCoordinator(
                     store: store,
                     state: state,
                     skin: state.appSkinState.currentValue,
@@ -131,13 +131,13 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
 
     func closeAllSubtrees(currentNode: NodeBox,
                           state: AppState) {
-        settingsChildDismissalActions.removeAll()
-        settingsChildDisposedSubject
+        aboutAppDismissalActions.removeAll()
+        aboutAppDisposedSubject
             .sink { [weak self] in
                 guard let self = self else { return }
                 self.store.dispatch(self.setSelfAsCurrentCoordinator)
             }
-            .store(in: &settingsChildDismissalActions)
+            .store(in: &aboutAppDismissalActions)
 
         child = nil
     }
@@ -193,7 +193,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
 private extension SettingsCoordinator {
 
     enum Child: Equatable {
-        case settingsChild(IgnoredEquatable<SettingsChildCoordinator<TStore>>)
+        case aboutApp(IgnoredEquatable<AboutAppCoordinator<TStore>>)
     }
 
 }
@@ -202,22 +202,22 @@ private extension SettingsCoordinator {
 
     func handleChildDidSet() {
         switch child {
-        case let .settingsChild(coordinator):
+        case let .aboutApp(coordinator):
             presenter.rootNavController.present(coordinator.value.rootViewController, animated: true) { [weak self] in
-                self?.handleSettingsChildPresentation(coordinator: coordinator.value)
+                self?.handleAboutAppPresentation(coordinator: coordinator.value)
             }
         case .none:
             presenter.rootNavController.dismiss(animated: true) { [weak self] in
-                self?.settingsChildDisposedSubject.send()
+                self?.aboutAppDisposedSubject.send()
             }
         }
     }
 
-    private func handleSettingsChildPresentation(coordinator: SettingsChildCoordinator<TStore>) {
-        let immediateDescendent = SettingsCoordinatorImmediateDescendent.settingsChild
+    private func handleAboutAppPresentation(coordinator: AboutAppCoordinator<TStore>) {
+        let immediateDescendent = SettingsCoordinatorImmediateDescendent.aboutApp
         store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
 
-        settingsChildDismissalActions.removeAll()
+        aboutAppDismissalActions.removeAll()
         coordinator.dismissal
             .sink { [weak self] in
                 guard let self = self else { return }
@@ -225,7 +225,7 @@ private extension SettingsCoordinator {
                 self.child = nil
                 self.store.dispatch(self.setSelfAsCurrentCoordinator)
             }
-            .store(in: &settingsChildDismissalActions)
+            .store(in: &aboutAppDismissalActions)
     }
 
 }

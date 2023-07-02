@@ -3,6 +3,7 @@
 import Foundation
 
 struct AppColorings: Decodable, Equatable, Sendable {
+    let aboutApp: AboutAppViewColorings
     let standard: AppStandardColorings
     let launch: LaunchViewColorings
     let navBar: NavBarColorings
@@ -11,7 +12,6 @@ struct AppColorings: Decodable, Equatable, Sendable {
     let searchInput: SearchInputViewColorings
     let searchProgress: SearchProgressViewColorings
     let searchResults: SearchResultsViewColorings
-    let settingsChild: SettingsChildViewColorings
     let settings: SettingsViewColorings
     let tabBar: TabBarColorings
 }

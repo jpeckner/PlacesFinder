@@ -48,7 +48,7 @@ class SettingsViewModelTests: QuickSpec {
                                               isSelected: cellIdx == 1,
                                               colorings: AppColorings.defaultColorings.settings.cellColorings,
                                               actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                              action: .showSettingsChild(SettingsChildLinkPayload()))
+                                              action: .showAboutApp(AboutAppLinkPayload()))
                     }
                 )
             }

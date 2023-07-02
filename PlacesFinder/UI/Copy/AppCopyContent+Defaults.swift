@@ -80,10 +80,10 @@ extension AppCopyContent {
             imperial: "U.S",
             metric: "Metric"
         )
-        self.settingsChildMenu = SettingsChildMenuCopyContent(
+        self.aboutAppMenu = AboutAppMenuCopyContent(
             ctaTitleFormat: "About %@"
         )
-        self.settingsChildView = SettingsChildViewCopyContent(
+        self.aboutAppView = AboutAppViewCopyContent(
             iconImageName: "app_icon",
             titleFormat: "About %@",
             descriptionFormat: """

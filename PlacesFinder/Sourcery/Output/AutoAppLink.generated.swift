@@ -6,9 +6,9 @@ import SwiftDux
 
 
 enum AppLinkType: Equatable, Sendable {
+    case aboutApp(AboutAppLinkPayload)
     case emptySearch(EmptySearchLinkPayload)
     case search(SearchLinkPayload)
-    case settingsChild(SettingsChildLinkPayload)
     case settings(SettingsLinkPayload)
 }
 
@@ -16,11 +16,11 @@ extension AppLinkType {
 
     var value: AppLinkPayloadProtocol {
         switch self {
+        case let .aboutApp(payload):
+            return payload
         case let .emptySearch(payload):
             return payload
         case let .search(payload):
-            return payload
-        case let .settingsChild(payload):
             return payload
         case let .settings(payload):
             return payload
@@ -35,12 +35,12 @@ extension AppLinkType: LinkTypeProtocol {
     // linkPayloadType annotation. A compiler error here means that's not currently the case.
     var destinationNodeBox: DestinationNodeBox {
         switch self {
+        case .aboutApp:
+            return AboutAppCoordinatorNode.destinationNodeBox
         case .emptySearch:
             return SearchCoordinatorNode.destinationNodeBox
         case .search:
             return SearchCoordinatorNode.destinationNodeBox
-        case .settingsChild:
-            return SettingsChildCoordinatorNode.destinationNodeBox
         case .settings:
             return SettingsCoordinatorNode.destinationNodeBox
         }
@@ -48,6 +48,18 @@ extension AppLinkType: LinkTypeProtocol {
 
 }
 
+extension AboutAppCoordinator {
+
+    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
+        _ state: AppState,
+        store: TStore
+    ) where TStore.TAction == AppAction {
+        clearPayloadTypeIfPresent(AboutAppLinkPayload.self,
+                                  state: state,
+                                  store: store)
+    }
+
+}
 extension SearchCoordinator {
 
     func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
@@ -58,18 +70,6 @@ extension SearchCoordinator {
                                   state: state,
                                   store: store)
         clearPayloadTypeIfPresent(EmptySearchLinkPayload.self,
-                                  state: state,
-                                  store: store)
-    }
-
-}
-extension SettingsChildCoordinator {
-
-    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
-        _ state: AppState,
-        store: TStore
-    ) where TStore.TAction == AppAction {
-        clearPayloadTypeIfPresent(SettingsChildLinkPayload.self,
                                   state: state,
                                   store: store)
     }

@@ -64,7 +64,7 @@ enum SearchPreferencesReducer {
                 sorting: sorting
             )
             return SearchPreferencesState(stored: updatedStored)
-        case .showSettingsChild:
+        case .showAboutApp:
             return currentState
         }
     }

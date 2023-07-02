@@ -99,18 +99,18 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
             ])
             .appendedWith([
                 SettingsSectionViewModel(
-                    id: .settingsChild,
+                    id: .aboutApp,
                     headerType: nil,
                     cells: [
                         SettingsCellViewModel(
                             title: String(
-                                format: appCopyContent.settingsChildMenu.ctaTitleFormat,
+                                format: appCopyContent.aboutAppMenu.ctaTitleFormat,
                                 appDisplayName.value
                             ),
                             isSelected: false,
                             colorings: colorings.cellColorings,
                             actionSubscriber: actionSubscriber,
-                            action: .showSettingsChild(SettingsChildLinkPayload())
+                            action: .showAboutApp(AboutAppLinkPayload())
                         )
                     ]
                 )

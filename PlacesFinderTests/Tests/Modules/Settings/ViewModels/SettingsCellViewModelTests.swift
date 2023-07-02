@@ -46,7 +46,7 @@ class SettingsCellViewModelTests: QuickSpec {
                                         isSelected: false,
                                         colorings: AppColorings.defaultColorings.settings.cellColorings,
                                         actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                        action: .showSettingsChild(SettingsChildLinkPayload()))
+                                        action: .showAboutApp(AboutAppLinkPayload()))
         }
 
         describe("dispatchAction()") {
@@ -56,7 +56,7 @@ class SettingsCellViewModelTests: QuickSpec {
             }
 
             it("dispatches the cell's action") {
-                expect(mockActionSubscriber.receivedInputs.first) == .showSettingsChild(SettingsChildLinkPayload())
+                expect(mockActionSubscriber.receivedInputs.first) == .showAboutApp(AboutAppLinkPayload())
             }
 
         }

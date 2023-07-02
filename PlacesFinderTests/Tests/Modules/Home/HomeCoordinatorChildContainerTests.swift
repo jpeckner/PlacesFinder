@@ -86,7 +86,7 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
                     case .search:
                         return dependencies.stubSearchCoordinator
                     case .settings,
-                         .settingsChild:
+                         .aboutApp:
                         return dependencies.stubSettingsCoordinator
                     }
                 }

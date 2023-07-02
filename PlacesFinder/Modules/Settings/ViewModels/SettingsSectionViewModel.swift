@@ -30,7 +30,7 @@ struct SettingsSectionViewModel: Identifiable {
     enum SectionID {
         case searchDistance
         case sortBy
-        case settingsChild
+        case aboutApp
     }
 
     enum HeaderType: Equatable {

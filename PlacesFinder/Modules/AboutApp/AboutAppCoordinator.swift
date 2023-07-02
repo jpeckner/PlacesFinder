@@ -1,5 +1,5 @@
 //
-//  SettingsChildCoordinator.swift
+//  AboutAppCoordinator.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -27,14 +27,14 @@ import Shared
 import SwiftDux
 import SwiftUI
 
-// sourcery: enumCaseName = "settingsChild"
-struct SettingsChildLinkPayload: AppLinkPayloadProtocol, Equatable {}
+// sourcery: enumCaseName = "aboutApp"
+struct AboutAppLinkPayload: AppLinkPayloadProtocol, Equatable {}
 
-// sourcery: linkPayloadType = "SettingsChildLinkPayload"
-class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
+// sourcery: linkPayloadType = "AboutAppLinkPayload"
+class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
-    private let viewController: UIHostingController<SettingsChildView>
+    private let viewController: UIHostingController<AboutAppView>
     private let dismissalSubject: PassthroughSubject<Void, Never>
     // swiftlint:disable:next weak_delegate
     private let presentationControllerDelegate = PresentationControllerDelegate()
@@ -51,13 +51,13 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
 
         self.store = store
 
-        let viewModel = SettingsChildViewModel(
-            copyContent: state.appCopyContentState.copyContent.settingsChildView,
-            colorings: skin.colorings.settingsChild,
+        let viewModel = AboutAppViewModel(
+            copyContent: state.appCopyContentState.copyContent.aboutAppView,
+            colorings: skin.colorings.aboutApp,
             appDisplayName: appDisplayName,
             appVersion: appVersion
         )
-        let view = SettingsChildView(viewModel: viewModel)
+        let view = AboutAppView(viewModel: viewModel)
         self.viewController = UIHostingController(rootView: view)
 
         self.dismissalSubject = dismissalSubject
@@ -73,7 +73,7 @@ class SettingsChildCoordinator<TStore: StoreProtocol> where TStore.TAction == Ap
 
 }
 
-extension SettingsChildCoordinator {
+extension AboutAppCoordinator {
 
     var rootViewController: UIViewController { viewController }
 
@@ -81,7 +81,7 @@ extension SettingsChildCoordinator {
 
 }
 
-extension SettingsChildCoordinator: SubstatesSubscriber {
+extension AboutAppCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 

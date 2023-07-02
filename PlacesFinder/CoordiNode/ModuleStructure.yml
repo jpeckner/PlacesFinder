@@ -13,5 +13,5 @@ AppCoordinator:
                     enumCaseName: settings
                     isDestinationNode: true
                     children:
-                        - SettingsChildCoordinator:
-                            enumCaseName: settingsChild
+                        - AboutAppCoordinator:
+                            enumCaseName: aboutApp
