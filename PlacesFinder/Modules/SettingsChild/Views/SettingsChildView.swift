@@ -34,7 +34,15 @@ struct SettingsChildView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack {
+            Spacer()
+                .frame(height: 8)
+
+            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                .frame(width: 32, height: 4)
+
+            Spacer()
+
             StaticInfoView(viewModel: viewModel.infoViewModel)
 
             Spacer()

@@ -84,7 +84,7 @@ extension AppCopyContent {
             ctaTitleFormat: "About %@"
         )
         self.settingsChildView = SettingsChildViewCopyContent(
-            iconImageName: "gear",
+            iconImageName: "app_icon",
             titleFormat: "About %@",
             descriptionFormat: """
             Version %@
