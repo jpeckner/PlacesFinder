@@ -114,8 +114,8 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
                     store: store,
                     state: state,
                     skin: state.appSkinState.currentValue,
-                    appDisplayName: serviceContainer.appConfig.displayName,
-                    appVersion: serviceContainer.appConfig.version
+                    appDisplayName: serviceContainer.appBundleInfo.displayName,
+                    appVersion: serviceContainer.appBundleInfo.version
                 )
             ))
         }
@@ -168,7 +168,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let viewModel = settingsViewModelBuilder.buildViewModel(
             searchPreferencesState: state.searchPreferencesState,
             appCopyContent: appCopyContent,
-            appDisplayName: serviceContainer.appConfig.displayName,
+            appDisplayName: serviceContainer.appBundleInfo.displayName,
             colorings: appSkin.colorings.settings
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)

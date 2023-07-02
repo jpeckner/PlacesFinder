@@ -431,6 +431,9 @@
 		C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
 		C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */; };
 		C9E3A8ADEC285EE33D2A4009 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
+		CA35218C2A520AD900228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
+		CA35218D2A520B6100228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
+		CA35218E2A520B6100228276 /* AppBundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35218B2A520AD900228276 /* AppBundleInfo.swift */; };
 		CA3F76E5278A401B00847AA2 /* AboutAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */; };
 		CA3F7700278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76FF278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift */; };
 		CA3F770A278A4AE600847AA2 /* StoredSearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */; };
@@ -857,6 +860,7 @@
 		C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModel.swift; sourceTree = "<group>"; };
 		C9FE8D9DEAE96F59628080B5 /* SearchPreferencesReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesReducerTests.swift; sourceTree = "<group>"; };
+		CA35218B2A520AD900228276 /* AppBundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundleInfo.swift; sourceTree = "<group>"; };
 		CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppCoordinator.swift; sourceTree = "<group>"; };
 		CA3F76FF278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AboutAppCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredSearchPreferences.swift; sourceTree = "<group>"; };
@@ -1972,6 +1976,7 @@
 			children = (
 				7F1D8911E41605D91100347A /* xcconfig */,
 				5B873E16D32602A5DBFA1715 /* AppConfig.plist */,
+				CA35218B2A520AD900228276 /* AppBundleInfo.swift */,
 				CC69B4B508408EA5ACD274D0 /* AppConfig.swift */,
 				7317019571262C965873F143 /* SearchConfig.swift */,
 			);
@@ -2842,6 +2847,7 @@
 				8A23D6FA0C50CAFD7CA49CEF /* SearchLookupViewModel.swift in Sources */,
 				4C720ECD11EEE5BDB3D9793C /* SearchMessageViewModel.swift in Sources */,
 				D69E7FA147499B5248BAA64C /* SearchNoInternetViewController.swift in Sources */,
+				CA35218D2A520B6100228276 /* AppBundleInfo.swift in Sources */,
 				06B3529DDB0352E6AACB1D12 /* SearchNoInternetViewModel.swift in Sources */,
 				B223CB67A228BE0CF2414297 /* SearchNoResultsFoundViewModel.swift in Sources */,
 				93D94AA74BC51024628807C7 /* SearchParams.swift in Sources */,
@@ -3040,6 +3046,7 @@
 				15738C11DA4C34B117B21AA5 /* SearchPrimaryViewControllerProtocol.swift in Sources */,
 				E8266F9BF7582B430D33D97A /* SearchProgressView.swift in Sources */,
 				E6892CD0E5522AC814CACEF0 /* SearchRatingValue+Image.swift in Sources */,
+				CA35218C2A520AD900228276 /* AppBundleInfo.swift in Sources */,
 				B99579EE4F202F0F8C1D7086 /* SearchRatingValue.swift in Sources */,
 				5F3799A065982925ED37268A /* SearchResultCell.swift in Sources */,
 				6A67B7AA982F25B566810904 /* SearchResultCellModel.swift in Sources */,
@@ -3238,6 +3245,7 @@
 				CA8BCAEF2814C5C6006989CF /* SearchState+Stub.swift in Sources */,
 				AF2DCD12CF7DA59012CFC9C9 /* SearchInputDispatcherTests.swift in Sources */,
 				19FED967EE8207DEBAF15F4C /* SearchInputParams+Stub.swift in Sources */,
+				CA35218E2A520B6100228276 /* AppBundleInfo.swift in Sources */,
 				CA3F774E278E98A000847AA2 /* StoredSearchPreferences.swift in Sources */,
 				567F170D57A22503734BDA24 /* SearchInputViewModel.swift in Sources */,
 				F79118E43012882B89DD4E31 /* SearchInputViewModelBuilderTests.swift in Sources */,

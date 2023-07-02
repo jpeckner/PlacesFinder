@@ -94,7 +94,7 @@ private extension AppDelegate.TChildFactory {
     convenience init(appConfig: AppConfig) {
         let serviceContainer = ServiceContainer(appConfig: appConfig)
         let userDefaultsService = UserDefaultsService(userDefaults: .standard)
-        let appCopyContent = AppCopyContent(displayName: appConfig.displayName)
+        let appCopyContent = AppCopyContent(displayName: appConfig.bundleInfo.displayName)
         let locationAuthManager = CLLocationManager()
 
         let store = Store<AppAction, AppState>(locationAuthManager: locationAuthManager,
@@ -157,7 +157,7 @@ private extension ServiceContainer {
 
     @MainActor
     init(appConfig: AppConfig) {
-        self.appConfig = appConfig
+        self.appBundleInfo = appConfig.bundleInfo
 
         let routingHandler = RoutingHandler()
         let destinationRoutingHandler = DestinationRoutingHandler()
