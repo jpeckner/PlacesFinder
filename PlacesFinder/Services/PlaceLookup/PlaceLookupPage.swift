@@ -37,7 +37,6 @@ struct PlaceLookupPricing: Hashable {
     let maximum: Int     // I.e. 4 if the maximum pricing a business can have is "$$$$"
 }
 
-// swiftlint:disable identifier_name
 struct PlaceLookupEntity: Hashable {
     let id: NonEmptyString
     let name: NonEmptyString

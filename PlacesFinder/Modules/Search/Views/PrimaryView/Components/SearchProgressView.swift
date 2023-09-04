@@ -89,6 +89,5 @@ struct SearchProgressView: View {
 // MARK: - Helper components
 
 private struct EmptyProgressItem: Identifiable {
-    // swiftlint:disable:next identifier_name
     let id = UUID()
 }

@@ -26,7 +26,6 @@ import Foundation
 
 extension SettingsSectionViewModel {
 
-    // swiftlint:disable:next identifier_name
     static func stubValue(id: SettingsSectionViewModel.SectionID,
                           headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
                           cells: [SettingsCellViewModel] = []) -> SettingsSectionViewModel {

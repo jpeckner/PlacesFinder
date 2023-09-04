@@ -83,7 +83,6 @@ extension PlaceLookupCoordinate {
 
 extension PlaceLookupEntity {
 
-    // swiftlint:disable identifier_name
     static func stubValue(id: NonEmptyString = .stubValue("stubID"),
                           name: NonEmptyString = .stubValue("stubEntityName"),
                           addressLines: PlaceLookupAddressLines? = .stubValue(),

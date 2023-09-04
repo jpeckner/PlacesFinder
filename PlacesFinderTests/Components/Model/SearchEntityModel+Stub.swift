@@ -38,7 +38,6 @@ extension SearchRatings {
 
 extension SearchEntityModel {
 
-    // swiftlint:disable identifier_name
     static func stubValue(id: NonEmptyString = NonEmptyString.stubValue("stubID"),
                           name: String = "stubName",
                           url: URL = .stubValue(),
