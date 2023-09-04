@@ -1,10 +1,13 @@
+analyzer_rules:
+  - explicit_self
+  - unused_import
+
 disabled_rules: # rule identifiers to exclude from running
   - implicit_return
   - nesting
   - trailing_comma
 
 opt_in_rules: # some rules are only opt-in
-  - anyobject_protocol
   - array_init
   - attributes
   - closure_end_indentation
@@ -16,7 +19,6 @@ opt_in_rules: # some rules are only opt-in
   - empty_string
   - empty_xctest_method
   - explicit_init
-  - explicit_self
   - extension_access_modifier
   - fatal_error_message
   - file_name
@@ -67,8 +69,6 @@ opt_in_rules: # some rules are only opt-in
   - trailing_closure
   - unneeded_parentheses_in_closure_argument
   - untyped_error_in_catch
-  - unused_capture_list
-  - unused_import
   - vertical_parameter_alignment_on_call
   - xct_specific_matcher
   - yoda_condition
