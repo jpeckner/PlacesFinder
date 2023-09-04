@@ -2461,7 +2461,8 @@
 		B358B17C8912250CA454B768 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Justin Peckner";
 				TargetAttributes = {
 					739B620DC2A5B044969F0B97 = {
