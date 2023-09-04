@@ -29,10 +29,11 @@ import Shared
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchDetailsViewContextBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
@@ -127,7 +128,7 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -136,3 +137,4 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

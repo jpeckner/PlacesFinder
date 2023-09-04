@@ -29,10 +29,11 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchActivityActionPrismTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubParams = PlaceLookupParams.stubValue()
@@ -102,7 +103,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 }
 
                 it("throws an error") {
-                    expect(errorThrown).toNot(beNil())
+                    expect(errorThrown) != nil
                 }
 
             }
@@ -119,7 +120,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 }
 
                 it("does not throw an error") {
-                    expect(errorThrown).to(beNil())
+                    expect(errorThrown) == nil
                 }
 
                 it("returns Search.ActivityAction.startSubsequentRequest() with the args for the next page request") {
@@ -175,3 +176,4 @@ class SearchActivityActionPrismTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -24,8 +24,8 @@
 
 import Shared
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable force_unwrapping
-
 extension PlaceLookupParams {
 
     static func stubValue(keywords: NonEmptyString = NonEmptyString.stubValue("Thai food"),
@@ -83,7 +83,6 @@ extension PlaceLookupCoordinate {
 
 extension PlaceLookupEntity {
 
-    // swiftlint:disable identifier_name
     static func stubValue(id: NonEmptyString = .stubValue("stubID"),
                           name: NonEmptyString = .stubValue("stubEntityName"),
                           addressLines: PlaceLookupAddressLines? = .stubValue(),
@@ -154,3 +153,4 @@ extension PlaceLookupResponse {
     }
 
 }
+// swiftlint:enable blanket_disable_command

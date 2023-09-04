@@ -28,10 +28,12 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchLookupViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
@@ -118,3 +120,4 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

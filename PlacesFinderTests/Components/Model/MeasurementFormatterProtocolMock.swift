@@ -24,6 +24,7 @@
 
 import Foundation
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
 internal class MeasurementFormatterProtocolMock: MeasurementFormatterProtocol {
 
@@ -44,3 +45,4 @@ internal class MeasurementFormatterProtocolMock: MeasurementFormatterProtocol {
     }
 
 }
+// swiftlint:enable blanket_disable_command

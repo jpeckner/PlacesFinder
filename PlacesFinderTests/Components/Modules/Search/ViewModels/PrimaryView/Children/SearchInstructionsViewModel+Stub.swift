@@ -24,6 +24,7 @@
 
 import Foundation
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable line_length
 extension SearchInstructionsViewModel {
 
@@ -37,3 +38,4 @@ extension SearchInstructionsViewModel {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -25,9 +25,10 @@
 import Nimble
 import Quick
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class NavigationBarViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var sut: NavigationBarViewModelBuilder!
@@ -52,3 +53,4 @@ class NavigationBarViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

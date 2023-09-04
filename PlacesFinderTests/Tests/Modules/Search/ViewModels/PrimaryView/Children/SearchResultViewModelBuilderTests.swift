@@ -28,10 +28,11 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchResultViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubEntityModel = SearchEntityModel.stubValue()
@@ -89,3 +90,4 @@ class SearchResultViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

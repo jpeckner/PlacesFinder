@@ -27,10 +27,11 @@ import Nimble
 import Quick
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchInputViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubInputParams = SearchInputParams.stubValue()
@@ -84,3 +85,4 @@ class SearchInputViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

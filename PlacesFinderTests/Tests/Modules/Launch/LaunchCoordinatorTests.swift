@@ -31,12 +31,13 @@ import SwiftDux
 import SwiftDuxTestComponents
 import UIKit
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_try
+// swiftlint:disable force_unwrapping
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class LaunchCoordinatorTests: QuickSpec {
 
-    // swiftlint:disable force_try
-    // swiftlint:disable force_unwrapping
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         struct Dependencies {
@@ -246,3 +247,4 @@ class LaunchCoordinatorTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

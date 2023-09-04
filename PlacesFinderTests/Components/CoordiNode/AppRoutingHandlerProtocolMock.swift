@@ -25,6 +25,7 @@
 import CoordiNode
 import CoordiNodeTestComponents
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
 // swiftlint:disable large_tuple
 // swiftlint:disable line_length
@@ -67,3 +68,4 @@ internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
     }
 
 }
+// swiftlint:enable blanket_disable_command

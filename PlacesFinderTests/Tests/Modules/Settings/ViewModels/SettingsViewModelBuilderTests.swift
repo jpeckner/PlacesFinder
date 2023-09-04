@@ -30,11 +30,12 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable identifier_name
+// swiftlint:disable implicitly_unwrapped_optional
 class SettingsViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable identifier_name
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubUnitsHeaderViewModel = SettingsUnitsHeaderViewModel.stubValue()
@@ -130,3 +131,4 @@ class SettingsViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

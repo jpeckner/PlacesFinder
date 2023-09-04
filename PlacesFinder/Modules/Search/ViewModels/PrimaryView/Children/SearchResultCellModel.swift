@@ -26,7 +26,6 @@ import Foundation
 import Shared
 
 struct SearchResultCellModel: Identifiable, Equatable {
-    // swiftlint:disable:next identifier_name
     let id: NonEmptyString
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue

@@ -35,6 +35,7 @@ extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
 // MARK: SearchInstructionsViewModelBuilder
 
 // sourcery: AutoMockable
+// swiftlint:disable:next type_name
 protocol SearchInstructionsViewModelBuilderProtocol {
     func buildViewModel(copyContent: SearchInstructionsCopyContent,
                         colorings: AppStandardColorings) -> SearchInstructionsViewModel

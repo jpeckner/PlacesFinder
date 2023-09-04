@@ -27,10 +27,11 @@ import Quick
 import Shared
 import SharedTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class YelpRequestServiceIntegrationTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let urlString = "https://api.yelp.com"
@@ -40,8 +41,8 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
         let decodableService = DecodableService(httpService: httpService,
                                                 decoder: JSONDecoder())
 
-        let coordinate = LocationCoordinate(latitude: 34.052_601,
-                                            longitude: -118.242_617)   // Downtown Los Angeles
+        let coordinate = LocationCoordinate(latitude: 34.052601,
+                                            longitude: -118.242617)   // Downtown Los Angeles
         let params = PlaceLookupParams(keywords: NonEmptyString.stubValue("restaurants"),
                                        coordinate: coordinate,
                                        radius: .init(value: 400, unit: .meters),
@@ -148,3 +149,4 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

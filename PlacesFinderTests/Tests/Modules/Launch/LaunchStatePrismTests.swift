@@ -29,9 +29,10 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class LaunchStatePrismTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var statePrism: LaunchStatePrism!
@@ -78,3 +79,4 @@ class LaunchStatePrismTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

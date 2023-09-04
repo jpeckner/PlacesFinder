@@ -26,9 +26,10 @@ import Nimble
 import Quick
 import Shared
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchRatingValueTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var result: SearchRatingValue!
@@ -66,3 +67,4 @@ class SearchRatingValueTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -28,10 +28,12 @@ import Shared
 import SharedTestComponents
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable type_body_length
 class SearchActivityReducerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         describe("reduce") {
@@ -422,3 +424,4 @@ class SearchActivityReducerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

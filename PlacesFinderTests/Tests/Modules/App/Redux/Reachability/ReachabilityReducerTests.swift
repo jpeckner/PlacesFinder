@@ -27,9 +27,10 @@ import Quick
 import Shared
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class ReachabilityReducerTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         describe("reduce") {
@@ -86,3 +87,4 @@ class ReachabilityReducerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

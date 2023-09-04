@@ -26,11 +26,12 @@ import CoordiNodeTestComponents
 import Nimble
 import Quick
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class AppRoutingHandlerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         var mockRoutingHandler: RoutingHandlerProtocolMock<RootCoordinatorMock>!
@@ -164,8 +165,8 @@ class AppRoutingHandlerTests: QuickSpec {
                     }
 
                     it("calls nothing on stubRouter") {
-                        expect(stubRouter.createSubtreeCurrentNodeArgValue).to(beNil())
-                        expect(stubRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubRouter.createSubtreeCurrentNodeArgValue) == nil
+                        expect(stubRouter.switchSubtreeCurrentNodeArgValue) == nil
                     }
                 }
 
@@ -297,8 +298,8 @@ class AppRoutingHandlerTests: QuickSpec {
                     }
 
                     it("calls nothing on stubDestinationRouter") {
-                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue).to(beNil())
-                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue) == nil
+                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue) == nil
                     }
                 }
 
@@ -309,3 +310,4 @@ class AppRoutingHandlerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

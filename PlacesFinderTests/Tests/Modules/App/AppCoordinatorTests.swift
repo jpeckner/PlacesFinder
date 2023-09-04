@@ -43,13 +43,14 @@ private class MockLaunchCoordinator: ChildCoordinatorProtocolMock, AppCoordinato
     }
 }
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_try
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class AppCoordinatorTests: QuickSpec {
 
     private typealias TFactoryType = AppCoordinatorChildFactoryProtocolMock<MockAppStore>
 
-    // swiftlint:disable force_try
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubLinkType: AppLinkType = .settings(SettingsLinkPayload())
@@ -354,3 +355,4 @@ class AppCoordinatorTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

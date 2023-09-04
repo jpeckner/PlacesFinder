@@ -24,6 +24,7 @@
 
 import Shared
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable line_length
 extension SearchCTAViewModel {
 
@@ -38,3 +39,4 @@ extension SearchCTAViewModel {
     }
 
 }
+// swiftlint:enable blanket_disable_command

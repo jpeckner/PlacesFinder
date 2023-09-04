@@ -28,7 +28,6 @@ import SharedTestComponents
 extension SearchResultCellModel {
 
     static func stubValue(
-        // swiftlint:disable:next identifier_name
         id: NonEmptyString = .stubValue(),
         name: NonEmptyString = .stubValue(),
         ratingsAverage: SearchRatingValue = .three,

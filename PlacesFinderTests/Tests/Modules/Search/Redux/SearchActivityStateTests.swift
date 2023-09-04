@@ -29,9 +29,10 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
 class SearchActivityStateTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     override func spec() {
 
         let stubSearchParams = SearchParams.stubValue()
@@ -55,7 +56,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -70,7 +71,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -85,7 +86,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -100,7 +101,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -138,7 +139,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -147,3 +148,4 @@ class SearchActivityStateTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

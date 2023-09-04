@@ -25,6 +25,7 @@
 import CoordiNode
 import CoordiNodeTestComponents
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
 class AppSecondChildCoordinatorMock: SecondChildCoordinatorMock, AppDestinationRouterProtocol {
 
@@ -68,3 +69,4 @@ class AppSecondChildCoordinatorMock: SecondChildCoordinatorMock, AppDestinationR
     }
 
 }
+// swiftlint:enable blanket_disable_command

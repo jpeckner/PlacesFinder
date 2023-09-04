@@ -27,13 +27,14 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchRetryViewModelBuilderTests: QuickSpec {
 
     private enum StubViewModelAction: Action {
         case detailEntity
     }
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubCopyContent = SearchRetryCopyContent.stubValue()
@@ -77,3 +78,4 @@ class SearchRetryViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

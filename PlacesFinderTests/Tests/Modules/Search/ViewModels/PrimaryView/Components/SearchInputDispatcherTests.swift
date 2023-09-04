@@ -28,10 +28,11 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchInputDispatcherTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
@@ -106,3 +107,4 @@ class SearchInputDispatcherTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -28,10 +28,11 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchBackgroundViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
@@ -85,3 +86,4 @@ class SearchBackgroundViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -29,11 +29,12 @@ import Shared
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchResultsViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubSearchParams = SearchParams.stubValue()
@@ -166,3 +167,4 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

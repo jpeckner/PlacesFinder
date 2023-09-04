@@ -41,6 +41,7 @@ struct SettingsUnitsHeaderViewModel: Equatable {
 // MARK: SettingsUnitsHeaderViewModelBuilder
 
 // sourcery: AutoMockable
+// swiftlint:disable:next type_name
 protocol SettingsUnitsHeaderViewModelBuilderProtocol {
     func buildViewModel(title: String,
                         currentlyActiveSystem: MeasurementSystem,

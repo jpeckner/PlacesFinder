@@ -27,13 +27,14 @@ import Quick
 import SharedTestComponents
 import UIKit
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_try
+// swiftlint:disable force_unwrapping
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class HomeCoordinatorChildContainerTests: QuickSpec {
 
-    // swiftlint:disable force_try
-    // swiftlint:disable force_unwrapping
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         typealias ChildContainerType = HomeCoordinatorChildContainer<HomeCoordinatorChildFactoryProtocolMock<MockAppStore>>
@@ -186,3 +187,4 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

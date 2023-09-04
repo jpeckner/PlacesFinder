@@ -30,12 +30,13 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 // swiftlint:disable:next type_name
 class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let timeout: TimeInterval = 2.0
@@ -343,3 +344,4 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

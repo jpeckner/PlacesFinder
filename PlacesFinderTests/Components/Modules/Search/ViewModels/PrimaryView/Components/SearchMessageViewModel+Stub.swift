@@ -24,6 +24,7 @@
 
 import Foundation
 
+// swiftlint:disable blanket_disable_command
 // swiftlint:disable line_length
 extension SearchMessageViewModel {
 
@@ -34,3 +35,4 @@ extension SearchMessageViewModel {
     }
 
 }
+// swiftlint:enable blanket_disable_command

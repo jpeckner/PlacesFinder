@@ -38,7 +38,6 @@ struct SettingsSectionViewModel: Identifiable {
         case measurementSystem(SettingsUnitsHeaderViewModel)
     }
 
-    // swiftlint:disable:next identifier_name
     let id: SectionID
     let headerType: HeaderType?
     let cells: [SettingsCellViewModel]

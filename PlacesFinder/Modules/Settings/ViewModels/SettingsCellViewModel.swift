@@ -49,7 +49,6 @@ struct SettingsCellViewModel: Equatable {
 
 extension SettingsCellViewModel: Identifiable {
 
-    // swiftlint:disable:next identifier_name
     var id: String { title }
 
 }

@@ -33,6 +33,7 @@ struct SettingsPlainHeaderViewModel: Equatable {
 // MARK: SettingsPlainHeaderViewModelBuilder
 
 // sourcery: AutoMockable
+// swiftlint:disable:next type_name
 protocol SettingsPlainHeaderViewModelBuilderProtocol {
     func buildViewModel(title: String,
                         colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel
