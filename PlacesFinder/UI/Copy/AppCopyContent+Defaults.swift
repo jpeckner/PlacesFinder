@@ -26,6 +26,7 @@ import Shared
 
 extension AppCopyContent {
 
+    // swiftlint:disable:next function_body_length
     init(displayName: NonEmptyString) {
         self.displayName = DisplayNameCopyContent(name: displayName)
 

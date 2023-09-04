@@ -56,7 +56,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -71,7 +71,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -86,7 +86,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -101,7 +101,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -139,7 +139,7 @@ class SearchActivityStateTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 

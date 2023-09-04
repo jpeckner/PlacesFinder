@@ -128,7 +128,7 @@ class SearchDetailsViewContextBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 

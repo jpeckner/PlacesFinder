@@ -3,6 +3,7 @@ analyzer_rules:
   - unused_import
 
 disabled_rules: # rule identifiers to exclude from running
+  - attributes
   - implicit_return
   - nesting
   - trailing_comma

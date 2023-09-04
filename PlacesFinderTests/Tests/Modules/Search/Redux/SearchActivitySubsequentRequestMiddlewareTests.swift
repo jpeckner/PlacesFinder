@@ -101,7 +101,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                 }
 
                 it("...and a nil value for the next request token") {
-                    expect(mockStore.dispatchedNextRequestToken).to(beNil())
+                    expect(mockStore.dispatchedNextRequestToken) == nil
                 }
             }
 
@@ -143,7 +143,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                         }
 
                         it("...and a nil value for the next request token") {
-                            expect(mockStore.dispatchedNextRequestToken).to(beNil())
+                            expect(mockStore.dispatchedNextRequestToken) == nil
                         }
                     }
 
@@ -204,7 +204,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                         }
 
                         it("...and a nil value for the next request token") {
-                            expect(mockStore.dispatchedNextRequestToken).to(beNil())
+                            expect(mockStore.dispatchedNextRequestToken) == nil
                         }
                     }
 
@@ -275,7 +275,7 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             }
 
                             it("...and a nil value for the next request token") {
-                                expect(mockStore.dispatchedNextRequestToken).to(beNil())
+                                expect(mockStore.dispatchedNextRequestToken) == nil
                             }
                         }
 

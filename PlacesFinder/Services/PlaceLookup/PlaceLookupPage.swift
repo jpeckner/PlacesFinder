@@ -50,7 +50,6 @@ struct PlaceLookupEntity: Hashable {
     let isPermanentlyClosed: Bool?
     let image: URL?
 }
-// swiftlint:enable identifier_name
 
 struct PlaceLookupPage: Hashable {
     let entities: [PlaceLookupEntity]

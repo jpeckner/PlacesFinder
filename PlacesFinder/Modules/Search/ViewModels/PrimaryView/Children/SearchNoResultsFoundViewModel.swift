@@ -34,6 +34,7 @@ extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
 // MARK: SearchNoResultsFoundViewModelBuilder
 
 // sourcery: AutoMockable
+// swiftlint:disable:next type_name
 protocol SearchNoResultsFoundViewModelBuilderProtocol {
     func buildViewModel(copyContent: SearchNoResultsCopyContent,
                         colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel

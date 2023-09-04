@@ -103,7 +103,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 }
 
                 it("throws an error") {
-                    expect(errorThrown).toNot(beNil())
+                    expect(errorThrown) != nil
                 }
 
             }
@@ -120,7 +120,7 @@ class SearchActivityActionPrismTests: QuickSpec {
                 }
 
                 it("does not throw an error") {
-                    expect(errorThrown).to(beNil())
+                    expect(errorThrown) == nil
                 }
 
                 it("returns Search.ActivityAction.startSubsequentRequest() with the args for the next page request") {

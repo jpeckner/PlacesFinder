@@ -59,6 +59,5 @@ extension SearchEntityModel {
                                  pricing: pricing,
                                  coordinate: coordinate)
     }
-    // swiftlint:enable identifier_name
 
 }

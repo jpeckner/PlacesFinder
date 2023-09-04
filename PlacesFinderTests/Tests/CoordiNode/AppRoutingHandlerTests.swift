@@ -165,8 +165,8 @@ class AppRoutingHandlerTests: QuickSpec {
                     }
 
                     it("calls nothing on stubRouter") {
-                        expect(stubRouter.createSubtreeCurrentNodeArgValue).to(beNil())
-                        expect(stubRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubRouter.createSubtreeCurrentNodeArgValue) == nil
+                        expect(stubRouter.switchSubtreeCurrentNodeArgValue) == nil
                     }
                 }
 
@@ -298,8 +298,8 @@ class AppRoutingHandlerTests: QuickSpec {
                     }
 
                     it("calls nothing on stubDestinationRouter") {
-                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue).to(beNil())
-                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue).to(beNil())
+                        expect(stubDestinationRouter.createSubtreeCurrentNodeArgValue) == nil
+                        expect(stubDestinationRouter.switchSubtreeCurrentNodeArgValue) == nil
                     }
                 }
 

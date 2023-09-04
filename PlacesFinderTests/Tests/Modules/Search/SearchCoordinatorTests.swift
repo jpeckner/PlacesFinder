@@ -39,6 +39,7 @@ import SwiftDuxTestComponents
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
+// swiftlint:disable type_body_length
 class SearchCoordinatorTests: QuickSpec {
 
     override func spec() {

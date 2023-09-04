@@ -30,10 +30,6 @@ struct AppSkinState: GuaranteedEntityState, Equatable, Sendable {
     static let fallbackValue = AppSkin(colorings: AppColorings.defaultColorings)
 
     let loadState: GuaranteedEntityLoadState<TEntity, AppSkinServiceError>
-
-    init(loadState: GuaranteedEntityLoadState<TEntity, AppSkinServiceError>) {
-        self.loadState = loadState
-    }
 }
 
 enum AppSkinReducer {

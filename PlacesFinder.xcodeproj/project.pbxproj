@@ -473,12 +473,12 @@
 		CA76D68F29C7BD1C0018308D /* View+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76D68829C78F7B0018308D /* View+AppSkin.swift */; };
 		CA77F0F98001F4B17CA5452A /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		CA784C712794F82B00FE76CC /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* AboutAppView.swift */; };
-		CA784C732794F85100FE76CC /* AppAboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AppAboutViewModel.swift */; };
+		CA784C732794F85100FE76CC /* AboutAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AboutAppViewModel.swift */; };
 		CA784C762796083C00FE76CC /* AboutAppViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C752796083C00FE76CC /* AboutAppViewColorings.swift */; };
 		CA784C8127961FAC00FE76CC /* AboutAppCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76FF278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift */; };
 		CA784C8227961FC400FE76CC /* AboutAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */; };
 		CA784C8327961FD800FE76CC /* AboutAppViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C752796083C00FE76CC /* AboutAppViewColorings.swift */; };
-		CA784C8427961FE000FE76CC /* AppAboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AppAboutViewModel.swift */; };
+		CA784C8427961FE000FE76CC /* AboutAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AboutAppViewModel.swift */; };
 		CA784C862796200A00FE76CC /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* AboutAppView.swift */; };
 		CA784C8C27963C6700FE76CC /* AppRootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8B27963C6700FE76CC /* AppRootCoordinatorMock.swift */; };
 		CA784C8E279644D200FE76CC /* AppSecondChildCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */; };
@@ -505,7 +505,7 @@
 		CA9A3CE4284D7E5500B65C4F /* AboutAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */; };
 		CA9A3CE5284D7E6400B65C4F /* AboutAppViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C752796083C00FE76CC /* AboutAppViewColorings.swift */; };
 		CA9A3CE6284D7E6F00B65C4F /* AboutAppCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F76FF278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift */; };
-		CA9A3CE8284D7E9C00B65C4F /* AppAboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AppAboutViewModel.swift */; };
+		CA9A3CE8284D7E9C00B65C4F /* AboutAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C722794F85100FE76CC /* AboutAppViewModel.swift */; };
 		CA9A3CE9284D7EDE00B65C4F /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA784C702794F82B00FE76CC /* AboutAppView.swift */; };
 		CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5496E27A8F97900F09F8A /* MockSubscriber.swift */; };
 		CAA5497127AA1BFE00F09F8A /* ActionSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5497027AA1BFE00F09F8A /* ActionSubscriber.swift */; };
@@ -880,7 +880,7 @@
 		CA76D68829C78F7B0018308D /* View+AppSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppSkin.swift"; sourceTree = "<group>"; };
 		CA76D68A29C79F970018308D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CA784C702794F82B00FE76CC /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
-		CA784C722794F85100FE76CC /* AppAboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAboutViewModel.swift; sourceTree = "<group>"; };
+		CA784C722794F85100FE76CC /* AboutAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewModel.swift; sourceTree = "<group>"; };
 		CA784C752796083C00FE76CC /* AboutAppViewColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewColorings.swift; sourceTree = "<group>"; };
 		CA784C8B27963C6700FE76CC /* AppRootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootCoordinatorMock.swift; sourceTree = "<group>"; };
 		CA784C8D279644D200FE76CC /* AppSecondChildCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecondChildCoordinatorMock.swift; sourceTree = "<group>"; };
@@ -2030,7 +2030,7 @@
 		CA784C6F2794F74A00FE76CC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				CA784C722794F85100FE76CC /* AppAboutViewModel.swift */,
+				CA784C722794F85100FE76CC /* AboutAppViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2858,7 +2858,7 @@
 				93D94AA74BC51024628807C7 /* SearchParams.swift in Sources */,
 				481F57FEF51D8EDCB5551979 /* SearchPreferencesAction.swift in Sources */,
 				CA99087E2A2AB9A100F4C6E4 /* SearchLookupSearchBar.swift in Sources */,
-				CA9A3CE8284D7E9C00B65C4F /* AppAboutViewModel.swift in Sources */,
+				CA9A3CE8284D7E9C00B65C4F /* AboutAppViewModel.swift in Sources */,
 				A026E6E8449521D80278D6FE /* SearchPreferencesState.swift in Sources */,
 				FC05DF9B7D3E213321091FD4 /* SearchPresenter.swift in Sources */,
 				532F49BAF2211C362BC033FE /* SearchPresenterProtocol.swift in Sources */,
@@ -3065,7 +3065,7 @@
 				6ACB780E0EA018531EB7616D /* Search+ActivityState.swift in Sources */,
 				BBE52C830246DEDCAA01F950 /* SearchActivityStatePrism.swift in Sources */,
 				B9C88065279DDF788B8AB1C6 /* ServiceContainer.swift in Sources */,
-				CA784C732794F85100FE76CC /* AppAboutViewModel.swift in Sources */,
+				CA784C732794F85100FE76CC /* AboutAppViewModel.swift in Sources */,
 				169953E3643178828DE56EB1 /* SettingsCellViewModel.swift in Sources */,
 				98CE69F621736DD7327073E2 /* SettingsViewColorings.swift in Sources */,
 				E38F351564F40CDAB667B931 /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */,
@@ -3270,7 +3270,7 @@
 				F4822373993D0A6CEA7F8C8C /* SearchLookupViewModel.swift in Sources */,
 				4968BB93C1C770D90F48AE54 /* SearchLookupViewModelBuilderTests.swift in Sources */,
 				A854B80B9932DC2F12E3DAC1 /* SearchMessageViewModel+Stub.swift in Sources */,
-				CA784C8427961FE000FE76CC /* AppAboutViewModel.swift in Sources */,
+				CA784C8427961FE000FE76CC /* AboutAppViewModel.swift in Sources */,
 				CA8BCAE82814A7F9006989CF /* SubstatesSubscriberRelay.swift in Sources */,
 				06425F1FFFFBC816C24D4A00 /* SearchMessageViewModel.swift in Sources */,
 				DB13F15EF99BE9257AD775E3 /* SearchNoInternetViewController.swift in Sources */,

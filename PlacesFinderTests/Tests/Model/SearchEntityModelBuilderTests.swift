@@ -30,6 +30,7 @@ import SharedTestComponents
 import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 class SearchEntityModelBuilderTests: QuickSpec {
 
@@ -52,7 +53,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -63,7 +64,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -74,7 +75,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -85,7 +86,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 
@@ -98,7 +99,7 @@ class SearchEntityModelBuilderTests: QuickSpec {
                 }
 
                 it("returns nil") {
-                    expect(result).to(beNil())
+                    expect(result) == nil
                 }
             }
 

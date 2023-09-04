@@ -27,6 +27,7 @@ import Quick
 import Shared
 
 // swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 class AppLinkTypeBuilderTests: QuickSpec {
 
@@ -55,7 +56,7 @@ class AppLinkTypeBuilderTests: QuickSpec {
 
                         it("returns an EmptySearchLinkPayload") {
                             let payload = result?.value as? EmptySearchLinkPayload
-                            expect(payload).toNot(beNil())
+                            expect(payload) != nil
                         }
                     }
 
@@ -67,7 +68,7 @@ class AppLinkTypeBuilderTests: QuickSpec {
 
                         it("returns an EmptySearchLinkPayload") {
                             let payload = result?.value as? EmptySearchLinkPayload
-                            expect(payload).toNot(beNil())
+                            expect(payload) != nil
                         }
                     }
 
@@ -95,7 +96,7 @@ class AppLinkTypeBuilderTests: QuickSpec {
 
                     it("returns a SettingsLinkPayload") {
                         let payload = result?.value as? SettingsLinkPayload
-                        expect(payload).toNot(beNil())
+                        expect(payload) != nil
                     }
                 }
 
@@ -107,7 +108,7 @@ class AppLinkTypeBuilderTests: QuickSpec {
                     }
 
                     it("returns nil") {
-                        expect(result).to(beNil())
+                        expect(result) == nil
                     }
                 }
 

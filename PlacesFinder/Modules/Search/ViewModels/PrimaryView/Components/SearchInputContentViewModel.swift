@@ -34,6 +34,7 @@ struct SearchInputContentViewModel: Equatable {
 // MARK: SearchInputContentViewModelBuilder
 
 // sourcery: AutoMockable
+// swiftlint:disable:next type_name
 protocol SearchInputContentViewModelBuilderProtocol {
     func buildViewModel(keywords: NonEmptyString?,
                         barState: SearchInputParams.BarState,

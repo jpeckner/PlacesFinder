@@ -239,7 +239,7 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
                 }
 
                 it("does not include SearchDetailsViewModel.Section.location") {
-                    expect(returnedSection()).to(beNil())
+                    expect(returnedSection()) == nil
                 }
             }
 

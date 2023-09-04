@@ -27,6 +27,7 @@ import Quick
 import Shared
 
 // swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 class SearchDistanceTests: QuickSpec {
 
