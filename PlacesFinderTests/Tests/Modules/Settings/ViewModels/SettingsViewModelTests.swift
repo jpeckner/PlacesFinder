@@ -29,10 +29,11 @@ import Shared
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_unwrapping
+// swiftlint:disable implicitly_unwrapped_optional
 class SettingsViewModelTests: QuickSpec {
 
-    // swiftlint:disable force_unwrapping
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
@@ -84,3 +85,4 @@ class SettingsViewModelTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

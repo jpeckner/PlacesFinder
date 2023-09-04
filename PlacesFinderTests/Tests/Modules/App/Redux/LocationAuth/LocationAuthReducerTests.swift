@@ -27,9 +27,10 @@ import Quick
 import Shared
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class LocationAuthReducerTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         describe("LocationAuthReducer.reduce") {
@@ -94,3 +95,4 @@ class LocationAuthReducerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

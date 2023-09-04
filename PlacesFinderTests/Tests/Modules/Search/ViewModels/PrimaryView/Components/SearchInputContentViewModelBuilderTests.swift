@@ -27,9 +27,10 @@ import Quick
 import Shared
 import SharedTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchInputContentViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
@@ -59,3 +60,4 @@ class SearchInputContentViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

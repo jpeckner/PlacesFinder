@@ -27,9 +27,10 @@ import Quick
 import Shared
 import SharedTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchCopyFormatterTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
@@ -118,3 +119,4 @@ class SearchCopyFormatterTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

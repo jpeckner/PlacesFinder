@@ -26,9 +26,10 @@ import Nimble
 import Quick
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchPreferencesActionCreatorTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         describe("setMeasurementSystem()") {
@@ -60,3 +61,4 @@ class SearchPreferencesActionCreatorTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

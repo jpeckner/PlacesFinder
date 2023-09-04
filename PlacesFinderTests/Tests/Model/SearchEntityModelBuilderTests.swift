@@ -29,9 +29,10 @@ import Shared
 import SharedTestComponents
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchEntityModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var builder: SearchEntityModelBuilder!
@@ -129,3 +130,4 @@ class SearchEntityModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

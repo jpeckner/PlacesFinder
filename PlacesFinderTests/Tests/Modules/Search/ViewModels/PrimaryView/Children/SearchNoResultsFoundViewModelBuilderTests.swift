@@ -27,10 +27,11 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable type_name
 class SearchNoResultsFoundViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubCopyContent = SearchNoResultsCopyContent.stubValue()
@@ -61,3 +62,4 @@ class SearchNoResultsFoundViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

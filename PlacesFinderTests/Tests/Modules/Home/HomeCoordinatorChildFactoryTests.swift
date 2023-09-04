@@ -28,9 +28,11 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_try
+// swiftlint:disable force_unwrapping
 class HomeCoordinatorChildFactoryTests: QuickSpec {
 
-    // swiftlint:disable force_try force_unwrapping
     override func spec() {
 
         let resultStorage = AsyncStorage<TabCoordinatorProtocol>()
@@ -87,3 +89,4 @@ class HomeCoordinatorChildFactoryTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

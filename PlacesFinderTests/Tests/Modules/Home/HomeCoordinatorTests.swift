@@ -31,14 +31,15 @@ import SwiftDux
 import SwiftDuxTestComponents
 import UIKit
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable force_try
+// swiftlint:disable force_unwrapping
+// swiftlint:disable function_body_length
+// swiftlint:disable line_length
 class HomeCoordinatorTests: QuickSpec {
 
     private typealias TFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
 
-    // swiftlint:disable force_try
-    // swiftlint:disable force_unwrapping
-    // swiftlint:disable function_body_length
-    // swiftlint:disable line_length
     override func spec() {
 
         struct Dependencies {
@@ -279,3 +280,4 @@ class HomeCoordinatorTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

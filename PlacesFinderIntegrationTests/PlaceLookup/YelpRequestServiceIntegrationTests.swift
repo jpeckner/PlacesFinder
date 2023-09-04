@@ -27,10 +27,11 @@ import Quick
 import Shared
 import SharedTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class YelpRequestServiceIntegrationTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let urlString = "https://api.yelp.com"
@@ -148,3 +149,4 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

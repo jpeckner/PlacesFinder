@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  swiftlint:disable file_length
 
 import CoordiNode
 import CoordiNodeTestComponents
@@ -33,13 +32,15 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable file_length
+// swiftlint:disable force_try
+// swiftlint:disable force_unwrapping
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchCoordinatorTests: QuickSpec {
 
-    // swiftlint:disable force_try
-    // swiftlint:disable force_unwrapping
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("abc")
@@ -507,3 +508,5 @@ private extension MockSearchStore {
     }
 
 }
+
+// swiftlint:enable blanket_disable_command

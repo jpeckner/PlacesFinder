@@ -26,11 +26,12 @@ import CoordiNodeTestComponents
 import Nimble
 import Quick
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class AppRoutingHandlerTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         var mockRoutingHandler: RoutingHandlerProtocolMock<RootCoordinatorMock>!
@@ -309,3 +310,4 @@ class AppRoutingHandlerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

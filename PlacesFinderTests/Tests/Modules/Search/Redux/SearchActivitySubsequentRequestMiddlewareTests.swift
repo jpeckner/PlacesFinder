@@ -29,12 +29,13 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 // swiftlint:disable:next type_name
 class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubState = Search.State.stub()
@@ -289,3 +290,4 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

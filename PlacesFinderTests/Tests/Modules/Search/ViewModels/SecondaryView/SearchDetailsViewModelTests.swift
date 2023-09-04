@@ -28,13 +28,14 @@ import Quick
 import Shared
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchDetailsViewModelTests: QuickSpec {
 
     private enum StubViewModelAction: Action {
         case removeDetailedEntityAction
     }
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         let stubInfoCellModels: [SearchDetailsInfoSectionViewModel] = [
@@ -95,3 +96,4 @@ class SearchDetailsViewModelTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

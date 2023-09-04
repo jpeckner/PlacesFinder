@@ -26,9 +26,10 @@ import Nimble
 import Quick
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class AppCopyContentReducerTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         describe("init()") {
@@ -50,3 +51,4 @@ class AppCopyContentReducerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

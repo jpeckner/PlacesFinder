@@ -28,9 +28,10 @@ import Quick
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class ReachabilityListenerTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var receivedActions: [ReachabilityAction]!
@@ -112,3 +113,4 @@ class ReachabilityListenerTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

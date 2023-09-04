@@ -29,9 +29,10 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
 class SearchActivityStateTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     override func spec() {
 
         let stubSearchParams = SearchParams.stubValue()
@@ -147,3 +148,4 @@ class SearchActivityStateTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

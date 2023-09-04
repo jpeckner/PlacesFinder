@@ -25,9 +25,10 @@
 import Nimble
 import Quick
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SettingsPlainHeaderViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var sut: SettingsPlainHeaderViewModelBuilder!
@@ -55,3 +56,4 @@ class SettingsPlainHeaderViewModelBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -29,9 +29,10 @@ import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class SearchActivityStatePrismTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var mockLocationAuthListener: LocationAuthListenerProtocolMock!
@@ -126,3 +127,4 @@ class SearchActivityStatePrismTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

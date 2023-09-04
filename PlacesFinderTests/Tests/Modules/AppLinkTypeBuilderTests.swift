@@ -26,9 +26,10 @@ import Nimble
 import Quick
 import Shared
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
 class AppLinkTypeBuilderTests: QuickSpec {
 
-    // swiftlint:disable implicitly_unwrapped_optional
     override func spec() {
 
         var builder: AppLinkTypeBuilder!
@@ -117,3 +118,4 @@ class AppLinkTypeBuilderTests: QuickSpec {
     }
 
 }
+// swiftlint:enable blanket_disable_command

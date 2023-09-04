@@ -29,11 +29,12 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable line_length
 class SearchDetailsViewModelBuilderTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
-    // swiftlint:disable implicitly_unwrapped_optional
-    // swiftlint:disable line_length
     override func spec() {
 
         let stubModel = SearchEntityModel.stubValue()
@@ -311,3 +312,5 @@ private extension SearchDetailsMapSectionViewModel {
     }
 
 }
+
+// swiftlint:enable blanket_disable_command
