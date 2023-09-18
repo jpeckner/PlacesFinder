@@ -168,18 +168,14 @@ extension SettingsCoordinator: SubstatesSubscriber {
 
     nonisolated func newState(state: AppState,
                               updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
-
         Task { @MainActor in
-            presentViews(state,
-                         updatedRoutingSubstates: updatedRoutingSubstates)
+            presentViews(state: state)
 
             processLinkPayload(state)
         }
     }
 
-    private func presentViews(_ state: AppState,
-                              updatedRoutingSubstates: UpdatedRoutingSubstates) {
+    private func presentViews(state: AppState) {
         let appCopyContent = state.appCopyContentState.copyContent
         let appSkin = state.appSkinState.currentValue
 
@@ -195,7 +191,6 @@ extension SettingsCoordinator: SubstatesSubscriber {
                                    appSkin: appSkin)
 
         serviceContainer.appRoutingHandler.determineRouting(state: state,
-                                                            updatedRoutingSubstates: updatedRoutingSubstates,
                                                             router: self)
     }
 

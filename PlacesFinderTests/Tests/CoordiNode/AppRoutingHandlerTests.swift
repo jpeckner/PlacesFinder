@@ -55,7 +55,6 @@ class AppRoutingHandlerTests: QuickSpec {
                     let stubState = AppState.stubValue()
                     await appRoutingHandler.determineRouting(
                         state: stubState,
-                        updatedRoutingSubstates: .init(updatedSubstates: []),
                         router: stubRouter
                     )
                 }
@@ -70,7 +69,6 @@ class AppRoutingHandlerTests: QuickSpec {
                     let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
                     await appRoutingHandler.determineRouting(
                         state: stubState,
-                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
                         router: stubRouter
                     )
                 }
@@ -90,7 +88,6 @@ class AppRoutingHandlerTests: QuickSpec {
 
                     await appRoutingHandler.determineRouting(
                         state: stubState,
-                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
                         router: stubRouter
                     )
                 }
@@ -112,7 +109,6 @@ class AppRoutingHandlerTests: QuickSpec {
                 func executeTest() {
                     appRoutingHandler.determineRouting(
                         state: stubAppState,
-                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
                         router: stubRouter
                     )
                 }
@@ -191,7 +187,6 @@ class AppRoutingHandlerTests: QuickSpec {
                     let stubState = AppState.stubValue()
                     await appRoutingHandler.determineRouting(
                         state: stubState,
-                        updatedRoutingSubstates: .init(updatedSubstates: []),
                         router: stubDestinationRouter
                     )
                 }
@@ -206,7 +201,6 @@ class AppRoutingHandlerTests: QuickSpec {
                     let stubState = AppState.stubValue(routerState: RouterState(currentNode: RootCoordinatorMock.nodeBox))
                     await appRoutingHandler.determineRouting(
                         state: stubState,
-                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
                         router: stubDestinationRouter
                     )
                 }
@@ -228,7 +222,6 @@ class AppRoutingHandlerTests: QuickSpec {
                 func executeTest() {
                     appRoutingHandler.determineRouting(
                         state: stubAppState,
-                        updatedRoutingSubstates: .init(updatedSubstates: [\AppState.routerState]),
                         router: stubDestinationRouter
                     )
                 }

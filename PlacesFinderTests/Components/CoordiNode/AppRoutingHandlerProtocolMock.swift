@@ -27,7 +27,6 @@ import CoordiNodeTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
-// swiftlint:disable large_tuple
 // swiftlint:disable line_length
 internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
 
@@ -37,16 +36,16 @@ internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
     var determineRoutingUpdatedRoutingSubstatesRouterCalled: Bool {
         return determineRoutingUpdatedRoutingSubstatesRouterCallsCount > 0
     }
-    var determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppRouterProtocol)?
-    var determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppRouterProtocol)] = []
-    var determineRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, UpdatedRoutingSubstates, any AppRouterProtocol) -> Void)?
+    var determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, router: any AppRouterProtocol)?
+    var determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, router: any AppRouterProtocol)] = []
+    var determineRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, any AppRouterProtocol) -> Void)?
 
     @MainActor
-    func determineRouting<TRouter: AppRouterProtocol>(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: TRouter) {
+    func determineRouting<TRouter: AppRouterProtocol>(state: AppState, router: TRouter) {
         determineRoutingUpdatedRoutingSubstatesRouterCallsCount += 1
-        determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router)
-        determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router))
-        determineRoutingUpdatedRoutingSubstatesRouterClosure?(state, updatedRoutingSubstates, router)
+        determineRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, router: router)
+        determineRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, router: router))
+        determineRoutingUpdatedRoutingSubstatesRouterClosure?(state, router)
     }
 
     // MARK: - determineRouting<TDestRouter: AppDestinationRouterProtocol>
@@ -55,16 +54,16 @@ internal class AppRoutingHandlerProtocolMock: AppRoutingHandlerProtocol {
     var determineDestRoutingUpdatedRoutingSubstatesRouterCalled: Bool {
         return determineDestRoutingUpdatedRoutingSubstatesRouterCallsCount > 0
     }
-    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppDestinationRouterProtocol)?
-    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: any AppDestinationRouterProtocol)] = []
-    var determineDestRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, UpdatedRoutingSubstates, any AppDestinationRouterProtocol) -> Void)?
+    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments: (state: AppState, router: any AppDestinationRouterProtocol)?
+    var determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations: [(state: AppState, router: any AppDestinationRouterProtocol)] = []
+    var determineDestRoutingUpdatedRoutingSubstatesRouterClosure: ((AppState, any AppDestinationRouterProtocol) -> Void)?
 
     @MainActor
-    func determineRouting<TDestRouter: AppDestinationRouterProtocol>(state: AppState, updatedRoutingSubstates: UpdatedRoutingSubstates, router: TDestRouter) {
+    func determineRouting<TDestRouter: AppDestinationRouterProtocol>(state: AppState, router: TDestRouter) {
         determineDestRoutingUpdatedRoutingSubstatesRouterCallsCount += 1
-        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router)
-        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, updatedRoutingSubstates: updatedRoutingSubstates, router: router))
-        determineDestRoutingUpdatedRoutingSubstatesRouterClosure?(state, updatedRoutingSubstates, router)
+        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedArguments = (state: state, router: router)
+        determineDestRoutingUpdatedRoutingSubstatesRouterReceivedInvocations.append((state: state, router: router))
+        determineDestRoutingUpdatedRoutingSubstatesRouterClosure?(state, router)
     }
 
 }
