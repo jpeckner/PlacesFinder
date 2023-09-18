@@ -26,10 +26,6 @@ import CoordiNode
 import Foundation
 import Shared
 
-protocol LinkTypeProtocol {
-    var destinationNodeBox: DestinationNodeBox { get }
-}
-
 protocol AppLinkPayloadProtocol {}
 
 // sourcery: AutoMockable

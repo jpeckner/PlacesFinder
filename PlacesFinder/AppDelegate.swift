@@ -76,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // placesFinder-dev:// for Debug.
     //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=Chinese%20Food
     //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/settings
+    //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/aboutApp
     func application(
         _ app: UIApplication,
         open url: URL,

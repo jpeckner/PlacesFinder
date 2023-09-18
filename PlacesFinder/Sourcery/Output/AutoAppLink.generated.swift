@@ -27,10 +27,6 @@ extension AppLinkType {
         }
     }
 
-}
-
-extension AppLinkType: LinkTypeProtocol {
-
     // Note: each type implementing AppLinkPayloadProtocol must belong to exactly one DestinationCoordinatorProtocol's
     // linkPayloadType annotation. A compiler error here means that's not currently the case.
     var destinationNodeBox: DestinationNodeBox {
@@ -44,46 +40,6 @@ extension AppLinkType: LinkTypeProtocol {
         case .settings:
             return SettingsCoordinatorNode.destinationNodeBox
         }
-    }
-
-}
-
-extension AboutAppCoordinator {
-
-    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
-        _ state: AppState,
-        store: TStore
-    ) where TStore.TAction == AppAction {
-        clearPayloadTypeIfPresent(AboutAppLinkPayload.self,
-                                  state: state,
-                                  store: store)
-    }
-
-}
-extension SearchCoordinator {
-
-    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
-        _ state: AppState,
-        store: TStore
-    ) where TStore.TAction == AppAction {
-        clearPayloadTypeIfPresent(SearchLinkPayload.self,
-                                  state: state,
-                                  store: store)
-        clearPayloadTypeIfPresent(EmptySearchLinkPayload.self,
-                                  state: state,
-                                  store: store)
-    }
-
-}
-extension SettingsCoordinator {
-
-    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
-        _ state: AppState,
-        store: TStore
-    ) where TStore.TAction == AppAction {
-        clearPayloadTypeIfPresent(SettingsLinkPayload.self,
-                                  state: state,
-                                  store: store)
     }
 
 }

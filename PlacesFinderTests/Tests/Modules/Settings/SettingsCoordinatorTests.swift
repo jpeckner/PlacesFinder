@@ -136,8 +136,12 @@ class SettingsCoordinatorTests: QuickSpec {
                     let testData = await testStorage.element!
 
                     let state = AppState.stubValue(
-                        routerState: RouterState(loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
-                                                 currentNode: StubNode.nodeBox)
+                        routerState: RouterState(
+                            loadState:
+                                linkType.map { .navigatingToDestination(SettingsCoordinatorNode.destinationNodeBox, linkType: $0) }
+                                ?? .idle,
+                            currentNode: SettingsCoordinatorNode.nodeBox
+                        )
                     )
 
                     testData.coordinator.newState(state: state,

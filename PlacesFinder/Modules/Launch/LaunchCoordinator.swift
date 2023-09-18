@@ -103,9 +103,9 @@ extension LaunchCoordinator: SubstatesSubscriber {
         switch state.routerState.loadState {
         case .idle:
             store.dispatch(requestLinkTypeAction(defaultLinkType))
+
         case .payloadRequested,
-             .navigatingToDestination,
-             .waitingForPayloadToBeCleared:
+             .navigatingToDestination:
             break
         }
     }

@@ -1,5 +1,5 @@
 //
-//  PlaceLookupService.swift
+//  PlaceLookupServiceProtocol.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
