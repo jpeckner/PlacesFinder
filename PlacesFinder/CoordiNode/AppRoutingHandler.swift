@@ -40,7 +40,7 @@ protocol AppRoutingHandlerProtocol {
     )
 }
 
-// UpdatedRoutingSubstates is necessary to workaround the fact the PartielKeyPath currently doesn't conform to Sendable.
+// UpdatedRoutingSubstates is necessary to workaround the fact the PartialKeyPath currently doesn't conform to Sendable.
 // Feel free to refactor-out UpdatedRoutingSubstates if that is ever fixed. More info:
 // https://github.com/apple/swift/issues/57560
 struct UpdatedRoutingSubstates: Sendable {
@@ -63,13 +63,17 @@ class AppRoutingHandler: AppRoutingHandlerProtocol {
         self.destinationRoutingHandler = destinationRoutingHandler
     }
 
-    func determineRouting<TRouter: AppRouterProtocol>(state: AppState,
-                                                      updatedRoutingSubstates: UpdatedRoutingSubstates,
-                                                      router: TRouter) {
+    func determineRouting<TRouter: AppRouterProtocol>(
+        state: AppState,
+        updatedRoutingSubstates: UpdatedRoutingSubstates,
+        router: TRouter
+    ) {
         guard updatedRoutingSubstates.didUpdateRouterState,
               let destinationNodeBox = state.routerState.destinationNodeBox,
               let destinationDescendent = TRouter.TDestinationDescendent(destinationNodeBox: destinationNodeBox)
-        else { return }
+        else {
+            return
+        }
 
         let result = routingHandler.determineRouting(from: state.routerState.currentNode,
                                                      to: destinationDescendent,
@@ -95,7 +99,9 @@ class AppRoutingHandler: AppRoutingHandlerProtocol {
     ) {
         guard updatedRoutingSubstates.didUpdateRouterState,
               let destinationNodeBox = state.routerState.destinationNodeBox
-        else { return }
+        else {
+            return
+        }
 
         let result = destinationRoutingHandler.determineRouting(from: state.routerState.currentNode,
                                                                 to: destinationNodeBox,

@@ -144,6 +144,24 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
 
 }
 
+extension SettingsCoordinator: PayloadConsumingCoordinatorProtocol {
+
+    typealias TPayload = Payload
+
+    enum Payload: CoordinatorPayload {
+        case settings(SettingsLinkPayload)
+
+        init?(appLinkPayload: AppLinkPayloadProtocol) {
+            if let settingsPayload = appLinkPayload as? SettingsLinkPayload {
+                self = .settings(settingsPayload)
+            } else {
+                return nil
+            }
+        }
+    }
+
+}
+
 extension SettingsCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
@@ -182,8 +200,8 @@ extension SettingsCoordinator: SubstatesSubscriber {
     }
 
     private func processLinkPayload(_ state: AppState) {
-        clearAllAssociatedLinkTypes(state,
-                                    store: store)
+        clearPayloadIfCurrentCoordinator(state: state,
+                                         store: store)
     }
 
 }

@@ -78,9 +78,9 @@ extension RootCoordinatorProtocol {
         case let .payloadRequested(linkType):
             return .router(.setDestinationCoordinator(linkType.destinationNodeBox,
                                                       payload: linkType))
+
         case .idle,
-             .navigatingToDestination,
-             .waitingForPayloadToBeCleared:
+             .navigatingToDestination:
             return nil
         }
     }

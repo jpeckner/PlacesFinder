@@ -26,7 +26,7 @@ import CoordiNode
 import CoordiNodeTestComponents
 import Foundation
 
-struct StubLinkType: LinkTypeProtocol, Equatable {
+struct StubLinkType: Equatable {
 
     var destinationNodeBox: DestinationNodeBox {
         return StubDestinationNode.destinationNodeBox

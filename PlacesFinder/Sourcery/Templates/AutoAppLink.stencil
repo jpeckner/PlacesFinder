@@ -33,10 +33,6 @@ extension AppLinkType {
         }
     }
 
-}
-
-extension AppLinkType: LinkTypeProtocol {
-
     // Note: each type implementing AppLinkPayloadProtocol must belong to exactly one DestinationCoordinatorProtocol's
     // linkPayloadType annotation. A compiler error here means that's not currently the case.
     var destinationNodeBox: DestinationNodeBox {
@@ -48,22 +44,3 @@ extension AppLinkType: LinkTypeProtocol {
     }
 
 }
-
-{% for type in types.classes where (type.based.DestinationCoordinatorProtocol or type.based.DestinationRouterProtocol) and type|annotated:"linkPayloadType" %}
-extension {{ type.name }} {
-
-    func clearAllAssociatedLinkTypes<TStore: DispatchingStoreProtocol>(
-        _ state: AppState,
-        store: TStore
-    ) where TStore.TAction == AppAction {
-        {% for key,value in type.annotations where key == "linkPayloadType" %}
-        {% for payloadType in value|toArray %}
-        clearPayloadTypeIfPresent({{ payloadType }}.self,
-                                  state: state,
-                                  store: store)
-        {% endfor %}
-        {% endfor %}
-    }
-
-}
-{% endfor %}

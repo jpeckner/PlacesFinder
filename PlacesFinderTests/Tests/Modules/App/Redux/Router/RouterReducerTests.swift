@@ -60,124 +60,18 @@ class RouterReducerTests: QuickSpec {
 
             context("else when the action is RouterAction.setCurrentCoordinator") {
 
-                context("and the loadState before reducing is .idle") {
-                    beforeEach {
-                        let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
-                        let currentState = RouterState<StubLinkType>(loadState: .idle,
-                                                                     currentNode: StubNode.nodeBox)
+                beforeEach {
+                    let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
+                    let currentState = RouterState<StubLinkType>(loadState: .idle,
+                                                                 currentNode: StubNode.nodeBox)
 
-                        result = RouterReducer.reduce(routerAction: action,
-                                                      currentState: currentState)
-                    }
-
-                    it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
-                        expect(result) == RouterState<StubLinkType>(loadState: .idle,
-                                                                    currentNode: OtherStubNode.nodeBox)
-                    }
+                    result = RouterReducer.reduce(routerAction: action,
+                                                  currentState: currentState)
                 }
 
-                context("and the loadState before reducing is .payloadRequested") {
-                    beforeEach {
-                        let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
-                        let currentState = RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
-                                                                     currentNode: StubNode.nodeBox)
-
-                        result = RouterReducer.reduce(routerAction: action,
-                                                      currentState: currentState)
-                    }
-
-                    it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
-                        expect(result) == RouterState<StubLinkType>(loadState: .payloadRequested(stubLinkType),
-                                                                    currentNode: OtherStubNode.nodeBox)
-                    }
-                }
-
-                context("and the loadState before reducing is .waitingForPayloadToBeCleared") {
-                    beforeEach {
-                        let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
-                        let currentState = RouterState<StubLinkType>(
-                            loadState: .waitingForPayloadToBeCleared(stubLinkType),
-                            currentNode: StubNode.nodeBox
-                        )
-
-                        result = RouterReducer.reduce(routerAction: action,
-                                                      currentState: currentState)
-                    }
-
-                    it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
-                        expect(result) == RouterState<StubLinkType>(
-                            loadState: .waitingForPayloadToBeCleared(stubLinkType),
-                            currentNode: OtherStubNode.nodeBox
-                        )
-                    }
-                }
-
-                context("and the loadState before reducing is .navigatingToDestination") {
-
-                    context("and .setCurrentCoordinator's value is not equal to .navigatingToDestination's") {
-                        beforeEach {
-                            let action = RouterAction<StubLinkType>.setCurrentCoordinator(OtherStubNode.nodeBox)
-                            let currentState = RouterState<StubLinkType>(
-                                loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    linkType: stubLinkType),
-                                currentNode: StubNode.nodeBox
-                            )
-
-                            result = RouterReducer.reduce(routerAction: action,
-                                                          currentState: currentState)
-                        }
-
-                        it("returns a state with .setCurrentCoordinator's value, and otherwise unchanged") {
-                            expect(result) == RouterState<StubLinkType>(
-                                loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    linkType: stubLinkType),
-                                currentNode: OtherStubNode.nodeBox
-                            )
-                        }
-                    }
-
-                    context("else when the loadState before reducing has a non-nil payload") {
-                        beforeEach {
-                            let action = RouterAction<StubLinkType>.setCurrentCoordinator(StubDestinationNode.nodeBox)
-                            let currentState = RouterState<StubLinkType>(
-                                loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    linkType: stubLinkType),
-                                currentNode: StubNode.nodeBox
-                            )
-
-                            result = RouterReducer.reduce(routerAction: action,
-                                                          currentState: currentState)
-                        }
-
-                        it("returns a state with .setCurrentCoordinator's value, and loadState == .waitingForPayloadToBeCleared") {
-                            expect(result) == RouterState<StubLinkType>(
-                                loadState: .waitingForPayloadToBeCleared(stubLinkType),
-                                currentNode: StubDestinationNode.nodeBox
-                            )
-                        }
-                    }
-
-                    context("else when the loadState before reducing has a nil payload") {
-                        beforeEach {
-                            let action = RouterAction<StubLinkType>.setCurrentCoordinator(StubDestinationNode.nodeBox)
-                            let currentState = RouterState<StubLinkType>(
-                                loadState: .navigatingToDestination(StubDestinationNode.destinationNodeBox,
-                                                                    linkType: nil),
-                                currentNode: StubNode.nodeBox
-                            )
-
-                            result = RouterReducer.reduce(routerAction: action,
-                                                          currentState: currentState)
-                        }
-
-                        it("returns a state with .setCurrentCoordinator's value, and loadState == .idle") {
-                            expect(result) == RouterState<StubLinkType>(
-                                loadState: .idle,
-                                currentNode: StubDestinationNode.nodeBox
-                            )
-                        }
-                    }
-
+                it("returns a state with currentNode equal to .setCurrentCoordinator's value, and otherwise unchanged") {
+                    expect(result) == RouterState<StubLinkType>(loadState: .idle,
+                                                                currentNode: OtherStubNode.nodeBox)
                 }
 
             }

@@ -33,8 +33,11 @@ import UIKit
 @MainActor class SearchCoordinator<
     TAppStore: StoreProtocol,
     TSearchStore: StoreProtocol
-> where TAppStore.TAction == AppAction, TAppStore.TState == AppState,
-        TSearchStore.TAction == Search.Action, TSearchStore.TState == Search.State {
+> where
+    TAppStore.TAction == AppAction,
+    TAppStore.TState == AppState,
+    TSearchStore.TAction == Search.Action,
+    TSearchStore.TState == Search.State {
 
     private let appStoreRelay: SubstatesSubscriberRelay<TAppStore>
     private let searchStoreRelay: StoreSubscriptionRelay<TSearchStore>
@@ -117,6 +120,27 @@ extension SearchCoordinator: TabCoordinatorProtocol {
 
 }
 
+extension SearchCoordinator: PayloadConsumingCoordinatorProtocol {
+
+    typealias TPayload = Payload
+
+    enum Payload: CoordinatorPayload {
+        case search(SearchLinkPayload)
+        case empty(EmptySearchLinkPayload)
+
+        init?(appLinkPayload: AppLinkPayloadProtocol) {
+            if let searchPayload = appLinkPayload as? SearchLinkPayload {
+                self = .search(searchPayload)
+            } else if let emptySearchPayload = appLinkPayload as? EmptySearchLinkPayload {
+                self = .empty(emptySearchPayload)
+            } else {
+                return nil
+            }
+        }
+    }
+
+}
+
 private extension SearchCoordinator {
 
     func presentViews(appState: AppState,
@@ -180,36 +204,47 @@ private extension SearchCoordinator {
 private extension SearchCoordinator {
 
     func processLinkPayload(appState: AppState) {
-        switch statePrism.presentationType(locationAuthState: appState.locationAuthState,
-                                           reachabilityState: appState.reachabilityState) {
-        case .noInternet,
-             .locationServicesDisabled:
-            clearAllAssociatedLinkTypes(appState,
-                                        store: appStoreRelay.store)
+        let presentationType = statePrism.presentationType(
+            locationAuthState: appState.locationAuthState,
+            reachabilityState: appState.reachabilityState
+        )
 
+        switch presentationType {
         case let .search(authType):
             switch authType.value {
             case let .locationServicesNotDetermined(authBlock):
                 // For clearer UX, only display the location auth block when this is the current coordinator
-                guard isCurrentCoordinator(appState) else {
+                guard isCurrentCoordinator(state: appState) else {
                     return
                 }
 
                 authBlock()
 
             case let .locationServicesEnabled(requestBlock):
-                let searchLinkPayload = currentPayloadToBeCleared(SearchLinkPayload.self,
-                                                                  state: appState)
-                clearAllAssociatedLinkTypes(appState,
-                                            store: appStoreRelay.store)
+                let payload = clearPayloadIfCurrentCoordinator(
+                    state: appState,
+                    store: appStoreRelay.store
+                )
 
-                searchLinkPayload.map { payload in
-                    let params = SearchParams(keywords: payload.keywords)
+                switch payload {
+                case let .search(searchPayload):
+                    let params = SearchParams(keywords: searchPayload.keywords)
                     let action = actionPrism.initialRequestAction(searchParams: params,
                                                                   locationUpdateRequestBlock: requestBlock)
                     searchStoreRelay.store.dispatch(.searchActivity(action))
+
+                case .empty,
+                     .none:
+                    break
                 }
             }
+
+        case .locationServicesDisabled,
+             .noInternet:
+            clearPayloadIfCurrentCoordinator(
+                state: appState,
+                store: appStoreRelay.store
+            )
         }
     }
 

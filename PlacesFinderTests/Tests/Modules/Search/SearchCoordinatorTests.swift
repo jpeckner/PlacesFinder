@@ -169,8 +169,10 @@ class SearchCoordinatorTests: QuickSpec {
                         let testData = await testStorage.element!
                         let appState = AppState.stubValue(
                             routerState: RouterState(
-                                loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
-                                currentNode: StubNode.nodeBox
+                                loadState:
+                                    linkType.map { .navigatingToDestination(SearchCoordinatorNode.destinationNodeBox, linkType: $0) }
+                                    ?? .idle,
+                                currentNode: SearchCoordinatorNode.nodeBox
                             )
                         )
 
@@ -255,8 +257,10 @@ class SearchCoordinatorTests: QuickSpec {
 
                         let appState = AppState.stubValue(
                             routerState: RouterState(
-                                loadState: linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle,
-                                currentNode: StubNode.nodeBox
+                                loadState:
+                                    linkType.map { .navigatingToDestination(SearchCoordinatorNode.destinationNodeBox, linkType: $0) }
+                                    ?? .idle,
+                                currentNode: SearchCoordinatorNode.nodeBox
                             )
                         )
 
@@ -408,10 +412,11 @@ class SearchCoordinatorTests: QuickSpec {
                         let testData = await testStorage.element!
 
                         let loadState: RouterState.LoadState =
-                            linkType.map { .waitingForPayloadToBeCleared($0) } ?? .idle
+                            linkType.map { .navigatingToDestination(SearchCoordinatorNode.destinationNodeBox, linkType: $0) }
+                            ?? .idle
                         let appState = AppState.stubValue(
                             routerState: RouterState(loadState: loadState,
-                                                     currentNode: StubNode.nodeBox)
+                                                     currentNode: SearchCoordinatorNode.nodeBox)
                         )
 
                         let searchState = Search.State.stub()

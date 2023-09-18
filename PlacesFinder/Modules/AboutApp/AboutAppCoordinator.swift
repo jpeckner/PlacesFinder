@@ -81,13 +81,31 @@ extension AboutAppCoordinator {
 
 }
 
+extension AboutAppCoordinator: PayloadConsumingCoordinatorProtocol {
+
+    typealias TPayload = Payload
+
+    enum Payload: CoordinatorPayload {
+        case aboutApp(AboutAppLinkPayload)
+
+        init?(appLinkPayload: AppLinkPayloadProtocol) {
+            if let aboutAppPayload = appLinkPayload as? AboutAppLinkPayload {
+                self = .aboutApp(aboutAppPayload)
+            } else {
+                return nil
+            }
+        }
+    }
+
+}
+
 extension AboutAppCoordinator: SubstatesSubscriber {
 
     typealias StoreState = AppState
 
     func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        clearAllAssociatedLinkTypes(state,
-                                    store: store)
+        clearPayloadIfCurrentCoordinator(state: state,
+                                         store: store)
     }
 
 }

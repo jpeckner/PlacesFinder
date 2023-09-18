@@ -54,7 +54,7 @@ class CoordinatorProtocolTests: QuickSpec {
                     let stubState = AppState.stubValue(
                         routerState: .init(currentNode: SearchCoordinatorNode.nodeBox)
                     )
-                    result = StubSearchCoordinator().isCurrentCoordinator(stubState)
+                    result = StubSearchCoordinator().isCurrentCoordinator(state: stubState)
                 }
 
                 it("returns true") {
@@ -67,7 +67,7 @@ class CoordinatorProtocolTests: QuickSpec {
                     let stubState = AppState.stubValue(
                         routerState: .init(currentNode: SettingsCoordinatorNode.nodeBox)
                     )
-                    result = StubSearchCoordinator().isCurrentCoordinator(stubState)
+                    result = StubSearchCoordinator().isCurrentCoordinator(state: stubState)
                 }
 
                 it("returns false") {
