@@ -109,11 +109,9 @@ extension HomeCoordinator: SubstatesSubscriber {
     typealias StoreState = AppState
 
     nonisolated func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
 
         Task { @MainActor in
             appRoutingHandler.determineRouting(state: state,
-                                               updatedRoutingSubstates: updatedRoutingSubstates,
                                                router: self)
         }
     }

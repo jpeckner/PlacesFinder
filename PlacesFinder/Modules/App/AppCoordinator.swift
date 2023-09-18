@@ -117,14 +117,11 @@ extension AppCoordinator: SubstatesSubscriber {
     typealias StoreState = AppState
 
     nonisolated func newState(state: AppState, updatedSubstates: Set<PartialKeyPath<AppState>>) {
-        let updatedRoutingSubstates = UpdatedRoutingSubstates(updatedSubstates: updatedSubstates)
-
         Task { @MainActor in
             dispatchDestinationForLinkType(state)
 
             let routingHandler = childFactory.serviceContainer.appRoutingHandler
             routingHandler.determineRouting(state: state,
-                                            updatedRoutingSubstates: updatedRoutingSubstates,
                                             router: self)
         }
     }
