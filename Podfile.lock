@@ -2,8 +2,8 @@ PODS:
   - CoordiNode (1.1.1)
   - CoordiNodeTestComponents (1.1.1):
     - CoordiNode (= 1.1.1)
-  - Kingfisher (7.7.0)
-  - Nimble (12.0.0)
+  - Kingfisher (7.9.1)
+  - Nimble (12.3.0)
   - Quick (6.1.0)
   - Shared (1.1.8)
   - SharedTestComponents (1.1.8):
@@ -81,8 +81,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CoordiNode: a814d1db0482fa5a2ba1777cb82d947c326cc369
   CoordiNodeTestComponents: b1f9da3a3537d7e4adc75e6b3c60b8aee6d79ee5
-  Kingfisher: f043ac666dfc96c1f37604f93effb45a7ee3a3e1
-  Nimble: 02a4990866e51868303a466970cd1c81bb84a192
+  Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
+  Nimble: f8a8219d16f176429b951e8f7e72df5c23ceddc0
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   Shared: c38157cd542c241e331e6c149af96fa58c0bb2b4
   SharedTestComponents: 06972ad043fc9feca9bf0e9ff35b77a6073db953
@@ -94,4 +94,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 52ba2861f28e819c662ab34ca59bec4a9430b887
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

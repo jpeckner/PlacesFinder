@@ -89,7 +89,13 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                 }
 
                 it("dispatches Search.ActivityAction.updateRequestStatus with .inProgress") {
-                    expect(mockStore.dispatchedPageAction) == .inProgress
+                    expect(mockStore.dispatchedActions.contains { action in
+                        guard case let .searchActivity(.updateRequestStatus(_, pageAction)) = action else {
+                            return false
+                        }
+
+                        return pageAction == .inProgress
+                    }) == true
                 }
 
                 it("...and with the previously received search params...") {

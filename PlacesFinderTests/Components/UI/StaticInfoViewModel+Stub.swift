@@ -26,13 +26,13 @@ import Foundation
 
 extension StaticInfoViewModel {
 
-    static func stubValue<TColorings: AppStandardColoringsProtocol>(
-        colorings: TColorings,
+    static func stubValue<TAppColorings: AppStandardColoringsProtocol>(
+        colorings: TAppColorings,
         imageName: String = "stubStaticInfoImageName",
         title: String = "stubStaticInfoTitle",
         description: String = "stubStaticInfoDescription"
-    ) -> StaticInfoViewModel<TColorings> {
-        StaticInfoViewModel<TColorings>(
+    ) -> StaticInfoViewModel<TAppColorings> {
+        StaticInfoViewModel<TAppColorings>(
             imageName: imageName,
             title: title,
             description: description,
