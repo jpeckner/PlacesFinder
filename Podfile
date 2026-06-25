@@ -6,9 +6,6 @@ ensure_bundler!
 
 def common_pods
   pod 'CoordiNode', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
-  pod 'Kingfisher'
-  pod 'SkeletonUI'
-  pod 'SnapKit'
   pod 'Shared', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
   pod 'SwiftDux', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
 end
@@ -24,8 +21,6 @@ target 'PlacesFinder' do
     common_pods
     
     pod 'CoordiNodeTestComponents', :git => 'https://github.com/jpeckner/CoordiNode.git', :branch => 'develop'
-    pod 'Nimble'
-    pod 'Quick'
     pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
     pod 'SwiftDuxTestComponents', :git => 'https://github.com/jpeckner/SwiftDux.git', :branch => 'develop'
   end
@@ -35,8 +30,6 @@ target 'PlacesFinder' do
 
     common_pods
 
-    pod 'Nimble'
-    pod 'Quick'
     pod 'SharedTestComponents', :git => 'https://github.com/jpeckner/Shared.git', :branch => 'develop'
   end
 
@@ -45,7 +38,6 @@ target 'PlacesFinder' do
 
     common_pods
 
-    pod 'Swifter'
   end
 
 end

@@ -459,6 +459,14 @@
 		CA5F849F27E7B60E00EEF854 /* ReachabilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5F849E27E7B60E00EEF854 /* ReachabilityState.swift */; };
 		CA5F84A027E7B60E00EEF854 /* ReachabilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5F849E27E7B60E00EEF854 /* ReachabilityState.swift */; };
 		CA5F84A127E7B60E00EEF854 /* ReachabilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5F849E27E7B60E00EEF854 /* ReachabilityState.swift */; };
+		CA656A902FEDE5A7009C6F59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A8F2FEDE5A7009C6F59 /* Kingfisher */; };
+		CA656A932FEDE602009C6F59 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A922FEDE602009C6F59 /* SkeletonUI */; };
+		CA656A962FEDE635009C6F59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A952FEDE635009C6F59 /* SnapKit */; };
+		CA656A992FEDE672009C6F59 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A982FEDE672009C6F59 /* Nimble */; };
+		CA656A9B2FEDE684009C6F59 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A9A2FEDE684009C6F59 /* Nimble */; };
+		CA656A9E2FEDE6C5009C6F59 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A9D2FEDE6C5009C6F59 /* Quick */; };
+		CA656AA02FEDE6D0009C6F59 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A9F2FEDE6D0009C6F59 /* Quick */; };
+		CA656AA32FEDE71A009C6F59 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AA22FEDE71A009C6F59 /* Swifter */; };
 		CA6ADEC62A25882C004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC72A25884F004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC82A258850004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
@@ -782,7 +790,7 @@
 		6D7116AB78865ABE16A4A5D1 /* Pods-PlacesFinderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesFinderTests.debug.xcconfig"; path = "Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsSectionProtocol.swift; sourceTree = "<group>"; };
 		6DB426CBC6CFD247D55616D8 /* AppLinkTypeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkTypeBuilderTests.swift; sourceTree = "<group>"; };
-		6E7FFBD1D29F804E19CC1301 /* PlacesFinderIntegrationTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesFinderIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E7FFBD1D29F804E19CC1301 /* PlacesFinderIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesFinderIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		707ACE43DB44856707F26C2C /* YelpRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestService.swift; sourceTree = "<group>"; };
 		70F9CB66F411E9B113942601 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		7317019571262C965873F143 /* SearchConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConfig.swift; sourceTree = "<group>"; };
@@ -834,7 +842,7 @@
 		A4D9906D7E327D706C3F1D31 /* RatingStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStarsView.swift; sourceTree = "<group>"; };
 		A55C8A30C568B514DB416131 /* AutoHomeCoordinatorChildContainer.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHomeCoordinatorChildContainer.generated.swift; sourceTree = "<group>"; };
 		A5961160D1BA1BFBAF9A88A3 /* AppCopyContentReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCopyContentReducerTests.swift; sourceTree = "<group>"; };
-		A6705B7BFA51A51539DDBB4C /* PlacesFinderTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6705B7BFA51A51539DDBB4C /* PlacesFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A69EA999B0F89F38C6FF532E /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContainerSplitControllers.swift; sourceTree = "<group>"; };
 		A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
@@ -946,7 +954,7 @@
 		EDA3861D26E2312C44BFF15C /* SearchCTAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCTAView.swift; sourceTree = "<group>"; };
 		EDC7126A14CF9D60D2ADF42C /* SearchInstructionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsViewModel.swift; sourceTree = "<group>"; };
 		EE6CF1B87BBDAE9DA774EE56 /* LaunchStatePrism.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatePrism.swift; sourceTree = "<group>"; };
-		EFC5EFB29FAD22E7D55CF0FA /* PlacesFinderUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PlacesFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFC5EFB29FAD22E7D55CF0FA /* PlacesFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0912F2A532B16E253A6B9E0 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		F09569D5707768CA771A0564 /* SearchDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistance.swift; sourceTree = "<group>"; };
 		F0D5BC5B925A91B8635C0029 /* SearchInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsView.swift; sourceTree = "<group>"; };
@@ -968,7 +976,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA656A9E2FEDE6C5009C6F59 /* Quick in Frameworks */,
 				7CAFEDF4859FAC7FAD1FBB66 /* Pods_PlacesFinderTests.framework in Frameworks */,
+				CA656A992FEDE672009C6F59 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -976,7 +986,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA656AA02FEDE6D0009C6F59 /* Quick in Frameworks */,
 				CFC022103DE8C6C090864B11 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */,
+				CA656A9B2FEDE684009C6F59 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +997,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2489C396F4957E0DD3F62D7 /* Pods_PlacesFinderUITests.framework in Frameworks */,
+				CA656AA32FEDE71A009C6F59 /* Swifter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,6 +1005,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA656A902FEDE5A7009C6F59 /* Kingfisher in Frameworks */,
+				CA656A962FEDE635009C6F59 /* SnapKit in Frameworks */,
+				CA656A932FEDE602009C6F59 /* SkeletonUI in Frameworks */,
 				C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2484,6 +2500,14 @@
 				en,
 			);
 			mainGroup = D18AD7AE40A035D43BE91814;
+			packageReferences = (
+				CA656A8E2FEDE5A7009C6F59 /* XCRemoteSwiftPackageReference "kingfisher" */,
+				CA656A912FEDE602009C6F59 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				CA656A942FEDE635009C6F59 /* XCRemoteSwiftPackageReference "snapkit" */,
+				CA656A972FEDE672009C6F59 /* XCRemoteSwiftPackageReference "nimble" */,
+				CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */,
+				CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */,
+			);
 			productRefGroup = 5629D061D9A6C2237F68BB91 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3697,6 +3721,100 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA656A8E2FEDE5A7009C6F59 /* XCRemoteSwiftPackageReference "kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/kingfisher";
+			requirement = {
+				kind = exactVersion;
+				version = 7.9.1;
+			};
+		};
+		CA656A912FEDE602009C6F59 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.11;
+			};
+		};
+		CA656A942FEDE635009C6F59 /* XCRemoteSwiftPackageReference "snapkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/snapkit/snapkit";
+			requirement = {
+				kind = exactVersion;
+				version = 5.6.0;
+			};
+		};
+		CA656A972FEDE672009C6F59 /* XCRemoteSwiftPackageReference "nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quick/nimble";
+			requirement = {
+				kind = exactVersion;
+				version = 12.3.0;
+			};
+		};
+		CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick";
+			requirement = {
+				kind = exactVersion;
+				version = 6.1.0;
+			};
+		};
+		CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/httpswift/swifter";
+			requirement = {
+				kind = exactVersion;
+				version = 1.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA656A8F2FEDE5A7009C6F59 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A8E2FEDE5A7009C6F59 /* XCRemoteSwiftPackageReference "kingfisher" */;
+			productName = Kingfisher;
+		};
+		CA656A922FEDE602009C6F59 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A912FEDE602009C6F59 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+		CA656A952FEDE635009C6F59 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A942FEDE635009C6F59 /* XCRemoteSwiftPackageReference "snapkit" */;
+			productName = SnapKit;
+		};
+		CA656A982FEDE672009C6F59 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A972FEDE672009C6F59 /* XCRemoteSwiftPackageReference "nimble" */;
+			productName = Nimble;
+		};
+		CA656A9A2FEDE684009C6F59 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A972FEDE672009C6F59 /* XCRemoteSwiftPackageReference "nimble" */;
+			productName = Nimble;
+		};
+		CA656A9D2FEDE6C5009C6F59 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		CA656A9F2FEDE6D0009C6F59 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		CA656AA22FEDE71A009C6F59 /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B358B17C8912250CA454B768 /* Project object */;
 }
