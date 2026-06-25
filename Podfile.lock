@@ -2,9 +2,6 @@ PODS:
   - CoordiNode (1.1.1)
   - CoordiNodeTestComponents (1.1.1):
     - CoordiNode (= 1.1.1)
-  - Shared (1.1.8)
-  - SharedTestComponents (1.1.8):
-    - Shared (= 1.1.8)
   - SwiftDux (1.1.6)
   - SwiftDuxTestComponents (1.1.6):
     - SwiftDux (= 1.1.6)
@@ -12,8 +9,6 @@ PODS:
 DEPENDENCIES:
   - CoordiNode (from `https://github.com/jpeckner/CoordiNode.git`, branch `develop`)
   - CoordiNodeTestComponents (from `https://github.com/jpeckner/CoordiNode.git`, branch `develop`)
-  - Shared (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
-  - SharedTestComponents (from `https://github.com/jpeckner/Shared.git`, branch `develop`)
   - SwiftDux (from `https://github.com/jpeckner/SwiftDux.git`, branch `develop`)
   - SwiftDuxTestComponents (from `https://github.com/jpeckner/SwiftDux.git`, branch `develop`)
 
@@ -24,12 +19,6 @@ EXTERNAL SOURCES:
   CoordiNodeTestComponents:
     :branch: develop
     :git: https://github.com/jpeckner/CoordiNode.git
-  Shared:
-    :branch: develop
-    :git: https://github.com/jpeckner/Shared.git
-  SharedTestComponents:
-    :branch: develop
-    :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
     :branch: develop
     :git: https://github.com/jpeckner/SwiftDux.git
@@ -44,12 +33,6 @@ CHECKOUT OPTIONS:
   CoordiNodeTestComponents:
     :commit: 04c4bd916b55917b1874d5f78e69d30d39155689
     :git: https://github.com/jpeckner/CoordiNode.git
-  Shared:
-    :commit: 0574e8af86c94de8e7285a1afe582990027e7969
-    :git: https://github.com/jpeckner/Shared.git
-  SharedTestComponents:
-    :commit: 0574e8af86c94de8e7285a1afe582990027e7969
-    :git: https://github.com/jpeckner/Shared.git
   SwiftDux:
     :commit: 4a55c1319de65055fff6bd886e50e2fc4a36486b
     :git: https://github.com/jpeckner/SwiftDux.git
@@ -60,11 +43,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CoordiNode: a814d1db0482fa5a2ba1777cb82d947c326cc369
   CoordiNodeTestComponents: b1f9da3a3537d7e4adc75e6b3c60b8aee6d79ee5
-  Shared: c38157cd542c241e331e6c149af96fa58c0bb2b4
-  SharedTestComponents: 06972ad043fc9feca9bf0e9ff35b77a6073db953
   SwiftDux: fe3e9c5ba3084335d984858e3480bce2463521c3
   SwiftDuxTestComponents: 1dafabf892f54fa36f6d3e9e8197157c0ca1f3f2
 
-PODFILE CHECKSUM: eaf25ad1386288600683cb62cf8dc2191b29ead8
+PODFILE CHECKSUM: 193df68d86426fac283e53c4b8dd5dac7451d225
 
 COCOAPODS: 1.16.2

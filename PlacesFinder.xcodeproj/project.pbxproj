@@ -467,6 +467,17 @@
 		CA656A9E2FEDE6C5009C6F59 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A9D2FEDE6C5009C6F59 /* Quick */; };
 		CA656AA02FEDE6D0009C6F59 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = CA656A9F2FEDE6D0009C6F59 /* Quick */; };
 		CA656AA32FEDE71A009C6F59 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AA22FEDE71A009C6F59 /* Swifter */; };
+		CA656AA62FEDE8D5009C6F59 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AA52FEDE8D5009C6F59 /* Shared */; };
+		CA656AA82FEDE8D5009C6F59 /* SharedTestComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AA72FEDE8D5009C6F59 /* SharedTestComponents */; };
+		CA656AAC2FEDED36009C6F59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AAB2FEDED36009C6F59 /* Kingfisher */; };
+		CA656AAE2FEDED3F009C6F59 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AAD2FEDED3F009C6F59 /* SkeletonUI */; };
+		CA656AB02FEDED49009C6F59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AAF2FEDED49009C6F59 /* SnapKit */; };
+		CA656AB22FEDED54009C6F59 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB12FEDED54009C6F59 /* Shared */; };
+		CA656AB42FEDED64009C6F59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB32FEDED64009C6F59 /* Kingfisher */; };
+		CA656AB62FEDED6D009C6F59 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB52FEDED6D009C6F59 /* SkeletonUI */; };
+		CA656AB82FEDED6D009C6F59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB72FEDED6D009C6F59 /* SnapKit */; };
+		CA656ABA2FEDED6D009C6F59 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB92FEDED6D009C6F59 /* Shared */; };
+		CA656ABC2FEDED7D009C6F59 /* SharedTestComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CA656ABB2FEDED7D009C6F59 /* SharedTestComponents */; };
 		CA6ADEC62A25882C004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC72A25884F004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC82A258850004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
@@ -884,6 +895,7 @@
 		CA5F849327E7B4B500EEF854 /* LocationAuthState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAuthState.swift; sourceTree = "<group>"; };
 		CA5F849A27E7B4C300EEF854 /* ReachabilityAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityAction.swift; sourceTree = "<group>"; };
 		CA5F849E27E7B60E00EEF854 /* ReachabilityState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityState.swift; sourceTree = "<group>"; };
+		CA656AA92FEDED11009C6F59 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBackgroundView.swift; sourceTree = "<group>"; };
 		CA6D635A27E6955B000866D5 /* Search+Redux.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search+Redux.swift"; sourceTree = "<group>"; };
 		CA6D635C27E69594000866D5 /* StoreSubscriptionRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriptionRelay.swift; sourceTree = "<group>"; };
@@ -977,8 +989,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA656A9E2FEDE6C5009C6F59 /* Quick in Frameworks */,
+				CA656AAE2FEDED3F009C6F59 /* SkeletonUI in Frameworks */,
+				CA656AA82FEDE8D5009C6F59 /* SharedTestComponents in Frameworks */,
+				CA656AB02FEDED49009C6F59 /* SnapKit in Frameworks */,
 				7CAFEDF4859FAC7FAD1FBB66 /* Pods_PlacesFinderTests.framework in Frameworks */,
+				CA656AB22FEDED54009C6F59 /* Shared in Frameworks */,
 				CA656A992FEDE672009C6F59 /* Nimble in Frameworks */,
+				CA656AAC2FEDED36009C6F59 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -986,9 +1003,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA656AB62FEDED6D009C6F59 /* SkeletonUI in Frameworks */,
+				CA656ABC2FEDED7D009C6F59 /* SharedTestComponents in Frameworks */,
 				CA656AA02FEDE6D0009C6F59 /* Quick in Frameworks */,
+				CA656AB82FEDED6D009C6F59 /* SnapKit in Frameworks */,
 				CFC022103DE8C6C090864B11 /* Pods_PlacesFinderIntegrationTests.framework in Frameworks */,
+				CA656ABA2FEDED6D009C6F59 /* Shared in Frameworks */,
 				CA656A9B2FEDE684009C6F59 /* Nimble in Frameworks */,
+				CA656AB42FEDED64009C6F59 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,6 +1027,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA656AA62FEDE8D5009C6F59 /* Shared in Frameworks */,
 				CA656A902FEDE5A7009C6F59 /* Kingfisher in Frameworks */,
 				CA656A962FEDE635009C6F59 /* SnapKit in Frameworks */,
 				CA656A932FEDE602009C6F59 /* SkeletonUI in Frameworks */,
@@ -1028,6 +1051,7 @@
 		05F4FDE340BFA3D428114980 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA656AA92FEDED11009C6F59 /* Foundation.framework */,
 				F7558519C8C7569B3802E35F /* Pods_PlacesFinder.framework */,
 				6223EB8B13B95E81146E19C5 /* Pods_PlacesFinderIntegrationTests.framework */,
 				69ED809D6100CEE709D38FD6 /* Pods_PlacesFinderTests.framework */,
@@ -2507,6 +2531,7 @@
 				CA656A972FEDE672009C6F59 /* XCRemoteSwiftPackageReference "nimble" */,
 				CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */,
 				CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */,
+				CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */,
 			);
 			productRefGroup = 5629D061D9A6C2237F68BB91 /* Products */;
 			projectDirPath = "";
@@ -2591,9 +2616,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderTests/Pods-PlacesFinderTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2652,9 +2681,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderUITests/Pods-PlacesFinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2713,9 +2746,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinderIntegrationTests/Pods-PlacesFinderIntegrationTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2749,9 +2786,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PlacesFinder/Pods-PlacesFinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3771,6 +3812,14 @@
 				version = 1.5.0;
 			};
 		};
+		CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpeckner/Shared";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3813,6 +3862,61 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */;
 			productName = Swifter;
+		};
+		CA656AA52FEDE8D5009C6F59 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
+			productName = Shared;
+		};
+		CA656AA72FEDE8D5009C6F59 /* SharedTestComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
+			productName = SharedTestComponents;
+		};
+		CA656AAB2FEDED36009C6F59 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A8E2FEDE5A7009C6F59 /* XCRemoteSwiftPackageReference "kingfisher" */;
+			productName = Kingfisher;
+		};
+		CA656AAD2FEDED3F009C6F59 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A912FEDE602009C6F59 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+		CA656AAF2FEDED49009C6F59 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A942FEDE635009C6F59 /* XCRemoteSwiftPackageReference "snapkit" */;
+			productName = SnapKit;
+		};
+		CA656AB12FEDED54009C6F59 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
+			productName = Shared;
+		};
+		CA656AB32FEDED64009C6F59 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A8E2FEDE5A7009C6F59 /* XCRemoteSwiftPackageReference "kingfisher" */;
+			productName = Kingfisher;
+		};
+		CA656AB52FEDED6D009C6F59 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A912FEDE602009C6F59 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+		CA656AB72FEDED6D009C6F59 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656A942FEDE635009C6F59 /* XCRemoteSwiftPackageReference "snapkit" */;
+			productName = SnapKit;
+		};
+		CA656AB92FEDED6D009C6F59 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
+			productName = Shared;
+		};
+		CA656ABB2FEDED7D009C6F59 /* SharedTestComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
+			productName = SharedTestComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
