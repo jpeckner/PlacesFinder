@@ -478,6 +478,10 @@
 		CA656AB82FEDED6D009C6F59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB72FEDED6D009C6F59 /* SnapKit */; };
 		CA656ABA2FEDED6D009C6F59 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AB92FEDED6D009C6F59 /* Shared */; };
 		CA656ABC2FEDED7D009C6F59 /* SharedTestComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CA656ABB2FEDED7D009C6F59 /* SharedTestComponents */; };
+		CA656ABF2FEDF390009C6F59 /* SwiftDux in Frameworks */ = {isa = PBXBuildFile; productRef = CA656ABE2FEDF390009C6F59 /* SwiftDux */; };
+		CA656AC12FEDF390009C6F59 /* SwiftDuxTestComponents in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AC02FEDF390009C6F59 /* SwiftDuxTestComponents */; };
+		CA656AC32FEDF44B009C6F59 /* SwiftDux in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AC22FEDF44B009C6F59 /* SwiftDux */; };
+		CA656AC52FEDF453009C6F59 /* SwiftDux in Frameworks */ = {isa = PBXBuildFile; productRef = CA656AC42FEDF453009C6F59 /* SwiftDux */; };
 		CA6ADEC62A25882C004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC72A25884F004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
 		CA6ADEC82A258850004BF718 /* SearchBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6ADEC52A25882C004BF718 /* SearchBackgroundView.swift */; };
@@ -989,6 +993,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA656A9E2FEDE6C5009C6F59 /* Quick in Frameworks */,
+				CA656AC12FEDF390009C6F59 /* SwiftDuxTestComponents in Frameworks */,
+				CA656AC32FEDF44B009C6F59 /* SwiftDux in Frameworks */,
 				CA656AAE2FEDED3F009C6F59 /* SkeletonUI in Frameworks */,
 				CA656AA82FEDE8D5009C6F59 /* SharedTestComponents in Frameworks */,
 				CA656AB02FEDED49009C6F59 /* SnapKit in Frameworks */,
@@ -1011,6 +1017,7 @@
 				CA656ABA2FEDED6D009C6F59 /* Shared in Frameworks */,
 				CA656A9B2FEDE684009C6F59 /* Nimble in Frameworks */,
 				CA656AB42FEDED64009C6F59 /* Kingfisher in Frameworks */,
+				CA656AC52FEDF453009C6F59 /* SwiftDux in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,6 +1036,7 @@
 			files = (
 				CA656AA62FEDE8D5009C6F59 /* Shared in Frameworks */,
 				CA656A902FEDE5A7009C6F59 /* Kingfisher in Frameworks */,
+				CA656ABF2FEDF390009C6F59 /* SwiftDux in Frameworks */,
 				CA656A962FEDE635009C6F59 /* SnapKit in Frameworks */,
 				CA656A932FEDE602009C6F59 /* SkeletonUI in Frameworks */,
 				C9CBAE7987923F47E6A91FE6 /* Pods_PlacesFinder.framework in Frameworks */,
@@ -2532,6 +2540,7 @@
 				CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */,
 				CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */,
 				CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */,
+				CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */,
 			);
 			productRefGroup = 5629D061D9A6C2237F68BB91 /* Products */;
 			projectDirPath = "";
@@ -3820,6 +3829,14 @@
 				kind = branch;
 			};
 		};
+		CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpeckner/SwiftDux";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3917,6 +3934,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA656AA42FEDE8D5009C6F59 /* XCRemoteSwiftPackageReference "Shared" */;
 			productName = SharedTestComponents;
+		};
+		CA656ABE2FEDF390009C6F59 /* SwiftDux */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */;
+			productName = SwiftDux;
+		};
+		CA656AC02FEDF390009C6F59 /* SwiftDuxTestComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */;
+			productName = SwiftDuxTestComponents;
+		};
+		CA656AC22FEDF44B009C6F59 /* SwiftDux */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */;
+			productName = SwiftDux;
+		};
+		CA656AC42FEDF453009C6F59 /* SwiftDux */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA656ABD2FEDF390009C6F59 /* XCRemoteSwiftPackageReference "SwiftDux" */;
+			productName = SwiftDux;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
