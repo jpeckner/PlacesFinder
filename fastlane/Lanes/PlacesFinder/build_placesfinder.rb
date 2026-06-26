@@ -6,14 +6,18 @@ def generate_placesfinder(baseURL, apiKey, config = "Release")
 end
 
 def generate_config(baseURL, apiKey)
+  ENV["PLACESFINDER_BASE_URL"] = baseURL
+  ENV["PLACESFINDER_API_KEY"] = apiKey
   run_script(
     [
       "cd Lanes/PlacesFinder",
       "chmod u+x generate_config.sh",
-      "./generate_config.sh '%{baseURL}' '%{apiKey}'" \
-        % {baseURL: baseURL, apiKey: apiKey}
+      "./generate_config.sh \"$PLACESFINDER_BASE_URL\" \"$PLACESFINDER_API_KEY\""
     ].join("\n")
   )
+ensure
+  ENV.delete("PLACESFINDER_BASE_URL")
+  ENV.delete("PLACESFINDER_API_KEY")
 end
 
 def generate_coordinode_files()

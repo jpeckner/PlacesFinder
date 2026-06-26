@@ -4,8 +4,8 @@ set -e
 
 cd ../../..
 APPCONFIG_PATH=$(pwd)/PlacesFinder/Config/AppConfig.plist
-baseURL=$1
-apiKey=$2
+baseURL=$PLACESFINDER_BASE_URL
+apiKey=$PLACESFINDER_API_KEY
 
 rm -rf "$APPCONFIG_PATH"
 
