@@ -30,6 +30,7 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
+import UIKit
 
 private class MockHomeCoordinator: ChildCoordinatorProtocolMock, AppCoordinatorChildProtocol {
     static var appCoordinatorImmediateDescendent: AppCoordinatorImmediateDescendent {

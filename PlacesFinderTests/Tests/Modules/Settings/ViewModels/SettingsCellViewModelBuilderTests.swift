@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import Combine
+import Foundation
 import Nimble
 import Quick
 import Shared

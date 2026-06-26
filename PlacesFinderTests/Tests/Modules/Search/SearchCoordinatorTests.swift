@@ -31,6 +31,7 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
+import UIKit
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable file_length

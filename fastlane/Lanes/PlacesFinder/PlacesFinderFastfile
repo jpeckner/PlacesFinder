@@ -5,5 +5,5 @@ lane :generate_placesfinder do |options|
   
   generate_placesfinder(PLACE_LOOKUP_BASE_URL, apiKey, config)
   
-  run_script("open ../PlacesFinder.xcworkspace")
+  run_script("open ../PlacesFinder.xcodeproj")
 end

@@ -29,6 +29,7 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
+import XCTest
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length

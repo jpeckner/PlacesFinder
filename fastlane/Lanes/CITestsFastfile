@@ -9,7 +9,7 @@ lane :ci_tests do
   add_localhost_ATS_exception
 
   run_tests(
-    workspace: PLACESFINDER_WORKSPACE_PATH,
+    project: PLACESFINDER_PROJECT_PATH,
     scheme: PLACESFINDER_RELEASE_SCHEME,
     clean: true
   )

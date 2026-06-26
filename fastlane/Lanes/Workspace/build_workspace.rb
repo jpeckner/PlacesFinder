@@ -9,8 +9,7 @@ def ensure_fresh_workspace()
 
   reset_git_repo(
     exclude: [
-        "fastlane/.env",
-        "Pods"
+        "fastlane/.env"
     ]
   )
 

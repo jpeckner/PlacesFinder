@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import Shared
+import UIKit
 
 // sourcery: AutoMockable
 protocol AppGlobalStylingsHandlerProtocol: Sendable {

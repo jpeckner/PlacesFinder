@@ -15,12 +15,10 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 
 ### One-Time Setup
 1. Install the following tools if your system doesn't have them already:
-    * [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
     * [Mint](https://github.com/yonaskolb/Mint)
     * [Bundler](https://bundler.io/)
 1. Clone the PlacesFinder repo onto your system.
 1. Run `$ bundle install` to install the dependencies listed in the Gemfile.
-1. Run `$ bundle exec pod install` to install CocoaPods dependencies.
 
 ### Running PlacesFinder
 1. In order to display results from the Yelp Fusion API in PlacesFinder, you'll need to provide it with an API key from Yelp. You can [obtain a limited daily-use token](https://www.yelp.com/developers/documentation/v3/authentication) for free.
@@ -32,7 +30,7 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
    ```
    
    The `generate_placesfinder` lane auto-generates all of the Sourcery, CoordiNode, config, and other files for the app. After running it, you'll see your key inserted into AppConfig.plist (be careful not to commit it to Git).
-1. Open `PlacesFinder.xcworkspace` in Xcode 13.3 or later.
+1. Open `PlacesFinder.xcworkspace` in Xcode.
 1. Build and run PlacesFinder; searching will correctly display results. (The app will also run without a valid API key, but searching won't work.)
 
    > NOTE: an app intended for App Store deployment (which PlacesFinder is not!) should NEVER bundle or be sent a globally-used private key. Instead, the app's own backend should manage private keys for external services such as Yelp, and provide authenticated client apps with limited-use tokens (such as OAuth tokens).
@@ -83,7 +81,6 @@ These include UI tests which run against a local HTTP server, at `http://localho
 * [Kingfisher](https://github.com/onevcat/Kingfisher) - download and cache images from the web
 * [Nimble](https://github.com/Quick/Nimble) - Swift matcher framework
 * [Quick](https://github.com/Quick/Quick) - Swift BDD testing framework
-* [Reachability.swift](https://github.com/ashleymills/Reachability.swift) - determine status of the device's internet connection
 * [SkeletonView](https://github.com/Juanpe/SkeletonView) - easily display progress-indicating "skeleton" views
 * [SnapKit](https://github.com/SnapKit/SnapKit) - a Swift Autolayout DSL
 * [swifter](https://github.com/httpswift/swifter) - a lightweight HTTP server engine written in Swift (used only for UI tests)
