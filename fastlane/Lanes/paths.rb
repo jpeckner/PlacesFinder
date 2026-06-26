@@ -3,7 +3,6 @@ SHARED_ROOT = "Shared"
 SHARED_PROJECT_PATH = SHARED_ROOT + "/Shared.xcodeproj"
 
 PLACESFINDER_ROOT = "PlacesFinder"
-PLACESFINDER_WORKSPACE_PATH = "PlacesFinder.xcworkspace"
 PLACESFINDER_PROJECT_PATH = "PlacesFinder.xcodeproj"
 PLACESFINDER_INFOPLIST_PATH = PLACESFINDER_ROOT + "/Info.plist"
 

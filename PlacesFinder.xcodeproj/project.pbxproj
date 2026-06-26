@@ -1695,13 +1695,6 @@
 			path = Styling;
 			sourceTree = "<group>";
 		};
-		885F101512DFE5F7F919AD9E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		8BED54EFBD32DE79F4866F18 /* PrimaryView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2245,7 +2238,6 @@
 				03EBB14FAEF2F205F43D1306 /* PlacesFinderTests */,
 				1D2129503CBDC617BE3BFCD6 /* PlacesFinderUITests */,
 				5629D061D9A6C2237F68BB91 /* Products */,
-				885F101512DFE5F7F919AD9E /* Pods */,
 				05F4FDE340BFA3D428114980 /* Frameworks */,
 			);
 			sourceTree = "<group>";
