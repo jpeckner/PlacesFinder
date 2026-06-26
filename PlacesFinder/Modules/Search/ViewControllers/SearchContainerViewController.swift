@@ -29,6 +29,16 @@ class SearchContainerViewController: UIViewController {
 
     var splitControllers: SearchContainerSplitControllers {
         didSet {
+            // Reconfiguring the split/navigation hierarchy removes and re-adds the
+            // primary controller's view, which resigns any active first responder
+            // (e.g. the search bar). Skip it when the controllers are unchanged,
+            // since the coordinator re-applies identical controllers on every state update —
+            // otherwise editing the search bar triggers a self-sustaining begin/end-editing
+            // loop that prevents the keyboard from appearing.
+            guard !splitControllers.hasSameControllers(as: oldValue) else {
+                return
+            }
+
             configureSplitController()
         }
     }
@@ -43,7 +53,7 @@ class SearchContainerViewController: UIViewController {
     init() {
         self.splitControllers = SearchContainerSplitControllers(primaryController: SearchPlaceholderViewController(),
                                                                 secondaryController: nil)
-        self.searchSplitViewController = UISplitViewController()
+        self.searchSplitViewController = UISplitViewController(style: .doubleColumn)
         self.mainPaneNavController = SearchMainPaneNavigationController()
 
         super.init(nibName: nil, bundle: nil)
@@ -147,18 +157,31 @@ private extension SearchContainerViewController {
 
             mainPaneNavController.setViewControllers(updatedViewControllers,
                                                      animated: animated)
-            searchSplitViewController.viewControllers = [mainPaneNavController]
+            setSplitViewControllersIfNeeded([mainPaneNavController])
         case .regular:
             mainPaneNavController.setViewControllers(
                 [splitControllers.primaryController],
                 animated: false
             )
 
-            searchSplitViewController.viewControllers = [
+            setSplitViewControllersIfNeeded([
                 mainPaneNavController,
                 detailsController
-            ].compactMap { $0 }
+            ].compactMap { $0 })
         }
+    }
+
+    // Reassigning a UISplitViewController's `viewControllers` rebuilds its columns
+    // and detaches the existing child's view from the window, which blanks the screen
+    // on iOS 26+. In the compact case the navigation controller pushes the details
+    // controller onto its own stack, so re-applying the (unchanged) split view controllers
+    // afterwards would orphan that just-pushed view. Only reassign on an actual change.
+    private func setSplitViewControllersIfNeeded(_ viewControllers: [UIViewController]) {
+        guard searchSplitViewController.viewControllers != viewControllers else {
+            return
+        }
+
+        searchSplitViewController.viewControllers = viewControllers
     }
 
     private var detailsController: SearchDetailsViewController? {

@@ -70,7 +70,7 @@ These include UI tests which run against a local HTTP server, at `http://localho
 
 ### APIs
 
-* [Yelp Fusion API](https://www.yelp.com/developers/documentation/v3/get_started) - local content and user reviews API
+* [Yelp Places API](https://docs.developer.yelp.com/docs/places-intro) - local content and user reviews API
 
 ### Other libraries by [jpeckner](https://github.com/jpeckner)
 * [CoordiNode](https://github.com/jpeckner/CoordiNode) - predictably and safely manage the flow of coordinators in an app

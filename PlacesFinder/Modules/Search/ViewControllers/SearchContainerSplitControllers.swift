@@ -43,3 +43,33 @@ struct SearchContainerSplitControllers {
     let primaryController: SearchPrimaryViewController
     let secondaryController: SecondaryController?
 }
+
+extension SearchContainerSplitControllers {
+
+    // Returns `true` when `self` and `other` reference the same primary and secondary
+    // controller instances (and the same secondary layout case). Used to avoid needlessly
+    // reconfiguring the split/navigation hierarchy when the coordinator re-applies
+    // identical controllers: that reconfiguration removes and re-adds the primary controller's
+    // view, which resigns the search bar's first responder status mid-edit and produces
+    // a begin/end-editing loop.
+    func hasSameControllers(as other: SearchContainerSplitControllers) -> Bool {
+        guard primaryController === other.primaryController else {
+            return false
+        }
+
+        switch (secondaryController, other.secondaryController) {
+        case (.none, .none):
+            return true
+
+        case let (.anySizeClass(lhs)?, .anySizeClass(rhs)?),
+             let (.regularOnly(lhs)?, .regularOnly(rhs)?):
+            return lhs === rhs
+
+        case (.anySizeClass, _),
+             (.regularOnly, _),
+             (.none, _):
+            return false
+        }
+    }
+
+}

@@ -46,14 +46,28 @@ struct SearchLookupSearchBar: UIViewRepresentable {
     }
 
     func updateUIView(_ searchBar: UISearchBar, context: Context) {
-        searchBar.text = viewModel.value.keywords?.value
-        searchBar.placeholder = viewModel.value.placeholder
+        // `UISearchBar.text` reports "" (not nil) when empty, so normalize to avoid a perpetual nil-vs-empty mismatch.
+        let keywords = viewModel.value.keywords?.value ?? ""
+        if searchBar.text != keywords {
+            searchBar.text = keywords
+        }
 
-        // This is a bit of a hack, but doing an async dispatch is necessary to prevent "AttributeGraph: cycle detected"
-        // warnings from arising here. This is likely a quirk of using UIViewRepresentable.
-        // More info: https://stackoverflow.com/a/63142687/1342984
-        DispatchQueue.main.async {
-            searchBar.safelySetFirstResponder(makeFirstResponder: viewModel.value.barState.isEditing)
+        let placeholder = viewModel.value.placeholder
+        if searchBar.placeholder != placeholder {
+            searchBar.placeholder = placeholder
+        }
+
+        // SwiftUI calls updateUIView on every layout pass, and a keyboard appearance triggers a cascade of them.
+        // Only mutate the search bar when a value actually changes, so we don't reassign text or re-toggle the
+        // first responder (and thus disturb the active text-input session) on passes where nothing is different.
+        let shouldBeEditing = viewModel.value.barState.isEditing
+        if searchBar.isFirstResponder != shouldBeEditing {
+            // This is a bit of a hack, but doing an async dispatch is necessary to prevent "AttributeGraph: cycle
+            // detected" warnings from arising here. This is likely a quirk of using UIViewRepresentable.
+            // More info: https://stackoverflow.com/a/63142687/1342984
+            DispatchQueue.main.async {
+                searchBar.safelySetFirstResponder(makeFirstResponder: shouldBeEditing)
+            }
         }
     }
 
