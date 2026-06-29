@@ -62,7 +62,7 @@ class SearchDetailsBasicInfoCell: UITableViewCell {
                                      bottom: 8.0,
                                      trailing: 8.0)
 
-        mainImageView.contentMode = .scaleToFill
+        mainImageView.contentMode = .scaleAspectFit
         mainImageView.snp.makeConstraints { make in
             make.centerX.equalTo(contentView)
             make.leading.equalTo(contentView.snp.leadingMargin).priority(999)
