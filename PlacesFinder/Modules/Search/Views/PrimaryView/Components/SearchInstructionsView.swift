@@ -50,7 +50,7 @@ struct SearchInstructionsView: View {
                 APILogoView(viewColoring: viewModel.value.infoViewModel.colorings.viewColoring)
             }
         }
-        .scrollBounceBasedOnSizeiOS16_4Min()
+        .scrollBounceBasedOnSize()
     }
 
 }

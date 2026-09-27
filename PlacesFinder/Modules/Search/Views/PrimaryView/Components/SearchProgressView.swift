@@ -74,7 +74,10 @@ struct SearchProgressView: View {
             .frame(height: 68)
         }
         .listStyle(PlainListStyle())
-        .showVerticalScrollIndicatorsiOS16Min(false)
+        .scrollIndicators(
+            .hidden,
+            axes: [.vertical]
+        )
     }
 
     private var appearanceType: AppearanceType {

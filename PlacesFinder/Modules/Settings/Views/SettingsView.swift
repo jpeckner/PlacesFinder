@@ -51,8 +51,11 @@ struct SettingsView: View {
         }
         .listStyle(.grouped)
         .background(Color(viewModel.value.colorings.viewColoring.backgroundColor))
-        .showVerticalScrollIndicatorsiOS16Min(false)
-        .scrollBounceBasedOnSizeiOS16_4Min()
+        .scrollIndicators(
+            .hidden,
+            axes: [.vertical]
+        )
+        .scrollBounceBasedOnSize()
     }
 
     @ViewBuilder
