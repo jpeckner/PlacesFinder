@@ -55,6 +55,13 @@ class HomePresenter: HomePresenterProtocol {
         self.tabSelectionViewController = TabSelectionViewController(viewControllers: orderedChildViewControllers)
 
         tabSelectionViewController.tabSelectionViewControllerDelegate = self
+
+        tabSelectionViewController.registerForTraitChanges(
+            [UITraitHorizontalSizeClass.self]
+        ) { (controller: TabSelectionViewController, _) in
+            controller.adjustSafeAreaForTopTabBar()
+        }
+        tabSelectionViewController.adjustSafeAreaForTopTabBar()
     }
 
     func setSelectedViewController(_ controller: UIViewController) {
@@ -70,6 +77,24 @@ extension HomePresenter: TabSelectionViewControllerDelegate {
                         previousIndex: Int) {
         delegate?.homePresenter(self,
                                 didSelectChildCoordinator: index)
+    }
+
+}
+
+private extension TabSelectionViewController {
+
+    // On iPad (regular width) iOS 18+ places the tab bar at the top, where it overlays the child navigation bars'
+    // titles. Extend the top safe area so child content sits below it.
+    func adjustSafeAreaForTopTabBar() {
+        let isTopTabBar = traitCollection.userInterfaceIdiom == .pad
+            && traitCollection.horizontalSizeClass == .regular
+
+        // Applied to the children, not the tab controller itself, since the tab bar is laid out within the tab
+        // controller's own safe area.
+        // Plain navigation controllers (e.g. Settings) already lay their bar out below the tab bar.
+        viewControllers?
+            .filter { !($0 is UINavigationController) }
+            .forEach { $0.additionalSafeAreaInsets.top = isTopTabBar ? 48.0 : 0.0 }
     }
 
 }

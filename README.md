@@ -38,11 +38,11 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 ### Deep Linking
 
 PlacesFinder supports the following custom URL schemes for deep linking:
-* `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=your_search_string_here`: opens/transitions PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
-   * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Thai`
-   * `placesFinder://com.justinpeckner.PlacesFinder/search?keywords=Greek%20food`
-* `placesFinder://com.justinpeckner.PlacesFinder/settings`: opens/transitions PlacesFinder to the Settings tab
-* `placesFinder://com.justinpeckner.PlacesFinder/settingsChild`: opens/transitions PlacesFinder to the Settings child presentation view
+* `placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=your_search_string_here`: opens/transitions PlacesFinder to the Search tab and automatically searches for the query value specified. Be sure to [percent encode](https://en.wikipedia.org/wiki/Percent-encoding) the query value, such as replacing space characters with `%20`. Examples:
+   * `placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=Thai`
+   * `placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=Greek%20food`
+* `placesFinder[-dev]://com.justinpeckner.PlacesFinder/settings`: opens/transitions PlacesFinder to the Settings tab
+* `placesFinder[-dev]://com.justinpeckner.PlacesFinder/settingsChild`: opens/transitions PlacesFinder to the Settings child presentation view
 
 To use a deep link scheme:
 1. Install PlacesFinder-Release scheme app on an iOS simulator or device. (Note: to use PlacesFinder-Debug scheme instead, replace the link's `placesFinder://` prefix with `placesFinder-dev://`).
@@ -81,9 +81,9 @@ These include UI tests which run against a local HTTP server, at `http://localho
 * [Kingfisher](https://github.com/onevcat/Kingfisher) - download and cache images from the web
 * [Nimble](https://github.com/Quick/Nimble) - Swift matcher framework
 * [Quick](https://github.com/Quick/Quick) - Swift BDD testing framework
-* [SkeletonView](https://github.com/Juanpe/SkeletonView) - easily display progress-indicating "skeleton" views
+* [SkeletonUI](https://github.com/CSolanaM/SkeletonUI) - easily display progress-indicating "skeleton" views
 * [SnapKit](https://github.com/SnapKit/SnapKit) - a Swift Autolayout DSL
-* [swifter](https://github.com/httpswift/swifter) - a lightweight HTTP server engine written in Swift (used only for UI tests)
+* [Swifter](https://github.com/httpswift/swifter) - a lightweight HTTP server engine written in Swift (used only for UI tests)
 
 ## License
 
