@@ -548,9 +548,6 @@
 		CAA5EAB72A2583B90000A3F0 /* SearchLookupSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5EAB62A2583B90000A3F0 /* SearchLookupSearchBar.swift */; };
 		CAA5EAB92A2583EE0000A3F0 /* SearchLookupParentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5EAB82A2583EE0000A3F0 /* SearchLookupParentView.swift */; };
 		CABDE0CC2A48E98300323AF2 /* PresentationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */; };
-		CAE5DDFA29FF24E4005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
-		CAE5DDFB29FF2962005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
-		CAE5DDFC29FF2963005A10B0 /* View+ScrollIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */; };
 		CAE6DE752A23D45500358D89 /* View+ScrollBounceBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */; };
 		CAE6DE792A23F9CB00358D89 /* VerticallyCenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */; };
 		CAE6DE7C2A23FA8A00358D89 /* VerticallyCenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */; };
@@ -921,7 +918,6 @@
 		CAA5EAB62A2583B90000A3F0 /* SearchLookupSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupSearchBar.swift; sourceTree = "<group>"; };
 		CAA5EAB82A2583EE0000A3F0 /* SearchLookupParentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupParentView.swift; sourceTree = "<group>"; };
 		CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationControllerDelegate.swift; sourceTree = "<group>"; };
-		CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollIndicators.swift"; sourceTree = "<group>"; };
 		CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollBounceBehavior.swift"; sourceTree = "<group>"; };
 		CAE6DE782A23F9CB00358D89 /* VerticallyCenteredScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredScrollView.swift; sourceTree = "<group>"; };
 		CAF24FED37A147B2C5741FC1 /* SearchResultCellModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellModelBuilderTests.swift; sourceTree = "<group>"; };
@@ -2152,7 +2148,6 @@
 			isa = PBXGroup;
 			children = (
 				CAE6DE742A23D45500358D89 /* View+ScrollBounceBehavior.swift */,
-				CAE5DDF929FF24E4005A10B0 /* View+ScrollIndicators.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2482,7 +2477,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2700;
 				ORGANIZATIONNAME = "Justin Peckner";
 				TargetAttributes = {
 					739B620DC2A5B044969F0B97 = {
@@ -2623,7 +2618,6 @@
 				9E4F057036859001C0028F45 /* AppCoordinator.swift in Sources */,
 				F4EEB5645C6573ACE646067A /* AppCoordinatorChildFactory.swift in Sources */,
 				5871934F62A81B63DA450610 /* AppCopyContent+Defaults.swift in Sources */,
-				CAE5DDFB29FF2962005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				EE2CD551F796BE690C554C1E /* AppCopyContent.swift in Sources */,
 				7893CC96E376D7FA9E97DC95 /* AppCopyContentState.swift in Sources */,
 				CC93498AF6E5B8030A413B88 /* AppDelegate.swift in Sources */,
@@ -2951,7 +2945,6 @@
 				638FA65C7C27E6B0A6AA96FD /* SettingsCoordinator.swift in Sources */,
 				B94C94663A518DAE803BE610 /* SettingsLinkPayload.swift in Sources */,
 				CA8BCAE42814A4D4006989CF /* Search+ReceiveState.swift in Sources */,
-				CAE5DDFA29FF24E4005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				CA784C762796083C00FE76CC /* AboutAppViewColorings.swift in Sources */,
 				FF9BF767F04B922626A7E9C7 /* SettingsPlainHeaderViewModel.swift in Sources */,
 				10B5CCEBDA2F952784FA7302 /* SettingsPresenter.swift in Sources */,
@@ -3168,7 +3161,6 @@
 				8C99441F3A7A545983BADA07 /* SearchPrimaryViewControllerProtocol.swift in Sources */,
 				43BF3EAB6AD1A21DEE9B2738 /* SearchProgressView.swift in Sources */,
 				5C7F91BDFB7EDD025740B207 /* SearchRatingValue+Image.swift in Sources */,
-				CAE5DDFC29FF2963005A10B0 /* View+ScrollIndicators.swift in Sources */,
 				CAA5496F27A8F97900F09F8A /* MockSubscriber.swift in Sources */,
 				EE381F0DD8CFE8D8D1DD63E4 /* SearchRatingValue.swift in Sources */,
 				19128C842DD3171E639D0380 /* SearchRatingValueTests.swift in Sources */,
@@ -3388,6 +3380,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3404,6 +3397,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3420,6 +3414,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3436,6 +3431,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3454,6 +3450,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3469,6 +3466,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3486,6 +3484,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3505,6 +3504,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

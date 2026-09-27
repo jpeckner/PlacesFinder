@@ -24,17 +24,11 @@
 
 import SwiftUI
 
-// Need to extend `View` itself; extending `ScrollView` or `List` results in build errors due to the type of `some View`
-// not being known
 extension View {
 
     @ViewBuilder
-    func scrollBounceBasedOnSizeiOS16_4Min(axes: Axis.Set = [.vertical]) -> some View {
-        if #available(iOS 16.4, *) {
-            self.scrollBounceBehavior(.basedOnSize, axes: axes)
-        } else {
-            self
-        }
+    func scrollBounceBasedOnSize(axes: Axis.Set = [.vertical]) -> some View {
+        self.scrollBounceBehavior(.basedOnSize, axes: axes)
     }
 
 }

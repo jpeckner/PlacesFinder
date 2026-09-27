@@ -49,7 +49,7 @@ struct SearchCTAView: View {
                 )
             }
         }
-        .scrollBounceBasedOnSizeiOS16_4Min()
+        .scrollBounceBasedOnSize()
     }
 
 }
