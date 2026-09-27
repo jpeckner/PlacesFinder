@@ -131,7 +131,7 @@ private extension Store where TAction == AppAction, TState == AppState {
             (try? userDefaultsService.getSearchPreferences()).map { stored in
                 SearchPreferencesState(stored: stored)
             }
-            ?? SearchPreferencesState(usesMetricSystem: Locale.current.usesMetricSystem)
+            ?? SearchPreferencesState(usesMetricSystem: Locale.current.measurementSystem == .metric)
         let initialState = AppState(
             appCopyContent: appCopyContent,
             locationAuthStatus: locationAuthManager.authorizationStatus.authStatus(),
