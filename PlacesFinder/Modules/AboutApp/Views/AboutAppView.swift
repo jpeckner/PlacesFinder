@@ -42,11 +42,11 @@ struct AboutAppView: View {
                 .frame(width: 32, height: 4)
 
             Spacer()
+                .frame(height: 120)
 
             StaticInfoView(viewModel: viewModel.infoViewModel)
 
             Spacer()
-                .frame(height: 120)
         }
     }
 

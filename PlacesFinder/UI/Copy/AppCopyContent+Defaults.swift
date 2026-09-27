@@ -86,7 +86,7 @@ extension AppCopyContent {
         )
         self.aboutAppView = AboutAppViewCopyContent(
             iconImageName: "app_icon",
-            titleFormat: "About %@",
+            titleFormat: "%@",
             descriptionFormat: """
             Version %@
 
