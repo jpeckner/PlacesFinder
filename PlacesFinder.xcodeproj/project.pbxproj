@@ -38,6 +38,7 @@
 		0CD2A285DE0AF42B17ECB9F3 /* UILabel+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55681DB11347069A8DFC1781 /* UILabel+AppSkin.swift */; };
 		0D86847F5B2561A58269E92F /* StaticInfoViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AE9FE4AA23793B1847D0F1 /* StaticInfoViewModel+Stub.swift */; };
 		0DC789DA2894EE7443849B64 /* AppTextStyleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C405056E5BD9DAB2EC652C /* AppTextStyleClass.swift */; };
+		0DDA7E0F04DB907C640D6D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E68BB6A46C89258E3B76F /* SceneDelegate.swift */; };
 		0E03920975855641C61CCC43 /* NavigationBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB422026EAEF7FEFE6AF4D /* NavigationBarTitleView.swift */; };
 		0EA93AC11382763B8E85D984 /* AppRoutingHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB108883E37F0330BFE34C8 /* AppRoutingHandlerTests.swift */; };
 		0ED5D600206F8F861C3D155C /* SearchEntityModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626C64A91146839543EFC9B /* SearchEntityModelBuilder.swift */; };
@@ -288,6 +289,7 @@
 		84A626848E1F1AD3EF83AF35 /* AppColoringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB3B49F64C7A1E7064ABD4 /* AppColoringProtocol.swift */; };
 		84CD07E5509CDD33F9E9C184 /* SearchCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB574438D6C3E6D8E17D35 /* SearchCoordinator+CoordiNode.autogen.swift */; };
 		858C0449B5CD731FE904F01E /* SearchInputContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81F8E65FC0975E6A9FC50C /* SearchInputContentViewModel.swift */; };
+		85AC0DA3F6D2932258F9A03E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E68BB6A46C89258E3B76F /* SceneDelegate.swift */; };
 		85F8F8330966479930E61289 /* SearchColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F56E4D4D938092419492978 /* SearchColorings.swift */; };
 		860BD8BB7364F087FC29C8D1 /* HomeCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A815D6974649A96F8CF360B /* HomeCoordinatorTests.swift */; };
 		86469AB9EED0A1371A5A0C59 /* SearchRatingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E54C382059E8456E5EC6183 /* SearchRatingValue.swift */; };
@@ -341,6 +343,7 @@
 		A0E4DA858CC59E992CD2E6D5 /* SearchDistanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE37A700A9F021F9B3CF1F7 /* SearchDistanceTests.swift */; };
 		A14EA5C803A0721DEC154D10 /* ReachabilityReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE823A18F7BA7436E039DF3 /* ReachabilityReducerTests.swift */; };
 		A1500186C3BBCECA5143ED32 /* FakeSearchRequest+GoKarts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05E0AF83104421F3888E3F /* FakeSearchRequest+GoKarts.swift */; };
+		A1F2CE9F9FC54820F61B2DAD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E68BB6A46C89258E3B76F /* SceneDelegate.swift */; };
 		A2042EC44B2856D6DD522534 /* SearchDetailsViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780522681B9CB08811EA7D1D /* SearchDetailsViewModel+Stub.swift */; };
 		A2F1A77910FAB581CBC71D40 /* SearchColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F56E4D4D938092419492978 /* SearchColorings.swift */; };
 		A37AC6A1D5B2353FEEA00334 /* MeasurementFormatterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */; };
@@ -703,6 +706,7 @@
 		14C3FC8625A09FE8D5DD01A5 /* SearchInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputViewModel.swift; sourceTree = "<group>"; };
 		16CDB280196EA900F1BC01B2 /* SearchInputCopyContent+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchInputCopyContent+Stub.swift"; sourceTree = "<group>"; };
 		17EA1C1D8E321C304B0F720D /* SearchDetailsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModelBuilderTests.swift; sourceTree = "<group>"; };
+		185E68BB6A46C89258E3B76F /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		18DEC8E07C78D2D040396C16 /* SearchPreferencesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesAction.swift; sourceTree = "<group>"; };
 		1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoViewModel.swift; sourceTree = "<group>"; };
 		1B391C2B59C1A18AAA7A4C0E /* SearchResultViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelBuilderTests.swift; sourceTree = "<group>"; };
@@ -2179,6 +2183,7 @@
 				D26813AF7A6FBD76325D2202 /* LaunchScreen.storyboard */,
 				7AF76F9AAD467EB55736ECF7 /* PlacesFinder.entitlements */,
 				91D20ADAB653F6239C94E423 /* Settings.bundle */,
+				185E68BB6A46C89258E3B76F /* SceneDelegate.swift */,
 			);
 			path = PlacesFinder;
 			sourceTree = "<group>";
@@ -2775,6 +2780,7 @@
 				D2E2735528FFC8F69082F105 /* YelpRequestConfig.swift in Sources */,
 				D7606BA36A14E50837BCEE6B /* YelpRequestService.swift in Sources */,
 				ABF54122F84C89EF0E7DAEFF /* YelpRequestServiceIntegrationTests.swift in Sources */,
+				A1F2CE9F9FC54820F61B2DAD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2965,6 +2971,7 @@
 				CAA5497627AB741600F09F8A /* AppAction.swift in Sources */,
 				AE92BB9FC79D72BDD3B88A26 /* YelpRequestConfig.swift in Sources */,
 				2C4984CB518239EE9D5C7721 /* YelpRequestService.swift in Sources */,
+				85AC0DA3F6D2932258F9A03E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3231,6 +3238,7 @@
 				C92168395D6A2930B4633D6C /* YelpRequestBuilder.swift in Sources */,
 				15D82D8955D240E45DD5861B /* YelpRequestConfig.swift in Sources */,
 				457E57F637C6F09311A17410 /* YelpRequestService.swift in Sources */,
+				0DDA7E0F04DB907C640D6D4E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

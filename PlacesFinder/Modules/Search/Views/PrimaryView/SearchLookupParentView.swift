@@ -47,10 +47,11 @@ struct SearchLookupParentView: View {
 
             ZStack {
                 childView
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
 
                 coverView
+                    .ignoresSafeArea()
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 
