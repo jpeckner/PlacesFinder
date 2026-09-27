@@ -100,7 +100,7 @@ class SearchCoordinatorTests: QuickSpec {
             }
         }
 
-        struct TestData {
+        struct TestData: @unchecked Sendable {
             let dependencies: Dependencies
             let coordinator: SearchCoordinator<MockAppStore, MockSearchStore>
         }

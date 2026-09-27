@@ -51,7 +51,7 @@ class HomeCoordinatorChildContainerTests: QuickSpec {
             }
         }
 
-        struct TestData {
+        struct TestData: @unchecked Sendable {
             let sut: ChildContainerType
             let dependencies: Dependencies
         }

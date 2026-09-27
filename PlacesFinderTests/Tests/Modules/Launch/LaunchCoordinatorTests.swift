@@ -61,7 +61,7 @@ class LaunchCoordinatorTests: QuickSpec {
             }
         }
 
-        struct TestData {
+        struct TestData: @unchecked Sendable {
             let dependencies: Dependencies
             let coordinator: LaunchCoordinator<MockAppStore>
         }
