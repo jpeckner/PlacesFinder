@@ -56,22 +56,18 @@ struct SearchCTAView: View {
 
 #if DEBUG
 
-struct SearchCTAView_Previews: PreviewProvider {
+#Preview {
+    // swiftlint:disable:next force_try
+    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+    let appColorings = AppColorings.defaultColorings
 
-    static var previews: some View {
-        // swiftlint:disable:next force_try
-        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
-        let appColorings = AppColorings.defaultColorings
-
-        return SearchCTAView(
-            // swiftlint:disable:next trailing_closure
-            viewModel: appCopyContent.searchRetry.ctaViewModel(
-                colorings: appColorings.searchCTA,
-                ctaBlock: {}
-            )
+    return SearchCTAView(
+        // swiftlint:disable:next trailing_closure
+        viewModel: appCopyContent.searchRetry.ctaViewModel(
+            colorings: appColorings.searchCTA,
+            ctaBlock: {}
         )
-    }
-
+    )
 }
 
 #endif

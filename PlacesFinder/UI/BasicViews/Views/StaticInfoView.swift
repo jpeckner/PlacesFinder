@@ -63,17 +63,13 @@ struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 
 #if DEBUG
 
-struct StaticInfoView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        // swiftlint:disable:next force_try
-        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
-        let appColorings = AppColorings.defaultColorings
-        return StaticInfoView(
-            viewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard)
-        )
-    }
-
+#Preview {
+    // swiftlint:disable:next force_try
+    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+    let appColorings = AppColorings.defaultColorings
+    return StaticInfoView(
+        viewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard)
+    )
 }
 
 #endif

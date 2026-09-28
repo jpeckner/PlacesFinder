@@ -54,24 +54,20 @@ struct AboutAppView: View {
 
 #if DEBUG
 
-struct AboutAppView_Previews: PreviewProvider {
+// swiftlint:disable force_try
+#Preview {
+    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+    let appColorings = AppColorings.defaultColorings
 
-    // swiftlint:disable force_try
-    static var previews: some View {
-        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
-        let appColorings = AppColorings.defaultColorings
-
-        return AboutAppView(
-            viewModel: AboutAppViewModel(
-                copyContent: appCopyContent.aboutAppView,
-                colorings: appColorings.aboutApp,
-                appDisplayName: try! NonEmptyString("PlacesFinder"),
-                appVersion: try! NonEmptyString("1.2.3")
-            )
+    return AboutAppView(
+        viewModel: AboutAppViewModel(
+            copyContent: appCopyContent.aboutAppView,
+            colorings: appColorings.aboutApp,
+            appDisplayName: try! NonEmptyString("PlacesFinder"),
+            appVersion: try! NonEmptyString("1.2.3")
         )
-    }
-    // swiftlint:enable force_try
-
+    )
 }
+// swiftlint:enable force_try
 
 #endif
