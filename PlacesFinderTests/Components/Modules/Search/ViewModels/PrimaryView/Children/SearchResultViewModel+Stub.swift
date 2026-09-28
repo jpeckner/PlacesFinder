@@ -30,7 +30,7 @@ extension SearchResultViewModel {
 
     static func stubValue(
         actionSubscriber: AnySubscriber<Search.Action, Never>,
-        cellModel: SearchResultCellModel = .stubValue(),
+        cellModel: SearchResultCellProps = .stubValue(),
         detailEntityAction: Search.Action = .searchActivity(.detailedEntity(.stubValue()))
     ) -> SearchResultViewModel {
         return SearchResultViewModel(cellModel: cellModel,

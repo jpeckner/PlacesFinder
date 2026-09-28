@@ -40,7 +40,7 @@ struct SearchResultsView: View {
                     viewModel.value.dispatchDetailsAction(rowIndex: index)
                 },
                 label: {
-                    SearchResultCell(cellModel: ValueObservable(resultViewModel.cellModel))
+                    SearchResultCell(props: resultViewModel.cellModel)
                         .onAppear {
                             dispatchRequestIfApplicable(currentIndex: index)
                         }

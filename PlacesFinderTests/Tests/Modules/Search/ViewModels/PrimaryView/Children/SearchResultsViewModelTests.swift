@@ -60,7 +60,7 @@ class SearchResultsViewModelTests: QuickSpec {
             stubResultViewModels = NonEmptyArray([0, 1, 2].map { idx in
                 SearchResultViewModel.stubValue(
                     actionSubscriber: AnySubscriber(mockActionSubscriber),
-                    cellModel: SearchResultCellModel.stubValue(name: .stubValue("stubName_\(idx)")),
+                    cellModel: SearchResultCellProps.stubValue(name: .stubValue("stubName_\(idx)")),
                     detailEntityAction: .searchActivity(.detailedEntity(.stubValue(id: .stubValue("stubID_\(idx)"))))
                 )
             })

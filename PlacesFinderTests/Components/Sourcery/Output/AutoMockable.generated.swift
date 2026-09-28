@@ -1112,7 +1112,7 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
     }
 
 }
-class SearchResultCellModelBuilderProtocolMock: SearchResultCellModelBuilderProtocol {
+class SearchResultCellPropsBuilderProtocolMock: SearchResultCellPropsBuilderProtocol {
 
 
 
@@ -1124,10 +1124,10 @@ class SearchResultCellModelBuilderProtocolMock: SearchResultCellModelBuilderProt
     }
     var buildViewModelModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
     var buildViewModelModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
-    var buildViewModelModelResultsCopyContentColoringsReturnValue: SearchResultCellModel!
-    var buildViewModelModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultCellModel)?
+    var buildViewModelModelResultsCopyContentColoringsReturnValue: SearchResultCellProps!
+    var buildViewModelModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultCellProps)?
 
-    func buildViewModel(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultCellModel {
+    func buildViewModel(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultCellProps {
         buildViewModelModelResultsCopyContentColoringsCallsCount += 1
         buildViewModelModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
         buildViewModelModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))

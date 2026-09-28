@@ -27,33 +27,37 @@ import SwiftUI
 
 struct SearchResultCell: View {
 
-    @ObservedObject var cellModel: ValueObservable<SearchResultCellModel>
+    private let props: SearchResultCellProps
+
+    init(props: SearchResultCellProps) {
+        self.props = props
+    }
 
     var body: some View {
         HStack {
-            DownloadedImageViewSUI(imageURL: cellModel.value.image.url)
+            DownloadedImageViewSUI(imageURL: props.image.url)
                 .aspectRatio(1, contentMode: .fit)
                 .cornerRadius(4)
 
             VStack(alignment: .leading) {
-                Text(cellModel.value.name.value)
+                Text(props.name.value)
                     .modifier(
                         textStyleClass: .cellText,
-                        textColoring: cellModel.value.colorings.bodyTextColoring
+                        textColoring: props.colorings.bodyTextColoring
                     )
 
                 HStack {
-                    Image(uiImage: cellModel.value.ratingsAverage.starsImage)
+                    Image(uiImage: props.ratingsAverage.starsImage)
                         .resizable()
                         .frame(width: 120, height: 22)
 
                     Spacer()
 
-                    cellModel.value.pricing.map { pricing in
+                    props.pricing.map { pricing in
                         Text(pricing)
                             .modifier(
                                 textStyleClass: .pricingLabel,
-                                textColoring: cellModel.value.colorings.bodyTextColoring
+                                textColoring: props.colorings.bodyTextColoring
                             )
                     }
                 }
@@ -64,7 +68,7 @@ struct SearchResultCell: View {
             Image(uiImage: Constants.disclosureArrow)
                 .resizable()
                 .frame(width: 12, widthToHeightRatio: Constants.disclosureArrow.widthToHeightRatio)
-                .foregroundColor(Color(uiColor: cellModel.value.colorings.disclosureArrowTint.color))
+                .foregroundColor(Color(uiColor: props.colorings.disclosureArrowTint.color))
         }
         .frame(height: 68)
     }
