@@ -26,7 +26,7 @@ import Foundation
 import Shared
 
 struct SearchNoResultsFoundViewModel: Equatable {
-    let messageViewModel: SearchMessageViewModel
+    let messageViewProps: SearchMessageViewProps
 }
 
 extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
@@ -44,8 +44,8 @@ class SearchNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilder
 
     func buildViewModel(copyContent: SearchNoResultsCopyContent,
                         colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel {
-        SearchNoResultsFoundViewModel(messageViewModel:
-            SearchMessageViewModel(
+        SearchNoResultsFoundViewModel(messageViewProps:
+            SearchMessageViewProps(
                 copyContent: copyContent,
                 colorings: colorings
             )

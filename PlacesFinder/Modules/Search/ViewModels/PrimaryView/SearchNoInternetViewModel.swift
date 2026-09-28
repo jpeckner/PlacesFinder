@@ -25,7 +25,7 @@
 import Foundation
 
 struct SearchNoInternetViewModel {
-    let messageViewModel: SearchMessageViewModel
+    let messageViewProps: SearchMessageViewProps
 }
 
 extension SearchNoInternetCopyContent: StaticInfoCopyProtocol {}
@@ -34,7 +34,7 @@ extension SearchNoInternetViewModel {
 
     init(copyContent: SearchNoInternetCopyContent,
          colorings: AppStandardColorings) {
-        self.messageViewModel = SearchMessageViewModel(
+        self.messageViewProps = SearchMessageViewProps(
             copyContent: copyContent,
             colorings: colorings
         )

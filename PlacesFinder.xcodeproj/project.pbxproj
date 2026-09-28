@@ -18,7 +18,7 @@
 		05573DDB56543354BD43B6B7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A87DE63FF802E0A4C33545C /* SettingsViewModel.swift */; };
 		05D646C901712143A460D38D /* AutoAppLink.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */; };
 		05EB01B7B83E3D0A45D73862 /* SearchLookupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5123CAB7B074A3E569E3812 /* SearchLookupViewModel.swift */; };
-		06425F1FFFFBC816C24D4A00 /* SearchMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */; };
+		06425F1FFFFBC816C24D4A00 /* SearchMessageViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */; };
 		064CE6C52A821BE6BE87460A /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388792B263033570D84E0515 /* ServiceContainer.swift */; };
 		06B3529DDB0352E6AACB1D12 /* SearchNoInternetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C804D267C64E8881315107B /* SearchNoInternetViewModel.swift */; };
 		07434862347C8E120FEAD9FD /* PlaceLookupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B1EFD4FFFDE104EFE68D5D /* PlaceLookupParams.swift */; };
@@ -171,7 +171,7 @@
 		4B5CB9BA2B477CA9A07F2CDF /* AppCopyContentReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5961160D1BA1BFBAF9A88A3 /* AppCopyContentReducerTests.swift */; };
 		4BC86C08996B02730F1278AB /* ReachabilityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */; };
 		4C5A547E540D72EB416E7E48 /* SettingsLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */; };
-		4C720ECD11EEE5BDB3D9793C /* SearchMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */; };
+		4C720ECD11EEE5BDB3D9793C /* SearchMessageViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */; };
 		4D2CAAE2CFC900014DE468D9 /* Search+ActivityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8319278AF1E32BCDBE16148B /* Search+ActivityAction.swift */; };
 		4DBDEC054B000E27232A2F55 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917740B6A62EA050BACF1D8C /* AppState.swift */; };
 		4DC8C69BEDDD422BE4270095 /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B873E16D32602A5DBFA1715 /* AppConfig.plist */; };
@@ -182,7 +182,7 @@
 		50840ECD1AED7C5ED65222EC /* RouterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294194DDECEFA249C4473B79 /* RouterAction.swift */; };
 		50C471FF8B3D4C2D4B9356CB /* SearchNoInternetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C804D267C64E8881315107B /* SearchNoInternetViewModel.swift */; };
 		5104E3A08BF84F6F9EFF8BED /* ChildCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FF307EE29526C6F649EA44 /* ChildCoordinatorProtocol.swift */; };
-		510747BE5AE5F4E324FEF8F0 /* SearchMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */; };
+		510747BE5AE5F4E324FEF8F0 /* SearchMessageViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */; };
 		524669A6FC5FEF657309815A /* SearchInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D5BC5B925A91B8635C0029 /* SearchInstructionsView.swift */; };
 		52E079A382F1FC08DF00E263 /* SearchLookupChildBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4137557F01E3FC545AF1AC /* SearchLookupChildBuilderTests.swift */; };
 		532F49BAF2211C362BC033FE /* SearchPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A4B869E98D0C4C0199FC27 /* SearchPresenterProtocol.swift */; };
@@ -361,7 +361,7 @@
 		A5EDF6C650DC69772B9AB7DB /* SearchActivityActionPrism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834C3A4BC027A5F3E5DF69E1 /* SearchActivityActionPrism.swift */; };
 		A645DAABDE65808E632BFE26 /* AutoHomeCoordinatorChildContainer.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 5596D36AFDBA7C57646BCC6A /* AutoHomeCoordinatorChildContainer.stencil */; };
 		A842FCF2EA8B78777A7D6A2F /* SearchInstructionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC7126A14CF9D60D2ADF42C /* SearchInstructionsViewModel.swift */; };
-		A854B80B9932DC2F12E3DAC1 /* SearchMessageViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5432AE6A02CF4C8016F9A7F /* SearchMessageViewModel+Stub.swift */; };
+		A854B80B9932DC2F12E3DAC1 /* SearchMessageViewProps+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5432AE6A02CF4C8016F9A7F /* SearchMessageViewProps+Stub.swift */; };
 		A90AE2B9CA819FBDB19C9606 /* AppRoutingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351B757574D52CBFE17B2EA2 /* AppRoutingHandler.swift */; };
 		A9AFA05E70C0B57D0953452A /* AppTextStyleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C405056E5BD9DAB2EC652C /* AppTextStyleClass.swift */; };
 		AA004809547E077DA84D9B09 /* SearchActivityReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55752985D69EE0C2DD4FA653 /* SearchActivityReducerTests.swift */; };
@@ -767,7 +767,7 @@
 		4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoAppLink.stencil; sourceTree = "<group>"; };
 		4E8DA42D385F10E36D0FB6A6 /* HomeCoordinatorChildContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorChildContainerTests.swift; sourceTree = "<group>"; };
-		4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMessageViewModel.swift; sourceTree = "<group>"; };
+		4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMessageViewProps.swift; sourceTree = "<group>"; };
 		4F56E4D4D938092419492978 /* SearchColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchColorings.swift; sourceTree = "<group>"; };
 		4FBF765D5827E4A226C2C5D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		507B6A221B07886D543D1D83 /* ModuleStructure.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = ModuleStructure.yml; sourceTree = "<group>"; };
@@ -863,7 +863,7 @@
 		B2A7303ADB411762CE0710AE /* SpringboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringboardHandler.swift; sourceTree = "<group>"; };
 		B3A1CAEE428545798F715245 /* SearchRetryViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRetryViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		B442CE2BA208FFA59637F12D /* SettingsCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
-		B5432AE6A02CF4C8016F9A7F /* SearchMessageViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchMessageViewModel+Stub.swift"; sourceTree = "<group>"; };
+		B5432AE6A02CF4C8016F9A7F /* SearchMessageViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchMessageViewProps+Stub.swift"; sourceTree = "<group>"; };
 		B626C64A91146839543EFC9B /* SearchEntityModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntityModelBuilder.swift; sourceTree = "<group>"; };
 		B7AEC5C92617E16AEBCBAE99 /* SettingsCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellViewModelTests.swift; sourceTree = "<group>"; };
 		B81C11433761B8F052669435 /* SearchLookupViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupViewModelBuilderTests.swift; sourceTree = "<group>"; };
@@ -1344,7 +1344,7 @@
 				5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */,
 				0C81F8E65FC0975E6A9FC50C /* SearchInputContentViewModel.swift */,
 				14C3FC8625A09FE8D5DD01A5 /* SearchInputViewModel.swift */,
-				4F4978523849A6EF26EE9495 /* SearchMessageViewModel.swift */,
+				4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1669,7 +1669,7 @@
 			children = (
 				A1B76BA2F2ADDB4276137A73 /* SearchCTAViewModel+Stub.swift */,
 				C3F90019F1DCF09F3AEC47C1 /* SearchInputContentViewModel+Stub.swift */,
-				B5432AE6A02CF4C8016F9A7F /* SearchMessageViewModel+Stub.swift */,
+				B5432AE6A02CF4C8016F9A7F /* SearchMessageViewProps+Stub.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2721,7 +2721,7 @@
 				FF60DF8CC6C3109676E194CD /* SearchLookupChild.swift in Sources */,
 				03B2DD76476DC1F05F3DEF7D /* SearchLookupParentController.swift in Sources */,
 				8A23D6FA0C50CAFD7CA49CEF /* SearchLookupViewModel.swift in Sources */,
-				4C720ECD11EEE5BDB3D9793C /* SearchMessageViewModel.swift in Sources */,
+				4C720ECD11EEE5BDB3D9793C /* SearchMessageViewProps.swift in Sources */,
 				D69E7FA147499B5248BAA64C /* SearchNoInternetViewController.swift in Sources */,
 				CA35218D2A520B6100228276 /* AppBundleInfo.swift in Sources */,
 				06B3529DDB0352E6AACB1D12 /* SearchNoInternetViewModel.swift in Sources */,
@@ -2913,7 +2913,7 @@
 				226BB2D6B906ADF592D0FBBE /* SearchLookupParentController.swift in Sources */,
 				CA6D635F27E695B4000866D5 /* SubstatesSubscriberRelay.swift in Sources */,
 				05EB01B7B83E3D0A45D73862 /* SearchLookupViewModel.swift in Sources */,
-				510747BE5AE5F4E324FEF8F0 /* SearchMessageViewModel.swift in Sources */,
+				510747BE5AE5F4E324FEF8F0 /* SearchMessageViewProps.swift in Sources */,
 				ED6B201837F370484D2AC982 /* SearchNoInternetViewController.swift in Sources */,
 				50C471FF8B3D4C2D4B9356CB /* SearchNoInternetViewModel.swift in Sources */,
 				86BC670B9E5A3871BB64A189 /* SearchNoResultsFoundViewModel.swift in Sources */,
@@ -3142,10 +3142,10 @@
 				D5C4CE88B4DF8D38DABECE0A /* SearchLookupParentController.swift in Sources */,
 				F4822373993D0A6CEA7F8C8C /* SearchLookupViewModel.swift in Sources */,
 				4968BB93C1C770D90F48AE54 /* SearchLookupViewModelBuilderTests.swift in Sources */,
-				A854B80B9932DC2F12E3DAC1 /* SearchMessageViewModel+Stub.swift in Sources */,
+				A854B80B9932DC2F12E3DAC1 /* SearchMessageViewProps+Stub.swift in Sources */,
 				CA784C8427961FE000FE76CC /* AboutAppViewModel.swift in Sources */,
 				CA8BCAE82814A7F9006989CF /* SubstatesSubscriberRelay.swift in Sources */,
-				06425F1FFFFBC816C24D4A00 /* SearchMessageViewModel.swift in Sources */,
+				06425F1FFFFBC816C24D4A00 /* SearchMessageViewProps.swift in Sources */,
 				DB13F15EF99BE9257AD775E3 /* SearchNoInternetViewController.swift in Sources */,
 				CAE6DE7F2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */,
 				68B759FBB19C9B972BDD402F /* SearchNoInternetViewModel.swift in Sources */,
