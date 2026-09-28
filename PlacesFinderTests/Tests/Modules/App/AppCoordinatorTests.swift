@@ -91,8 +91,7 @@ class AppCoordinatorTests: QuickSpec {
             mockChildFactory.buildLaunchCoordinatorReturnValue = mockLaunchCoordinator
             mockChildFactory.buildCoordinatorForClosure = { _ in mockHomeCoordinator }
 
-            coordinator = AppCoordinator(mainWindow: mockMainWindow,
-                                         childFactory: mockChildFactory,
+            coordinator = AppCoordinator(childFactory: mockChildFactory,
                                          payloadBuilder: mockPayloadBuilder)
         }
 
@@ -132,7 +131,7 @@ class AppCoordinatorTests: QuickSpec {
             beforeEach {
                 let launchStatePrism = LaunchStatePrism()
                 await initCoordinator(launchStatePrism: launchStatePrism)
-                await coordinator.start()
+                await coordinator.start(mainWindow: mockMainWindow)
             }
 
             it("activates the coordinator returned by mockChildFactory.buildLaunchCoordinator()") {
@@ -153,6 +152,10 @@ class AppCoordinatorTests: QuickSpec {
         }
 
         describe("AppRouterProtocol") {
+
+            beforeEach {
+                await coordinator.start(mainWindow: mockMainWindow)
+            }
 
             describe("createSubtree()") {
 

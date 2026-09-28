@@ -30,7 +30,7 @@ import SwiftDux
 @MainActor
 class AppCoordinator<TFactory: AppCoordinatorChildFactoryProtocol> {
 
-    private let mainWindow: UIWindowProtocol
+    private var mainWindow: UIWindowProtocol?
     private let childFactory: TFactory
     private let payloadBuilder: AppLinkTypeBuilderProtocol
 
@@ -44,10 +44,8 @@ class AppCoordinator<TFactory: AppCoordinatorChildFactoryProtocol> {
         return childFactory.store
     }
 
-    init(mainWindow: UIWindowProtocol,
-         childFactory: TFactory,
+    init(childFactory: TFactory,
          payloadBuilder: AppLinkTypeBuilderProtocol) {
-        self.mainWindow = mainWindow
         self.childFactory = childFactory
         self.payloadBuilder = payloadBuilder
         self.childCoordinator = childFactory.buildLaunchCoordinator()
@@ -57,7 +55,8 @@ class AppCoordinator<TFactory: AppCoordinatorChildFactoryProtocol> {
 
 extension AppCoordinator {
 
-    func start() {
+    func start(mainWindow: UIWindowProtocol) {
+        self.mainWindow = mainWindow
         didSetChildCoordinator()
 
         let keyPaths = childFactory.launchStatePrism.launchKeyPaths.union([
@@ -71,7 +70,7 @@ extension AppCoordinator {
         store.dispatch(setCurrentCoordinatorAction(immediateDescendent))
 
         childCoordinator.start()
-        mainWindow.rootViewController = childCoordinator.rootViewController
+        mainWindow?.rootViewController = childCoordinator.rootViewController
     }
 
 }

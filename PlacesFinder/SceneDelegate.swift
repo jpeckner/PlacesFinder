@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2018 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,15 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     typealias TChildFactory = AppCoordinatorChildFactory<Store<AppAction, AppState>>
 
     var window: UIWindow?
-    private var appCoordinator: AppCoordinator<TChildFactory>?
+    private let appCoordinator: AppCoordinator<TChildFactory>
 
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
-    ) {
-        guard let windowScene = scene as? UIWindowScene else { return }
-
+    override init() {
         let appConfig: AppConfig
         do {
             appConfig = try AppConfig(bundle: Bundle.main)
@@ -50,28 +44,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fatalError("Unexpected error: \(error)")
         }
 
-        let window = UIWindow(windowScene: windowScene)
-        self.window = window
-
         let childFactory = TChildFactory(appConfig: appConfig)
         let payloadBuilder = AppLinkTypeBuilder()
-        let appCoordinator = AppCoordinator(mainWindow: window,
-                                            childFactory: childFactory,
-                                            payloadBuilder: payloadBuilder)
-        self.appCoordinator = appCoordinator
+        self.appCoordinator = AppCoordinator(childFactory: childFactory,
+                                             payloadBuilder: payloadBuilder)
+    }
 
-        // Defer this so that appCoordinator first has a chance to dispatch the link payload (if any) to the app's state
-        defer {
-            appCoordinator.start()
-        }
-
-        window.makeKeyAndVisible()
-
-        guard let url = connectionOptions.urlContexts.first?.url else {
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
+        guard let windowScene = scene as? UIWindowScene else {
             return
         }
 
-        _ = appCoordinator.handleURL(url)
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
+        window.makeKeyAndVisible()
+
+        // Handle this before start() so that appCoordinator first has a chance to dispatch the link payload (if any)
+        // to the app's state
+        if let url = connectionOptions.urlContexts.first?.url {
+            _ = appCoordinator.handleURL(url)
+        }
+
+        appCoordinator.start(mainWindow: window)
     }
 
     // Sample linking URLs to use in Safari in iOS Simulator. Use placesFinder:// as the scheme for Release builds, and
@@ -79,10 +77,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/search?keywords=Chinese%20Food
     //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/settings
     //   placesFinder[-dev]://com.justinpeckner.PlacesFinder/aboutApp
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
+    func scene(
+        _ scene: UIScene,
+        openURLContexts URLContexts: Set<UIOpenURLContext>
+    ) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
 
-        _ = appCoordinator?.handleURL(url)
+        _ = appCoordinator.handleURL(url)
     }
 
 }
