@@ -26,7 +26,7 @@ import Foundation
 import Shared
 
 struct SearchDetailsBasicInfoViewModel: Equatable {
-    let image: DownloadedImageViewModel
+    let image: DownloadedImageProps
     let name: NonEmptyString
     let address: NonEmptyString?
     let ratingsAverage: SearchRatingValue

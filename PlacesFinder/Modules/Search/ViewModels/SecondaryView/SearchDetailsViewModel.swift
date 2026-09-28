@@ -148,7 +148,7 @@ private extension SearchEntityModel {
         resultsCopyContent: SearchResultsCopyContent
     ) -> SearchDetailsInfoSectionViewModel {
         return .basicInfo(SearchDetailsBasicInfoViewModel(
-            image: DownloadedImageViewModel(url: image),
+            image: DownloadedImageProps(url: image),
             name: name,
             address: addressLines.map { copyFormatter.formatAddress($0) },
             ratingsAverage: ratings.average,

@@ -32,7 +32,7 @@ extension SearchResultCellProps {
         name: NonEmptyString = .stubValue(),
         ratingsAverage: SearchRatingValue = .three,
         pricing: String? = nil,
-        image: DownloadedImageViewModel = DownloadedImageViewModel(url: .stubValue()),
+        image: DownloadedImageProps = DownloadedImageProps(url: .stubValue()),
         colorings: SearchResultsViewColorings = AppColorings.defaultColorings.searchResults
     ) -> SearchResultCellProps {
         return SearchResultCellProps(id: id,

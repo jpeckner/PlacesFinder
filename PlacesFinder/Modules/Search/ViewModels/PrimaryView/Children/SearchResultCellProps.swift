@@ -30,7 +30,7 @@ struct SearchResultCellProps: Identifiable, Equatable {
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue
     let pricing: String?
-    let image: DownloadedImageViewModel
+    let image: DownloadedImageProps
     let colorings: SearchResultsViewColorings
 }
 
@@ -59,7 +59,7 @@ class SearchResultCellPropsBuilder: SearchResultCellPropsBuilderProtocol {
             name: model.name,
             ratingsAverage: model.ratings.average,
             pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
-            image: DownloadedImageViewModel(url: model.image),
+            image: DownloadedImageProps(url: model.image),
             colorings: colorings
         )
     }
