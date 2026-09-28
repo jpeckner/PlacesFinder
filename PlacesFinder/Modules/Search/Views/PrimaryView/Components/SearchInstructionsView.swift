@@ -63,7 +63,7 @@ struct SearchInstructionsView: View {
     let appColorings = AppColorings.defaultColorings
     return SearchInstructionsView(
         viewModel: SearchInstructionsViewModel(
-            infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard),
+            infoViewModel: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard),
             resultsSource: appCopyContent.searchInstructions.resultsSource
         )
     )

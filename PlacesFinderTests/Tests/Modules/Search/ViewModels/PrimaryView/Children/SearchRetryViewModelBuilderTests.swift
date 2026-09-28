@@ -58,7 +58,7 @@ class SearchRetryViewModelBuilderTests: QuickSpec {
             }
 
             it("returns the expected infoViewModel") {
-                expect(result.ctaViewModel.infoViewModel) == stubCopyContent.staticInfoViewModel(
+                expect(result.ctaViewModel.infoViewModel) == stubCopyContent.staticInfoViewProps(
                     colorings: AppColorings.defaultColorings.searchCTA
                 )
             }

@@ -26,7 +26,7 @@ import Foundation
 import Shared
 
 struct AboutAppViewModel {
-    let infoViewModel: StaticInfoViewModel<AboutAppViewColorings>
+    let infoViewModel: StaticInfoViewProps<AboutAppViewColorings>
 
     init(copyContent: AboutAppViewCopyContent,
          colorings: AboutAppViewColorings,
@@ -43,7 +43,7 @@ struct AboutAppViewModel {
             Calendar.current.component(.year, from: Date())
         )
 
-        self.infoViewModel = StaticInfoViewModel(
+        self.infoViewModel = StaticInfoViewProps(
             imageName: copyContent.iconImageName,
             title: titleFormatted,
             description: descriptionFormatted,

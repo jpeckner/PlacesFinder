@@ -27,9 +27,9 @@ import SwiftUI
 
 struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 
-    @ObservedObject var viewModel: ValueObservable<StaticInfoViewModel<TColorings>>
+    @ObservedObject var viewModel: ValueObservable<StaticInfoViewProps<TColorings>>
 
-    init(viewModel: StaticInfoViewModel<TColorings>) {
+    init(viewModel: StaticInfoViewProps<TColorings>) {
         self.viewModel = ValueObservable(viewModel)
     }
 
@@ -68,7 +68,7 @@ struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
     let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
     return StaticInfoView(
-        viewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard)
+        viewModel: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard)
     )
 }
 

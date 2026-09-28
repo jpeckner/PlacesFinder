@@ -36,7 +36,7 @@
 		0C9E99EE2268FD950BCCB370 /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77879B5217696A51424CDCA6 /* SettingsCoordinatorTests.swift */; };
 		0CC98FAA80C5F5FC562DA22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664F256C934B5B4A349BD9EF /* Assets.xcassets */; };
 		0CD2A285DE0AF42B17ECB9F3 /* UILabel+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55681DB11347069A8DFC1781 /* UILabel+AppSkin.swift */; };
-		0D86847F5B2561A58269E92F /* StaticInfoViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AE9FE4AA23793B1847D0F1 /* StaticInfoViewModel+Stub.swift */; };
+		0D86847F5B2561A58269E92F /* StaticInfoViewProps+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AE9FE4AA23793B1847D0F1 /* StaticInfoViewProps+Stub.swift */; };
 		0DC789DA2894EE7443849B64 /* AppTextStyleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C405056E5BD9DAB2EC652C /* AppTextStyleClass.swift */; };
 		0DDA7E0F04DB907C640D6D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E68BB6A46C89258E3B76F /* SceneDelegate.swift */; };
 		0E03920975855641C61CCC43 /* NavigationBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB422026EAEF7FEFE6AF4D /* NavigationBarTitleView.swift */; };
@@ -392,7 +392,7 @@
 		B4903FA0F2C9A643D6D4938C /* SearchDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09569D5707768CA771A0564 /* SearchDistance.swift */; };
 		B4BD1DD5428AF6A70DF06265 /* HomeCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0A66EF4BD61A417B69236D /* HomeCoordinator+CoordiNode.autogen.swift */; };
 		B53386333ADECD86707E4673 /* SearchCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB574438D6C3E6D8E17D35 /* SearchCoordinator+CoordiNode.autogen.swift */; };
-		B5661AD2FBB7A8F28F80CC44 /* StaticInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */; };
+		B5661AD2FBB7A8F28F80CC44 /* StaticInfoViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */; };
 		B70CCF2693DF677D56C19975 /* UserDefaultsListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415FFEEFB2318C0317D5A6B /* UserDefaultsListenerTests.swift */; };
 		B8610BF5E846D190E63628A2 /* SettingsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D289B192ED1C0E4D2631DAC1 /* SettingsSectionViewModel.swift */; };
 		B94C94663A518DAE803BE610 /* SettingsLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */; };
@@ -575,11 +575,11 @@
 		D283D1CCFB43EF9E5AD30A19 /* LaunchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26415262B4842982863806DF /* LaunchCoordinator.swift */; };
 		D2E2735528FFC8F69082F105 /* YelpRequestConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B98DCE9C29D1AC87688363 /* YelpRequestConfig.swift */; };
 		D32C12CE1D91524AED190BE5 /* LaunchViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545C436376BADABE7FAD2451 /* LaunchViewColorings.swift */; };
-		D371F3BCD6297E65084D8187 /* StaticInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */; };
+		D371F3BCD6297E65084D8187 /* StaticInfoViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */; };
 		D3E98AB90033DE473D5CCE8B /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48B8E96B4B0F939F2322588 /* RouterState.swift */; };
 		D4089B9A00857989FA821171 /* AppCopyContent+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06BA82F8F3544F46B3D711C /* AppCopyContent+Defaults.swift */; };
 		D41A373671CFFE6E5F3FD631 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0912F2A532B16E253A6B9E0 /* LaunchViewController.swift */; };
-		D44C74BA2C6EE16C837B331B /* StaticInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */; };
+		D44C74BA2C6EE16C837B331B /* StaticInfoViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */; };
 		D4C2C1E57EDBAFF2EE46AB51 /* SettingsUnitsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D882899960626D3450C6D1 /* SettingsUnitsHeaderViewModel.swift */; };
 		D58CB7C04C40B9A215FC46DF /* SearchDetailsSectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */; };
 		D5C4CE88B4DF8D38DABECE0A /* SearchLookupParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DE12507E49A40CA6381D6E /* SearchLookupParentController.swift */; };
@@ -705,7 +705,7 @@
 		17EA1C1D8E321C304B0F720D /* SearchDetailsViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		185E68BB6A46C89258E3B76F /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		18DEC8E07C78D2D040396C16 /* SearchPreferencesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesAction.swift; sourceTree = "<group>"; };
-		1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoViewModel.swift; sourceTree = "<group>"; };
+		1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticInfoViewProps.swift; sourceTree = "<group>"; };
 		1B391C2B59C1A18AAA7A4C0E /* SearchResultViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityListener.swift; sourceTree = "<group>"; };
 		1DA4E3D46B78E975BC75AB3D /* TestDispatchingStoreProtocol+SearchActivityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestDispatchingStoreProtocol+SearchActivityAction.swift"; sourceTree = "<group>"; };
@@ -722,7 +722,7 @@
 		2451958012F573C657821791 /* NavigationBarViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		245C23909849E198F6503796 /* SettingsSectionViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsSectionViewModel+Stub.swift"; sourceTree = "<group>"; };
 		25286197F89091EEC720D419 /* SearchInstructionsCopyContent+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchInstructionsCopyContent+Stub.swift"; sourceTree = "<group>"; };
-		25AE9FE4AA23793B1847D0F1 /* StaticInfoViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StaticInfoViewModel+Stub.swift"; sourceTree = "<group>"; };
+		25AE9FE4AA23793B1847D0F1 /* StaticInfoViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StaticInfoViewProps+Stub.swift"; sourceTree = "<group>"; };
 		26415262B4842982863806DF /* LaunchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCoordinator.swift; sourceTree = "<group>"; };
 		283E6088B081A3B2D4560502 /* SearchCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorTests.swift; sourceTree = "<group>"; };
 		28A4B869E98D0C4C0199FC27 /* SearchPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenterProtocol.swift; sourceTree = "<group>"; };
@@ -1366,7 +1366,7 @@
 				2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewModel+Stub.swift */,
 				16CDB280196EA900F1BC01B2 /* SearchInputCopyContent+Stub.swift */,
 				25286197F89091EEC720D419 /* SearchInstructionsCopyContent+Stub.swift */,
-				25AE9FE4AA23793B1847D0F1 /* StaticInfoViewModel+Stub.swift */,
+				25AE9FE4AA23793B1847D0F1 /* StaticInfoViewProps+Stub.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1525,7 +1525,7 @@
 			children = (
 				214CD417BD9B4EEDF20E1ED5 /* DownloadedImageProps.swift */,
 				D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */,
-				1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewModel.swift */,
+				1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2762,7 +2762,7 @@
 				D4C2C1E57EDBAFF2EE46AB51 /* SettingsUnitsHeaderViewModel.swift in Sources */,
 				4806220153E4F289411A23BA /* SettingsViewController.swift in Sources */,
 				05573DDB56543354BD43B6B7 /* SettingsViewModel.swift in Sources */,
-				D371F3BCD6297E65084D8187 /* StaticInfoViewModel.swift in Sources */,
+				D371F3BCD6297E65084D8187 /* StaticInfoViewProps.swift in Sources */,
 				9C7BE44313D35092037B9649 /* TabCoordinatorProtocol.swift in Sources */,
 				19884E79FC3BA3D4A689EF26 /* UIButton+AppSkin.swift in Sources */,
 				F0D0729C64B74E9E902AF3EC /* UILabel+AppSkin.swift in Sources */,
@@ -2952,7 +2952,7 @@
 				B3242E759DFA67D62C1EA0D2 /* SettingsUnitsHeaderViewModel.swift in Sources */,
 				7192B1725084AD44661324B0 /* SettingsViewController.swift in Sources */,
 				5FD5B74E4796E36777F98693 /* SettingsViewModel.swift in Sources */,
-				B5661AD2FBB7A8F28F80CC44 /* StaticInfoViewModel.swift in Sources */,
+				B5661AD2FBB7A8F28F80CC44 /* StaticInfoViewProps.swift in Sources */,
 				092835CB7D15790B624DAA80 /* TabCoordinatorProtocol.swift in Sources */,
 				CA6D635B27E6955B000866D5 /* Search+Redux.swift in Sources */,
 				49E6019DFA8405FD16ED5C26 /* UIButton+AppSkin.swift in Sources */,
@@ -3215,8 +3215,8 @@
 				EA72F2B0CEC3A37012D56A6B /* SettingsViewModel.swift in Sources */,
 				36098DE1BA11AC692BB9B6E7 /* SettingsViewModelBuilderTests.swift in Sources */,
 				3374F81696AD47E021172DF9 /* SettingsViewModelTests.swift in Sources */,
-				0D86847F5B2561A58269E92F /* StaticInfoViewModel+Stub.swift in Sources */,
-				D44C74BA2C6EE16C837B331B /* StaticInfoViewModel.swift in Sources */,
+				0D86847F5B2561A58269E92F /* StaticInfoViewProps+Stub.swift in Sources */,
+				D44C74BA2C6EE16C837B331B /* StaticInfoViewProps.swift in Sources */,
 				E31378CA29AE8617F73EF14D /* StubLinkType.swift in Sources */,
 				CA35218A2A5209D800228276 /* AppBundleInfo+Stub.swift in Sources */,
 				BB1F8D8CDAC157A21F2CE11B /* TabCoordinatorProtocol.swift in Sources */,

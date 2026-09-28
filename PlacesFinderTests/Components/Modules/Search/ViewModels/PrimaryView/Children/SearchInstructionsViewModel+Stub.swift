@@ -29,7 +29,7 @@ import Foundation
 extension SearchInstructionsViewModel {
 
     static func stubValue(
-        infoViewModel: StaticInfoViewModel<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
+        infoViewModel: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
         resultsSource: String = "stubResultsSource",
         colorings: AppStandardColorings = AppColorings.defaultColorings.standard
     ) -> SearchInstructionsViewModel {

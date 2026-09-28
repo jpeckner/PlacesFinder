@@ -25,14 +25,14 @@
 import Foundation
 
 struct SearchMessageViewModel: Equatable {
-    let infoViewModel: StaticInfoViewModel<AppStandardColorings>
+    let infoViewModel: StaticInfoViewProps<AppStandardColorings>
 }
 
 extension SearchMessageViewModel {
 
     init(copyContent: StaticInfoCopyProtocol,
          colorings: AppStandardColorings) {
-        self.infoViewModel = copyContent.staticInfoViewModel(colorings: colorings)
+        self.infoViewModel = copyContent.staticInfoViewProps(colorings: colorings)
     }
 
 }

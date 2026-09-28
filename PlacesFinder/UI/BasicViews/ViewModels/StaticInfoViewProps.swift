@@ -1,6 +1,6 @@
 //
-//  StaticInfoViewModel+Stub.swift
-//  PlacesFinderTests
+//  StaticInfoViewProps.swift
+//  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
 //  
@@ -24,16 +24,26 @@
 
 import Foundation
 
-extension StaticInfoViewModel {
+struct StaticInfoViewProps<TColorings: AppStandardColoringsProtocol>: Equatable {
+    let imageName: String
+    let title: String
+    let description: String
+    let colorings: TColorings
+}
 
-    static func stubValue<TAppColorings: AppStandardColoringsProtocol>(
-        colorings: TAppColorings,
-        imageName: String = "stubStaticInfoImageName",
-        title: String = "stubStaticInfoTitle",
-        description: String = "stubStaticInfoDescription"
-    ) -> StaticInfoViewModel<TAppColorings> {
-        StaticInfoViewModel<TAppColorings>(
-            imageName: imageName,
+protocol StaticInfoCopyProtocol {
+    var iconImageName: String { get }
+    var title: String { get }
+    var description: String { get }
+}
+
+extension StaticInfoCopyProtocol {
+
+    func staticInfoViewProps<TColorings: AppStandardColoringsProtocol>(
+        colorings: TColorings
+    ) -> StaticInfoViewProps<TColorings> {
+        StaticInfoViewProps(
+            imageName: iconImageName,
             title: title,
             description: description,
             colorings: colorings

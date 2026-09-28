@@ -29,7 +29,7 @@ import Foundation
 extension SearchMessageViewModel {
 
     static func stubValue(
-        infoViewModel: StaticInfoViewModel<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
+        infoViewModel: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
     ) -> SearchMessageViewModel {
         return SearchMessageViewModel(infoViewModel: infoViewModel)
     }
