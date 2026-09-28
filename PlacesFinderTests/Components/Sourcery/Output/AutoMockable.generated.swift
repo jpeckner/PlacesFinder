@@ -1049,11 +1049,11 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
     var loadNoInternetViewsTitleViewModelAppSkinCalled: Bool {
         return loadNoInternetViewsTitleViewModelAppSkinCallsCount > 0
     }
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadNoInternetViews(_ viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadNoInternetViewsTitleViewModelAppSkinCallsCount += 1
         loadNoInternetViewsTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
         loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))

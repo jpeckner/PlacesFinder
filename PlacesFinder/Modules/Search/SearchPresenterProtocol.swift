@@ -29,7 +29,7 @@ import UIKit
 @MainActor protocol SearchPresenterProtocol {
     var rootViewController: UIViewController { get }
 
-    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
+    func loadNoInternetViews(_ props: SearchNoInternetViewProps,
                              titleViewModel: NavigationBarTitleViewModel,
                              appSkin: AppSkin)
 
