@@ -35,7 +35,7 @@ struct SearchInstructionsView: View {
 
     var body: some View {
         VerticallyCenteredScrollView {
-            StaticInfoView(viewModel: viewModel.value.props)
+            StaticInfoView(props: viewModel.value.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
             HStack(spacing: .zero) {

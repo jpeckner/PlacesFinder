@@ -1,8 +1,8 @@
 //
-//  AboutAppView.swift
+//  SinglePropsViewModel.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2022 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,52 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
-import SwiftUI
+import Observation
 
-struct AboutAppView: View {
+@MainActor
+@Observable
+class SinglePropsViewModel<TProps> {
+    var props: TProps
 
-    private let viewModel: AboutAppViewModel
-
-    init(viewModel: AboutAppViewModel) {
-        self.viewModel = viewModel
+    init(props: TProps) {
+        self.props = props
     }
-
-    var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 8)
-
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .frame(width: 32, height: 4)
-
-            Spacer()
-                .frame(height: 120)
-
-            StaticInfoView(props: viewModel.props)
-
-            Spacer()
-        }
-    }
-
 }
-
-#if DEBUG
-
-// swiftlint:disable force_try
-#Preview {
-    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
-    let appColorings = AppColorings.defaultColorings
-
-    return AboutAppView(
-        viewModel: AboutAppViewModel(
-            copyContent: appCopyContent.aboutAppView,
-            colorings: appColorings.aboutApp,
-            appDisplayName: try! NonEmptyString("PlacesFinder"),
-            appVersion: try! NonEmptyString("1.2.3")
-        )
-    )
-}
-// swiftlint:enable force_try
-
-#endif

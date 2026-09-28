@@ -25,13 +25,36 @@
 import Shared
 import SwiftUI
 
-class SearchNoInternetViewController: UIHostingController<StaticInfoView<AppStandardColorings>>,
+// MARK: - SearchNoInternetView
+
+struct SearchNoInternetView: View {
+
+    typealias ViewModel = SinglePropsViewModel<SearchNoInternetViewProps>
+
+    private let viewModel: ViewModel
+
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
+
+    var body: some View {
+        StaticInfoView(props: viewModel.props.messageViewProps.props)
+    }
+
+}
+
+// MARK: - SearchNoInternetViewController
+
+class SearchNoInternetViewController: UIHostingController<SearchNoInternetView>,
                                       SearchPrimaryViewControllerProtocol {
 
-    init(props: SearchNoInternetViewProps) {
-        let rootView = StaticInfoView(viewModel: props.messageViewProps.props)
+    private let viewModel: SearchNoInternetView.ViewModel
 
-        super.init(rootView: rootView)
+    init(props: SearchNoInternetViewProps) {
+        let viewModel = SearchNoInternetView.ViewModel(props: props)
+        self.viewModel = viewModel
+
+        super.init(rootView: SearchNoInternetView(viewModel: viewModel))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +66,7 @@ class SearchNoInternetViewController: UIHostingController<StaticInfoView<AppStan
 extension SearchNoInternetViewController {
 
     func configure(props: SearchNoInternetViewProps) {
-        rootView.viewModel.value = props.messageViewProps.props
+        viewModel.props = props
     }
 
 }

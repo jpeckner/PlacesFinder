@@ -432,6 +432,9 @@
 		C92168395D6A2930B4633D6C /* YelpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E979DAF934F98AF614BB58 /* YelpRequestBuilder.swift */; };
 		C99419DDD3AB0B5B5A55990A /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
 		C9E3A8ADEC285EE33D2A4009 /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B34E621C330921861BAB3C5 /* LocationAuthStatus.swift */; };
+		CA00CB8A306A23A000BF932A /* SinglePropsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00CB89306A23A000BF932A /* SinglePropsViewModel.swift */; };
+		CA00CB8B306A23A000BF932A /* SinglePropsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00CB89306A23A000BF932A /* SinglePropsViewModel.swift */; };
+		CA00CB8C306A23A000BF932A /* SinglePropsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00CB89306A23A000BF932A /* SinglePropsViewModel.swift */; };
 		CA18C99F2FEE37BE00427695 /* CoordiNode in Frameworks */ = {isa = PBXBuildFile; productRef = CA18C99E2FEE37BE00427695 /* CoordiNode */; };
 		CA3521872A5209A400228276 /* PresentationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */; };
 		CA3521882A5209A500228276 /* PresentationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */; };
@@ -882,6 +885,7 @@
 		C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModel.swift; sourceTree = "<group>"; };
 		C9FE8D9DEAE96F59628080B5 /* SearchPreferencesReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesReducerTests.swift; sourceTree = "<group>"; };
+		CA00CB89306A23A000BF932A /* SinglePropsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePropsViewModel.swift; sourceTree = "<group>"; };
 		CA3521892A5209D800228276 /* AppBundleInfo+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppBundleInfo+Stub.swift"; sourceTree = "<group>"; };
 		CA35218B2A520AD900228276 /* AppBundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundleInfo.swift; sourceTree = "<group>"; };
 		CA3F76E4278A401B00847AA2 /* AboutAppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppCoordinator.swift; sourceTree = "<group>"; };
@@ -2131,6 +2135,7 @@
 			isa = PBXGroup;
 			children = (
 				CABDE0CB2A48E98300323AF2 /* PresentationControllerDelegate.swift */,
+				CA00CB89306A23A000BF932A /* SinglePropsViewModel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2757,6 +2762,7 @@
 				CA9A3CE5284D7E6400B65C4F /* AboutAppViewColorings.swift in Sources */,
 				CA3521872A5209A400228276 /* PresentationControllerDelegate.swift in Sources */,
 				5C691D75FD70552344BD813C /* SettingsPlainHeaderViewModel.swift in Sources */,
+				CA00CB8A306A23A000BF932A /* SinglePropsViewModel.swift in Sources */,
 				6880E4C835A5E53F9AAC97FF /* SettingsPresenter.swift in Sources */,
 				04BF6BB87DE6C232DAB8D35D /* SettingsSectionViewModel.swift in Sources */,
 				D4C2C1E57EDBAFF2EE46AB51 /* SettingsUnitsHeaderViewModel.swift in Sources */,
@@ -2823,6 +2829,7 @@
 				990DAF6C43F32508C676B83E /* AppSkinState.swift in Sources */,
 				4DBDEC054B000E27232A2F55 /* AppState.swift in Sources */,
 				6B8FCB0BB1B36A62A14DE8EB /* AppTextStyleClass.swift in Sources */,
+				CA00CB8B306A23A000BF932A /* SinglePropsViewModel.swift in Sources */,
 				5F591C7F9D407C551978ECDB /* AutoAppColorings.generated.swift in Sources */,
 				CA3F7700278A41BB00847AA2 /* AboutAppCoordinator+CoordiNode.autogen.swift in Sources */,
 				CA76D68B29C79F970018308D /* SettingsView.swift in Sources */,
@@ -3063,6 +3070,7 @@
 				C88DCAC4E35BB710752FC559 /* PlaceLookupServiceProtocol.swift in Sources */,
 				243BA764AB07FCE1F33D6C52 /* RatingStarsView.swift in Sources */,
 				CA3521882A5209A500228276 /* PresentationControllerDelegate.swift in Sources */,
+				CA00CB8C306A23A000BF932A /* SinglePropsViewModel.swift in Sources */,
 				00EC301780249D11A5323D66 /* ReachabilityListener.swift in Sources */,
 				9321924247899DF84E457122 /* ReachabilityListenerTests.swift in Sources */,
 				42E06CD8626A10FD2DBCDFF2 /* ReachabilityProtocol.swift in Sources */,
