@@ -29,11 +29,11 @@ import Shared
 extension SearchCTAViewModel {
 
     static func stubValue(
-        infoViewModel: StaticInfoViewProps<SearchCTAViewColorings> = .stubValue(colorings: AppColorings.defaultColorings.searchCTA),
+        props: StaticInfoViewProps<SearchCTAViewColorings> = .stubValue(colorings: AppColorings.defaultColorings.searchCTA),
         ctaTitle: String = "stubCTATitle",
         ctaBlock: SearchCTABlock? = nil
     ) -> SearchCTAViewModel {
-        return SearchCTAViewModel(infoViewModel: infoViewModel,
+        return SearchCTAViewModel(props: props,
                                   ctaTitle: ctaTitle,
                                   ctaBlock: ctaBlock.map { IgnoredEquatable($0) })
     }

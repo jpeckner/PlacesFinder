@@ -44,7 +44,7 @@ struct AboutAppView: View {
             Spacer()
                 .frame(height: 120)
 
-            StaticInfoView(viewModel: viewModel.infoViewModel)
+            StaticInfoView(viewModel: viewModel.props)
 
             Spacer()
         }

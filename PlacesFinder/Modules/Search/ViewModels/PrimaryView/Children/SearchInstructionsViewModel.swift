@@ -26,7 +26,7 @@ import Foundation
 import Shared
 
 struct SearchInstructionsViewModel: Equatable {
-    let infoViewModel: StaticInfoViewProps<AppStandardColorings>
+    let props: StaticInfoViewProps<AppStandardColorings>
     let resultsSource: String
 }
 
@@ -46,7 +46,7 @@ class SearchInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProt
     func buildViewModel(copyContent: SearchInstructionsCopyContent,
                         colorings: AppStandardColorings) -> SearchInstructionsViewModel {
         return SearchInstructionsViewModel(
-            infoViewModel: copyContent.staticInfoViewProps(colorings: colorings),
+            props: copyContent.staticInfoViewProps(colorings: colorings),
             resultsSource: copyContent.resultsSource
         )
     }

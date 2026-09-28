@@ -29,7 +29,7 @@ class SearchNoInternetViewController: UIHostingController<StaticInfoView<AppStan
                                       SearchPrimaryViewControllerProtocol {
 
     init(viewModel: SearchNoInternetViewModel) {
-        let rootView = StaticInfoView(viewModel: viewModel.messageViewModel.infoViewModel)
+        let rootView = StaticInfoView(viewModel: viewModel.messageViewModel.props)
 
         super.init(rootView: rootView)
     }
@@ -43,7 +43,7 @@ class SearchNoInternetViewController: UIHostingController<StaticInfoView<AppStan
 extension SearchNoInternetViewController {
 
     func configure(viewModel: SearchNoInternetViewModel) {
-        rootView.viewModel.value = viewModel.messageViewModel.infoViewModel
+        rootView.viewModel.value = viewModel.messageViewModel.props
     }
 
 }

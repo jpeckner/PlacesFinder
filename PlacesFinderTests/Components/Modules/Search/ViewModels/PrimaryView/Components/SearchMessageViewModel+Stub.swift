@@ -24,15 +24,12 @@
 
 import Foundation
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable line_length
 extension SearchMessageViewModel {
 
     static func stubValue(
-        infoViewModel: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
+        props: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
     ) -> SearchMessageViewModel {
-        return SearchMessageViewModel(infoViewModel: infoViewModel)
+        return SearchMessageViewModel(props: props)
     }
 
 }
-// swiftlint:enable blanket_disable_command

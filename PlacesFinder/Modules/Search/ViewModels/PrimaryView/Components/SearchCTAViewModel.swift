@@ -28,7 +28,7 @@ import Shared
 typealias SearchCTABlock = () -> Void
 
 struct SearchCTAViewModel: Equatable {
-    let infoViewModel: StaticInfoViewProps<SearchCTAViewColorings>
+    let props: StaticInfoViewProps<SearchCTAViewColorings>
     let ctaTitle: String
     let ctaBlock: IgnoredEquatable<SearchCTABlock>?
 }
@@ -44,7 +44,7 @@ extension SearchCTACopyProtocol {
         ctaBlock: SearchCTABlock?
     ) -> SearchCTAViewModel {
         SearchCTAViewModel(
-            infoViewModel: staticInfoViewProps(colorings: colorings),
+            props: staticInfoViewProps(colorings: colorings),
             ctaTitle: ctaTitle,
             ctaBlock: ctaBlock.map { IgnoredEquatable($0) }
         )

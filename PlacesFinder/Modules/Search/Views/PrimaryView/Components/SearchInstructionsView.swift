@@ -35,19 +35,19 @@ struct SearchInstructionsView: View {
 
     var body: some View {
         VerticallyCenteredScrollView {
-            StaticInfoView(viewModel: viewModel.value.infoViewModel)
+            StaticInfoView(viewModel: viewModel.value.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
             HStack(spacing: .zero) {
                 Text(viewModel.value.resultsSource)
                     .modifier(
                         textStyleClass: .sourceAPILabel,
-                        textColoring: viewModel.value.infoViewModel.colorings.bodyTextColoring
+                        textColoring: viewModel.value.props.colorings.bodyTextColoring
                     )
                     // Padding is needed to align this text with image text
                     .padding([.top], 4)
 
-                APILogoView(viewColoring: viewModel.value.infoViewModel.colorings.viewColoring)
+                APILogoView(viewColoring: viewModel.value.props.colorings.viewColoring)
             }
         }
         .scrollBounceBasedOnSize()
@@ -63,7 +63,7 @@ struct SearchInstructionsView: View {
     let appColorings = AppColorings.defaultColorings
     return SearchInstructionsView(
         viewModel: SearchInstructionsViewModel(
-            infoViewModel: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard),
+            props: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard),
             resultsSource: appCopyContent.searchInstructions.resultsSource
         )
     )

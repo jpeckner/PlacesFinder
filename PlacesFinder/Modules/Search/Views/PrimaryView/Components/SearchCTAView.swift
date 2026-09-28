@@ -35,7 +35,7 @@ struct SearchCTAView: View {
 
     var body: some View {
         VerticallyCenteredScrollView {
-            StaticInfoView(viewModel: viewModel.value.infoViewModel)
+            StaticInfoView(viewModel: viewModel.value.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
             if let action = viewModel.value.ctaBlock {
@@ -45,7 +45,7 @@ struct SearchCTAView: View {
                 )
                 .modifier(
                     textStyleClass: .ctaButton,
-                    textColoring: viewModel.value.infoViewModel.colorings.ctaTextColoring
+                    textColoring: viewModel.value.props.colorings.ctaTextColoring
                 )
             }
         }
