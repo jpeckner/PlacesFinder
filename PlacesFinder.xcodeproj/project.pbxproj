@@ -26,7 +26,7 @@
 		090D65B06D7C11D34943E6F3 /* SearchLookupChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB88A33A8D9CC8F96A0CA0F3 /* SearchLookupChild.swift */; };
 		092835CB7D15790B624DAA80 /* TabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E04ABD7FCF9A719BCFFA93B /* TabCoordinatorProtocol.swift */; };
 		0A172D9521B7DFD56AEB1BB2 /* SearchPreferencesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC5398AFB947DBC6E7983F /* SearchPreferencesState.swift */; };
-		0A1C6370E661CFDFC1309272 /* SearchRetryViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A1CAEE428545798F715245 /* SearchRetryViewModelBuilderTests.swift */; };
+		0A1C6370E661CFDFC1309272 /* SearchRetryPropsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A1CAEE428545798F715245 /* SearchRetryPropsBuilderTests.swift */; };
 		0A724E39A9A51C37E41669B7 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC69B4B508408EA5ACD274D0 /* AppConfig.swift */; };
 		0AEE6249DC3256D10687E368 /* AutoAppColorings.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */; };
 		0BA2C04AC001A6C8266C8E9E /* SearchDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09569D5707768CA771A0564 /* SearchDistance.swift */; };
@@ -80,7 +80,7 @@
 		2088386DF713487D7E875AE9 /* AppColoringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB3B49F64C7A1E7064ABD4 /* AppColoringProtocol.swift */; };
 		211B963D30DA7E43BAF9E4FD /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52CE3EE9D873B3373B2FCEE /* LaunchView.swift */; };
 		219833C25788BECE1CAC04BD /* SearchActivityActionPrism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834C3A4BC027A5F3E5DF69E1 /* SearchActivityActionPrism.swift */; };
-		219A9977E8CF57904868FB35 /* SearchRetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryViewModel.swift */; };
+		219A9977E8CF57904868FB35 /* SearchRetryProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryProps.swift */; };
 		21D6227EC9076F1C95C99E08 /* SearchActivityActionPrism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834C3A4BC027A5F3E5DF69E1 /* SearchActivityActionPrism.swift */; };
 		222CC0C9D354CF79873C7131 /* AutoHomeCoordinatorChildContainer.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55C8A30C568B514DB416131 /* AutoHomeCoordinatorChildContainer.generated.swift */; };
 		226BB2D6B906ADF592D0FBBE /* SearchLookupParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DE12507E49A40CA6381D6E /* SearchLookupParentController.swift */; };
@@ -103,9 +103,9 @@
 		29590DF325B531C9A296F77E /* AutoAppColorings.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */; };
 		298F6C51A4EB8DD9A9D35665 /* SearchPreferencesActionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C2A58BEF46DEF9ADD54B2 /* SearchPreferencesActionCreatorTests.swift */; };
 		29EDDB04E2AAE6625BAA62FD /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465FE65E494987072E6DB607 /* UserDefaultsService.swift */; };
-		29FD0694BA3A486FC73F0B37 /* SearchCTAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */; };
+		29FD0694BA3A486FC73F0B37 /* SearchCTAViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewProps.swift */; };
 		2A0B953250EC9505396F2BB5 /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49B4A7D5C3007BA2FA2E767 /* LaunchPresenter.swift */; };
-		2A10E4E452301557FE4EB46A /* SearchLocationDisabledViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */; };
+		2A10E4E452301557FE4EB46A /* SearchLocationDisabledViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewProps.swift */; };
 		2AE1090DD60363381425E091 /* SearchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8FAA0532A5EC4C5BDDF03 /* SearchDetailsViewController.swift */; };
 		2B30E72B6BDE3F1BD82BC40F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91D20ADAB653F6239C94E423 /* Settings.bundle */; };
 		2B402AF50ED71609D9FC0FDB /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B880D529DABADCCFFDC93E /* SearchResultViewModel.swift */; };
@@ -114,7 +114,7 @@
 		2C4984CB518239EE9D5C7721 /* YelpRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707ACE43DB44856707F26C2C /* YelpRequestService.swift */; };
 		2D2BD380313BE5F62CF58361 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52CE3EE9D873B3373B2FCEE /* LaunchView.swift */; };
 		2DE263EC987FF8A1E1BCB5D6 /* SearchEntityModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626C64A91146839543EFC9B /* SearchEntityModelBuilder.swift */; };
-		2E40835A52A76F3BA2E66132 /* SearchRetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryViewModel.swift */; };
+		2E40835A52A76F3BA2E66132 /* SearchRetryProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryProps.swift */; };
 		2E45E69564DE02B7498E2B8F /* AutoCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD39453C056D8B03B9E899 /* AutoCodable.swift */; };
 		2EACF876A67AC6222D29C538 /* AutoCellType.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */; };
 		2FADF8BB9E7535E5A321938B /* SearchResultCellProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663790D65E009702EFEBC603 /* SearchResultCellProps.swift */; };
@@ -195,7 +195,7 @@
 		567F170D57A22503734BDA24 /* SearchInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3FC8625A09FE8D5DD01A5 /* SearchInputViewModel.swift */; };
 		56C0CED28BC1401EC1E387D8 /* LocationAuthListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F493F2ED91C8A96126F81 /* LocationAuthListener.swift */; };
 		57C1829B1B3E7CBE6DFF232B /* AutoSearchDetailsSections.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 03E82E16F0B97C73710EAEF8 /* AutoSearchDetailsSections.stencil */; };
-		58107869F06EBC7555DF6B22 /* SearchCTAViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B76BA2F2ADDB4276137A73 /* SearchCTAViewModel+Stub.swift */; };
+		58107869F06EBC7555DF6B22 /* SearchCTAViewProps+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B76BA2F2ADDB4276137A73 /* SearchCTAViewProps+Stub.swift */; };
 		5855265E92E09A60D6BF97C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664F256C934B5B4A349BD9EF /* Assets.xcassets */; };
 		585B3CECC2C2BBAE491872F8 /* SearchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8FAA0532A5EC4C5BDDF03 /* SearchDetailsViewController.swift */; };
 		5871934F62A81B63DA450610 /* AppCopyContent+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06BA82F8F3544F46B3D711C /* AppCopyContent+Defaults.swift */; };
@@ -254,11 +254,11 @@
 		7192B1725084AD44661324B0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060719B75D4DAF75DC1C1AD /* SettingsViewController.swift */; };
 		72797B223382D9A04715D4D5 /* AppSkinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16663401B46D796AAB6633 /* AppSkinService.swift */; };
 		7367410873C0BA0C1CCCA123 /* NavigationBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB422026EAEF7FEFE6AF4D /* NavigationBarTitleView.swift */; };
-		74046AB1CBAF97CFFD055382 /* SearchLocationDisabledViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */; };
+		74046AB1CBAF97CFFD055382 /* SearchLocationDisabledViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewProps.swift */; };
 		745ACCF27580DD47543EBB13 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC69B4B508408EA5ACD274D0 /* AppConfig.swift */; };
 		74ACCD51A6C8347AC6B22866 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3F62F2BE7E1593701674EF /* SettingsPresenter.swift */; };
 		74AD3DA46DD3CF77E8BC59C2 /* PlaceLookupPageRequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A7DDF3207B0F24DFF9B9C6 /* PlaceLookupPageRequestToken.swift */; };
-		74FE8186E43A9400BD50EB66 /* SearchCTAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */; };
+		74FE8186E43A9400BD50EB66 /* SearchCTAViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewProps.swift */; };
 		7664859A782BFCE1B87031A0 /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48B8E96B4B0F939F2322588 /* RouterState.swift */; };
 		7745C9EE2AEDD6539B29818C /* AppSkin+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34AA94422964B8FCA8F972D /* AppSkin+UIBarButtonItem.swift */; };
 		7836CB6A8C01318725000AE5 /* SearchEntityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C7A74A25DA53BB697E4F97 /* SearchEntityModel.swift */; };
@@ -297,7 +297,7 @@
 		873B4DAE8F3D276E40B9CEE2 /* SearchInstructionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC7126A14CF9D60D2ADF42C /* SearchInstructionsViewModel.swift */; };
 		8825DE993584828003D20F88 /* SearchCTAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA3861D26E2312C44BFF15C /* SearchCTAView.swift */; };
 		8859C9738E3795C3DD07E52F /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55E78A64861D1B4087AFA1 /* SearchPresenter.swift */; };
-		8904440F5F6394BD19B26F56 /* SearchRetryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryViewModel.swift */; };
+		8904440F5F6394BD19B26F56 /* SearchRetryProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C35A8FDC37FA2A956C7B95 /* SearchRetryProps.swift */; };
 		895AA4D26D84274188B401D0 /* MockAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F660EAC4A5CEA5344D7CB78 /* MockAppStore.swift */; };
 		8A23D6FA0C50CAFD7CA49CEF /* SearchLookupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5123CAB7B074A3E569E3812 /* SearchLookupViewModel.swift */; };
 		8A269756BABD69EA9A981AD3 /* SearchActivityStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98C92D92983EBED05311A44 /* SearchActivityStateTests.swift */; };
@@ -382,7 +382,7 @@
 		B1CEED26BEBC3A18055DDB59 /* PlaceLookupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90DD892B1BDE2B213DBF878 /* PlaceLookupPage.swift */; };
 		B223CB67A228BE0CF2414297 /* SearchNoResultsFoundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DA3224CBB3C5DF4DB2EA05 /* SearchNoResultsFoundViewModel.swift */; };
 		B27A81BA1D2BAF3A722C2923 /* ListenerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03691AB9343C4669226B4E57 /* ListenerContainer.swift */; };
-		B2A1CA74EE771B8D0952FD85 /* SearchCTAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */; };
+		B2A1CA74EE771B8D0952FD85 /* SearchCTAViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344EE3AFF24845381D28284 /* SearchCTAViewProps.swift */; };
 		B2B5101555A20B94EBF30A2F /* SearchDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */; };
 		B3242E759DFA67D62C1EA0D2 /* SettingsUnitsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D882899960626D3450C6D1 /* SettingsUnitsHeaderViewModel.swift */; };
 		B325B5865837E65D9F95C92B /* AppGlobalStylingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E94A496CEC00C38267E28A /* AppGlobalStylingsHandler.swift */; };
@@ -570,7 +570,7 @@
 		CF3DE0ECA7D3A846B752C318 /* PlaceLookupPageRequestTokenResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1139F22E04648626B0DA1F2E /* PlaceLookupPageRequestTokenResult.swift */; };
 		CF3F5424656B8019DE8F67B4 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF6B710B9A625C8E883FFB /* SettingsCoordinator.swift */; };
 		D031F7252D8B07D6805490A4 /* MeasurementFormatterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E628EEF6BBC503E5481B /* MeasurementFormatterProtocol.swift */; };
-		D064479650C227A9FA5C666A /* SearchLocationDisabledViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */; };
+		D064479650C227A9FA5C666A /* SearchLocationDisabledViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewProps.swift */; };
 		D0D591CA279D05C45E5499B0 /* SearchBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935259BC1F38C6E3208BB06 /* SearchBackgroundViewController.swift */; };
 		D1B7B87C218F7EB3B5947FC1 /* AutoHomeCoordinatorChildContainer.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 5596D36AFDBA7C57646BCC6A /* AutoHomeCoordinatorChildContainer.stencil */; };
 		D1CF50F318D15EDBCE3C3A4B /* AutoCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD39453C056D8B03B9E899 /* AutoCodable.swift */; };
@@ -775,10 +775,10 @@
 		4FBF765D5827E4A226C2C5D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		507B6A221B07886D543D1D83 /* ModuleStructure.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = ModuleStructure.yml; sourceTree = "<group>"; };
 		50AF0EAC37D497F290555BD0 /* MeasurementFormatterProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementFormatterProtocolMock.swift; sourceTree = "<group>"; };
-		50C35A8FDC37FA2A956C7B95 /* SearchRetryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRetryViewModel.swift; sourceTree = "<group>"; };
+		50C35A8FDC37FA2A956C7B95 /* SearchRetryProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRetryProps.swift; sourceTree = "<group>"; };
 		52124374E34FF143C2C045F6 /* ListenerContainer+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListenerContainer+Mock.swift"; sourceTree = "<group>"; };
 		531A1B2756BA283CE33AF4A5 /* DecodableServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableServices.swift; sourceTree = "<group>"; };
-		5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCTAViewModel.swift; sourceTree = "<group>"; };
+		5344EE3AFF24845381D28284 /* SearchCTAViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCTAViewProps.swift; sourceTree = "<group>"; };
 		53DA3224CBB3C5DF4DB2EA05 /* SearchNoResultsFoundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoResultsFoundViewModel.swift; sourceTree = "<group>"; };
 		545C436376BADABE7FAD2451 /* LaunchViewColorings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewColorings.swift; sourceTree = "<group>"; };
 		552040C815599989C90F9A66 /* SearchInputContentViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputContentViewModelBuilderTests.swift; sourceTree = "<group>"; };
@@ -818,7 +818,7 @@
 		7BB82F102B92D500DD50D7D2 /* AppCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorTests.swift; sourceTree = "<group>"; };
 		7BF41EAD5E4E2AFEF118BDF9 /* SearchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProgressView.swift; sourceTree = "<group>"; };
 		7EF9A58DDA3E34F0BA103EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationDisabledViewModel.swift; sourceTree = "<group>"; };
+		8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationDisabledViewProps.swift; sourceTree = "<group>"; };
 		8319278AF1E32BCDBE16148B /* Search+ActivityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search+ActivityAction.swift"; sourceTree = "<group>"; };
 		832F493F2ED91C8A96126F81 /* LocationAuthListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthListener.swift; sourceTree = "<group>"; };
 		834C3A4BC027A5F3E5DF69E1 /* SearchActivityActionPrism.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchActivityActionPrism.swift; sourceTree = "<group>"; };
@@ -847,7 +847,7 @@
 		9BD0E88B2828B57760F35D8B /* AppCopyContent+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCopyContent+Stub.swift"; sourceTree = "<group>"; };
 		9C804D267C64E8881315107B /* SearchNoInternetViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNoInternetViewProps.swift; sourceTree = "<group>"; };
 		A163DA02FAD3A6EB097081AE /* AppRoutingHandlerProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoutingHandlerProtocolMock.swift; sourceTree = "<group>"; };
-		A1B76BA2F2ADDB4276137A73 /* SearchCTAViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchCTAViewModel+Stub.swift"; sourceTree = "<group>"; };
+		A1B76BA2F2ADDB4276137A73 /* SearchCTAViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchCTAViewProps+Stub.swift"; sourceTree = "<group>"; };
 		A28526B39037CBF87ADDEA15 /* LaunchCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		A3F6EEA7033FD046E6B015A2 /* SearchContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContainerViewController.swift; sourceTree = "<group>"; };
 		A4D9906D7E327D706C3F1D31 /* RatingStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStarsView.swift; sourceTree = "<group>"; };
@@ -864,7 +864,7 @@
 		AFC944D90DB1CB77DADC30E5 /* ReachabilityListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityListenerTests.swift; sourceTree = "<group>"; };
 		B0CB422026EAEF7FEFE6AF4D /* NavigationBarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarTitleView.swift; sourceTree = "<group>"; };
 		B2A7303ADB411762CE0710AE /* SpringboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringboardHandler.swift; sourceTree = "<group>"; };
-		B3A1CAEE428545798F715245 /* SearchRetryViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRetryViewModelBuilderTests.swift; sourceTree = "<group>"; };
+		B3A1CAEE428545798F715245 /* SearchRetryPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRetryPropsBuilderTests.swift; sourceTree = "<group>"; };
 		B442CE2BA208FFA59637F12D /* SettingsCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		B5432AE6A02CF4C8016F9A7F /* SearchMessageViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchMessageViewProps+Stub.swift"; sourceTree = "<group>"; };
 		B626C64A91146839543EFC9B /* SearchEntityModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntityModelBuilder.swift; sourceTree = "<group>"; };
@@ -1345,7 +1345,7 @@
 		4A2F4A8391E2684B4366F95A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				5344EE3AFF24845381D28284 /* SearchCTAViewModel.swift */,
+				5344EE3AFF24845381D28284 /* SearchCTAViewProps.swift */,
 				0C81F8E65FC0975E6A9FC50C /* SearchInputContentViewModel.swift */,
 				14C3FC8625A09FE8D5DD01A5 /* SearchInputViewModel.swift */,
 				4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */,
@@ -1446,7 +1446,7 @@
 				91F98A3447E3B2A94DCAB81A /* SearchResultsViewModelBuilderTests.swift */,
 				879DCC44C9C250AF3ED9219F /* SearchResultsViewModelTests.swift */,
 				1B391C2B59C1A18AAA7A4C0E /* SearchResultViewModelBuilderTests.swift */,
-				B3A1CAEE428545798F715245 /* SearchRetryViewModelBuilderTests.swift */,
+				B3A1CAEE428545798F715245 /* SearchRetryPropsBuilderTests.swift */,
 			);
 			path = Children;
 			sourceTree = "<group>";
@@ -1503,7 +1503,7 @@
 				663790D65E009702EFEBC603 /* SearchResultCellProps.swift */,
 				E7E87AE8C6F951E00360C862 /* SearchResultsViewModel.swift */,
 				85B880D529DABADCCFFDC93E /* SearchResultViewModel.swift */,
-				50C35A8FDC37FA2A956C7B95 /* SearchRetryViewModel.swift */,
+				50C35A8FDC37FA2A956C7B95 /* SearchRetryProps.swift */,
 			);
 			path = Children;
 			sourceTree = "<group>";
@@ -1671,7 +1671,7 @@
 		8282C5D4654AF7789091B578 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				A1B76BA2F2ADDB4276137A73 /* SearchCTAViewModel+Stub.swift */,
+				A1B76BA2F2ADDB4276137A73 /* SearchCTAViewProps+Stub.swift */,
 				C3F90019F1DCF09F3AEC47C1 /* SearchInputContentViewModel+Stub.swift */,
 				B5432AE6A02CF4C8016F9A7F /* SearchMessageViewProps+Stub.swift */,
 			);
@@ -1776,7 +1776,7 @@
 				69A0235E9499E1572DF69E1A /* Children */,
 				4A2F4A8391E2684B4366F95A /* Components */,
 				3D693F799436FB827B7A0844 /* SearchBackgroundViewModel.swift */,
-				8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewModel.swift */,
+				8168F49F2843D7B8A2961F46 /* SearchLocationDisabledViewProps.swift */,
 				E5123CAB7B074A3E569E3812 /* SearchLookupViewModel.swift */,
 				9C804D267C64E8881315107B /* SearchNoInternetViewProps.swift */,
 				CAA5EAB02A2563BC0000A3F0 /* SearchProgressViewModel.swift */,
@@ -2693,7 +2693,7 @@
 				D0D591CA279D05C45E5499B0 /* SearchBackgroundViewController.swift in Sources */,
 				8A81D6076D6EE1C8C0BE22A9 /* SearchBackgroundViewModel.swift in Sources */,
 				FF44A64E03E70976EAA11778 /* SearchCTAView.swift in Sources */,
-				74FE8186E43A9400BD50EB66 /* SearchCTAViewModel.swift in Sources */,
+				74FE8186E43A9400BD50EB66 /* SearchCTAViewProps.swift in Sources */,
 				CAA5497427AA1C3400F09F8A /* ActionSubscriber.swift in Sources */,
 				85F8F8330966479930E61289 /* SearchColorings.swift in Sources */,
 				1B3D3EAFFEBEF4DBC75D404E /* SearchConfig.swift in Sources */,
@@ -2722,7 +2722,7 @@
 				A842FCF2EA8B78777A7D6A2F /* SearchInstructionsViewModel.swift in Sources */,
 				C85EDFDA90FBF69DD5A0FE39 /* SearchLinkPayload.swift in Sources */,
 				EFF1505DD7920CD36495F7A8 /* SearchLocationDisabledViewController.swift in Sources */,
-				74046AB1CBAF97CFFD055382 /* SearchLocationDisabledViewModel.swift in Sources */,
+				74046AB1CBAF97CFFD055382 /* SearchLocationDisabledViewProps.swift in Sources */,
 				FF60DF8CC6C3109676E194CD /* SearchLookupChild.swift in Sources */,
 				03B2DD76476DC1F05F3DEF7D /* SearchLookupParentController.swift in Sources */,
 				8A23D6FA0C50CAFD7CA49CEF /* SearchLookupViewModel.swift in Sources */,
@@ -2749,7 +2749,7 @@
 				2B402AF50ED71609D9FC0FDB /* SearchResultViewModel.swift in Sources */,
 				D9C17F3F960A217066721D5F /* SearchResultsView.swift in Sources */,
 				6B19A70C00BD0753D5B76B66 /* SearchResultsViewModel.swift in Sources */,
-				2E40835A52A76F3BA2E66132 /* SearchRetryViewModel.swift in Sources */,
+				2E40835A52A76F3BA2E66132 /* SearchRetryProps.swift in Sources */,
 				B0BA68448C4EBE7E17890DAA /* Search+ActivityState.swift in Sources */,
 				0F520E32DAD80220934CFD30 /* SearchActivityStatePrism.swift in Sources */,
 				CA748FFC29D0C3FB00D67F32 /* SettingsView.swift in Sources */,
@@ -2885,7 +2885,7 @@
 				33EC8AABA45BCD9DDA87200A /* SearchBackgroundViewModel.swift in Sources */,
 				8825DE993584828003D20F88 /* SearchCTAView.swift in Sources */,
 				CAA5EAB92A2583EE0000A3F0 /* SearchLookupParentView.swift in Sources */,
-				29FD0694BA3A486FC73F0B37 /* SearchCTAViewModel.swift in Sources */,
+				29FD0694BA3A486FC73F0B37 /* SearchCTAViewProps.swift in Sources */,
 				CA6D635D27E69594000866D5 /* StoreSubscriptionRelay.swift in Sources */,
 				A2F1A77910FAB581CBC71D40 /* SearchColorings.swift in Sources */,
 				392A0BDCBB17500CB6F8FE47 /* SearchConfig.swift in Sources */,
@@ -2915,7 +2915,7 @@
 				CA3F770A278A4AE600847AA2 /* StoredSearchPreferences.swift in Sources */,
 				BC67DB8BFBC20CCCA3232D7A /* SearchLinkPayload.swift in Sources */,
 				A53808E6746B805BAD43A4F2 /* SearchLocationDisabledViewController.swift in Sources */,
-				2A10E4E452301557FE4EB46A /* SearchLocationDisabledViewModel.swift in Sources */,
+				2A10E4E452301557FE4EB46A /* SearchLocationDisabledViewProps.swift in Sources */,
 				090D65B06D7C11D34943E6F3 /* SearchLookupChild.swift in Sources */,
 				226BB2D6B906ADF592D0FBBE /* SearchLookupParentController.swift in Sources */,
 				CA6D635F27E695B4000866D5 /* SubstatesSubscriberRelay.swift in Sources */,
@@ -2941,7 +2941,7 @@
 				CA76D68729C78EDD0018308D /* StaticInfoView.swift in Sources */,
 				D7B16EB7146F1F7F99111E05 /* SearchResultsView.swift in Sources */,
 				26B70F64F0E37B9A4CBEF9DE /* SearchResultsViewModel.swift in Sources */,
-				8904440F5F6394BD19B26F56 /* SearchRetryViewModel.swift in Sources */,
+				8904440F5F6394BD19B26F56 /* SearchRetryProps.swift in Sources */,
 				6ACB780E0EA018531EB7616D /* Search+ActivityState.swift in Sources */,
 				BBE52C830246DEDCAA01F950 /* SearchActivityStatePrism.swift in Sources */,
 				B9C88065279DDF788B8AB1C6 /* ServiceContainer.swift in Sources */,
@@ -3091,8 +3091,8 @@
 				13826BE2CB6BDA9E756EBBF0 /* SearchBackgroundViewModel.swift in Sources */,
 				14C58E18E0D58136B34959D9 /* SearchBackgroundViewModelBuilderTests.swift in Sources */,
 				31E3AF7CDC2CF7B57FA945C5 /* SearchCTAView.swift in Sources */,
-				58107869F06EBC7555DF6B22 /* SearchCTAViewModel+Stub.swift in Sources */,
-				B2A1CA74EE771B8D0952FD85 /* SearchCTAViewModel.swift in Sources */,
+				58107869F06EBC7555DF6B22 /* SearchCTAViewProps+Stub.swift in Sources */,
+				B2A1CA74EE771B8D0952FD85 /* SearchCTAViewProps.swift in Sources */,
 				CA8BCAEA2814A800006989CF /* StoreSubscriptionRelay.swift in Sources */,
 				0306E598BB3777382AFE6D2F /* SearchColorings.swift in Sources */,
 				CA99087F2A2AB9A100F4C6E4 /* SearchLookupSearchBar.swift in Sources */,
@@ -3144,7 +3144,7 @@
 				ECC5FB68E582020664A0EF88 /* SearchInstructionsViewModelBuilderTests.swift in Sources */,
 				FECC15635F178F1D143E8E7E /* SearchLinkPayload.swift in Sources */,
 				6A0505B5D13CDA4379915490 /* SearchLocationDisabledViewController.swift in Sources */,
-				D064479650C227A9FA5C666A /* SearchLocationDisabledViewModel.swift in Sources */,
+				D064479650C227A9FA5C666A /* SearchLocationDisabledViewProps.swift in Sources */,
 				DCB53ECA98BB09D44546BB3D /* SearchLookupChild.swift in Sources */,
 				52E079A382F1FC08DF00E263 /* SearchLookupChildBuilderTests.swift in Sources */,
 				D5C4CE88B4DF8D38DABECE0A /* SearchLookupParentController.swift in Sources */,
@@ -3189,8 +3189,8 @@
 				362CA2753DC15F45588FA1AC /* SearchResultsViewModel.swift in Sources */,
 				4DEA53E26A699B7C28EB6BC2 /* SearchResultsViewModelBuilderTests.swift in Sources */,
 				99345E312AD9946B282DD467 /* SearchResultsViewModelTests.swift in Sources */,
-				219A9977E8CF57904868FB35 /* SearchRetryViewModel.swift in Sources */,
-				0A1C6370E661CFDFC1309272 /* SearchRetryViewModelBuilderTests.swift in Sources */,
+				219A9977E8CF57904868FB35 /* SearchRetryProps.swift in Sources */,
+				0A1C6370E661CFDFC1309272 /* SearchRetryPropsBuilderTests.swift in Sources */,
 				C2A831C15CCE04E7445FD6CB /* Search+ActivityState.swift in Sources */,
 				CA8BCAE62814A633006989CF /* Search+Redux.swift in Sources */,
 				03EC465151D887AB4ED32585 /* SearchActivityStatePrism.swift in Sources */,

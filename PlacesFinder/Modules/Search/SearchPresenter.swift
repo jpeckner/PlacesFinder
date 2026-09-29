@@ -60,11 +60,11 @@ class SearchPresenter: SearchPresenterProtocol {
                                               appSkin: appSkin)
     }
 
-    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
+    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
                                            titleViewModel: NavigationBarTitleViewModel,
                                            appSkin: AppSkin) {
         guard let existingController: SearchLocationDisabledViewController = existingPrimaryController() else {
-            let controller = buildLocationServicesDisabledViewController(viewModel,
+            let controller = buildLocationServicesDisabledViewController(props,
                                                                          titleViewModel: titleViewModel,
                                                                          appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
@@ -74,7 +74,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel: viewModel)
+        existingController.configure(props: props)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -185,11 +185,11 @@ private extension SearchPresenter {
     }
 
     func buildLocationServicesDisabledViewController(
-        _ viewModel: SearchLocationDisabledViewModel,
+        _ props: SearchLocationDisabledViewProps,
         titleViewModel: NavigationBarTitleViewModel,
         appSkin: AppSkin
     ) -> SearchLocationDisabledViewController {
-        let controller = SearchLocationDisabledViewController(viewModel: viewModel)
+        let controller = SearchLocationDisabledViewController(props: props)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

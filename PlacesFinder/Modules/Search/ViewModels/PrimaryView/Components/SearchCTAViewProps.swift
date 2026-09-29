@@ -1,8 +1,8 @@
 //
-//  SearchRetryViewModel.swift
+//  SearchCTAViewProps.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2020 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,33 +25,29 @@
 import Foundation
 import Shared
 
-struct SearchRetryViewModel: Equatable {
-    let ctaViewModel: SearchCTAViewModel
+typealias SearchCTABlock = () -> Void
+
+struct SearchCTAViewProps: Equatable {
+    let props: StaticInfoViewProps<SearchCTAViewColorings>
+    let ctaTitle: String
+    let ctaBlock: IgnoredEquatable<SearchCTABlock>?
 }
 
-extension SearchRetryCopyContent: SearchCTACopyProtocol {}
-
-// MARK: SearchRetryViewModelBuilder
-
-// sourcery: AutoMockable
-protocol SearchRetryViewModelBuilderProtocol {
-    func buildViewModel(copyContent: SearchRetryCopyContent,
-                        colorings: SearchCTAViewColorings,
-                        ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel
+protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
+    var ctaTitle: String { get }
 }
 
-class SearchRetryViewModelBuilder: SearchRetryViewModelBuilderProtocol {
+extension SearchCTACopyProtocol {
 
-    func buildViewModel(copyContent: SearchRetryCopyContent,
-                        colorings: SearchCTAViewColorings,
-                        ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
-        let ctaViewModel = SearchCTAViewModel(
-            props: copyContent.staticInfoViewProps(colorings: colorings),
-            ctaTitle: copyContent.ctaTitle,
-            ctaBlock: IgnoredEquatable(ctaBlock)
+    func ctaViewProps(
+        colorings: SearchCTAViewColorings,
+        ctaBlock: SearchCTABlock?
+    ) -> SearchCTAViewProps {
+        SearchCTAViewProps(
+            props: staticInfoViewProps(colorings: colorings),
+            ctaTitle: ctaTitle,
+            ctaBlock: ctaBlock.map { IgnoredEquatable($0) }
         )
-
-        return SearchRetryViewModel(ctaViewModel: ctaViewModel)
     }
 
 }

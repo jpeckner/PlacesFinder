@@ -1,5 +1,5 @@
 //
-//  SearchRetryViewModelBuilderTests.swift
+//  SearchRetryPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -29,7 +29,7 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchRetryViewModelBuilderTests: QuickSpec {
+class SearchRetryPropsBuilderTests: QuickSpec {
 
     private enum StubViewModelAction: Action {
         case detailEntity
@@ -39,37 +39,37 @@ class SearchRetryViewModelBuilderTests: QuickSpec {
 
         let stubCopyContent = SearchRetryCopyContent.stubValue()
 
-        var sut: SearchRetryViewModelBuilder!
-        var result: SearchRetryViewModel!
+        var sut: SearchRetryPropsBuilder!
+        var result: SearchRetryProps!
 
         beforeEach {
-            sut = SearchRetryViewModelBuilder()
+            sut = SearchRetryPropsBuilder()
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
             var hasTriggeredCTABlock: Bool!
 
             beforeEach {
                 hasTriggeredCTABlock = false
-                result = sut.buildViewModel(copyContent: stubCopyContent,
-                                            colorings: AppColorings.defaultColorings.searchCTA) {
+                result = sut.buildProps(copyContent: stubCopyContent,
+                                        colorings: AppColorings.defaultColorings.searchCTA) {
                     hasTriggeredCTABlock = true
                 }
             }
 
             it("returns the expected props") {
-                expect(result.ctaViewModel.props) == stubCopyContent.staticInfoViewProps(
+                expect(result.ctaViewProps.props) == stubCopyContent.staticInfoViewProps(
                     colorings: AppColorings.defaultColorings.searchCTA
                 )
             }
 
             it("returns the expected ctaTitle") {
-                expect(result.ctaViewModel.ctaTitle) == stubCopyContent.ctaTitle
+                expect(result.ctaViewProps.ctaTitle) == stubCopyContent.ctaTitle
             }
 
             it("includes the block passed to it") {
                 expect(hasTriggeredCTABlock) == false
-                result.ctaViewModel.ctaBlock?.value()
+                result.ctaViewProps.ctaBlock?.value()
                 expect(hasTriggeredCTABlock) == true
             }
 

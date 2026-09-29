@@ -1,5 +1,5 @@
 //
-//  SearchLocationDisabledViewModel.swift
+//  SearchLocationDisabledViewProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -25,18 +25,18 @@
 import Foundation
 import Shared
 
-struct SearchLocationDisabledViewModel {
-    let ctaViewModel: SearchCTAViewModel
+struct SearchLocationDisabledViewProps {
+    let ctaViewProps: SearchCTAViewProps
 }
 
 extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
 
-extension SearchLocationDisabledViewModel {
+extension SearchLocationDisabledViewProps {
 
     init(urlOpenerService: URLOpenerServiceProtocol,
          copyContent: SearchLocationDisabledCopyContent,
          colorings: SearchCTAViewColorings) {
-        self.ctaViewModel = copyContent.ctaViewModel(
+        self.ctaViewProps = copyContent.ctaViewProps(
             colorings: colorings,
             ctaBlock: urlOpenerService.openSettingsBlock
         )
