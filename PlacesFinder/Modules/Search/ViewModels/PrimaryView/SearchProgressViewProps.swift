@@ -1,6 +1,6 @@
 //
-//  SearchProgressViewModel+Stub.swift
-//  PlacesFinderTests
+//  SearchProgressViewProps.swift
+//  PlacesFinder
 //
 //  Copyright (c) 2023 Justin Peckner
 //  
@@ -24,12 +24,6 @@
 
 import Foundation
 
-extension SearchProgressViewModel {
-
-    static func stubValue(
-        colorings: SearchProgressViewColorings = AppColorings.defaultColorings.searchProgress
-    ) -> SearchProgressViewModel {
-        SearchProgressViewModel(colorings: colorings)
-    }
-
+struct SearchProgressViewProps: Equatable {
+    let colorings: SearchProgressViewColorings
 }
