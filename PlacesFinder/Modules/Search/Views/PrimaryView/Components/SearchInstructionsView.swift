@@ -57,20 +57,16 @@ struct SearchInstructionsView: View {
 
 #if DEBUG
 
-struct SearchInstructionsView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        // swiftlint:disable:next force_try
-        let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
-        let appColorings = AppColorings.defaultColorings
-        return SearchInstructionsView(
-            viewModel: SearchInstructionsViewModel(
-                infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard),
-                resultsSource: appCopyContent.searchInstructions.resultsSource
-            )
+#Preview {
+    // swiftlint:disable:next force_try
+    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
+    let appColorings = AppColorings.defaultColorings
+    return SearchInstructionsView(
+        viewModel: SearchInstructionsViewModel(
+            infoViewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard),
+            resultsSource: appCopyContent.searchInstructions.resultsSource
         )
-    }
-
+    )
 }
 
 #endif
