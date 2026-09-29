@@ -34,7 +34,7 @@ struct SearchCTAView: View {
     }
 
     var body: some View {
-        VerticallyCenteredScrollView {
+        ScrollView(.vertical) {
             StaticInfoView(props: props.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
@@ -49,7 +49,7 @@ struct SearchCTAView: View {
                 )
             }
         }
-        .scrollBounceBasedOnSize()
+        .centeredWhenFitting()
     }
 
 }

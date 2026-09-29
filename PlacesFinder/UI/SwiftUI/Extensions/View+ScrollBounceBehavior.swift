@@ -26,9 +26,16 @@ import SwiftUI
 
 extension View {
 
-    @ViewBuilder
     func scrollBounceBasedOnSize(axes: Axis.Set = [.vertical]) -> some View {
         self.scrollBounceBehavior(.basedOnSize, axes: axes)
+    }
+
+    /// Centers a scroll view's content when it's smaller than the scroll view, and only lets it bounce when it's
+    /// larger. Apply to a `ScrollView`.
+    func centeredWhenFitting(axes: Axis.Set = [.vertical]) -> some View {
+        self
+            .defaultScrollAnchor(.center, for: .alignment)
+            .scrollBounceBasedOnSize(axes: axes)
     }
 
 }

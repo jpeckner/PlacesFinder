@@ -34,7 +34,7 @@ struct SearchInstructionsView: View {
     }
 
     var body: some View {
-        VerticallyCenteredScrollView {
+        ScrollView(.vertical) {
             StaticInfoView(props: props.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
@@ -50,7 +50,7 @@ struct SearchInstructionsView: View {
                 APILogoView(viewColoring: props.props.colorings.viewColoring)
             }
         }
-        .scrollBounceBasedOnSize()
+        .centeredWhenFitting()
     }
 
 }
