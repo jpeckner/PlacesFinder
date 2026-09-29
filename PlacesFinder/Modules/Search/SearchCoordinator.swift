@@ -153,11 +153,11 @@ private extension SearchCoordinator {
 
         switch presentationType {
         case .noInternet:
-            let viewModel = SearchNoInternetViewProps(
+            let props = SearchNoInternetViewProps(
                 copyContent: appCopyContent.searchNoInternet,
                 colorings: appSkin.colorings.standard
             )
-            presenter.loadNoInternetViews(viewModel,
+            presenter.loadNoInternetViews(props,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)
 

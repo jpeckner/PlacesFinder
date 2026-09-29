@@ -1049,15 +1049,15 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
     var loadNoInternetViewsTitleViewModelAppSkinCalled: Bool {
         return loadNoInternetViewsTitleViewModelAppSkinCallsCount > 0
     }
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
     var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    func loadNoInternetViews(_ viewModel: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadNoInternetViews(_ props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadNoInternetViewsTitleViewModelAppSkinCallsCount += 1
-        loadNoInternetViewsTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadNoInternetViewsTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
+        loadNoInternetViewsTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
+        loadNoInternetViewsTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
     }
 
     //MARK: - loadLocationServicesDisabledViews
@@ -1116,25 +1116,25 @@ class SearchResultCellPropsBuilderProtocolMock: SearchResultCellPropsBuilderProt
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelModelResultsCopyContentColoringsCallsCount = 0
-    var buildViewModelModelResultsCopyContentColoringsCalled: Bool {
-        return buildViewModelModelResultsCopyContentColoringsCallsCount > 0
+    var buildPropsModelResultsCopyContentColoringsCallsCount = 0
+    var buildPropsModelResultsCopyContentColoringsCalled: Bool {
+        return buildPropsModelResultsCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
-    var buildViewModelModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
-    var buildViewModelModelResultsCopyContentColoringsReturnValue: SearchResultCellProps!
-    var buildViewModelModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultCellProps)?
+    var buildPropsModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
+    var buildPropsModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
+    var buildPropsModelResultsCopyContentColoringsReturnValue: SearchResultCellProps!
+    var buildPropsModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultCellProps)?
 
-    func buildViewModel(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultCellProps {
-        buildViewModelModelResultsCopyContentColoringsCallsCount += 1
-        buildViewModelModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
-        buildViewModelModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
-        if let buildViewModelModelResultsCopyContentColoringsClosure = buildViewModelModelResultsCopyContentColoringsClosure {
-            return buildViewModelModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
+    func buildProps(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultCellProps {
+        buildPropsModelResultsCopyContentColoringsCallsCount += 1
+        buildPropsModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
+        buildPropsModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
+        if let buildPropsModelResultsCopyContentColoringsClosure = buildPropsModelResultsCopyContentColoringsClosure {
+            return buildPropsModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
         } else {
-            return buildViewModelModelResultsCopyContentColoringsReturnValue
+            return buildPropsModelResultsCopyContentColoringsReturnValue
         }
     }
 

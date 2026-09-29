@@ -71,8 +71,8 @@ class DownloadedImageView: UIImageView {
 
 extension DownloadedImageView {
 
-    func configure(_ viewModel: DownloadedImageProps) {
-        downloadTask = kf.setImage(with: viewModel.url,
+    func configure(_ props: DownloadedImageProps) {
+        downloadTask = kf.setImage(with: props.url,
                                    placeholder: placeholderImage)
     }
 

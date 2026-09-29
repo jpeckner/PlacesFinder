@@ -42,16 +42,16 @@ class SearchResultCellPropsBuilderTests: QuickSpec {
             sut = SearchResultCellPropsBuilder(copyFormatter: mockFormatter)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
             let stubEntityModel = SearchEntityModel.stubValue()
             let stubCopyContent = SearchResultsCopyContent.stubValue()
 
             var result: SearchResultCellProps!
 
             beforeEach {
-                result = sut.buildViewModel(model: stubEntityModel,
-                                            resultsCopyContent: stubCopyContent,
-                                            colorings: AppColorings.defaultColorings.searchResults)
+                result = sut.buildProps(model: stubEntityModel,
+                                        resultsCopyContent: stubCopyContent,
+                                        colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockFormatter with expected method and args") {
