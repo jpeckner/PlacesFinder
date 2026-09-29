@@ -57,7 +57,7 @@ class SearchCoordinatorTests: QuickSpec {
             let mockSearchPresenter: SearchPresenterProtocolMock
             let mockStatePrism: SearchActivityStatePrismProtocolMock
             let mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock
-            let mockSearchBackgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocolMock
+            let mockSearchBackgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocolMock
             let mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock
             let mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock
             let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
@@ -83,8 +83,8 @@ class SearchCoordinatorTests: QuickSpec {
                 mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue =
                     stubInitialRequestAction
 
-                self.mockSearchBackgroundViewModelBuilder = SearchBackgroundViewModelBuilderProtocolMock()
-                mockSearchBackgroundViewModelBuilder.buildViewModelKeywordsAppCopyContentColoringsReturnValue = SearchBackgroundViewModel.stubValue()
+                self.mockSearchBackgroundPropsBuilder = SearchBackgroundViewPropsBuilderProtocolMock()
+                mockSearchBackgroundPropsBuilder.buildPropsKeywordsAppCopyContentColoringsReturnValue = SearchBackgroundViewProps.stubValue()
 
                 let lookupViewModel = SearchLookupViewModel(
                     searchInputViewModel: .nonDispatching(content: .stubValue()),
@@ -117,7 +117,7 @@ class SearchCoordinatorTests: QuickSpec {
                     urlOpenerService: dependencies.mockServiceContainer.urlOpenerService,
                     statePrism: dependencies.mockStatePrism,
                     actionPrism: dependencies.mockSearchActivityActionPrism,
-                    backgroundViewModelBuilder: dependencies.mockSearchBackgroundViewModelBuilder,
+                    backgroundPropsBuilder: dependencies.mockSearchBackgroundPropsBuilder,
                     lookupViewModelBuilder: dependencies.mockSearchLookupViewModelBuilder,
                     detailsViewContextBuilder: dependencies.mockSearchDetailsViewContextBuilder,
                     navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder

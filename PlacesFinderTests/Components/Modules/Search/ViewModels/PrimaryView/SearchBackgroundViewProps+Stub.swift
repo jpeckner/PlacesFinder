@@ -1,5 +1,5 @@
 //
-//  SearchBackgroundViewModel+Stub.swift
+//  SearchBackgroundViewProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -24,14 +24,14 @@
 
 import Foundation
 
-extension SearchBackgroundViewModel {
+extension SearchBackgroundViewProps {
 
     static func stubValue(
-        contentViewModel: SearchInputContentViewModel = .stubValue(),
-        instructionsViewModel: SearchInstructionsViewModel = .stubValue()
-    ) -> SearchBackgroundViewModel {
-        return SearchBackgroundViewModel(contentViewModel: contentViewModel,
-                                         instructionsViewModel: instructionsViewModel)
+        contentProps: SearchInputContentProps = .stubValue(),
+        instructionsProps: SearchInstructionsProps = .stubValue()
+    ) -> SearchBackgroundViewProps {
+        return SearchBackgroundViewProps(contentProps: contentProps,
+                                         instructionsProps: instructionsProps)
     }
 
 }

@@ -27,7 +27,7 @@ import Shared
 import SwiftDux
 
 enum SearchLookupChild: Equatable {
-    case instructions(SearchInstructionsViewModel)
+    case instructions(SearchInstructionsProps)
     case progress(SearchProgressViewModel)
     case results(SearchResultsViewModel)
     case noResults(SearchNoResultsFoundViewModel)
@@ -48,20 +48,20 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
-    private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
+    private let instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
     private let retryPropsBuilder: SearchRetryPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
-         instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
+         instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
          noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,
          retryPropsBuilder: SearchRetryPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
-        self.instructionsViewModelBuilder = instructionsViewModelBuilder
+        self.instructionsPropsBuilder = instructionsPropsBuilder
         self.resultsViewModelBuilder = resultsViewModelBuilder
         self.noResultsFoundViewModelBuilder = noResultsFoundViewModelBuilder
         self.retryPropsBuilder = retryPropsBuilder
@@ -73,11 +73,11 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
-            let instructionsViewModel = instructionsViewModelBuilder.buildViewModel(
+            let instructionsProps = instructionsPropsBuilder.buildProps(
                 copyContent: appCopyContent.searchInstructions,
                 colorings: appSkin.colorings.standard
             )
-            return .instructions(instructionsViewModel)
+            return .instructions(instructionsProps)
         case .locationRequested,
              .initialPageRequested:
             let progressViewModel = SearchProgressViewModel(colorings: appSkin.colorings.searchProgress)

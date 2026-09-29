@@ -1,6 +1,6 @@
 //
-//  SearchInstructionsViewModel+Stub.swift
-//  PlacesFinderTests
+//  SearchInputContentProps.swift
+//  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
 //  
@@ -23,19 +23,31 @@
 //  SOFTWARE.
 
 import Foundation
+import Shared
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable line_length
-extension SearchInstructionsViewModel {
+struct SearchInputContentProps: Equatable {
+    let keywords: NonEmptyString?
+    let barState: SearchInputParams.BarState
+    let placeholder: String
+}
 
-    static func stubValue(
-        props: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
-        resultsSource: String = "stubResultsSource",
-        colorings: AppStandardColorings = AppColorings.defaultColorings.standard
-    ) -> SearchInstructionsViewModel {
-        return SearchInstructionsViewModel(props: props,
-                                           resultsSource: resultsSource)
+// MARK: SearchInputContentPropsBuilder
+
+// sourcery: AutoMockable
+protocol SearchInputContentPropsBuilderProtocol {
+    func buildProps(keywords: NonEmptyString?,
+                    barState: SearchInputParams.BarState,
+                    copyContent: SearchInputCopyContent) -> SearchInputContentProps
+}
+
+class SearchInputContentPropsBuilder: SearchInputContentPropsBuilderProtocol {
+
+    func buildProps(keywords: NonEmptyString?,
+                    barState: SearchInputParams.BarState,
+                    copyContent: SearchInputCopyContent) -> SearchInputContentProps {
+        return SearchInputContentProps(keywords: keywords,
+                                       barState: barState,
+                                       placeholder: copyContent.placeholder)
     }
 
 }
-// swiftlint:enable blanket_disable_command

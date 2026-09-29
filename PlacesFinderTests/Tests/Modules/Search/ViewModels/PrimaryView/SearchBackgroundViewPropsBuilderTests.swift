@@ -1,5 +1,5 @@
 //
-//  SearchInputViewModelBuilderTests.swift
+//  SearchBackgroundViewPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,61 +22,63 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
+import Shared
+import SharedTestComponents
 import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInputViewModelBuilderTests: QuickSpec {
+// swiftlint:disable line_length
+class SearchBackgroundViewPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
-        let stubInputParams = SearchInputParams.stubValue()
-        let stubInputCopyContent = SearchInputCopyContent.stubValue()
+        let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
+        let stubAppCopyContent = AppCopyContent.stubValue()
         let stubContentProps = SearchInputContentProps.stubValue()
+        let stubInstructionsProps = SearchInstructionsProps.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockContentPropsBuilder: SearchInputContentPropsBuilderProtocolMock!
+        var mockInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocolMock!
 
-        var sut: SearchInputViewModelBuilder!
-        var result: SearchInputViewModel!
+        var sut: SearchBackgroundViewPropsBuilder!
+        var result: SearchBackgroundViewProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
-            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
-
             mockContentPropsBuilder = SearchInputContentPropsBuilderProtocolMock()
             mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReturnValue = stubContentProps
 
-            sut = SearchInputViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                              actionPrism: mockSearchActivityActionPrism,
-                                              contentPropsBuilder: mockContentPropsBuilder)
+            mockInstructionsPropsBuilder = SearchInstructionsPropsBuilderProtocolMock()
+            mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubInstructionsProps
+
+            sut = SearchBackgroundViewPropsBuilder(contentPropsBuilder: mockContentPropsBuilder,
+                                                   instructionsPropsBuilder: mockInstructionsPropsBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildDispatchingViewModel(
-                    inputParams: stubInputParams,
-                    copyContent: stubInputCopyContent
-                ) {
-                    .success(.stubValue())
-                }
+                result = sut.buildProps(keywords: stubKeywords,
+                                        appCopyContent: stubAppCopyContent,
+                                        colorings: AppColorings.defaultColorings.standard)
             }
 
             it("calls mockContentPropsBuilder with expected method and args") {
                 let receivedArgs = mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReceivedArguments
-                expect(receivedArgs?.keywords) == stubInputParams.params?.keywords
-                expect(receivedArgs?.barState) == stubInputParams.barState
-                expect(receivedArgs?.copyContent) == stubInputCopyContent
+                expect(receivedArgs?.keywords) == stubKeywords
+                expect(receivedArgs?.barState) == .isShowing(isEditing: false)
+                expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
             }
 
-            it("returns the viewmodel built by mockContentPropsBuilder") {
-                expect(result.content) == stubContentProps
+            it("calls mockInstructionsPropsBuilder with expected method and args") {
+                expect(mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchInstructions
+            }
+
+            it("returns the expected value") {
+                expect(result.contentProps) == stubContentProps
+                expect(result.instructionsProps) == stubInstructionsProps
             }
 
         }

@@ -26,12 +26,13 @@ import SwiftUI
 
 class SearchBackgroundViewController: UIHostingController<SearchBackgroundView>, SearchPrimaryViewControllerProtocol {
 
-    private let backgroundView: SearchBackgroundView
+    private let viewModel: SearchBackgroundView.ViewModel
 
-    init(viewModel: SearchBackgroundViewModel) {
-        self.backgroundView = SearchBackgroundView(viewModel: viewModel)
+    init(props: SearchBackgroundViewProps) {
+        let viewModel = SearchBackgroundView.ViewModel(props: props)
+        self.viewModel = viewModel
 
-        super.init(rootView: backgroundView)
+        super.init(rootView: SearchBackgroundView(viewModel: viewModel))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,8 +43,8 @@ class SearchBackgroundViewController: UIHostingController<SearchBackgroundView>,
 
 extension SearchBackgroundViewController {
 
-    func configure(viewModel: SearchBackgroundViewModel) {
-        rootView.viewModel.value = viewModel
+    func configure(props: SearchBackgroundViewProps) {
+        viewModel.props = props
     }
 
 }

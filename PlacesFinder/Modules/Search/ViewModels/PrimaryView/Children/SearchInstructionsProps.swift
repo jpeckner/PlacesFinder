@@ -1,8 +1,8 @@
 //
-//  SearchInputContentViewModel+Stub.swift
-//  PlacesFinderTests
+//  SearchInstructionsProps.swift
+//  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2019 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Foundation
 import Shared
 
-extension SearchInputContentViewModel {
+struct SearchInstructionsProps: Equatable {
+    let props: StaticInfoViewProps<AppStandardColorings>
+    let resultsSource: String
+}
 
-    static func stubValue(keywords: NonEmptyString? = nil,
-                          barState: SearchInputParams.BarState = .isHidden,
-                          placeholder: String = "stubPlaceholder") -> SearchInputContentViewModel {
-        return SearchInputContentViewModel(keywords: keywords,
-                                           barState: barState,
-                                           placeholder: placeholder)
+extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
+
+// MARK: SearchInstructionsPropsBuilder
+
+// sourcery: AutoMockable
+protocol SearchInstructionsPropsBuilderProtocol {
+    func buildProps(copyContent: SearchInstructionsCopyContent,
+                    colorings: AppStandardColorings) -> SearchInstructionsProps
+}
+
+class SearchInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol {
+
+    func buildProps(copyContent: SearchInstructionsCopyContent,
+                    colorings: AppStandardColorings) -> SearchInstructionsProps {
+        return SearchInstructionsProps(
+            props: copyContent.staticInfoViewProps(colorings: colorings),
+            resultsSource: copyContent.resultsSource
+        )
     }
 
 }

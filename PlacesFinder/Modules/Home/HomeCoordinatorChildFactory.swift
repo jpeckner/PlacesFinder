@@ -99,18 +99,18 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         )
         let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies)
 
-        let contentViewModelBuilder = SearchInputContentViewModelBuilder()
-        let instructionsViewModelBuilder = SearchInstructionsViewModelBuilder()
-        let backgroundViewModelBuilder = SearchBackgroundViewModelBuilder(
-            contentViewModelBuilder: contentViewModelBuilder,
-            instructionsViewModelBuilder: instructionsViewModelBuilder
+        let contentPropsBuilder = SearchInputContentPropsBuilder()
+        let instructionsPropsBuilder = SearchInstructionsPropsBuilder()
+        let backgroundPropsBuilder = SearchBackgroundViewPropsBuilder(
+            contentPropsBuilder: contentPropsBuilder,
+            instructionsPropsBuilder: instructionsPropsBuilder
         )
         let lookupViewModelBuilder = SearchLookupViewModelBuilder(
             actionSubscriber: searchActionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
-            contentViewModelBuilder: contentViewModelBuilder,
-            instructionsViewModelBuilder: instructionsViewModelBuilder
+            contentPropsBuilder: contentPropsBuilder,
+            instructionsPropsBuilder: instructionsPropsBuilder
         )
 
         let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: searchActionSubscriber,
@@ -129,7 +129,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  statePrism: statePrism,
                                  actionPrism: actionPrism,
-                                 backgroundViewModelBuilder: backgroundViewModelBuilder,
+                                 backgroundPropsBuilder: backgroundPropsBuilder,
                                  lookupViewModelBuilder: lookupViewModelBuilder,
                                  detailsViewContextBuilder: detailsViewContextBuilder,
                                  navigationBarViewModelBuilder: navigationBarViewModelBuilder)
@@ -194,11 +194,11 @@ private extension SearchLookupViewModelBuilder {
     convenience init(actionSubscriber: AnySubscriber<Search.Action, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
-                     contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol,
-                     instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol) {
+                     contentPropsBuilder: SearchInputContentPropsBuilderProtocol,
+                     instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol) {
         let inputViewModelBuilder = SearchInputViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                 actionPrism: actionPrism,
-                                                                contentViewModelBuilder: contentViewModelBuilder)
+                                                                contentPropsBuilder: contentPropsBuilder)
 
         let resultCellPropsBuilder = SearchResultCellPropsBuilder(copyFormatter: copyFormatter)
         let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
@@ -211,7 +211,7 @@ private extension SearchLookupViewModelBuilder {
 
         let childBuilder = SearchLookupChildBuilder(actionSubscriber: actionSubscriber,
                                                     actionPrism: actionPrism,
-                                                    instructionsViewModelBuilder: instructionsViewModelBuilder,
+                                                    instructionsPropsBuilder: instructionsPropsBuilder,
                                                     resultsViewModelBuilder: resultsViewModelBuilder,
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
                                                     retryPropsBuilder: retryPropsBuilder)

@@ -37,7 +37,7 @@ import UIKit
                                            titleViewModel: NavigationBarTitleViewModel,
                                            appSkin: AppSkin)
 
-    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
+    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps,
                                   titleViewModel: NavigationBarTitleViewModel,
                                   appSkin: AppSkin)
 

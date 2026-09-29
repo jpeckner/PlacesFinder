@@ -1,5 +1,5 @@
 //
-//  SearchInputContentViewModelBuilderTests.swift
+//  SearchInputContentPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -29,31 +29,31 @@ import SharedTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInputContentViewModelBuilderTests: QuickSpec {
+class SearchInputContentPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
 
-        var sut: SearchInputContentViewModelBuilder!
-        var result: SearchInputContentViewModel!
+        var sut: SearchInputContentPropsBuilder!
+        var result: SearchInputContentProps!
 
         beforeEach {
-            sut = SearchInputContentViewModelBuilder()
+            sut = SearchInputContentPropsBuilder()
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
             beforeEach {
                 let copyContent = SearchInputCopyContent.stubValue()
-                result = sut.buildViewModel(keywords: stubKeywords,
-                                            barState: .isShowing(isEditing: false),
-                                            copyContent: copyContent)
+                result = sut.buildProps(keywords: stubKeywords,
+                                        barState: .isShowing(isEditing: false),
+                                        copyContent: copyContent)
             }
 
             it("returns its expected value") {
-                expect(result) == SearchInputContentViewModel(keywords: stubKeywords,
-                                                              barState: .isShowing(isEditing: false),
-                                                              placeholder: "stubPlaceholder")
+                expect(result) == SearchInputContentProps(keywords: stubKeywords,
+                                                          barState: .isShowing(isEditing: false),
+                                                          placeholder: "stubPlaceholder")
             }
         }
 

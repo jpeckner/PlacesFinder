@@ -79,11 +79,11 @@ class SearchPresenter: SearchPresenterProtocol {
                                               appSkin: appSkin)
     }
 
-    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel,
+    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps,
                                   titleViewModel: NavigationBarTitleViewModel,
                                   appSkin: AppSkin) {
         guard let existingController: SearchBackgroundViewController = existingPrimaryController() else {
-            let controller = buildSearchBackgroundViewController(viewModel,
+            let controller = buildSearchBackgroundViewController(props,
                                                                  titleViewModel: titleViewModel,
                                                                  appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
@@ -93,7 +93,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel: viewModel)
+        existingController.configure(props: props)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -195,10 +195,10 @@ private extension SearchPresenter {
         return controller
     }
 
-    func buildSearchBackgroundViewController(_ viewModel: SearchBackgroundViewModel,
+    func buildSearchBackgroundViewController(_ props: SearchBackgroundViewProps,
                                              titleViewModel: NavigationBarTitleViewModel,
                                              appSkin: AppSkin) -> SearchBackgroundViewController {
-        let controller = SearchBackgroundViewController(viewModel: viewModel)
+        let controller = SearchBackgroundViewController(props: props)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

@@ -27,10 +27,10 @@ import SwiftUI
 
 struct SearchInstructionsView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchInstructionsViewModel>
+    @ObservedObject var viewModel: ValueObservable<SearchInstructionsProps>
 
-    init(viewModel: SearchInstructionsViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    init(props: SearchInstructionsProps) {
+        self.viewModel = ValueObservable(props)
     }
 
     var body: some View {
@@ -62,7 +62,7 @@ struct SearchInstructionsView: View {
     let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
     return SearchInstructionsView(
-        viewModel: SearchInstructionsViewModel(
+        props: SearchInstructionsProps(
             props: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard),
             resultsSource: appCopyContent.searchInstructions.resultsSource
         )
