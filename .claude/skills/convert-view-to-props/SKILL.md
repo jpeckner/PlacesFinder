@@ -40,8 +40,8 @@ Arguments: `$ARGUMENTS`
 4. Choose the pattern:
    - **Pattern A** applies when the view is only created inside other SwiftUI views.
    - **Pattern B** applies when the view is a `UIHostingController`'s `rootView` and the controller updates it in `configure(...)` (today that looks like `rootView.viewModel.value = …`).
-     - If the view is *also* used as a child elsewhere, convert the view itself with pattern A. Then add a thin pattern-B root view in the controller's file. This is what happened with `StaticInfoView` and `SearchNoInternetView`.
-     - If it's used only as that controller's root, it can hold the `SinglePropsViewModel` directly. Say so in your report.
+     - If the view is *also* used as a child elsewhere, convert the view itself with pattern A. Then add a thin pattern-B root view in its own file (see step 3). This is what happened with `StaticInfoView` and `SearchNoInternetView`.
+     - If it's used only as that controller's root, it can hold the `SinglePropsViewModel` directly, as `SearchBackgroundView` does. Say so in your report.
    - **Neither pattern:** if the view creates its own state (e.g. `LaunchView`'s `ValueObservable(ProgressState.loading)`), stop and ask the user. This skill doesn't cover that case.
 
 ## 2. Rename the data types
@@ -52,13 +52,13 @@ Rename a plain data struct to props when either of these is true:
 
 Everything else keeps its `…ViewModel` name until the view that reads it is converted:
 - **A wrapper this run doesn't otherwise touch**, even if every field is already a props value. For example, `SearchNoResultsFoundViewModel` (only `messageViewProps`) waits for `SearchLookupParentView`, and `AboutAppViewModel` (only `props`) waits for `AboutAppView`.
-- **A type that also holds data for an unconverted view.** Only rename its fields (see step 4). For example, `SearchInstructionsViewModel` holds `props` plus `resultsSource`, which unconverted `SearchInstructionsView` reads.
+- **A type that also holds data for an unconverted view.** Only rename its fields (see step 4). For example, `SearchInstructionsProps` holds `props` plus `resultsSource`, which unconverted `SearchInstructionsView` reads. It would have kept its `SearchInstructionsViewModel` name, but the user asked for the rename.
 
 Naming:
 - `XViewModel` → `XViewProps` when a view named `XView` reads it (`StaticInfoViewProps`, `SearchCTAViewProps`).
 - `XCellModel` → `XCellProps`.
 - When no view is named after the type, drop `View`. For example, `SearchRetryViewModel` → `SearchRetryProps`, because there is no `SearchRetryView`.
-- `SearchMessageViewProps` and `DownloadedImageProps` predate this rule. Leave them alone.
+- `SearchMessageViewProps` and `DownloadedImageProps` predate this rule, and the user chose the name `SearchInstructionsProps`. Leave them alone.
 
 Steps:
 1. `git mv` the source file, its `+Stub.swift`, and any builder test file (`XModelBuilderTests.swift` → `XPropsBuilderTests.swift`).
@@ -87,9 +87,14 @@ init(props: XViewProps) {
 ```
 In `body`, `viewModel.value.foo` becomes `props.foo`. Callers change from `XView(viewModel: …)` to `XView(props: …)`. Parents that still use `ValueObservable` themselves stay as they are.
 
-**Pattern B (hosting-controller root).** Model it on `SearchNoInternetViewController.swift`:
+**Pattern B (hosting-controller root).** Model it on `SearchNoInternetView.swift` and `SearchNoInternetViewController.swift`. The view and the controller each get their own file:
+- the view in `PlacesFinder/Modules/<Module>/Views/…/XView.swift`, e.g. `Search/Views/PrimaryView/Components/`;
+- the controller in `PlacesFinder/Modules/<Module>/ViewControllers/…/XViewController.swift`.
+
+Neither file needs a `// MARK:` for its single type.
+
 ```swift
-// MARK: - XView            (in the controller's file)
+// XView.swift
 
 struct XView: View {
 
@@ -106,8 +111,9 @@ struct XView: View {
     }
 
 }
-
-// MARK: - XViewController
+```
+```swift
+// XViewController.swift
 
 class XViewController: UIHostingController<XView>, … {
 
@@ -134,6 +140,14 @@ Rules for pattern B:
 - Reuse the shared `SinglePropsViewModel` in `PlacesFinder/UI/Components/` (it's `@MainActor @Observable`). Don't create a new `@Observable` class for each view.
 - The view stores the model as `private let viewModel: ViewModel`, **not** `@State`. SwiftUI only reads a `@State` initial value the first time the view appears, so a model passed in later would be silently ignored. `@State` is only for models the view creates itself.
 - Never reassign `rootView` in `configure`. Change `viewModel.props` instead.
+- If you create a new view file, copy the license header from a neighboring file, fixing the filename line and using the current year. Then register the file in `project.pbxproj` in the same targets as the controller:
+  ```bash
+  python3 .claude/skills/convert-view-to-props/add_to_pbxproj.py \
+      PlacesFinder/Modules/<Module>/Views/…/XView.swift \
+      --targets-like XViewController.swift \
+      --group-like <any file already in the destination folder>
+  ```
+  The script adds a file reference, one build file for each Sources phase that compiles the controller, and a group entry in alphabetical order. Then run `plutil -lint PlacesFinder.xcodeproj/project.pbxproj`.
 - Update the presenter and presenter protocol (`loadXViews(_ props: XViewProps, …)`, `buildXViewController(_ props: …)`) and the coordinator that builds the props.
 
 Update every `#Preview` block that uses the changed initializers.
@@ -199,6 +213,12 @@ grep -E "Executed [0-9]+ tests" "$LOG" | tail -1
 grep -E "warning:" "$LOG" | grep -E "(FileOne|FileTwo)\.swift" | sort -u
 ```
 Don't grep for a bare `error:`, because test names such as `…throws_an_error:` match it. SwiftLint runs as a build phase, so fix any new warnings in files you touched. Warnings elsewhere were already there; leave them.
+
+Renames that shorten names (`…ViewModel…` → `…Props…` drops 4 characters) can make existing `swiftlint:disable` comments unnecessary. SwiftLint then reports `superfluous_disable_command` warnings. Two cases have come up:
+- `// swiftlint:disable:next type_name` above a builder protocol whose name is now within the 40-character `type_name` limit.
+- `// swiftlint:disable line_length` in a test file whose lines are now all within 120 characters.
+
+Delete the disable comment in either case. After editing files following the test run, you can lint without rebuilding: `PATH="$PATH:/opt/homebrew/bin" mint run realm/SwiftLint swiftlint lint --quiet`, filtered to the files you touched.
 
 **If `xcodebuild test` hangs:** it can hang after every test has finished, whether they passed or failed. If the log ends with `Test Suite 'All tests' passed` (or `failed`) followed by the `Executed N tests` totals, and it hasn't grown for about two minutes, stop only the process you started. A run limited with `-only-testing` prints `Test Suite 'Selected tests'` instead of `'All tests'`, so any automated watcher must match both, e.g. `grep -E "Test Suite '(All|Selected) tests' (passed|failed)"`. Find its PID with `pgrep -fl "xcodebuild test"`, then `kill <pid>`. The totals already in the log are the final results; `** TEST SUCCEEDED **` or `** TEST FAILED **` won't be printed in that case. Mention the hang in your report. Don't wait indefinitely, and don't kill `xcodebuild` processes you didn't start.
 

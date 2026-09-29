@@ -22,28 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
 import SwiftUI
-
-// MARK: - SearchNoInternetView
-
-struct SearchNoInternetView: View {
-
-    typealias ViewModel = SinglePropsViewModel<SearchNoInternetViewProps>
-
-    private let viewModel: ViewModel
-
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
-    }
-
-    var body: some View {
-        StaticInfoView(props: viewModel.props.messageViewProps.props)
-    }
-
-}
-
-// MARK: - SearchNoInternetViewController
 
 class SearchNoInternetViewController: UIHostingController<SearchNoInternetView>,
                                       SearchPrimaryViewControllerProtocol {

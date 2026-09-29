@@ -1,8 +1,8 @@
 //
-//  SearchLocationDisabledViewController.swift
+//  SearchLocationDisabledView.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,28 +24,18 @@
 
 import SwiftUI
 
-class SearchLocationDisabledViewController: UIHostingController<SearchLocationDisabledView>,
-                                            SearchPrimaryViewControllerProtocol {
+struct SearchLocationDisabledView: View {
 
-    private let viewModel: SearchLocationDisabledView.ViewModel
+    typealias ViewModel = SinglePropsViewModel<SearchLocationDisabledViewProps>
 
-    init(props: SearchLocationDisabledViewProps) {
-        let viewModel = SearchLocationDisabledView.ViewModel(props: props)
+    private let viewModel: ViewModel
+
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
-
-        super.init(rootView: SearchLocationDisabledView(viewModel: viewModel))
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-extension SearchLocationDisabledViewController {
-
-    func configure(props: SearchLocationDisabledViewProps) {
-        viewModel.props = props
+    var body: some View {
+        SearchCTAView(props: viewModel.props.ctaViewProps)
     }
 
 }
