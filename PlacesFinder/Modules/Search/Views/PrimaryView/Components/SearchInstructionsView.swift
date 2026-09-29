@@ -27,27 +27,27 @@ import SwiftUI
 
 struct SearchInstructionsView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchInstructionsProps>
+    private let props: SearchInstructionsProps
 
     init(props: SearchInstructionsProps) {
-        self.viewModel = ValueObservable(props)
+        self.props = props
     }
 
     var body: some View {
         VerticallyCenteredScrollView {
-            StaticInfoView(props: viewModel.value.props)
+            StaticInfoView(props: props.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
             HStack(spacing: .zero) {
-                Text(viewModel.value.resultsSource)
+                Text(props.resultsSource)
                     .modifier(
                         textStyleClass: .sourceAPILabel,
-                        textColoring: viewModel.value.props.colorings.bodyTextColoring
+                        textColoring: props.props.colorings.bodyTextColoring
                     )
                     // Padding is needed to align this text with image text
                     .padding([.top], 4)
 
-                APILogoView(viewColoring: viewModel.value.props.colorings.viewColoring)
+                APILogoView(viewColoring: props.props.colorings.viewColoring)
             }
         }
         .scrollBounceBasedOnSize()
