@@ -160,7 +160,7 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                 it("calls mockPlaceLookupService.buildInitialPageRequestToken()") {
                     performTest()
 
-                    expect(mockPlaceLookupService.buildInitialPageRequestTokenPlaceLookupParamsReceivedPlaceLookupParams) == stubParams
+                    await expect(mockPlaceLookupService.buildInitialPageRequestTokenPlaceLookupParamsReceivedPlaceLookupParams).toEventually(equal(stubParams))
                 }
 
                 context("when mockPlaceLookupService.buildInitialPageRequestToken() throws an error") {
@@ -328,7 +328,8 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                 }
 
                                 it("...and a nil value for the next request token") {
-                                    await expect(mockSearchStore.dispatchedNextRequestToken).toEventually(beNil())
+                                    await expect(mockSearchStore.dispatchedPageAction).toEventually(equal(.success))
+                                    expect(mockSearchStore.dispatchedNextRequestToken) == nil
                                 }
                             }
 
