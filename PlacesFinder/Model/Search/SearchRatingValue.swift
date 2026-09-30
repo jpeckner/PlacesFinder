@@ -47,8 +47,8 @@ enum SearchRatingValue: Double {
 
 extension SearchRatingValue {
 
-    init?(averageRating: Percentage) {
-        switch averageRating.value * SearchRatingValue.maxRating {
+    init?(averageRating: Double) {
+        switch averageRating.rounded(toNearest: .oneHalf) {
         case 1.0:
             self = .one
         case 1.5:

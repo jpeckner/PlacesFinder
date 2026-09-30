@@ -171,8 +171,7 @@ extension YelpBusiness {
             return nil
         }
 
-        let averageRating = Percentage(decimalOf: rating / YelpBusiness.maxRating)
-        return PlaceLookupRatingFields(averageRating: averageRating,
+        return PlaceLookupRatingFields(averageRating: rating,
                                        numRatings: numRatings)
     }
 

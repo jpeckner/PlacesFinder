@@ -77,7 +77,9 @@ private extension SearchEntityModel {
 private extension PlaceLookupRatingFields {
 
     var searchRatings: SearchRatings? {
-        guard let average = SearchRatingValue(averageRating: averageRating) else { return nil }
+        guard let average = SearchRatingValue(averageRating: averageRating) else {
+            return nil
+        }
 
         return SearchRatings(average: average,
                              numRatings: numRatings)
