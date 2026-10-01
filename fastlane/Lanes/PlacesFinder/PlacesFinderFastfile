@@ -7,3 +7,7 @@ lane :generate_placesfinder do |options|
   
   run_script("open ../PlacesFinder.xcodeproj")
 end
+
+lane :run_sourcery do
+  generate_sourcery_files()
+end

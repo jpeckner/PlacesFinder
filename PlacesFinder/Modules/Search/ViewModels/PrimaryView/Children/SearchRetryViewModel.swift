@@ -46,7 +46,7 @@ class SearchRetryViewModelBuilder: SearchRetryViewModelBuilderProtocol {
                         colorings: SearchCTAViewColorings,
                         ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
         let ctaViewModel = SearchCTAViewModel(
-            infoViewModel: copyContent.staticInfoViewModel(colorings: colorings),
+            props: copyContent.staticInfoViewProps(colorings: colorings),
             ctaTitle: copyContent.ctaTitle,
             ctaBlock: IgnoredEquatable(ctaBlock)
         )

@@ -1,8 +1,8 @@
 //
-//  SearchMessageViewModel+Stub.swift
-//  PlacesFinderTests
+//  SinglePropsViewModel.swift
+//  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,17 +22,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import Observation
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable line_length
-extension SearchMessageViewModel {
+@MainActor
+@Observable
+class SinglePropsViewModel<TProps> {
+    var props: TProps
 
-    static func stubValue(
-        infoViewModel: StaticInfoViewModel<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
-    ) -> SearchMessageViewModel {
-        return SearchMessageViewModel(infoViewModel: infoViewModel)
+    init(props: TProps) {
+        self.props = props
     }
-
 }
-// swiftlint:enable blanket_disable_command

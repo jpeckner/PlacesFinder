@@ -1,5 +1,5 @@
 //
-//  SearchNoInternetViewModel.swift
+//  SearchNoInternetViewProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -24,17 +24,17 @@
 
 import Foundation
 
-struct SearchNoInternetViewModel {
-    let messageViewModel: SearchMessageViewModel
+struct SearchNoInternetViewProps {
+    let messageViewProps: SearchMessageViewProps
 }
 
 extension SearchNoInternetCopyContent: StaticInfoCopyProtocol {}
 
-extension SearchNoInternetViewModel {
+extension SearchNoInternetViewProps {
 
     init(copyContent: SearchNoInternetCopyContent,
          colorings: AppStandardColorings) {
-        self.messageViewModel = SearchMessageViewModel(
+        self.messageViewProps = SearchMessageViewProps(
             copyContent: copyContent,
             colorings: colorings
         )

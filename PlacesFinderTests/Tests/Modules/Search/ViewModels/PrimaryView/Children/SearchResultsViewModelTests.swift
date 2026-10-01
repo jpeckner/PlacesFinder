@@ -60,7 +60,7 @@ class SearchResultsViewModelTests: QuickSpec {
             stubResultViewModels = NonEmptyArray([0, 1, 2].map { idx in
                 SearchResultViewModel.stubValue(
                     actionSubscriber: AnySubscriber(mockActionSubscriber),
-                    cellModel: SearchResultCellProps.stubValue(name: .stubValue("stubName_\(idx)")),
+                    cellProps: SearchResultCellProps.stubValue(name: .stubValue("stubName_\(idx)")),
                     detailEntityAction: .searchActivity(.detailedEntity(.stubValue(id: .stubValue("stubID_\(idx)"))))
                 )
             })
@@ -93,7 +93,7 @@ class SearchResultsViewModelTests: QuickSpec {
             }
 
             it("returns the view-model at the specified index") {
-                expect(result.resultViewModels.value[2].cellModel) == stubResultViewModels.value[2].cellModel
+                expect(result.resultViewModels.value[2].cellProps) == stubResultViewModels.value[2].cellProps
             }
 
         }

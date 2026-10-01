@@ -41,11 +41,11 @@ class SearchPresenter: SearchPresenterProtocol {
         searchContainerViewController.configure(tabItemProperties)
     }
 
-    func loadNoInternetViews(_ viewModel: SearchNoInternetViewModel,
+    func loadNoInternetViews(_ props: SearchNoInternetViewProps,
                              titleViewModel: NavigationBarTitleViewModel,
                              appSkin: AppSkin) {
         guard let existingController: SearchNoInternetViewController = existingPrimaryController() else {
-            let controller = buildNoInternetViewController(viewModel,
+            let controller = buildNoInternetViewController(props,
                                                            titleViewModel: titleViewModel,
                                                            appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
@@ -55,7 +55,7 @@ class SearchPresenter: SearchPresenterProtocol {
             return
         }
 
-        existingController.configure(viewModel: viewModel)
+        existingController.configure(props: props)
         existingController.configureTitleView(titleViewModel,
                                               appSkin: appSkin)
     }
@@ -175,10 +175,10 @@ private extension SearchPresenter {
 
 private extension SearchPresenter {
 
-    func buildNoInternetViewController(_ viewModel: SearchNoInternetViewModel,
+    func buildNoInternetViewController(_ props: SearchNoInternetViewProps,
                                        titleViewModel: NavigationBarTitleViewModel,
                                        appSkin: AppSkin) -> SearchNoInternetViewController {
-        let controller = SearchNoInternetViewController(viewModel: viewModel)
+        let controller = SearchNoInternetViewController(props: props)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

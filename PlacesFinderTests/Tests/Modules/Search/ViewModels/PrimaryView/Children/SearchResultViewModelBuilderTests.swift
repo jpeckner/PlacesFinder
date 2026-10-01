@@ -36,11 +36,11 @@ class SearchResultViewModelBuilderTests: QuickSpec {
     override func spec() {
 
         let stubEntityModel = SearchEntityModel.stubValue()
-        let stubResultCellModel = SearchResultCellProps.stubValue()
+        let stubResultCellProps = SearchResultCellProps.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var mockResultCellModelBuilder: SearchResultCellPropsBuilderProtocolMock!
+        var mockResultCellPropsBuilder: SearchResultCellPropsBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var sut: SearchResultViewModelBuilder!
@@ -48,15 +48,15 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            mockResultCellModelBuilder = SearchResultCellPropsBuilderProtocolMock()
-            mockResultCellModelBuilder.buildViewModelModelResultsCopyContentColoringsReturnValue = stubResultCellModel
+            mockResultCellPropsBuilder = SearchResultCellPropsBuilderProtocolMock()
+            mockResultCellPropsBuilder.buildPropsModelResultsCopyContentColoringsReturnValue = stubResultCellProps
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.detailEntityActionReturnValue = .detailedEntity(stubEntityModel)
 
             sut = SearchResultViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                actionPrism: mockSearchActivityActionPrism,
-                                               resultCellModelBuilder: mockResultCellModelBuilder)
+                                               resultCellPropsBuilder: mockResultCellPropsBuilder)
         }
 
         describe("buildViewModel()") {
@@ -69,14 +69,14 @@ class SearchResultViewModelBuilderTests: QuickSpec {
                                             colorings: AppColorings.defaultColorings.searchResults)
             }
 
-            it("calls mockResultCellModelBuilder with expected method and args") {
-                let receivedArgs = mockResultCellModelBuilder.buildViewModelModelResultsCopyContentColoringsReceivedArguments
+            it("calls mockResultCellPropsBuilder with expected method and args") {
+                let receivedArgs = mockResultCellPropsBuilder.buildPropsModelResultsCopyContentColoringsReceivedArguments
                 expect(receivedArgs?.model) == stubEntityModel
                 expect(receivedArgs?.resultsCopyContent) == stubCopyContent
             }
 
-            it("returns the SearchResultCellProps returned by mockResultCellModelBuilder") {
-                expect(result.cellModel) == stubResultCellModel
+            it("returns the SearchResultCellProps returned by mockResultCellPropsBuilder") {
+                expect(result.cellProps) == stubResultCellProps
             }
 
             it("includes the Action returned by mockSearchActivityActionPrism") {

@@ -34,13 +34,13 @@ struct SearchResultsView: View {
     }
 
     var body: some View {
-        List(viewModel.value.resultViewModels.value.indexed, id: \.element.cellModel.id) { index, resultViewModel in
+        List(viewModel.value.resultViewModels.value.indexed, id: \.element.cellProps.id) { index, resultViewModel in
             Button(
                 action: {
                     viewModel.value.dispatchDetailsAction(rowIndex: index)
                 },
                 label: {
-                    SearchResultCell(props: resultViewModel.cellModel)
+                    SearchResultCell(props: resultViewModel.cellProps)
                         .onAppear {
                             dispatchRequestIfApplicable(currentIndex: index)
                         }

@@ -1,8 +1,8 @@
 //
-//  AboutAppViewModel.swift
+//  SearchMessageViewProps.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2022 Justin Peckner
+//  Copyright (c) 2019 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,16 @@
 //  SOFTWARE.
 
 import Foundation
-import Shared
 
-struct AboutAppViewModel {
-    let props: StaticInfoViewProps<AboutAppViewColorings>
+struct SearchMessageViewProps: Equatable {
+    let props: StaticInfoViewProps<AppStandardColorings>
+}
 
-    init(copyContent: AboutAppViewCopyContent,
-         colorings: AboutAppViewColorings,
-         appDisplayName: NonEmptyString,
-         appVersion: NonEmptyString) {
-        let titleFormatted = String(
-            format: copyContent.titleFormat,
-            appDisplayName.value
-        )
+extension SearchMessageViewProps {
 
-        let descriptionFormatted = String(
-            format: copyContent.descriptionFormat,
-            appVersion.value,
-            Calendar.current.component(.year, from: Date())
-        )
-
-        self.props = StaticInfoViewProps(
-            imageName: copyContent.iconImageName,
-            title: titleFormatted,
-            description: descriptionFormatted,
-            colorings: colorings
-        )
+    init(copyContent: StaticInfoCopyProtocol,
+         colorings: AppStandardColorings) {
+        self.props = copyContent.staticInfoViewProps(colorings: colorings)
     }
+
 }

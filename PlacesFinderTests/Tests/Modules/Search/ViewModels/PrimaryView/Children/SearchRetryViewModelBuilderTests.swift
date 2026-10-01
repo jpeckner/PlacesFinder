@@ -57,8 +57,8 @@ class SearchRetryViewModelBuilderTests: QuickSpec {
                 }
             }
 
-            it("returns the expected infoViewModel") {
-                expect(result.ctaViewModel.infoViewModel) == stubCopyContent.staticInfoViewModel(
+            it("returns the expected props") {
+                expect(result.ctaViewModel.props) == stubCopyContent.staticInfoViewProps(
                     colorings: AppColorings.defaultColorings.searchCTA
                 )
             }

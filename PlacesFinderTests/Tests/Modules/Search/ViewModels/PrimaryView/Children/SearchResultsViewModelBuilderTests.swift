@@ -65,9 +65,9 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
             mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
             mockResultViewModelBuilder.buildViewModelModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
-                let cellModel = SearchResultCellProps.stubValue(name: entityModel.name)
+                let cellProps = SearchResultCellProps.stubValue(name: entityModel.name)
                 return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                                       cellModel: cellModel,
+                                                       cellProps: cellProps,
                                                        detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
             }
 
@@ -146,7 +146,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
                 expect(result.resultViewModels.value.count) == 3
                 for idx in 0..<3 {
-                    expect(result.resultViewModels.value[idx].cellModel) == expectedViewModels.value[idx].cellModel
+                    expect(result.resultViewModels.value[idx].cellProps) == expectedViewModels.value[idx].cellProps
                 }
             }
 

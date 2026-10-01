@@ -27,32 +27,32 @@ import SwiftUI
 
 struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 
-    @ObservedObject var viewModel: ValueObservable<StaticInfoViewModel<TColorings>>
+    private let props: StaticInfoViewProps<TColorings>
 
-    init(viewModel: StaticInfoViewModel<TColorings>) {
-        self.viewModel = ValueObservable(viewModel)
+    init(props: StaticInfoViewProps<TColorings>) {
+        self.props = props
     }
 
     var body: some View {
         VStack {
-            Image(viewModel.value.imageName)
+            Image(props.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 160)
 
-            Text(viewModel.value.title)
+            Text(props.title)
                 .modifier(
                     textStyleClass: .title,
-                    textColoring: viewModel.value.colorings.titleTextColoring
+                    textColoring: props.colorings.titleTextColoring
                 )
                 .scaledToFit()
                 .minimumScaleFactor(0.25)
                 .lineLimit(1)
 
-            Text(viewModel.value.description)
+            Text(props.description)
                 .modifier(
                     textStyleClass: .body,
-                    textColoring: viewModel.value.colorings.bodyTextColoring
+                    textColoring: props.colorings.bodyTextColoring
                 )
         }
         .padding(EdgeInsets(uniformInset: 16))
@@ -68,7 +68,7 @@ struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
     let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
     return StaticInfoView(
-        viewModel: appCopyContent.searchInstructions.staticInfoViewModel(colorings: appColorings.standard)
+        props: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard)
     )
 }
 

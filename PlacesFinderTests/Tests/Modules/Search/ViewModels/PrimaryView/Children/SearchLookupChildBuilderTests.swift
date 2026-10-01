@@ -40,7 +40,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubSearchParams = SearchParams.stubValue()
         let stubInstructionsViewModel = SearchInstructionsViewModel.stubValue()
-        let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewModel: .stubValue())
+        let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewProps: .stubValue())
         let stubRetryViewModel = SearchRetryViewModel(ctaViewModel: .stubValue())
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!

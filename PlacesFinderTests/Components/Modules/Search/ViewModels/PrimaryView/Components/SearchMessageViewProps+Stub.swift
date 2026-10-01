@@ -1,8 +1,8 @@
 //
-//  SearchMessageViewModel.swift
-//  PlacesFinder
+//  SearchMessageViewProps+Stub.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2020 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,12 @@
 
 import Foundation
 
-struct SearchMessageViewModel: Equatable {
-    let infoViewModel: StaticInfoViewModel<AppStandardColorings>
-}
+extension SearchMessageViewProps {
 
-extension SearchMessageViewModel {
-
-    init(copyContent: StaticInfoCopyProtocol,
-         colorings: AppStandardColorings) {
-        self.infoViewModel = copyContent.staticInfoViewModel(colorings: colorings)
+    static func stubValue(
+        props: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard)
+    ) -> SearchMessageViewProps {
+        return SearchMessageViewProps(props: props)
     }
 
 }

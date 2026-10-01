@@ -50,8 +50,8 @@ class SearchNoResultsFoundViewModelBuilderTests: QuickSpec {
                                             colorings: AppColorings.defaultColorings.standard)
             }
 
-            it("returns the expected infoViewModel") {
-                expect(result.messageViewModel) == SearchMessageViewModel(
+            it("returns the expected props") {
+                expect(result.messageViewProps) == SearchMessageViewProps(
                     copyContent: stubCopyContent,
                     colorings: AppColorings.defaultColorings.standard
                 )

@@ -27,14 +27,14 @@ import Shared
 import SwiftDux
 
 struct SearchResultViewModel: Equatable {
-    let cellModel: SearchResultCellProps
+    let cellProps: SearchResultCellProps
     private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
     private let detailEntityAction: IgnoredEquatable<Search.Action>
 
-    init(cellModel: SearchResultCellProps,
+    init(cellProps: SearchResultCellProps,
          actionSubscriber: AnySubscriber<Search.Action, Never>,
          detailEntityAction: Search.Action) {
-        self.cellModel = cellModel
+        self.cellProps = cellProps
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
     }
@@ -61,25 +61,25 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
-    private let resultCellModelBuilder: SearchResultCellPropsBuilderProtocol
+    private let resultCellPropsBuilder: SearchResultCellPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
-         resultCellModelBuilder: SearchResultCellPropsBuilderProtocol) {
+         resultCellPropsBuilder: SearchResultCellPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
-        self.resultCellModelBuilder = resultCellModelBuilder
+        self.resultCellPropsBuilder = resultCellPropsBuilder
     }
 
     func buildViewModel(model: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent,
                         colorings: SearchResultsViewColorings) -> SearchResultViewModel {
-        let cellModel = resultCellModelBuilder.buildViewModel(model: model,
-                                                              resultsCopyContent: resultsCopyContent,
-                                                              colorings: colorings)
+        let cellProps = resultCellPropsBuilder.buildProps(model: model,
+                                                          resultsCopyContent: resultsCopyContent,
+                                                          colorings: colorings)
         let detailEntityAction = actionPrism.detailEntityAction(model)
 
-        return SearchResultViewModel(cellModel: cellModel,
+        return SearchResultViewModel(cellProps: cellProps,
                                      actionSubscriber: actionSubscriber,
                                      detailEntityAction: .searchActivity(detailEntityAction))
     }
