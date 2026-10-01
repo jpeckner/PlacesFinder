@@ -29,10 +29,10 @@ import UIKit
 
 struct DownloadedImageViewSUI: View {
 
-    private let imageURL: URL
+    private let imageURL: URL?
     private let placeholderImage: Image
 
-    init(imageURL: URL,
+    init(imageURL: URL?,
          placeholderImage: Image = Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))) {
         self.imageURL = imageURL
         self.placeholderImage = placeholderImage

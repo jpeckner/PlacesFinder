@@ -238,9 +238,9 @@ class YelpRequestServiceTests: QuickSpec {
                     await performTest()
                 }
 
-                // The payload has 50 businesses, 5 of which aren't displayable
-                it("returns an entity for each displayable business in the payload") {
-                    expect(returnedEntities?.count) == 45
+                // The payload has 50 businesses, none of which are permanently closed
+                it("returns an entity for each business in the payload") {
+                    expect(returnedEntities?.count) == 50
                 }
 
                 it("returns the entities in the same order as the payload") {
@@ -252,17 +252,19 @@ class YelpRequestServiceTests: QuickSpec {
                     expect(returnedEntities?.last?.id.value) == "oTRQsmZ7ac9V5Zs8wt8x_A"
                 }
 
-                it("omits businesses that have no image") {
-                    let omittedIDs: Set<String> = [
+                it("returns a nil image for businesses that have no image") {
+                    let imagelessIDs: Set<String> = [
                         "zXCta1P2Xv43sw-Lo5kMYw",    // "image_url": ""
                         "icQi0anMKE7ix4VOMRWyfQ",    // Same as above
                         "f0YqSx9HUXbSkKsrqoWSyQ",    // Same as above
                         "KjGCxB742V7Z2e1KhFeuOg",    // Same as above
                         "dCos-4Ln0FHKco6H-ilQPg",    // Same as above
                     ]
-                    let returnedIDs = Set(returnedEntities?.map { $0.id.value } ?? [])
+                    let returnedImagelessIDs = Set(
+                        returnedEntities?.filter { $0.image == nil }.map { $0.id.value } ?? []
+                    )
 
-                    expect(returnedIDs.isDisjoint(with: omittedIDs)) == true
+                    expect(returnedImagelessIDs) == imagelessIDs
                 }
 
                 it("returns all fields of a business that has all of them") {

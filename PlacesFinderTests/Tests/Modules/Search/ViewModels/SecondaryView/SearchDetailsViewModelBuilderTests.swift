@@ -136,10 +136,26 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
                     expect(returnedViewModel()?.infoViewModel?.pricing) == "formatPricingPricingReturnValue"
                 }
 
+                it("...and with the model's image...") {
+                    expect(returnedViewModel()?.infoViewModel?.image.url) == stubModel.image
+                    expect(returnedViewModel()?.infoViewModel?.image.url) != nil
+                }
+
                 it("...and the block returned from buildOpenURLBlock()") {
                     expect(blockCalled) == false
                     returnedViewModel()?.infoViewModel?.apiLinkCallback?.value()
                     expect(blockCalled) == true
+                }
+
+                context("when the model has no image") {
+                    beforeEach {
+                        constructResult(entity: .stubValue(image: nil))
+                    }
+
+                    it("contains .info as a viewmodel, with a nil image URL") {
+                        expect(returnedViewModel()?.infoViewModel) != nil
+                        expect(returnedViewModel()?.infoViewModel?.image.url) == nil
+                    }
                 }
 
                 context("when the model has no ratings") {

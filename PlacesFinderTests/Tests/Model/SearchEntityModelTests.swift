@@ -52,12 +52,13 @@ class SearchEntityModelTests: QuickSpec {
                                          isPermanentlyClosed: isPermanentlyClosed)
             }
 
-            func expectedModel(ratings: SearchRatings? = stubRatings) -> SearchEntityModel {
+            func expectedModel(ratings: SearchRatings? = stubRatings,
+                               image: URL? = .stubValue()) -> SearchEntityModel {
                 return SearchEntityModel(id: .stubValue("stubID"),
                                          name: .stubValue("stubEntityName"),
                                          url: .stubValue(),
                                          ratings: ratings,
-                                         image: .stubValue(),
+                                         image: image,
                                          addressLines: .stubValue(),
                                          displayPhone: .stubValue("stubDisplayPhone"),
                                          dialablePhone: .stubValue("stubDialablePhone"),
@@ -72,8 +73,8 @@ class SearchEntityModelTests: QuickSpec {
             }
 
             context("else when the image arg is nil") {
-                it("returns nil") {
-                    expect(buildModel(image: nil)) == nil
+                it("returns a SearchEntityModel with the args' values, including a nil image") {
+                    expect(buildModel(image: nil)) == expectedModel(image: nil)
                 }
             }
 
