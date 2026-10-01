@@ -11,8 +11,13 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:PlacesFinderTests.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -20,6 +25,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E862C24CA0323107692499A1"
                BuildableName = "PlacesFinderTests.xctest"
+               BlueprintName = "PlacesFinderTests"
                ReferencedContainer = "container:PlacesFinder.xcodeproj">
             </BuildableReference>
          </TestableReference>
