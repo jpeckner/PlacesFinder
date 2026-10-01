@@ -1,5 +1,5 @@
 //
-//  SearchResultCellModel.swift
+//  SearchResultCellProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -25,25 +25,25 @@
 import Foundation
 import Shared
 
-struct SearchResultCellModel: Identifiable, Equatable {
+struct SearchResultCellProps: Identifiable, Equatable {
     let id: NonEmptyString
     let name: NonEmptyString
     let ratingsAverage: SearchRatingValue
     let pricing: String?
-    let image: DownloadedImageViewModel
+    let image: DownloadedImageProps
     let colorings: SearchResultsViewColorings
 }
 
-// MARK: SearchResultCellModelBuilder
+// MARK: SearchResultCellPropsBuilder
 
 // sourcery: AutoMockable
-protocol SearchResultCellModelBuilderProtocol {
+protocol SearchResultCellPropsBuilderProtocol {
     func buildViewModel(model: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent,
-                        colorings: SearchResultsViewColorings) -> SearchResultCellModel
+                        colorings: SearchResultsViewColorings) -> SearchResultCellProps
 }
 
-class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
+class SearchResultCellPropsBuilder: SearchResultCellPropsBuilderProtocol {
 
     let copyFormatter: SearchCopyFormatterProtocol
 
@@ -53,13 +53,13 @@ class SearchResultCellModelBuilder: SearchResultCellModelBuilderProtocol {
 
     func buildViewModel(model: SearchEntityModel,
                         resultsCopyContent: SearchResultsCopyContent,
-                        colorings: SearchResultsViewColorings) -> SearchResultCellModel {
-        SearchResultCellModel(
+                        colorings: SearchResultsViewColorings) -> SearchResultCellProps {
+        SearchResultCellProps(
             id: model.id,
             name: model.name,
             ratingsAverage: model.ratings.average,
             pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
-            image: DownloadedImageViewModel(url: model.image),
+            image: DownloadedImageProps(url: model.image),
             colorings: colorings
         )
     }

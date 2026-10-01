@@ -200,7 +200,7 @@ private extension SearchLookupViewModelBuilder {
                                                                 actionPrism: actionPrism,
                                                                 contentViewModelBuilder: contentViewModelBuilder)
 
-        let resultCellModelBuilder = SearchResultCellModelBuilder(copyFormatter: copyFormatter)
+        let resultCellModelBuilder = SearchResultCellPropsBuilder(copyFormatter: copyFormatter)
         let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
                                                                   actionPrism: actionPrism,
                                                                   resultCellModelBuilder: resultCellModelBuilder)

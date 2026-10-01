@@ -1,5 +1,5 @@
 //
-//  SearchResultCellModelBuilderTests.swift
+//  SearchResultCellPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -27,26 +27,26 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchResultCellModelBuilderTests: QuickSpec {
+class SearchResultCellPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
         var mockFormatter: SearchCopyFormatterProtocolMock!
 
-        var sut: SearchResultCellModelBuilder!
+        var sut: SearchResultCellPropsBuilder!
 
         beforeEach {
             mockFormatter = SearchCopyFormatterProtocolMock()
             mockFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
 
-            sut = SearchResultCellModelBuilder(copyFormatter: mockFormatter)
+            sut = SearchResultCellPropsBuilder(copyFormatter: mockFormatter)
         }
 
         describe("buildViewModel()") {
             let stubEntityModel = SearchEntityModel.stubValue()
             let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-            var result: SearchResultCellModel!
+            var result: SearchResultCellProps!
 
             beforeEach {
                 result = sut.buildViewModel(model: stubEntityModel,

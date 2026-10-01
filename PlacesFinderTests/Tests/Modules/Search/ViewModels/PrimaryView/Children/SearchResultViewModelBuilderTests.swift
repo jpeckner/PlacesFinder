@@ -36,11 +36,11 @@ class SearchResultViewModelBuilderTests: QuickSpec {
     override func spec() {
 
         let stubEntityModel = SearchEntityModel.stubValue()
-        let stubResultCellModel = SearchResultCellModel.stubValue()
+        let stubResultCellModel = SearchResultCellProps.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var mockResultCellModelBuilder: SearchResultCellModelBuilderProtocolMock!
+        var mockResultCellModelBuilder: SearchResultCellPropsBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var sut: SearchResultViewModelBuilder!
@@ -48,7 +48,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            mockResultCellModelBuilder = SearchResultCellModelBuilderProtocolMock()
+            mockResultCellModelBuilder = SearchResultCellPropsBuilderProtocolMock()
             mockResultCellModelBuilder.buildViewModelModelResultsCopyContentColoringsReturnValue = stubResultCellModel
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
@@ -75,7 +75,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
                 expect(receivedArgs?.resultsCopyContent) == stubCopyContent
             }
 
-            it("returns the SearchResultCellModel returned by mockResultCellModelBuilder") {
+            it("returns the SearchResultCellProps returned by mockResultCellModelBuilder") {
                 expect(result.cellModel) == stubResultCellModel
             }
 

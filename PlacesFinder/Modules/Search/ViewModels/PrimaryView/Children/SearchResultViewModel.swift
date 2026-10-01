@@ -27,11 +27,11 @@ import Shared
 import SwiftDux
 
 struct SearchResultViewModel: Equatable {
-    let cellModel: SearchResultCellModel
+    let cellModel: SearchResultCellProps
     private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
     private let detailEntityAction: IgnoredEquatable<Search.Action>
 
-    init(cellModel: SearchResultCellModel,
+    init(cellModel: SearchResultCellProps,
          actionSubscriber: AnySubscriber<Search.Action, Never>,
          detailEntityAction: Search.Action) {
         self.cellModel = cellModel
@@ -61,11 +61,11 @@ class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
-    private let resultCellModelBuilder: SearchResultCellModelBuilderProtocol
+    private let resultCellModelBuilder: SearchResultCellPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchDetailsActionPrismProtocol,
-         resultCellModelBuilder: SearchResultCellModelBuilderProtocol) {
+         resultCellModelBuilder: SearchResultCellPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.resultCellModelBuilder = resultCellModelBuilder

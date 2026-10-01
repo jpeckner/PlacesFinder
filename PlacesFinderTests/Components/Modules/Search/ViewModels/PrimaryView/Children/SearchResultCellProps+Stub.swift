@@ -1,5 +1,5 @@
 //
-//  SearchResultCellModel+Stub.swift
+//  SearchResultCellProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -25,17 +25,17 @@
 import Shared
 import SharedTestComponents
 
-extension SearchResultCellModel {
+extension SearchResultCellProps {
 
     static func stubValue(
         id: NonEmptyString = .stubValue(),
         name: NonEmptyString = .stubValue(),
         ratingsAverage: SearchRatingValue = .three,
         pricing: String? = nil,
-        image: DownloadedImageViewModel = DownloadedImageViewModel(url: .stubValue()),
+        image: DownloadedImageProps = DownloadedImageProps(url: .stubValue()),
         colorings: SearchResultsViewColorings = AppColorings.defaultColorings.searchResults
-    ) -> SearchResultCellModel {
-        return SearchResultCellModel(id: id,
+    ) -> SearchResultCellProps {
+        return SearchResultCellProps(id: id,
                                      name: name,
                                      ratingsAverage: ratingsAverage,
                                      pricing: pricing,

@@ -1,5 +1,5 @@
 //
-//  DownloadedImageViewModel.swift
+//  DownloadedImageProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -24,6 +24,6 @@
 
 import Foundation
 
-struct DownloadedImageViewModel: Equatable {
+struct DownloadedImageProps: Equatable {
     let url: URL
 }

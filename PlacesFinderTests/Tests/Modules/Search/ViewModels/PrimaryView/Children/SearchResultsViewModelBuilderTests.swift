@@ -65,7 +65,7 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
 
             mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
             mockResultViewModelBuilder.buildViewModelModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
-                let cellModel = SearchResultCellModel.stubValue(name: entityModel.name)
+                let cellModel = SearchResultCellProps.stubValue(name: entityModel.name)
                 return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                                        cellModel: cellModel,
                                                        detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
