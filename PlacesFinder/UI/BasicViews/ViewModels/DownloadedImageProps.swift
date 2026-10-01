@@ -25,5 +25,5 @@
 import Foundation
 
 struct DownloadedImageProps: Equatable {
-    let url: URL
+    let url: URL?   // The view shows its placeholder image when this is nil
 }

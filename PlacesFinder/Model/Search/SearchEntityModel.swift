@@ -30,7 +30,7 @@ struct SearchEntityModel: Hashable, Sendable {
     let name: NonEmptyString
     let url: URL
     let ratings: SearchRatings?
-    let image: URL
+    let image: URL?
     let addressLines: PlaceLookupAddressLines?
     let displayPhone: NonEmptyString?
     let dialablePhone: NonEmptyString?
@@ -40,8 +40,8 @@ struct SearchEntityModel: Hashable, Sendable {
 
 extension SearchEntityModel {
 
-    /// Returns nil if the place is permanently closed, or if it lacks a field that's required for displaying it.
-    /// A nil `isPermanentlyClosed` value is treated as the place being open.
+    /// Returns nil if the place is permanently closed. A nil `isPermanentlyClosed` value is treated as the place
+    /// being open.
     init?(id: NonEmptyString,
           name: NonEmptyString,
           url: URL,
@@ -53,9 +53,7 @@ extension SearchEntityModel {
           pricing: PlaceLookupPricing?,
           coordinate: PlaceLookupCoordinate?,
           isPermanentlyClosed: Bool?) {
-        guard isPermanentlyClosed != true,
-            let image = image
-        else {
+        guard isPermanentlyClosed != true else {
             return nil
         }
 

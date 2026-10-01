@@ -77,6 +77,18 @@ class SearchResultCellPropsBuilderTests: QuickSpec {
                 expect(result.image.url) == stubEntityModel.image
             }
 
+            context("when the model has no image") {
+                beforeEach {
+                    result = sut.buildProps(model: .stubValue(image: nil),
+                                            resultsCopyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.searchResults)
+                }
+
+                it("inits a viewmodel with a nil image URL") {
+                    expect(result.image.url) == nil
+                }
+            }
+
             context("when the model has no ratings") {
                 beforeEach {
                     result = sut.buildProps(model: .stubValue(ratings: nil),

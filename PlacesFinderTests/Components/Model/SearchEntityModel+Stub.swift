@@ -42,7 +42,7 @@ extension SearchEntityModel {
                           name: String = "stubName",
                           url: URL = .stubValue(),
                           ratings: SearchRatings? = .stubValue(),
-                          image: URL = .stubValue(),
+                          image: URL? = .stubValue(),
                           addressLines: PlaceLookupAddressLines = .stubValue(),
                           displayPhone: String? = "stubDisplayPhone",
                           dialablePhone: String? = "stubDialablePhone",
