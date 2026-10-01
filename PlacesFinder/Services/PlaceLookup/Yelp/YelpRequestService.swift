@@ -105,7 +105,7 @@ actor YelpRequestService: PlaceLookupServiceProtocol {
 // MARK: Yelp-specific result components
 
 // Complete payload details at https://www.yelp.com/developers/documentation/v3/business_search
-private struct YelpPageResponse: Decodable {
+struct YelpPageResponse: Decodable {
     /// Total number of businesses that Yelp found matching the search criteria. This is NOT necessarily equal to
     /// businesses.count, as Yelp returns at most 50 results per request. Additional requests may be needed to fetch
     /// all matching businesses.
@@ -144,7 +144,7 @@ extension YelpPageResponse {
 
 // swiftlint:disable identifier_name
 
-private struct YelpBusiness: Decodable {
+struct YelpBusiness: Decodable {
     let id: NonEmptyString
     let name: NonEmptyString
     let location: FailableDecodable<YelpLocation>?
@@ -189,7 +189,7 @@ extension YelpBusiness {
 
 }
 
-private struct YelpCoordinate: Decodable {
+struct YelpCoordinate: Decodable {
     let longitude: Double
     let latitude: Double
 }
@@ -203,7 +203,7 @@ extension YelpCoordinate {
 
 }
 
-private struct YelpLocation: Decodable {
+struct YelpLocation: Decodable {
     let display_address: [String]
 }
 
@@ -219,12 +219,12 @@ extension YelpLocation {
 
 // MARK: Yelp-specific error components
 
-private struct YelpErrorDetails: Decodable {
+struct YelpErrorDetails: Decodable {
     let code: String
     let description: String
 }
 
-private struct YelpErrorPayload: Decodable {
+struct YelpErrorPayload: Decodable {
     let error: YelpErrorDetails
 }
 

@@ -28,7 +28,6 @@ import Quick
 import Shared
 import SharedTestComponents
 
-// swiftlint:disable blanket_disable_command
 class SearchEntityModelTests: QuickSpec {
 
     override func spec() {
@@ -99,4 +98,3 @@ class SearchEntityModelTests: QuickSpec {
     }
 
 }
-// swiftlint:enable blanket_disable_command
