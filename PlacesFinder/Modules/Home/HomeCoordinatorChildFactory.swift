@@ -207,14 +207,14 @@ private extension SearchLookupViewModelBuilder {
         let resultsViewModelBuilder = SearchResultsViewModelBuilder(actionPrism: actionPrism,
                                                                     resultViewModelBuilder: resultViewModelBuilder)
         let noResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilder()
-        let retryViewModelBuilder = SearchRetryViewModelBuilder()
+        let retryPropsBuilder = SearchRetryPropsBuilder()
 
         let childBuilder = SearchLookupChildBuilder(actionSubscriber: actionSubscriber,
                                                     actionPrism: actionPrism,
                                                     instructionsViewModelBuilder: instructionsViewModelBuilder,
                                                     resultsViewModelBuilder: resultsViewModelBuilder,
                                                     noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
-                                                    retryViewModelBuilder: retryViewModelBuilder)
+                                                    retryPropsBuilder: retryPropsBuilder)
 
         self.init(inputViewModelBuilder: inputViewModelBuilder,
                   childBuilder: childBuilder)

@@ -27,25 +27,25 @@ import SwiftUI
 
 struct SearchCTAView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchCTAViewModel>
+    private let props: SearchCTAViewProps
 
-    init(viewModel: SearchCTAViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    init(props: SearchCTAViewProps) {
+        self.props = props
     }
 
     var body: some View {
         VerticallyCenteredScrollView {
-            StaticInfoView(props: viewModel.value.props)
+            StaticInfoView(props: props.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
-            if let action = viewModel.value.ctaBlock {
+            if let action = props.ctaBlock {
                 Button(
-                    viewModel.value.ctaTitle,
+                    props.ctaTitle,
                     action: action.value
                 )
                 .modifier(
                     textStyleClass: .ctaButton,
-                    textColoring: viewModel.value.props.colorings.ctaTextColoring
+                    textColoring: props.props.colorings.ctaTextColoring
                 )
             }
         }
@@ -63,7 +63,7 @@ struct SearchCTAView: View {
 
     return SearchCTAView(
         // swiftlint:disable:next trailing_closure
-        viewModel: appCopyContent.searchRetry.ctaViewModel(
+        props: appCopyContent.searchRetry.ctaViewProps(
             colorings: appColorings.searchCTA,
             ctaBlock: {}
         )

@@ -33,7 +33,7 @@ import UIKit
                              titleViewModel: NavigationBarTitleViewModel,
                              appSkin: AppSkin)
 
-    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel,
+    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
                                            titleViewModel: NavigationBarTitleViewModel,
                                            appSkin: AppSkin)
 

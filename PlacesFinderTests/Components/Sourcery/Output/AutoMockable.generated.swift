@@ -1066,15 +1066,15 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
     var loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled: Bool {
         return loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount > 0
     }
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure: ((SearchLocationDisabledViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments: (props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations: [(props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure: ((SearchLocationDisabledViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    func loadLocationServicesDisabledViews(_ viewModel: SearchLocationDisabledViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount += 1
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
+        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
+        loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
     }
 
     //MARK: - loadSearchBackgroundView
@@ -1193,29 +1193,29 @@ class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModelBuilderPr
     }
 
 }
-class SearchRetryViewModelBuilderProtocolMock: SearchRetryViewModelBuilderProtocol {
+class SearchRetryPropsBuilderProtocolMock: SearchRetryPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelCopyContentColoringsCtaBlockCallsCount = 0
-    var buildViewModelCopyContentColoringsCtaBlockCalled: Bool {
-        return buildViewModelCopyContentColoringsCtaBlockCallsCount > 0
+    var buildPropsCopyContentColoringsCtaBlockCallsCount = 0
+    var buildPropsCopyContentColoringsCtaBlockCalled: Bool {
+        return buildPropsCopyContentColoringsCtaBlockCallsCount > 0
     }
-    var buildViewModelCopyContentColoringsCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)?
-    var buildViewModelCopyContentColoringsCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)] = []
-    var buildViewModelCopyContentColoringsCtaBlockReturnValue: SearchRetryViewModel!
-    var buildViewModelCopyContentColoringsCtaBlockClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, @escaping SearchCTABlock) -> SearchRetryViewModel)?
+    var buildPropsCopyContentColoringsCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)?
+    var buildPropsCopyContentColoringsCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)] = []
+    var buildPropsCopyContentColoringsCtaBlockReturnValue: SearchRetryProps!
+    var buildPropsCopyContentColoringsCtaBlockClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, @escaping SearchCTABlock) -> SearchRetryProps)?
 
-    func buildViewModel(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: @escaping SearchCTABlock) -> SearchRetryViewModel {
-        buildViewModelCopyContentColoringsCtaBlockCallsCount += 1
-        buildViewModelCopyContentColoringsCtaBlockReceivedArguments = (copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock)
-        buildViewModelCopyContentColoringsCtaBlockReceivedInvocations.append((copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock))
-        if let buildViewModelCopyContentColoringsCtaBlockClosure = buildViewModelCopyContentColoringsCtaBlockClosure {
-            return buildViewModelCopyContentColoringsCtaBlockClosure(copyContent, colorings, ctaBlock)
+    func buildProps(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps {
+        buildPropsCopyContentColoringsCtaBlockCallsCount += 1
+        buildPropsCopyContentColoringsCtaBlockReceivedArguments = (copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock)
+        buildPropsCopyContentColoringsCtaBlockReceivedInvocations.append((copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock))
+        if let buildPropsCopyContentColoringsCtaBlockClosure = buildPropsCopyContentColoringsCtaBlockClosure {
+            return buildPropsCopyContentColoringsCtaBlockClosure(copyContent, colorings, ctaBlock)
         } else {
-            return buildViewModelCopyContentColoringsCtaBlockReturnValue
+            return buildPropsCopyContentColoringsCtaBlockReturnValue
         }
     }
 

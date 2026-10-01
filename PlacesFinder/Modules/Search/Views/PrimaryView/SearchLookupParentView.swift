@@ -70,8 +70,8 @@ struct SearchLookupParentView: View {
         case let .noResults(viewModel):
             StaticInfoView<AppStandardColorings>(props: viewModel.messageViewProps.props)
 
-        case let .failure(viewModel):
-            SearchCTAView(viewModel: viewModel.ctaViewModel)
+        case let .failure(props):
+            SearchCTAView(props: props.ctaViewProps)
         }
     }
 

@@ -31,7 +31,7 @@ enum SearchLookupChild: Equatable {
     case progress(SearchProgressViewModel)
     case results(SearchResultsViewModel)
     case noResults(SearchNoResultsFoundViewModel)
-    case failure(SearchRetryViewModel)
+    case failure(SearchRetryProps)
 }
 
 // MARK: SearchLookupChildBuilder
@@ -51,20 +51,20 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
     private let instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol
     private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
     private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
-    private let retryViewModelBuilder: SearchRetryViewModelBuilderProtocol
+    private let retryPropsBuilder: SearchRetryPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          instructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol,
          resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
          noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,
-         retryViewModelBuilder: SearchRetryViewModelBuilderProtocol) {
+         retryPropsBuilder: SearchRetryPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.instructionsViewModelBuilder = instructionsViewModelBuilder
         self.resultsViewModelBuilder = resultsViewModelBuilder
         self.noResultsFoundViewModelBuilder = noResultsFoundViewModelBuilder
-        self.retryViewModelBuilder = retryViewModelBuilder
+        self.retryPropsBuilder = retryPropsBuilder
     }
 
     func buildChild(loadState: Search.LoadState,
@@ -102,8 +102,8 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
         case let .failure(submittedParams, _):
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism
-            return .failure(retryViewModelBuilder.buildViewModel(copyContent: appCopyContent.searchRetry,
-                                                                 colorings: appSkin.colorings.searchCTA) {
+            return .failure(retryPropsBuilder.buildProps(copyContent: appCopyContent.searchRetry,
+                                                         colorings: appSkin.colorings.searchCTA) {
                 let action = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
                 _ = actionSubscriber.receive(.searchActivity(action))

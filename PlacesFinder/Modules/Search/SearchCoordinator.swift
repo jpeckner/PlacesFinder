@@ -162,10 +162,10 @@ private extension SearchCoordinator {
                                           appSkin: appSkin)
 
         case .locationServicesDisabled:
-            let viewModel = SearchLocationDisabledViewModel(urlOpenerService: urlOpenerService,
-                                                            copyContent: appCopyContent.searchLocationDisabled,
-                                                            colorings: appSkin.colorings.searchCTA)
-            presenter.loadLocationServicesDisabledViews(viewModel,
+            let props = SearchLocationDisabledViewProps(urlOpenerService: urlOpenerService,
+                                                        copyContent: appCopyContent.searchLocationDisabled,
+                                                        colorings: appSkin.colorings.searchCTA)
+            presenter.loadLocationServicesDisabledViews(props,
                                                         titleViewModel: titleViewModel,
                                                         appSkin: appSkin)
 

@@ -1,5 +1,5 @@
 //
-//  SearchCTAViewModel+Stub.swift
+//  SearchCTAViewProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -26,14 +26,14 @@ import Shared
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable line_length
-extension SearchCTAViewModel {
+extension SearchCTAViewProps {
 
     static func stubValue(
         props: StaticInfoViewProps<SearchCTAViewColorings> = .stubValue(colorings: AppColorings.defaultColorings.searchCTA),
         ctaTitle: String = "stubCTATitle",
         ctaBlock: SearchCTABlock? = nil
-    ) -> SearchCTAViewModel {
-        return SearchCTAViewModel(props: props,
+    ) -> SearchCTAViewProps {
+        return SearchCTAViewProps(props: props,
                                   ctaTitle: ctaTitle,
                                   ctaBlock: ctaBlock.map { IgnoredEquatable($0) })
     }

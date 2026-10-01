@@ -1,8 +1,8 @@
 //
-//  SearchCTAViewModel.swift
+//  SearchRetryProps.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2019 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,29 +25,33 @@
 import Foundation
 import Shared
 
-typealias SearchCTABlock = () -> Void
-
-struct SearchCTAViewModel: Equatable {
-    let props: StaticInfoViewProps<SearchCTAViewColorings>
-    let ctaTitle: String
-    let ctaBlock: IgnoredEquatable<SearchCTABlock>?
+struct SearchRetryProps: Equatable {
+    let ctaViewProps: SearchCTAViewProps
 }
 
-protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
-    var ctaTitle: String { get }
+extension SearchRetryCopyContent: SearchCTACopyProtocol {}
+
+// MARK: SearchRetryPropsBuilder
+
+// sourcery: AutoMockable
+protocol SearchRetryPropsBuilderProtocol {
+    func buildProps(copyContent: SearchRetryCopyContent,
+                    colorings: SearchCTAViewColorings,
+                    ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps
 }
 
-extension SearchCTACopyProtocol {
+class SearchRetryPropsBuilder: SearchRetryPropsBuilderProtocol {
 
-    func ctaViewModel(
-        colorings: SearchCTAViewColorings,
-        ctaBlock: SearchCTABlock?
-    ) -> SearchCTAViewModel {
-        SearchCTAViewModel(
-            props: staticInfoViewProps(colorings: colorings),
-            ctaTitle: ctaTitle,
-            ctaBlock: ctaBlock.map { IgnoredEquatable($0) }
+    func buildProps(copyContent: SearchRetryCopyContent,
+                    colorings: SearchCTAViewColorings,
+                    ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps {
+        let ctaViewProps = SearchCTAViewProps(
+            props: copyContent.staticInfoViewProps(colorings: colorings),
+            ctaTitle: copyContent.ctaTitle,
+            ctaBlock: IgnoredEquatable(ctaBlock)
         )
+
+        return SearchRetryProps(ctaViewProps: ctaViewProps)
     }
 
 }

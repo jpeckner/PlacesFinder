@@ -41,7 +41,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubSearchParams = SearchParams.stubValue()
         let stubInstructionsViewModel = SearchInstructionsViewModel.stubValue()
         let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewProps: .stubValue())
-        let stubRetryViewModel = SearchRetryViewModel(ctaViewModel: .stubValue())
+        let stubRetryProps = SearchRetryProps(ctaViewProps: .stubValue())
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
@@ -50,7 +50,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
         var stubResultsViewModel: SearchResultsViewModel!
         var mockResultsViewModelBuilder: SearchResultsViewModelBuilderProtocolMock!
         var mockNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocolMock!
-        var mockRetryViewModelBuilder: SearchRetryViewModelBuilderProtocolMock!
+        var mockRetryPropsBuilder: SearchRetryPropsBuilderProtocolMock!
 
         var stubStartInitialRequestAction: Search.ActivityAction!
 
@@ -85,14 +85,14 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
             mockNoResultsFoundViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubNoResultsViewModel
 
-            mockRetryViewModelBuilder = SearchRetryViewModelBuilderProtocolMock()
+            mockRetryPropsBuilder = SearchRetryPropsBuilderProtocolMock()
 
             sut = SearchLookupChildBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                            actionPrism: mockSearchActivityActionPrism,
                                            instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
                                            resultsViewModelBuilder: mockResultsViewModelBuilder,
                                            noResultsFoundViewModelBuilder: mockNoResultsFoundViewModelBuilder,
-                                           retryViewModelBuilder: mockRetryViewModelBuilder)
+                                           retryPropsBuilder: mockRetryPropsBuilder)
         }
 
         describe("buildViewModel()") {
@@ -220,10 +220,10 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 var receivedCTABlock: SearchCTABlock!
 
                 beforeEach {
-                    mockRetryViewModelBuilder.buildViewModelCopyContentColoringsCtaBlockClosure = {
+                    mockRetryPropsBuilder.buildPropsCopyContentColoringsCtaBlockClosure = {
                         receivedCopyContent = $0
                         receivedCTABlock = $2
-                        return stubRetryViewModel
+                        return stubRetryProps
                     }
 
                     result = sut.buildChild(
@@ -238,12 +238,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     }
                 }
 
-                it("calls mockRetryViewModelBuilder with expected method and args") {
+                it("calls mockRetryPropsBuilder with expected method and args") {
                     expect(receivedCopyContent) == stubAppCopyContent.searchRetry
                 }
 
                 it("returns a value of .failure, containing expected values") {
-                    expect(result) == .failure(stubRetryViewModel)
+                    expect(result) == .failure(stubRetryProps)
                 }
 
                 it("includes the Action returned by mockSearchActivityActionPrism") {
