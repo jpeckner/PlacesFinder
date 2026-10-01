@@ -28,10 +28,8 @@ extension AppColorings {
 
     static let defaultColorings = AppColorings(
         aboutApp: AboutAppViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             titleTextColoring: TextColoring(textColor: .label),
-            bodyTextColoring: TextColoring(textColor: .label),
-            ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
+            bodyTextColoring: TextColoring(textColor: .label)
         ),
         standard: AppStandardColorings(
             viewColoring: ViewColoring(backgroundColor: .systemBackground),
@@ -49,7 +47,6 @@ extension AppColorings {
             titleTextColoring: TextColoring(textColor: .label)
         ),
         searchCTA: SearchCTAViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             titleTextColoring: TextColoring(textColor: .label),
             bodyTextColoring: TextColoring(textColor: .label),
             ctaTextColoring: TextColoring(textColor: #colorLiteral(red: 0, green: 0.568627451, blue: 1, alpha: 1))
@@ -60,24 +57,13 @@ extension AppColorings {
             phoneIconTint: FillColoring(color: .label),
             disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
-        searchInput: SearchInputViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemGray),
-            iconTintColoring: FillColoring(color: .systemGray),
-            textFieldViewColoring: ViewColoring(backgroundColor: .systemBackground),
-            placeholderColoring: TextColoring(textColor: .placeholderText),
-            inputTextColoring: TextColoring(textColor: .label),
-            cancelButtonTextColoring: TextColoring(textColor: .label)
-        ),
         searchProgress: SearchProgressViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             gradientFill: FillColoring(color: .systemGray6),
             gradientBackground: FillColoring(color: .systemGray4)
         ),
         searchResults: SearchResultsViewColorings(
-            viewColoring: ViewColoring(backgroundColor: .systemBackground),
             bodyTextColoring: TextColoring(textColor: .label),
-            disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)),
-            refreshControlTint: FillColoring(color: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
+            disclosureArrowTint: FillColoring(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         ),
         settings: SettingsViewColorings(
             viewColoring: ViewColoring(backgroundColor: .systemGroupedBackground),

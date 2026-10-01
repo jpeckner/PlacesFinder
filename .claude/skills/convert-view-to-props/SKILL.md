@@ -199,9 +199,11 @@ Fix whatever turns up, including leftovers from earlier conversions.
 `xcodebuild test` builds the app and test targets and then runs the unit tests, so you don't need a separate build. Write its output to a log file in your scratchpad (or `/tmp`), and run it in the background:
 ```bash
 LOG=<scratchpad>/convert-view-to-props-test.log
-xcodebuild test -scheme PlacesFinder-Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' -only-testing:PlacesFinderTests > "$LOG" 2>&1
+xcodebuild test -scheme PlacesFinder -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' -only-testing:PlacesFinderTests -collect-test-diagnostics never > "$LOG" 2>&1
 ```
 If `iPhone 17` isn't available, pick any iPhone from `xcrun simctl list devices available`.
+
+Keep `-collect-test-diagnostics never`. Without it, once the tests have finished `xcodebuild` runs `simctl diagnose --timeout=600` to gather simulator diagnostics for the result bundle, and that step stalls until its 10-minute timeout. The run then looks hung even though every test has already reported. With the flag, the unit tests finish in well under a minute after the build.
 
 When it finishes, read the results from the log:
 ```bash
@@ -220,7 +222,7 @@ Renames that shorten names (`…ViewModel…` → `…Props…` drops 4 characte
 
 Delete the disable comment in either case. After editing files following the test run, you can lint without rebuilding: `PATH="$PATH:/opt/homebrew/bin" mint run realm/SwiftLint swiftlint lint --quiet`, filtered to the files you touched.
 
-**If `xcodebuild test` hangs:** it can hang after every test has finished, whether they passed or failed. If the log ends with `Test Suite 'All tests' passed` (or `failed`) followed by the `Executed N tests` totals, and it hasn't grown for about two minutes, stop only the process you started. A run limited with `-only-testing` prints `Test Suite 'Selected tests'` instead of `'All tests'`, so any automated watcher must match both, e.g. `grep -E "Test Suite '(All|Selected) tests' (passed|failed)"`. Find its PID with `pgrep -fl "xcodebuild test"`, then `kill <pid>`. The totals already in the log are the final results; `** TEST SUCCEEDED **` or `** TEST FAILED **` won't be printed in that case. Mention the hang in your report. Don't wait indefinitely, and don't kill `xcodebuild` processes you didn't start.
+**If `xcodebuild test` still hangs:** first check that the command included `-collect-test-diagnostics never`; `pgrep -fl "simctl diagnose"` showing a child of your `xcodebuild` means it didn't. Otherwise, if the log ends with `Test Suite 'All tests' passed` (or `failed`) followed by the `Executed N tests` totals, and it hasn't grown for about two minutes, stop only the process you started. A run limited with `-only-testing` prints `Test Suite 'Selected tests'` instead of `'All tests'`, so any automated watcher must match both, e.g. `grep -E "Test Suite '(All|Selected) tests' (passed|failed)"`. Find its PID with `pgrep -fl "xcodebuild test"`, then `kill <pid>`. The totals already in the log are the final results; `** TEST SUCCEEDED **` or `** TEST FAILED **` won't be printed in that case. Mention the hang in your report. Don't wait indefinitely, and don't kill `xcodebuild` processes you didn't start.
 
 **If a test fails:** check whether the failing test covers anything this run changed, e.g. by running `git diff HEAD --stat` over its folder and the code it tests. If it doesn't, rerun just that test class in a single `xcodebuild` invocation with repeats: `-only-testing:PlacesFinderTests/<TestClass> -test-iterations 5`. One invocation means only one possible hang, which is better than a loop of separate runs. Report the result either way. Don't change unrelated tests to make them pass.
 ## 8. Report

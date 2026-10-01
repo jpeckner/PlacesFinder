@@ -2,7 +2,7 @@
 SHARED_RELEASE_SCHEME = "Shared-Release"
 
 PLACESFINDER_APP_ID = "com.justinpeckner.PlacesFinder"
-PLACESFINDER_RELEASE_SCHEME = "PlacesFinder-Release"
+PLACESFINDER_SCHEME = "PlacesFinder"
 PLACESFINDER_PROFILE_NAME = "PlacesFinder-Distribution"
 
 PLACE_LOOKUP_BASE_URL = "https://api.yelp.com"

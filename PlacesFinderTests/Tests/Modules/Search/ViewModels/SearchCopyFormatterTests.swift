@@ -109,7 +109,7 @@ class SearchCopyFormatterTests: QuickSpec {
 
             beforeEach {
                 result = formatter.formatPricing(stubCopyContent,
-                                                 pricing: PlaceLookupPricing(count: 5, maximum: 10))
+                                                 pricing: PlaceLookupPricing(count: 5))
             }
 
             it("returns the currency symbol in copyContent, repeated count times") {

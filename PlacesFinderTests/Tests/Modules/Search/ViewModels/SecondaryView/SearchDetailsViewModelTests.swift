@@ -32,10 +32,6 @@ import SwiftDux
 // swiftlint:disable implicitly_unwrapped_optional
 class SearchDetailsViewModelTests: QuickSpec {
 
-    private enum StubViewModelAction: Action {
-        case removeDetailedEntityAction
-    }
-
     override func spec() {
 
         let stubInfoCellModels: [SearchDetailsInfoSectionViewModel] = [

@@ -3,7 +3,7 @@
 set -e
 
 cd ../../..
-BUILD_DIR=$(xcodebuild -project PlacesFinder.xcodeproj -scheme PlacesFinder-Debug -showBuildSettings 2>/dev/null | grep "    BUILD_DIR = " | awk '{print $3}')
+BUILD_DIR=$(xcodebuild -project PlacesFinder.xcodeproj -scheme PlacesFinder -showBuildSettings 2>/dev/null | grep "    BUILD_DIR = " | awk '{print $3}')
 SOURCE_PACKAGES_DIR="$(dirname "$(dirname "$BUILD_DIR")")/SourcePackages"
 GENERATOR_PATH="$SOURCE_PACKAGES_DIR/checkouts/CoordiNode/CoordiNode/Resources/CoordiNodeGenerator"
 COORDINODE_DIR="$(pwd)/PlacesFinder/CoordiNode"

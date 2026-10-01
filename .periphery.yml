@@ -1,7 +1,9 @@
+external_test_case_classes:
+- QuickSpec
+project: PlacesFinder.xcodeproj
+report_exclude:
+- PlacesFinderTests/Components/Sourcery/Output/**
+retain_public: true
 schemes:
-- PlacesFinder-Debug
-
-targets:
 - PlacesFinder
-
-workspace: PlacesFinder.xcworkspace
+- PlacesFinderTests

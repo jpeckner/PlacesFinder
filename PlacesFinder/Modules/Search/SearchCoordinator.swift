@@ -78,9 +78,9 @@ import UIKit
 
     private func setupStoreRelays() {
         appStoreRelay.publisher
-            .sink { [weak self] update in
+            .sink { [weak self] appState in
                 self?.searchStoreRelay.store.dispatch(.receiveState(IgnoredEquatable { [weak self] searchState in
-                    self?.handleStateUpdate(appState: update.state,
+                    self?.handleStateUpdate(appState: appState,
                                             searchState: searchState)
                 }))
             }

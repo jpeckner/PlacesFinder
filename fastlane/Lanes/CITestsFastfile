@@ -10,7 +10,7 @@ lane :ci_tests do
 
   run_tests(
     project: PLACESFINDER_PROJECT_PATH,
-    scheme: PLACESFINDER_RELEASE_SCHEME,
+    scheme: PLACESFINDER_SCHEME,
     clean: true
   )
 end

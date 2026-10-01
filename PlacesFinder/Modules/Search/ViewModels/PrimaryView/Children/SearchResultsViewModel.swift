@@ -28,18 +28,15 @@ import SwiftDux
 
 struct SearchResultsViewModel: Equatable {
     let resultViewModels: NonEmptyArray<SearchResultViewModel>
-    let colorings: SearchResultsViewColorings
     private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
     private let refreshAction: IgnoredEquatable<Search.Action>
     private var nextRequestAction: IgnoredEquatable<Search.Action>?
 
     init(resultViewModels: NonEmptyArray<SearchResultViewModel>,
-         colorings: SearchResultsViewColorings,
          actionSubscriber: AnySubscriber<Search.Action, Never>,
          refreshAction: Search.Action,
          nextRequestAction: Search.Action?) {
         self.resultViewModels = resultViewModels
-        self.colorings = colorings
         self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.refreshAction = IgnoredEquatable(refreshAction)
         self.nextRequestAction = nextRequestAction.map { IgnoredEquatable($0) }
@@ -130,7 +127,6 @@ class SearchResultsViewModelBuilder: SearchResultsViewModelBuilderProtocol {
         }
 
         return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                      colorings: colorings,
                                       actionSubscriber: actionSubscriber,
                                       refreshAction: .searchActivity(refreshAction),
                                       nextRequestAction: nextRequestAction.map { .searchActivity($0) })

@@ -43,24 +43,6 @@ extension Search.ActivityAction.StartSubsequentRequestParams {
 
 }
 
-extension Search.ActivityAction.UpdateRequestStatusParams {
-
-    static func stubValue(
-        searchParams: SearchParams = .stubValue(),
-        numPagesReceived: Int = 0,
-        allEntities: NonEmptyArray<SearchEntityModel> = .init(with: .stubValue()),
-        nextRequestToken: PlaceLookupTokenAttemptsContainer? = nil
-    ) -> Self {
-        Self(
-            searchParams: searchParams,
-            numPagesReceived: numPagesReceived,
-            allEntities: allEntities,
-            nextRequestToken: nextRequestToken
-        )
-    }
-
-}
-
 extension Search.ActivityAction {
 
     static func stubbedStartInitialRequestAction(

@@ -31,10 +31,6 @@ import SwiftDux
 // swiftlint:disable implicitly_unwrapped_optional
 class SearchRetryPropsBuilderTests: QuickSpec {
 
-    private enum StubViewModelAction: Action {
-        case detailEntity
-    }
-
     override func spec() {
 
         let stubCopyContent = SearchRetryCopyContent.stubValue()

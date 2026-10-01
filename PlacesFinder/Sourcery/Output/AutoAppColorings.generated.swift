@@ -1,4 +1,4 @@
-// Generated using Sourcery 2.0.1 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 2.3.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 import Foundation
 
@@ -9,7 +9,6 @@ struct AppColorings: Decodable, Equatable, Sendable {
     let navBar: NavBarColorings
     let searchCTA: SearchCTAViewColorings
     let searchDetails: SearchDetailsViewColorings
-    let searchInput: SearchInputViewColorings
     let searchProgress: SearchProgressViewColorings
     let searchResults: SearchResultsViewColorings
     let settings: SettingsViewColorings

@@ -1,6 +1,6 @@
 xcodeproj: PlacesFinder.xcodeproj
 workspace: ../PlacesFinder.xcworkspace
-scheme: PlacesFinder-Debug
+scheme: PlacesFinder
 source_directory: PlacesFinder
 output_directory: Slather/Output
 ignore:

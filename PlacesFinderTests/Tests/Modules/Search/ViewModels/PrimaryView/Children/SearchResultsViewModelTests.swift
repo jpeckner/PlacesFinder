@@ -48,7 +48,6 @@ class SearchResultsViewModelTests: QuickSpec {
             nextRequestAction: Search.Action? = .searchActivity(.stubbedStartSubsequentRequestAction())
         ) -> SearchResultsViewModel {
             return SearchResultsViewModel(resultViewModels: resultViewModels,
-                                          colorings: AppColorings.defaultColorings.searchResults,
                                           actionSubscriber: AnySubscriber(mockActionSubscriber),
                                           refreshAction: .searchActivity(stubbedRefreshAction),
                                           nextRequestAction: nextRequestAction)

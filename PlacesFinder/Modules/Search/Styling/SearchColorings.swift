@@ -27,7 +27,6 @@ import Shared
 
 // sourcery: fieldName = "searchCTA"
 struct SearchCTAViewColorings: AppColoringProtocol, AppStandardColoringsProtocol {
-    let viewColoring: ViewColoring
     let titleTextColoring: TextColoring
     let bodyTextColoring: TextColoring
     let ctaTextColoring: TextColoring
@@ -41,27 +40,14 @@ struct SearchDetailsViewColorings: AppColoringProtocol {
     let disclosureArrowTint: FillColoring
 }
 
-// sourcery: fieldName = "searchInput"
-struct SearchInputViewColorings: AppColoringProtocol {
-    let viewColoring: ViewColoring
-    let iconTintColoring: FillColoring
-    let textFieldViewColoring: ViewColoring
-    let placeholderColoring: TextColoring
-    let inputTextColoring: TextColoring
-    let cancelButtonTextColoring: TextColoring
-}
-
 // sourcery: fieldName = "searchProgress"
 struct SearchProgressViewColorings: AppColoringProtocol {
-    let viewColoring: ViewColoring
     let gradientFill: FillColoring
     let gradientBackground: FillColoring
 }
 
 // sourcery: fieldName = "searchResults"
 struct SearchResultsViewColorings: AppColoringProtocol {
-    let viewColoring: ViewColoring
     let bodyTextColoring: TextColoring
     let disclosureArrowTint: FillColoring
-    let refreshControlTint: FillColoring
 }

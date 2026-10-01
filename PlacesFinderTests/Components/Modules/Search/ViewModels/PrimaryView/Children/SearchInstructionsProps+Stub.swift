@@ -30,8 +30,7 @@ extension SearchInstructionsProps {
 
     static func stubValue(
         props: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
-        resultsSource: String = "stubResultsSource",
-        colorings: AppStandardColorings = AppColorings.defaultColorings.standard
+        resultsSource: String = "stubResultsSource"
     ) -> SearchInstructionsProps {
         return SearchInstructionsProps(props: props,
                                        resultsSource: resultsSource)
