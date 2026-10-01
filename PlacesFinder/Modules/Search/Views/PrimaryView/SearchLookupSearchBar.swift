@@ -31,13 +31,12 @@ import SwiftUI
 // `UIViewRepresentable`.
 struct SearchLookupSearchBar: UIViewRepresentable {
 
-    @ObservedObject var viewModel: ValueObservable<SearchInputContentProps>
-
+    private let props: SearchInputContentProps
     private let searchBar: UISearchBar
 
     init(props: SearchInputContentProps,
          searchBar: UISearchBar) {
-        self.viewModel = ValueObservable(props)
+        self.props = props
         self.searchBar = searchBar
     }
 
@@ -47,12 +46,12 @@ struct SearchLookupSearchBar: UIViewRepresentable {
 
     func updateUIView(_ searchBar: UISearchBar, context: Context) {
         // `UISearchBar.text` reports "" (not nil) when empty, so normalize to avoid a perpetual nil-vs-empty mismatch.
-        let keywords = viewModel.value.keywords?.value ?? ""
+        let keywords = props.keywords?.value ?? ""
         if searchBar.text != keywords {
             searchBar.text = keywords
         }
 
-        let placeholder = viewModel.value.placeholder
+        let placeholder = props.placeholder
         if searchBar.placeholder != placeholder {
             searchBar.placeholder = placeholder
         }
@@ -60,7 +59,7 @@ struct SearchLookupSearchBar: UIViewRepresentable {
         // SwiftUI calls updateUIView on every layout pass, and a keyboard appearance triggers a cascade of them.
         // Only mutate the search bar when a value actually changes, so we don't reassign text or re-toggle the
         // first responder (and thus disturb the active text-input session) on passes where nothing is different.
-        let shouldBeEditing = viewModel.value.barState.isEditing
+        let shouldBeEditing = props.barState.isEditing
         if searchBar.isFirstResponder != shouldBeEditing {
             // This is a bit of a hack, but doing an async dispatch is necessary to prevent "AttributeGraph: cycle
             // detected" warnings from arising here. This is likely a quirk of using UIViewRepresentable.
