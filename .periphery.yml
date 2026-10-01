@@ -1,7 +1,5 @@
+project: PlacesFinder.xcodeproj
+retain_public: true
 schemes:
-- PlacesFinder-Debug
-
-targets:
 - PlacesFinder
-
-workspace: PlacesFinder.xcworkspace
+- PlacesFinderTests
