@@ -105,7 +105,7 @@ actor YelpRequestService: PlaceLookupServiceProtocol {
 // MARK: Yelp-specific result components
 
 // Complete payload details at https://www.yelp.com/developers/documentation/v3/business_search
-private struct YelpPageResponse: Decodable {
+struct YelpPageResponse: Decodable {
     /// Total number of businesses that Yelp found matching the search criteria. This is NOT necessarily equal to
     /// businesses.count, as Yelp returns at most 50 results per request. Additional requests may be needed to fetch
     /// all matching businesses.
@@ -119,21 +119,21 @@ private struct YelpPageResponse: Decodable {
 extension YelpPageResponse {
 
     var lookupPage: PlaceLookupPage {
-        let entities: [PlaceLookupEntity] = businesses.compactMap {
+        let entities: [SearchEntityModel] = businesses.compactMap {
             guard let business = $0.value else { return nil }
 
-            return PlaceLookupEntity(
+            return SearchEntityModel(
                 id: business.id,
                 name: business.name,
+                url: business.url,
+                ratings: business.ratings,
+                image: business.image_url?.value,
                 addressLines: business.location?.value?.placeLookupAddressLines,
                 displayPhone: business.display_phone?.value,
                 dialablePhone: business.phone?.value,
-                url: business.url,
-                ratingFields: business.ratingFields,
                 pricing: business.pricing,
                 coordinate: business.coordinates?.value?.coordinate,
-                isPermanentlyClosed: business.is_closed?.value,
-                image: business.image_url?.value
+                isPermanentlyClosed: business.is_closed?.value
             )
         }
 
@@ -144,7 +144,7 @@ extension YelpPageResponse {
 
 // swiftlint:disable identifier_name
 
-private struct YelpBusiness: Decodable {
+struct YelpBusiness: Decodable {
     let id: NonEmptyString
     let name: NonEmptyString
     let location: FailableDecodable<YelpLocation>?
@@ -164,16 +164,15 @@ extension YelpBusiness {
     static let maxRating: Double = 5.0
     static let pricingRange = 1...4
 
-    var ratingFields: PlaceLookupRatingFields? {
+    var ratings: SearchRatings? {
         guard let rating = rating?.value,
             let numRatings = review_count?.value
         else {
             return nil
         }
 
-        let averageRating = Percentage(decimalOf: rating / YelpBusiness.maxRating)
-        return PlaceLookupRatingFields(averageRating: averageRating,
-                                       numRatings: numRatings)
+        return SearchRatings(averageRating: rating,
+                             numRatings: numRatings)
     }
 
     var pricing: PlaceLookupPricing? {
@@ -190,7 +189,7 @@ extension YelpBusiness {
 
 }
 
-private struct YelpCoordinate: Decodable {
+struct YelpCoordinate: Decodable {
     let longitude: Double
     let latitude: Double
 }
@@ -204,7 +203,7 @@ extension YelpCoordinate {
 
 }
 
-private struct YelpLocation: Decodable {
+struct YelpLocation: Decodable {
     let display_address: [String]
 }
 
@@ -220,12 +219,12 @@ extension YelpLocation {
 
 // MARK: Yelp-specific error components
 
-private struct YelpErrorDetails: Decodable {
+struct YelpErrorDetails: Decodable {
     let code: String
     let description: String
 }
 
-private struct YelpErrorPayload: Decodable {
+struct YelpErrorPayload: Decodable {
     let error: YelpErrorDetails
 }
 

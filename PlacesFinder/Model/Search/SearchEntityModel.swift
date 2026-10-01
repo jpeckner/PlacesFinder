@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-struct SearchEntityModel: Equatable, Sendable {
+struct SearchEntityModel: Hashable, Sendable {
     let id: NonEmptyString
     let name: NonEmptyString
     let url: URL
@@ -36,4 +36,40 @@ struct SearchEntityModel: Equatable, Sendable {
     let dialablePhone: NonEmptyString?
     let pricing: PlaceLookupPricing?
     let coordinate: PlaceLookupCoordinate?
+}
+
+extension SearchEntityModel {
+
+    /// Returns nil if the place is permanently closed, or if it lacks a field that's required for displaying it.
+    /// A nil `isPermanentlyClosed` value is treated as the place being open.
+    init?(id: NonEmptyString,
+          name: NonEmptyString,
+          url: URL,
+          ratings: SearchRatings?,
+          image: URL?,
+          addressLines: PlaceLookupAddressLines?,
+          displayPhone: NonEmptyString?,
+          dialablePhone: NonEmptyString?,
+          pricing: PlaceLookupPricing?,
+          coordinate: PlaceLookupCoordinate?,
+          isPermanentlyClosed: Bool?) {
+        guard isPermanentlyClosed != true,
+            let ratings = ratings,
+            let image = image
+        else {
+            return nil
+        }
+
+        self.init(id: id,
+                  name: name,
+                  url: url,
+                  ratings: ratings,
+                  image: image,
+                  addressLines: addressLines,
+                  displayPhone: displayPhone,
+                  dialablePhone: dialablePhone,
+                  pricing: pricing,
+                  coordinate: coordinate)
+    }
+
 }

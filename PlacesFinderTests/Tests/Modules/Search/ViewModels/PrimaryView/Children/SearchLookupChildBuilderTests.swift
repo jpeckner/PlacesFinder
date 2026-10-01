@@ -61,10 +61,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockActionSubscriber = MockSubscriber()
 
             let mockPlaceLookupService = PlaceLookupServiceProtocolMock()
-            let mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             let mockDependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
+                placeLookupService: mockPlaceLookupService
             )
             stubStartInitialRequestAction = Search.ActivityAction.stubbedStartInitialRequestAction(dependencies: mockDependencies)
 

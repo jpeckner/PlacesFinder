@@ -90,12 +90,10 @@ extension Search.ActivityAction {
 extension Search.ActivityActionCreatorDependencies {
 
     static func stubValue(
-        placeLookupService: PlaceLookupServiceProtocol = PlaceLookupServiceProtocolMock(),
-        searchEntityModelBuilder: SearchEntityModelBuilderProtocol = SearchEntityModelBuilderProtocolMock()
+        placeLookupService: PlaceLookupServiceProtocol = PlaceLookupServiceProtocolMock()
     ) -> Search.ActivityActionCreatorDependencies {
         Search.ActivityActionCreatorDependencies(
-            placeLookupService: placeLookupService,
-            searchEntityModelBuilder: searchEntityModelBuilder
+            placeLookupService: placeLookupService
         )
     }
 

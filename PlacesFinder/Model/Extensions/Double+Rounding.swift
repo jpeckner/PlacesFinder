@@ -1,8 +1,8 @@
 //
-//  PlaceLookupPage.swift
+//  Double+Rounding.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,15 @@
 //  SOFTWARE.
 
 import Foundation
-import Shared
 
-typealias PlaceLookupAddressLines = NonEmptyArray<NonEmptyString>
+extension Double {
 
-struct PlaceLookupPricing: Hashable {
-    let count: Int       // I.e. 2 if this business' pricing is "$$"
-    let maximum: Int     // I.e. 4 if the maximum pricing a business can have is "$$$$"
-}
+    enum RoundingIncrement: Double {
+        case oneHalf = 0.5
+    }
 
-struct PlaceLookupPage: Hashable {
-    let entities: [SearchEntityModel]
+    func rounded(toNearest increment: RoundingIncrement) -> Double {
+        (self / increment.rawValue).rounded() * increment.rawValue
+    }
+
 }

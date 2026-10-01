@@ -91,7 +91,6 @@ extension Search {
 
     struct ActivityActionCreatorDependencies: Sendable {
         let placeLookupService: PlaceLookupServiceProtocol
-        let searchEntityModelBuilder: SearchEntityModelBuilderProtocol
     }
 
 }
@@ -176,8 +175,7 @@ extension Search {
 
                 switch result {
                 case let .success(lookupResponse):
-                    dispatchInitialPageSuccess(dependencies,
-                                               searchParams: searchParams,
+                    dispatchInitialPageSuccess(searchParams,
                                                lookupResponse: lookupResponse,
                                                dispatch: dispatch)
                 case let .failure(error):
@@ -193,12 +191,10 @@ extension Search {
         }
     }
 
-    private static func dispatchInitialPageSuccess(_ dependencies: Search.ActivityActionCreatorDependencies,
-                                                   searchParams: SearchParams,
+    private static func dispatchInitialPageSuccess(_ searchParams: SearchParams,
                                                    lookupResponse: PlaceLookupResponse,
                                                    dispatch: @escaping (Search.Action) -> Void) {
-        let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
-        guard let allEntities = NonEmptyArray(entityModels) else {
+        guard let allEntities = NonEmptyArray(lookupResponse.page.entities) else {
             dispatch(.searchActivity(.noResultsFound(searchParams)))
             return
         }
@@ -271,7 +267,6 @@ extension Search {
             switch result {
             case let .success(lookupResponse):
                 dispatchSubsequentPageSuccess(lookupResponse: lookupResponse,
-                                              dependencies: dependencies,
                                               startSubsequentRequestParams: startSubsequentRequestParams,
                                               dispatch: dispatch)
             case let .failure(error):
@@ -284,15 +279,13 @@ extension Search {
 
     private static func dispatchSubsequentPageSuccess(
         lookupResponse: PlaceLookupResponse,
-        dependencies: Search.ActivityActionCreatorDependencies,
         startSubsequentRequestParams: Search.ActivityAction.StartSubsequentRequestParams,
         dispatch: @escaping (Search.Action) -> Void
     ) {
-        let entityModels = dependencies.searchEntityModelBuilder.buildEntityModels(lookupResponse.page.entities)
         let updateRequestStatusParams = Search.ActivityAction.UpdateRequestStatusParams(
             searchParams: startSubsequentRequestParams.searchParams,
             numPagesReceived: startSubsequentRequestParams.numPagesReceived + 1,
-            allEntities: startSubsequentRequestParams.previousResults.appendedWith(entityModels),
+            allEntities: startSubsequentRequestParams.previousResults.appendedWith(lookupResponse.page.entities),
             nextRequestToken: tokenContainer(for: lookupResponse)
         )
 

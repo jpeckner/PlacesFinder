@@ -53,7 +53,6 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
         var mockLocationRequestBlockCalled: Bool!
         var mockLocationRequestReturnValue: LocationRequestResult!
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
-        var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
         var mockDependencies: Search.ActivityActionCreatorDependencies!
         var mockAppStore: SpyingStore<AppAction, AppState>!
         var mockSearchStore: SpyingStore<Search.Action, Search.State>!
@@ -64,10 +63,8 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             mockPlaceLookupService.buildInitialPageRequestTokenPlaceLookupParamsReturnValue = PlaceLookupPageRequestToken.stubValue()
-            mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             mockDependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
+                placeLookupService: mockPlaceLookupService
             )
 
             mockAppStore = SpyingStore(
@@ -150,7 +147,6 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
 
                 beforeEach {
                     mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
-                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
 
                     let coordinate = LocationCoordinate(latitude: stubParams.coordinate.latitude,
                                                         longitude: stubParams.coordinate.longitude)
@@ -249,7 +245,6 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                         context("and no search results were found") {
                             beforeEach {
                                 mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(.stubValue())
-                                mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
                             }
 
                             it("dispatches Search.ActivityAction.noResultsFound") {
@@ -268,19 +263,15 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                                 SearchEntityModel.stubValue(name: "stubEntityC"),
                             ]
 
-                            beforeEach {
-                                mockSearchEntityModelBuilder.buildEntityModelsReturnValue = stubEntityModels
-                            }
-
                             context("and a token for the next request is returned") {
                                 let stubNextRequestToken = PlaceLookupPageRequestToken.stubValue()
 
                                 beforeEach {
                                     mockPlaceLookupService.requestPageRequestTokenReturnValue =
                                         .success(PlaceLookupResponse.stubValue(
+                                            page: .stubValue(entities: stubEntityModels),
                                             nextRequestTokenResult: .success(stubNextRequestToken)
                                         ))
-                                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = stubEntityModels
 
                                     performTest()
                                 }
@@ -310,7 +301,10 @@ class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
                             context("and a token for the next request is not returned") {
                                 beforeEach {
                                     mockPlaceLookupService.requestPageRequestTokenReturnValue =
-                                        .success(PlaceLookupResponse.stubValue(nextRequestTokenResult: nil))
+                                        .success(PlaceLookupResponse.stubValue(
+                                            page: .stubValue(entities: stubEntityModels),
+                                            nextRequestTokenResult: nil
+                                        ))
 
                                     performTest()
                                 }

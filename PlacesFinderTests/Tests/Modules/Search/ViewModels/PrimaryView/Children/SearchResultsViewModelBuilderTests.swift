@@ -49,7 +49,6 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
-        var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
         var mockDependencies: Search.ActivityActionCreatorDependencies!
         var stubInitialRequestAction: Search.ActivityAction!
         var stubSubsequentRequestAction: Search.ActivityAction!
@@ -72,10 +71,8 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             }
 
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
-            mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             mockDependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
+                placeLookupService: mockPlaceLookupService
             )
 
             stubInitialRequestAction = .startInitialRequest(
