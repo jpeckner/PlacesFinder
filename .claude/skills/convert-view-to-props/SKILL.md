@@ -199,7 +199,7 @@ Fix whatever turns up, including leftovers from earlier conversions.
 `xcodebuild test` builds the app and test targets and then runs the unit tests, so you don't need a separate build. Write its output to a log file in your scratchpad (or `/tmp`), and run it in the background:
 ```bash
 LOG=<scratchpad>/convert-view-to-props-test.log
-xcodebuild test -scheme PlacesFinder-Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' -only-testing:PlacesFinderTests > "$LOG" 2>&1
+xcodebuild test -scheme PlacesFinder -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' -only-testing:PlacesFinderTests > "$LOG" 2>&1
 ```
 If `iPhone 17` isn't available, pick any iPhone from `xcrun simctl list devices available`.
 

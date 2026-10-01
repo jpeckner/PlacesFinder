@@ -44,14 +44,14 @@ PlacesFinder supports the following custom URL schemes for deep linking:
 * `placesFinder[-dev]://com.justinpeckner.PlacesFinder/settings`: opens/transitions PlacesFinder to the Settings tab
 * `placesFinder[-dev]://com.justinpeckner.PlacesFinder/settingsChild`: opens/transitions PlacesFinder to the Settings child presentation view
 
-To use a deep link scheme:
-1. Install PlacesFinder-Release scheme app on an iOS simulator or device. (Note: to use PlacesFinder-Debug scheme instead, replace the link's `placesFinder://` prefix with `placesFinder-dev://`).
+To use a deeplink scheme:
+1. Install a build of PlacesFinder on an iOS simulator or device. For Release builds, use the `placesFinder://` scheme in the deeplink URL; for Debug builds, use `placesFinder-dev://`.
 1. Optional: the above URL schemes work even if PlacesFinder isn't currently launched, so kill the running instance of PlacesFinder if you'd like to try this out.
 1. Enter one of the URLs in Safari, and tap Go.
 1. Tap Open in Safari's confirmation dialog.
 1. PlacesFinder will open to the content specified by the link.
 
-   > NOTE: a business or organization with a website should use [universal links](https://developer.apple.com/ios/universal-links/) rather than a [custom URL scheme](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app). However, this in no way lessens the usefulness of PlacesFinder's deep link handling, as there is no significant difference between how it would handle a universal link versus a custom URL scheme link.
+   > NOTE: a business or organization with a website should use [universal links](https://developer.apple.com/ios/universal-links/) rather than a [custom URL scheme](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app). However, this in no way lessens the usefulness of PlacesFinder's deeplink handling, as there is no significant difference between how it would handle a universal link versus a custom URL scheme link.
 
 ### Running CI Tests
 PlacesFinder includes a full suite of CI tests, which can be run via `bundle exec fastlane ci_tests`.
