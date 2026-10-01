@@ -46,20 +46,24 @@ struct SearchResultCell: View {
                         textColoring: props.colorings.bodyTextColoring
                     )
 
-                HStack {
-                    Image(uiImage: props.ratingsAverage.starsImage)
-                        .resizable()
-                        .frame(width: 120, height: 22)
+                if let ratingsAverage = props.ratingsAverage {
+                    HStack {
+                        Image(uiImage: ratingsAverage.starsImage)
+                            .resizable()
+                            .frame(width: 120, height: 22)
 
-                    Spacer()
+                        Spacer()
 
-                    props.pricing.map { pricing in
-                        Text(pricing)
-                            .modifier(
-                                textStyleClass: .pricingLabel,
-                                textColoring: props.colorings.bodyTextColoring
-                            )
+                        props.pricing.map { pricing in
+                            Text(pricing)
+                                .modifier(
+                                    textStyleClass: .pricingLabel,
+                                    textColoring: props.colorings.bodyTextColoring
+                                )
+                        }
                     }
+                } else {
+                    EmptyView()
                 }
             }
 

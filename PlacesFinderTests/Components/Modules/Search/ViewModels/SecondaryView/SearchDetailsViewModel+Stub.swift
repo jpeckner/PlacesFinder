@@ -32,8 +32,8 @@ extension SearchDetailsBasicInfoViewModel {
     static func stubValue(image: DownloadedImageProps = DownloadedImageProps(url: .stubValue()),
                           name: NonEmptyString = .stubValue("stubName"),
                           address: NonEmptyString? = .stubValue("stubAddress"),
-                          ratingsAverage: SearchRatingValue = .threeAndAHalf,
-                          numRatingsMessage: String = "stubNumRatingsMessage",
+                          ratingsAverage: SearchRatingValue? = .threeAndAHalf,
+                          numRatingsMessage: String? = "stubNumRatingsMessage",
                           pricing: String? = "stubPricing",
                           apiLinkCallback: OpenURLBlock? = nil) -> SearchDetailsBasicInfoViewModel {
         return SearchDetailsBasicInfoViewModel(image: image,

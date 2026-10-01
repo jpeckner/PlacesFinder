@@ -41,7 +41,7 @@ extension SearchEntityModel {
     static func stubValue(id: NonEmptyString = NonEmptyString.stubValue("stubID"),
                           name: String = "stubName",
                           url: URL = .stubValue(),
-                          ratings: SearchRatings = .stubValue(),
+                          ratings: SearchRatings? = .stubValue(),
                           image: URL = .stubValue(),
                           addressLines: PlaceLookupAddressLines = .stubValue(),
                           displayPhone: String? = "stubDisplayPhone",

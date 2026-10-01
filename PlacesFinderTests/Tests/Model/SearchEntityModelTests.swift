@@ -52,26 +52,22 @@ class SearchEntityModelTests: QuickSpec {
                                          isPermanentlyClosed: isPermanentlyClosed)
             }
 
-            let expectedModel = SearchEntityModel(id: .stubValue("stubID"),
-                                                  name: .stubValue("stubEntityName"),
-                                                  url: .stubValue(),
-                                                  ratings: stubRatings,
-                                                  image: .stubValue(),
-                                                  addressLines: .stubValue(),
-                                                  displayPhone: .stubValue("stubDisplayPhone"),
-                                                  dialablePhone: .stubValue("stubDialablePhone"),
-                                                  pricing: .stubValue(),
-                                                  coordinate: .stubValue())
+            func expectedModel(ratings: SearchRatings? = stubRatings) -> SearchEntityModel {
+                return SearchEntityModel(id: .stubValue("stubID"),
+                                         name: .stubValue("stubEntityName"),
+                                         url: .stubValue(),
+                                         ratings: ratings,
+                                         image: .stubValue(),
+                                         addressLines: .stubValue(),
+                                         displayPhone: .stubValue("stubDisplayPhone"),
+                                         dialablePhone: .stubValue("stubDialablePhone"),
+                                         pricing: .stubValue(),
+                                         coordinate: .stubValue())
+            }
 
             context("when the isPermanentlyClosed arg is true") {
                 it("returns nil") {
                     expect(buildModel(isPermanentlyClosed: true)) == nil
-                }
-            }
-
-            context("else when the ratings arg is nil") {
-                it("returns nil") {
-                    expect(buildModel(ratings: nil)) == nil
                 }
             }
 
@@ -81,15 +77,21 @@ class SearchEntityModelTests: QuickSpec {
                 }
             }
 
+            context("else when the ratings arg is nil") {
+                it("returns a SearchEntityModel with the args' values, including nil ratings") {
+                    expect(buildModel(ratings: nil)) == expectedModel(ratings: nil)
+                }
+            }
+
             context("else when the isPermanentlyClosed arg is nil") {
                 it("returns a SearchEntityModel with the args' values") {
-                    expect(buildModel(isPermanentlyClosed: nil)) == expectedModel
+                    expect(buildModel(isPermanentlyClosed: nil)) == expectedModel()
                 }
             }
 
             context("else") {
                 it("returns a SearchEntityModel with the args' values") {
-                    expect(buildModel(isPermanentlyClosed: false)) == expectedModel
+                    expect(buildModel(isPermanentlyClosed: false)) == expectedModel()
                 }
             }
 

@@ -29,6 +29,7 @@ import Shared
 import SharedTestComponents
 
 // swiftlint:disable blanket_disable_command
+// swiftlint:disable file_length
 // swiftlint:disable force_unwrapping
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
@@ -289,9 +290,9 @@ class YelpRequestServiceTests: QuickSpec {
                     await performTest()
                 }
 
-                // The payload has 50 businesses, 6 of which aren't displayable
+                // The payload has 50 businesses, 5 of which aren't displayable
                 it("returns an entity for each displayable business in the payload") {
-                    expect(returnedEntities?.count) == 44
+                    expect(returnedEntities?.count) == 45
                 }
 
                 it("returns the entities in the same order as the payload") {
@@ -303,10 +304,9 @@ class YelpRequestServiceTests: QuickSpec {
                     expect(returnedEntities?.last?.id.value) == "oTRQsmZ7ac9V5Zs8wt8x_A"
                 }
 
-                it("omits businesses that have no ratings and/or no image") {
+                it("omits businesses that have no image") {
                     let omittedIDs: Set<String> = [
-                        "ZZJSk-LVtR4-wpiWoBVwuw",    // "rating": 0, "review_count": 0
-                        "zXCta1P2Xv43sw-Lo5kMYw",    // "rating": 0, "review_count": 0, "image_url": ""
+                        "zXCta1P2Xv43sw-Lo5kMYw",    // "image_url": ""
                         "icQi0anMKE7ix4VOMRWyfQ",    // Same as above
                         "f0YqSx9HUXbSkKsrqoWSyQ",    // Same as above
                         "KjGCxB742V7Z2e1KhFeuOg",    // Same as above
@@ -368,6 +368,14 @@ class YelpRequestServiceTests: QuickSpec {
 
                     expect(entity?.name.value) == "Thai Chicken-n-Rice"
                     expect(entity?.pricing) == nil
+                }
+
+                it("returns nil for the ratings of a business that hasn't been rated") {
+                    // "rating": 0, "review_count": 0
+                    let entity = returnedEntities?.first { $0.id.value == "ZZJSk-LVtR4-wpiWoBVwuw" }
+
+                    expect(entity?.name.value) == "JFC"
+                    expect(entity?.ratings) == nil
                 }
 
                 // The payload has "total": 905

@@ -151,9 +151,10 @@ private extension SearchEntityModel {
             image: DownloadedImageProps(url: image),
             name: name,
             address: addressLines.map { copyFormatter.formatAddress($0) },
-            ratingsAverage: ratings.average,
-            numRatingsMessage: copyFormatter.formatRatings(resultsCopyContent,
-                                                           numRatings: ratings.numRatings),
+            ratingsAverage: ratings?.average,
+            numRatingsMessage: ratings.map {
+                copyFormatter.formatRatings(resultsCopyContent, numRatings: $0.numRatings)
+            },
             pricing: pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
             apiLinkCallback: urlOpenerService.buildOpenURLBlock(url).map { IgnoredEquatable($0) }
         ))
