@@ -25,9 +25,23 @@
 import Foundation
 import Shared
 
-struct SearchRatings: Equatable {
+struct SearchRatings: Hashable {
     let average: SearchRatingValue
     let numRatings: Int
+}
+
+extension SearchRatings {
+
+    init?(averageRating: Double,
+          numRatings: Int) {
+        guard let average = SearchRatingValue(averageRating: averageRating) else {
+            return nil
+        }
+
+        self.init(average: average,
+                  numRatings: numRatings)
+    }
+
 }
 
 // Per https://www.yelp.com/developers/documentation/v3/business_search - "value ranges from 1, 1.5, ... 4.5, 5"

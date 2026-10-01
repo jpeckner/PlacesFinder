@@ -46,16 +46,13 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
-        var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
         var mockDependencies: Search.ActivityActionCreatorDependencies!
         var mockStore: SpyingStore<Search.Action, Search.State>!
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
-            mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             mockDependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
+                placeLookupService: mockPlaceLookupService
             )
             mockStore = SpyingStore(
                 reducer: Search.reduce,
@@ -94,7 +91,6 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
                 beforeEach {
                     mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
-                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
 
                     performTest()
                 }
@@ -121,7 +117,6 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
                 it("calls mockPlaceLookupService.requestPage()") {
                     mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
-                    mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
                     performTest()
 
                     await expect(mockPlaceLookupService.requestPageRequestTokenCalled).toEventually(beTrue())
@@ -201,7 +196,6 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                     context("and no search results were found") {
                         beforeEach {
                             mockPlaceLookupService.requestPageRequestTokenReturnValue = .success(PlaceLookupResponse.stubValue())
-                            mockSearchEntityModelBuilder.buildEntityModelsReturnValue = []
 
                             performTest()
                         }
@@ -232,16 +226,13 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
                             SearchEntityModel.stubValue(name: "stubEntityC"),
                         ]
 
-                        beforeEach {
-                            mockSearchEntityModelBuilder.buildEntityModelsReturnValue = stubReceivedEntityModels
-                        }
-
                         context("and a token for the next request is returned") {
                             let stubNextRequestToken = PlaceLookupPageRequestToken.stubValue()
 
                             beforeEach {
                                 mockPlaceLookupService.requestPageRequestTokenReturnValue =
                                     .success(PlaceLookupResponse.stubValue(
+                                        page: .stubValue(entities: stubReceivedEntityModels),
                                         nextRequestTokenResult: .success(stubNextRequestToken)
                                     ))
 
@@ -273,7 +264,10 @@ class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
 
                             beforeEach {
                                 mockPlaceLookupService.requestPageRequestTokenReturnValue =
-                                    .success(PlaceLookupResponse.stubValue(nextRequestTokenResult: nil))
+                                    .success(PlaceLookupResponse.stubValue(
+                                        page: .stubValue(entities: stubReceivedEntityModels),
+                                        nextRequestTokenResult: nil
+                                    ))
 
                                 performTest()
                             }

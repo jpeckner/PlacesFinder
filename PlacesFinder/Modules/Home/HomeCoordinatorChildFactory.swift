@@ -92,10 +92,8 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         let statePrism = SearchActivityStatePrism(locationAuthRequester: listenerContainer.locationAuthListener,
                                                   locationRequestHandler: serviceContainer.locationRequestHandler)
 
-        let searchEntityModelBuilder = SearchEntityModelBuilder()
         let actionCreatorDependencies = Search.ActivityActionCreatorDependencies(
-            placeLookupService: serviceContainer.placeLookupService,
-            searchEntityModelBuilder: searchEntityModelBuilder
+            placeLookupService: serviceContainer.placeLookupService
         )
         let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies)
 

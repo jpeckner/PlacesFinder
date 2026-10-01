@@ -119,21 +119,21 @@ private struct YelpPageResponse: Decodable {
 extension YelpPageResponse {
 
     var lookupPage: PlaceLookupPage {
-        let entities: [PlaceLookupEntity] = businesses.compactMap {
+        let entities: [SearchEntityModel] = businesses.compactMap {
             guard let business = $0.value else { return nil }
 
-            return PlaceLookupEntity(
+            return SearchEntityModel(
                 id: business.id,
                 name: business.name,
+                url: business.url,
+                ratings: business.ratings,
+                image: business.image_url?.value,
                 addressLines: business.location?.value?.placeLookupAddressLines,
                 displayPhone: business.display_phone?.value,
                 dialablePhone: business.phone?.value,
-                url: business.url,
-                ratingFields: business.ratingFields,
                 pricing: business.pricing,
                 coordinate: business.coordinates?.value?.coordinate,
-                isPermanentlyClosed: business.is_closed?.value,
-                image: business.image_url?.value
+                isPermanentlyClosed: business.is_closed?.value
             )
         }
 
@@ -164,15 +164,15 @@ extension YelpBusiness {
     static let maxRating: Double = 5.0
     static let pricingRange = 1...4
 
-    var ratingFields: PlaceLookupRatingFields? {
+    var ratings: SearchRatings? {
         guard let rating = rating?.value,
             let numRatings = review_count?.value
         else {
             return nil
         }
 
-        return PlaceLookupRatingFields(averageRating: rating,
-                                       numRatings: numRatings)
+        return SearchRatings(averageRating: rating,
+                             numRatings: numRatings)
     }
 
     var pricing: PlaceLookupPricing? {

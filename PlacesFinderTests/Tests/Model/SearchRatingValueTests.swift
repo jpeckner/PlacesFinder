@@ -32,27 +32,31 @@ class SearchRatingValueTests: QuickSpec {
 
     override func spec() {
 
-        var result: SearchRatingValue!
+        describe("SearchRatingValue.init()") {
 
-        describe("init()") {
+            var result: SearchRatingValue!
 
-            let expectedResults: [Int: SearchRatingValue] = [
-                20: .one,
-                30: .oneAndAHalf,
-                40: .two,
-                50: .twoAndAHalf,
-                60: .three,
-                70: .threeAndAHalf,
-                80: .four,
-                90: .fourAndAHalf,
-                100: .five
+            let expectedResults: [Double: SearchRatingValue] = [
+                1.0: .one,
+                1.5: .oneAndAHalf,
+                2.0: .two,
+                2.5: .twoAndAHalf,
+                3.0: .three,
+                3.5: .threeAndAHalf,
+                4.0: .four,
+                4.5: .fourAndAHalf,
+                5.0: .five,
+                // Values that aren't a multiple of 0.5 are rounded to the nearest one
+                3.8: .four,
+                4.2: .four,
+                4.3: .fourAndAHalf,
             ]
 
-            for (percentage, expectedValue) in expectedResults {
+            for (averageRating, expectedValue) in expectedResults {
 
-                context("when the rating percentage is \(percentage)") {
+                context("when the average rating is \(averageRating)") {
                     beforeEach {
-                        result = SearchRatingValue(averageRating: Percentage(fromPercentageInt: percentage))
+                        result = SearchRatingValue(averageRating: averageRating)
                     }
 
                     it("returns \(expectedValue)") {
@@ -60,6 +64,37 @@ class SearchRatingValueTests: QuickSpec {
                     }
                 }
 
+            }
+
+            for averageRating in [0.0, 0.7, 5.3] {
+
+                context("when the average rating is \(averageRating)") {
+                    beforeEach {
+                        result = SearchRatingValue(averageRating: averageRating)
+                    }
+
+                    it("returns nil") {
+                        expect(result) == nil
+                    }
+                }
+
+            }
+
+        }
+
+        describe("SearchRatings.init()") {
+
+            context("when the averageRating arg can't be converted to a SearchRatingValue") {
+                it("returns nil") {
+                    expect(SearchRatings(averageRating: 0.0, numRatings: 123)) == nil
+                }
+            }
+
+            context("else") {
+                it("returns a SearchRatings with the converted average and the numRatings arg") {
+                    expect(SearchRatings(averageRating: 4.4, numRatings: 123))
+                        == SearchRatings(average: .fourAndAHalf, numRatings: 123)
+                }
             }
 
         }

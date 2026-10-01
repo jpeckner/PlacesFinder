@@ -41,16 +41,6 @@ extension PlaceLookupParams {
 
 }
 
-extension PlaceLookupRatingFields {
-
-    static func stubValue(averageRating: Percentage = .init(decimalOf: 0.7),
-                          numRatings: Int = 123) -> PlaceLookupRatingFields {
-        return PlaceLookupRatingFields(averageRating: averageRating,
-                                       numRatings: numRatings)
-    }
-
-}
-
 extension PlaceLookupAddressLines {
 
     static func stubValue() -> PlaceLookupAddressLines {
@@ -82,38 +72,9 @@ extension PlaceLookupCoordinate {
 
 }
 
-extension PlaceLookupEntity {
-
-    static func stubValue(id: NonEmptyString = .stubValue("stubID"),
-                          name: NonEmptyString = .stubValue("stubEntityName"),
-                          addressLines: PlaceLookupAddressLines? = .stubValue(),
-                          displayPhone: NonEmptyString? = .stubValue("stubDisplayPhone"),
-                          dialablePhone: NonEmptyString? = .stubValue("stubDialablePhone"),
-                          url: URL = .stubValue(),
-                          ratingFields: PlaceLookupRatingFields? = .stubValue(),
-                          pricing: PlaceLookupPricing? = .stubValue(),
-                          coordinate: PlaceLookupCoordinate? = .stubValue(),
-                          isPermanentlyClosed: Bool? = false,
-                          image: URL? = .stubValue()) -> PlaceLookupEntity {
-        return PlaceLookupEntity(id: id,
-                                 name: name,
-                                 addressLines: addressLines,
-                                 displayPhone: displayPhone,
-                                 dialablePhone: dialablePhone,
-                                 url: url,
-                                 ratingFields: ratingFields,
-                                 pricing: pricing,
-                                 coordinate: coordinate,
-                                 isPermanentlyClosed: isPermanentlyClosed,
-                                 image: image)
-    }
-    // swiftlint:enable identifier_name
-
-}
-
 extension PlaceLookupPage {
 
-    static func stubValue(entities: [PlaceLookupEntity] = []) -> PlaceLookupPage {
+    static func stubValue(entities: [SearchEntityModel] = []) -> PlaceLookupPage {
         return PlaceLookupPage(entities: entities)
     }
 

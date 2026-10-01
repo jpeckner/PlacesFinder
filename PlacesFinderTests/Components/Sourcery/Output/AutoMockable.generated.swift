@@ -823,55 +823,6 @@ class SearchDetailsViewModelBuilderProtocolMock: SearchDetailsViewModelBuilderPr
     }
 
 }
-class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol, @unchecked Sendable {
-
-
-
-    //MARK: - buildEntityModels
-
-    var buildEntityModelsCallsCount = 0
-    var buildEntityModelsCalled: Bool {
-        return buildEntityModelsCallsCount > 0
-    }
-    var buildEntityModelsReceivedEntities: [PlaceLookupEntity]?
-    var buildEntityModelsReceivedInvocations: [[PlaceLookupEntity]] = []
-    var buildEntityModelsReturnValue: [SearchEntityModel]!
-    var buildEntityModelsClosure: (([PlaceLookupEntity]) -> [SearchEntityModel])?
-
-    func buildEntityModels(_ entities: [PlaceLookupEntity]) -> [SearchEntityModel] {
-        buildEntityModelsCallsCount += 1
-        buildEntityModelsReceivedEntities = entities
-        buildEntityModelsReceivedInvocations.append(entities)
-        if let buildEntityModelsClosure = buildEntityModelsClosure {
-            return buildEntityModelsClosure(entities)
-        } else {
-            return buildEntityModelsReturnValue
-        }
-    }
-
-    //MARK: - buildEntityModel
-
-    var buildEntityModelCallsCount = 0
-    var buildEntityModelCalled: Bool {
-        return buildEntityModelCallsCount > 0
-    }
-    var buildEntityModelReceivedEntity: PlaceLookupEntity?
-    var buildEntityModelReceivedInvocations: [PlaceLookupEntity] = []
-    var buildEntityModelReturnValue: SearchEntityModel?
-    var buildEntityModelClosure: ((PlaceLookupEntity) -> SearchEntityModel?)?
-
-    func buildEntityModel(_ entity: PlaceLookupEntity) -> SearchEntityModel? {
-        buildEntityModelCallsCount += 1
-        buildEntityModelReceivedEntity = entity
-        buildEntityModelReceivedInvocations.append(entity)
-        if let buildEntityModelClosure = buildEntityModelClosure {
-            return buildEntityModelClosure(entity)
-        } else {
-            return buildEntityModelReturnValue
-        }
-    }
-
-}
 class SearchInputContentPropsBuilderProtocolMock: SearchInputContentPropsBuilderProtocol {
 
 

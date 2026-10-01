@@ -42,7 +42,6 @@ class SearchActivityActionPrismTests: QuickSpec {
         let stubRequestToken = PlaceLookupPageRequestToken.stubValue()
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
-        var mockSearchEntityModelBuilder: SearchEntityModelBuilderProtocolMock!
         var mockDependencies: Search.ActivityActionCreatorDependencies!
         var prism: SearchActivityActionPrism!
 
@@ -50,10 +49,8 @@ class SearchActivityActionPrismTests: QuickSpec {
 
         beforeEach {
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
-            mockSearchEntityModelBuilder = SearchEntityModelBuilderProtocolMock()
             mockDependencies = Search.ActivityActionCreatorDependencies(
-                placeLookupService: mockPlaceLookupService,
-                searchEntityModelBuilder: mockSearchEntityModelBuilder
+                placeLookupService: mockPlaceLookupService
             )
 
             prism = SearchActivityActionPrism(dependencies: mockDependencies)
