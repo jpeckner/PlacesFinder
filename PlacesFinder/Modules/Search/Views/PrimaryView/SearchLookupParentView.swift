@@ -61,8 +61,8 @@ struct SearchLookupParentView: View {
         case let .instructions(props):
             SearchInstructionsView(props: props)
 
-        case let .progress(viewModel):
-            SearchProgressView(viewModel: viewModel)
+        case let .progress(props):
+            SearchProgressView(props: props)
 
         case let .results(viewModel):
             SearchResultsView(viewModel: viewModel)

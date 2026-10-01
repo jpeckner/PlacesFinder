@@ -28,10 +28,10 @@ import SwiftUI
 
 struct SearchProgressView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchProgressViewModel>
+    private let props: SearchProgressViewProps
 
-    init(viewModel: SearchProgressViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    init(props: SearchProgressViewProps) {
+        self.props = props
     }
 
     var body: some View {
@@ -82,8 +82,8 @@ struct SearchProgressView: View {
 
     private var appearanceType: AppearanceType {
         .gradient(
-            color: Color(viewModel.value.colorings.gradientFill.color),
-            background: Color(viewModel.value.colorings.gradientBackground.color)
+            color: Color(props.colorings.gradientFill.color),
+            background: Color(props.colorings.gradientBackground.color)
         )
     }
 

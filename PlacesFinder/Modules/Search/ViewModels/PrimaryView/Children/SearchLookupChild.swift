@@ -28,7 +28,7 @@ import SwiftDux
 
 enum SearchLookupChild: Equatable {
     case instructions(SearchInstructionsProps)
-    case progress(SearchProgressViewModel)
+    case progress(SearchProgressViewProps)
     case results(SearchResultsViewModel)
     case noResults(SearchNoResultsFoundViewModel)
     case failure(SearchRetryProps)
@@ -80,8 +80,8 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             return .instructions(instructionsProps)
         case .locationRequested,
              .initialPageRequested:
-            let progressViewModel = SearchProgressViewModel(colorings: appSkin.colorings.searchProgress)
-            return .progress(progressViewModel)
+            let progressProps = SearchProgressViewProps(colorings: appSkin.colorings.searchProgress)
+            return .progress(progressProps)
         case let .pagesReceived(submittedParams, _, numPagesReceived, allEntities, tokenContainer):
             return .results(resultsViewModelBuilder.buildViewModel(
                 submittedParams: submittedParams,
