@@ -41,12 +41,13 @@ import UIKit
 
     private let appStoreRelay: SubstatesSubscriberRelay<TAppStore>
     private let searchStoreRelay: StoreSubscriptionRelay<TSearchStore>
+    private let viewModel: SearchViewModel
     private let presenter: SearchPresenterProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let statePrism: SearchActivityStatePrismProtocol
     private let actionPrism: SearchActivityActionPrismProtocol
     private let backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol
-    private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
+    private let lookupPropsBuilder: SearchLookupPropsBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
@@ -54,22 +55,24 @@ import UIKit
 
     init(appStoreRelay: SubstatesSubscriberRelay<TAppStore>,
          searchStoreRelay: StoreSubscriptionRelay<TSearchStore>,
+         viewModel: SearchViewModel,
          presenter: SearchPresenterProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          statePrism: SearchActivityStatePrismProtocol,
          actionPrism: SearchActivityActionPrismProtocol,
          backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol,
-         lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
+         lookupPropsBuilder: SearchLookupPropsBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
          navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
         self.appStoreRelay = appStoreRelay
         self.searchStoreRelay = searchStoreRelay
+        self.viewModel = viewModel
         self.presenter = presenter
         self.urlOpenerService = urlOpenerService
         self.statePrism = statePrism
         self.actionPrism = actionPrism
         self.backgroundPropsBuilder = backgroundPropsBuilder
-        self.lookupViewModelBuilder = lookupViewModelBuilder
+        self.lookupPropsBuilder = lookupPropsBuilder
         self.detailsViewContextBuilder = detailsViewContextBuilder
         self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
 
@@ -182,7 +185,7 @@ private extension SearchCoordinator {
                                                    appSkin: appSkin)
 
             case let .locationServicesEnabled(locationUpdateRequestBlock):
-                let viewModel = lookupViewModelBuilder.buildViewModel(
+                let props = lookupPropsBuilder.buildProps(
                     searchActivityState: searchState.searchActivityState,
                     appCopyContent: appCopyContent,
                     appSkin: appSkin,
@@ -191,7 +194,8 @@ private extension SearchCoordinator {
                 let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,
                                                                                 appCopyContent: appCopyContent)
 
-                presenter.loadSearchViews(viewModel,
+                presenter.loadSearchViews(props,
+                                          viewModel: viewModel,
                                           detailsViewContext: detailsContext,
                                           titleViewModel: titleViewModel,
                                           appSkin: appSkin)

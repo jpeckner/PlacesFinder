@@ -27,21 +27,26 @@ import SwiftUI
 
 struct SearchLookupParentView: View {
 
+    typealias ViewModel = SinglePropsViewModel<SearchLookupProps>
+
     @Environment(\.colorScheme) var colorScheme
 
-    @ObservedObject var viewModel: ValueObservable<SearchLookupViewModel>
+    private let viewModel: ViewModel
     private let searchBar: UISearchBar
+    private let actionTriggered: (Search.Action) -> Void
 
-    init(viewModel: SearchLookupViewModel,
-         searchBar: UISearchBar) {
-        self.viewModel = ValueObservable(viewModel)
+    init(viewModel: ViewModel,
+         searchBar: UISearchBar,
+         actionTriggered: @escaping (Search.Action) -> Void) {
+        self.viewModel = viewModel
         self.searchBar = searchBar
+        self.actionTriggered = actionTriggered
     }
 
     var body: some View {
         VStack(spacing: .zero) {
             SearchLookupSearchBar(
-                props: viewModel.value.searchInputViewModel.content,
+                props: viewModel.props.inputProps.content,
                 searchBar: searchBar
             )
 
@@ -57,18 +62,21 @@ struct SearchLookupParentView: View {
 
     @ViewBuilder
     private var childView: some View {
-        switch viewModel.value.child {
+        switch viewModel.props.child {
         case let .instructions(props):
             SearchInstructionsView(props: props)
 
         case let .progress(props):
             SearchProgressView(props: props)
 
-        case let .results(viewModel):
-            SearchResultsView(viewModel: viewModel)
+        case let .results(props):
+            SearchResultsView(
+                props: props,
+                actionTriggered: actionTriggered
+            )
 
-        case let .noResults(viewModel):
-            StaticInfoView<AppStandardColorings>(props: viewModel.messageViewProps.props)
+        case let .noResults(props):
+            StaticInfoView<AppStandardColorings>(props: props.messageViewProps.props)
 
         case let .failure(props):
             SearchCTAView(props: props.ctaViewProps)
@@ -77,7 +85,7 @@ struct SearchLookupParentView: View {
 
     @ViewBuilder
     private var coverView: some View {
-        switch viewModel.value.searchInputViewModel.content.barState.isEditing {
+        switch viewModel.props.inputProps.content.barState.isEditing {
         case true:
             let coverColor: Color = {
                 switch colorScheme {
@@ -96,7 +104,7 @@ struct SearchLookupParentView: View {
             coverColor
                 .opacity(0.3)
                 .onTapGesture {
-                    viewModel.value.searchInputViewModel.coverTappedCallback?()
+                    actionTriggered(viewModel.props.inputProps.coverTappedAction.value)
                 }
 
         case false:

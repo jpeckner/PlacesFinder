@@ -40,16 +40,16 @@ class SearchLookupChildBuilderTests: QuickSpec {
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubSearchParams = SearchParams.stubValue()
         let stubInstructionsProps = SearchInstructionsProps.stubValue()
-        let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewProps: .stubValue())
+        let stubNoResultsProps = SearchNoResultsFoundProps(messageViewProps: .stubValue())
         let stubRetryProps = SearchRetryProps(ctaViewProps: .stubValue())
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocolMock!
-        var stubResultsViewModel: SearchResultsViewModel!
-        var mockResultsViewModelBuilder: SearchResultsViewModelBuilderProtocolMock!
-        var mockNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocolMock!
+        var stubResultsProps: SearchResultsViewProps!
+        var mockResultsPropsBuilder: SearchResultsViewPropsBuilderProtocolMock!
+        var mockNoResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocolMock!
         var mockRetryPropsBuilder: SearchRetryPropsBuilderProtocolMock!
 
         var stubStartInitialRequestAction: Search.ActivityAction!
@@ -72,28 +72,27 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockInstructionsPropsBuilder = SearchInstructionsPropsBuilderProtocolMock()
             mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubInstructionsProps
 
-            stubResultsViewModel = .stubValue(
-                resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))),
-                actionSubscriber: AnySubscriber(mockActionSubscriber)
+            stubResultsProps = .stubValue(
+                resultProps: NonEmptyArray(with: SearchResultProps.stubValue())
             )
-            mockResultsViewModelBuilder = SearchResultsViewModelBuilderProtocolMock()
-            mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
-                = stubResultsViewModel
+            mockResultsPropsBuilder = SearchResultsViewPropsBuilderProtocolMock()
+            mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
+                = stubResultsProps
 
-            mockNoResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilderProtocolMock()
-            mockNoResultsFoundViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubNoResultsViewModel
+            mockNoResultsFoundPropsBuilder = SearchNoResultsFoundPropsBuilderProtocolMock()
+            mockNoResultsFoundPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubNoResultsProps
 
             mockRetryPropsBuilder = SearchRetryPropsBuilderProtocolMock()
 
             sut = SearchLookupChildBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                            actionPrism: mockSearchActivityActionPrism,
                                            instructionsPropsBuilder: mockInstructionsPropsBuilder,
-                                           resultsViewModelBuilder: mockResultsViewModelBuilder,
-                                           noResultsFoundViewModelBuilder: mockNoResultsFoundViewModelBuilder,
+                                           resultsPropsBuilder: mockResultsPropsBuilder,
+                                           noResultsFoundPropsBuilder: mockNoResultsFoundPropsBuilder,
                                            retryPropsBuilder: mockRetryPropsBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildChild()") {
 
             context("when loadState is .idle") {
 
@@ -175,9 +174,9 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     }
                 }
 
-                it("calls mockResultsViewModelBuilder with expected method and args") {
+                it("calls mockResultsPropsBuilder with expected method and args") {
                     let args =
-                    mockResultsViewModelBuilder.buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments
+                    mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments
                     expect(args?.submittedParams) == stubSearchParams
                     expect(args?.allEntities) == stubEntities
                     expect(args?.tokenContainer) == tokenContainer
@@ -185,7 +184,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
                 }
 
                 it("returns a value of .results") {
-                    expect(result) == .results(stubResultsViewModel)
+                    expect(result) == .results(stubResultsProps)
                 }
 
             }
@@ -202,12 +201,12 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     }
                 }
 
-                it("calls mockNoResultsFoundViewModelBuilder with expected method and args") {
-                    expect(mockNoResultsFoundViewModelBuilder.buildViewModelCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchNoResults
+                it("calls mockNoResultsFoundPropsBuilder with expected method and args") {
+                    expect(mockNoResultsFoundPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchNoResults
                 }
 
                 it("returns a value of .noResults") {
-                    expect(result) == .noResults(stubNoResultsViewModel)
+                    expect(result) == .noResults(stubNoResultsProps)
                 }
 
             }

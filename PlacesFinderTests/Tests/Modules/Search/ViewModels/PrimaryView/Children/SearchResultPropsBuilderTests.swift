@@ -1,5 +1,5 @@
 //
-//  SearchResultViewModelBuilderTests.swift
+//  SearchResultPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
@@ -31,7 +30,7 @@ import SwiftDux
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchResultViewModelBuilderTests: QuickSpec {
+class SearchResultPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
@@ -39,34 +38,30 @@ class SearchResultViewModelBuilderTests: QuickSpec {
         let stubResultCellProps = SearchResultCellProps.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockResultCellPropsBuilder: SearchResultCellPropsBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
-        var sut: SearchResultViewModelBuilder!
+        var sut: SearchResultPropsBuilder!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             mockResultCellPropsBuilder = SearchResultCellPropsBuilderProtocolMock()
             mockResultCellPropsBuilder.buildPropsModelResultsCopyContentColoringsReturnValue = stubResultCellProps
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.detailEntityActionReturnValue = .detailedEntity(stubEntityModel)
 
-            sut = SearchResultViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                               actionPrism: mockSearchActivityActionPrism,
-                                               resultCellPropsBuilder: mockResultCellPropsBuilder)
+            sut = SearchResultPropsBuilder(actionPrism: mockSearchActivityActionPrism,
+                                           resultCellPropsBuilder: mockResultCellPropsBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
-            var result: SearchResultViewModel!
+            var result: SearchResultProps!
 
             beforeEach {
-                result = sut.buildViewModel(model: stubEntityModel,
-                                            resultsCopyContent: stubCopyContent,
-                                            colorings: AppColorings.defaultColorings.searchResults)
+                result = sut.buildProps(model: stubEntityModel,
+                                        resultsCopyContent: stubCopyContent,
+                                        colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockResultCellPropsBuilder with expected method and args") {
@@ -80,9 +75,7 @@ class SearchResultViewModelBuilderTests: QuickSpec {
             }
 
             it("includes the Action returned by mockSearchActivityActionPrism") {
-                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                result.dispatchDetailEntityAction()
-                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(.detailedEntity(stubEntityModel))
+                expect(result.detailEntityAction.value) == .searchActivity(.detailedEntity(stubEntityModel))
             }
 
         }

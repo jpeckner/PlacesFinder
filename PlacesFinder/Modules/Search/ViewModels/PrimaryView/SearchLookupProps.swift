@@ -1,5 +1,5 @@
 //
-//  SearchLookupViewModel.swift
+//  SearchLookupProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -26,38 +26,37 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SearchLookupViewModel: Equatable {
-    let searchInputViewModel: SearchInputViewModel
+struct SearchLookupProps: Equatable {
+    let inputProps: SearchInputProps
     let child: SearchLookupChild
 }
 
 // sourcery: AutoMockable
-protocol SearchLookupViewModelBuilderProtocol {
-    func buildViewModel(searchActivityState: Search.ActivityState,
-                        appCopyContent: AppCopyContent,
-                        appSkin: AppSkin,
-                        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel
+protocol SearchLookupPropsBuilderProtocol {
+    func buildProps(searchActivityState: Search.ActivityState,
+                    appCopyContent: AppCopyContent,
+                    appSkin: AppSkin,
+                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps
 }
 
-class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
+class SearchLookupPropsBuilder: SearchLookupPropsBuilderProtocol {
 
-    private let inputViewModelBuilder: SearchInputViewModelBuilderProtocol
+    private let inputPropsBuilder: SearchInputPropsBuilderProtocol
     private let childBuilder: SearchLookupChildBuilderProtocol
 
-    init(inputViewModelBuilder: SearchInputViewModelBuilderProtocol,
+    init(inputPropsBuilder: SearchInputPropsBuilderProtocol,
          childBuilder: SearchLookupChildBuilderProtocol) {
-        self.inputViewModelBuilder = inputViewModelBuilder
+        self.inputPropsBuilder = inputPropsBuilder
         self.childBuilder = childBuilder
     }
 
-    func buildViewModel(searchActivityState: Search.ActivityState,
-                        appCopyContent: AppCopyContent,
-                        appSkin: AppSkin,
-                        locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
-        let searchInputViewModel = inputViewModelBuilder.buildDispatchingViewModel(
+    func buildProps(searchActivityState: Search.ActivityState,
+                    appCopyContent: AppCopyContent,
+                    appSkin: AppSkin,
+                    locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps {
+        let inputProps = inputPropsBuilder.buildProps(
             inputParams: searchActivityState.inputParams,
-            copyContent: appCopyContent.searchInput,
-            locationUpdateRequestBlock: locationUpdateRequestBlock
+            copyContent: appCopyContent.searchInput
         )
 
         let child = childBuilder.buildChild(loadState: searchActivityState.loadState,
@@ -65,8 +64,8 @@ class SearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocol {
                                             appSkin: appSkin,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 
-        return SearchLookupViewModel(searchInputViewModel: searchInputViewModel,
-                                     child: child)
+        return SearchLookupProps(inputProps: inputProps,
+                                 child: child)
     }
 
 }
