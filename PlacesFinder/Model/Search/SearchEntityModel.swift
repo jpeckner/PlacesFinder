@@ -29,7 +29,7 @@ struct SearchEntityModel: Hashable, Sendable {
     let id: NonEmptyString
     let name: NonEmptyString
     let url: URL
-    let ratings: SearchRatings
+    let ratings: SearchRatings?
     let image: URL
     let addressLines: PlaceLookupAddressLines?
     let displayPhone: NonEmptyString?
@@ -54,7 +54,6 @@ extension SearchEntityModel {
           coordinate: PlaceLookupCoordinate?,
           isPermanentlyClosed: Bool?) {
         guard isPermanentlyClosed != true,
-            let ratings = ratings,
             let image = image
         else {
             return nil

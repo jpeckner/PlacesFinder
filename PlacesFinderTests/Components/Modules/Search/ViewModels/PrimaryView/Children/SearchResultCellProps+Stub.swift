@@ -30,7 +30,7 @@ extension SearchResultCellProps {
     static func stubValue(
         id: NonEmptyString = .stubValue(),
         name: NonEmptyString = .stubValue(),
-        ratingsAverage: SearchRatingValue = .three,
+        ratingsAverage: SearchRatingValue? = .three,
         pricing: String? = nil,
         image: DownloadedImageProps = DownloadedImageProps(url: .stubValue()),
         colorings: SearchResultsViewColorings = AppColorings.defaultColorings.searchResults

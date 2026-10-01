@@ -124,7 +124,8 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
                 }
 
                 it("...and with the model's ratingsAverage...") {
-                    expect(returnedViewModel()?.infoViewModel?.ratingsAverage) == stubModel.ratings.average
+                    expect(returnedViewModel()?.infoViewModel?.ratingsAverage) == stubModel.ratings?.average
+                    expect(returnedViewModel()?.infoViewModel?.ratingsAverage) != nil
                 }
 
                 it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
@@ -139,6 +140,27 @@ class SearchDetailsViewModelBuilderTests: QuickSpec {
                     expect(blockCalled) == false
                     returnedViewModel()?.infoViewModel?.apiLinkCallback?.value()
                     expect(blockCalled) == true
+                }
+
+                context("when the model has no ratings") {
+                    beforeEach {
+                        mockCopyFormatter.formatRatingsNumRatingsCallsCount = 0
+
+                        constructResult(entity: .stubValue(ratings: nil))
+                    }
+
+                    it("contains .info as a viewmodel, with the model's name...") {
+                        expect(returnedViewModel()?.infoViewModel?.name) == stubModel.name
+                    }
+
+                    it("...and with a nil ratingsAverage...") {
+                        expect(returnedViewModel()?.infoViewModel?.ratingsAverage) == nil
+                    }
+
+                    it("...and with a nil numRatingsMessage, without calling mockCopyFormatter.formatRatings()") {
+                        expect(returnedViewModel()?.infoViewModel?.numRatingsMessage) == nil
+                        expect(mockCopyFormatter.formatRatingsNumRatingsCalled) == false
+                    }
                 }
 
             }

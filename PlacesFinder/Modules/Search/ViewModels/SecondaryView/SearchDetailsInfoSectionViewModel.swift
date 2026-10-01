@@ -29,8 +29,8 @@ struct SearchDetailsBasicInfoViewModel: Equatable {
     let image: DownloadedImageProps
     let name: NonEmptyString
     let address: NonEmptyString?
-    let ratingsAverage: SearchRatingValue
-    let numRatingsMessage: String
+    let ratingsAverage: SearchRatingValue?
+    let numRatingsMessage: String?
     let pricing: String?
     let apiLinkCallback: IgnoredEquatable<OpenURLBlock>?
 }

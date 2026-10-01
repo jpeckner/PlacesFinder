@@ -65,7 +65,8 @@ class SearchResultCellPropsBuilderTests: QuickSpec {
             }
 
             it("...and with the model's ratings average...") {
-                expect(result.ratingsAverage) == stubEntityModel.ratings.average
+                expect(result.ratingsAverage) == stubEntityModel.ratings?.average
+                expect(result.ratingsAverage) != nil
             }
 
             it("...and with the ratings returned by mockCopyFormatter.formatRatings()...") {
@@ -74,6 +75,18 @@ class SearchResultCellPropsBuilderTests: QuickSpec {
 
             it("...and with the model's image") {
                 expect(result.image.url) == stubEntityModel.image
+            }
+
+            context("when the model has no ratings") {
+                beforeEach {
+                    result = sut.buildProps(model: .stubValue(ratings: nil),
+                                            resultsCopyContent: stubCopyContent,
+                                            colorings: AppColorings.defaultColorings.searchResults)
+                }
+
+                it("inits a viewmodel with a nil ratings average") {
+                    expect(result.ratingsAverage) == nil
+                }
             }
         }
 

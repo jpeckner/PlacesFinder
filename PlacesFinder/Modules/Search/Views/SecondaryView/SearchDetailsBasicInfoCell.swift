@@ -172,6 +172,12 @@ extension InfoContentView {
 
 private class RatingsPricingView: UIView {
 
+    // Views are only added to these stackviews when they have content to show, so that absent content (i.e. the ratings
+    // of a place that hasn't been rated yet) doesn't take up any space
+    private let contentStackView: UIStackView
+    private let ratingsPricingStackView: UIStackView
+    private let numRatingsPricingStackView: UIStackView
+
     private let ratingStarsView: RatingStarsView
     private let numRatingsLabel: StyledLabel
     private let pricingLabel: StyledLabel
@@ -180,6 +186,9 @@ private class RatingsPricingView: UIView {
     private var apiLinkCallback: OpenURLBlock?
 
     init() {
+        self.contentStackView = UIStackView()
+        self.ratingsPricingStackView = UIStackView()
+        self.numRatingsPricingStackView = UIStackView()
         self.ratingStarsView = RatingStarsView()
         self.numRatingsLabel = StyledLabel()
         self.pricingLabel = StyledLabel()
@@ -197,36 +206,28 @@ private class RatingsPricingView: UIView {
     }
 
     private func setupSubviews() {
-        addSubview(ratingStarsView)
-        addSubview(numRatingsLabel)
-        addSubview(pricingLabel)
-        addSubview(apiLinkButton)
+        addSubview(contentStackView)
     }
 
     private func setupConstraints() {
-        ratingStarsView.snp.makeConstraints { make in
-            make.leading.top.equalTo(self)
+        contentStackView.axis = .horizontal
+        contentStackView.alignment = .center
+        contentStackView.spacing = 40.0
+        contentStackView.snp.makeConstraints { make in
+            make.edges.equalTo(self)
         }
 
-        numRatingsLabel.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(self)
-            make.top.equalTo(ratingStarsView.snp.bottom).offset(8.0)
-        }
+        ratingsPricingStackView.axis = .vertical
+        ratingsPricingStackView.spacing = 8.0
 
-        pricingLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(numRatingsLabel).offset(-8.0)
-            make.trailing.equalTo(ratingStarsView)
-            make.bottom.equalTo(self)
-            make.top.equalTo(numRatingsLabel)
-        }
+        numRatingsPricingStackView.axis = .horizontal
+        numRatingsPricingStackView.spacing = 8.0
+        numRatingsLabel.adjustFontSizeToFitWidth()
+        pricingLabel.numberOfLines = 1
+        pricingLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        pricingLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         apiLinkButton.snp.makeConstraints { make in
-            make.leading.equalTo(ratingStarsView.snp.trailing).offset(40.0)
-            make.trailing.equalTo(self)
-            make.centerY.equalTo(self)
-            make.top.greaterThanOrEqualTo(self)
-            make.bottom.lessThanOrEqualTo(self)
-
             make.width.equalTo(100.0)
             make.width.equalTo(apiLinkButton.snp.height).multipliedBy(APILogoView.widthToHeightRatio)
         }
@@ -249,7 +250,7 @@ extension RatingsPricingView {
 
     func configure(_ viewModel: SearchDetailsBasicInfoViewModel,
                    colorings: SearchDetailsViewColorings) {
-        ratingStarsView.configure(viewModel.ratingsAverage)
+        viewModel.ratingsAverage.map { ratingStarsView.configure($0) }
 
         numRatingsLabel.text = viewModel.numRatingsMessage
         numRatingsLabel.configure(.body,
@@ -263,6 +264,48 @@ extension RatingsPricingView {
 
         apiLinkButton.setImage(colorings.viewColoring.apiLogo, for: .normal)
         apiLinkCallback = viewModel.apiLinkCallback?.value
+
+        arrangeSubviews(viewModel)
+    }
+
+    private func arrangeSubviews(_ viewModel: SearchDetailsBasicInfoViewModel) {
+        var numRatingsPricingSubviews: [UIView] = []
+        if viewModel.numRatingsMessage != nil {
+            numRatingsPricingSubviews.append(numRatingsLabel)
+        }
+        if viewModel.pricing != nil {
+            numRatingsPricingSubviews.append(pricingLabel)
+        }
+        numRatingsPricingStackView.setArrangedSubviews(numRatingsPricingSubviews)
+
+        var ratingsPricingSubviews: [UIView] = []
+        if viewModel.ratingsAverage != nil {
+            ratingsPricingSubviews.append(ratingStarsView)
+        }
+        if !numRatingsPricingSubviews.isEmpty {
+            ratingsPricingSubviews.append(numRatingsPricingStackView)
+        }
+        ratingsPricingStackView.setArrangedSubviews(ratingsPricingSubviews)
+
+        var contentSubviews: [UIView] = []
+        if !ratingsPricingSubviews.isEmpty {
+            contentSubviews.append(ratingsPricingStackView)
+        }
+        contentSubviews.append(apiLinkButton)
+        contentStackView.setArrangedSubviews(contentSubviews)
+    }
+
+}
+
+private extension UIStackView {
+
+    func setArrangedSubviews(_ subviews: [UIView]) {
+        arrangedSubviews.forEach {
+            removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        subviews.forEach { addArrangedSubview($0) }
     }
 
 }
