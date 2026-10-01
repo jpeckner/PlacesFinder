@@ -27,20 +27,25 @@ import SwiftUI
 
 struct SearchResultsView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchResultsViewModel>
+    private let props: SearchResultsViewProps
+    private let actionTriggered: (Search.Action) -> Void
 
-    init(viewModel: SearchResultsViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    init(
+        props: SearchResultsViewProps,
+        actionTriggered: @escaping (Search.Action) -> Void
+    ) {
+        self.props = props
+        self.actionTriggered = actionTriggered
     }
 
     var body: some View {
-        List(viewModel.value.resultViewModels.value.indexed, id: \.element.cellProps.id) { index, resultViewModel in
+        List(props.resultProps.value.indexed, id: \.element.cellProps.id) { index, resultProps in
             Button(
                 action: {
-                    viewModel.value.dispatchDetailsAction(rowIndex: index)
+                    actionTriggered(resultProps.detailEntityAction.value)
                 },
                 label: {
-                    SearchResultCell(props: resultViewModel.cellProps)
+                    SearchResultCell(props: resultProps.cellProps)
                         .onAppear {
                             dispatchRequestIfApplicable(currentIndex: index)
                         }
@@ -55,19 +60,24 @@ struct SearchResultsView: View {
         .refreshable {
             // Add a slight delay to keep the refresh control from disappearing too fast (which is jarring)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                viewModel.value.dispatchRefreshAction()
+                actionTriggered(props.refreshAction.value)
             }
         }
     }
 
     private func dispatchRequestIfApplicable(currentIndex: Int) {
-        guard viewModel.value.hasNextRequestAction,
-              currentIndex >= viewModel.value.resultViewModels.value.count - 30
-        else {
-            return
-        }
+        Task {
+            guard currentIndex >= props.resultProps.value.count - 30,
+                  // Be sure to call consume() only AFTER determining that currentIndex is high enough.
+                  // Otherwise this will consume `nextRequestAction` too early and prevent the next request
+                  // from actually happening.
+                  let nextRequestAction = await props.nextRequestAction.value.consume()
+            else {
+                return
+            }
 
-        viewModel.value.dispatchNextRequestAction()
+            actionTriggered(nextRequestAction)
+        }
     }
 
 }

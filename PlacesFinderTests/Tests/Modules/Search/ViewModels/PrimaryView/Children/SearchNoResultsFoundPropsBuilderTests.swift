@@ -1,5 +1,5 @@
 //
-//  SearchNoResultsFoundViewModelBuilderTests.swift
+//  SearchNoResultsFoundPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -29,25 +29,24 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable type_name
-class SearchNoResultsFoundViewModelBuilderTests: QuickSpec {
+class SearchNoResultsFoundPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
         let stubCopyContent = SearchNoResultsCopyContent.stubValue()
 
-        var sut: SearchNoResultsFoundViewModelBuilder!
-        var result: SearchNoResultsFoundViewModel!
+        var sut: SearchNoResultsFoundPropsBuilder!
+        var result: SearchNoResultsFoundProps!
 
         beforeEach {
-            sut = SearchNoResultsFoundViewModelBuilder()
+            sut = SearchNoResultsFoundPropsBuilder()
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildViewModel(copyContent: stubCopyContent,
-                                            colorings: AppColorings.defaultColorings.standard)
+                result = sut.buildProps(copyContent: stubCopyContent,
+                                        colorings: AppColorings.defaultColorings.standard)
             }
 
             it("returns the expected props") {

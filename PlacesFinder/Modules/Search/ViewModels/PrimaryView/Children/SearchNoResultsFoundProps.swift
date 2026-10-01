@@ -1,5 +1,5 @@
 //
-//  SearchPresenterProtocol.swift
+//  SearchNoResultsFoundProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,28 +22,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Foundation
 import Shared
-import UIKit
+
+struct SearchNoResultsFoundProps: Equatable {
+    let messageViewProps: SearchMessageViewProps
+}
+
+extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
+
+// MARK: SearchNoResultsFoundPropsBuilder
 
 // sourcery: AutoMockable
-@MainActor protocol SearchPresenterProtocol {
-    var rootViewController: UIViewController { get }
+protocol SearchNoResultsFoundPropsBuilderProtocol {
+    func buildProps(copyContent: SearchNoResultsCopyContent,
+                    colorings: AppStandardColorings) -> SearchNoResultsFoundProps
+}
 
-    func loadNoInternetViews(_ props: SearchNoInternetViewProps,
-                             titleViewModel: NavigationBarTitleViewModel,
-                             appSkin: AppSkin)
+class SearchNoResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol {
 
-    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
-                                           titleViewModel: NavigationBarTitleViewModel,
-                                           appSkin: AppSkin)
+    func buildProps(copyContent: SearchNoResultsCopyContent,
+                    colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
+        SearchNoResultsFoundProps(messageViewProps:
+            SearchMessageViewProps(
+                copyContent: copyContent,
+                colorings: colorings
+            )
+        )
+    }
 
-    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps,
-                                  titleViewModel: NavigationBarTitleViewModel,
-                                  appSkin: AppSkin)
-
-    func loadSearchViews(_ props: SearchLookupProps,
-                         viewModel: SearchViewModel,
-                         detailsViewContext: SearchDetailsViewContext?,
-                         titleViewModel: NavigationBarTitleViewModel,
-                         appSkin: AppSkin)
 }

@@ -29,8 +29,8 @@ import SwiftDux
 enum SearchLookupChild: Equatable {
     case instructions(SearchInstructionsProps)
     case progress(SearchProgressViewProps)
-    case results(SearchResultsViewModel)
-    case noResults(SearchNoResultsFoundViewModel)
+    case results(SearchResultsViewProps)
+    case noResults(SearchNoResultsFoundProps)
     case failure(SearchRetryProps)
 }
 
@@ -49,21 +49,21 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol
-    private let resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol
-    private let noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol
+    private let resultsPropsBuilder: SearchResultsViewPropsBuilderProtocol
+    private let noResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol
     private let retryPropsBuilder: SearchRetryPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
          instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol,
-         resultsViewModelBuilder: SearchResultsViewModelBuilderProtocol,
-         noResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol,
+         resultsPropsBuilder: SearchResultsViewPropsBuilderProtocol,
+         noResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol,
          retryPropsBuilder: SearchRetryPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.instructionsPropsBuilder = instructionsPropsBuilder
-        self.resultsViewModelBuilder = resultsViewModelBuilder
-        self.noResultsFoundViewModelBuilder = noResultsFoundViewModelBuilder
+        self.resultsPropsBuilder = resultsPropsBuilder
+        self.noResultsFoundPropsBuilder = noResultsFoundPropsBuilder
         self.retryPropsBuilder = retryPropsBuilder
     }
 
@@ -78,27 +78,30 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
                 colorings: appSkin.colorings.standard
             )
             return .instructions(instructionsProps)
+
         case .locationRequested,
              .initialPageRequested:
             let progressProps = SearchProgressViewProps(colorings: appSkin.colorings.searchProgress)
             return .progress(progressProps)
+
         case let .pagesReceived(submittedParams, _, numPagesReceived, allEntities, tokenContainer):
-            return .results(resultsViewModelBuilder.buildViewModel(
+            return .results(resultsPropsBuilder.buildProps(
                 submittedParams: submittedParams,
                 allEntities: allEntities,
                 colorings: appSkin.colorings.searchResults,
                 numPagesReceived: numPagesReceived,
                 tokenContainer: tokenContainer,
                 resultsCopyContent: appCopyContent.searchResults,
-                actionSubscriber: actionSubscriber,
                 locationUpdateRequestBlock: locationUpdateRequestBlock
             ))
+
         case .noResultsFound:
-            let noResultsViewModel = noResultsFoundViewModelBuilder.buildViewModel(
+            let noResultsProps = noResultsFoundPropsBuilder.buildProps(
                 copyContent: appCopyContent.searchNoResults,
                 colorings: appSkin.colorings.standard
             )
-            return .noResults(noResultsViewModel)
+            return .noResults(noResultsProps)
+
         case let .failure(submittedParams, _):
             let actionSubscriber = self.actionSubscriber
             let actionPrism = self.actionPrism

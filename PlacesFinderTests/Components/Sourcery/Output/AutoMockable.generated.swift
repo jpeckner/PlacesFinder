@@ -850,29 +850,29 @@ class SearchInputContentPropsBuilderProtocolMock: SearchInputContentPropsBuilder
     }
 
 }
-class SearchInputViewModelBuilderProtocolMock: SearchInputViewModelBuilderProtocol {
+class SearchInputPropsBuilderProtocolMock: SearchInputPropsBuilderProtocol {
 
 
 
-    //MARK: - buildDispatchingViewModel
+    //MARK: - buildProps
 
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockCallsCount = 0
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockCalled: Bool {
-        return buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockCallsCount > 0
+    var buildPropsInputParamsCopyContentCallsCount = 0
+    var buildPropsInputParamsCopyContentCalled: Bool {
+        return buildPropsInputParamsCopyContentCallsCount > 0
     }
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReceivedArguments: (inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReceivedInvocations: [(inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue: SearchInputViewModel!
-    var buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockClosure: ((SearchInputParams, SearchInputCopyContent, @escaping LocationUpdateRequestBlock) -> SearchInputViewModel)?
+    var buildPropsInputParamsCopyContentReceivedArguments: (inputParams: SearchInputParams, copyContent: SearchInputCopyContent)?
+    var buildPropsInputParamsCopyContentReceivedInvocations: [(inputParams: SearchInputParams, copyContent: SearchInputCopyContent)] = []
+    var buildPropsInputParamsCopyContentReturnValue: SearchInputProps!
+    var buildPropsInputParamsCopyContentClosure: ((SearchInputParams, SearchInputCopyContent) -> SearchInputProps)?
 
-    func buildDispatchingViewModel(inputParams: SearchInputParams, copyContent: SearchInputCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchInputViewModel {
-        buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockCallsCount += 1
-        buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReceivedArguments = (inputParams: inputParams, copyContent: copyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReceivedInvocations.append((inputParams: inputParams, copyContent: copyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockClosure = buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockClosure {
-            return buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockClosure(inputParams, copyContent, locationUpdateRequestBlock)
+    func buildProps(inputParams: SearchInputParams, copyContent: SearchInputCopyContent) -> SearchInputProps {
+        buildPropsInputParamsCopyContentCallsCount += 1
+        buildPropsInputParamsCopyContentReceivedArguments = (inputParams: inputParams, copyContent: copyContent)
+        buildPropsInputParamsCopyContentReceivedInvocations.append((inputParams: inputParams, copyContent: copyContent))
+        if let buildPropsInputParamsCopyContentClosure = buildPropsInputParamsCopyContentClosure {
+            return buildPropsInputParamsCopyContentClosure(inputParams, copyContent)
         } else {
-            return buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue
+            return buildPropsInputParamsCopyContentReturnValue
         }
     }
 
@@ -931,56 +931,56 @@ class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderProtocol {
     }
 
 }
-class SearchLookupViewModelBuilderProtocolMock: SearchLookupViewModelBuilderProtocol {
+class SearchLookupPropsBuilderProtocolMock: SearchLookupPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount = 0
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCalled: Bool {
-        return buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount > 0
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount = 0
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCalled: Bool {
+        return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupViewModel!
-    var buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel)?
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupProps!
+    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupProps)?
 
-    func buildViewModel(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupViewModel {
-        buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount += 1
-        buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure = buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure {
-            return buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, appSkin, locationUpdateRequestBlock)
+    func buildProps(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps {
+        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount += 1
+        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure = buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure {
+            return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, appSkin, locationUpdateRequestBlock)
         } else {
-            return buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue
+            return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue
         }
     }
 
 }
-class SearchNoResultsFoundViewModelBuilderProtocolMock: SearchNoResultsFoundViewModelBuilderProtocol {
+class SearchNoResultsFoundPropsBuilderProtocolMock: SearchNoResultsFoundPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelCopyContentColoringsCallsCount = 0
-    var buildViewModelCopyContentColoringsCalled: Bool {
-        return buildViewModelCopyContentColoringsCallsCount > 0
+    var buildPropsCopyContentColoringsCallsCount = 0
+    var buildPropsCopyContentColoringsCalled: Bool {
+        return buildPropsCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelCopyContentColoringsReceivedArguments: (copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)?
-    var buildViewModelCopyContentColoringsReceivedInvocations: [(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)] = []
-    var buildViewModelCopyContentColoringsReturnValue: SearchNoResultsFoundViewModel!
-    var buildViewModelCopyContentColoringsClosure: ((SearchNoResultsCopyContent, AppStandardColorings) -> SearchNoResultsFoundViewModel)?
+    var buildPropsCopyContentColoringsReceivedArguments: (copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)?
+    var buildPropsCopyContentColoringsReceivedInvocations: [(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)] = []
+    var buildPropsCopyContentColoringsReturnValue: SearchNoResultsFoundProps!
+    var buildPropsCopyContentColoringsClosure: ((SearchNoResultsCopyContent, AppStandardColorings) -> SearchNoResultsFoundProps)?
 
-    func buildViewModel(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel {
-        buildViewModelCopyContentColoringsCallsCount += 1
-        buildViewModelCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
-        buildViewModelCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
-        if let buildViewModelCopyContentColoringsClosure = buildViewModelCopyContentColoringsClosure {
-            return buildViewModelCopyContentColoringsClosure(copyContent, colorings)
+    func buildProps(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
+        buildPropsCopyContentColoringsCallsCount += 1
+        buildPropsCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
+        buildPropsCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
+        if let buildPropsCopyContentColoringsClosure = buildPropsCopyContentColoringsClosure {
+            return buildPropsCopyContentColoringsClosure(copyContent, colorings)
         } else {
-            return buildViewModelCopyContentColoringsReturnValue
+            return buildPropsCopyContentColoringsReturnValue
         }
     }
 
@@ -1047,19 +1047,19 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
 
     //MARK: - loadSearchViews
 
-    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount = 0
-    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled: Bool {
-        return loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount > 0
+    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount = 0
+    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled: Bool {
+        return loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount > 0
     }
-    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedArguments: (viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadSearchViewsDetailsViewContextTitleViewModelAppSkinClosure: ((SearchLookupViewModel, SearchDetailsViewContext?, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedArguments: (props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedInvocations: [(props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinClosure: ((SearchLookupProps, SearchViewModel, SearchDetailsViewContext?, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    func loadSearchViews(_ viewModel: SearchLookupViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadSearchViewsDetailsViewContextTitleViewModelAppSkinCallsCount += 1
-        loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadSearchViewsDetailsViewContextTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadSearchViewsDetailsViewContextTitleViewModelAppSkinClosure?(viewModel, detailsViewContext, titleViewModel, appSkin)
+    func loadSearchViews(_ props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount += 1
+        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedArguments = (props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedInvocations.append((props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin))
+        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinClosure?(props, viewModel, detailsViewContext, titleViewModel, appSkin)
     }
 
 }
@@ -1090,56 +1090,56 @@ class SearchResultCellPropsBuilderProtocolMock: SearchResultCellPropsBuilderProt
     }
 
 }
-class SearchResultViewModelBuilderProtocolMock: SearchResultViewModelBuilderProtocol {
+class SearchResultPropsBuilderProtocolMock: SearchResultPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelModelResultsCopyContentColoringsCallsCount = 0
-    var buildViewModelModelResultsCopyContentColoringsCalled: Bool {
-        return buildViewModelModelResultsCopyContentColoringsCallsCount > 0
+    var buildPropsModelResultsCopyContentColoringsCallsCount = 0
+    var buildPropsModelResultsCopyContentColoringsCalled: Bool {
+        return buildPropsModelResultsCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
-    var buildViewModelModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
-    var buildViewModelModelResultsCopyContentColoringsReturnValue: SearchResultViewModel!
-    var buildViewModelModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultViewModel)?
+    var buildPropsModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
+    var buildPropsModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
+    var buildPropsModelResultsCopyContentColoringsReturnValue: SearchResultProps!
+    var buildPropsModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultProps)?
 
-    func buildViewModel(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultViewModel {
-        buildViewModelModelResultsCopyContentColoringsCallsCount += 1
-        buildViewModelModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
-        buildViewModelModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
-        if let buildViewModelModelResultsCopyContentColoringsClosure = buildViewModelModelResultsCopyContentColoringsClosure {
-            return buildViewModelModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
+    func buildProps(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultProps {
+        buildPropsModelResultsCopyContentColoringsCallsCount += 1
+        buildPropsModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
+        buildPropsModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
+        if let buildPropsModelResultsCopyContentColoringsClosure = buildPropsModelResultsCopyContentColoringsClosure {
+            return buildPropsModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
         } else {
-            return buildViewModelModelResultsCopyContentColoringsReturnValue
+            return buildPropsModelResultsCopyContentColoringsReturnValue
         }
     }
 
 }
-class SearchResultsViewModelBuilderProtocolMock: SearchResultsViewModelBuilderProtocol {
+class SearchResultsViewPropsBuilderProtocolMock: SearchResultsViewPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount = 0
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCalled: Bool {
-        return buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount > 0
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount = 0
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCalled: Bool {
+        return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedInvocations: [(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue: SearchResultsViewModel!
-    var buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, SearchResultsViewColorings, Int, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, AnySubscriber<Search.Action, Never>, @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel)?
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedInvocations: [(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue: SearchResultsViewProps!
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, SearchResultsViewColorings, Int, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps)?
 
-    func buildViewModel(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, actionSubscriber: AnySubscriber<Search.Action, Never>, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewModel {
-        buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockCallsCount += 1
-        buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReceivedInvocations.append((submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, actionSubscriber: actionSubscriber, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure = buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure {
-            return buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockClosure(submittedParams, allEntities, colorings, numPagesReceived, tokenContainer, resultsCopyContent, actionSubscriber, locationUpdateRequestBlock)
+    func buildProps(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps {
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount += 1
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedInvocations.append((submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure = buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure {
+            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure(submittedParams, allEntities, colorings, numPagesReceived, tokenContainer, resultsCopyContent, locationUpdateRequestBlock)
         } else {
-            return buildViewModelSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentActionSubscriberLocationUpdateRequestBlockReturnValue
+            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
         }
     }
 

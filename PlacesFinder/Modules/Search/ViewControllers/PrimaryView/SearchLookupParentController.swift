@@ -31,9 +31,15 @@ class SearchLookupParentController: UIHostingController<SearchLookupParentView>,
     private let eventPublisher = SearchBarEventPublisher()
     private var cancellables: Set<AnyCancellable> = []
 
-    private var viewModel: SearchLookupViewModel
+    private let propsViewModel: SearchLookupParentView.ViewModel
+    private let viewModel: SearchViewModel
 
-    init(viewModel: SearchLookupViewModel) {
+    init(
+        props: SearchLookupProps,
+        viewModel: SearchViewModel
+    ) {
+        let propsViewModel = SearchLookupParentView.ViewModel(props: props)
+        self.propsViewModel = propsViewModel
         self.viewModel = viewModel
 
         let searchBar = UISearchBar()
@@ -41,9 +47,11 @@ class SearchLookupParentController: UIHostingController<SearchLookupParentView>,
         searchBar.delegate = eventPublisher
 
         let lookupView = SearchLookupParentView(
-            viewModel: viewModel,
+            viewModel: propsViewModel,
             searchBar: searchBar
-        )
+        ) { [weak viewModel] searchAction in
+            viewModel?.dispatchAction(searchAction)
+        }
 
         super.init(rootView: lookupView)
 
@@ -58,8 +66,8 @@ class SearchLookupParentController: UIHostingController<SearchLookupParentView>,
 
 extension SearchLookupParentController {
 
-    func configure(viewModel: SearchLookupViewModel) {
-        rootView.viewModel.value = viewModel
+    func configure(props: SearchLookupProps) {
+        propsViewModel.props = props
     }
 
 }
@@ -81,7 +89,7 @@ private extension SearchLookupParentController {
     }
 
     func handleSearchBarEvent(event: SearchBarEditEvent) {
-        viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(event)
+        viewModel.dispatchEditEvent(event)
     }
 
     func handleSearchBarSubmit(text: String?) {
@@ -89,17 +97,17 @@ private extension SearchLookupParentController {
             !text.isEmpty
         else {
             AssertionHandler.performAssertionFailure { "UISearchBar should be configured to not return nil text" }
-            viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            viewModel.dispatchEditEvent(.endedEditing)
             return
         }
 
         guard let nonEmptyText = try? NonEmptyString(text.trimmingCharacters(in: .whitespacesAndNewlines)) else {
-            viewModel.searchInputViewModel.dispatcher?.dispatchEditEvent(.endedEditing)
+            viewModel.dispatchEditEvent(.endedEditing)
             return
         }
 
         let params = SearchParams(keywords: nonEmptyText)
-        viewModel.searchInputViewModel.dispatcher?.dispatchSearchParams(params)
+        viewModel.dispatchSearchParams(params)
     }
 
 }

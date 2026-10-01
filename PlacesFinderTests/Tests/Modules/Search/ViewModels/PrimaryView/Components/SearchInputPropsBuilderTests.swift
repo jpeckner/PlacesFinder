@@ -1,5 +1,5 @@
 //
-//  SearchInputViewModelBuilderTests.swift
+//  SearchInputPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,14 +22,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInputViewModelBuilderTests: QuickSpec {
+class SearchInputPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
@@ -37,35 +36,30 @@ class SearchInputViewModelBuilderTests: QuickSpec {
         let stubInputCopyContent = SearchInputCopyContent.stubValue()
         let stubContentProps = SearchInputContentProps.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
         var mockContentPropsBuilder: SearchInputContentPropsBuilderProtocolMock!
 
-        var sut: SearchInputViewModelBuilder!
-        var result: SearchInputViewModel!
+        var sut: SearchInputPropsBuilder!
+        var result: SearchInputProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
+            mockSearchActivityActionPrism.updateEditingActionClosure = { editEvent in .updateInputEditing(editEvent) }
 
             mockContentPropsBuilder = SearchInputContentPropsBuilderProtocolMock()
             mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReturnValue = stubContentProps
 
-            sut = SearchInputViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                              actionPrism: mockSearchActivityActionPrism,
-                                              contentPropsBuilder: mockContentPropsBuilder)
+            sut = SearchInputPropsBuilder(actionPrism: mockSearchActivityActionPrism,
+                                          contentPropsBuilder: mockContentPropsBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildDispatchingViewModel(
+                result = sut.buildProps(
                     inputParams: stubInputParams,
                     copyContent: stubInputCopyContent
-                ) {
-                    .success(.stubValue())
-                }
+                )
             }
 
             it("calls mockContentPropsBuilder with expected method and args") {
@@ -75,8 +69,13 @@ class SearchInputViewModelBuilderTests: QuickSpec {
                 expect(receivedArgs?.copyContent) == stubInputCopyContent
             }
 
-            it("returns the viewmodel built by mockContentPropsBuilder") {
+            it("returns the content props built by mockContentPropsBuilder") {
                 expect(result.content) == stubContentProps
+            }
+
+            it("includes the end-editing action returned by mockSearchActivityActionPrism as coverTappedAction") {
+                expect(mockSearchActivityActionPrism.updateEditingActionReceivedEditEvent) == .endedEditing
+                expect(result.coverTappedAction.value) == .searchActivity(.updateInputEditing(.endedEditing))
             }
 
         }

@@ -1,5 +1,5 @@
 //
-//  SearchResultsViewModelBuilderTests.swift
+//  SearchResultsViewPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
@@ -33,7 +32,7 @@ import SwiftDuxTestComponents
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchResultsViewModelBuilderTests: QuickSpec {
+class SearchResultsViewPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
@@ -53,21 +52,17 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
         var stubInitialRequestAction: Search.ActivityAction!
         var stubSubsequentRequestAction: Search.ActivityAction!
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var mockResultViewModelBuilder: SearchResultViewModelBuilderProtocolMock!
+        var mockResultPropsBuilder: SearchResultPropsBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
-        var sut: SearchResultsViewModelBuilder!
+        var sut: SearchResultsViewPropsBuilder!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
-            mockResultViewModelBuilder = SearchResultViewModelBuilderProtocolMock()
-            mockResultViewModelBuilder.buildViewModelModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
+            mockResultPropsBuilder = SearchResultPropsBuilderProtocolMock()
+            mockResultPropsBuilder.buildPropsModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
                 let cellProps = SearchResultCellProps.stubValue(name: entityModel.name)
-                return SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                                       cellProps: cellProps,
-                                                       detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
+                return SearchResultProps.stubValue(cellProps: cellProps,
+                                                   detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
             }
 
             mockPlaceLookupService = PlaceLookupServiceProtocolMock()
@@ -95,24 +90,23 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
             mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubInitialRequestAction
             mockSearchActivityActionPrism.subsequentRequestActionSearchParamsAllEntitiesNumPagesReceivedTokenContainerReturnValue = stubSubsequentRequestAction
 
-            sut = SearchResultsViewModelBuilder(actionPrism: mockSearchActivityActionPrism,
-                                                resultViewModelBuilder: mockResultViewModelBuilder)
+            sut = SearchResultsViewPropsBuilder(actionPrism: mockSearchActivityActionPrism,
+                                                resultPropsBuilder: mockResultPropsBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             var locationBlockCalled: Bool!
-            var result: SearchResultsViewModel!
+            var result: SearchResultsViewProps!
 
             beforeEach {
                 locationBlockCalled = false
-                result = sut.buildViewModel(submittedParams: stubSearchParams,
-                                            allEntities: stubEntities,
-                                            colorings: AppColorings.defaultColorings.searchResults,
-                                            numPagesReceived: 1,
-                                            tokenContainer: stubTokenContainer,
-                                            resultsCopyContent: stubCopyContent,
-                                            actionSubscriber: AnySubscriber(mockActionSubscriber)) {
+                result = sut.buildProps(submittedParams: stubSearchParams,
+                                        allEntities: stubEntities,
+                                        colorings: AppColorings.defaultColorings.searchResults,
+                                        numPagesReceived: 1,
+                                        tokenContainer: stubTokenContainer,
+                                        resultsCopyContent: stubCopyContent) {
                     locationBlockCalled = true
                     return .success(.stubValue())
                 }
@@ -134,29 +128,26 @@ class SearchResultsViewModelBuilderTests: QuickSpec {
                 expect(initialRequestReceivedArgs?.tokenContainer) == stubTokenContainer
             }
 
-            it("inits a viewmodel with the entities as transformed by mockResultViewModelBuilder") {
-                let expectedViewModels = stubEntities.withTransformation { model in
-                    mockResultViewModelBuilder.buildViewModel(model: model,
-                                                              resultsCopyContent: stubCopyContent,
-                                                              colorings: AppColorings.defaultColorings.searchResults)
+            it("inits props with the entities as transformed by mockResultPropsBuilder") {
+                let expectedProps = stubEntities.withTransformation { model in
+                    mockResultPropsBuilder.buildProps(model: model,
+                                                      resultsCopyContent: stubCopyContent,
+                                                      colorings: AppColorings.defaultColorings.searchResults)
                 }
 
-                expect(result.resultViewModels.value.count) == 3
+                expect(result.resultProps.value.count) == 3
                 for idx in 0..<3 {
-                    expect(result.resultViewModels.value[idx].cellProps) == expectedViewModels.value[idx].cellProps
+                    expect(result.resultProps.value[idx].cellProps) == expectedProps.value[idx].cellProps
                 }
             }
 
             it("passes the expected action as refreshAction") {
-                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                result.dispatchRefreshAction()
-                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubInitialRequestAction)
+                expect(result.refreshAction.value) == .searchActivity(stubInitialRequestAction)
             }
 
             it("passes the expected action as nextRequestAction") {
-                expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                result.dispatchNextRequestAction()
-                expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubSubsequentRequestAction)
+                let nextRequestAction = await result.nextRequestAction.value.consume()
+                expect(nextRequestAction) == .searchActivity(stubSubsequentRequestAction)
             }
 
         }

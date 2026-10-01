@@ -1,5 +1,5 @@
 //
-//  SearchLookupViewModelBuilderTests.swift
+//  SearchLookupPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,17 +22,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
 import SwiftDux
 
 // swiftlint:disable blanket_disable_command
-// swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchLookupViewModelBuilderTests: QuickSpec {
+class SearchLookupPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
@@ -42,45 +40,35 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                                                            inputParams: stubInputParams,
                                                            detailedEntity: .stubValue())
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
-        var stubInputViewModel: SearchInputViewModel!
-        var mockInputViewModelBuilder: SearchInputViewModelBuilderProtocolMock!
+        var stubInputProps: SearchInputProps!
+        var mockInputPropsBuilder: SearchInputPropsBuilderProtocolMock!
         var mockChildBuilder: SearchLookupChildBuilderProtocolMock!
 
         var locationBlockCalled: Bool!
-        var sut: SearchLookupViewModelBuilder!
-        var result: SearchLookupViewModel!
-
-        func locationUpdateStub() async -> LocationRequestResult {
-            locationBlockCalled = true
-            return .success(.stubValue())
-        }
+        var sut: SearchLookupPropsBuilder!
+        var result: SearchLookupProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-            mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             locationBlockCalled = false
 
-            let dispatcher = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                                   actionPrism: mockSearchActivityActionPrism,
-                                                   locationUpdateRequestBlock: locationUpdateStub)
-            stubInputViewModel = .dispatching(content: .stubValue(),
-                                              dispatcher: IgnoredEquatable(dispatcher))
-            mockInputViewModelBuilder = SearchInputViewModelBuilderProtocolMock()
-            mockInputViewModelBuilder.buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReturnValue = stubInputViewModel
+            stubInputProps = SearchInputProps(
+                content: .stubValue(),
+                coverTappedAction: .searchActivity(.updateInputEditing(.endedEditing))
+            )
+            mockInputPropsBuilder = SearchInputPropsBuilderProtocolMock()
+            mockInputPropsBuilder.buildPropsInputParamsCopyContentReturnValue = stubInputProps
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
             mockChildBuilder.buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = .progress(.stubValue())
 
-            sut = SearchLookupViewModelBuilder(inputViewModelBuilder: mockInputViewModelBuilder,
-                                               childBuilder: mockChildBuilder)
+            sut = SearchLookupPropsBuilder(inputPropsBuilder: mockInputPropsBuilder,
+                                           childBuilder: mockChildBuilder)
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildViewModel(
+                result = sut.buildProps(
                     searchActivityState: stubSearchActivityState,
                     appCopyContent: stubAppCopyContent,
                     appSkin: .stubValue()
@@ -90,14 +78,10 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
                 }
             }
 
-            it("calls mockInputViewModelBuilder with expected method and args") {
-                let receivedArgs = mockInputViewModelBuilder.buildDispatchingViewModelInputParamsCopyContentLocationUpdateRequestBlockReceivedArguments
+            it("calls mockInputPropsBuilder with expected method and args") {
+                let receivedArgs = mockInputPropsBuilder.buildPropsInputParamsCopyContentReceivedArguments
                 expect(receivedArgs?.inputParams) == stubInputParams
                 expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
-
-                expect(locationBlockCalled) == false
-                _ = await receivedArgs?.locationUpdateRequestBlock()
-                expect(locationBlockCalled) == true
             }
 
             it("calls mockChildBuilder with expected method and args") {
@@ -111,7 +95,7 @@ class SearchLookupViewModelBuilderTests: QuickSpec {
             }
 
             it("returns the expected value") {
-                expect(result.searchInputViewModel) == stubInputViewModel
+                expect(result.inputProps) == stubInputProps
                 expect(result.child) == .progress(.stubValue())
             }
 

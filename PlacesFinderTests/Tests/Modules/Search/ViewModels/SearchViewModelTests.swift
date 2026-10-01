@@ -1,5 +1,5 @@
 //
-//  SearchInputDispatcherTests.swift
+//  SearchViewModelTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -31,7 +31,7 @@ import SwiftDux
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchInputDispatcherTests: QuickSpec {
+class SearchViewModelTests: QuickSpec {
 
     override func spec() {
 
@@ -39,7 +39,7 @@ class SearchInputDispatcherTests: QuickSpec {
         var mockActionPrism: SearchActivityActionPrismProtocolMock!
 
         var locationBlockCalled: Bool!
-        var sut: SearchInputDispatcher!
+        var sut: SearchViewModel!
 
         beforeEach {
             mockActionSubscriber = MockSubscriber()
@@ -48,11 +48,25 @@ class SearchInputDispatcherTests: QuickSpec {
             mockActionPrism.updateEditingActionClosure = { editEvent in .updateInputEditing(editEvent) }
 
             locationBlockCalled = false
-            sut = SearchInputDispatcher(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                        actionPrism: mockActionPrism) {
+            sut = SearchViewModel(actionSubscriber: AnySubscriber(mockActionSubscriber),
+                                  actionPrism: mockActionPrism) {
                 locationBlockCalled = true
                 return .success(.stubValue())
             }
+        }
+
+        describe("dispatchAction()") {
+
+            let stubAction = Search.Action.searchActivity(.initialPageRequested(.stubValue()))
+
+            beforeEach {
+                sut.dispatchAction(stubAction)
+            }
+
+            it("dispatches the action it was given") {
+                expect(mockActionSubscriber.receivedInputs) == [stubAction]
+            }
+
         }
 
         describe("dispatchEditEvent()") {
@@ -90,7 +104,7 @@ class SearchInputDispatcherTests: QuickSpec {
             }
 
             it("calls the action prism with expected method and args") {
-                expect(mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments?  .searchParams) == stubParams
+                expect(mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments?.searchParams) == stubParams
 
                 expect(locationBlockCalled) == false
                 _ = await mockActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReceivedArguments?

@@ -1,5 +1,5 @@
 //
-//  SearchResultViewModel+Stub.swift
+//  SearchResultProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,20 +22,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import SwiftDux
 import SwiftDuxTestComponents
 
-extension SearchResultViewModel {
+extension SearchResultProps {
 
     static func stubValue(
-        actionSubscriber: AnySubscriber<Search.Action, Never>,
         cellProps: SearchResultCellProps = .stubValue(),
         detailEntityAction: Search.Action = .searchActivity(.detailedEntity(.stubValue()))
-    ) -> SearchResultViewModel {
-        return SearchResultViewModel(cellProps: cellProps,
-                                     actionSubscriber: actionSubscriber,
-                                     detailEntityAction: detailEntityAction)
+    ) -> SearchResultProps {
+        return SearchResultProps(cellProps: cellProps,
+                                 detailEntityAction: detailEntityAction)
     }
 
 }

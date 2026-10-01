@@ -23,6 +23,7 @@
 //  SOFTWARE.
 //
 
+import Combine
 import CoordiNode
 import CoordiNodeTestComponents
 import Nimble
@@ -53,12 +54,13 @@ class SearchCoordinatorTests: QuickSpec {
 
             let mockAppStoreRelay: SubstatesSubscriberRelay<MockAppStore>
             let mockSearchStoreRelay: StoreSubscriptionRelay<MockSearchStore>
+            let stubViewModel: SearchViewModel
             let mockServiceContainer: ServiceContainer
             let mockSearchPresenter: SearchPresenterProtocolMock
             let mockStatePrism: SearchActivityStatePrismProtocolMock
             let mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock
             let mockSearchBackgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocolMock
-            let mockSearchLookupViewModelBuilder: SearchLookupViewModelBuilderProtocolMock
+            let mockSearchLookupPropsBuilder: SearchLookupPropsBuilderProtocolMock
             let mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock
             let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
 
@@ -83,15 +85,25 @@ class SearchCoordinatorTests: QuickSpec {
                 mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue =
                     stubInitialRequestAction
 
+                self.stubViewModel = SearchViewModel(
+                    actionSubscriber: AnySubscriber(MockSubscriber<Search.Action>()),
+                    actionPrism: mockSearchActivityActionPrism
+                ) {
+                    .success(.stubValue())
+                }
+
                 self.mockSearchBackgroundPropsBuilder = SearchBackgroundViewPropsBuilderProtocolMock()
                 mockSearchBackgroundPropsBuilder.buildPropsKeywordsAppCopyContentColoringsReturnValue = SearchBackgroundViewProps.stubValue()
 
-                let lookupViewModel = SearchLookupViewModel(
-                    searchInputViewModel: .nonDispatching(content: .stubValue()),
+                let lookupProps = SearchLookupProps(
+                    inputProps: SearchInputProps(
+                        content: .stubValue(),
+                        coverTappedAction: .searchActivity(.updateInputEditing(.endedEditing))
+                    ),
                     child: .progress(.stubValue())
                 )
-                self.mockSearchLookupViewModelBuilder = SearchLookupViewModelBuilderProtocolMock()
-                mockSearchLookupViewModelBuilder.buildViewModelSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = lookupViewModel
+                self.mockSearchLookupPropsBuilder = SearchLookupPropsBuilderProtocolMock()
+                mockSearchLookupPropsBuilder.buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = lookupProps
 
                 self.mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
@@ -113,12 +125,13 @@ class SearchCoordinatorTests: QuickSpec {
                 let coordinator = SearchCoordinator(
                     appStoreRelay: dependencies.mockAppStoreRelay,
                     searchStoreRelay: dependencies.mockSearchStoreRelay,
+                    viewModel: dependencies.stubViewModel,
                     presenter: dependencies.mockSearchPresenter,
                     urlOpenerService: dependencies.mockServiceContainer.urlOpenerService,
                     statePrism: dependencies.mockStatePrism,
                     actionPrism: dependencies.mockSearchActivityActionPrism,
                     backgroundPropsBuilder: dependencies.mockSearchBackgroundPropsBuilder,
-                    lookupViewModelBuilder: dependencies.mockSearchLookupViewModelBuilder,
+                    lookupPropsBuilder: dependencies.mockSearchLookupPropsBuilder,
                     detailsViewContextBuilder: dependencies.mockSearchDetailsViewContextBuilder,
                     navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder
                 )
@@ -447,7 +460,7 @@ class SearchCoordinatorTests: QuickSpec {
                         it("calls presenter.loadSearchViews()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)
@@ -484,7 +497,7 @@ class SearchCoordinatorTests: QuickSpec {
                         it("calls presenter.loadSearchViews()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)

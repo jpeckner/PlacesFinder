@@ -97,13 +97,19 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         )
         let actionPrism = SearchActivityActionPrism(dependencies: actionCreatorDependencies)
 
+        let viewModel = SearchViewModel(
+            actionSubscriber: searchActionSubscriber,
+            actionPrism: actionPrism,
+            locationUpdateRequestBlock: serviceContainer.locationRequestHandler.requestLocation
+        )
+
         let contentPropsBuilder = SearchInputContentPropsBuilder()
         let instructionsPropsBuilder = SearchInstructionsPropsBuilder()
         let backgroundPropsBuilder = SearchBackgroundViewPropsBuilder(
             contentPropsBuilder: contentPropsBuilder,
             instructionsPropsBuilder: instructionsPropsBuilder
         )
-        let lookupViewModelBuilder = SearchLookupViewModelBuilder(
+        let lookupPropsBuilder = SearchLookupPropsBuilder(
             actionSubscriber: searchActionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
@@ -123,12 +129,13 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
 
         return SearchCoordinator(appStoreRelay: appStoreRelay,
                                  searchStoreRelay: searchStoreRelay,
+                                 viewModel: viewModel,
                                  presenter: presenter,
                                  urlOpenerService: serviceContainer.urlOpenerService,
                                  statePrism: statePrism,
                                  actionPrism: actionPrism,
                                  backgroundPropsBuilder: backgroundPropsBuilder,
-                                 lookupViewModelBuilder: lookupViewModelBuilder,
+                                 lookupPropsBuilder: lookupPropsBuilder,
                                  detailsViewContextBuilder: detailsViewContextBuilder,
                                  navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
@@ -187,34 +194,32 @@ private extension HomeCoordinatorImmediateDescendent {
 
 }
 
-private extension SearchLookupViewModelBuilder {
+private extension SearchLookupPropsBuilder {
 
     convenience init(actionSubscriber: AnySubscriber<Search.Action, Never>,
                      actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentPropsBuilder: SearchInputContentPropsBuilderProtocol,
                      instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol) {
-        let inputViewModelBuilder = SearchInputViewModelBuilder(actionSubscriber: actionSubscriber,
-                                                                actionPrism: actionPrism,
-                                                                contentPropsBuilder: contentPropsBuilder)
+        let inputPropsBuilder = SearchInputPropsBuilder(actionPrism: actionPrism,
+                                                        contentPropsBuilder: contentPropsBuilder)
 
         let resultCellPropsBuilder = SearchResultCellPropsBuilder(copyFormatter: copyFormatter)
-        let resultViewModelBuilder = SearchResultViewModelBuilder(actionSubscriber: actionSubscriber,
-                                                                  actionPrism: actionPrism,
-                                                                  resultCellPropsBuilder: resultCellPropsBuilder)
-        let resultsViewModelBuilder = SearchResultsViewModelBuilder(actionPrism: actionPrism,
-                                                                    resultViewModelBuilder: resultViewModelBuilder)
-        let noResultsFoundViewModelBuilder = SearchNoResultsFoundViewModelBuilder()
+        let resultPropsBuilder = SearchResultPropsBuilder(actionPrism: actionPrism,
+                                                          resultCellPropsBuilder: resultCellPropsBuilder)
+        let resultsPropsBuilder = SearchResultsViewPropsBuilder(actionPrism: actionPrism,
+                                                                resultPropsBuilder: resultPropsBuilder)
+        let noResultsFoundPropsBuilder = SearchNoResultsFoundPropsBuilder()
         let retryPropsBuilder = SearchRetryPropsBuilder()
 
         let childBuilder = SearchLookupChildBuilder(actionSubscriber: actionSubscriber,
                                                     actionPrism: actionPrism,
                                                     instructionsPropsBuilder: instructionsPropsBuilder,
-                                                    resultsViewModelBuilder: resultsViewModelBuilder,
-                                                    noResultsFoundViewModelBuilder: noResultsFoundViewModelBuilder,
+                                                    resultsPropsBuilder: resultsPropsBuilder,
+                                                    noResultsFoundPropsBuilder: noResultsFoundPropsBuilder,
                                                     retryPropsBuilder: retryPropsBuilder)
 
-        self.init(inputViewModelBuilder: inputViewModelBuilder,
+        self.init(inputPropsBuilder: inputPropsBuilder,
                   childBuilder: childBuilder)
     }
 

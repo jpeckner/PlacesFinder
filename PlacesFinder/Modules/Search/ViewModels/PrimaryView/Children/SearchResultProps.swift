@@ -1,5 +1,5 @@
 //
-//  SearchResultViewModel.swift
+//  SearchResultProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,66 +22,50 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Shared
 import SwiftDux
 
-struct SearchResultViewModel: Equatable {
+struct SearchResultProps: Equatable {
     let cellProps: SearchResultCellProps
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
-    private let detailEntityAction: IgnoredEquatable<Search.Action>
+    let detailEntityAction: IgnoredEquatable<Search.Action>
 
     init(cellProps: SearchResultCellProps,
-         actionSubscriber: AnySubscriber<Search.Action, Never>,
          detailEntityAction: Search.Action) {
         self.cellProps = cellProps
-        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.detailEntityAction = IgnoredEquatable(detailEntityAction)
     }
 }
 
-extension SearchResultViewModel {
-
-    func dispatchDetailEntityAction() {
-        _ = actionSubscriber.value.receive(detailEntityAction.value)
-    }
-
-}
-
-// MARK: SearchResultViewModelBuilder
+// MARK: SearchResultPropsBuilder
 
 // sourcery: AutoMockable
-protocol SearchResultViewModelBuilderProtocol {
-    func buildViewModel(model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent,
-                        colorings: SearchResultsViewColorings) -> SearchResultViewModel
+protocol SearchResultPropsBuilderProtocol {
+    func buildProps(model: SearchEntityModel,
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchResultsViewColorings) -> SearchResultProps
 }
 
-class SearchResultViewModelBuilder: SearchResultViewModelBuilderProtocol {
+class SearchResultPropsBuilder: SearchResultPropsBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let resultCellPropsBuilder: SearchResultCellPropsBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
-         actionPrism: SearchDetailsActionPrismProtocol,
+    init(actionPrism: SearchDetailsActionPrismProtocol,
          resultCellPropsBuilder: SearchResultCellPropsBuilderProtocol) {
-        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.resultCellPropsBuilder = resultCellPropsBuilder
     }
 
-    func buildViewModel(model: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent,
-                        colorings: SearchResultsViewColorings) -> SearchResultViewModel {
+    func buildProps(model: SearchEntityModel,
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchResultsViewColorings) -> SearchResultProps {
         let cellProps = resultCellPropsBuilder.buildProps(model: model,
                                                           resultsCopyContent: resultsCopyContent,
                                                           colorings: colorings)
         let detailEntityAction = actionPrism.detailEntityAction(model)
 
-        return SearchResultViewModel(cellProps: cellProps,
-                                     actionSubscriber: actionSubscriber,
-                                     detailEntityAction: .searchActivity(detailEntityAction))
+        return SearchResultProps(cellProps: cellProps,
+                                 detailEntityAction: .searchActivity(detailEntityAction))
     }
 
 }

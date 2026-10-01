@@ -1,8 +1,8 @@
 //
-//  SearchNoResultsFoundViewModel.swift
+//  SingleReadBox.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
-import Shared
+actor SingleReadBox<TValue> {
+    private var value: TValue? // Must be optional to clear it
 
-struct SearchNoResultsFoundViewModel: Equatable {
-    let messageViewProps: SearchMessageViewProps
-}
-
-extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
-
-// MARK: SearchNoResultsFoundViewModelBuilder
-
-// sourcery: AutoMockable
-// swiftlint:disable:next type_name
-protocol SearchNoResultsFoundViewModelBuilderProtocol {
-    func buildViewModel(copyContent: SearchNoResultsCopyContent,
-                        colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel
-}
-
-class SearchNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocol {
-
-    func buildViewModel(copyContent: SearchNoResultsCopyContent,
-                        colorings: AppStandardColorings) -> SearchNoResultsFoundViewModel {
-        SearchNoResultsFoundViewModel(messageViewProps:
-            SearchMessageViewProps(
-                copyContent: copyContent,
-                colorings: colorings
-            )
-        )
+    init(_ value: TValue?) {
+        self.value = value
     }
 
+    func consume() -> TValue? {
+        let uniqueValue = self.value
+        self.value = nil // Clear it for future callers
+        return uniqueValue
+    }
 }
