@@ -26,6 +26,7 @@ import Foundation
 
 enum PlaceLookupRequestBuilderError: Error {
     case invalidResultsPerPageAmount(acceptableRange: ClosedRange<Int>)
+    case maxResultsOffsetExceeded
     case invalidURL(components: URLComponents)
 }
 

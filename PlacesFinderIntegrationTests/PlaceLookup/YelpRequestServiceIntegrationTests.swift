@@ -111,12 +111,12 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
 
                 it("returns the requested number of items per page for the first n-1 pages") {
                     for page in pagesReturned.dropLast() {
-                        expect(page.entities.count) == YelpRequestService.maxResultsPerPage
+                        expect(page.entities.count) == YelpRequestBuilder.maxResultsPerPage
                     }
                 }
 
                 it("returns up to the requested number of items per page for the last page") {
-                    expect(pagesReturned.last?.entities.count) <= YelpRequestService.maxResultsPerPage
+                    expect(pagesReturned.last?.entities.count) <= YelpRequestBuilder.maxResultsPerPage
                 }
 
             }
