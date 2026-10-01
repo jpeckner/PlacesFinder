@@ -27,6 +27,7 @@ import Foundation
 final class YelpRequestBuilder: Sendable {
     static let searchPath = "/v3/businesses/search"
     static let maxResultsPerPage: Int = 50
+    private static let maxLimitPlusOffsetSum = 240  // This is a limit enforced by the Yelp API
 
     private let config: YelpRequestConfig
 
@@ -45,11 +46,16 @@ extension YelpRequestBuilder {
             return .failure(.invalidResultsPerPageAmount(acceptableRange: acceptableRange))
         }
 
+        let massagedResultsPerPage = min(resultsPerPage, Self.maxLimitPlusOffsetSum - startingIndex)
+        guard massagedResultsPerPage > 0 else {
+            return .failure(.maxResultsOffsetExceeded)
+        }
+
         var components = config.searchURLComponents
         components.queryItems =
             placeLookupParams.queryItems + [
                 URLQueryItem(name: "offset", value: String(startingIndex)),
-                URLQueryItem(name: "limit", value: String(resultsPerPage)),
+                URLQueryItem(name: "limit", value: String(massagedResultsPerPage)),
             ]
         guard let url = components.url else {
             return .failure(.invalidURL(components: components))
@@ -62,7 +68,7 @@ extension YelpRequestBuilder {
         return .success(PlaceLookupPageRequestToken(placeLookupParams: placeLookupParams,
                                                     urlRequest: request,
                                                     startingIndex: startingIndex,
-                                                    resultsPerPage: resultsPerPage))
+                                                    resultsPerPage: massagedResultsPerPage))
     }
 
 }

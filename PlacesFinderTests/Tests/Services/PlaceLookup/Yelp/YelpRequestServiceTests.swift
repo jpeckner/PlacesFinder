@@ -127,67 +127,6 @@ class YelpRequestServiceTests: QuickSpec {
             }
         }
 
-        describe("buildInitialPageRequestToken(placeLookupParams:resultsPerPage:)") {
-
-            for resultsPerPage in [0, 51] {
-
-                context("when the resultsPerPage arg is \(resultsPerPage)") {
-                    it("throws .invalidResultsPerPageAmount, with the range of acceptable amounts") {
-                        var thrownError: Error?
-                        do {
-                            _ = try sut.buildInitialPageRequestToken(placeLookupParams: stubParams,
-                                                                     resultsPerPage: resultsPerPage)
-                        } catch {
-                            thrownError = error
-                        }
-
-                        guard case let .invalidResultsPerPageAmount(acceptableRange)? =
-                            thrownError as? PlaceLookupRequestBuilderError
-                        else {
-                            fail("Unexpected value: \(String(describing: thrownError))")
-                            return
-                        }
-
-                        expect(acceptableRange) == 1...50
-                    }
-                }
-
-            }
-
-            context("else") {
-
-                var result: PlaceLookupPageRequestToken!
-
-                beforeEach {
-                    result = try? sut.buildInitialPageRequestToken(placeLookupParams: stubParams,
-                                                                   resultsPerPage: 20)
-                }
-
-                it("returns a token with the placeLookupParams arg") {
-                    expect(result.placeLookupParams) == stubParams
-                }
-
-                it("returns a token with a starting index of 0") {
-                    expect(result.startingIndex) == 0
-                }
-
-                it("returns a token with the resultsPerPage arg") {
-                    expect(result.resultsPerPage) == 20
-                }
-
-                it("returns a token with a GET request for the first page of search results") {
-                    expect(result.urlRequest.httpMethod) == "GET"
-                    expect(result.urlRequest.url?.absoluteString) == urlString(offset: 0, limit: 20)
-                }
-
-                it("returns a token with a request that's authorized with the API key") {
-                    expect(result.urlRequest.value(forHTTPHeaderField: "Authorization")) == "Bearer \(stubAPIKey)"
-                }
-
-            }
-
-        }
-
         describe("buildInitialPageRequestToken(placeLookupParams:)") {
 
             var result: PlaceLookupPageRequestToken!
@@ -196,10 +135,19 @@ class YelpRequestServiceTests: QuickSpec {
                 result = try? sut.buildInitialPageRequestToken(placeLookupParams: stubParams)
             }
 
+            it("returns a token with the placeLookupParams arg") {
+                expect(result.placeLookupParams) == stubParams
+            }
+
             it("returns a token requesting the maximum number of results per page") {
                 expect(result.startingIndex) == 0
                 expect(result.resultsPerPage) == 50
                 expect(result.urlRequest.url?.absoluteString) == urlString(offset: 0, limit: 50)
+            }
+
+            it("returns a token with a GET request that's authorized with the API key") {
+                expect(result.urlRequest.httpMethod) == "GET"
+                expect(result.urlRequest.value(forHTTPHeaderField: "Authorization")) == "Bearer \(stubAPIKey)"
             }
 
         }
@@ -435,6 +383,59 @@ class YelpRequestServiceTests: QuickSpec {
                 it("returns nil for the next request token") {
                     expect(returnedResponse) != nil
                     expect(returnedResponse?.nextRequestTokenResult) == nil
+                }
+
+            }
+
+            // Yelp rejects any request in which offset + limit is greater than 240
+
+            context("when the next page would extend past Yelp's maximum for offset + limit") {
+
+                beforeEach {
+                    stubRequestToken = PlaceLookupPageRequestToken(placeLookupParams: stubParams,
+                                                                   urlRequest: .stubValue(),
+                                                                   startingIndex: 150,
+                                                                   resultsPerPage: 50)
+                    mockDecodableService.performRequestUrlRequestReturnValue =
+                        stubPageResponse(total: 905,
+                                         businesses: [stubBusinessJSON(id: "stubID")]).map { .success($0) }
+
+                    await performTest()
+                }
+
+                it("returns a token requesting only the results up to that maximum") {
+                    let nextRequestToken = try? returnedResponse?.nextRequestTokenResult?.get()
+
+                    expect(nextRequestToken?.startingIndex) == 200
+                    expect(nextRequestToken?.resultsPerPage) == 40
+                    expect(nextRequestToken?.urlRequest.url?.absoluteString) == urlString(offset: 200, limit: 40)
+                }
+
+            }
+
+            context("when the results requested so far have reached Yelp's maximum for offset + limit") {
+
+                beforeEach {
+                    stubRequestToken = PlaceLookupPageRequestToken(placeLookupParams: stubParams,
+                                                                   urlRequest: .stubValue(),
+                                                                   startingIndex: 200,
+                                                                   resultsPerPage: 40)
+                    mockDecodableService.performRequestUrlRequestReturnValue =
+                        stubPageResponse(total: 905,
+                                         businesses: [stubBusinessJSON(id: "stubID")]).map { .success($0) }
+
+                    await performTest()
+                }
+
+                it("returns the payload's entities") {
+                    expect(returnedEntities?.map { $0.id.value }) == ["stubID"]
+                }
+
+                it("returns .maxResultsOffsetExceeded in place of a next request token") {
+                    guard case .failure(.maxResultsOffsetExceeded)? = returnedResponse?.nextRequestTokenResult else {
+                        fail("Unexpected value: \(String(describing: returnedResponse?.nextRequestTokenResult))")
+                        return
+                    }
                 }
 
             }

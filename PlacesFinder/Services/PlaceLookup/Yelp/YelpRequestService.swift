@@ -29,8 +29,6 @@ actor YelpRequestService: PlaceLookupServiceProtocol {
 
     private typealias YelpServiceResult = DecodableServiceResult<YelpPageResponse, YelpErrorPayload>
 
-    static let maxResultsPerPage = YelpRequestBuilder.maxResultsPerPage
-
     private let decodableService: DecodableServiceProtocol
     private let requestBuilder: YelpRequestBuilder
 
@@ -41,20 +39,12 @@ actor YelpRequestService: PlaceLookupServiceProtocol {
     }
 
     nonisolated func buildInitialPageRequestToken(
-        placeLookupParams: PlaceLookupParams,
-        resultsPerPage: Int
+        placeLookupParams: PlaceLookupParams
     ) throws -> PlaceLookupPageRequestToken {
         let tokenResult = requestBuilder.buildPageRequestToken(placeLookupParams,
                                                                startingIndex: 0,
-                                                               resultsPerPage: resultsPerPage)
+                                                               resultsPerPage: YelpRequestBuilder.maxResultsPerPage)
         return try tokenResult.get()
-    }
-
-    nonisolated func buildInitialPageRequestToken(
-        placeLookupParams: PlaceLookupParams
-    ) throws -> PlaceLookupPageRequestToken {
-        return try buildInitialPageRequestToken(placeLookupParams: placeLookupParams,
-                                                resultsPerPage: YelpRequestService.maxResultsPerPage)
     }
 
     func requestPage(requestToken: PlaceLookupPageRequestToken) async -> PlaceLookupResult {
