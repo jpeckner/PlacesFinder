@@ -27,8 +27,6 @@ import Shared
 
 // sourcery: fieldName = "aboutApp"
 struct AboutAppViewColorings: AppColoringProtocol, AppStandardColoringsProtocol {
-    let viewColoring: ViewColoring
     let titleTextColoring: TextColoring
     let bodyTextColoring: TextColoring
-    let ctaTextColoring: TextColoring
 }

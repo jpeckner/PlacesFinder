@@ -335,7 +335,7 @@ class YelpRequestServiceTests: QuickSpec {
                         displayPhone: .stubValue("(669) 240-5556"),
                         dialablePhone: .stubValue("+16692405556"),
                         // "price": "$$"
-                        pricing: PlaceLookupPricing(count: 2, maximum: 4),
+                        pricing: PlaceLookupPricing(count: 2),
                         coordinate: PlaceLookupCoordinate(latitude: 37.3234481, longitude: -122.0092386)
                     )
                 }
@@ -358,7 +358,7 @@ class YelpRequestServiceTests: QuickSpec {
                         displayPhone: nil,
                         dialablePhone: nil,
                         // "price": "$"
-                        pricing: PlaceLookupPricing(count: 1, maximum: 4),
+                        pricing: PlaceLookupPricing(count: 1),
                         coordinate: PlaceLookupCoordinate(latitude: 37.326185, longitude: -121.944765)
                     )
                 }

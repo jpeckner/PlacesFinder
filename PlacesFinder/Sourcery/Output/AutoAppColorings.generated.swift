@@ -9,7 +9,6 @@ struct AppColorings: Decodable, Equatable, Sendable {
     let navBar: NavBarColorings
     let searchCTA: SearchCTAViewColorings
     let searchDetails: SearchDetailsViewColorings
-    let searchInput: SearchInputViewColorings
     let searchProgress: SearchProgressViewColorings
     let searchResults: SearchResultsViewColorings
     let settings: SettingsViewColorings

@@ -51,7 +51,6 @@ struct DownloadedImageViewSUI: View {
 class DownloadedImageView: UIImageView {
 
     private let placeholderImage: UIImage
-    private var downloadTask: DownloadTask?
 
     init(contentMode: ContentMode = .scaleAspectFit,
          placeholderImage: UIImage = #imageLiteral(resourceName: "magnifying_glass")) {
@@ -72,12 +71,8 @@ class DownloadedImageView: UIImageView {
 extension DownloadedImageView {
 
     func configure(_ props: DownloadedImageProps) {
-        downloadTask = kf.setImage(with: props.url,
-                                   placeholder: placeholderImage)
-    }
-
-    func cancelImageDownload() {
-        downloadTask?.cancel()
+        kf.setImage(with: props.url,
+                    placeholder: placeholderImage)
     }
 
 }

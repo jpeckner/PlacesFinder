@@ -29,7 +29,6 @@ typealias PlaceLookupAddressLines = NonEmptyArray<NonEmptyString>
 
 struct PlaceLookupPricing: Hashable {
     let count: Int       // I.e. 2 if this business' pricing is "$$"
-    let maximum: Int     // I.e. 4 if the maximum pricing a business can have is "$$$$"
 }
 
 struct PlaceLookupPage: Hashable {

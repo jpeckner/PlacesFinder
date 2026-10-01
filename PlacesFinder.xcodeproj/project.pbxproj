@@ -63,7 +63,6 @@
 		19128C842DD3171E639D0380 /* SearchRatingValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B0E907EE9BC7957E23EE0 /* SearchRatingValueTests.swift */; };
 		192C188F7F6E4FEB0240420B /* SearchEntityModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664DD2BEB49B5AD9464E1C68 /* SearchEntityModelTests.swift */; };
 		197938C68A1B244791C238A7 /* SearchCopyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64638B8A363ADA77F021686C /* SearchCopyFormatter.swift */; };
-		19884E79FC3BA3D4A689EF26 /* UIButton+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */; };
 		19FED967EE8207DEBAF15F4C /* SearchInputParams+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319B82D01FB8007C7F14F8F6 /* SearchInputParams+Stub.swift */; };
 		1A7340A5A687A936B339E735 /* UserDefaultsListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379BFA810E3BCEC1750642CD /* UserDefaultsListener.swift */; };
 		1B3D3EAFFEBEF4DBC75D404E /* SearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7317019571262C965873F143 /* SearchConfig.swift */; };
@@ -166,7 +165,6 @@
 		4962DCEF2BEF0AAE30E4117D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060719B75D4DAF75DC1C1AD /* SettingsViewController.swift */; };
 		4968BB93C1C770D90F48AE54 /* SearchLookupViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C11433761B8F052669435 /* SearchLookupViewModelBuilderTests.swift */; };
 		49DEFBF43D4247B3B98B80D1 /* SettingsSectionViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C23909849E198F6503796 /* SettingsSectionViewModel+Stub.swift */; };
-		49E6019DFA8405FD16ED5C26 /* UIButton+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */; };
 		4A831C8C94F1F1240887C829 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 664F256C934B5B4A349BD9EF /* Assets.xcassets */; };
 		4AE486A83FA33C0658E22CB1 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB82F102B92D500DD50D7D2 /* AppCoordinatorTests.swift */; };
 		4B5CB9BA2B477CA9A07F2CDF /* AppCopyContentReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5961160D1BA1BFBAF9A88A3 /* AppCopyContentReducerTests.swift */; };
@@ -425,7 +423,6 @@
 		C4E0F506718B2F6FDA9A2741 /* AppCopyContent+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD0E88B2828B57760F35D8B /* AppCopyContent+Stub.swift */; };
 		C4F417C5A56440FA22588BE9 /* NavigationBarTitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */; };
 		C6CFD7EF4F55CC68D46FBBD9 /* RouterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294194DDECEFA249C4473B79 /* RouterAction.swift */; };
-		C7ECBED9BE63B2F987CFAA7C /* UIButton+AppSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */; };
 		C7F20DC054FC0C50C73EABCE /* SearchDetailsPhoneNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319BE046FC8C6E4899D8288C /* SearchDetailsPhoneNumberCell.swift */; };
 		C842ECBAE5912C94CA6D6135 /* AutoCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD39453C056D8B03B9E899 /* AutoCodable.swift */; };
 		C85EDFDA90FBF69DD5A0FE39 /* SearchLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A85B6105111602DBD5A8DE /* SearchLinkPayload.swift */; };
@@ -955,7 +952,6 @@
 		DB88A33A8D9CC8F96A0CA0F3 /* SearchLookupChild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLookupChild.swift; sourceTree = "<group>"; };
 		DBFCE99217E921F5B0DE8A73 /* SearchEntityModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchEntityModel+Stub.swift"; sourceTree = "<group>"; };
 		DC6D0384799AC47AB81AE976 /* APILogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogoView.swift; sourceTree = "<group>"; };
-		DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+AppSkin.swift"; sourceTree = "<group>"; };
 		DE627FA240FC1338B5F1FF96 /* SearchLocationDisabledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationDisabledViewController.swift; sourceTree = "<group>"; };
 		DF01549EBE9F0E1C12F4A416 /* HttpServer+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpServer+Search.swift"; sourceTree = "<group>"; };
 		DF53AD5C147F4FC9058FEA7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -1183,7 +1179,6 @@
 			isa = PBXGroup;
 			children = (
 				E34AA94422964B8FCA8F972D /* AppSkin+UIBarButtonItem.swift */,
-				DDC4533548C23AF7336F480E /* UIButton+AppSkin.swift */,
 				55681DB11347069A8DFC1781 /* UILabel+AppSkin.swift */,
 				CA76D68829C78F7B0018308D /* View+AppSkin.swift */,
 			);
@@ -2807,7 +2802,6 @@
 				05573DDB56543354BD43B6B7 /* SettingsViewModel.swift in Sources */,
 				D371F3BCD6297E65084D8187 /* StaticInfoViewProps.swift in Sources */,
 				9C7BE44313D35092037B9649 /* TabCoordinatorProtocol.swift in Sources */,
-				19884E79FC3BA3D4A689EF26 /* UIButton+AppSkin.swift in Sources */,
 				F0D0729C64B74E9E902AF3EC /* UILabel+AppSkin.swift in Sources */,
 				CAE6DE7E2A23FA9E00358D89 /* View+ScrollBounceBehavior.swift in Sources */,
 				8F92EAF9F0635B6064619569 /* UserDefaultsListener.swift in Sources */,
@@ -3000,7 +2994,6 @@
 				B5661AD2FBB7A8F28F80CC44 /* StaticInfoViewProps.swift in Sources */,
 				092835CB7D15790B624DAA80 /* TabCoordinatorProtocol.swift in Sources */,
 				CA6D635B27E6955B000866D5 /* Search+Redux.swift in Sources */,
-				49E6019DFA8405FD16ED5C26 /* UIButton+AppSkin.swift in Sources */,
 				DD3D61948AF20ADBC8A7D022 /* UILabel+AppSkin.swift in Sources */,
 				1FFEE17E3461ECF02DC28220 /* UserDefaultsListener.swift in Sources */,
 				CA3F76E5278A401B00847AA2 /* AboutAppCoordinator.swift in Sources */,
@@ -3267,7 +3260,6 @@
 				E31378CA29AE8617F73EF14D /* StubLinkType.swift in Sources */,
 				CA35218A2A5209D800228276 /* AppBundleInfo+Stub.swift in Sources */,
 				BB1F8D8CDAC157A21F2CE11B /* TabCoordinatorProtocol.swift in Sources */,
-				C7ECBED9BE63B2F987CFAA7C /* UIButton+AppSkin.swift in Sources */,
 				0CD2A285DE0AF42B17ECB9F3 /* UILabel+AppSkin.swift in Sources */,
 				1A7340A5A687A936B339E735 /* UserDefaultsListener.swift in Sources */,
 				B70CCF2693DF677D56C19975 /* UserDefaultsListenerTests.swift in Sources */,

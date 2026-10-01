@@ -22,14 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import CoordiNode
-import CoordiNodeTestComponents
 import Foundation
 
-struct StubLinkType: Equatable {
-
-    var destinationNodeBox: DestinationNodeBox {
-        return StubDestinationNode.destinationNodeBox
-    }
-
-}
+struct StubLinkType: Equatable {}

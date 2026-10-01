@@ -161,7 +161,6 @@ struct YelpBusiness: Decodable {
 
 extension YelpBusiness {
 
-    static let maxRating: Double = 5.0
     static let pricingRange = 1...4
 
     var ratings: SearchRatings? {
@@ -183,8 +182,7 @@ extension YelpBusiness {
             return nil
         }
 
-        return PlaceLookupPricing(count: price.count,
-                                  maximum: YelpBusiness.pricingRange.upperBound)
+        return PlaceLookupPricing(count: price.count)
     }
 
 }

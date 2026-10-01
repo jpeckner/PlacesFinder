@@ -116,6 +116,7 @@ extension PlacesFinderLinkTests {
                                 placeNames: placeNames)
     }
 
+    // periphery:ignore:parameters keywords
     private func verifySearchResultsView(keywords: String,
                                          placeNames: [String]) {
         Thread.sleep(forTimeInterval: 2.0)

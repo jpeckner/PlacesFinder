@@ -36,7 +36,6 @@ import Shared
 protocol AppColoringProtocol: Decodable, Equatable {}
 
 protocol AppStandardColoringsProtocol: Equatable {
-    var viewColoring: ViewColoring { get }
     var titleTextColoring: TextColoring { get }
     var bodyTextColoring: TextColoring { get }
 }

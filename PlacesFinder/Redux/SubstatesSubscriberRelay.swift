@@ -25,17 +25,12 @@
 import Combine
 import SwiftDux
 
-struct SubstatesSubscriberRelayUpdate<TState: StateProtocol> {
-    let state: TState
-    let updatedSubstates: Set<PartialKeyPath<TState>>
-}
-
 class SubstatesSubscriberRelay<TStore: SubscribableStoreProtocol> {
 
     let store: TStore
-    private let subject = PassthroughSubject<SubstatesSubscriberRelayUpdate<TStore.TState>, Never>()
+    private let subject = PassthroughSubject<TStore.TState, Never>()
 
-    var publisher: AnyPublisher<SubstatesSubscriberRelayUpdate<TStore.TState>, Never> {
+    var publisher: AnyPublisher<TStore.TState, Never> {
         subject.eraseToAnyPublisher()
     }
 
@@ -54,9 +49,7 @@ extension SubstatesSubscriberRelay: SubstatesSubscriber {
     typealias StoreState = TStore.TState
 
     func newState(state: StoreState, updatedSubstates: Set<PartialKeyPath<StoreState>>) {
-        let update = SubstatesSubscriberRelayUpdate(state: state,
-                                                    updatedSubstates: updatedSubstates)
-        subject.send(update)
+        subject.send(state)
     }
 
 }

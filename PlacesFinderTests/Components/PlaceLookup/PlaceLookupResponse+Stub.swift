@@ -54,10 +54,8 @@ extension PlaceLookupAddressLines {
 
 extension PlaceLookupPricing {
 
-    static func stubValue(count: Int = 5,
-                          maximum: Int = 10) -> PlaceLookupPricing {
-        return PlaceLookupPricing(count: count,
-                                  maximum: maximum)
+    static func stubValue(count: Int = 5) -> PlaceLookupPricing {
+        return PlaceLookupPricing(count: count)
     }
 
 }

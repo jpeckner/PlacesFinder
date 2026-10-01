@@ -46,8 +46,6 @@ extension SearchRatings {
 
 // Per https://www.yelp.com/developers/documentation/v3/business_search - "value ranges from 1, 1.5, ... 4.5, 5"
 enum SearchRatingValue: Double {
-    static let maxRating: Double = 5.0
-
     case one = 1.0
     case oneAndAHalf = 1.5
     case two = 2.0
