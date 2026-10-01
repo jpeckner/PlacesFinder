@@ -627,29 +627,29 @@ class SearchActivityStatePrismProtocolMock: SearchActivityStatePrismProtocol {
     }
 
 }
-class SearchBackgroundViewModelBuilderProtocolMock: SearchBackgroundViewModelBuilderProtocol {
+class SearchBackgroundViewPropsBuilderProtocolMock: SearchBackgroundViewPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelKeywordsAppCopyContentColoringsCallsCount = 0
-    var buildViewModelKeywordsAppCopyContentColoringsCalled: Bool {
-        return buildViewModelKeywordsAppCopyContentColoringsCallsCount > 0
+    var buildPropsKeywordsAppCopyContentColoringsCallsCount = 0
+    var buildPropsKeywordsAppCopyContentColoringsCalled: Bool {
+        return buildPropsKeywordsAppCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelKeywordsAppCopyContentColoringsReceivedArguments: (keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)?
-    var buildViewModelKeywordsAppCopyContentColoringsReceivedInvocations: [(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)] = []
-    var buildViewModelKeywordsAppCopyContentColoringsReturnValue: SearchBackgroundViewModel!
-    var buildViewModelKeywordsAppCopyContentColoringsClosure: ((NonEmptyString?, AppCopyContent, AppStandardColorings) -> SearchBackgroundViewModel)?
+    var buildPropsKeywordsAppCopyContentColoringsReceivedArguments: (keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)?
+    var buildPropsKeywordsAppCopyContentColoringsReceivedInvocations: [(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)] = []
+    var buildPropsKeywordsAppCopyContentColoringsReturnValue: SearchBackgroundViewProps!
+    var buildPropsKeywordsAppCopyContentColoringsClosure: ((NonEmptyString?, AppCopyContent, AppStandardColorings) -> SearchBackgroundViewProps)?
 
-    func buildViewModel(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings) -> SearchBackgroundViewModel {
-        buildViewModelKeywordsAppCopyContentColoringsCallsCount += 1
-        buildViewModelKeywordsAppCopyContentColoringsReceivedArguments = (keywords: keywords, appCopyContent: appCopyContent, colorings: colorings)
-        buildViewModelKeywordsAppCopyContentColoringsReceivedInvocations.append((keywords: keywords, appCopyContent: appCopyContent, colorings: colorings))
-        if let buildViewModelKeywordsAppCopyContentColoringsClosure = buildViewModelKeywordsAppCopyContentColoringsClosure {
-            return buildViewModelKeywordsAppCopyContentColoringsClosure(keywords, appCopyContent, colorings)
+    func buildProps(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings) -> SearchBackgroundViewProps {
+        buildPropsKeywordsAppCopyContentColoringsCallsCount += 1
+        buildPropsKeywordsAppCopyContentColoringsReceivedArguments = (keywords: keywords, appCopyContent: appCopyContent, colorings: colorings)
+        buildPropsKeywordsAppCopyContentColoringsReceivedInvocations.append((keywords: keywords, appCopyContent: appCopyContent, colorings: colorings))
+        if let buildPropsKeywordsAppCopyContentColoringsClosure = buildPropsKeywordsAppCopyContentColoringsClosure {
+            return buildPropsKeywordsAppCopyContentColoringsClosure(keywords, appCopyContent, colorings)
         } else {
-            return buildViewModelKeywordsAppCopyContentColoringsReturnValue
+            return buildPropsKeywordsAppCopyContentColoringsReturnValue
         }
     }
 
@@ -872,29 +872,29 @@ class SearchEntityModelBuilderProtocolMock: SearchEntityModelBuilderProtocol, @u
     }
 
 }
-class SearchInputContentViewModelBuilderProtocolMock: SearchInputContentViewModelBuilderProtocol {
+class SearchInputContentPropsBuilderProtocolMock: SearchInputContentPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelKeywordsBarStateCopyContentCallsCount = 0
-    var buildViewModelKeywordsBarStateCopyContentCalled: Bool {
-        return buildViewModelKeywordsBarStateCopyContentCallsCount > 0
+    var buildPropsKeywordsBarStateCopyContentCallsCount = 0
+    var buildPropsKeywordsBarStateCopyContentCalled: Bool {
+        return buildPropsKeywordsBarStateCopyContentCallsCount > 0
     }
-    var buildViewModelKeywordsBarStateCopyContentReceivedArguments: (keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)?
-    var buildViewModelKeywordsBarStateCopyContentReceivedInvocations: [(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)] = []
-    var buildViewModelKeywordsBarStateCopyContentReturnValue: SearchInputContentViewModel!
-    var buildViewModelKeywordsBarStateCopyContentClosure: ((NonEmptyString?, SearchInputParams.BarState, SearchInputCopyContent) -> SearchInputContentViewModel)?
+    var buildPropsKeywordsBarStateCopyContentReceivedArguments: (keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)?
+    var buildPropsKeywordsBarStateCopyContentReceivedInvocations: [(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)] = []
+    var buildPropsKeywordsBarStateCopyContentReturnValue: SearchInputContentProps!
+    var buildPropsKeywordsBarStateCopyContentClosure: ((NonEmptyString?, SearchInputParams.BarState, SearchInputCopyContent) -> SearchInputContentProps)?
 
-    func buildViewModel(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
-        buildViewModelKeywordsBarStateCopyContentCallsCount += 1
-        buildViewModelKeywordsBarStateCopyContentReceivedArguments = (keywords: keywords, barState: barState, copyContent: copyContent)
-        buildViewModelKeywordsBarStateCopyContentReceivedInvocations.append((keywords: keywords, barState: barState, copyContent: copyContent))
-        if let buildViewModelKeywordsBarStateCopyContentClosure = buildViewModelKeywordsBarStateCopyContentClosure {
-            return buildViewModelKeywordsBarStateCopyContentClosure(keywords, barState, copyContent)
+    func buildProps(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent) -> SearchInputContentProps {
+        buildPropsKeywordsBarStateCopyContentCallsCount += 1
+        buildPropsKeywordsBarStateCopyContentReceivedArguments = (keywords: keywords, barState: barState, copyContent: copyContent)
+        buildPropsKeywordsBarStateCopyContentReceivedInvocations.append((keywords: keywords, barState: barState, copyContent: copyContent))
+        if let buildPropsKeywordsBarStateCopyContentClosure = buildPropsKeywordsBarStateCopyContentClosure {
+            return buildPropsKeywordsBarStateCopyContentClosure(keywords, barState, copyContent)
         } else {
-            return buildViewModelKeywordsBarStateCopyContentReturnValue
+            return buildPropsKeywordsBarStateCopyContentReturnValue
         }
     }
 
@@ -926,29 +926,29 @@ class SearchInputViewModelBuilderProtocolMock: SearchInputViewModelBuilderProtoc
     }
 
 }
-class SearchInstructionsViewModelBuilderProtocolMock: SearchInstructionsViewModelBuilderProtocol {
+class SearchInstructionsPropsBuilderProtocolMock: SearchInstructionsPropsBuilderProtocol {
 
 
 
-    //MARK: - buildViewModel
+    //MARK: - buildProps
 
-    var buildViewModelCopyContentColoringsCallsCount = 0
-    var buildViewModelCopyContentColoringsCalled: Bool {
-        return buildViewModelCopyContentColoringsCallsCount > 0
+    var buildPropsCopyContentColoringsCallsCount = 0
+    var buildPropsCopyContentColoringsCalled: Bool {
+        return buildPropsCopyContentColoringsCallsCount > 0
     }
-    var buildViewModelCopyContentColoringsReceivedArguments: (copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)?
-    var buildViewModelCopyContentColoringsReceivedInvocations: [(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)] = []
-    var buildViewModelCopyContentColoringsReturnValue: SearchInstructionsViewModel!
-    var buildViewModelCopyContentColoringsClosure: ((SearchInstructionsCopyContent, AppStandardColorings) -> SearchInstructionsViewModel)?
+    var buildPropsCopyContentColoringsReceivedArguments: (copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)?
+    var buildPropsCopyContentColoringsReceivedInvocations: [(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)] = []
+    var buildPropsCopyContentColoringsReturnValue: SearchInstructionsProps!
+    var buildPropsCopyContentColoringsClosure: ((SearchInstructionsCopyContent, AppStandardColorings) -> SearchInstructionsProps)?
 
-    func buildViewModel(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings) -> SearchInstructionsViewModel {
-        buildViewModelCopyContentColoringsCallsCount += 1
-        buildViewModelCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
-        buildViewModelCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
-        if let buildViewModelCopyContentColoringsClosure = buildViewModelCopyContentColoringsClosure {
-            return buildViewModelCopyContentColoringsClosure(copyContent, colorings)
+    func buildProps(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings) -> SearchInstructionsProps {
+        buildPropsCopyContentColoringsCallsCount += 1
+        buildPropsCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
+        buildPropsCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
+        if let buildPropsCopyContentColoringsClosure = buildPropsCopyContentColoringsClosure {
+            return buildPropsCopyContentColoringsClosure(copyContent, colorings)
         } else {
-            return buildViewModelCopyContentColoringsReturnValue
+            return buildPropsCopyContentColoringsReturnValue
         }
     }
 
@@ -1083,15 +1083,15 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
     var loadSearchBackgroundViewTitleViewModelAppSkinCalled: Bool {
         return loadSearchBackgroundViewTitleViewModelAppSkinCallsCount > 0
     }
-    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments: (viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations: [(viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadSearchBackgroundViewTitleViewModelAppSkinClosure: ((SearchBackgroundViewModel, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments: (props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
+    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations: [(props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
+    var loadSearchBackgroundViewTitleViewModelAppSkinClosure: ((SearchBackgroundViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
 
-    func loadSearchBackgroundView(_ viewModel: SearchBackgroundViewModel, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
+    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
         loadSearchBackgroundViewTitleViewModelAppSkinCallsCount += 1
-        loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments = (viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations.append((viewModel: viewModel, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadSearchBackgroundViewTitleViewModelAppSkinClosure?(viewModel, titleViewModel, appSkin)
+        loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
+        loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
+        loadSearchBackgroundViewTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
     }
 
     //MARK: - loadSearchViews

@@ -1,5 +1,5 @@
 //
-//  SearchInputContentViewModel+Stub.swift
+//  SearchBackgroundViewProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,16 +22,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Shared
+import Foundation
 
-extension SearchInputContentViewModel {
+extension SearchBackgroundViewProps {
 
-    static func stubValue(keywords: NonEmptyString? = nil,
-                          barState: SearchInputParams.BarState = .isHidden,
-                          placeholder: String = "stubPlaceholder") -> SearchInputContentViewModel {
-        return SearchInputContentViewModel(keywords: keywords,
-                                           barState: barState,
-                                           placeholder: placeholder)
+    static func stubValue(
+        contentProps: SearchInputContentProps = .stubValue(),
+        instructionsProps: SearchInstructionsProps = .stubValue()
+    ) -> SearchBackgroundViewProps {
+        return SearchBackgroundViewProps(contentProps: contentProps,
+                                         instructionsProps: instructionsProps)
     }
 
 }

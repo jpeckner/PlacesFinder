@@ -24,26 +24,6 @@
 
 import SwiftUI
 
-// MARK: - SearchLocationDisabledView
-
-struct SearchLocationDisabledView: View {
-
-    typealias ViewModel = SinglePropsViewModel<SearchLocationDisabledViewProps>
-
-    private let viewModel: ViewModel
-
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
-    }
-
-    var body: some View {
-        SearchCTAView(props: viewModel.props.ctaViewProps)
-    }
-
-}
-
-// MARK: - SearchLocationDisabledViewController
-
 class SearchLocationDisabledViewController: UIHostingController<SearchLocationDisabledView>,
                                             SearchPrimaryViewControllerProtocol {
 

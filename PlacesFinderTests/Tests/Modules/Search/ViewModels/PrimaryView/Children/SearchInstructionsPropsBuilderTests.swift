@@ -1,5 +1,5 @@
 //
-//  SearchInstructionsViewModelBuilderTests.swift
+//  SearchInstructionsPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -27,28 +27,28 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInstructionsViewModelBuilderTests: QuickSpec {
+class SearchInstructionsPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
-        var sut: SearchInstructionsViewModelBuilder!
-        var result: SearchInstructionsViewModel!
+        var sut: SearchInstructionsPropsBuilder!
+        var result: SearchInstructionsProps!
 
         beforeEach {
-            sut = SearchInstructionsViewModelBuilder()
+            sut = SearchInstructionsPropsBuilder()
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildViewModel(
+                result = sut.buildProps(
                     copyContent: SearchInstructionsCopyContent.stubValue(),
                     colorings: AppColorings.defaultColorings.standard
                 )
             }
 
             it("returns its expected value") {
-                expect(result) == SearchInstructionsViewModel(
+                expect(result) == SearchInstructionsProps(
                     props: StaticInfoViewProps(
                         imageName: "stubIconImageName",
                         title: "stubTitle",

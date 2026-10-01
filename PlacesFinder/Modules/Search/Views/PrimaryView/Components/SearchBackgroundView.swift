@@ -27,21 +27,23 @@ import SwiftUI
 
 struct SearchBackgroundView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SearchBackgroundViewModel>
+    typealias ViewModel = SinglePropsViewModel<SearchBackgroundViewProps>
+
+    private let viewModel: ViewModel
     private let searchBar = UISearchBar()
 
-    init(viewModel: SearchBackgroundViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
         VStack {
             SearchLookupSearchBar(
-                viewModel: viewModel.value.contentViewModel,
+                props: viewModel.props.contentProps,
                 searchBar: searchBar
             )
 
-            SearchInstructionsView(viewModel: viewModel.value.instructionsViewModel)
+            SearchInstructionsView(props: viewModel.props.instructionsProps)
         }
     }
 

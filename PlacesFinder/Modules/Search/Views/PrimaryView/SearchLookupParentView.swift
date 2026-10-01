@@ -41,7 +41,7 @@ struct SearchLookupParentView: View {
     var body: some View {
         VStack(spacing: .zero) {
             SearchLookupSearchBar(
-                viewModel: viewModel.value.searchInputViewModel.content,
+                props: viewModel.value.searchInputViewModel.content,
                 searchBar: searchBar
             )
 
@@ -58,8 +58,8 @@ struct SearchLookupParentView: View {
     @ViewBuilder
     private var childView: some View {
         switch viewModel.value.child {
-        case let .instructions(viewModel):
-            SearchInstructionsView(viewModel: viewModel)
+        case let .instructions(props):
+            SearchInstructionsView(props: props)
 
         case let .progress(viewModel):
             SearchProgressView(viewModel: viewModel)

@@ -1,8 +1,8 @@
 //
-//  SearchBackgroundViewModel+Stub.swift
-//  PlacesFinderTests
+//  SearchNoInternetView.swift
+//  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-extension SearchBackgroundViewModel {
+struct SearchNoInternetView: View {
 
-    static func stubValue(
-        contentViewModel: SearchInputContentViewModel = .stubValue(),
-        instructionsViewModel: SearchInstructionsViewModel = .stubValue()
-    ) -> SearchBackgroundViewModel {
-        return SearchBackgroundViewModel(contentViewModel: contentViewModel,
-                                         instructionsViewModel: instructionsViewModel)
+    typealias ViewModel = SinglePropsViewModel<SearchNoInternetViewProps>
+
+    private let viewModel: ViewModel
+
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
+
+    var body: some View {
+        StaticInfoView(props: viewModel.props.messageViewProps.props)
     }
 
 }

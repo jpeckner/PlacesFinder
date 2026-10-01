@@ -39,14 +39,14 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubSearchParams = SearchParams.stubValue()
-        let stubInstructionsViewModel = SearchInstructionsViewModel.stubValue()
+        let stubInstructionsProps = SearchInstructionsProps.stubValue()
         let stubNoResultsViewModel = SearchNoResultsFoundViewModel(messageViewProps: .stubValue())
         let stubRetryProps = SearchRetryProps(ctaViewProps: .stubValue())
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
-        var mockInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocolMock!
+        var mockInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocolMock!
         var stubResultsViewModel: SearchResultsViewModel!
         var mockResultsViewModelBuilder: SearchResultsViewModelBuilderProtocolMock!
         var mockNoResultsFoundViewModelBuilder: SearchNoResultsFoundViewModelBuilderProtocolMock!
@@ -71,8 +71,8 @@ class SearchLookupChildBuilderTests: QuickSpec {
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
 
-            mockInstructionsViewModelBuilder = SearchInstructionsViewModelBuilderProtocolMock()
-            mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReturnValue = stubInstructionsViewModel
+            mockInstructionsPropsBuilder = SearchInstructionsPropsBuilderProtocolMock()
+            mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubInstructionsProps
 
             stubResultsViewModel = .stubValue(
                 resultViewModels: NonEmptyArray(with: SearchResultViewModel.stubValue(actionSubscriber: AnySubscriber(mockActionSubscriber))),
@@ -89,7 +89,7 @@ class SearchLookupChildBuilderTests: QuickSpec {
 
             sut = SearchLookupChildBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
                                            actionPrism: mockSearchActivityActionPrism,
-                                           instructionsViewModelBuilder: mockInstructionsViewModelBuilder,
+                                           instructionsPropsBuilder: mockInstructionsPropsBuilder,
                                            resultsViewModelBuilder: mockResultsViewModelBuilder,
                                            noResultsFoundViewModelBuilder: mockNoResultsFoundViewModelBuilder,
                                            retryPropsBuilder: mockRetryPropsBuilder)
@@ -109,13 +109,13 @@ class SearchLookupChildBuilderTests: QuickSpec {
                     }
                 }
 
-                it("calls mockInstructionsViewModelBuilder with expected method and args") {
-                    expect(mockInstructionsViewModelBuilder.buildViewModelCopyContentColoringsReceivedArguments?.copyContent)
+                it("calls mockInstructionsPropsBuilder with expected method and args") {
+                    expect(mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent)
                         == stubAppCopyContent.searchInstructions
                 }
 
                 it("returns a value of .instructions") {
-                    expect(result) == .instructions(stubInstructionsViewModel)
+                    expect(result) == .instructions(stubInstructionsProps)
                 }
 
             }

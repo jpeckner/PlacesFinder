@@ -31,13 +31,13 @@ import SwiftUI
 // `UIViewRepresentable`.
 struct SearchLookupSearchBar: UIViewRepresentable {
 
-    @ObservedObject var viewModel: ValueObservable<SearchInputContentViewModel>
+    @ObservedObject var viewModel: ValueObservable<SearchInputContentProps>
 
     private let searchBar: UISearchBar
 
-    init(viewModel: SearchInputContentViewModel,
+    init(props: SearchInputContentProps,
          searchBar: UISearchBar) {
-        self.viewModel = ValueObservable(viewModel)
+        self.viewModel = ValueObservable(props)
         self.searchBar = searchBar
     }
 

@@ -1,8 +1,8 @@
 //
-//  SearchBackgroundViewController.swift
+//  SearchInputContentProps.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2020 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
+import Shared
 
-class SearchBackgroundViewController: UIHostingController<SearchBackgroundView>, SearchPrimaryViewControllerProtocol {
-
-    private let viewModel: SearchBackgroundView.ViewModel
-
-    init(props: SearchBackgroundViewProps) {
-        let viewModel = SearchBackgroundView.ViewModel(props: props)
-        self.viewModel = viewModel
-
-        super.init(rootView: SearchBackgroundView(viewModel: viewModel))
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+struct SearchInputContentProps: Equatable {
+    let keywords: NonEmptyString?
+    let barState: SearchInputParams.BarState
+    let placeholder: String
 }
 
-extension SearchBackgroundViewController {
+// MARK: SearchInputContentPropsBuilder
 
-    func configure(props: SearchBackgroundViewProps) {
-        viewModel.props = props
+// sourcery: AutoMockable
+protocol SearchInputContentPropsBuilderProtocol {
+    func buildProps(keywords: NonEmptyString?,
+                    barState: SearchInputParams.BarState,
+                    copyContent: SearchInputCopyContent) -> SearchInputContentProps
+}
+
+class SearchInputContentPropsBuilder: SearchInputContentPropsBuilderProtocol {
+
+    func buildProps(keywords: NonEmptyString?,
+                    barState: SearchInputParams.BarState,
+                    copyContent: SearchInputCopyContent) -> SearchInputContentProps {
+        return SearchInputContentProps(keywords: keywords,
+                                       barState: barState,
+                                       placeholder: copyContent.placeholder)
     }
 
 }

@@ -45,7 +45,7 @@ import UIKit
     private let urlOpenerService: URLOpenerServiceProtocol
     private let statePrism: SearchActivityStatePrismProtocol
     private let actionPrism: SearchActivityActionPrismProtocol
-    private let backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol
+    private let backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol
     private let lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
@@ -58,7 +58,7 @@ import UIKit
          urlOpenerService: URLOpenerServiceProtocol,
          statePrism: SearchActivityStatePrismProtocol,
          actionPrism: SearchActivityActionPrismProtocol,
-         backgroundViewModelBuilder: SearchBackgroundViewModelBuilderProtocol,
+         backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol,
          lookupViewModelBuilder: SearchLookupViewModelBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
          navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
@@ -68,7 +68,7 @@ import UIKit
         self.urlOpenerService = urlOpenerService
         self.statePrism = statePrism
         self.actionPrism = actionPrism
-        self.backgroundViewModelBuilder = backgroundViewModelBuilder
+        self.backgroundPropsBuilder = backgroundPropsBuilder
         self.lookupViewModelBuilder = lookupViewModelBuilder
         self.detailsViewContextBuilder = detailsViewContextBuilder
         self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
@@ -172,12 +172,12 @@ private extension SearchCoordinator {
         case let .search(authType):
             switch authType.value {
             case .locationServicesNotDetermined:
-                let viewModel = backgroundViewModelBuilder.buildViewModel(
+                let props = backgroundPropsBuilder.buildProps(
                     keywords: searchState.searchActivityState.inputParams.params?.keywords,
                     appCopyContent: appCopyContent,
                     colorings: appSkin.colorings.standard
                 )
-                presenter.loadSearchBackgroundView(viewModel,
+                presenter.loadSearchBackgroundView(props,
                                                    titleViewModel: titleViewModel,
                                                    appSkin: appSkin)
 

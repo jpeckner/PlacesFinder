@@ -1,8 +1,8 @@
 //
-//  SearchInstructionsViewModel.swift
-//  PlacesFinder
+//  SearchInstructionsProps+Stub.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2020 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,19 @@
 //  SOFTWARE.
 
 import Foundation
-import Shared
 
-struct SearchInstructionsViewModel: Equatable {
-    let props: StaticInfoViewProps<AppStandardColorings>
-    let resultsSource: String
-}
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable line_length
+extension SearchInstructionsProps {
 
-extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
-
-// MARK: SearchInstructionsViewModelBuilder
-
-// sourcery: AutoMockable
-// swiftlint:disable:next type_name
-protocol SearchInstructionsViewModelBuilderProtocol {
-    func buildViewModel(copyContent: SearchInstructionsCopyContent,
-                        colorings: AppStandardColorings) -> SearchInstructionsViewModel
-}
-
-class SearchInstructionsViewModelBuilder: SearchInstructionsViewModelBuilderProtocol {
-
-    func buildViewModel(copyContent: SearchInstructionsCopyContent,
-                        colorings: AppStandardColorings) -> SearchInstructionsViewModel {
-        return SearchInstructionsViewModel(
-            props: copyContent.staticInfoViewProps(colorings: colorings),
-            resultsSource: copyContent.resultsSource
-        )
+    static func stubValue(
+        props: StaticInfoViewProps<AppStandardColorings> = .stubValue(colorings: AppColorings.defaultColorings.standard),
+        resultsSource: String = "stubResultsSource",
+        colorings: AppStandardColorings = AppColorings.defaultColorings.standard
+    ) -> SearchInstructionsProps {
+        return SearchInstructionsProps(props: props,
+                                       resultsSource: resultsSource)
     }
 
 }
+// swiftlint:enable blanket_disable_command

@@ -1,6 +1,6 @@
 //
-//  SearchInputContentViewModel.swift
-//  PlacesFinder
+//  SearchInputContentProps+Stub.swift
+//  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
 //  
@@ -22,33 +22,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
 import Shared
 
-struct SearchInputContentViewModel: Equatable {
-    let keywords: NonEmptyString?
-    let barState: SearchInputParams.BarState
-    let placeholder: String
-}
+extension SearchInputContentProps {
 
-// MARK: SearchInputContentViewModelBuilder
-
-// sourcery: AutoMockable
-// swiftlint:disable:next type_name
-protocol SearchInputContentViewModelBuilderProtocol {
-    func buildViewModel(keywords: NonEmptyString?,
-                        barState: SearchInputParams.BarState,
-                        copyContent: SearchInputCopyContent) -> SearchInputContentViewModel
-}
-
-class SearchInputContentViewModelBuilder: SearchInputContentViewModelBuilderProtocol {
-
-    func buildViewModel(keywords: NonEmptyString?,
-                        barState: SearchInputParams.BarState,
-                        copyContent: SearchInputCopyContent) -> SearchInputContentViewModel {
-        return SearchInputContentViewModel(keywords: keywords,
-                                           barState: barState,
-                                           placeholder: copyContent.placeholder)
+    static func stubValue(keywords: NonEmptyString? = nil,
+                          barState: SearchInputParams.BarState = .isHidden,
+                          placeholder: String = "stubPlaceholder") -> SearchInputContentProps {
+        return SearchInputContentProps(keywords: keywords,
+                                       barState: barState,
+                                       placeholder: placeholder)
     }
 
 }

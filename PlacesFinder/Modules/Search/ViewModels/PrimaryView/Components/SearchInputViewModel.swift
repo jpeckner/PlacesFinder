@@ -27,15 +27,15 @@ import Shared
 import SwiftDux
 
 enum SearchInputViewModel: Equatable {
-    case nonDispatching(content: SearchInputContentViewModel)
+    case nonDispatching(content: SearchInputContentProps)
 
-    case dispatching(content: SearchInputContentViewModel,
+    case dispatching(content: SearchInputContentProps,
                      dispatcher: IgnoredEquatable<SearchInputDispatcher>)
 }
 
 extension SearchInputViewModel {
 
-    var content: SearchInputContentViewModel {
+    var content: SearchInputContentProps {
         switch self {
         case let .nonDispatching(content),
              let .dispatching(content, _):
@@ -115,14 +115,14 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
-    private let contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol
+    private let contentPropsBuilder: SearchInputContentPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<Search.Action, Never>,
          actionPrism: SearchActivityActionPrismProtocol,
-         contentViewModelBuilder: SearchInputContentViewModelBuilderProtocol) {
+         contentPropsBuilder: SearchInputContentPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
-        self.contentViewModelBuilder = contentViewModelBuilder
+        self.contentPropsBuilder = contentPropsBuilder
     }
 
     func buildDispatchingViewModel(
@@ -130,7 +130,7 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
         copyContent: SearchInputCopyContent,
         locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock
     ) -> SearchInputViewModel {
-        let contentViewModel = contentViewModelBuilder.buildViewModel(
+        let contentProps = contentPropsBuilder.buildProps(
             keywords: inputParams.params?.keywords,
             barState: inputParams.barState,
             copyContent: copyContent
@@ -140,7 +140,7 @@ class SearchInputViewModelBuilder: SearchInputViewModelBuilderProtocol {
                                                actionPrism: actionPrism,
                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
 
-        return .dispatching(content: contentViewModel,
+        return .dispatching(content: contentProps,
                             dispatcher: IgnoredEquatable(dispatcher))
     }
 
