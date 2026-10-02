@@ -31,9 +31,9 @@ import SwiftDux
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchViewModelTests: QuickSpec {
+class SearchViewModelTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockActionPrism: SearchActivityActionPrismProtocolMock!

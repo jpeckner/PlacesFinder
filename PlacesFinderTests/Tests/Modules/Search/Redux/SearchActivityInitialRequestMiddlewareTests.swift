@@ -36,9 +36,9 @@ import XCTest
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
 // swiftlint:disable:next type_name
-class SearchActivityInitialRequestMiddlewareTests: QuickSpec {
+class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let timeout: TimeInterval = 2.0
 

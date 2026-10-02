@@ -27,9 +27,9 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInstructionsPropsBuilderTests: QuickSpec {
+class SearchInstructionsPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var sut: SearchInstructionsPropsBuilder!
         var result: SearchInstructionsProps!

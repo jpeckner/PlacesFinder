@@ -48,11 +48,11 @@ private class MockLaunchCoordinator: ChildCoordinatorProtocolMock, AppCoordinato
 // swiftlint:disable force_try
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class AppCoordinatorTests: QuickSpec {
+class AppCoordinatorTests: AsyncSpec {
 
     private typealias TFactoryType = AppCoordinatorChildFactoryProtocolMock<MockAppStore>
 
-    override func spec() {
+    override class func spec() {
 
         let stubLinkType: AppLinkType = .settings(SettingsLinkPayload())
 
@@ -229,7 +229,7 @@ class AppCoordinatorTests: QuickSpec {
                         let storage = AsyncStorage<Bool>()
                         resultStorage = storage
 
-                        verificationBlock = self.verifyNoDispatches(from: mockStore) {
+                        verificationBlock = mockStore.verifyNoDispatches {
                             Task {
                                 await storage.setElement(constCoordinator?.handleURL(URL.stubValue()))
                             }
@@ -286,7 +286,7 @@ class AppCoordinatorTests: QuickSpec {
                                                      currentNode: StubNode.nodeBox)
                         )
 
-                        verificationBlock = self.verifyNoDispatches(from: mockStore) {
+                        verificationBlock = mockStore.verifyNoDispatches {
                             coordinator.newState(state: appState,
                                                  updatedSubstates: [])
                         }
@@ -336,7 +336,7 @@ class AppCoordinatorTests: QuickSpec {
                                                      currentNode: StubNode.nodeBox)
                         )
 
-                        verificationBlock = self.verifyNoDispatches(from: mockStore) {
+                        verificationBlock = mockStore.verifyNoDispatches {
                             coordinator.newState(state: appState,
                                                  updatedSubstates: [])
                         }

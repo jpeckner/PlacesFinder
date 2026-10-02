@@ -30,9 +30,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class ReachabilityListenerTests: QuickSpec {
+class ReachabilityListenerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var receivedActions: [ReachabilityAction]!
         var cancellables: Set<AnyCancellable>!

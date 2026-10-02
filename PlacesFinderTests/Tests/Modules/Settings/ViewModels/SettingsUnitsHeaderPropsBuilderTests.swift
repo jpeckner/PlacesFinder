@@ -32,9 +32,9 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SettingsUnitsHeaderPropsBuilderTests: QuickSpec {
+class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
 

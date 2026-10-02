@@ -32,9 +32,9 @@ import SharedTestComponents
 // swiftlint:disable force_unwrapping
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class YelpRequestBuilderTests: QuickSpec {
+class YelpRequestBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubAPIKey = "stubAPIKey"
         let stubBaseURL = URL(string: "https://api.yelp.com")!

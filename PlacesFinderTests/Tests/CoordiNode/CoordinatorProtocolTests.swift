@@ -29,7 +29,7 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class CoordinatorProtocolTests: QuickSpec {
+class CoordinatorProtocolTests: AsyncSpec {
 
     private class StubSearchCoordinator: CoordinatorProtocol {
         static var nodeBox: NodeBox {
@@ -43,7 +43,7 @@ class CoordinatorProtocolTests: QuickSpec {
         }
     }
 
-    override func spec() {
+    override class func spec() {
 
         describe("isCurrentCoordinator") {
 

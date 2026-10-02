@@ -31,9 +31,9 @@ import SharedTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class YelpRequestServiceIntegrationTests: QuickSpec {
+class YelpRequestServiceIntegrationTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let urlString = "https://api.yelp.com"
         let apiKeyString = ProcessInfo().environment["PLACE_LOOKUP_KEY"]

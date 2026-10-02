@@ -36,11 +36,11 @@ import UIKit
 // swiftlint:disable force_unwrapping
 // swiftlint:disable function_body_length
 // swiftlint:disable line_length
-class HomeCoordinatorTests: QuickSpec {
+class HomeCoordinatorTests: AsyncSpec {
 
     private typealias TFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
 
-    override func spec() {
+    override class func spec() {
 
         struct Dependencies {
             let dummyRootViewController = UIViewController()

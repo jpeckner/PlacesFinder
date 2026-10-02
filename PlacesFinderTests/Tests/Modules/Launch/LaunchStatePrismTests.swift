@@ -31,9 +31,9 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class LaunchStatePrismTests: QuickSpec {
+class LaunchStatePrismTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var statePrism: LaunchStatePrism!
 

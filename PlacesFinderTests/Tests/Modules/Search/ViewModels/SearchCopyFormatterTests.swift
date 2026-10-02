@@ -30,9 +30,9 @@ import SharedTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchCopyFormatterTests: QuickSpec {
+class SearchCopyFormatterTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
         let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var formatter: SearchCopyFormatter!

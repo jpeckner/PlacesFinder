@@ -30,9 +30,9 @@ import Quick
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class AppRoutingHandlerTests: QuickSpec {
+class AppRoutingHandlerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var mockRoutingHandler: RoutingHandlerProtocolMock<RootCoordinatorMock>!
         var mockDestinationRoutingHandler: DestinationRoutingHandlerProtocolMock<SecondChildCoordinatorMock>!

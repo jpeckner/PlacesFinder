@@ -33,9 +33,9 @@ import UIKit
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class HomeCoordinatorChildContainerTests: QuickSpec {
+class HomeCoordinatorChildContainerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         typealias ChildContainerType = HomeCoordinatorChildContainer<HomeCoordinatorChildFactoryProtocolMock<MockAppStore>>
 

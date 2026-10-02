@@ -32,9 +32,9 @@ import SwiftDux
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchActivityActionPrismTests: QuickSpec {
+class SearchActivityActionPrismTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubParams = PlaceLookupParams.stubValue()
         let stubSearchParams = SearchParams(keywords: stubParams.keywords)

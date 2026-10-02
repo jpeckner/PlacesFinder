@@ -28,9 +28,9 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class AppCopyContentReducerTests: QuickSpec {
+class AppCopyContentReducerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("init()") {
 

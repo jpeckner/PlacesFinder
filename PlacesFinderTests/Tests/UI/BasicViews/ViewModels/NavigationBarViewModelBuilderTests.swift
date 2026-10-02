@@ -27,9 +27,9 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class NavigationBarViewModelBuilderTests: QuickSpec {
+class NavigationBarViewModelBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var sut: NavigationBarViewModelBuilder!
         var result: NavigationBarTitleViewModel!

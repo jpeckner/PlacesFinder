@@ -34,9 +34,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class LocationAuthListenerTests: QuickSpec {
+class LocationAuthListenerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let dummyLocationManager = CLLocationManager()
 

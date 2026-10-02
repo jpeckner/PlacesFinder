@@ -28,9 +28,9 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class UserDefaultsServiceIntegrationTests: QuickSpec {
+class UserDefaultsServiceIntegrationTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var userDefaults: UserDefaults!
         var userDefaultsService: UserDefaultsService!

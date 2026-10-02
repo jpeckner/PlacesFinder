@@ -35,11 +35,11 @@ import SharedTestComponents
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
 // swiftlint:disable type_body_length
-class YelpRequestServiceTests: QuickSpec {
+class YelpRequestServiceTests: AsyncSpec {
 
     private typealias DecodableServiceMock = DecodableServiceProtocolMock<YelpPageResponse, YelpErrorPayload>
 
-    override func spec() {
+    override class func spec() {
 
         let stubAPIKey = "stubAPIKey"
         let stubBaseURL = URL(string: "https://api.yelp.com")!

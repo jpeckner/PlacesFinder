@@ -36,9 +36,9 @@ import UIKit
 // swiftlint:disable force_unwrapping
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class LaunchCoordinatorTests: QuickSpec {
+class LaunchCoordinatorTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         struct Dependencies {
             let stubRootViewController = UIViewController()
@@ -170,7 +170,7 @@ class LaunchCoordinatorTests: QuickSpec {
                                                  currentNode: StubNode.nodeBox)
                     )
 
-                    verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                    verificationBlock = testData.dependencies.mockStore.verifyNoDispatches {
                         testData.coordinator.newState(state: appState,
                                                       updatedSubstates: [])
                     }
@@ -198,7 +198,7 @@ class LaunchCoordinatorTests: QuickSpec {
                                                  currentNode: StubNode.nodeBox)
                     )
 
-                    verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                    verificationBlock = testData.dependencies.mockStore.verifyNoDispatches {
                         testData.coordinator.newState(state: appState,
                                                       updatedSubstates: [])
                     }
