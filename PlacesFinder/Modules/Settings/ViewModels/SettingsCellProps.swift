@@ -1,5 +1,5 @@
 //
-//  SettingsCellViewModel.swift
+//  SettingsCellProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -27,7 +27,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SettingsCellViewModel: Equatable {
+struct SettingsCellProps: Equatable {
     let title: String
     let isSelected: Bool
     let colorings: SettingsCellColorings
@@ -47,13 +47,13 @@ struct SettingsCellViewModel: Equatable {
     }
 }
 
-extension SettingsCellViewModel: Identifiable {
+extension SettingsCellProps: Identifiable {
 
     var id: String { title }
 
 }
 
-extension SettingsCellViewModel {
+extension SettingsCellProps {
 
     func dispatchAction() {
         _ = actionSubscriber.value.receive(action.value)
@@ -61,19 +61,19 @@ extension SettingsCellViewModel {
 
 }
 
-// MARK: SettingsCellViewModelBuilder
+// MARK: SettingsCellPropsBuilder
 
 // sourcery: AutoMockable
-protocol SettingsCellViewModelBuilderProtocol {
-    func buildDistanceCellModels(currentDistanceType: SearchDistance,
-                                 colorings: SettingsCellColorings) -> [SettingsCellViewModel]
+protocol SettingsCellPropsBuilderProtocol {
+    func buildDistanceCellProps(currentDistanceType: SearchDistance,
+                                colorings: SettingsCellColorings) -> [SettingsCellProps]
 
-    func buildSortingCellModels(currentSorting: PlaceLookupSorting,
-                                copyContent: SettingsSortPreferenceCopyContent,
-                                colorings: SettingsCellColorings) -> [SettingsCellViewModel]
+    func buildSortingCellProps(currentSorting: PlaceLookupSorting,
+                               copyContent: SettingsSortPreferenceCopyContent,
+                               colorings: SettingsCellColorings) -> [SettingsCellProps]
 }
 
-class SettingsCellViewModelBuilder {
+class SettingsCellPropsBuilder {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
@@ -88,13 +88,13 @@ class SettingsCellViewModelBuilder {
 
 }
 
-extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
+extension SettingsCellPropsBuilder: SettingsCellPropsBuilderProtocol {
 
-    func buildDistanceCellModels(currentDistanceType: SearchDistance,
-                                 colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
+    func buildDistanceCellProps(currentDistanceType: SearchDistance,
+                                colorings: SettingsCellColorings) -> [SettingsCellProps] {
         switch currentDistanceType {
         case let .imperial(currentlySelectedDistance):
-            return buildModels(
+            return buildProps(
                 currentlySelectedDistance: currentlySelectedDistance,
                 colorings: colorings
             ) {
@@ -102,7 +102,7 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
             }
 
         case let .metric(currentlySelectedDistance):
-            return buildModels(
+            return buildProps(
                 currentlySelectedDistance: currentlySelectedDistance,
                 colorings: colorings
             ) {
@@ -111,27 +111,27 @@ extension SettingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol {
         }
     }
 
-    private func buildModels<T: SearchDistanceType>(currentlySelectedDistance: T,
-                                                    colorings: SettingsCellColorings,
-                                                    distanceBlock: (T) -> SearchDistance) -> [SettingsCellViewModel] {
+    private func buildProps<T: SearchDistanceType>(currentlySelectedDistance: T,
+                                                   colorings: SettingsCellColorings,
+                                                   distanceBlock: (T) -> SearchDistance) -> [SettingsCellProps] {
         return T.allCases.map { distance in
-            SettingsCellViewModel(title: measurementFormatter.string(from: distance.measurement),
-                                  isSelected: currentlySelectedDistance == distance,
-                                  colorings: colorings,
-                                  actionSubscriber: actionSubscriber,
-                                  action: .setDistance(distanceBlock(distance)))
+            SettingsCellProps(title: measurementFormatter.string(from: distance.measurement),
+                              isSelected: currentlySelectedDistance == distance,
+                              colorings: colorings,
+                              actionSubscriber: actionSubscriber,
+                              action: .setDistance(distanceBlock(distance)))
         }
     }
 
-    func buildSortingCellModels(currentSorting: PlaceLookupSorting,
-                                copyContent: SettingsSortPreferenceCopyContent,
-                                colorings: SettingsCellColorings) -> [SettingsCellViewModel] {
+    func buildSortingCellProps(currentSorting: PlaceLookupSorting,
+                               copyContent: SettingsSortPreferenceCopyContent,
+                               colorings: SettingsCellColorings) -> [SettingsCellProps] {
         return PlaceLookupSorting.allCases.map { sorting in
-            SettingsCellViewModel(title: copyContent.title(sorting),
-                                  isSelected: currentSorting == sorting,
-                                  colorings: colorings,
-                                  actionSubscriber: actionSubscriber,
-                                  action: .setSorting(sorting))
+            SettingsCellProps(title: copyContent.title(sorting),
+                              isSelected: currentSorting == sorting,
+                              colorings: colorings,
+                              actionSubscriber: actionSubscriber,
+                              action: .setSorting(sorting))
         }
     }
 

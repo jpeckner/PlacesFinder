@@ -1,5 +1,5 @@
 //
-//  SettingsCellViewModelBuilderTests.swift
+//  SettingsCellPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -34,26 +34,26 @@ import SwiftDuxTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class SettingsCellViewModelBuilderTests: QuickSpec {
+class SettingsCellPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementFormatter: MeasurementFormatterProtocolMock!
 
-        var sut: SettingsCellViewModelBuilder!
+        var sut: SettingsCellPropsBuilder!
 
         beforeEach {
             mockActionSubscriber = MockSubscriber()
             mockMeasurementFormatter = MeasurementFormatterProtocolMock()
 
-            sut = SettingsCellViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                               measurementFormatter: mockMeasurementFormatter)
+            sut = SettingsCellPropsBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
+                                           measurementFormatter: mockMeasurementFormatter)
         }
 
-        describe("buildDistanceCellModels()") {
+        describe("buildDistanceCellProps()") {
 
-            var results: [SettingsCellViewModel]!
+            var results: [SettingsCellProps]!
 
             beforeEach {
                 mockMeasurementFormatter.stringFromClosure = { value in
@@ -71,20 +71,20 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     context("when the current search distance is .\(currentDistanceType)") {
 
                         beforeEach {
-                            results = sut.buildDistanceCellModels(
+                            results = sut.buildDistanceCellProps(
                                 currentDistanceType: currentDistanceType,
                                 colorings: AppColorings.defaultColorings.settings.cellColorings
                             )
                         }
 
-                        it("has exactly one cell model per sorting option") {
+                        it("has exactly one cell props per sorting option") {
                             expect(results.count) == searchDistances.count
                         }
 
-                        it("has the title in each cell model as returned by mockMeasurementFormatter") {
-                            for (idx, resultCellModel) in results.enumerated() {
+                        it("has the title in each cell props as returned by mockMeasurementFormatter") {
+                            for (idx, resultCellProps) in results.enumerated() {
                                 let expectedMeasurement = searchDistances[idx].distanceType.measurement
-                                expect(resultCellModel.title) ==
+                                expect(resultCellProps.title) ==
                                     "stub_\(expectedMeasurement.value)_\(expectedMeasurement.unit.symbol)"
                             }
                         }
@@ -94,8 +94,8 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                         }
 
                         it("has false as the value of isSelected for the other cases") {
-                            for (idx, resultCellModel) in results.enumerated() where idx != caseIdx {
-                                expect(resultCellModel.isSelected) == false
+                            for (idx, resultCellProps) in results.enumerated() where idx != caseIdx {
+                                expect(resultCellProps.isSelected) == false
                             }
                         }
 
@@ -123,31 +123,31 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
 
         }
 
-        describe("buildSortingCellModels()") {
+        describe("buildSortingCellProps()") {
 
             let stubCopyContent = SettingsSortPreferenceCopyContent.stubValue()
 
-            var results: [SettingsCellViewModel]!
+            var results: [SettingsCellProps]!
 
             for (caseIdx, currentSorting) in PlaceLookupSorting.allCases.enumerated() {
 
                 context("when the current PlaceLookupSorting case is .\(currentSorting)") {
 
                     beforeEach {
-                        results = sut.buildSortingCellModels(
+                        results = sut.buildSortingCellProps(
                             currentSorting: currentSorting,
                             copyContent: stubCopyContent,
                             colorings: AppColorings.defaultColorings.settings.cellColorings
                         )
                     }
 
-                    it("has exactly one cell model per sorting option") {
+                    it("has exactly one cell props per sorting option") {
                         expect(results.count) == PlaceLookupSorting.allCases.count
                     }
 
-                    it("has the correct title in each cell model as found in stubCopyContent") {
-                        for (idx, resultCellModel) in results.enumerated() {
-                            expect(resultCellModel.title) == stubCopyContent.title(PlaceLookupSorting.allCases[idx])
+                    it("has the correct title in each cell props as found in stubCopyContent") {
+                        for (idx, resultCellProps) in results.enumerated() {
+                            expect(resultCellProps.title) == stubCopyContent.title(PlaceLookupSorting.allCases[idx])
                         }
                     }
 
@@ -156,8 +156,8 @@ class SettingsCellViewModelBuilderTests: QuickSpec {
                     }
 
                     it("has false as the value of isSelected for the other cases") {
-                        for (idx, resultCellModel) in results.enumerated() where idx != caseIdx {
-                            expect(resultCellModel.isSelected) == false
+                        for (idx, resultCellProps) in results.enumerated() where idx != caseIdx {
+                            expect(resultCellProps.isSelected) == false
                         }
                     }
 

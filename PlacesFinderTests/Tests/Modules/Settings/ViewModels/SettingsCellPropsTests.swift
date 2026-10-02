@@ -1,5 +1,5 @@
 //
-//  SettingsCellViewModelTests.swift
+//  SettingsCellPropsTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -32,22 +32,22 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SettingsCellViewModelTests: QuickSpec {
+class SettingsCellPropsTests: QuickSpec {
 
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
 
-        var sut: SettingsCellViewModel!
+        var sut: SettingsCellProps!
 
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            sut = SettingsCellViewModel(title: "",
-                                        isSelected: false,
-                                        colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                        actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                        action: .showAboutApp(AboutAppLinkPayload()))
+            sut = SettingsCellProps(title: "",
+                                    isSelected: false,
+                                    colorings: AppColorings.defaultColorings.settings.cellColorings,
+                                    actionSubscriber: AnySubscriber(mockActionSubscriber),
+                                    action: .showAboutApp(AboutAppLinkPayload()))
         }
 
         describe("dispatchAction()") {

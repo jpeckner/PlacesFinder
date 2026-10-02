@@ -27,30 +27,32 @@ import SwiftUI
 
 struct SettingsView: View {
 
-    @ObservedObject var viewModel: ValueObservable<SettingsViewModel>
+    typealias ViewModel = SinglePropsViewModel<SettingsViewProps>
 
-    init(viewModel: SettingsViewModel) {
-        self.viewModel = ValueObservable(viewModel)
+    private let viewModel: ViewModel
+
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
         List {
-            ForEach(viewModel.value.sections.value) { sectionViewModel in
-                Section(header: header(sectionViewModel)) {
-                    ForEach(sectionViewModel.cells) { cellViewModel in
+            ForEach(viewModel.props.sections.value) { sectionProps in
+                Section(header: header(sectionProps)) {
+                    ForEach(sectionProps.cells) { cellProps in
                         SettingsCell(
-                            viewModel: cellViewModel
+                            props: cellProps
                         )
                         .contentShape(Rectangle())  // Necessary for `onTapGesture` to work on the entire cell
                         .onTapGesture {
-                            cellViewModel.dispatchAction()
+                            cellProps.dispatchAction()
                         }
                     }
                 }
             }
         }
         .listStyle(.grouped)
-        .background(Color(viewModel.value.colorings.viewColoring.backgroundColor))
+        .background(Color(viewModel.props.colorings.viewColoring.backgroundColor))
         .scrollIndicators(
             .hidden,
             axes: [.vertical]
@@ -59,16 +61,16 @@ struct SettingsView: View {
     }
 
     @ViewBuilder
-    private func header(_ sectionViewModel: SettingsSectionViewModel) -> some View {
-        switch sectionViewModel.headerType {
-        case let .plain(headerViewModel):
+    private func header(_ sectionProps: SettingsSectionProps) -> some View {
+        switch sectionProps.headerType {
+        case let .plain(props):
             SettingsPlainSystemHeaderView(
-                viewModel: headerViewModel
+                props: props
             )
 
-        case let .measurementSystem(headerViewModel):
+        case let .measurementSystem(props):
             SettingsMeasurementSystemHeaderView(
-                viewModel: headerViewModel
+                props: props
             )
 
         case .none:
@@ -82,13 +84,13 @@ struct SettingsView: View {
 
 private struct SettingsPlainSystemHeaderView: View {
 
-    let viewModel: SettingsPlainHeaderViewModel
+    let props: SettingsPlainHeaderProps
 
     var body: some View {
-        Text(viewModel.title)
+        Text(props.title)
             .modifier(
                 textStyleClass: .tableHeader,
-                textColoring: viewModel.colorings.textColoring
+                textColoring: props.colorings.textColoring
             )
     }
 
@@ -98,20 +100,20 @@ private struct SettingsPlainSystemHeaderView: View {
 
 private struct SettingsMeasurementSystemHeaderView: View {
 
-    let viewModel: SettingsUnitsHeaderViewModel
+    let props: SettingsUnitsHeaderProps
 
     var body: some View {
         HStack {
-            Text(viewModel.title)
+            Text(props.title)
                 .modifier(
                     textStyleClass: .tableHeader,
-                    textColoring: viewModel.colorings.textColoring
+                    textColoring: props.colorings.textColoring
                 )
 
             Spacer()
 
             HStack {
-                ForEach(0..<viewModel.systemOptions.count, id: \.self) { index in
+                ForEach(0..<props.systemOptions.count, id: \.self) { index in
                     Group {
                         if index > 0 {
                             Text("|")
@@ -126,7 +128,7 @@ private struct SettingsMeasurementSystemHeaderView: View {
 
     @ViewBuilder
     private func systemOptionElement(index: Int) -> some View {
-        switch viewModel.systemOptions[index] {
+        switch props.systemOptions[index] {
         case let .selectable(title, selectionAction):
             Button(
                 action: {
@@ -136,7 +138,7 @@ private struct SettingsMeasurementSystemHeaderView: View {
                     Text(title)
                         .modifier(
                             textStyleClass: .tableHeaderSelectableOption,
-                            textColoring: viewModel.colorings.activeButtonTextColoring
+                            textColoring: props.colorings.activeButtonTextColoring
                         )
                 }
             )
@@ -145,7 +147,7 @@ private struct SettingsMeasurementSystemHeaderView: View {
             Text(title)
                 .modifier(
                     textStyleClass: .tableHeaderNonSelectableOption,
-                    textColoring: viewModel.colorings.textColoring
+                    textColoring: props.colorings.textColoring
                 )
         }
     }
@@ -161,28 +163,28 @@ private struct SettingsCell: View {
         static let imageHeight: CGFloat = 24.0
     }
 
-    let viewModel: SettingsCellViewModel
+    let props: SettingsCellProps
 
     var body: some View {
         HStack {
-            Text(viewModel.title)
+            Text(props.title)
                 .modifier(
                     textStyleClass: .cellText,
-                    textColoring: viewModel.colorings.textColoring
+                    textColoring: props.colorings.textColoring
                 )
 
             Spacer()
 
-            if viewModel.isSelected {
+            if props.isSelected {
                 Image(uiImage: Constants.image)
                     .resizable()
                     .frame(width: Constants.imageHeight * Constants.image.widthToHeightRatio,
                            height: Constants.imageHeight)
                     .aspectRatio(contentMode: .fit)
-                    .colorMultiply(Color(viewModel.colorings.checkmarkTint.color))
+                    .colorMultiply(Color(props.colorings.checkmarkTint.color))
             }
         }
-        .listRowBackground(Color(viewModel.colorings.viewColoring.backgroundColor))
+        .listRowBackground(Color(props.colorings.viewColoring.backgroundColor))
     }
 
 }

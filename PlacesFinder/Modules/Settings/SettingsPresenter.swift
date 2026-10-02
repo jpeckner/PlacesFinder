@@ -31,7 +31,7 @@ import UIKit
 @MainActor protocol SettingsPresenterProtocol {
     var rootNavController: UINavigationController { get }
 
-    func loadSettingsView(_ viewModel: SettingsViewModel,
+    func loadSettingsView(_ props: SettingsViewProps,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin)
 }
@@ -46,18 +46,18 @@ class SettingsPresenter: SettingsPresenterProtocol {
         rootNavController.configure(tabItemProperties)
     }
 
-    func loadSettingsView(_ viewModel: SettingsViewModel,
+    func loadSettingsView(_ props: SettingsViewProps,
                           titleViewModel: NavigationBarTitleViewModel,
                           appSkin: AppSkin) {
         guard let existingController: SettingsViewController = existingRootController() else {
-            let controller = buildSettingsViewController(viewModel,
+            let controller = buildSettingsViewController(props,
                                                          titleViewModel: titleViewModel,
                                                          appSkin: appSkin)
             rootNavController.setViewControllers([controller], animated: true)
             return
         }
 
-        existingController.configure(viewModel: viewModel)
+        existingController.configure(props: props)
     }
 
 }
@@ -72,10 +72,10 @@ private extension SettingsPresenter {
 
 private extension SettingsPresenter {
 
-    func buildSettingsViewController(_ viewModel: SettingsViewModel,
+    func buildSettingsViewController(_ props: SettingsViewProps,
                                      titleViewModel: NavigationBarTitleViewModel,
                                      appSkin: AppSkin) -> SettingsViewController {
-        let controller = SettingsViewController(viewModel: viewModel)
+        let controller = SettingsViewController(props: props)
         controller.configureTitleView(titleViewModel,
                                       appSkin: appSkin)
         return controller

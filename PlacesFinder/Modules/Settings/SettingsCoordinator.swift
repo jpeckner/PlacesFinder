@@ -35,7 +35,7 @@ import UIKit
     private let store: TStore
     private let presenter: SettingsPresenterProtocol
     private let serviceContainer: ServiceContainer
-    private let settingsViewModelBuilder: SettingsViewModelBuilderProtocol
+    private let settingsPropsBuilder: SettingsViewPropsBuilderProtocol
     private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
 
     private let aboutAppDisposedSubject = PassthroughSubject<Void, Never>()
@@ -54,12 +54,12 @@ import UIKit
     init(store: TStore,
          presenter: SettingsPresenterProtocol,
          serviceContainer: ServiceContainer,
-         settingsViewModelBuilder: SettingsViewModelBuilderProtocol,
+         settingsPropsBuilder: SettingsViewPropsBuilderProtocol,
          navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
         self.store = store
         self.presenter = presenter
         self.serviceContainer = serviceContainer
-        self.settingsViewModelBuilder = settingsViewModelBuilder
+        self.settingsPropsBuilder = settingsPropsBuilder
         self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
 
         store.subscribe(self, equatableKeyPaths: [
@@ -179,14 +179,14 @@ extension SettingsCoordinator: SubstatesSubscriber {
         let appCopyContent = state.appCopyContentState.copyContent
         let appSkin = state.appSkinState.currentValue
 
-        let viewModel = settingsViewModelBuilder.buildViewModel(
+        let props = settingsPropsBuilder.buildProps(
             searchPreferencesState: state.searchPreferencesState,
             appCopyContent: appCopyContent,
             appDisplayName: serviceContainer.appBundleInfo.displayName,
             colorings: appSkin.colorings.settings
         )
         let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
-        presenter.loadSettingsView(viewModel,
+        presenter.loadSettingsView(props,
                                    titleViewModel: titleViewModel,
                                    appSkin: appSkin)
 

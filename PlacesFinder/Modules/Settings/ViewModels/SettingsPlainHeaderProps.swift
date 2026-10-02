@@ -1,6 +1,6 @@
 //
-//  SettingsPlainHeaderViewModelBuilderTests.swift
-//  PlacesFinderTests
+//  SettingsPlainHeaderProps.swift
+//  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
 //  
@@ -22,38 +22,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Nimble
-import Quick
+import Foundation
+import Shared
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable implicitly_unwrapped_optional
-class SettingsPlainHeaderViewModelBuilderTests: QuickSpec {
+struct SettingsPlainHeaderProps: Equatable {
+    let title: String
+    let colorings: SettingsHeaderViewColorings
+}
 
-    override func spec() {
+// MARK: SettingsPlainHeaderPropsBuilder
 
-        var sut: SettingsPlainHeaderViewModelBuilder!
-        var result: SettingsPlainHeaderViewModel!
+// sourcery: AutoMockable
+protocol SettingsPlainHeaderPropsBuilderProtocol {
+    func buildProps(title: String,
+                    colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderProps
+}
 
-        beforeEach {
-            sut = SettingsPlainHeaderViewModelBuilder()
-        }
+class SettingsPlainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocol {
 
-        describe("buildViewModel()") {
-
-            let stubTitle = "stubPlainHeaderTitle"
-
-            beforeEach {
-                result = sut.buildViewModel(title: stubTitle,
-                                            colorings: AppColorings.defaultColorings.settings.headerColorings)
-            }
-
-            it("returns a viewmodel with the expected title") {
-                expect(result.title) == "stubPlainHeaderTitle"
-            }
-
-        }
-
+    func buildProps(title: String,
+                    colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderProps {
+        SettingsPlainHeaderProps(
+            title: title,
+            colorings: colorings
+        )
     }
 
 }
-// swiftlint:enable blanket_disable_command
