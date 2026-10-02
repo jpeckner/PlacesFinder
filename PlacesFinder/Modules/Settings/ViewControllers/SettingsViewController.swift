@@ -26,10 +26,13 @@ import SwiftUI
 
 class SettingsViewController: UIHostingController<SettingsView> {
 
-    init(viewModel: SettingsViewModel) {
-        let rootView = SettingsView(viewModel: viewModel)
+    private let viewModel: SettingsView.ViewModel
 
-        super.init(rootView: rootView)
+    init(props: SettingsViewProps) {
+        let viewModel = SettingsView.ViewModel(props: props)
+        self.viewModel = viewModel
+
+        super.init(rootView: SettingsView(viewModel: viewModel))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +43,8 @@ class SettingsViewController: UIHostingController<SettingsView> {
 
 extension SettingsViewController {
 
-    func configure(viewModel: SettingsViewModel) {
-        rootView.viewModel.value = viewModel
+    func configure(props: SettingsViewProps) {
+        viewModel.props = props
     }
 
 }

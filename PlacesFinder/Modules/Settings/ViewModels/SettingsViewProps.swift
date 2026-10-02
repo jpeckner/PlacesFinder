@@ -1,5 +1,5 @@
 //
-//  SettingsViewModel.swift
+//  SettingsViewProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -27,70 +27,70 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SettingsViewModel {
-    let sections: NonEmptyArray<SettingsSectionViewModel>
+struct SettingsViewProps {
+    let sections: NonEmptyArray<SettingsSectionProps>
     let colorings: SettingsViewColorings
 }
 
-// MARK: SettingsViewModelBuilder
+// MARK: SettingsViewPropsBuilder
 
 // sourcery: AutoMockable
-protocol SettingsViewModelBuilderProtocol {
-    func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        appDisplayName: NonEmptyString,
-                        colorings: SettingsViewColorings) -> SettingsViewModel
+protocol SettingsViewPropsBuilderProtocol {
+    func buildProps(searchPreferencesState: SearchPreferencesState,
+                    appCopyContent: AppCopyContent,
+                    appDisplayName: NonEmptyString,
+                    colorings: SettingsViewColorings) -> SettingsViewProps
 }
 
-class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
+class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
-    private let measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol
-    private let plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol
-    private let settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol
+    private let measurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol
+    private let plainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocol
+    private let settingsCellPropsBuilder: SettingsCellPropsBuilderProtocol
 
     init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
-         measurementSystemHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol,
-         plainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol,
-         settingsCellViewModelBuilder: SettingsCellViewModelBuilderProtocol) {
+         measurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol,
+         plainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocol,
+         settingsCellPropsBuilder: SettingsCellPropsBuilderProtocol) {
         self.actionSubscriber = actionSubscriber
-        self.measurementSystemHeaderViewModelBuilder = measurementSystemHeaderViewModelBuilder
-        self.plainHeaderViewModelBuilder = plainHeaderViewModelBuilder
-        self.settingsCellViewModelBuilder = settingsCellViewModelBuilder
+        self.measurementSystemHeaderPropsBuilder = measurementSystemHeaderPropsBuilder
+        self.plainHeaderPropsBuilder = plainHeaderPropsBuilder
+        self.settingsCellPropsBuilder = settingsCellPropsBuilder
     }
 
-    func buildViewModel(searchPreferencesState: SearchPreferencesState,
-                        appCopyContent: AppCopyContent,
-                        appDisplayName: NonEmptyString,
-                        colorings: SettingsViewColorings) -> SettingsViewModel {
+    func buildProps(searchPreferencesState: SearchPreferencesState,
+                    appCopyContent: AppCopyContent,
+                    appDisplayName: NonEmptyString,
+                    colorings: SettingsViewColorings) -> SettingsViewProps {
         let sections =
             NonEmptyArray(with:
-                SettingsSectionViewModel(
+                SettingsSectionProps(
                     id: .searchDistance,
                     headerType: .measurementSystem(
-                        measurementSystemHeaderViewModelBuilder.buildViewModel(
+                        measurementSystemHeaderPropsBuilder.buildProps(
                             title: appCopyContent.settingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.stored.distance.system,
                             copyContent: appCopyContent.settingsMeasurementSystem,
                             colorings: colorings.headerColorings
                         )
                     ),
-                    cells: settingsCellViewModelBuilder.buildDistanceCellModels(
+                    cells: settingsCellPropsBuilder.buildDistanceCellProps(
                         currentDistanceType: searchPreferencesState.stored.distance,
                         colorings: colorings.cellColorings
                     )
                 )
             )
             .appendedWith([
-                SettingsSectionViewModel(
+                SettingsSectionProps(
                     id: .sortBy,
                     headerType: .plain(
-                        plainHeaderViewModelBuilder.buildViewModel(
+                        plainHeaderPropsBuilder.buildProps(
                             title: appCopyContent.settingsHeaders.sortSectionTitle,
                             colorings: colorings.headerColorings
                         )
                     ),
-                    cells: settingsCellViewModelBuilder.buildSortingCellModels(
+                    cells: settingsCellPropsBuilder.buildSortingCellProps(
                         currentSorting: searchPreferencesState.stored.sorting,
                         copyContent: appCopyContent.settingsSortPreference,
                         colorings: colorings.cellColorings
@@ -98,11 +98,11 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                 )
             ])
             .appendedWith([
-                SettingsSectionViewModel(
+                SettingsSectionProps(
                     id: .aboutApp,
                     headerType: nil,
                     cells: [
-                        SettingsCellViewModel(
+                        SettingsCellProps(
                             title: String(
                                 format: appCopyContent.aboutAppMenu.ctaTitleFormat,
                                 appDisplayName.value
@@ -116,7 +116,7 @@ class SettingsViewModelBuilder: SettingsViewModelBuilderProtocol {
                 )
             ])
 
-        return SettingsViewModel(
+        return SettingsViewProps(
             sections: sections,
             colorings: colorings
         )

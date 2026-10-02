@@ -155,19 +155,19 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let unitsHeaderViewModelBuilder = SettingsUnitsHeaderViewModelBuilder(
+        let unitsHeaderPropsBuilder = SettingsUnitsHeaderPropsBuilder(
             actionSubscriber: searchPreferencesActionSubscriber
         )
-        let plainHeaderViewModelBuilder = SettingsPlainHeaderViewModelBuilder()
-        let settingsCellViewModelBuilder = SettingsCellViewModelBuilder(
+        let plainHeaderPropsBuilder = SettingsPlainHeaderPropsBuilder()
+        let settingsCellPropsBuilder = SettingsCellPropsBuilder(
             actionSubscriber: searchPreferencesActionSubscriber,
             measurementFormatter: measurementFormatter
         )
-        let settingsViewModelBuilder = SettingsViewModelBuilder(
+        let settingsPropsBuilder = SettingsViewPropsBuilder(
             actionSubscriber: searchPreferencesActionSubscriber,
-            measurementSystemHeaderViewModelBuilder: unitsHeaderViewModelBuilder,
-            plainHeaderViewModelBuilder: plainHeaderViewModelBuilder,
-            settingsCellViewModelBuilder: settingsCellViewModelBuilder
+            measurementSystemHeaderPropsBuilder: unitsHeaderPropsBuilder,
+            plainHeaderPropsBuilder: plainHeaderPropsBuilder,
+            settingsCellPropsBuilder: settingsCellPropsBuilder
         )
 
         let navigationBarViewModelBuilder = NavigationBarViewModelBuilder()
@@ -175,7 +175,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         return SettingsCoordinator(store: store,
                                    presenter: presenter,
                                    serviceContainer: serviceContainer,
-                                   settingsViewModelBuilder: settingsViewModelBuilder,
+                                   settingsPropsBuilder: settingsPropsBuilder,
                                    navigationBarViewModelBuilder: navigationBarViewModelBuilder)
     }
 

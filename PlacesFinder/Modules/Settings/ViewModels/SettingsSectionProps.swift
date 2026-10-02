@@ -1,8 +1,8 @@
 //
-//  SettingsPlainHeaderViewModel.swift
+//  SettingsSectionProps.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2020 Justin Peckner
+//  Copyright (c) 2019 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,21 @@
 
 import Foundation
 import Shared
+import SwiftDux
 
-struct SettingsPlainHeaderViewModel: Equatable {
-    let title: String
-    let colorings: SettingsHeaderViewColorings
-}
-
-// MARK: SettingsPlainHeaderViewModelBuilder
-
-// sourcery: AutoMockable
-// swiftlint:disable:next type_name
-protocol SettingsPlainHeaderViewModelBuilderProtocol {
-    func buildViewModel(title: String,
-                        colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel
-}
-
-class SettingsPlainHeaderViewModelBuilder: SettingsPlainHeaderViewModelBuilderProtocol {
-
-    func buildViewModel(title: String,
-                        colorings: SettingsHeaderViewColorings) -> SettingsPlainHeaderViewModel {
-        SettingsPlainHeaderViewModel(
-            title: title,
-            colorings: colorings
-        )
+struct SettingsSectionProps: Identifiable {
+    enum SectionID {
+        case searchDistance
+        case sortBy
+        case aboutApp
     }
 
+    enum HeaderType: Equatable {
+        case plain(SettingsPlainHeaderProps)
+        case measurementSystem(SettingsUnitsHeaderProps)
+    }
+
+    let id: SectionID
+    let headerType: HeaderType?
+    let cells: [SettingsCellProps]
 }

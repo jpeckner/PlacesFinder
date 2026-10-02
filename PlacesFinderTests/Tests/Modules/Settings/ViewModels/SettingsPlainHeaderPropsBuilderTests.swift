@@ -1,8 +1,8 @@
 //
-//  SettingsSectionViewModel.swift
-//  PlacesFinder
+//  SettingsPlainHeaderPropsBuilderTests.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2020 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
-import Shared
-import SwiftDux
+import Nimble
+import Quick
 
-struct SettingsSectionViewModel: Identifiable {
-    enum SectionID {
-        case searchDistance
-        case sortBy
-        case aboutApp
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+class SettingsPlainHeaderPropsBuilderTests: QuickSpec {
+
+    override func spec() {
+
+        var sut: SettingsPlainHeaderPropsBuilder!
+        var result: SettingsPlainHeaderProps!
+
+        beforeEach {
+            sut = SettingsPlainHeaderPropsBuilder()
+        }
+
+        describe("buildProps()") {
+
+            let stubTitle = "stubPlainHeaderTitle"
+
+            beforeEach {
+                result = sut.buildProps(title: stubTitle,
+                                        colorings: AppColorings.defaultColorings.settings.headerColorings)
+            }
+
+            it("returns props with the expected title") {
+                expect(result.title) == "stubPlainHeaderTitle"
+            }
+
+        }
+
     }
 
-    enum HeaderType: Equatable {
-        case plain(SettingsPlainHeaderViewModel)
-        case measurementSystem(SettingsUnitsHeaderViewModel)
-    }
-
-    let id: SectionID
-    let headerType: HeaderType?
-    let cells: [SettingsCellViewModel]
 }
+// swiftlint:enable blanket_disable_command

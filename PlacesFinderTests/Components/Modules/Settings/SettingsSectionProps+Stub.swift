@@ -1,5 +1,5 @@
 //
-//  SettingsViewModel+Stub.swift
+//  SettingsSectionProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -24,40 +24,40 @@
 
 import Foundation
 
-extension SettingsSectionViewModel {
+extension SettingsSectionProps {
 
-    static func stubValue(id: SettingsSectionViewModel.SectionID,
-                          headerType: SettingsSectionViewModel.HeaderType = .plain(.stubValue()),
-                          cells: [SettingsCellViewModel] = []) -> SettingsSectionViewModel {
-        return SettingsSectionViewModel(id: id,
-                                        headerType: headerType,
-                                        cells: cells)
+    static func stubValue(id: SettingsSectionProps.SectionID,
+                          headerType: SettingsSectionProps.HeaderType = .plain(.stubValue()),
+                          cells: [SettingsCellProps] = []) -> SettingsSectionProps {
+        return SettingsSectionProps(id: id,
+                                    headerType: headerType,
+                                    cells: cells)
     }
 
 }
 
-extension SettingsPlainHeaderViewModel {
+extension SettingsPlainHeaderProps {
 
     static func stubValue(
         title: String = "stubTitle",
         colorings: SettingsHeaderViewColorings = AppColorings.defaultColorings.settings.headerColorings
-    ) -> SettingsPlainHeaderViewModel {
-        return SettingsPlainHeaderViewModel(title: title,
-                                            colorings: colorings)
+    ) -> SettingsPlainHeaderProps {
+        return SettingsPlainHeaderProps(title: title,
+                                        colorings: colorings)
     }
 
 }
 
-extension SettingsUnitsHeaderViewModel {
+extension SettingsUnitsHeaderProps {
 
     static func stubValue(
         title: String = "stubUnitsHeaderTitle",
-        systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] = [],
+        systemOptions: [SettingsUnitsHeaderProps.SystemOption] = [],
         colorings: SettingsHeaderViewColorings = AppColorings.defaultColorings.settings.headerColorings
-    ) -> SettingsUnitsHeaderViewModel {
-        return SettingsUnitsHeaderViewModel(title: title,
-                                            systemOptions: systemOptions,
-                                            colorings: colorings)
+    ) -> SettingsUnitsHeaderProps {
+        return SettingsUnitsHeaderProps(title: title,
+                                        systemOptions: systemOptions,
+                                        colorings: colorings)
     }
 
 }

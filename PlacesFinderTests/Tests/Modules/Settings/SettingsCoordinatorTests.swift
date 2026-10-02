@@ -43,9 +43,9 @@ class SettingsCoordinatorTests: QuickSpec {
     override func spec() {
 
         struct Dependencies {
-            let stubSettingsViewModel: SettingsViewModel = {
-                let sections = NonEmptyArray(with: SettingsSectionViewModel.stubValue(id: .searchDistance))
-                return SettingsViewModel(
+            let stubSettingsProps: SettingsViewProps = {
+                let sections = NonEmptyArray(with: SettingsSectionProps.stubValue(id: .searchDistance))
+                return SettingsViewProps(
                     sections: sections,
                     colorings: AppColorings.defaultColorings.settings
                 )
@@ -55,7 +55,7 @@ class SettingsCoordinatorTests: QuickSpec {
             let mockStore: MockAppStore
             let mockServiceContainer: ServiceContainer
             let mockSettingsPresenter: SettingsPresenterProtocolMock
-            let mockSettingsViewModelBuilder: SettingsViewModelBuilderProtocolMock
+            let mockSettingsPropsBuilder: SettingsViewPropsBuilderProtocolMock
             let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
 
             @MainActor
@@ -66,8 +66,8 @@ class SettingsCoordinatorTests: QuickSpec {
 
                 mockServiceContainer = ServiceContainer.mockValue()
 
-                mockSettingsViewModelBuilder = SettingsViewModelBuilderProtocolMock()
-                mockSettingsViewModelBuilder.buildViewModelSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue = stubSettingsViewModel
+                mockSettingsPropsBuilder = SettingsViewPropsBuilderProtocolMock()
+                mockSettingsPropsBuilder.buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue = stubSettingsProps
 
                 mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
                 mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
@@ -88,7 +88,7 @@ class SettingsCoordinatorTests: QuickSpec {
                     store: dependencies.mockStore,
                     presenter: dependencies.mockSettingsPresenter,
                     serviceContainer: dependencies.mockServiceContainer,
-                    settingsViewModelBuilder: dependencies.mockSettingsViewModelBuilder,
+                    settingsPropsBuilder: dependencies.mockSettingsPropsBuilder,
                     navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder
                 )
                 let testData = TestData(dependencies: dependencies,

@@ -1,5 +1,5 @@
 //
-//  SettingsUnitsHeaderViewModelBuilderTests.swift
+//  SettingsUnitsHeaderPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -32,31 +32,31 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SettingsUnitsHeaderViewModelBuilderTests: QuickSpec {
+class SettingsUnitsHeaderPropsBuilderTests: QuickSpec {
 
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
 
-        var sut: SettingsUnitsHeaderViewModelBuilder!
-        var result: SettingsUnitsHeaderViewModel!
+        var sut: SettingsUnitsHeaderPropsBuilder!
+        var result: SettingsUnitsHeaderProps!
 
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            sut = SettingsUnitsHeaderViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber))
+            sut = SettingsUnitsHeaderPropsBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber))
         }
 
-        describe("buildViewModel()") {
+        describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildViewModel(title: "stubTitle",
-                                            currentlyActiveSystem: .imperial,
-                                            copyContent: SettingsMeasurementSystemCopyContent.stubValue(),
-                                            colorings: AppColorings.defaultColorings.settings.headerColorings)
+                result = sut.buildProps(title: "stubTitle",
+                                        currentlyActiveSystem: .imperial,
+                                        copyContent: SettingsMeasurementSystemCopyContent.stubValue(),
+                                        colorings: AppColorings.defaultColorings.settings.headerColorings)
             }
 
-            it("returns a viewmodel with the expected title...") {
+            it("returns props with the expected title...") {
                 expect(result.title) == "stubTitle"
             }
 

@@ -1,5 +1,5 @@
 //
-//  SettingsUnitsHeaderViewModel.swift
+//  SettingsUnitsHeaderProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -27,7 +27,7 @@ import Foundation
 import Shared
 import SwiftDux
 
-struct SettingsUnitsHeaderViewModel: Equatable {
+struct SettingsUnitsHeaderProps: Equatable {
     enum SystemOption: Equatable {
         case selectable(title: String, selectionAction: IgnoredEquatable<() -> Void>)
         case nonSelectable(title: String)
@@ -38,18 +38,17 @@ struct SettingsUnitsHeaderViewModel: Equatable {
     let colorings: SettingsHeaderViewColorings
 }
 
-// MARK: SettingsUnitsHeaderViewModelBuilder
+// MARK: SettingsUnitsHeaderPropsBuilder
 
 // sourcery: AutoMockable
-// swiftlint:disable:next type_name
-protocol SettingsUnitsHeaderViewModelBuilderProtocol {
-    func buildViewModel(title: String,
-                        currentlyActiveSystem: MeasurementSystem,
-                        copyContent: SettingsMeasurementSystemCopyContent,
-                        colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel
+protocol SettingsUnitsHeaderPropsBuilderProtocol {
+    func buildProps(title: String,
+                    currentlyActiveSystem: MeasurementSystem,
+                    copyContent: SettingsMeasurementSystemCopyContent,
+                    colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps
 }
 
-class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderProtocol {
+class SettingsUnitsHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol {
 
     private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
 
@@ -57,11 +56,11 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
         self.actionSubscriber = actionSubscriber
     }
 
-    func buildViewModel(title: String,
-                        currentlyActiveSystem: MeasurementSystem,
-                        copyContent: SettingsMeasurementSystemCopyContent,
-                        colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderViewModel {
-        let systemOptions: [SettingsUnitsHeaderViewModel.SystemOption] =
+    func buildProps(title: String,
+                    currentlyActiveSystem: MeasurementSystem,
+                    copyContent: SettingsMeasurementSystemCopyContent,
+                    colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps {
+        let systemOptions: [SettingsUnitsHeaderProps.SystemOption] =
             MeasurementSystem.allCases.map { system in
                 let systemTitle = copyContent.title(system)
                 return system == currentlyActiveSystem ?
@@ -76,9 +75,9 @@ class SettingsUnitsHeaderViewModelBuilder: SettingsUnitsHeaderViewModelBuilderPr
                     )
             }
 
-        return SettingsUnitsHeaderViewModel(title: title,
-                                            systemOptions: systemOptions,
-                                            colorings: colorings)
+        return SettingsUnitsHeaderProps(title: title,
+                                        systemOptions: systemOptions,
+                                        colorings: colorings)
     }
 
 }

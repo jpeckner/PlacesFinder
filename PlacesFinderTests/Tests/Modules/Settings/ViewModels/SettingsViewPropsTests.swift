@@ -1,5 +1,5 @@
 //
-//  SettingsViewModelTests.swift
+//  SettingsViewPropsTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -32,24 +32,24 @@ import SwiftDuxTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable force_unwrapping
 // swiftlint:disable implicitly_unwrapped_optional
-class SettingsViewModelTests: QuickSpec {
+class SettingsViewPropsTests: QuickSpec {
 
     override func spec() {
 
         var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
-        var sut: SettingsViewModel!
+        var sut: SettingsViewProps!
 
-        func buildSectionViewModels() -> NonEmptyArray<SettingsSectionViewModel> {
+        func buildSectionProps() -> NonEmptyArray<SettingsSectionProps> {
             let sections = [0, 1, 2].map { sectionIdx in
-                SettingsSectionViewModel.stubValue(
+                SettingsSectionProps.stubValue(
                     id: .searchDistance,
                     headerType: .plain(.stubValue(title: "stubSection\(sectionIdx)Title")),
                     cells: [0, 1, 2].map { cellIdx in
-                        SettingsCellViewModel(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
-                                              isSelected: cellIdx == 1,
-                                              colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                              actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                              action: .showAboutApp(AboutAppLinkPayload()))
+                        SettingsCellProps(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
+                                          isSelected: cellIdx == 1,
+                                          colorings: AppColorings.defaultColorings.settings.cellColorings,
+                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
+                                          action: .showAboutApp(AboutAppLinkPayload()))
                     }
                 )
             }
@@ -60,22 +60,22 @@ class SettingsViewModelTests: QuickSpec {
         beforeEach {
             mockActionSubscriber = MockSubscriber()
 
-            let sections = buildSectionViewModels()
-            sut = SettingsViewModel(sections: sections,
+            let sections = buildSectionProps()
+            sut = SettingsViewProps(sections: sections,
                                     colorings: AppColorings.defaultColorings.settings)
         }
 
         describe("tableModel") {
 
-            it("returns a viewmodel with the expected number of sections") {
+            it("returns props with the expected number of sections") {
                 expect(sut.sections.value.count) == 3
             }
 
-            it("returns a viewmodel with the expected contents in each section") {
+            it("returns props with the expected contents in each section") {
                 for (sectionIdx, section) in sut.sections.value.enumerated() {
                     for cellIdx in [0, 1, 2] {
-                        let cellModel = section.cells[cellIdx]
-                        expect(cellModel.title) == "stubSection\(sectionIdx)Cell\(cellIdx)"
+                        let cellProps = section.cells[cellIdx]
+                        expect(cellProps.title) == "stubSection\(sectionIdx)Cell\(cellIdx)"
                     }
                 }
             }
