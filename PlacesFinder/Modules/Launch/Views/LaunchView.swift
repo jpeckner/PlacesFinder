@@ -27,17 +27,25 @@ import SwiftUI
 
 struct LaunchView: View {
 
-    private enum ProgressState {
+    enum ProgressState {
         case loading
         case completing(continuation: CheckedContinuation<Void, Never>)
     }
 
-    let colorings: LaunchViewColorings
-    @ObservedObject private var state = ValueObservable(ProgressState.loading)
+    typealias ViewModel = SinglePropsViewModel<ProgressState>
+
+    private let colorings: LaunchViewColorings
+    private let viewModel: ViewModel
+
+    init(colorings: LaunchViewColorings,
+         viewModel: ViewModel) {
+        self.colorings = colorings
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         GeometryReader { geometry in
-            switch state.value {
+            switch viewModel.props {
             case .loading:
                 LoadingLaunchView(
                     geometry: geometry,
@@ -52,12 +60,6 @@ struct LaunchView: View {
             }
         }
         .background(Color(colorings.viewColoring.backgroundColor))
-    }
-
-    func animateOut() async {
-        await withCheckedContinuation { continuation in
-            state.value = .completing(continuation: continuation)
-        }
     }
 
 }
@@ -90,7 +92,7 @@ private struct CompletingLaunchView: View {
 
     private enum AnimationConstants {
         static let firstAnimationDuration: TimeInterval = 0.3
-        static let secondAnimationDuration: TimeInterval = 0.2
+        static let secondAnimationDuration: TimeInterval = 0.1
         static let totalAnimationDuration = firstAnimationDuration + secondAnimationDuration
     }
 
