@@ -26,8 +26,16 @@ import SwiftUI
 
 class LaunchViewController: UIHostingController<LaunchView> {
 
+    private let viewModel: LaunchView.ViewModel
+
     init(appSkin: AppSkin) {
-        let launchView = LaunchView(colorings: appSkin.colorings.launch)
+        let viewModel = LaunchView.ViewModel(props: .loading)
+        self.viewModel = viewModel
+
+        let launchView = LaunchView(
+            colorings: appSkin.colorings.launch,
+            viewModel: viewModel
+        )
 
         super.init(rootView: launchView)
     }
@@ -41,7 +49,9 @@ class LaunchViewController: UIHostingController<LaunchView> {
 extension LaunchViewController {
 
     func animateOut() async {
-        await rootView.animateOut()
+        await withCheckedContinuation { continuation in
+            viewModel.props = .completing(continuation: continuation)
+        }
     }
 
 }
