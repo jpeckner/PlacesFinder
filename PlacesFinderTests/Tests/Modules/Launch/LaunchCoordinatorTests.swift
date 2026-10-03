@@ -159,7 +159,7 @@ class LaunchCoordinatorTests: AsyncSpec {
         describe("StoreSubscriber") {
 
             context("when mockStatePrism.hasFinishedLaunching returns false") {
-                var verificationBlock: NoDispatchVerificationBlock!
+                var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                 beforeEach {
                     let testData = await testStorage.element!
@@ -187,7 +187,7 @@ class LaunchCoordinatorTests: AsyncSpec {
             }
 
             context("else when the state already has a payload requested") {
-                var verificationBlock: NoDispatchVerificationBlock!
+                var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                 beforeEach {
                     let testData = await testStorage.element!

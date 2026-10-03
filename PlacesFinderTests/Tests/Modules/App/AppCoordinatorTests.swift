@@ -102,26 +102,28 @@ class AppCoordinatorTests: AsyncSpec {
             await initCoordinator(launchStatePrism: mockLaunchStatePrism)
         }
 
-        func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) {
-            let dispatchedAction = mockStore.dispatchedActions.last
-            expect(dispatchedAction).toEventually(equal(.router(.setCurrentCoordinator(nodeBox))))
+        func verifySetCurrentCoordinatorCalled(_ nodeBox: NodeBox) async {
+            await expect(mockStore.dispatchedActions.last).toEventually(equal(.router(.setCurrentCoordinator(nodeBox))))
         }
 
-        func verifySetDestinationCoordinatorCalled(_ destinationNodeBox: DestinationNodeBox,
-                                                   linkType: AppLinkType) {
-            let dispatchedAction = mockStore.dispatchedActions.last
-            expect(dispatchedAction).toEventually(
+        func verifySetDestinationCoordinatorCalled(
+            _ destinationNodeBox: DestinationNodeBox,
+            linkType: AppLinkType
+        ) async {
+            await expect(mockStore.dispatchedActions.last).toEventually(
                 equal(.router(.setDestinationCoordinator(destinationNodeBox, payload: linkType)))
             )
         }
 
-        func verifyCoordinatorWasActivated(_ childCoordinator: ChildCoordinatorProtocolMock,
-                                           with nodeBox: NodeBox,
-                                           rootViewController: UIViewController) {
-            verifySetCurrentCoordinatorCalled(nodeBox)
+        func verifyCoordinatorWasActivated(
+            _ childCoordinator: ChildCoordinatorProtocolMock,
+            with nodeBox: NodeBox,
+            rootViewController: UIViewController
+        ) async {
+            await verifySetCurrentCoordinatorCalled(nodeBox)
 
-            expect(childCoordinator.startCalled).toEventually(beTrue())
-            expect(mockMainWindow.rootViewController).toEventually(equal(rootViewController))
+            await expect(childCoordinator.startCalled).toEventually(beTrue())
+            await expect(mockMainWindow.rootViewController).toEventually(equal(rootViewController))
         }
 
         // MARK: Tests
@@ -135,9 +137,11 @@ class AppCoordinatorTests: AsyncSpec {
             }
 
             it("activates the coordinator returned by mockChildFactory.buildLaunchCoordinator()") {
-                verifyCoordinatorWasActivated(mockLaunchCoordinator,
-                                              with: LaunchCoordinatorNode.nodeBox,
-                                              rootViewController: dummyLaunchViewController)
+                await verifyCoordinatorWasActivated(
+                    mockLaunchCoordinator,
+                    with: LaunchCoordinatorNode.nodeBox,
+                    rootViewController: dummyLaunchViewController
+                )
             }
 
             it("subscribes to its relevant key paths") {
@@ -172,9 +176,11 @@ class AppCoordinatorTests: AsyncSpec {
                         }
 
                         it("activates mockHomeCoordinator") {
-                            verifyCoordinatorWasActivated(mockHomeCoordinator,
-                                                          with: HomeCoordinatorNode.nodeBox,
-                                                          rootViewController: dummySearchRootController)
+                            await verifyCoordinatorWasActivated(
+                                mockHomeCoordinator,
+                                with: HomeCoordinatorNode.nodeBox,
+                                rootViewController: dummySearchRootController
+                            )
                         }
                     }
                 }
@@ -201,9 +207,11 @@ class AppCoordinatorTests: AsyncSpec {
                             }
 
                             it("activates mockHomeCoordinator") {
-                                verifyCoordinatorWasActivated(mockHomeCoordinator,
-                                                              with: HomeCoordinatorNode.nodeBox,
-                                                              rootViewController: dummySearchRootController)
+                                await verifyCoordinatorWasActivated(
+                                    mockHomeCoordinator,
+                                    with: HomeCoordinatorNode.nodeBox,
+                                    rootViewController: dummySearchRootController
+                                )
                             }
                         }
                     }
@@ -220,7 +228,7 @@ class AppCoordinatorTests: AsyncSpec {
                 var resultStorage: AsyncStorage<Bool>!
 
                 context("when payloadBuilder.buildPayload() returns nil") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         let constCoordinator = coordinator
@@ -277,7 +285,7 @@ class AppCoordinatorTests: AsyncSpec {
             describe("newState()") {
 
                 context("when mockStatePrism.hasFinishedLaunching returns false") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         mockLaunchStatePrism.hasFinishedLaunchingReturnValue = false
@@ -321,13 +329,15 @@ class AppCoordinatorTests: AsyncSpec {
                     }
 
                     it("dispatches setDestinationCoordinator with the payload's destinationNodeBox") {
-                        verifySetDestinationCoordinatorCalled(stubLinkType.destinationNodeBox,
-                                                              linkType: stubLinkType)
+                        await verifySetDestinationCoordinatorCalled(
+                            stubLinkType.destinationNodeBox,
+                            linkType: stubLinkType
+                        )
                     }
                 }
 
                 context("else when the state does not already have a payload requested") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         mockLaunchStatePrism.hasFinishedLaunchingReturnValue = true

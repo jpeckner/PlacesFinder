@@ -29,7 +29,6 @@ import Shared
 import SharedTestComponents
 import SwiftDux
 import SwiftDuxTestComponents
-import XCTest
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
@@ -39,8 +38,6 @@ import XCTest
 class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
 
     override class func spec() {
-
-        let timeout: TimeInterval = 2.0
 
         let stubAppState = AppState.stubValue()
         let stubSearchState = Search.State.stub()
@@ -97,15 +94,6 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
             mockSearchStore.dispatch(.searchActivity(action))
         }
 
-        func performTest(predicateBlock: @escaping (Any?, [String: Any]?) -> Bool) {
-            let predicate = NSPredicate(block: predicateBlock)
-            let expectation = XCTNSPredicateExpectation(predicate: predicate,
-                                                        object: nil)
-
-            performTest()
-            self.wait(for: [expectation], timeout: timeout)
-        }
-
         describe("requestInitialPage()") {
 
             let stubUnderlyingError = LocationRequestError.noLocationsReturned
@@ -115,10 +103,14 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
             }
 
             it("dispatches Search.ActivityAction.locationRequested") {
-                performTest { _, _ -> Bool in
+                let predicate = {
                     let action = mockSearchStore.dispatchedActions[1]
                     return action == .searchActivity(.locationRequested(stubSearchParams))
                 }
+
+                performTest()
+
+                await expect(predicate()).toEventually(beTrue())
             }
 
             it("calls locationUpdateRequestBlock()") {
@@ -133,13 +125,17 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
                 }
 
                 it("dispatches Search.ActivityAction.failure") {
-                    performTest { _, _ -> Bool in
+                    let predicate = {
                         let action = mockSearchStore.dispatchedActions.last
                         return action == .searchActivity(
                             .failure(stubSearchParams,
                                      underlyingError: IgnoredEquatable(stubUnderlyingError))
                         )
                     }
+
+                    performTest()
+
+                    await expect(predicate()).toEventually(beTrue())
                 }
             }
 
@@ -166,23 +162,28 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
                     }
 
                     it("dispatches Search.ActivityAction.failure") {
-                        performTest { _, _ -> Bool in
+                        let predicate = {
                             let action = mockSearchStore.dispatchedActions.last
                             return action == .searchActivity(
                                 .failure(stubSearchParams,
                                          underlyingError: IgnoredEquatable(stubUnderlyingError))
                             )
                         }
+
+                        performTest()
+
+                        await expect(predicate()).toEventually(beTrue())
                     }
                 }
 
                 context("else") {
 
                     it("dispatches Search.ActivityAction.initialPageRequested") {
-                        performTest { _, _ -> Bool in
-                            let action = mockSearchStore.dispatchedActions.last
-                            return action == .searchActivity(.initialPageRequested(stubSearchParams))
-                        }
+                        performTest()
+
+                        await expect(mockSearchStore.dispatchedActions).toEventually(
+                            contain(.searchActivity(.initialPageRequested(stubSearchParams)))
+                        )
                     }
 
                     it("calls mockPlaceLookupService.requestPage()") {
@@ -203,13 +204,17 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
                             }
 
                             it("dispatches Search.ActivityAction.failure") {
-                                performTest { _, _ -> Bool in
+                                let predicate = {
                                     let action = mockSearchStore.dispatchedActions.last
                                     return action == .searchActivity(
                                         .failure(stubSearchParams,
                                                  underlyingError: IgnoredEquatable(stubUnderlyingError))
                                     )
                                 }
+
+                                performTest()
+
+                                await expect(predicate()).toEventually(beTrue())
                             }
                         }
 
@@ -229,13 +234,17 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
                             }
 
                             it("dispatches Search.ActivityAction.failure") {
-                                performTest { _, _ -> Bool in
+                                let predicate = {
                                     let action = mockSearchStore.dispatchedActions.last
                                     return action == .searchActivity(
                                         .failure(stubSearchParams,
                                                  underlyingError: IgnoredEquatable(stubUnderlyingError))
                                     )
                                 }
+
+                                performTest()
+
+                                await expect(predicate()).toEventually(beTrue())
                             }
                         }
                     }
@@ -248,10 +257,14 @@ class SearchActivityInitialRequestMiddlewareTests: AsyncSpec {
                             }
 
                             it("dispatches Search.ActivityAction.noResultsFound") {
-                                performTest { _, _ -> Bool in
+                                let predicate = {
                                     let action = mockSearchStore.dispatchedActions.last
                                     return action == .searchActivity(.noResultsFound(stubSearchParams))
                                 }
+
+                                performTest()
+
+                                await expect(predicate()).toEventually(beTrue())
                             }
                         }
 

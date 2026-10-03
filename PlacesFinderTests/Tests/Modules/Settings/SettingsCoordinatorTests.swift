@@ -175,7 +175,7 @@ class SettingsCoordinatorTests: AsyncSpec {
                 }
 
                 context("else when the state has a pending linkType of a different type") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         let testData = await testStorage.element!
@@ -194,7 +194,7 @@ class SettingsCoordinatorTests: AsyncSpec {
                 }
 
                 context("else when the state does not have a linkType") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         let testData = await testStorage.element!
