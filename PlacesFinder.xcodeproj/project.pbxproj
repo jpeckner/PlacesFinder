@@ -148,7 +148,7 @@
 		3CEE20E4CC986343F06E9D46 /* PlacesFinderLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8E82FA67D2D02476430DC /* PlacesFinderLinkTests.swift */; };
 		3D2D64EBBD67E0C506F76571 /* DownloadedImageProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214CD417BD9B4EEDF20E1ED5 /* DownloadedImageProps.swift */; };
 		3D386BDA36E7E23188DA5BE2 /* AppState+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27A0A36568B7B3B95FC167 /* AppState+Stub.swift */; };
-		3EECADDDE5391956666F7D1E /* NavigationBarViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2451958012F573C657821791 /* NavigationBarViewModelBuilderTests.swift */; };
+		3EECADDDE5391956666F7D1E /* NavigationBarPropsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2451958012F573C657821791 /* NavigationBarPropsBuilderTests.swift */; };
 		3F4C0EADFF277B57E363639B /* LaunchStatePrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F03EEFEC951DBBFE4B27040 /* LaunchStatePrismTests.swift */; };
 		3F56FF6B61BB3D78C6D02745 /* SearchInstructionsCopyContent+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25286197F89091EEC720D419 /* SearchInstructionsCopyContent+Stub.swift */; };
 		3F95CE3DBEB34BCB41B0B5FC /* SearchDetailsMapSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9912A0DE6911F8217574DCDD /* SearchDetailsMapSectionViewModel.swift */; };
@@ -275,7 +275,7 @@
 		7CF8176AED6B90EFEBF6A937 /* ReachabilityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */; };
 		7D949E50D977ABBB29E45F82 /* SearchResultCellProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663790D65E009702EFEBC603 /* SearchResultCellProps.swift */; };
 		7DCE6D31C254046A2B90BDA7 /* SettingsViewColorings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E063A75A8BE831E6254BD7 /* SettingsViewColorings.swift */; };
-		7F299F4ADBFAF66E41C98507 /* NavigationBarTitleViewModel+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewModel+Stub.swift */; };
+		7F299F4ADBFAF66E41C98507 /* NavigationBarTitleViewProps+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewProps+Stub.swift */; };
 		7FA9A92EE85CEBEDD6618E1F /* SearchContainerSplitControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78212A6CCC4D4682E7C6039 /* SearchContainerSplitControllers.swift */; };
 		803F0095C61BDD299C116B98 /* ReachabilityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED821C78F2C88DFCDF02B8D /* ReachabilityProtocol.swift */; };
 		803FAD1F969AF32881D8F923 /* SettingsCoordinator+CoordiNode.autogen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442CE2BA208FFA59637F12D /* SettingsCoordinator+CoordiNode.autogen.swift */; };
@@ -315,14 +315,14 @@
 		8CE2D6DDFED2749F59F73A39 /* PlaceLookupResponse+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A12C73777DE2DA7C7955E /* PlaceLookupResponse+Stub.swift */; };
 		8EB06C3E6EDA123729E20116 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0E41795D8F0CF032447E21 /* SearchCoordinator.swift */; };
 		8EF24D0F3B26CDA06E4F90AA /* SearchPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A4B869E98D0C4C0199FC27 /* SearchPresenterProtocol.swift */; };
-		8F3B563F4056BE5DDF8247F5 /* NavigationBarTitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */; };
+		8F3B563F4056BE5DDF8247F5 /* NavigationBarTitleViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewProps.swift */; };
 		8F4F0604A737E8C116CC9143 /* SearchDetailsViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DBA960C25CAFEC63D7BF2F /* SearchDetailsViewContext.swift */; };
 		8F92EAF9F0635B6064619569 /* UserDefaultsListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379BFA810E3BCEC1750642CD /* UserDefaultsListener.swift */; };
 		8FD6CE27E86A28DD108EF2F7 /* SearchDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */; };
 		8FDE44B25F92F880DC16A3FC /* SearchDetailsMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F554CC10D1B40A054908C /* SearchDetailsMapCell.swift */; };
 		902EA1C2A7F4FE683D02F82C /* SettingsLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */; };
 		90D5A985F11E6A7ACCB1FC38 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3AE9D1FE697FBC750B7FC /* AppCoordinator.swift */; };
-		9110DA967A3C4B3D1423B4B8 /* NavigationBarTitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */; };
+		9110DA967A3C4B3D1423B4B8 /* NavigationBarTitleViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewProps.swift */; };
 		9321924247899DF84E457122 /* ReachabilityListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC944D90DB1CB77DADC30E5 /* ReachabilityListenerTests.swift */; };
 		936AB9C7B62A900A07E56FEA /* SearchDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ABACCAAD06033363D38178 /* SearchDetailsViewModelTests.swift */; };
 		93D94AA74BC51024628807C7 /* SearchParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BAB9CBB60ED41C9DBD701 /* SearchParams.swift */; };
@@ -424,7 +424,7 @@
 		C49857C5B6FFEF996DB57807 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52CE3EE9D873B3373B2FCEE /* LaunchView.swift */; };
 		C4A808FE27660A928CF11740 /* SearchDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */; };
 		C4E0F506718B2F6FDA9A2741 /* AppCopyContent+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD0E88B2828B57760F35D8B /* AppCopyContent+Stub.swift */; };
-		C4F417C5A56440FA22588BE9 /* NavigationBarTitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */; };
+		C4F417C5A56440FA22588BE9 /* NavigationBarTitleViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewProps.swift */; };
 		C6CFD7EF4F55CC68D46FBBD9 /* RouterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294194DDECEFA249C4473B79 /* RouterAction.swift */; };
 		C7F20DC054FC0C50C73EABCE /* SearchDetailsPhoneNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319BE046FC8C6E4899D8288C /* SearchDetailsPhoneNumberCell.swift */; };
 		C842ECBAE5912C94CA6D6135 /* AutoCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD39453C056D8B03B9E899 /* AutoCodable.swift */; };
@@ -731,7 +731,7 @@
 		23ABACCAAD06033363D38178 /* SearchDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		23C6AEFCB0C47F01E38759AA /* PlaceLookupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLookupResponse.swift; sourceTree = "<group>"; };
 		23F7045CB2DF20502F6F756C /* YelpRequestServiceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestServiceIntegrationTests.swift; sourceTree = "<group>"; };
-		2451958012F573C657821791 /* NavigationBarViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarViewModelBuilderTests.swift; sourceTree = "<group>"; };
+		2451958012F573C657821791 /* NavigationBarPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarPropsBuilderTests.swift; sourceTree = "<group>"; };
 		245C23909849E198F6503796 /* SettingsSectionProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsSectionProps+Stub.swift"; sourceTree = "<group>"; };
 		25286197F89091EEC720D419 /* SearchInstructionsCopyContent+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchInstructionsCopyContent+Stub.swift"; sourceTree = "<group>"; };
 		25AE9FE4AA23793B1847D0F1 /* StaticInfoViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StaticInfoViewProps+Stub.swift"; sourceTree = "<group>"; };
@@ -742,7 +742,7 @@
 		2A086865782D8FE850AD3720 /* AutoCellType.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCellType.generated.swift; sourceTree = "<group>"; };
 		2C05E0AF83104421F3888E3F /* FakeSearchRequest+GoKarts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeSearchRequest+GoKarts.swift"; sourceTree = "<group>"; };
 		2D4AC0EC5200A17D813CC851 /* SearchBackgroundViewPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBackgroundViewPropsBuilderTests.swift; sourceTree = "<group>"; };
-		2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewModel+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationBarTitleViewModel+Stub.swift"; sourceTree = "<group>"; };
+		2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationBarTitleViewProps+Stub.swift"; sourceTree = "<group>"; };
 		2E54C382059E8456E5EC6183 /* SearchRatingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRatingValue.swift; sourceTree = "<group>"; };
 		2F1E7E109569C9D4DF2EA16D /* RouterReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterReducerTests.swift; sourceTree = "<group>"; };
 		2F939B6FD9252941A676BDE1 /* UserDefaultsServiceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsServiceIntegrationTests.swift; sourceTree = "<group>"; };
@@ -946,7 +946,7 @@
 		CE6539114A1F10B9E6B4EC0C /* AutoMockable.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		CEE499408E9298EF010D8D53 /* HomeCoordinatorChildFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorChildFactoryTests.swift; sourceTree = "<group>"; };
 		CFF24353B57755101F348001 /* SettingsViewPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewPropsBuilderTests.swift; sourceTree = "<group>"; };
-		D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarTitleViewModel.swift; sourceTree = "<group>"; };
+		D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarTitleViewProps.swift; sourceTree = "<group>"; };
 		D10C29A2462FDF1D9887D537 /* FakeSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSearchRequest.swift; sourceTree = "<group>"; };
 		D289B192ED1C0E4D2631DAC1 /* SettingsSectionProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionProps.swift; sourceTree = "<group>"; };
 		D2B831186C14DDB433FA4A49 /* XCTestCase+Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Element.swift"; sourceTree = "<group>"; };
@@ -1385,7 +1385,7 @@
 			children = (
 				9BD0E88B2828B57760F35D8B /* AppCopyContent+Stub.swift */,
 				CA9908822A2ABABF00F4C6E4 /* AppSkin+Stub.swift */,
-				2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewModel+Stub.swift */,
+				2D6765B18F563111AC51AEF7 /* NavigationBarTitleViewProps+Stub.swift */,
 				16CDB280196EA900F1BC01B2 /* SearchInputCopyContent+Stub.swift */,
 				25286197F89091EEC720D419 /* SearchInstructionsCopyContent+Stub.swift */,
 				25AE9FE4AA23793B1847D0F1 /* StaticInfoViewProps+Stub.swift */,
@@ -1547,7 +1547,7 @@
 			isa = PBXGroup;
 			children = (
 				214CD417BD9B4EEDF20E1ED5 /* DownloadedImageProps.swift */,
-				D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewModel.swift */,
+				D03A281CF3FE60B862CDE395 /* NavigationBarTitleViewProps.swift */,
 				1B2ABE0F15AF3E339CB3F3C5 /* StaticInfoViewProps.swift */,
 			);
 			path = ViewModels;
@@ -2448,7 +2448,7 @@
 		FF834B5EC72CF5450BC0F0CC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2451958012F573C657821791 /* NavigationBarViewModelBuilderTests.swift */,
+				2451958012F573C657821791 /* NavigationBarPropsBuilderTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2728,7 +2728,7 @@
 				CA5F849527E7B4B500EEF854 /* LocationAuthAction.swift in Sources */,
 				A37AC6A1D5B2353FEEA00334 /* MeasurementFormatterProtocol.swift in Sources */,
 				0E03920975855641C61CCC43 /* NavigationBarTitleView.swift in Sources */,
-				9110DA967A3C4B3D1423B4B8 /* NavigationBarTitleViewModel.swift in Sources */,
+				9110DA967A3C4B3D1423B4B8 /* NavigationBarTitleViewProps.swift in Sources */,
 				7A7CA29F75D606E98878BE19 /* PlaceLookupPage.swift in Sources */,
 				6E979A369284E4AA3C5CAE39 /* PlaceLookupPageRequestToken.swift in Sources */,
 				6A61FB4F9FF6E81EE3598ED6 /* PlaceLookupParams.swift in Sources */,
@@ -2918,7 +2918,7 @@
 				7B09F410F8F72736300AC05A /* LocationAuthStatus.swift in Sources */,
 				E61AD158A829EE13A2F780E5 /* MeasurementFormatterProtocol.swift in Sources */,
 				7367410873C0BA0C1CCCA123 /* NavigationBarTitleView.swift in Sources */,
-				8F3B563F4056BE5DDF8247F5 /* NavigationBarTitleViewModel.swift in Sources */,
+				8F3B563F4056BE5DDF8247F5 /* NavigationBarTitleViewProps.swift in Sources */,
 				B1CEED26BEBC3A18055DDB59 /* PlaceLookupPage.swift in Sources */,
 				CABDE0CC2A48E98300323AF2 /* PresentationControllerDelegate.swift in Sources */,
 				CA5F849727E7B4B500EEF854 /* LocationAuthState.swift in Sources */,
@@ -3113,10 +3113,10 @@
 				895AA4D26D84274188B401D0 /* MockAppStore.swift in Sources */,
 				E9223C6BDAA1F28F852A41B0 /* TestDispatchingStoreProtocol+SearchActivityAction.swift in Sources */,
 				A5340C3CE88392EE9972F6D4 /* NavigationBarTitleView.swift in Sources */,
-				7F299F4ADBFAF66E41C98507 /* NavigationBarTitleViewModel+Stub.swift in Sources */,
+				7F299F4ADBFAF66E41C98507 /* NavigationBarTitleViewProps+Stub.swift in Sources */,
 				CA9908832A2ABABF00F4C6E4 /* AppSkin+Stub.swift in Sources */,
-				C4F417C5A56440FA22588BE9 /* NavigationBarTitleViewModel.swift in Sources */,
-				3EECADDDE5391956666F7D1E /* NavigationBarViewModelBuilderTests.swift in Sources */,
+				C4F417C5A56440FA22588BE9 /* NavigationBarTitleViewProps.swift in Sources */,
+				3EECADDDE5391956666F7D1E /* NavigationBarPropsBuilderTests.swift in Sources */,
 				5422249FD06BB5A4D717C2B1 /* PlaceLookupPage.swift in Sources */,
 				74AD3DA46DD3CF77E8BC59C2 /* PlaceLookupPageRequestToken.swift in Sources */,
 				07434862347C8E120FEAD9FD /* PlaceLookupParams.swift in Sources */,

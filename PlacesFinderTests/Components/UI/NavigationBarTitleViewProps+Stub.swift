@@ -1,6 +1,6 @@
 //
-//  NavigationBarTitleViewModel.swift
-//  PlacesFinder
+//  NavigationBarTitleViewProps+Stub.swift
+//  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
 //  
@@ -23,21 +23,11 @@
 //  SOFTWARE.
 
 import Foundation
-import Shared
 
-struct NavigationBarTitleViewModel: Equatable {
-    let displayName: String
-}
+extension NavigationBarTitleViewProps {
 
-// sourcery: AutoMockable
-protocol NavigationBarViewModelBuilderProtocol {
-    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel
-}
-
-class NavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol {
-
-    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel {
-        return NavigationBarTitleViewModel(displayName: copyContent.name.value)
+    static func stubValue(displayName: String = "stubTitlePropsDisplayName") -> NavigationBarTitleViewProps {
+        return NavigationBarTitleViewProps(displayName: displayName)
     }
 
 }

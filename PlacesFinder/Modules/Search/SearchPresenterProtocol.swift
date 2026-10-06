@@ -30,20 +30,20 @@ import UIKit
     var rootViewController: UIViewController { get }
 
     func loadNoInternetViews(_ props: SearchNoInternetViewProps,
-                             titleViewModel: NavigationBarTitleViewModel,
+                             titleProps: NavigationBarTitleViewProps,
                              appSkin: AppSkin)
 
     func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
-                                           titleViewModel: NavigationBarTitleViewModel,
+                                           titleProps: NavigationBarTitleViewProps,
                                            appSkin: AppSkin)
 
     func loadSearchBackgroundView(_ props: SearchBackgroundViewProps,
-                                  titleViewModel: NavigationBarTitleViewModel,
+                                  titleProps: NavigationBarTitleViewProps,
                                   appSkin: AppSkin)
 
     func loadSearchViews(_ props: SearchLookupProps,
                          viewModel: SearchViewModel,
                          detailsViewContext: SearchDetailsViewContext?,
-                         titleViewModel: NavigationBarTitleViewModel,
+                         titleProps: NavigationBarTitleViewProps,
                          appSkin: AppSkin)
 }

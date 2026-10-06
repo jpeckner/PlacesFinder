@@ -36,7 +36,7 @@ import UIKit
     private let presenter: SettingsPresenterProtocol
     private let serviceContainer: ServiceContainer
     private let settingsPropsBuilder: SettingsViewPropsBuilderProtocol
-    private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
+    private let navigationBarPropsBuilder: NavigationBarPropsBuilderProtocol
 
     private let aboutAppDisposedSubject = PassthroughSubject<Void, Never>()
     private var aboutAppDismissalActions: Set<AnyCancellable> = []
@@ -55,12 +55,12 @@ import UIKit
          presenter: SettingsPresenterProtocol,
          serviceContainer: ServiceContainer,
          settingsPropsBuilder: SettingsViewPropsBuilderProtocol,
-         navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
+         navigationBarPropsBuilder: NavigationBarPropsBuilderProtocol) {
         self.store = store
         self.presenter = presenter
         self.serviceContainer = serviceContainer
         self.settingsPropsBuilder = settingsPropsBuilder
-        self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
+        self.navigationBarPropsBuilder = navigationBarPropsBuilder
 
         store.subscribe(self, equatableKeyPaths: [
             EquatableKeyPath(\AppState.routerState),
@@ -185,9 +185,9 @@ extension SettingsCoordinator: SubstatesSubscriber {
             appDisplayName: serviceContainer.appBundleInfo.displayName,
             colorings: appSkin.colorings.settings
         )
-        let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
+        let titleProps = navigationBarPropsBuilder.buildTitleProps(copyContent: appCopyContent.displayName)
         presenter.loadSettingsView(props,
-                                   titleViewModel: titleViewModel,
+                                   titleProps: titleProps,
                                    appSkin: appSkin)
 
         serviceContainer.appRoutingHandler.determineRouting(state: state,

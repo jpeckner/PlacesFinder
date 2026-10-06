@@ -62,7 +62,7 @@ class SearchCoordinatorTests: AsyncSpec {
             let mockSearchBackgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocolMock
             let mockSearchLookupPropsBuilder: SearchLookupPropsBuilderProtocolMock
             let mockSearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocolMock
-            let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
+            let mockNavigationBarPropsBuilder: NavigationBarPropsBuilderProtocolMock
 
             @MainActor init() {
                 let mockAppStore = MockAppStore()
@@ -107,8 +107,8 @@ class SearchCoordinatorTests: AsyncSpec {
 
                 self.mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
-                self.mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
-                mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
+                self.mockNavigationBarPropsBuilder = NavigationBarPropsBuilderProtocolMock()
+                mockNavigationBarPropsBuilder.buildTitlePropsCopyContentReturnValue = .stubValue()
             }
         }
 
@@ -133,7 +133,7 @@ class SearchCoordinatorTests: AsyncSpec {
                     backgroundPropsBuilder: dependencies.mockSearchBackgroundPropsBuilder,
                     lookupPropsBuilder: dependencies.mockSearchLookupPropsBuilder,
                     detailsViewContextBuilder: dependencies.mockSearchDetailsViewContextBuilder,
-                    navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder
+                    navigationBarPropsBuilder: dependencies.mockNavigationBarPropsBuilder
                 )
                 let testData = TestData(dependencies: dependencies,
                                         coordinator: coordinator)
@@ -211,7 +211,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         Task { @MainActor in
                             let testData = await testStorage.element!
                             await performTest(linkType: nil)
-                            await expect(testData.dependencies.mockSearchPresenter.loadNoInternetViewsTitleViewModelAppSkinCalled)
+                            await expect(testData.dependencies.mockSearchPresenter.loadNoInternetViewsTitlePropsAppSkinCalled)
                                 .toEventually(beTrue())
                         }
 
@@ -300,7 +300,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         Task { @MainActor in
                             let testData = await testStorage.element!
                             await performTest(linkType: nil)
-                            await expect(testData.dependencies.mockSearchPresenter.loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled)
+                            await expect(testData.dependencies.mockSearchPresenter.loadLocationServicesDisabledViewsTitlePropsAppSkinCalled)
                                 .toEventually(beTrue())
                         }
 
@@ -389,7 +389,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         it("calls presenter.loadSearchBackgroundView()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchBackgroundViewTitlePropsAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)
@@ -408,7 +408,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         it("calls presenter.loadSearchBackgroundView()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchBackgroundViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchBackgroundViewTitlePropsAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)
@@ -460,7 +460,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         it("calls presenter.loadSearchViews()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)
@@ -497,7 +497,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         it("calls presenter.loadSearchViews()") {
                             Task { @MainActor in
                                 let testData = await testStorage.element!
-                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled).toEventually(beTrue())
+                                await expect(testData.dependencies.mockSearchPresenter.loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCalled).toEventually(beTrue())
                             }
 
                             try! await Task.sleep(nanoseconds: 100_000_000)

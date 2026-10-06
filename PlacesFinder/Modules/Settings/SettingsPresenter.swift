@@ -32,7 +32,7 @@ import UIKit
     var rootNavController: UINavigationController { get }
 
     func loadSettingsView(_ props: SettingsViewProps,
-                          titleViewModel: NavigationBarTitleViewModel,
+                          titleProps: NavigationBarTitleViewProps,
                           appSkin: AppSkin)
 }
 
@@ -47,11 +47,11 @@ class SettingsPresenter: SettingsPresenterProtocol {
     }
 
     func loadSettingsView(_ props: SettingsViewProps,
-                          titleViewModel: NavigationBarTitleViewModel,
+                          titleProps: NavigationBarTitleViewProps,
                           appSkin: AppSkin) {
         guard let existingController: SettingsViewController = existingRootController() else {
             let controller = buildSettingsViewController(props,
-                                                         titleViewModel: titleViewModel,
+                                                         titleProps: titleProps,
                                                          appSkin: appSkin)
             rootNavController.setViewControllers([controller], animated: true)
             return
@@ -73,10 +73,10 @@ private extension SettingsPresenter {
 private extension SettingsPresenter {
 
     func buildSettingsViewController(_ props: SettingsViewProps,
-                                     titleViewModel: NavigationBarTitleViewModel,
+                                     titleProps: NavigationBarTitleViewProps,
                                      appSkin: AppSkin) -> SettingsViewController {
         let controller = SettingsViewController(props: props)
-        controller.configureTitleView(titleViewModel,
+        controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         return controller
     }

@@ -42,11 +42,11 @@ class SearchPresenter: SearchPresenterProtocol {
     }
 
     func loadNoInternetViews(_ props: SearchNoInternetViewProps,
-                             titleViewModel: NavigationBarTitleViewModel,
+                             titleProps: NavigationBarTitleViewProps,
                              appSkin: AppSkin) {
         guard let existingController: SearchNoInternetViewController = existingPrimaryController() else {
             let controller = buildNoInternetViewController(props,
-                                                           titleViewModel: titleViewModel,
+                                                           titleProps: titleProps,
                                                            appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
                 primaryController: controller,
@@ -56,16 +56,16 @@ class SearchPresenter: SearchPresenterProtocol {
         }
 
         existingController.configure(props: props)
-        existingController.configureTitleView(titleViewModel,
+        existingController.configureTitleView(titleProps,
                                               appSkin: appSkin)
     }
 
     func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
-                                           titleViewModel: NavigationBarTitleViewModel,
+                                           titleProps: NavigationBarTitleViewProps,
                                            appSkin: AppSkin) {
         guard let existingController: SearchLocationDisabledViewController = existingPrimaryController() else {
             let controller = buildLocationServicesDisabledViewController(props,
-                                                                         titleViewModel: titleViewModel,
+                                                                         titleProps: titleProps,
                                                                          appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
                 primaryController: controller,
@@ -75,16 +75,16 @@ class SearchPresenter: SearchPresenterProtocol {
         }
 
         existingController.configure(props: props)
-        existingController.configureTitleView(titleViewModel,
+        existingController.configureTitleView(titleProps,
                                               appSkin: appSkin)
     }
 
     func loadSearchBackgroundView(_ props: SearchBackgroundViewProps,
-                                  titleViewModel: NavigationBarTitleViewModel,
+                                  titleProps: NavigationBarTitleViewProps,
                                   appSkin: AppSkin) {
         guard let existingController: SearchBackgroundViewController = existingPrimaryController() else {
             let controller = buildSearchBackgroundViewController(props,
-                                                                 titleViewModel: titleViewModel,
+                                                                 titleProps: titleProps,
                                                                  appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
                 primaryController: controller,
@@ -94,18 +94,18 @@ class SearchPresenter: SearchPresenterProtocol {
         }
 
         existingController.configure(props: props)
-        existingController.configureTitleView(titleViewModel,
+        existingController.configureTitleView(titleProps,
                                               appSkin: appSkin)
     }
 
     func loadSearchViews(_ props: SearchLookupProps,
                          viewModel: SearchViewModel,
                          detailsViewContext: SearchDetailsViewContext?,
-                         titleViewModel: NavigationBarTitleViewModel,
+                         titleProps: NavigationBarTitleViewProps,
                          appSkin: AppSkin) {
         let lookupController = loadOrBuildLookupController(props,
                                                            viewModel: viewModel,
-                                                           titleViewModel: titleViewModel,
+                                                           titleProps: titleProps,
                                                            appSkin: appSkin)
         let secondaryController = loadOrBuildSecondaryController(detailsViewContext,
                                                                  appSkin: appSkin)
@@ -119,18 +119,18 @@ class SearchPresenter: SearchPresenterProtocol {
     private func loadOrBuildLookupController(
         _ props: SearchLookupProps,
         viewModel: SearchViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
+        titleProps: NavigationBarTitleViewProps,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
         guard let existingController: SearchLookupParentController = existingPrimaryController() else {
             return buildSearchParentViewController(props,
                                                    viewModel: viewModel,
-                                                   titleViewModel: titleViewModel,
+                                                   titleProps: titleProps,
                                                    appSkin: appSkin)
         }
 
         existingController.configure(props: props)
-        existingController.configureTitleView(titleViewModel,
+        existingController.configureTitleView(titleProps,
                                               appSkin: appSkin)
         return existingController
     }
@@ -180,30 +180,30 @@ private extension SearchPresenter {
 private extension SearchPresenter {
 
     func buildNoInternetViewController(_ props: SearchNoInternetViewProps,
-                                       titleViewModel: NavigationBarTitleViewModel,
+                                       titleProps: NavigationBarTitleViewProps,
                                        appSkin: AppSkin) -> SearchNoInternetViewController {
         let controller = SearchNoInternetViewController(props: props)
-        controller.configureTitleView(titleViewModel,
+        controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         return controller
     }
 
     func buildLocationServicesDisabledViewController(
         _ props: SearchLocationDisabledViewProps,
-        titleViewModel: NavigationBarTitleViewModel,
+        titleProps: NavigationBarTitleViewProps,
         appSkin: AppSkin
     ) -> SearchLocationDisabledViewController {
         let controller = SearchLocationDisabledViewController(props: props)
-        controller.configureTitleView(titleViewModel,
+        controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         return controller
     }
 
     func buildSearchBackgroundViewController(_ props: SearchBackgroundViewProps,
-                                             titleViewModel: NavigationBarTitleViewModel,
+                                             titleProps: NavigationBarTitleViewProps,
                                              appSkin: AppSkin) -> SearchBackgroundViewController {
         let controller = SearchBackgroundViewController(props: props)
-        controller.configureTitleView(titleViewModel,
+        controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         return controller
     }
@@ -211,14 +211,14 @@ private extension SearchPresenter {
     func buildSearchParentViewController(
         _ props: SearchLookupProps,
         viewModel: SearchViewModel,
-        titleViewModel: NavigationBarTitleViewModel,
+        titleProps: NavigationBarTitleViewProps,
         appSkin: AppSkin
     ) -> SearchLookupParentController {
         let controller = SearchLookupParentController(
             props: props,
             viewModel: viewModel
         )
-        controller.configureTitleView(titleViewModel,
+        controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         controller.navigationItem.backBarButtonItem = appSkin.backButtonItem
         return controller
