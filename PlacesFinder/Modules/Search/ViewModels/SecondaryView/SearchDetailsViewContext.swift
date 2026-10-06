@@ -26,8 +26,8 @@ import Shared
 import SwiftDux
 
 enum SearchDetailsViewContext: Equatable {
-    case detailedEntity(SearchDetailsViewModel)
-    case firstListedEntity(SearchDetailsViewModel)
+    case detailedEntity(SearchDetailsProps)
+    case firstListedEntity(SearchDetailsProps)
 }
 
 // MARK: SearchDetailsViewContextBuilder
@@ -35,29 +35,33 @@ enum SearchDetailsViewContext: Equatable {
 // sourcery: AutoMockable
 protocol SearchDetailsViewContextBuilderProtocol {
     func buildViewContext(_ searchActivityState: Search.ActivityState,
-                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext?
+                          appCopyContent: AppCopyContent,
+                          colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext?
 }
 
 class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
 
-    private let detailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol
+    private let detailsPropsBuilder: SearchDetailsPropsBuilderProtocol
 
-    init(detailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol) {
-        self.detailsViewModelBuilder = detailsViewModelBuilder
+    init(detailsPropsBuilder: SearchDetailsPropsBuilderProtocol) {
+        self.detailsPropsBuilder = detailsPropsBuilder
     }
 
     func buildViewContext(_ searchActivityState: Search.ActivityState,
-                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
+                          appCopyContent: AppCopyContent,
+                          colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext? {
         return
             searchActivityState.detailedEntity.map { entity in
-                let viewModel = detailsViewModelBuilder.buildViewModel(entity,
-                                                                       resultsCopyContent: appCopyContent.searchResults)
-                return .detailedEntity(viewModel)
+                let props = detailsPropsBuilder.buildProps(entity,
+                                                           resultsCopyContent: appCopyContent.searchResults,
+                                                           colorings: colorings)
+                return .detailedEntity(props)
             }
             ?? searchActivityState.entities?.value.first.map { entity in
-                let viewModel = detailsViewModelBuilder.buildViewModel(entity,
-                                                                       resultsCopyContent: appCopyContent.searchResults)
-                return .firstListedEntity(viewModel)
+                let props = detailsPropsBuilder.buildProps(entity,
+                                                           resultsCopyContent: appCopyContent.searchResults,
+                                                           colorings: colorings)
+                return .firstListedEntity(props)
             }
     }
 

@@ -1,5 +1,5 @@
 //
-//  SearchDetailsViewModelTests.swift
+//  SearchDetailsPropsTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
@@ -30,7 +29,7 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchDetailsViewModelTests: AsyncSpec {
+class SearchDetailsPropsTests: AsyncSpec {
 
     override class func spec() {
 
@@ -39,19 +38,16 @@ class SearchDetailsViewModelTests: AsyncSpec {
             .basicInfo(.stubValue(name: .stubValue("cellIdx1"))),
             .basicInfo(.stubValue(name: .stubValue("cellIdx2"))),
         ]
-        let stubInfoSection = SearchDetailsViewModel.Section.info(stubInfoCellModels)
-        let stubLocationSection = SearchDetailsViewModel.Section.location([.mapCoordinate(.stubValue())])
+        let stubInfoSection = SearchDetailsProps.Section.info(stubInfoCellModels)
+        let stubLocationSection = SearchDetailsProps.Section.location([.mapCoordinate(.stubValue())])
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
-        var sut: SearchDetailsViewModel!
+        var sut: SearchDetailsProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
-            sut = SearchDetailsViewModel(placeName: "stubPlaceName",
-                                         sections: [stubInfoSection, stubLocationSection],
-                                         actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                         removeDetailedEntityAction: .searchActivity(.removeDetailedEntity))
+            sut = SearchDetailsProps(placeName: "stubPlaceName",
+                                     sections: [stubInfoSection, stubLocationSection],
+                                     colorings: AppColorings.defaultColorings.searchDetails,
+                                     removeDetailedEntityAction: .searchActivity(.removeDetailedEntity))
         }
 
         describe("sectionsCount") {

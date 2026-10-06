@@ -1,5 +1,5 @@
 //
-//  SearchDetailsViewModel+Init.swift
+//  SearchDetailsProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -22,11 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Shared
 import SwiftDux
 
-struct SearchDetailsViewModel: Equatable {
+struct SearchDetailsProps: Equatable {
 
     enum Section: Equatable {
         case info([SearchDetailsInfoSectionViewModel])
@@ -35,22 +34,22 @@ struct SearchDetailsViewModel: Equatable {
 
     let placeName: String
     private let sections: [Section]
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<Search.Action, Never>>
-    private let removeDetailedEntityAction: IgnoredEquatable<Search.Action>
+    let colorings: SearchDetailsViewColorings
+    let removeDetailedEntityAction: IgnoredEquatable<Search.Action>
 
     init(placeName: String,
-         sections: [SearchDetailsViewModel.Section],
-         actionSubscriber: AnySubscriber<Search.Action, Never>,
+         sections: [SearchDetailsProps.Section],
+         colorings: SearchDetailsViewColorings,
          removeDetailedEntityAction: Search.Action) {
         self.placeName = placeName
         self.sections = sections
-        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
+        self.colorings = colorings
         self.removeDetailedEntityAction = IgnoredEquatable(removeDetailedEntityAction)
     }
 
 }
 
-extension SearchDetailsViewModel {
+extension SearchDetailsProps {
 
     var sectionsCount: Int {
         return sections.count
@@ -75,41 +74,32 @@ extension SearchDetailsViewModel {
 
 }
 
-extension SearchDetailsViewModel {
-
-    func dispatchRemoveDetailsAction() {
-        _ = actionSubscriber.value.receive(removeDetailedEntityAction.value)
-    }
-
-}
-
-// MARK: SearchDetailsViewModelBuilder
+// MARK: SearchDetailsPropsBuilder
 
 // sourcery: AutoMockable
-protocol SearchDetailsViewModelBuilderProtocol {
-    func buildViewModel(_ entity: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel
+protocol SearchDetailsPropsBuilderProtocol {
+    func buildProps(_ entity: SearchEntityModel,
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchDetailsViewColorings) -> SearchDetailsProps
 }
 
-class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
+class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchDetailsActionPrismProtocol
     private let urlOpenerService: URLOpenerServiceProtocol
     private let copyFormatter: SearchCopyFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
-         actionPrism: SearchDetailsActionPrismProtocol,
+    init(actionPrism: SearchDetailsActionPrismProtocol,
          urlOpenerService: URLOpenerServiceProtocol,
          copyFormatter: SearchCopyFormatterProtocol) {
-        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.urlOpenerService = urlOpenerService
         self.copyFormatter = copyFormatter
     }
 
-    func buildViewModel(_ entity: SearchEntityModel,
-                        resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel {
+    func buildProps(_ entity: SearchEntityModel,
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchDetailsViewColorings) -> SearchDetailsProps {
         let sections = [
             entity.buildInfoSection(urlOpenerService,
                                     copyFormatter: copyFormatter,
@@ -117,10 +107,10 @@ class SearchDetailsViewModelBuilder: SearchDetailsViewModelBuilderProtocol {
             entity.buildLocationSection(copyFormatter),
         ].compactMap { $0 }
 
-        return SearchDetailsViewModel(
+        return SearchDetailsProps(
             placeName: entity.name.value,
             sections: sections,
-            actionSubscriber: actionSubscriber,
+            colorings: colorings,
             removeDetailedEntityAction: .searchActivity(actionPrism.removeDetailedEntityAction)
         )
     }
@@ -131,7 +121,7 @@ private extension SearchEntityModel {
 
     func buildInfoSection(_ urlOpenerService: URLOpenerServiceProtocol,
                           copyFormatter: SearchCopyFormatterProtocol,
-                          resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel.Section {
+                          resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsProps.Section {
         return .info([
             placeDetailsCellModel(urlOpenerService,
                                   copyFormatter: copyFormatter,
@@ -182,7 +172,7 @@ private extension SearchEntityModel {
 
 private extension SearchEntityModel {
 
-    func buildLocationSection(_ copyFormatter: SearchCopyFormatterProtocol) -> SearchDetailsViewModel.Section? {
+    func buildLocationSection(_ copyFormatter: SearchCopyFormatterProtocol) -> SearchDetailsProps.Section? {
         guard let coordinate = coordinate else { return nil }
 
         return .location([

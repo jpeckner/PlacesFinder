@@ -117,12 +117,11 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             instructionsPropsBuilder: instructionsPropsBuilder
         )
 
-        let detailsViewModelBuilder = SearchDetailsViewModelBuilder(actionSubscriber: searchActionSubscriber,
-                                                                    actionPrism: actionPrism,
-                                                                    urlOpenerService: serviceContainer.urlOpenerService,
-                                                                    copyFormatter: serviceContainer.searchCopyFormatter)
+        let detailsPropsBuilder = SearchDetailsPropsBuilder(actionPrism: actionPrism,
+                                                            urlOpenerService: serviceContainer.urlOpenerService,
+                                                            copyFormatter: serviceContainer.searchCopyFormatter)
         let detailsViewContextBuilder = SearchDetailsViewContextBuilder(
-            detailsViewModelBuilder: detailsViewModelBuilder
+            detailsPropsBuilder: detailsPropsBuilder
         )
 
         let navigationBarPropsBuilder = NavigationBarPropsBuilder()

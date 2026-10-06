@@ -1,5 +1,5 @@
 //
-//  SearchDetailsViewModelBuilderTests.swift
+//  SearchDetailsPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2019 Justin Peckner
@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
@@ -33,25 +32,23 @@ import SwiftDux
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchDetailsViewModelBuilderTests: AsyncSpec {
+class SearchDetailsPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
+        let stubColorings = AppColorings.defaultColorings.searchDetails
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockURLOpenerService: URLOpenerServiceProtocolMock!
         var mockCopyFormatter: SearchCopyFormatterProtocolMock!
 
-        var sut: SearchDetailsViewModelBuilder!
-        var result: SearchDetailsViewModel!
+        var sut: SearchDetailsPropsBuilder!
+        var result: SearchDetailsProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.removeDetailedEntityAction = .removeDetailedEntity
 
@@ -64,15 +61,15 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
             mockCopyFormatter.formatRatingsNumRatingsReturnValue = "formatRatingsNumRatingsReturnValue"
             mockCopyFormatter.formatPricingPricingReturnValue = "formatPricingPricingReturnValue"
 
-            sut = SearchDetailsViewModelBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                                actionPrism: mockSearchActivityActionPrism,
-                                                urlOpenerService: mockURLOpenerService,
-                                                copyFormatter: mockCopyFormatter)
+            sut = SearchDetailsPropsBuilder(actionPrism: mockSearchActivityActionPrism,
+                                            urlOpenerService: mockURLOpenerService,
+                                            copyFormatter: mockCopyFormatter)
         }
 
         func constructResult(entity: SearchEntityModel) {
-            result = sut.buildViewModel(entity,
-                                        resultsCopyContent: stubCopyContent)
+            result = sut.buildProps(entity,
+                                    resultsCopyContent: stubCopyContent,
+                                    colorings: stubColorings)
         }
 
         describe("placeName") {
@@ -87,8 +84,8 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
 
         describe(".info section") {
 
-            func returnedSection() -> SearchDetailsViewModel.Section? {
-                return result.section(sectionIndex: SearchDetailsViewModel.Section.infoSectionIndex)
+            func returnedSection() -> SearchDetailsProps.Section? {
+                return result.section(sectionIndex: SearchDetailsProps.Section.infoSectionIndex)
             }
 
             var blockCalled: Bool!
@@ -102,7 +99,7 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
                 constructResult(entity: stubModel)
             }
 
-            it("includes SearchDetailsViewModel.Section.info") {
+            it("includes SearchDetailsProps.Section.info") {
                 guard case .info? = returnedSection() else {
                     fail("Unexpected value found: \(String(describing: returnedSection()))")
                     return
@@ -230,9 +227,9 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
 
         describe(".location section") {
 
-            func returnedSection() -> SearchDetailsViewModel.Section? {
-                guard result.sectionsCount > SearchDetailsViewModel.Section.locationSectionIndex else { return nil }
-                return result.section(sectionIndex: SearchDetailsViewModel.Section.locationSectionIndex)
+            func returnedSection() -> SearchDetailsProps.Section? {
+                guard result.sectionsCount > SearchDetailsProps.Section.locationSectionIndex else { return nil }
+                return result.section(sectionIndex: SearchDetailsProps.Section.locationSectionIndex)
             }
 
             context("when the model has a non-nil coordinate") {
@@ -248,7 +245,7 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
                     constructResult(entity: stubEntity)
                 }
 
-                it("includes SearchDetailsViewModel.Section.location") {
+                it("includes SearchDetailsProps.Section.location") {
                     guard case .location? = returnedSection() else {
                         fail("Unexpected value found: \(String(describing: returnedSection()))")
                         return
@@ -276,21 +273,30 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
                     constructResult(entity: stubEntity)
                 }
 
-                it("does not include SearchDetailsViewModel.Section.location") {
+                it("does not include SearchDetailsProps.Section.location") {
                     expect(returnedSection()) == nil
                 }
             }
 
         }
 
-        describe("dispatchRemoveDetailsAction") {
+        describe("colorings") {
             beforeEach {
                 constructResult(entity: stubModel)
-                result.dispatchRemoveDetailsAction()
             }
 
-            it("dispatches the expected action") {
-                expect(mockActionSubscriber.receivedInputs.last) == .searchActivity(.removeDetailedEntity)
+            it("returns the colorings passed to the builder") {
+                expect(result.colorings) == stubColorings
+            }
+        }
+
+        describe("removeDetailedEntityAction") {
+            beforeEach {
+                constructResult(entity: stubModel)
+            }
+
+            it("returns the expected action") {
+                expect(result.removeDetailedEntityAction.value) == .searchActivity(.removeDetailedEntity)
             }
         }
 
@@ -298,7 +304,7 @@ class SearchDetailsViewModelBuilderTests: AsyncSpec {
 
 }
 
-private extension SearchDetailsViewModel.Section {
+private extension SearchDetailsProps.Section {
 
     static var infoSectionIndex: Int {
         return 0
