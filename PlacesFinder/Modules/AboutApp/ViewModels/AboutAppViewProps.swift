@@ -1,5 +1,5 @@
 //
-//  AboutAppViewModel.swift
+//  AboutAppViewProps.swift
 //  PlacesFinder
 //
 //  Copyright (c) 2022 Justin Peckner
@@ -25,7 +25,7 @@
 import Foundation
 import Shared
 
-struct AboutAppViewModel {
+struct AboutAppViewProps {
     let props: StaticInfoViewProps<AboutAppViewColorings>
 
     init(copyContent: AboutAppViewCopyContent,

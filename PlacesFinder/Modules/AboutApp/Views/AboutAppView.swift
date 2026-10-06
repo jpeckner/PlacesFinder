@@ -27,10 +27,10 @@ import SwiftUI
 
 struct AboutAppView: View {
 
-    private let viewModel: AboutAppViewModel
+    private let props: AboutAppViewProps
 
-    init(viewModel: AboutAppViewModel) {
-        self.viewModel = viewModel
+    init(props: AboutAppViewProps) {
+        self.props = props
     }
 
     var body: some View {
@@ -44,7 +44,7 @@ struct AboutAppView: View {
             Spacer()
                 .frame(height: 120)
 
-            StaticInfoView(props: viewModel.props)
+            StaticInfoView(props: props.props)
 
             Spacer()
         }
@@ -60,7 +60,7 @@ struct AboutAppView: View {
     let appColorings = AppColorings.defaultColorings
 
     return AboutAppView(
-        viewModel: AboutAppViewModel(
+        props: AboutAppViewProps(
             copyContent: appCopyContent.aboutAppView,
             colorings: appColorings.aboutApp,
             appDisplayName: try! NonEmptyString("PlacesFinder"),
