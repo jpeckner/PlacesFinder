@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Shared
 import SwiftDux
 
@@ -46,20 +45,17 @@ protocol SearchLookupChildBuilderProtocol {
 
 class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<Search.Action, Never>
     private let actionPrism: SearchActivityActionPrismProtocol
     private let instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol
     private let resultsPropsBuilder: SearchResultsViewPropsBuilderProtocol
     private let noResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol
     private let retryPropsBuilder: SearchRetryPropsBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<Search.Action, Never>,
-         actionPrism: SearchActivityActionPrismProtocol,
+    init(actionPrism: SearchActivityActionPrismProtocol,
          instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol,
          resultsPropsBuilder: SearchResultsViewPropsBuilderProtocol,
          noResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol,
          retryPropsBuilder: SearchRetryPropsBuilderProtocol) {
-        self.actionSubscriber = actionSubscriber
         self.actionPrism = actionPrism
         self.instructionsPropsBuilder = instructionsPropsBuilder
         self.resultsPropsBuilder = resultsPropsBuilder
@@ -103,14 +99,11 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
             return .noResults(noResultsProps)
 
         case let .failure(submittedParams, _):
-            let actionSubscriber = self.actionSubscriber
-            let actionPrism = self.actionPrism
+            let retryAction = actionPrism.initialRequestAction(searchParams: submittedParams,
+                                                               locationUpdateRequestBlock: locationUpdateRequestBlock)
             return .failure(retryPropsBuilder.buildProps(copyContent: appCopyContent.searchRetry,
-                                                         colorings: appSkin.colorings.searchCTA) {
-                let action = actionPrism.initialRequestAction(searchParams: submittedParams,
-                                                              locationUpdateRequestBlock: locationUpdateRequestBlock)
-                _ = actionSubscriber.receive(.searchActivity(action))
-            })
+                                                         colorings: appSkin.colorings.searchCTA,
+                                                         retryAction: .searchActivity(retryAction)))
         }
     }
 

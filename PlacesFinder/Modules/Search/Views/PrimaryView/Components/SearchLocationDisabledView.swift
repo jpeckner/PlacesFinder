@@ -29,13 +29,19 @@ struct SearchLocationDisabledView: View {
     typealias ViewModel = SinglePropsViewModel<SearchLocationDisabledViewProps>
 
     private let viewModel: ViewModel
+    private let ctaBlock: SearchCTABlock?
 
-    init(viewModel: ViewModel) {
+    init(viewModel: ViewModel,
+         ctaBlock: SearchCTABlock?) {
         self.viewModel = viewModel
+        self.ctaBlock = ctaBlock
     }
 
     var body: some View {
-        SearchCTAView(props: viewModel.props.ctaViewProps)
+        SearchCTAView(
+            props: viewModel.props.ctaViewProps,
+            ctaBlock: ctaBlock
+        )
     }
 
 }

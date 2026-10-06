@@ -30,12 +30,10 @@ extension SearchCTAViewProps {
 
     static func stubValue(
         props: StaticInfoViewProps<SearchCTAViewColorings> = .stubValue(colorings: AppColorings.defaultColorings.searchCTA),
-        ctaTitle: String = "stubCTATitle",
-        ctaBlock: SearchCTABlock? = nil
+        ctaTitle: String = "stubCTATitle"
     ) -> SearchCTAViewProps {
         return SearchCTAViewProps(props: props,
-                                  ctaTitle: ctaTitle,
-                                  ctaBlock: ctaBlock.map { IgnoredEquatable($0) })
+                                  ctaTitle: ctaTitle)
     }
 
 }

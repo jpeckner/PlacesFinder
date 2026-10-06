@@ -25,12 +25,19 @@
 import Shared
 import SwiftUI
 
+typealias SearchCTABlock = () -> Void
+
 struct SearchCTAView: View {
 
     private let props: SearchCTAViewProps
+    private let ctaBlock: SearchCTABlock?
 
-    init(props: SearchCTAViewProps) {
+    init(
+        props: SearchCTAViewProps,
+        ctaBlock: SearchCTABlock?
+    ) {
         self.props = props
+        self.ctaBlock = ctaBlock
     }
 
     var body: some View {
@@ -38,10 +45,10 @@ struct SearchCTAView: View {
             StaticInfoView(props: props.props)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
-            if let action = props.ctaBlock {
+            if let ctaBlock {
                 Button(
                     props.ctaTitle,
-                    action: action.value
+                    action: ctaBlock
                 )
                 .modifier(
                     textStyleClass: .ctaButton,
@@ -62,12 +69,8 @@ struct SearchCTAView: View {
     let appColorings = AppColorings.defaultColorings
 
     return SearchCTAView(
-        // swiftlint:disable:next trailing_closure
-        props: appCopyContent.searchRetry.ctaViewProps(
-            colorings: appColorings.searchCTA,
-            ctaBlock: {}
-        )
-    )
+        props: appCopyContent.searchRetry.ctaViewProps(colorings: appColorings.searchCTA)
+    ) {}
 }
 
 #endif
