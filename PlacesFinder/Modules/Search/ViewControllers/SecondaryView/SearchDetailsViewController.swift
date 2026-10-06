@@ -29,9 +29,8 @@ class SearchDetailsViewController: SingleContentViewController {
 
     private let tableView: UITableView
     private let titleLabel: StyledLabel
-    private var props: SearchDetailsProps
-    private var colorings: SearchDetailsViewColorings
     private let actionTriggered: (Search.Action) -> Void
+    private var props: SearchDetailsProps
 
     init(props: SearchDetailsProps,
          appSkin: AppSkin,
@@ -39,11 +38,10 @@ class SearchDetailsViewController: SingleContentViewController {
         self.tableView = UITableView()
         self.titleLabel = StyledLabel(numberOfLines: 1)
         self.props = props
-        self.colorings = appSkin.colorings.searchDetails
         self.actionTriggered = actionTriggered
 
         super.init(contentView: tableView,
-                   viewColoring: colorings.viewColoring)
+                   viewColoring: props.colorings.viewColoring)
 
         setupTitleView()
         setupTableView()
@@ -91,10 +89,9 @@ extension SearchDetailsViewController {
 
     func configure(_ props: SearchDetailsProps,
                    appSkin: AppSkin) {
-        self.colorings = appSkin.colorings.searchDetails
         self.props = props
 
-        viewColoring = colorings.viewColoring
+        viewColoring = props.colorings.viewColoring
 
         titleLabel.configure(.navBarTitle,
                              textColoring: appSkin.colorings.navBar.titleTextColoring)
@@ -133,7 +130,7 @@ extension SearchDetailsViewController: UITableViewDataSource {
 
         AssertionHandler.assertIfErrorThrown {
             try cellViewModel.configureCell(cell,
-                                            colorings: colorings)
+                                            colorings: props.colorings)
         }
 
         cell.selectionStyle = cellViewModel.isSelectable ? .default : .none

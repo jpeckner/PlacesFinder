@@ -38,6 +38,7 @@ class SearchDetailsPropsBuilderTests: AsyncSpec {
 
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()
+        let stubColorings = AppColorings.defaultColorings.searchDetails
 
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
@@ -67,7 +68,8 @@ class SearchDetailsPropsBuilderTests: AsyncSpec {
 
         func constructResult(entity: SearchEntityModel) {
             result = sut.buildProps(entity,
-                                    resultsCopyContent: stubCopyContent)
+                                    resultsCopyContent: stubCopyContent,
+                                    colorings: stubColorings)
         }
 
         describe("placeName") {
@@ -276,6 +278,16 @@ class SearchDetailsPropsBuilderTests: AsyncSpec {
                 }
             }
 
+        }
+
+        describe("colorings") {
+            beforeEach {
+                constructResult(entity: stubModel)
+            }
+
+            it("returns the colorings passed to the builder") {
+                expect(result.colorings) == stubColorings
+            }
         }
 
         describe("removeDetailedEntityAction") {

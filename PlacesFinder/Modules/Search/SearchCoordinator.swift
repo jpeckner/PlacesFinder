@@ -191,8 +191,11 @@ private extension SearchCoordinator {
                     appSkin: appSkin,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
-                let detailsContext = detailsViewContextBuilder.buildViewContext(searchState.searchActivityState,
-                                                                                appCopyContent: appCopyContent)
+                let detailsContext = detailsViewContextBuilder.buildViewContext(
+                    searchState.searchActivityState,
+                    appCopyContent: appCopyContent,
+                    colorings: appSkin.colorings.searchDetails
+                )
 
                 presenter.loadSearchViews(props,
                                           viewModel: viewModel,

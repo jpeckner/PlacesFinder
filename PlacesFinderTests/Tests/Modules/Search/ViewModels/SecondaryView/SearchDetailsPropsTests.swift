@@ -46,6 +46,7 @@ class SearchDetailsPropsTests: AsyncSpec {
         beforeEach {
             sut = SearchDetailsProps(placeName: "stubPlaceName",
                                      sections: [stubInfoSection, stubLocationSection],
+                                     colorings: AppColorings.defaultColorings.searchDetails,
                                      removeDetailedEntityAction: .searchActivity(.removeDetailedEntity))
         }
 

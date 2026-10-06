@@ -34,13 +34,16 @@ struct SearchDetailsProps: Equatable {
 
     let placeName: String
     private let sections: [Section]
+    let colorings: SearchDetailsViewColorings
     let removeDetailedEntityAction: IgnoredEquatable<Search.Action>
 
     init(placeName: String,
          sections: [SearchDetailsProps.Section],
+         colorings: SearchDetailsViewColorings,
          removeDetailedEntityAction: Search.Action) {
         self.placeName = placeName
         self.sections = sections
+        self.colorings = colorings
         self.removeDetailedEntityAction = IgnoredEquatable(removeDetailedEntityAction)
     }
 
@@ -76,7 +79,8 @@ extension SearchDetailsProps {
 // sourcery: AutoMockable
 protocol SearchDetailsPropsBuilderProtocol {
     func buildProps(_ entity: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsProps
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchDetailsViewColorings) -> SearchDetailsProps
 }
 
 class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
@@ -94,7 +98,8 @@ class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
     }
 
     func buildProps(_ entity: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsProps {
+                    resultsCopyContent: SearchResultsCopyContent,
+                    colorings: SearchDetailsViewColorings) -> SearchDetailsProps {
         let sections = [
             entity.buildInfoSection(urlOpenerService,
                                     copyFormatter: copyFormatter,
@@ -105,6 +110,7 @@ class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
         return SearchDetailsProps(
             placeName: entity.name.value,
             sections: sections,
+            colorings: colorings,
             removeDetailedEntityAction: .searchActivity(actionPrism.removeDetailedEntityAction)
         )
     }

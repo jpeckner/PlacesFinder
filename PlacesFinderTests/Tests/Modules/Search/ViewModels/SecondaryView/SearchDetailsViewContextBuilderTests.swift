@@ -36,6 +36,7 @@ class SearchDetailsViewContextBuilderTests: AsyncSpec {
     override class func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
+        let stubColorings = AppColorings.defaultColorings.searchDetails
 
         var stubDetailsProps: SearchDetailsProps!
         var mockDetailsPropsBuilder: SearchDetailsPropsBuilderProtocolMock!
@@ -47,10 +48,11 @@ class SearchDetailsViewContextBuilderTests: AsyncSpec {
             stubDetailsProps = SearchDetailsProps(
                 placeName: "stubPlaceName",
                 sections: [.info([.basicInfo(.stubValue())])],
+                colorings: stubColorings,
                 removeDetailedEntityAction: .searchActivity(.removeDetailedEntity)
             )
             mockDetailsPropsBuilder = SearchDetailsPropsBuilderProtocolMock()
-            mockDetailsPropsBuilder.buildPropsResultsCopyContentReturnValue = stubDetailsProps
+            mockDetailsPropsBuilder.buildPropsResultsCopyContentColoringsReturnValue = stubDetailsProps
 
             sut = SearchDetailsViewContextBuilder(detailsPropsBuilder: mockDetailsPropsBuilder)
         }
@@ -65,13 +67,15 @@ class SearchDetailsViewContextBuilderTests: AsyncSpec {
 
                 beforeEach {
                     result = sut.buildViewContext(stubSearchActivityState,
-                                                  appCopyContent: stubAppCopyContent)
+                                                  appCopyContent: stubAppCopyContent,
+                                                  colorings: stubColorings)
                 }
 
                 it("calls mockDetailsPropsBuilder with expected method and args") {
-                    let receivedArgs = mockDetailsPropsBuilder.buildPropsResultsCopyContentReceivedArguments
+                    let receivedArgs = mockDetailsPropsBuilder.buildPropsResultsCopyContentColoringsReceivedArguments
                     expect(receivedArgs?.entity) == stubEntity
                     expect(receivedArgs?.resultsCopyContent) == stubAppCopyContent.searchResults
+                    expect(receivedArgs?.colorings) == stubColorings
                 }
 
                 it("returns .detailedEntity") {
@@ -97,13 +101,15 @@ class SearchDetailsViewContextBuilderTests: AsyncSpec {
                 )
                 beforeEach {
                     result = sut.buildViewContext(stubSearchActivityState,
-                                                  appCopyContent: stubAppCopyContent)
+                                                  appCopyContent: stubAppCopyContent,
+                                                  colorings: stubColorings)
                 }
 
                 it("calls mockDetailsPropsBuilder with expected method and args") {
-                    let receivedArgs = mockDetailsPropsBuilder.buildPropsResultsCopyContentReceivedArguments
+                    let receivedArgs = mockDetailsPropsBuilder.buildPropsResultsCopyContentColoringsReceivedArguments
                     expect(receivedArgs?.entity) == stubEntities.first
                     expect(receivedArgs?.resultsCopyContent) == stubAppCopyContent.searchResults
+                    expect(receivedArgs?.colorings) == stubColorings
                 }
 
                 it("returns .firstListedEntity") {
@@ -119,7 +125,8 @@ class SearchDetailsViewContextBuilderTests: AsyncSpec {
                 )
                 beforeEach {
                     result = sut.buildViewContext(stubSearchActivityState,
-                                                  appCopyContent: stubAppCopyContent)
+                                                  appCopyContent: stubAppCopyContent,
+                                                  colorings: stubColorings)
                 }
 
                 it("returns nil") {

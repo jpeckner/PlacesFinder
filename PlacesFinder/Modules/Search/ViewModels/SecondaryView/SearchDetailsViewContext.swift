@@ -35,7 +35,8 @@ enum SearchDetailsViewContext: Equatable {
 // sourcery: AutoMockable
 protocol SearchDetailsViewContextBuilderProtocol {
     func buildViewContext(_ searchActivityState: Search.ActivityState,
-                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext?
+                          appCopyContent: AppCopyContent,
+                          colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext?
 }
 
 class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
@@ -47,16 +48,19 @@ class SearchDetailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol {
     }
 
     func buildViewContext(_ searchActivityState: Search.ActivityState,
-                          appCopyContent: AppCopyContent) -> SearchDetailsViewContext? {
+                          appCopyContent: AppCopyContent,
+                          colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext? {
         return
             searchActivityState.detailedEntity.map { entity in
                 let props = detailsPropsBuilder.buildProps(entity,
-                                                           resultsCopyContent: appCopyContent.searchResults)
+                                                           resultsCopyContent: appCopyContent.searchResults,
+                                                           colorings: colorings)
                 return .detailedEntity(props)
             }
             ?? searchActivityState.entities?.value.first.map { entity in
                 let props = detailsPropsBuilder.buildProps(entity,
-                                                           resultsCopyContent: appCopyContent.searchResults)
+                                                           resultsCopyContent: appCopyContent.searchResults,
+                                                           colorings: colorings)
                 return .firstListedEntity(props)
             }
     }
