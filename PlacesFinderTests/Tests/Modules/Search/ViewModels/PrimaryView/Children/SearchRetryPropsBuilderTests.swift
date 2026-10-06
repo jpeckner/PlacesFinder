@@ -43,14 +43,12 @@ class SearchRetryPropsBuilderTests: AsyncSpec {
         }
 
         describe("buildProps()") {
-            var hasTriggeredCTABlock: Bool!
+            let stubRetryAction = Search.Action.searchActivity(.initialPageRequested(.stubValue()))
 
             beforeEach {
-                hasTriggeredCTABlock = false
                 result = sut.buildProps(copyContent: stubCopyContent,
-                                        colorings: AppColorings.defaultColorings.searchCTA) {
-                    hasTriggeredCTABlock = true
-                }
+                                        colorings: AppColorings.defaultColorings.searchCTA,
+                                        retryAction: stubRetryAction)
             }
 
             it("returns the expected props") {
@@ -63,10 +61,8 @@ class SearchRetryPropsBuilderTests: AsyncSpec {
                 expect(result.ctaViewProps.ctaTitle) == stubCopyContent.ctaTitle
             }
 
-            it("includes the block passed to it") {
-                expect(hasTriggeredCTABlock) == false
-                result.ctaViewProps.ctaBlock?.value()
-                expect(hasTriggeredCTABlock) == true
+            it("includes the retry action passed to it") {
+                expect(result.retryAction.value) == stubRetryAction
             }
 
         }

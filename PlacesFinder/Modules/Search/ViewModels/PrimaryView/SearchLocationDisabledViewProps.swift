@@ -33,13 +33,9 @@ extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
 
 extension SearchLocationDisabledViewProps {
 
-    init(urlOpenerService: URLOpenerServiceProtocol,
-         copyContent: SearchLocationDisabledCopyContent,
+    init(copyContent: SearchLocationDisabledCopyContent,
          colorings: SearchCTAViewColorings) {
-        self.ctaViewProps = copyContent.ctaViewProps(
-            colorings: colorings,
-            ctaBlock: urlOpenerService.openSettingsBlock
-        )
+        self.ctaViewProps = copyContent.ctaViewProps(colorings: colorings)
     }
 
 }

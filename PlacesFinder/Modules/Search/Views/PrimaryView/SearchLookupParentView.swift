@@ -79,7 +79,9 @@ struct SearchLookupParentView: View {
             StaticInfoView<AppStandardColorings>(props: props.messageViewProps.props)
 
         case let .failure(props):
-            SearchCTAView(props: props.ctaViewProps)
+            SearchCTAView(props: props.ctaViewProps) {
+                actionTriggered(props.retryAction.value)
+            }
         }
     }
 

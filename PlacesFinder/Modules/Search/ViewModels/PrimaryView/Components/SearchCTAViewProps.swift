@@ -25,12 +25,9 @@
 import Foundation
 import Shared
 
-typealias SearchCTABlock = () -> Void
-
 struct SearchCTAViewProps: Equatable {
     let props: StaticInfoViewProps<SearchCTAViewColorings>
     let ctaTitle: String
-    let ctaBlock: IgnoredEquatable<SearchCTABlock>?
 }
 
 protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
@@ -39,14 +36,10 @@ protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
 
 extension SearchCTACopyProtocol {
 
-    func ctaViewProps(
-        colorings: SearchCTAViewColorings,
-        ctaBlock: SearchCTABlock?
-    ) -> SearchCTAViewProps {
+    func ctaViewProps(colorings: SearchCTAViewColorings) -> SearchCTAViewProps {
         SearchCTAViewProps(
             props: staticInfoViewProps(colorings: colorings),
-            ctaTitle: ctaTitle,
-            ctaBlock: ctaBlock.map { IgnoredEquatable($0) }
+            ctaTitle: ctaTitle
         )
     }
 

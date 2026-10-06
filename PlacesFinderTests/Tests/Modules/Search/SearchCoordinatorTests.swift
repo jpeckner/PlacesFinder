@@ -300,7 +300,7 @@ class SearchCoordinatorTests: AsyncSpec {
                         Task { @MainActor in
                             let testData = await testStorage.element!
                             await performTest(linkType: nil)
-                            await expect(testData.dependencies.mockSearchPresenter.loadLocationServicesDisabledViewsTitlePropsAppSkinCalled)
+                            await expect(testData.dependencies.mockSearchPresenter.loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinCalled)
                                 .toEventually(beTrue())
                         }
 

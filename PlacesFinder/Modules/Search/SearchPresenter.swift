@@ -61,10 +61,12 @@ class SearchPresenter: SearchPresenterProtocol {
     }
 
     func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
+                                           ctaBlock: SearchCTABlock?,
                                            titleProps: NavigationBarTitleViewProps,
                                            appSkin: AppSkin) {
         guard let existingController: SearchLocationDisabledViewController = existingPrimaryController() else {
             let controller = buildLocationServicesDisabledViewController(props,
+                                                                         ctaBlock: ctaBlock,
                                                                          titleProps: titleProps,
                                                                          appSkin: appSkin)
             searchContainerViewController.splitControllers = SearchContainerSplitControllers(
@@ -201,10 +203,12 @@ private extension SearchPresenter {
 
     func buildLocationServicesDisabledViewController(
         _ props: SearchLocationDisabledViewProps,
+        ctaBlock: SearchCTABlock?,
         titleProps: NavigationBarTitleViewProps,
         appSkin: AppSkin
     ) -> SearchLocationDisabledViewController {
-        let controller = SearchLocationDisabledViewController(props: props)
+        let controller = SearchLocationDisabledViewController(props: props,
+                                                              ctaBlock: ctaBlock)
         controller.configureTitleView(titleProps,
                                       appSkin: appSkin)
         return controller

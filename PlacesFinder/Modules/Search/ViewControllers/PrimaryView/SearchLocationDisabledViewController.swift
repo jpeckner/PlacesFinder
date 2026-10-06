@@ -29,11 +29,13 @@ class SearchLocationDisabledViewController: UIHostingController<SearchLocationDi
 
     private let viewModel: SearchLocationDisabledView.ViewModel
 
-    init(props: SearchLocationDisabledViewProps) {
+    init(props: SearchLocationDisabledViewProps,
+         ctaBlock: SearchCTABlock?) {
         let viewModel = SearchLocationDisabledView.ViewModel(props: props)
         self.viewModel = viewModel
 
-        super.init(rootView: SearchLocationDisabledView(viewModel: viewModel))
+        super.init(rootView: SearchLocationDisabledView(viewModel: viewModel,
+                                                        ctaBlock: ctaBlock))
     }
 
     required init?(coder aDecoder: NSCoder) {

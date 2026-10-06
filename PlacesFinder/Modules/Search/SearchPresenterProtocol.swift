@@ -34,6 +34,7 @@ import UIKit
                              appSkin: AppSkin)
 
     func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps,
+                                           ctaBlock: SearchCTABlock?,
                                            titleProps: NavigationBarTitleViewProps,
                                            appSkin: AppSkin)
 

@@ -27,6 +27,13 @@ import Shared
 
 struct SearchRetryProps: Equatable {
     let ctaViewProps: SearchCTAViewProps
+    let retryAction: IgnoredEquatable<Search.Action>
+
+    init(ctaViewProps: SearchCTAViewProps,
+         retryAction: Search.Action) {
+        self.ctaViewProps = ctaViewProps
+        self.retryAction = IgnoredEquatable(retryAction)
+    }
 }
 
 extension SearchRetryCopyContent: SearchCTACopyProtocol {}
@@ -37,21 +44,18 @@ extension SearchRetryCopyContent: SearchCTACopyProtocol {}
 protocol SearchRetryPropsBuilderProtocol {
     func buildProps(copyContent: SearchRetryCopyContent,
                     colorings: SearchCTAViewColorings,
-                    ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps
+                    retryAction: Search.Action) -> SearchRetryProps
 }
 
 class SearchRetryPropsBuilder: SearchRetryPropsBuilderProtocol {
 
     func buildProps(copyContent: SearchRetryCopyContent,
                     colorings: SearchCTAViewColorings,
-                    ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps {
-        let ctaViewProps = SearchCTAViewProps(
-            props: copyContent.staticInfoViewProps(colorings: colorings),
-            ctaTitle: copyContent.ctaTitle,
-            ctaBlock: IgnoredEquatable(ctaBlock)
-        )
+                    retryAction: Search.Action) -> SearchRetryProps {
+        let ctaViewProps = copyContent.ctaViewProps(colorings: colorings)
 
-        return SearchRetryProps(ctaViewProps: ctaViewProps)
+        return SearchRetryProps(ctaViewProps: ctaViewProps,
+                                retryAction: retryAction)
     }
 
 }

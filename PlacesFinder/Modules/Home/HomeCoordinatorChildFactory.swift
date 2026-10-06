@@ -110,7 +110,6 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             instructionsPropsBuilder: instructionsPropsBuilder
         )
         let lookupPropsBuilder = SearchLookupPropsBuilder(
-            actionSubscriber: searchActionSubscriber,
             actionPrism: actionPrism,
             copyFormatter: serviceContainer.searchCopyFormatter,
             contentPropsBuilder: contentPropsBuilder,
@@ -194,8 +193,7 @@ private extension HomeCoordinatorImmediateDescendent {
 
 private extension SearchLookupPropsBuilder {
 
-    convenience init(actionSubscriber: AnySubscriber<Search.Action, Never>,
-                     actionPrism: SearchActivityActionPrismProtocol,
+    convenience init(actionPrism: SearchActivityActionPrismProtocol,
                      copyFormatter: SearchCopyFormatterProtocol,
                      contentPropsBuilder: SearchInputContentPropsBuilderProtocol,
                      instructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol) {
@@ -210,8 +208,7 @@ private extension SearchLookupPropsBuilder {
         let noResultsFoundPropsBuilder = SearchNoResultsFoundPropsBuilder()
         let retryPropsBuilder = SearchRetryPropsBuilder()
 
-        let childBuilder = SearchLookupChildBuilder(actionSubscriber: actionSubscriber,
-                                                    actionPrism: actionPrism,
+        let childBuilder = SearchLookupChildBuilder(actionPrism: actionPrism,
                                                     instructionsPropsBuilder: instructionsPropsBuilder,
                                                     resultsPropsBuilder: resultsPropsBuilder,
                                                     noResultsFoundPropsBuilder: noResultsFoundPropsBuilder,

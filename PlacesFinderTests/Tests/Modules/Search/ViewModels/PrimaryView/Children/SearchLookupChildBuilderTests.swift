@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
@@ -41,9 +40,11 @@ class SearchLookupChildBuilderTests: AsyncSpec {
         let stubSearchParams = SearchParams.stubValue()
         let stubInstructionsProps = SearchInstructionsProps.stubValue()
         let stubNoResultsProps = SearchNoResultsFoundProps(messageViewProps: .stubValue())
-        let stubRetryProps = SearchRetryProps(ctaViewProps: .stubValue())
+        let stubRetryProps = SearchRetryProps(
+            ctaViewProps: .stubValue(),
+            retryAction: .searchActivity(.initialPageRequested(.stubValue()))
+        )
 
-        var mockActionSubscriber: MockSubscriber<Search.Action>!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
 
         var mockInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocolMock!
@@ -58,8 +59,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
         var result: SearchLookupChild!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             let mockPlaceLookupService = PlaceLookupServiceProtocolMock()
             let mockDependencies = Search.ActivityActionCreatorDependencies(
                 placeLookupService: mockPlaceLookupService
@@ -84,8 +83,7 @@ class SearchLookupChildBuilderTests: AsyncSpec {
 
             mockRetryPropsBuilder = SearchRetryPropsBuilderProtocolMock()
 
-            sut = SearchLookupChildBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                           actionPrism: mockSearchActivityActionPrism,
+            sut = SearchLookupChildBuilder(actionPrism: mockSearchActivityActionPrism,
                                            instructionsPropsBuilder: mockInstructionsPropsBuilder,
                                            resultsPropsBuilder: mockResultsPropsBuilder,
                                            noResultsFoundPropsBuilder: mockNoResultsFoundPropsBuilder,
@@ -213,15 +211,8 @@ class SearchLookupChildBuilderTests: AsyncSpec {
 
             context("when loadState is .failure") {
 
-                var receivedCopyContent: SearchRetryCopyContent!
-                var receivedCTABlock: SearchCTABlock!
-
                 beforeEach {
-                    mockRetryPropsBuilder.buildPropsCopyContentColoringsCtaBlockClosure = {
-                        receivedCopyContent = $0
-                        receivedCTABlock = $2
-                        return stubRetryProps
-                    }
+                    mockRetryPropsBuilder.buildPropsCopyContentColoringsRetryActionReturnValue = stubRetryProps
 
                     result = sut.buildChild(
                         loadState: .failure(
@@ -236,17 +227,13 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 }
 
                 it("calls mockRetryPropsBuilder with expected method and args") {
-                    expect(receivedCopyContent) == stubAppCopyContent.searchRetry
+                    let receivedArgs = mockRetryPropsBuilder.buildPropsCopyContentColoringsRetryActionReceivedArguments
+                    expect(receivedArgs?.copyContent) == stubAppCopyContent.searchRetry
+                    expect(receivedArgs?.retryAction) == .searchActivity(stubStartInitialRequestAction)
                 }
 
                 it("returns a value of .failure, containing expected values") {
                     expect(result) == .failure(stubRetryProps)
-                }
-
-                it("includes the Action returned by mockSearchActivityActionPrism") {
-                    expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                    receivedCTABlock()
-                    expect(mockActionSubscriber.receivedInputs.first) == .searchActivity(stubStartInitialRequestAction)
                 }
 
             }

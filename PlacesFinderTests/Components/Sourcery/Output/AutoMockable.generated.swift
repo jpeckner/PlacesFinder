@@ -1013,19 +1013,19 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
 
     //MARK: - loadLocationServicesDisabledViews
 
-    var loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount = 0
-    var loadLocationServicesDisabledViewsTitlePropsAppSkinCalled: Bool {
-        return loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount > 0
+    var loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinCallsCount = 0
+    var loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinCalled: Bool {
+        return loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinCallsCount > 0
     }
-    var loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedArguments: (props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
-    var loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedInvocations: [(props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
-    var loadLocationServicesDisabledViewsTitlePropsAppSkinClosure: ((SearchLocationDisabledViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
+    var loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinReceivedArguments: (props: SearchLocationDisabledViewProps, ctaBlock: SearchCTABlock?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinReceivedInvocations: [(props: SearchLocationDisabledViewProps, ctaBlock: SearchCTABlock?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinClosure: ((SearchLocationDisabledViewProps, SearchCTABlock?, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
-        loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount += 1
-        loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
-        loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
-        loadLocationServicesDisabledViewsTitlePropsAppSkinClosure?(props, titleProps, appSkin)
+    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps, ctaBlock: SearchCTABlock?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinCallsCount += 1
+        loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinReceivedArguments = (props: props, ctaBlock: ctaBlock, titleProps: titleProps, appSkin: appSkin)
+        loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinReceivedInvocations.append((props: props, ctaBlock: ctaBlock, titleProps: titleProps, appSkin: appSkin))
+        loadLocationServicesDisabledViewsCtaBlockTitlePropsAppSkinClosure?(props, ctaBlock, titleProps, appSkin)
     }
 
     //MARK: - loadSearchBackgroundView
@@ -1150,23 +1150,23 @@ class SearchRetryPropsBuilderProtocolMock: SearchRetryPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsCopyContentColoringsCtaBlockCallsCount = 0
-    var buildPropsCopyContentColoringsCtaBlockCalled: Bool {
-        return buildPropsCopyContentColoringsCtaBlockCallsCount > 0
+    var buildPropsCopyContentColoringsRetryActionCallsCount = 0
+    var buildPropsCopyContentColoringsRetryActionCalled: Bool {
+        return buildPropsCopyContentColoringsRetryActionCallsCount > 0
     }
-    var buildPropsCopyContentColoringsCtaBlockReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)?
-    var buildPropsCopyContentColoringsCtaBlockReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: SearchCTABlock)] = []
-    var buildPropsCopyContentColoringsCtaBlockReturnValue: SearchRetryProps!
-    var buildPropsCopyContentColoringsCtaBlockClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, @escaping SearchCTABlock) -> SearchRetryProps)?
+    var buildPropsCopyContentColoringsRetryActionReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action)?
+    var buildPropsCopyContentColoringsRetryActionReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action)] = []
+    var buildPropsCopyContentColoringsRetryActionReturnValue: SearchRetryProps!
+    var buildPropsCopyContentColoringsRetryActionClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, Search.Action) -> SearchRetryProps)?
 
-    func buildProps(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, ctaBlock: @escaping SearchCTABlock) -> SearchRetryProps {
-        buildPropsCopyContentColoringsCtaBlockCallsCount += 1
-        buildPropsCopyContentColoringsCtaBlockReceivedArguments = (copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock)
-        buildPropsCopyContentColoringsCtaBlockReceivedInvocations.append((copyContent: copyContent, colorings: colorings, ctaBlock: ctaBlock))
-        if let buildPropsCopyContentColoringsCtaBlockClosure = buildPropsCopyContentColoringsCtaBlockClosure {
-            return buildPropsCopyContentColoringsCtaBlockClosure(copyContent, colorings, ctaBlock)
+    func buildProps(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action) -> SearchRetryProps {
+        buildPropsCopyContentColoringsRetryActionCallsCount += 1
+        buildPropsCopyContentColoringsRetryActionReceivedArguments = (copyContent: copyContent, colorings: colorings, retryAction: retryAction)
+        buildPropsCopyContentColoringsRetryActionReceivedInvocations.append((copyContent: copyContent, colorings: colorings, retryAction: retryAction))
+        if let buildPropsCopyContentColoringsRetryActionClosure = buildPropsCopyContentColoringsRetryActionClosure {
+            return buildPropsCopyContentColoringsRetryActionClosure(copyContent, colorings, retryAction)
         } else {
-            return buildPropsCopyContentColoringsCtaBlockReturnValue
+            return buildPropsCopyContentColoringsRetryActionReturnValue
         }
     }
 
