@@ -56,7 +56,7 @@ class SettingsCoordinatorTests: AsyncSpec {
             let mockServiceContainer: ServiceContainer
             let mockSettingsPresenter: SettingsPresenterProtocolMock
             let mockSettingsPropsBuilder: SettingsViewPropsBuilderProtocolMock
-            let mockNavigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocolMock
+            let mockNavigationBarPropsBuilder: NavigationBarPropsBuilderProtocolMock
 
             @MainActor
             init() {
@@ -69,8 +69,8 @@ class SettingsCoordinatorTests: AsyncSpec {
                 mockSettingsPropsBuilder = SettingsViewPropsBuilderProtocolMock()
                 mockSettingsPropsBuilder.buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue = stubSettingsProps
 
-                mockNavigationBarViewModelBuilder = NavigationBarViewModelBuilderProtocolMock()
-                mockNavigationBarViewModelBuilder.buildTitleViewModelCopyContentReturnValue = .stubValue()
+                mockNavigationBarPropsBuilder = NavigationBarPropsBuilderProtocolMock()
+                mockNavigationBarPropsBuilder.buildTitlePropsCopyContentReturnValue = .stubValue()
             }
         }
 
@@ -89,7 +89,7 @@ class SettingsCoordinatorTests: AsyncSpec {
                     presenter: dependencies.mockSettingsPresenter,
                     serviceContainer: dependencies.mockServiceContainer,
                     settingsPropsBuilder: dependencies.mockSettingsPropsBuilder,
-                    navigationBarViewModelBuilder: dependencies.mockNavigationBarViewModelBuilder
+                    navigationBarPropsBuilder: dependencies.mockNavigationBarPropsBuilder
                 )
                 let testData = TestData(dependencies: dependencies,
                                         coordinator: coordinator)
@@ -154,9 +154,9 @@ class SettingsCoordinatorTests: AsyncSpec {
                     let presenter = testData.dependencies.mockSettingsPresenter
 
                     Task { @MainActor in
-                        expect(presenter.loadSettingsViewTitleViewModelAppSkinCalled) == false
+                        expect(presenter.loadSettingsViewTitlePropsAppSkinCalled) == false
                         await performTest(linkType: nil)
-                        await expect(presenter.loadSettingsViewTitleViewModelAppSkinCalled).toEventually(beTrue())
+                        await expect(presenter.loadSettingsViewTitlePropsAppSkinCalled).toEventually(beTrue())
                     }
 
                     try! await Task.sleep(nanoseconds: 100_000_000)

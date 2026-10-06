@@ -49,7 +49,7 @@ import UIKit
     private let backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol
     private let lookupPropsBuilder: SearchLookupPropsBuilderProtocol
     private let detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol
-    private let navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol
+    private let navigationBarPropsBuilder: NavigationBarPropsBuilderProtocol
 
     private var cancellables: Set<Combine.AnyCancellable> = []
 
@@ -63,7 +63,7 @@ import UIKit
          backgroundPropsBuilder: SearchBackgroundViewPropsBuilderProtocol,
          lookupPropsBuilder: SearchLookupPropsBuilderProtocol,
          detailsViewContextBuilder: SearchDetailsViewContextBuilderProtocol,
-         navigationBarViewModelBuilder: NavigationBarViewModelBuilderProtocol) {
+         navigationBarPropsBuilder: NavigationBarPropsBuilderProtocol) {
         self.appStoreRelay = appStoreRelay
         self.searchStoreRelay = searchStoreRelay
         self.viewModel = viewModel
@@ -74,7 +74,7 @@ import UIKit
         self.backgroundPropsBuilder = backgroundPropsBuilder
         self.lookupPropsBuilder = lookupPropsBuilder
         self.detailsViewContextBuilder = detailsViewContextBuilder
-        self.navigationBarViewModelBuilder = navigationBarViewModelBuilder
+        self.navigationBarPropsBuilder = navigationBarPropsBuilder
 
         setupStoreRelays()
     }
@@ -149,7 +149,7 @@ private extension SearchCoordinator {
     func presentViews(appState: AppState,
                       searchState: Search.State) {
         let appCopyContent = appState.appCopyContentState.copyContent
-        let titleViewModel = navigationBarViewModelBuilder.buildTitleViewModel(copyContent: appCopyContent.displayName)
+        let titleProps = navigationBarPropsBuilder.buildTitleProps(copyContent: appCopyContent.displayName)
         let appSkin = appState.appSkinState.currentValue
         let presentationType = statePrism.presentationType(locationAuthState: appState.locationAuthState,
                                                            reachabilityState: appState.reachabilityState)
@@ -161,7 +161,7 @@ private extension SearchCoordinator {
                 colorings: appSkin.colorings.standard
             )
             presenter.loadNoInternetViews(props,
-                                          titleViewModel: titleViewModel,
+                                          titleProps: titleProps,
                                           appSkin: appSkin)
 
         case .locationServicesDisabled:
@@ -169,7 +169,7 @@ private extension SearchCoordinator {
                                                         copyContent: appCopyContent.searchLocationDisabled,
                                                         colorings: appSkin.colorings.searchCTA)
             presenter.loadLocationServicesDisabledViews(props,
-                                                        titleViewModel: titleViewModel,
+                                                        titleProps: titleProps,
                                                         appSkin: appSkin)
 
         case let .search(authType):
@@ -181,7 +181,7 @@ private extension SearchCoordinator {
                     colorings: appSkin.colorings.standard
                 )
                 presenter.loadSearchBackgroundView(props,
-                                                   titleViewModel: titleViewModel,
+                                                   titleProps: titleProps,
                                                    appSkin: appSkin)
 
             case let .locationServicesEnabled(locationUpdateRequestBlock):
@@ -197,7 +197,7 @@ private extension SearchCoordinator {
                 presenter.loadSearchViews(props,
                                           viewModel: viewModel,
                                           detailsViewContext: detailsContext,
-                                          titleViewModel: titleViewModel,
+                                          titleProps: titleProps,
                                           appSkin: appSkin)
             }
         }

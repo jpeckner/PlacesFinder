@@ -1,5 +1,5 @@
 //
-//  NavigationBarViewModelBuilderTests.swift
+//  NavigationBarPropsBuilderTests.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner
@@ -27,25 +27,25 @@ import Quick
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class NavigationBarViewModelBuilderTests: AsyncSpec {
+class NavigationBarPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        var sut: NavigationBarViewModelBuilder!
-        var result: NavigationBarTitleViewModel!
+        var sut: NavigationBarPropsBuilder!
+        var result: NavigationBarTitleViewProps!
 
         beforeEach {
-            sut = NavigationBarViewModelBuilder()
+            sut = NavigationBarPropsBuilder()
         }
 
-        describe("buildTitleViewModel()") {
+        describe("buildTitleProps()") {
 
             beforeEach {
-                result = sut.buildTitleViewModel(copyContent: DisplayNameCopyContent.stubValue())
+                result = sut.buildTitleProps(copyContent: DisplayNameCopyContent.stubValue())
             }
 
-            it("returns its expected value") {
-                expect(result) == NavigationBarTitleViewModel(displayName: "stubDisplayName")
+            it("returns the expected props") {
+                expect(result) == NavigationBarTitleViewProps(displayName: "stubDisplayName")
             }
 
         }

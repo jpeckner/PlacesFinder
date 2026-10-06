@@ -361,29 +361,29 @@ class LocationAuthListenerProtocolMock: LocationAuthListenerProtocol {
     }
 
 }
-class NavigationBarViewModelBuilderProtocolMock: NavigationBarViewModelBuilderProtocol {
+class NavigationBarPropsBuilderProtocolMock: NavigationBarPropsBuilderProtocol {
 
 
 
-    //MARK: - buildTitleViewModel
+    //MARK: - buildTitleProps
 
-    var buildTitleViewModelCopyContentCallsCount = 0
-    var buildTitleViewModelCopyContentCalled: Bool {
-        return buildTitleViewModelCopyContentCallsCount > 0
+    var buildTitlePropsCopyContentCallsCount = 0
+    var buildTitlePropsCopyContentCalled: Bool {
+        return buildTitlePropsCopyContentCallsCount > 0
     }
-    var buildTitleViewModelCopyContentReceivedCopyContent: DisplayNameCopyContent?
-    var buildTitleViewModelCopyContentReceivedInvocations: [DisplayNameCopyContent] = []
-    var buildTitleViewModelCopyContentReturnValue: NavigationBarTitleViewModel!
-    var buildTitleViewModelCopyContentClosure: ((DisplayNameCopyContent) -> NavigationBarTitleViewModel)?
+    var buildTitlePropsCopyContentReceivedCopyContent: DisplayNameCopyContent?
+    var buildTitlePropsCopyContentReceivedInvocations: [DisplayNameCopyContent] = []
+    var buildTitlePropsCopyContentReturnValue: NavigationBarTitleViewProps!
+    var buildTitlePropsCopyContentClosure: ((DisplayNameCopyContent) -> NavigationBarTitleViewProps)?
 
-    func buildTitleViewModel(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewModel {
-        buildTitleViewModelCopyContentCallsCount += 1
-        buildTitleViewModelCopyContentReceivedCopyContent = copyContent
-        buildTitleViewModelCopyContentReceivedInvocations.append(copyContent)
-        if let buildTitleViewModelCopyContentClosure = buildTitleViewModelCopyContentClosure {
-            return buildTitleViewModelCopyContentClosure(copyContent)
+    func buildTitleProps(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewProps {
+        buildTitlePropsCopyContentCallsCount += 1
+        buildTitlePropsCopyContentReceivedCopyContent = copyContent
+        buildTitlePropsCopyContentReceivedInvocations.append(copyContent)
+        if let buildTitlePropsCopyContentClosure = buildTitlePropsCopyContentClosure {
+            return buildTitlePropsCopyContentClosure(copyContent)
         } else {
-            return buildTitleViewModelCopyContentReturnValue
+            return buildTitlePropsCopyContentReturnValue
         }
     }
 
@@ -996,70 +996,70 @@ class SearchPresenterProtocolMock: SearchPresenterProtocol {
 
     //MARK: - loadNoInternetViews
 
-    var loadNoInternetViewsTitleViewModelAppSkinCallsCount = 0
-    var loadNoInternetViewsTitleViewModelAppSkinCalled: Bool {
-        return loadNoInternetViewsTitleViewModelAppSkinCallsCount > 0
+    var loadNoInternetViewsTitlePropsAppSkinCallsCount = 0
+    var loadNoInternetViewsTitlePropsAppSkinCalled: Bool {
+        return loadNoInternetViewsTitlePropsAppSkinCallsCount > 0
     }
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedArguments: (props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations: [(props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadNoInternetViewsTitleViewModelAppSkinClosure: ((SearchNoInternetViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadNoInternetViewsTitlePropsAppSkinReceivedArguments: (props: SearchNoInternetViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadNoInternetViewsTitlePropsAppSkinReceivedInvocations: [(props: SearchNoInternetViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadNoInternetViewsTitlePropsAppSkinClosure: ((SearchNoInternetViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadNoInternetViews(_ props: SearchNoInternetViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadNoInternetViewsTitleViewModelAppSkinCallsCount += 1
-        loadNoInternetViewsTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadNoInternetViewsTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadNoInternetViewsTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
+    func loadNoInternetViews(_ props: SearchNoInternetViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadNoInternetViewsTitlePropsAppSkinCallsCount += 1
+        loadNoInternetViewsTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
+        loadNoInternetViewsTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
+        loadNoInternetViewsTitlePropsAppSkinClosure?(props, titleProps, appSkin)
     }
 
     //MARK: - loadLocationServicesDisabledViews
 
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount = 0
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinCalled: Bool {
-        return loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount > 0
+    var loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount = 0
+    var loadLocationServicesDisabledViewsTitlePropsAppSkinCalled: Bool {
+        return loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount > 0
     }
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments: (props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations: [(props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure: ((SearchLocationDisabledViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedArguments: (props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedInvocations: [(props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadLocationServicesDisabledViewsTitlePropsAppSkinClosure: ((SearchLocationDisabledViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinCallsCount += 1
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadLocationServicesDisabledViewsTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
+    func loadLocationServicesDisabledViews(_ props: SearchLocationDisabledViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadLocationServicesDisabledViewsTitlePropsAppSkinCallsCount += 1
+        loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
+        loadLocationServicesDisabledViewsTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
+        loadLocationServicesDisabledViewsTitlePropsAppSkinClosure?(props, titleProps, appSkin)
     }
 
     //MARK: - loadSearchBackgroundView
 
-    var loadSearchBackgroundViewTitleViewModelAppSkinCallsCount = 0
-    var loadSearchBackgroundViewTitleViewModelAppSkinCalled: Bool {
-        return loadSearchBackgroundViewTitleViewModelAppSkinCallsCount > 0
+    var loadSearchBackgroundViewTitlePropsAppSkinCallsCount = 0
+    var loadSearchBackgroundViewTitlePropsAppSkinCalled: Bool {
+        return loadSearchBackgroundViewTitlePropsAppSkinCallsCount > 0
     }
-    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments: (props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations: [(props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadSearchBackgroundViewTitleViewModelAppSkinClosure: ((SearchBackgroundViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchBackgroundViewTitlePropsAppSkinReceivedArguments: (props: SearchBackgroundViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadSearchBackgroundViewTitlePropsAppSkinReceivedInvocations: [(props: SearchBackgroundViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadSearchBackgroundViewTitlePropsAppSkinClosure: ((SearchBackgroundViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadSearchBackgroundViewTitleViewModelAppSkinCallsCount += 1
-        loadSearchBackgroundViewTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadSearchBackgroundViewTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadSearchBackgroundViewTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
+    func loadSearchBackgroundView(_ props: SearchBackgroundViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadSearchBackgroundViewTitlePropsAppSkinCallsCount += 1
+        loadSearchBackgroundViewTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
+        loadSearchBackgroundViewTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
+        loadSearchBackgroundViewTitlePropsAppSkinClosure?(props, titleProps, appSkin)
     }
 
     //MARK: - loadSearchViews
 
-    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount = 0
-    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCalled: Bool {
-        return loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount > 0
+    var loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCallsCount = 0
+    var loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCalled: Bool {
+        return loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCallsCount > 0
     }
-    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedArguments: (props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedInvocations: [(props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinClosure: ((SearchLookupProps, SearchViewModel, SearchDetailsViewContext?, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinReceivedArguments: (props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinReceivedInvocations: [(props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinClosure: ((SearchLookupProps, SearchViewModel, SearchDetailsViewContext?, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadSearchViews(_ props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinCallsCount += 1
-        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedArguments = (props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinReceivedInvocations.append((props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadSearchViewsViewModelDetailsViewContextTitleViewModelAppSkinClosure?(props, viewModel, detailsViewContext, titleViewModel, appSkin)
+    func loadSearchViews(_ props: SearchLookupProps, viewModel: SearchViewModel, detailsViewContext: SearchDetailsViewContext?, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinCallsCount += 1
+        loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinReceivedArguments = (props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleProps: titleProps, appSkin: appSkin)
+        loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinReceivedInvocations.append((props: props, viewModel: viewModel, detailsViewContext: detailsViewContext, titleProps: titleProps, appSkin: appSkin))
+        loadSearchViewsViewModelDetailsViewContextTitlePropsAppSkinClosure?(props, viewModel, detailsViewContext, titleProps, appSkin)
     }
 
 }
@@ -1258,19 +1258,19 @@ class SettingsPresenterProtocolMock: SettingsPresenterProtocol {
 
     //MARK: - loadSettingsView
 
-    var loadSettingsViewTitleViewModelAppSkinCallsCount = 0
-    var loadSettingsViewTitleViewModelAppSkinCalled: Bool {
-        return loadSettingsViewTitleViewModelAppSkinCallsCount > 0
+    var loadSettingsViewTitlePropsAppSkinCallsCount = 0
+    var loadSettingsViewTitlePropsAppSkinCalled: Bool {
+        return loadSettingsViewTitlePropsAppSkinCallsCount > 0
     }
-    var loadSettingsViewTitleViewModelAppSkinReceivedArguments: (props: SettingsViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)?
-    var loadSettingsViewTitleViewModelAppSkinReceivedInvocations: [(props: SettingsViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin)] = []
-    var loadSettingsViewTitleViewModelAppSkinClosure: ((SettingsViewProps, NavigationBarTitleViewModel, AppSkin) -> Void)?
+    var loadSettingsViewTitlePropsAppSkinReceivedArguments: (props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadSettingsViewTitlePropsAppSkinReceivedInvocations: [(props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadSettingsViewTitlePropsAppSkinClosure: ((SettingsViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadSettingsView(_ props: SettingsViewProps, titleViewModel: NavigationBarTitleViewModel, appSkin: AppSkin) {
-        loadSettingsViewTitleViewModelAppSkinCallsCount += 1
-        loadSettingsViewTitleViewModelAppSkinReceivedArguments = (props: props, titleViewModel: titleViewModel, appSkin: appSkin)
-        loadSettingsViewTitleViewModelAppSkinReceivedInvocations.append((props: props, titleViewModel: titleViewModel, appSkin: appSkin))
-        loadSettingsViewTitleViewModelAppSkinClosure?(props, titleViewModel, appSkin)
+    func loadSettingsView(_ props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadSettingsViewTitlePropsAppSkinCallsCount += 1
+        loadSettingsViewTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
+        loadSettingsViewTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
+        loadSettingsViewTitlePropsAppSkinClosure?(props, titleProps, appSkin)
     }
 
 }
