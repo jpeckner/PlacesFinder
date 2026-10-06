@@ -769,6 +769,33 @@ class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
     }
 
 }
+class SearchDetailsPropsBuilderProtocolMock: SearchDetailsPropsBuilderProtocol {
+
+
+
+    //MARK: - buildProps
+
+    var buildPropsResultsCopyContentCallsCount = 0
+    var buildPropsResultsCopyContentCalled: Bool {
+        return buildPropsResultsCopyContentCallsCount > 0
+    }
+    var buildPropsResultsCopyContentReceivedArguments: (entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
+    var buildPropsResultsCopyContentReceivedInvocations: [(entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)] = []
+    var buildPropsResultsCopyContentReturnValue: SearchDetailsProps!
+    var buildPropsResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchDetailsProps)?
+
+    func buildProps(_ entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsProps {
+        buildPropsResultsCopyContentCallsCount += 1
+        buildPropsResultsCopyContentReceivedArguments = (entity: entity, resultsCopyContent: resultsCopyContent)
+        buildPropsResultsCopyContentReceivedInvocations.append((entity: entity, resultsCopyContent: resultsCopyContent))
+        if let buildPropsResultsCopyContentClosure = buildPropsResultsCopyContentClosure {
+            return buildPropsResultsCopyContentClosure(entity, resultsCopyContent)
+        } else {
+            return buildPropsResultsCopyContentReturnValue
+        }
+    }
+
+}
 class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewContextBuilderProtocol {
 
 
@@ -792,33 +819,6 @@ class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewContextBuild
             return buildViewContextAppCopyContentClosure(searchActivityState, appCopyContent)
         } else {
             return buildViewContextAppCopyContentReturnValue
-        }
-    }
-
-}
-class SearchDetailsViewModelBuilderProtocolMock: SearchDetailsViewModelBuilderProtocol {
-
-
-
-    //MARK: - buildViewModel
-
-    var buildViewModelResultsCopyContentCallsCount = 0
-    var buildViewModelResultsCopyContentCalled: Bool {
-        return buildViewModelResultsCopyContentCallsCount > 0
-    }
-    var buildViewModelResultsCopyContentReceivedArguments: (entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)?
-    var buildViewModelResultsCopyContentReceivedInvocations: [(entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent)] = []
-    var buildViewModelResultsCopyContentReturnValue: SearchDetailsViewModel!
-    var buildViewModelResultsCopyContentClosure: ((SearchEntityModel, SearchResultsCopyContent) -> SearchDetailsViewModel)?
-
-    func buildViewModel(_ entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsViewModel {
-        buildViewModelResultsCopyContentCallsCount += 1
-        buildViewModelResultsCopyContentReceivedArguments = (entity: entity, resultsCopyContent: resultsCopyContent)
-        buildViewModelResultsCopyContentReceivedInvocations.append((entity: entity, resultsCopyContent: resultsCopyContent))
-        if let buildViewModelResultsCopyContentClosure = buildViewModelResultsCopyContentClosure {
-            return buildViewModelResultsCopyContentClosure(entity, resultsCopyContent)
-        } else {
-            return buildViewModelResultsCopyContentReturnValue
         }
     }
 

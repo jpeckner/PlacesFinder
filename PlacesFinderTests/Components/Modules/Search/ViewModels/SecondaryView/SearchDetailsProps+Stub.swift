@@ -1,6 +1,6 @@
 //  swiftlint:disable:this file_name
 //
-//  SearchDetailsViewModel+Stub.swift
+//  SearchDetailsProps+Stub.swift
 //  PlacesFinderTests
 //
 //  Copyright (c) 2020 Justin Peckner

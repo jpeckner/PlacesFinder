@@ -29,22 +29,25 @@ class SearchDetailsViewController: SingleContentViewController {
 
     private let tableView: UITableView
     private let titleLabel: StyledLabel
-    private var viewModel: SearchDetailsViewModel
+    private var props: SearchDetailsProps
     private var colorings: SearchDetailsViewColorings
+    private let actionTriggered: (Search.Action) -> Void
 
-    init(viewModel: SearchDetailsViewModel,
-         appSkin: AppSkin) {
+    init(props: SearchDetailsProps,
+         appSkin: AppSkin,
+         actionTriggered: @escaping (Search.Action) -> Void) {
         self.tableView = UITableView()
         self.titleLabel = StyledLabel(numberOfLines: 1)
-        self.viewModel = viewModel
+        self.props = props
         self.colorings = appSkin.colorings.searchDetails
+        self.actionTriggered = actionTriggered
 
         super.init(contentView: tableView,
                    viewColoring: colorings.viewColoring)
 
         setupTitleView()
         setupTableView()
-        configure(viewModel,
+        configure(props,
                   appSkin: appSkin)
     }
 
@@ -86,16 +89,16 @@ extension SearchDetailsViewController {
 
 extension SearchDetailsViewController {
 
-    func configure(_ viewModel: SearchDetailsViewModel,
+    func configure(_ props: SearchDetailsProps,
                    appSkin: AppSkin) {
         self.colorings = appSkin.colorings.searchDetails
-        self.viewModel = viewModel
+        self.props = props
 
         viewColoring = colorings.viewColoring
 
         titleLabel.configure(.navBarTitle,
                              textColoring: appSkin.colorings.navBar.titleTextColoring)
-        titleLabel.text = viewModel.placeName
+        titleLabel.text = props.placeName
         titleLabel.sizeToFit()
 
         tableView.reloadData()
@@ -107,7 +110,7 @@ extension SearchDetailsViewController {
 extension SearchDetailsViewController: PopCallbackViewController {
 
     func viewControllerWasPopped() {
-        viewModel.dispatchRemoveDetailsAction()
+        actionTriggered(props.removeDetailedEntityAction.value)
     }
 
 }
@@ -115,16 +118,16 @@ extension SearchDetailsViewController: PopCallbackViewController {
 extension SearchDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sectionsCount
+        return props.sectionsCount
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellViewModels(sectionIndex: section).count
+        return props.cellViewModels(sectionIndex: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = viewModel.cellViewModel(sectionIndex: indexPath.section,
-                                                    rowIndex: indexPath.row)
+        let cellViewModel = props.cellViewModel(sectionIndex: indexPath.section,
+                                                rowIndex: indexPath.row)
         let cell = tableView.dequeueReusableCell(withCellType: cellViewModel.cellType,
                                                  for: indexPath)
 
@@ -144,8 +147,8 @@ extension SearchDetailsViewController: UITableViewDataSource {
 extension SearchDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cellViewModel = viewModel.cellViewModel(sectionIndex: indexPath.section,
-                                                    rowIndex: indexPath.row)
+        let cellViewModel = props.cellViewModel(sectionIndex: indexPath.section,
+                                                rowIndex: indexPath.row)
         return cellViewModel.isSelectable ? indexPath : nil
     }
 
@@ -165,7 +168,7 @@ extension SearchDetailsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch viewModel.section(sectionIndex: section) {
+        switch props.section(sectionIndex: section) {
         case .info,
              .location:
             return 0.0

@@ -107,8 +107,12 @@ class SearchPresenter: SearchPresenterProtocol {
                                                            viewModel: viewModel,
                                                            titleProps: titleProps,
                                                            appSkin: appSkin)
-        let secondaryController = loadOrBuildSecondaryController(detailsViewContext,
-                                                                 appSkin: appSkin)
+        let secondaryController = loadOrBuildSecondaryController(
+            detailsViewContext,
+            appSkin: appSkin
+        ) { [weak viewModel] searchAction in
+            viewModel?.dispatchAction(searchAction)
+        }
 
         searchContainerViewController.splitControllers = SearchContainerSplitControllers(
             primaryController: lookupController,
@@ -137,28 +141,35 @@ class SearchPresenter: SearchPresenterProtocol {
 
     private func loadOrBuildSecondaryController(
         _ detailsViewContext: SearchDetailsViewContext?,
-        appSkin: AppSkin
+        appSkin: AppSkin,
+        actionTriggered: @escaping (Search.Action) -> Void
     ) -> SearchContainerSplitControllers.SecondaryController? {
         switch detailsViewContext {
-        case let .detailedEntity(viewModel):
-            return .anySizeClass(loadOrBuildDetailsController(viewModel,
-                                                              appSkin: appSkin))
-        case let .firstListedEntity(viewModel):
-            return .regularOnly(loadOrBuildDetailsController(viewModel,
-                                                             appSkin: appSkin))
+        case let .detailedEntity(props):
+            return .anySizeClass(loadOrBuildDetailsController(props,
+                                                              appSkin: appSkin,
+                                                              actionTriggered: actionTriggered))
+        case let .firstListedEntity(props):
+            return .regularOnly(loadOrBuildDetailsController(props,
+                                                             appSkin: appSkin,
+                                                             actionTriggered: actionTriggered))
         case .none:
             return nil
         }
     }
 
-    private func loadOrBuildDetailsController(_ viewModel: SearchDetailsViewModel,
-                                              appSkin: AppSkin) -> SearchDetailsViewController {
+    private func loadOrBuildDetailsController(
+        _ props: SearchDetailsProps,
+        appSkin: AppSkin,
+        actionTriggered: @escaping (Search.Action) -> Void
+    ) -> SearchDetailsViewController {
         guard let controller = existingDetailsController else {
-            return buildSearchDetailsViewController(viewModel,
-                                                    appSkin: appSkin)
+            return buildSearchDetailsViewController(props,
+                                                    appSkin: appSkin,
+                                                    actionTriggered: actionTriggered)
         }
 
-        controller.configure(viewModel,
+        controller.configure(props,
                              appSkin: appSkin)
         return controller
     }
@@ -225,11 +236,13 @@ private extension SearchPresenter {
     }
 
     func buildSearchDetailsViewController(
-        _ viewModel: SearchDetailsViewModel,
-        appSkin: AppSkin
+        _ props: SearchDetailsProps,
+        appSkin: AppSkin,
+        actionTriggered: @escaping (Search.Action) -> Void
     ) -> SearchDetailsViewController {
-        return SearchDetailsViewController(viewModel: viewModel,
-                                           appSkin: appSkin)
+        return SearchDetailsViewController(props: props,
+                                           appSkin: appSkin,
+                                           actionTriggered: actionTriggered)
     }
 
 }
