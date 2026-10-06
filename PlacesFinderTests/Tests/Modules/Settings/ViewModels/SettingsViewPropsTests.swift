@@ -22,12 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
 import SwiftDux
-import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable force_unwrapping
@@ -36,7 +34,6 @@ class SettingsViewPropsTests: AsyncSpec {
 
     override class func spec() {
 
-        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var sut: SettingsViewProps!
 
         func buildSectionProps() -> NonEmptyArray<SettingsSectionProps> {
@@ -48,7 +45,6 @@ class SettingsViewPropsTests: AsyncSpec {
                         SettingsCellProps(title: "stubSection\(sectionIdx)Cell\(cellIdx)",
                                           isSelected: cellIdx == 1,
                                           colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                          actionSubscriber: AnySubscriber(mockActionSubscriber),
                                           action: .showAboutApp(AboutAppLinkPayload()))
                     }
                 )
@@ -58,8 +54,6 @@ class SettingsViewPropsTests: AsyncSpec {
         }
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             let sections = buildSectionProps()
             sut = SettingsViewProps(sections: sections,
                                     colorings: AppColorings.defaultColorings.settings)

@@ -22,14 +22,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Foundation
 import Shared
 import SwiftDux
 
 struct SettingsUnitsHeaderProps: Equatable {
     enum SystemOption: Equatable {
-        case selectable(title: String, selectionAction: IgnoredEquatable<() -> Void>)
+        case selectable(title: String, selectionAction: IgnoredEquatable<SearchPreferencesAction>)
         case nonSelectable(title: String)
     }
 
@@ -50,12 +49,6 @@ protocol SettingsUnitsHeaderPropsBuilderProtocol {
 
 class SettingsUnitsHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
-
-    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>) {
-        self.actionSubscriber = actionSubscriber
-    }
-
     func buildProps(title: String,
                     currentlyActiveSystem: MeasurementSystem,
                     copyContent: SettingsMeasurementSystemCopyContent,
@@ -68,10 +61,9 @@ class SettingsUnitsHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol {
                     :
                     .selectable(
                         title: systemTitle,
-                        selectionAction: IgnoredEquatable { [weak self] in
-                            let action = SearchPreferencesActionCreator.setMeasurementSystem(system)
-                            _ = self?.actionSubscriber.receive(action)
-                        }
+                        selectionAction: IgnoredEquatable(
+                            SearchPreferencesActionCreator.setMeasurementSystem(system)
+                        )
                     )
             }
 

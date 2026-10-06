@@ -30,9 +30,14 @@ struct SettingsView: View {
     typealias ViewModel = SinglePropsViewModel<SettingsViewProps>
 
     private let viewModel: ViewModel
+    private let actionTriggered: (SearchPreferencesAction) -> Void
 
-    init(viewModel: ViewModel) {
+    init(
+        viewModel: ViewModel,
+        actionTriggered: @escaping (SearchPreferencesAction) -> Void
+    ) {
         self.viewModel = viewModel
+        self.actionTriggered = actionTriggered
     }
 
     var body: some View {
@@ -45,7 +50,7 @@ struct SettingsView: View {
                         )
                         .contentShape(Rectangle())  // Necessary for `onTapGesture` to work on the entire cell
                         .onTapGesture {
-                            cellProps.dispatchAction()
+                            actionTriggered(cellProps.action.value)
                         }
                     }
                 }
@@ -70,7 +75,8 @@ struct SettingsView: View {
 
         case let .measurementSystem(props):
             SettingsMeasurementSystemHeaderView(
-                props: props
+                props: props,
+                actionTriggered: actionTriggered
             )
 
         case .none:
@@ -101,6 +107,7 @@ private struct SettingsPlainSystemHeaderView: View {
 private struct SettingsMeasurementSystemHeaderView: View {
 
     let props: SettingsUnitsHeaderProps
+    let actionTriggered: (SearchPreferencesAction) -> Void
 
     var body: some View {
         HStack {
@@ -132,7 +139,7 @@ private struct SettingsMeasurementSystemHeaderView: View {
         case let .selectable(title, selectionAction):
             Button(
                 action: {
-                    selectionAction.value()
+                    actionTriggered(selectionAction.value)
                 },
                 label: {
                     Text(title)

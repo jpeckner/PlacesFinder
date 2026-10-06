@@ -86,6 +86,7 @@ class SettingsCoordinatorTests: AsyncSpec {
                 let dependencies = Dependencies()
                 let coordinator = SettingsCoordinator(
                     store: dependencies.mockStore,
+                    viewModel: SettingsViewModel(actionSubscriber: AnySubscriber(MockSubscriber<SearchPreferencesAction>())),
                     presenter: dependencies.mockSettingsPresenter,
                     serviceContainer: dependencies.mockServiceContainer,
                     settingsPropsBuilder: dependencies.mockSettingsPropsBuilder,
@@ -154,9 +155,9 @@ class SettingsCoordinatorTests: AsyncSpec {
                     let presenter = testData.dependencies.mockSettingsPresenter
 
                     Task { @MainActor in
-                        expect(presenter.loadSettingsViewTitlePropsAppSkinCalled) == false
+                        expect(presenter.loadSettingsViewViewModelTitlePropsAppSkinCalled) == false
                         await performTest(linkType: nil)
-                        await expect(presenter.loadSettingsViewTitlePropsAppSkinCalled).toEventually(beTrue())
+                        await expect(presenter.loadSettingsViewViewModelTitlePropsAppSkinCalled).toEventually(beTrue())
                     }
 
                     try! await Task.sleep(nanoseconds: 100_000_000)

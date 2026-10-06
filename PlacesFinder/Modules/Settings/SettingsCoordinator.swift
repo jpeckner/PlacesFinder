@@ -33,6 +33,7 @@ import UIKit
     where TStore.TAction == AppAction, TStore.TState == AppState {
 
     private let store: TStore
+    private let viewModel: SettingsViewModel
     private let presenter: SettingsPresenterProtocol
     private let serviceContainer: ServiceContainer
     private let settingsPropsBuilder: SettingsViewPropsBuilderProtocol
@@ -52,11 +53,13 @@ import UIKit
     }
 
     init(store: TStore,
+         viewModel: SettingsViewModel,
          presenter: SettingsPresenterProtocol,
          serviceContainer: ServiceContainer,
          settingsPropsBuilder: SettingsViewPropsBuilderProtocol,
          navigationBarPropsBuilder: NavigationBarPropsBuilderProtocol) {
         self.store = store
+        self.viewModel = viewModel
         self.presenter = presenter
         self.serviceContainer = serviceContainer
         self.settingsPropsBuilder = settingsPropsBuilder
@@ -187,6 +190,7 @@ extension SettingsCoordinator: SubstatesSubscriber {
         )
         let titleProps = navigationBarPropsBuilder.buildTitleProps(copyContent: appCopyContent.displayName)
         presenter.loadSettingsView(props,
+                                   viewModel: viewModel,
                                    titleProps: titleProps,
                                    appSkin: appSkin)
 

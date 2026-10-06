@@ -22,13 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
-import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
@@ -36,15 +34,11 @@ class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
-
         var sut: SettingsUnitsHeaderPropsBuilder!
         var result: SettingsUnitsHeaderProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
-            sut = SettingsUnitsHeaderPropsBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber))
+            sut = SettingsUnitsHeaderPropsBuilder()
         }
 
         describe("buildProps()") {
@@ -76,15 +70,10 @@ class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
             it("...and with the non-currently active systems as selectable options...") {
                 var numSelectableOptions = 0
                 for option in result.systemOptions {
-                    if case let .selectable(title, actionBlock) = option {
+                    if case let .selectable(title, selectionAction) = option {
                         numSelectableOptions += 1
                         expect(title) == "stubMetricTitle"
-
-                        expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                        actionBlock.value()
-
-                        let dispatchedAction = mockActionSubscriber.receivedInputs.first
-                        expect(dispatchedAction) == .setDistance(.metric(.defaultDistance))
+                        expect(selectionAction.value) == .setDistance(.metric(.defaultDistance))
                     }
                 }
 
