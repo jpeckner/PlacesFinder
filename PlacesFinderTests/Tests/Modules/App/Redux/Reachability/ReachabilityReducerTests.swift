@@ -29,9 +29,9 @@ import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class ReachabilityReducerTests: QuickSpec {
+class ReachabilityReducerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("reduce") {
 

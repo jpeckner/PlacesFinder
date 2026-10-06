@@ -28,9 +28,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchPreferencesActionCreatorTests: QuickSpec {
+class SearchPreferencesActionCreatorTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("setMeasurementSystem()") {
 

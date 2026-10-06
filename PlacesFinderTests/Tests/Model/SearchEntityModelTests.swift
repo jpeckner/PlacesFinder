@@ -28,9 +28,9 @@ import Quick
 import Shared
 import SharedTestComponents
 
-class SearchEntityModelTests: QuickSpec {
+class SearchEntityModelTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("init(isPermanentlyClosed:)") {
 

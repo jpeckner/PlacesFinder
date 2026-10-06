@@ -29,9 +29,9 @@ import SharedTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchInputContentPropsBuilderTests: QuickSpec {
+class SearchInputContentPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
 

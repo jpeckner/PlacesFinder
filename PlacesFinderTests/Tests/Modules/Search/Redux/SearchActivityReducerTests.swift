@@ -32,9 +32,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable type_body_length
-class SearchActivityReducerTests: QuickSpec {
+class SearchActivityReducerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("reduce") {
 

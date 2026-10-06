@@ -32,9 +32,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchActivityStatePrismTests: QuickSpec {
+class SearchActivityStatePrismTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         var mockLocationAuthListener: LocationAuthListenerProtocolMock!
         var mockLocationRequestHandler: LocationRequestHandlerProtocolMock!

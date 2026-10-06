@@ -30,9 +30,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchDetailsViewModelTests: QuickSpec {
+class SearchDetailsViewModelTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubInfoCellModels: [SearchDetailsInfoSectionViewModel] = [
             .basicInfo(.stubValue(name: .stubValue("cellIdx0"))),

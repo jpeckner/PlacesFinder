@@ -29,9 +29,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchRetryPropsBuilderTests: QuickSpec {
+class SearchRetryPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubCopyContent = SearchRetryCopyContent.stubValue()
 

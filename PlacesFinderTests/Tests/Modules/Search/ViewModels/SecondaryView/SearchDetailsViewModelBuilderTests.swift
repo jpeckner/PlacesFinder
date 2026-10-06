@@ -33,9 +33,9 @@ import SwiftDux
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchDetailsViewModelBuilderTests: QuickSpec {
+class SearchDetailsViewModelBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubModel = SearchEntityModel.stubValue()
         let stubCopyContent = SearchResultsCopyContent.stubValue()

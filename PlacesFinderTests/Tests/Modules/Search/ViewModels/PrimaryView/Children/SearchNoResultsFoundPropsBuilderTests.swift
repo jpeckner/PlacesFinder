@@ -29,9 +29,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchNoResultsFoundPropsBuilderTests: QuickSpec {
+class SearchNoResultsFoundPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubCopyContent = SearchNoResultsCopyContent.stubValue()
 

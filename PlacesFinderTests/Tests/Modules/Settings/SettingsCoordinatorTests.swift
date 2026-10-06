@@ -38,9 +38,9 @@ import UIKit
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SettingsCoordinatorTests: QuickSpec {
+class SettingsCoordinatorTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         struct Dependencies {
             let stubSettingsProps: SettingsViewProps = {
@@ -175,11 +175,11 @@ class SettingsCoordinatorTests: QuickSpec {
                 }
 
                 context("else when the state has a pending linkType of a different type") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         let testData = await testStorage.element!
-                        verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                        verificationBlock = testData.dependencies.mockStore.verifyNoDispatches {
                             Task {
                                 await performTest(linkType: .emptySearch(EmptySearchLinkPayload()))
                             }
@@ -194,11 +194,11 @@ class SettingsCoordinatorTests: QuickSpec {
                 }
 
                 context("else when the state does not have a linkType") {
-                    var verificationBlock: NoDispatchVerificationBlock!
+                    var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                     beforeEach {
                         let testData = await testStorage.element!
-                        verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockStore) {
+                        verificationBlock = testData.dependencies.mockStore.verifyNoDispatches {
                             Task {
                                 await performTest(linkType: nil)
                             }

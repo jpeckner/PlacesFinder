@@ -32,9 +32,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchResultsViewPropsBuilderTests: QuickSpec {
+class SearchResultsViewPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubSearchParams = SearchParams.stubValue()
         let stubEntities = NonEmptyArray(with:

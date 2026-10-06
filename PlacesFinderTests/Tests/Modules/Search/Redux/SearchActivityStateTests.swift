@@ -31,9 +31,9 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
-class SearchActivityStateTests: QuickSpec {
+class SearchActivityStateTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubSearchParams = SearchParams.stubValue()
         let stubSearchInputParams = SearchInputParams(params: stubSearchParams,

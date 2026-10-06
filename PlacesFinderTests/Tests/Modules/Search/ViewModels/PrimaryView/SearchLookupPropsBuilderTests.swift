@@ -30,9 +30,9 @@ import SwiftDux
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class SearchLookupPropsBuilderTests: QuickSpec {
+class SearchLookupPropsBuilderTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubAppCopyContent = AppCopyContent.stubValue()
         let stubInputParams = SearchInputParams.stubValue()

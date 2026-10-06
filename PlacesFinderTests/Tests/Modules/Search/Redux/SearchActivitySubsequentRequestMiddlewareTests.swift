@@ -35,9 +35,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
 // swiftlint:disable:next type_name
-class SearchActivitySubsequentRequestMiddlewareTests: QuickSpec {
+class SearchActivitySubsequentRequestMiddlewareTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubState = Search.State.stub()
         let stubParams = PlaceLookupParams.stubValue()

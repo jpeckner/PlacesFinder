@@ -31,9 +31,9 @@ import SharedTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
-class YelpRequestServiceIntegrationTests: QuickSpec {
+class YelpRequestServiceIntegrationTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let urlString = "https://api.yelp.com"
         let apiKeyString = ProcessInfo().environment["PLACE_LOOKUP_KEY"]
@@ -75,8 +75,18 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
             context("when the request has a valid API key") {
 
                 var pagesReturned: [PlaceLookupPage]!
+                var hasBeforeSuiteRun = false
 
-                beforeSuite {
+                // AsyncSpec doesn't support beforeSuite, so run this setup only once (before the first test in this
+                // context) to avoid repeating the network requests.
+                //
+                // Note: any failure here is reported against just that first test
+                beforeEach {
+                    guard !hasBeforeSuiteRun else {
+                        return
+                    }
+                    hasBeforeSuiteRun = true
+
                     pagesReturned = []
 
                     guard let apiKey = apiKeyString else {
@@ -94,6 +104,7 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
                             case let .success(response):
                                 nextRequestToken = try? response.nextRequestTokenResult?.get()
                                 pagesReturned.append(response.page)
+
                             case let .failure(error):
                                 nextRequestToken = nil  // Prevent infinite looping
                                 fail("Unexpected error: \(error)")
@@ -124,8 +135,18 @@ class YelpRequestServiceIntegrationTests: QuickSpec {
             context("when the request has an invalid API key") {
 
                 var placeLookupResult: PlaceLookupResult!
+                var hasBeforeSuiteRun = false
 
-                beforeSuite {
+                // AsyncSpec doesn't support beforeSuite, so run this setup only once (before the first test in this
+                // context) to avoid repeating the network requests.
+                //
+                // Note: any failure here is reported against just that first test
+                beforeEach {
+                    guard !hasBeforeSuiteRun else {
+                        return
+                    }
+                    hasBeforeSuiteRun = true
+
                     setupTest(apiKey: "")
 
                     await waitUntil(timeout: .seconds(5)) { done in

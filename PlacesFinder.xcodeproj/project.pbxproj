@@ -28,6 +28,7 @@
 		092835CB7D15790B624DAA80 /* TabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E04ABD7FCF9A719BCFFA93B /* TabCoordinatorProtocol.swift */; };
 		0A172D9521B7DFD56AEB1BB2 /* SearchPreferencesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC5398AFB947DBC6E7983F /* SearchPreferencesState.swift */; };
 		0A1C6370E661CFDFC1309272 /* SearchRetryPropsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A1CAEE428545798F715245 /* SearchRetryPropsBuilderTests.swift */; };
+		0A53BE995B8D828559764E4D /* YelpRequestBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B979D262DCE4DD9B77148 /* YelpRequestBuilderTests.swift */; };
 		0A724E39A9A51C37E41669B7 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC69B4B508408EA5ACD274D0 /* AppConfig.swift */; };
 		0AEE6249DC3256D10687E368 /* AutoAppColorings.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 9296B7D023B4B654453DB287 /* AutoAppColorings.stencil */; };
 		0BA2C04AC001A6C8266C8E9E /* SearchDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09569D5707768CA771A0564 /* SearchDistance.swift */; };
@@ -171,6 +172,7 @@
 		4AE486A83FA33C0658E22CB1 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB82F102B92D500DD50D7D2 /* AppCoordinatorTests.swift */; };
 		4B5CB9BA2B477CA9A07F2CDF /* AppCopyContentReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5961160D1BA1BFBAF9A88A3 /* AppCopyContentReducerTests.swift */; };
 		4BC86C08996B02730F1278AB /* ReachabilityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD94DDB402BD31A5A960859 /* ReachabilityListener.swift */; };
+		4BE6F7879EC25093A64E4DB6 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6D07C93B1219A4B4197D2C /* SearchViewModelTests.swift */; };
 		4C5A547E540D72EB416E7E48 /* SettingsLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA4603B6A40D20949C5C38 /* SettingsLinkPayload.swift */; };
 		4C720ECD11EEE5BDB3D9793C /* SearchMessageViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4978523849A6EF26EE9495 /* SearchMessageViewProps.swift */; };
 		4D2CAAE2CFC900014DE468D9 /* Search+ActivityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8319278AF1E32BCDBE16148B /* Search+ActivityAction.swift */; };
@@ -418,7 +420,6 @@
 		C3857883C46A1B6CD58E4888 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */; };
 		C3B11819493E5F29237B64EC /* SearchInputCopyContent+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CDB280196EA900F1BC01B2 /* SearchInputCopyContent+Stub.swift */; };
 		C40DE272BEEA587673124659 /* PlaceLookupServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE221B470A8510956F1458 /* PlaceLookupServiceProtocol.swift */; };
-		4BE6F7879EC25093A64E4DB6 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6D07C93B1219A4B4197D2C /* SearchViewModelTests.swift */; };
 		C438BA0EC72C9CA76DEED6DA /* SearchCopyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE951984B520FED669F6301 /* SearchCopyFormatterTests.swift */; };
 		C49857C5B6FFEF996DB57807 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52CE3EE9D873B3373B2FCEE /* LaunchView.swift */; };
 		C4A808FE27660A928CF11740 /* SearchDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C948DBC9842F2479057E7F62 /* SearchDetailsViewModel.swift */; };
@@ -455,7 +456,6 @@
 		CA57C559306DD7440021DC62 /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA57C558306DD7400021DC62 /* Double+Rounding.swift */; };
 		CA57C55A306DD7440021DC62 /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA57C558306DD7400021DC62 /* Double+Rounding.swift */; };
 		CA57C55B306DD7440021DC62 /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA57C558306DD7400021DC62 /* Double+Rounding.swift */; };
-		0A53BE995B8D828559764E4D /* YelpRequestBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8B979D262DCE4DD9B77148 /* YelpRequestBuilderTests.swift */; };
 		CA57C561306F10000021DC62 /* YelpRequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA57C560306F10000021DC62 /* YelpRequestServiceTests.swift */; };
 		CA57C566306F10000021DC62 /* YelpAPIMocks in Resources */ = {isa = PBXBuildFile; fileRef = CA57C565306F10000021DC62 /* YelpAPIMocks */; };
 		CA5C57422AB7DD38008B292E /* PayloadConsumingCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C57412AB7DD38008B292E /* PayloadConsumingCoordinatorProtocol.swift */; };
@@ -776,6 +776,7 @@
 		4C3F62F2BE7E1593701674EF /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		4CC8FAA0532A5EC4C5BDDF03 /* SearchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewController.swift; sourceTree = "<group>"; };
 		4CF7FD8D5BF8D63199BF634D /* AppSkinAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSkinAction.swift; sourceTree = "<group>"; };
+		4D6D07C93B1219A4B4197D2C /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		4D8E4136FD198F4F9614BE05 /* SearchInstructionsPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInstructionsPropsBuilderTests.swift; sourceTree = "<group>"; };
 		4E00F34C6ADBA37DC93EE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E0B0CF7960E542299E9B9CE /* AutoAppLink.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoAppLink.stencil; sourceTree = "<group>"; };
@@ -812,6 +813,7 @@
 		6AAB3AC2FFBC208E880F7F34 /* CoordinatorProtocol+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorProtocol+App.swift"; sourceTree = "<group>"; };
 		6D069CBCFB2B4F83F31B4ADA /* AutoCodable.swifttemplate */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoCodable.swifttemplate; sourceTree = "<group>"; };
 		6D7D13FB7DB2F9851C71ABA5 /* SearchDetailsSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsSectionProtocol.swift; sourceTree = "<group>"; };
+		6D8B979D262DCE4DD9B77148 /* YelpRequestBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestBuilderTests.swift; sourceTree = "<group>"; };
 		6DB426CBC6CFD247D55616D8 /* AppLinkTypeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinkTypeBuilderTests.swift; sourceTree = "<group>"; };
 		6E7FFBD1D29F804E19CC1301 /* PlacesFinderIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesFinderIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		707ACE43DB44856707F26C2C /* YelpRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestService.swift; sourceTree = "<group>"; };
@@ -902,7 +904,6 @@
 		CA3F7709278A4AE600847AA2 /* StoredSearchPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredSearchPreferences.swift; sourceTree = "<group>"; };
 		CA57C552306C84100021DC62 /* SingleReadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleReadBox.swift; sourceTree = "<group>"; };
 		CA57C558306DD7400021DC62 /* Double+Rounding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Rounding.swift"; sourceTree = "<group>"; };
-		6D8B979D262DCE4DD9B77148 /* YelpRequestBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestBuilderTests.swift; sourceTree = "<group>"; };
 		CA57C560306F10000021DC62 /* YelpRequestServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpRequestServiceTests.swift; sourceTree = "<group>"; };
 		CA57C565306F10000021DC62 /* YelpAPIMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = YelpAPIMocks; sourceTree = "<group>"; };
 		CA5C57412AB7DD38008B292E /* PayloadConsumingCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadConsumingCoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -941,7 +942,6 @@
 		CC69B4B508408EA5ACD274D0 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CCA50B284C64F4468E1A3201 /* SearchResultsViewProps+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsViewProps+Stub.swift"; sourceTree = "<group>"; };
 		CCB108883E37F0330BFE34C8 /* AppRoutingHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoutingHandlerTests.swift; sourceTree = "<group>"; };
-		4D6D07C93B1219A4B4197D2C /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		CDE951984B520FED669F6301 /* SearchCopyFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCopyFormatterTests.swift; sourceTree = "<group>"; };
 		CE6539114A1F10B9E6B4EC0C /* AutoMockable.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		CEE499408E9298EF010D8D53 /* HomeCoordinatorChildFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorChildFactoryTests.swift; sourceTree = "<group>"; };
@@ -3369,7 +3369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3431,7 +3431,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3448,7 +3448,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3465,7 +3464,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3482,7 +3480,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3499,7 +3496,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderIntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3518,7 +3514,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3534,7 +3529,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3552,7 +3546,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PlacesFinderUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3572,7 +3565,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ER3Y6PM2YR;
 				INFOPLIST_FILE = PlacesFinder/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3663,7 +3655,7 @@
 			repositoryURL = "https://github.com/quick/nimble";
 			requirement = {
 				kind = exactVersion;
-				version = 12.3.0;
+				version = 14.0.0;
 			};
 		};
 		CA656A9C2FEDE6C5009C6F59 /* XCRemoteSwiftPackageReference "Quick" */ = {
@@ -3671,7 +3663,7 @@
 			repositoryURL = "https://github.com/Quick/Quick";
 			requirement = {
 				kind = exactVersion;
-				version = 6.1.0;
+				version = 7.6.2;
 			};
 		};
 		CA656AA12FEDE71A009C6F59 /* XCRemoteSwiftPackageReference "swifter" */ = {

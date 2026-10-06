@@ -28,9 +28,9 @@ import Shared
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-class SearchRatingValueTests: QuickSpec {
+class SearchRatingValueTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         describe("SearchRatingValue.init()") {
 

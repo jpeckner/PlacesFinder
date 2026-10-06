@@ -25,11 +25,11 @@
 import Nimble
 import Quick
 
-class AppChildCoordinatorTests: QuickSpec {
+class AppChildCoordinatorTests: AsyncSpec {
 
     private typealias THomeCoordinatorFactory = HomeCoordinatorChildFactoryProtocolMock<MockAppStore>
 
-    override func spec() {
+    override class func spec() {
 
         describe("AppCoordinatorChildProtocol") {
 

@@ -42,9 +42,9 @@ import UIKit
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
 // swiftlint:disable type_body_length
-class SearchCoordinatorTests: QuickSpec {
+class SearchCoordinatorTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("abc")
 
@@ -244,11 +244,11 @@ class SearchCoordinatorTests: QuickSpec {
                     }
 
                     context("else when the state has a pending linkType of a different type") {
-                        var verificationBlock: NoDispatchVerificationBlock!
+                        var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                         beforeEach {
                             let testData = await testStorage.element!
-                            verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockAppStoreRelay.store) {
+                            verificationBlock = testData.dependencies.mockAppStoreRelay.store.verifyNoDispatches {
                                 Task {
                                     await performTest(linkType: .settings(SettingsLinkPayload()))
                                 }
@@ -332,11 +332,11 @@ class SearchCoordinatorTests: QuickSpec {
                     }
 
                     context("else when the state has a pending linkType of a different type") {
-                        var verificationBlock: NoDispatchVerificationBlock!
+                        var verificationBlock: MockStore.NoDispatchVerificationBlock!
 
                         beforeEach {
                             let testData = await testStorage.element!
-                            verificationBlock = self.verifyNoDispatches(from: testData.dependencies.mockAppStoreRelay.store) {
+                            verificationBlock = testData.dependencies.mockAppStoreRelay.store.verifyNoDispatches {
                                 Task {
                                     await performTest(linkType: .settings(SettingsLinkPayload()))
                                 }

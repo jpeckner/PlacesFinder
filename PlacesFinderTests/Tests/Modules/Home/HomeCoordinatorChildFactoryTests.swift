@@ -31,9 +31,9 @@ import SwiftDuxTestComponents
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable force_try
 // swiftlint:disable force_unwrapping
-class HomeCoordinatorChildFactoryTests: QuickSpec {
+class HomeCoordinatorChildFactoryTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let resultStorage = AsyncStorage<TabCoordinatorProtocol>()
         let sutStorage = AsyncStorage<HomeCoordinatorChildFactory<MockAppStore>>()

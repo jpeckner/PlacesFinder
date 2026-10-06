@@ -34,9 +34,9 @@ private enum OtherStubNode: NodeProtocol {}
 // swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 // swiftlint:disable line_length
-class RouterReducerTests: QuickSpec {
+class RouterReducerTests: AsyncSpec {
 
-    override func spec() {
+    override class func spec() {
 
         let stubLinkType = StubLinkType()
 
