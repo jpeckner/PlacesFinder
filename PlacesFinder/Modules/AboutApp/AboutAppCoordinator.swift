@@ -51,13 +51,13 @@ class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppActi
 
         self.store = store
 
-        let viewModel = AboutAppViewModel(
+        let props = AboutAppViewProps(
             copyContent: state.appCopyContentState.copyContent.aboutAppView,
             colorings: skin.colorings.aboutApp,
             appDisplayName: appDisplayName,
             appVersion: appVersion
         )
-        let view = AboutAppView(viewModel: viewModel)
+        let view = AboutAppView(props: props)
         self.viewController = UIHostingController(rootView: view)
 
         self.dismissalSubject = dismissalSubject
