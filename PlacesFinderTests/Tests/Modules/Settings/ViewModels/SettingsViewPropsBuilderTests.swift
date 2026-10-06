@@ -22,13 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
-import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
@@ -40,7 +38,6 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
         let stubUnitsHeaderProps = SettingsUnitsHeaderProps.stubValue()
         let stubPlainHeaderProps = SettingsPlainHeaderProps.stubValue()
 
-        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocolMock!
         var mockPlainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocolMock!
         var stubDistanceCellProps: [SettingsCellProps]!
@@ -51,8 +48,6 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
         var result: SettingsViewProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             mockMeasurementSystemHeaderPropsBuilder = SettingsUnitsHeaderPropsBuilderProtocolMock()
             mockMeasurementSystemHeaderPropsBuilder
                 .buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReturnValue = stubUnitsHeaderProps
@@ -64,14 +59,12 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
                 SettingsCellProps(title: "stubDistanceCellProps",
                                   isSelected: false,
                                   colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                  actionSubscriber: AnySubscriber(mockActionSubscriber),
                                   action: .showAboutApp(AboutAppLinkPayload()))
             ]
             stubSortingCellProps = [
                 SettingsCellProps(title: "stubSortingCellProps",
                                   isSelected: false,
                                   colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                  actionSubscriber: AnySubscriber(mockActionSubscriber),
                                   action: .showAboutApp(AboutAppLinkPayload()))
             ]
             mockSettingsCellPropsBuilder = SettingsCellPropsBuilderProtocolMock()
@@ -81,7 +74,6 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
                 stubSortingCellProps
 
             sut = SettingsViewPropsBuilder(
-                actionSubscriber: AnySubscriber(mockActionSubscriber),
                 measurementSystemHeaderPropsBuilder: mockMeasurementSystemHeaderPropsBuilder,
                 plainHeaderPropsBuilder: mockPlainHeaderPropsBuilder,
                 settingsCellPropsBuilder: mockSettingsCellPropsBuilder
@@ -123,6 +115,13 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
             it("returns props with the cell props returned by mockSettingsCellPropsBuilder in index 1") {
                 let section = result.sections.value[1]
                 expect(section.cells) == stubSortingCellProps
+            }
+
+            it("returns props with an about-app cell in index 2 that shows the about-app view") {
+                let section = result.sections.value[2]
+                expect(section.headerType) == nil
+                expect(section.cells.count) == 1
+                expect(section.cells.first?.action.value) == .showAboutApp(AboutAppLinkPayload())
             }
 
         }

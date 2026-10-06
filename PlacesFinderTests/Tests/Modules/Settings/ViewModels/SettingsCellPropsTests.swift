@@ -22,13 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
-import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
@@ -36,28 +34,19 @@ class SettingsCellPropsTests: AsyncSpec {
 
     override class func spec() {
 
-        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
-
         var sut: SettingsCellProps!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
-
             sut = SettingsCellProps(title: "",
                                     isSelected: false,
                                     colorings: AppColorings.defaultColorings.settings.cellColorings,
-                                    actionSubscriber: AnySubscriber(mockActionSubscriber),
                                     action: .showAboutApp(AboutAppLinkPayload()))
         }
 
-        describe("dispatchAction()") {
+        describe("action") {
 
-            beforeEach {
-                sut.dispatchAction()
-            }
-
-            it("dispatches the cell's action") {
-                expect(mockActionSubscriber.receivedInputs.first) == .showAboutApp(AboutAppLinkPayload())
+            it("holds the cell's action") {
+                expect(sut.action.value) == .showAboutApp(AboutAppLinkPayload())
             }
 
         }

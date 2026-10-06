@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Foundation
 import Shared
 import SwiftDux
@@ -31,18 +30,15 @@ struct SettingsCellProps: Equatable {
     let title: String
     let isSelected: Bool
     let colorings: SettingsCellColorings
-    private let actionSubscriber: IgnoredEquatable<AnySubscriber<SearchPreferencesAction, Never>>
-    private let action: IgnoredEquatable<SearchPreferencesAction>
+    let action: IgnoredEquatable<SearchPreferencesAction>
 
     init(title: String,
          isSelected: Bool,
          colorings: SettingsCellColorings,
-         actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
          action: SearchPreferencesAction) {
         self.title = title
         self.isSelected = isSelected
         self.colorings = colorings
-        self.actionSubscriber = IgnoredEquatable(actionSubscriber)
         self.action = IgnoredEquatable(action)
     }
 }
@@ -50,14 +46,6 @@ struct SettingsCellProps: Equatable {
 extension SettingsCellProps: Identifiable {
 
     var id: String { title }
-
-}
-
-extension SettingsCellProps {
-
-    func dispatchAction() {
-        _ = actionSubscriber.value.receive(action.value)
-    }
 
 }
 
@@ -77,12 +65,9 @@ class SettingsCellPropsBuilder {
 
     private typealias SearchDistanceType = SearchDistanceTypeProtocol & CaseIterable & Equatable
 
-    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
     private let measurementFormatter: MeasurementFormatterProtocol
 
-    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
-         measurementFormatter: MeasurementFormatterProtocol) {
-        self.actionSubscriber = actionSubscriber
+    init(measurementFormatter: MeasurementFormatterProtocol) {
         self.measurementFormatter = measurementFormatter
     }
 
@@ -118,7 +103,6 @@ extension SettingsCellPropsBuilder: SettingsCellPropsBuilderProtocol {
             SettingsCellProps(title: measurementFormatter.string(from: distance.measurement),
                               isSelected: currentlySelectedDistance == distance,
                               colorings: colorings,
-                              actionSubscriber: actionSubscriber,
                               action: .setDistance(distanceBlock(distance)))
         }
     }
@@ -130,7 +114,6 @@ extension SettingsCellPropsBuilder: SettingsCellPropsBuilderProtocol {
             SettingsCellProps(title: copyContent.title(sorting),
                               isSelected: currentSorting == sorting,
                               colorings: colorings,
-                              actionSubscriber: actionSubscriber,
                               action: .setSorting(sorting))
         }
     }

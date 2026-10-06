@@ -1,8 +1,8 @@
 //
-//  SettingsViewController.swift
+//  SettingsViewModel.swift
 //  PlacesFinder
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Combine
 
-class SettingsViewController: UIHostingController<SettingsView> {
+class SettingsViewModel {
+    private let inputs: Inputs
 
-    private let propsViewModel: SettingsView.ViewModel
-    private let viewModel: SettingsViewModel
-
-    init(
-        props: SettingsViewProps,
-        viewModel: SettingsViewModel
-    ) {
-        let propsViewModel = SettingsView.ViewModel(props: props)
-        self.propsViewModel = propsViewModel
-        self.viewModel = viewModel
-
-        let settingsView = SettingsView(
-            viewModel: propsViewModel
-        ) { [weak viewModel] action in
-            viewModel?.dispatchAction(action)
-        }
-
-        super.init(rootView: settingsView)
+    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>) {
+        self.inputs = Inputs(actionSubscriber: actionSubscriber)
     }
+}
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+extension SettingsViewModel {
+
+    struct Inputs {
+        let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
     }
 
 }
 
-extension SettingsViewController {
+extension SettingsViewModel {
 
-    func configure(props: SettingsViewProps) {
-        propsViewModel.props = props
+    func dispatchAction(_ action: SearchPreferencesAction) {
+        _ = inputs.actionSubscriber.receive(action)
     }
 
 }

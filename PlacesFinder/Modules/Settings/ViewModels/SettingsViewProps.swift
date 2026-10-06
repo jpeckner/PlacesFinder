@@ -22,7 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Foundation
 import Shared
 import SwiftDux
@@ -44,16 +43,13 @@ protocol SettingsViewPropsBuilderProtocol {
 
 class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
 
-    private let actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>
     private let measurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol
     private let plainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocol
     private let settingsCellPropsBuilder: SettingsCellPropsBuilderProtocol
 
-    init(actionSubscriber: AnySubscriber<SearchPreferencesAction, Never>,
-         measurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol,
+    init(measurementSystemHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol,
          plainHeaderPropsBuilder: SettingsPlainHeaderPropsBuilderProtocol,
          settingsCellPropsBuilder: SettingsCellPropsBuilderProtocol) {
-        self.actionSubscriber = actionSubscriber
         self.measurementSystemHeaderPropsBuilder = measurementSystemHeaderPropsBuilder
         self.plainHeaderPropsBuilder = plainHeaderPropsBuilder
         self.settingsCellPropsBuilder = settingsCellPropsBuilder
@@ -109,7 +105,6 @@ class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
                             ),
                             isSelected: false,
                             colorings: colorings.cellColorings,
-                            actionSubscriber: actionSubscriber,
                             action: .showAboutApp(AboutAppLinkPayload())
                         )
                     ]

@@ -1,8 +1,8 @@
 //
-//  SettingsViewController.swift
-//  PlacesFinder
+//  SettingsViewModelTests.swift
+//  PlacesFinderTests
 //
-//  Copyright (c) 2019 Justin Peckner
+//  Copyright (c) 2026 Justin Peckner
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,43 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Combine
+import Nimble
+import Quick
+import Shared
+import SwiftDux
 
-class SettingsViewController: UIHostingController<SettingsView> {
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable implicitly_unwrapped_optional
+class SettingsViewModelTests: AsyncSpec {
 
-    private let propsViewModel: SettingsView.ViewModel
-    private let viewModel: SettingsViewModel
+    override class func spec() {
 
-    init(
-        props: SettingsViewProps,
-        viewModel: SettingsViewModel
-    ) {
-        let propsViewModel = SettingsView.ViewModel(props: props)
-        self.propsViewModel = propsViewModel
-        self.viewModel = viewModel
+        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
 
-        let settingsView = SettingsView(
-            viewModel: propsViewModel
-        ) { [weak viewModel] action in
-            viewModel?.dispatchAction(action)
+        var sut: SettingsViewModel!
+
+        beforeEach {
+            mockActionSubscriber = MockSubscriber()
+
+            sut = SettingsViewModel(actionSubscriber: AnySubscriber(mockActionSubscriber))
         }
 
-        super.init(rootView: settingsView)
-    }
+        describe("dispatchAction()") {
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+            let stubAction = SearchPreferencesAction.setSorting(.rating)
+
+            beforeEach {
+                sut.dispatchAction(stubAction)
+            }
+
+            it("dispatches the action it was given") {
+                expect(mockActionSubscriber.receivedInputs) == [stubAction]
+            }
+
+        }
+
     }
 
 }
-
-extension SettingsViewController {
-
-    func configure(props: SettingsViewProps) {
-        propsViewModel.props = props
-    }
-
-}
+// swiftlint:enable blanket_disable_command

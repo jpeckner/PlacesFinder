@@ -22,14 +22,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Combine
 import Foundation
 import Nimble
 import Quick
 import Shared
 import SharedTestComponents
 import SwiftDux
-import SwiftDuxTestComponents
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable function_body_length
@@ -38,17 +36,14 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        var mockActionSubscriber: MockSubscriber<SearchPreferencesAction>!
         var mockMeasurementFormatter: MeasurementFormatterProtocolMock!
 
         var sut: SettingsCellPropsBuilder!
 
         beforeEach {
-            mockActionSubscriber = MockSubscriber()
             mockMeasurementFormatter = MeasurementFormatterProtocolMock()
 
-            sut = SettingsCellPropsBuilder(actionSubscriber: AnySubscriber(mockActionSubscriber),
-                                           measurementFormatter: mockMeasurementFormatter)
+            sut = SettingsCellPropsBuilder(measurementFormatter: mockMeasurementFormatter)
         }
 
         describe("buildDistanceCellProps()") {
@@ -99,10 +94,10 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
                             }
                         }
 
-                        it("dispatches the correct .setSorting action when dispatchAction() is called") {
-                            expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                            results[caseIdx].dispatchAction()
-                            expect(mockActionSubscriber.receivedInputs.first) == .setDistance(currentDistanceType)
+                        it("has the correct .setDistance action in each cell props") {
+                            for (idx, resultCellProps) in results.enumerated() {
+                                expect(resultCellProps.action.value) == .setDistance(searchDistances[idx])
+                            }
                         }
 
                     }
@@ -161,10 +156,10 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
                         }
                     }
 
-                    it("dispatches the correct .setSorting action when dispatchAction() is called") {
-                        expect(mockActionSubscriber.receivedInputs.isEmpty) == true
-                        results[caseIdx].dispatchAction()
-                        expect(mockActionSubscriber.receivedInputs.first) == .setSorting(currentSorting)
+                    it("has the correct .setSorting action in each cell props") {
+                        for (idx, resultCellProps) in results.enumerated() {
+                            expect(resultCellProps.action.value) == .setSorting(PlaceLookupSorting.allCases[idx])
+                        }
                     }
 
                 }

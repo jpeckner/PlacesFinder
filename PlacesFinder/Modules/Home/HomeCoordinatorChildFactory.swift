@@ -149,21 +149,19 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             }
         )
 
+        let viewModel = SettingsViewModel(actionSubscriber: searchPreferencesActionSubscriber)
+
         let presenter = SettingsPresenter(tabItemProperties: tabItemProperties)
 
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
 
-        let unitsHeaderPropsBuilder = SettingsUnitsHeaderPropsBuilder(
-            actionSubscriber: searchPreferencesActionSubscriber
-        )
+        let unitsHeaderPropsBuilder = SettingsUnitsHeaderPropsBuilder()
         let plainHeaderPropsBuilder = SettingsPlainHeaderPropsBuilder()
         let settingsCellPropsBuilder = SettingsCellPropsBuilder(
-            actionSubscriber: searchPreferencesActionSubscriber,
             measurementFormatter: measurementFormatter
         )
         let settingsPropsBuilder = SettingsViewPropsBuilder(
-            actionSubscriber: searchPreferencesActionSubscriber,
             measurementSystemHeaderPropsBuilder: unitsHeaderPropsBuilder,
             plainHeaderPropsBuilder: plainHeaderPropsBuilder,
             settingsCellPropsBuilder: settingsCellPropsBuilder
@@ -172,6 +170,7 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
         let navigationBarPropsBuilder = NavigationBarPropsBuilder()
 
         return SettingsCoordinator(store: store,
+                                   viewModel: viewModel,
                                    presenter: presenter,
                                    serviceContainer: serviceContainer,
                                    settingsPropsBuilder: settingsPropsBuilder,

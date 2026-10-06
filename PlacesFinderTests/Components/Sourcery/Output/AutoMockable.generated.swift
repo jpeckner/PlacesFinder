@@ -1258,19 +1258,19 @@ class SettingsPresenterProtocolMock: SettingsPresenterProtocol {
 
     //MARK: - loadSettingsView
 
-    var loadSettingsViewTitlePropsAppSkinCallsCount = 0
-    var loadSettingsViewTitlePropsAppSkinCalled: Bool {
-        return loadSettingsViewTitlePropsAppSkinCallsCount > 0
+    var loadSettingsViewViewModelTitlePropsAppSkinCallsCount = 0
+    var loadSettingsViewViewModelTitlePropsAppSkinCalled: Bool {
+        return loadSettingsViewViewModelTitlePropsAppSkinCallsCount > 0
     }
-    var loadSettingsViewTitlePropsAppSkinReceivedArguments: (props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
-    var loadSettingsViewTitlePropsAppSkinReceivedInvocations: [(props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
-    var loadSettingsViewTitlePropsAppSkinClosure: ((SettingsViewProps, NavigationBarTitleViewProps, AppSkin) -> Void)?
+    var loadSettingsViewViewModelTitlePropsAppSkinReceivedArguments: (props: SettingsViewProps, viewModel: SettingsViewModel, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)?
+    var loadSettingsViewViewModelTitlePropsAppSkinReceivedInvocations: [(props: SettingsViewProps, viewModel: SettingsViewModel, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin)] = []
+    var loadSettingsViewViewModelTitlePropsAppSkinClosure: ((SettingsViewProps, SettingsViewModel, NavigationBarTitleViewProps, AppSkin) -> Void)?
 
-    func loadSettingsView(_ props: SettingsViewProps, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
-        loadSettingsViewTitlePropsAppSkinCallsCount += 1
-        loadSettingsViewTitlePropsAppSkinReceivedArguments = (props: props, titleProps: titleProps, appSkin: appSkin)
-        loadSettingsViewTitlePropsAppSkinReceivedInvocations.append((props: props, titleProps: titleProps, appSkin: appSkin))
-        loadSettingsViewTitlePropsAppSkinClosure?(props, titleProps, appSkin)
+    func loadSettingsView(_ props: SettingsViewProps, viewModel: SettingsViewModel, titleProps: NavigationBarTitleViewProps, appSkin: AppSkin) {
+        loadSettingsViewViewModelTitlePropsAppSkinCallsCount += 1
+        loadSettingsViewViewModelTitlePropsAppSkinReceivedArguments = (props: props, viewModel: viewModel, titleProps: titleProps, appSkin: appSkin)
+        loadSettingsViewViewModelTitlePropsAppSkinReceivedInvocations.append((props: props, viewModel: viewModel, titleProps: titleProps, appSkin: appSkin))
+        loadSettingsViewViewModelTitlePropsAppSkinClosure?(props, viewModel, titleProps, appSkin)
     }
 
 }
