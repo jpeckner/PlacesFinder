@@ -32,21 +32,13 @@ struct AboutAppViewProps {
          colorings: AboutAppViewColorings,
          appDisplayName: NonEmptyString,
          appVersion: NonEmptyString) {
-        let titleFormatted = String(
-            format: copyContent.titleFormat,
-            appDisplayName.value
-        )
-
-        let descriptionFormatted = String(
-            format: copyContent.descriptionFormat,
-            appVersion.value,
-            Calendar.current.component(.year, from: Date())
-        )
-
         self.props = StaticInfoViewProps(
             imageName: copyContent.iconImageName,
-            title: titleFormatted,
-            description: descriptionFormatted,
+            title: L10n.AboutAppDetails.title(appDisplayName.value),
+            description: L10n.AboutAppDetails.description(
+                appVersion.value,
+                String(Calendar.current.component(.year, from: Date()))
+            ),
             colorings: colorings
         )
     }

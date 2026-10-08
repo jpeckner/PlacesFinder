@@ -686,17 +686,17 @@ class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
     var formatCallablePhoneNumberDisplayPhoneCalled: Bool {
         return formatCallablePhoneNumberDisplayPhoneCallsCount > 0
     }
-    var formatCallablePhoneNumberDisplayPhoneReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString)?
-    var formatCallablePhoneNumberDisplayPhoneReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString)] = []
+    var formatCallablePhoneNumberDisplayPhoneReceivedDisplayPhone: NonEmptyString?
+    var formatCallablePhoneNumberDisplayPhoneReceivedInvocations: [NonEmptyString] = []
     var formatCallablePhoneNumberDisplayPhoneReturnValue: String!
-    var formatCallablePhoneNumberDisplayPhoneClosure: ((SearchResultsCopyContent, NonEmptyString) -> String)?
+    var formatCallablePhoneNumberDisplayPhoneClosure: ((NonEmptyString) -> String)?
 
-    func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent, displayPhone: NonEmptyString) -> String {
+    func formatCallablePhoneNumber(displayPhone: NonEmptyString) -> String {
         formatCallablePhoneNumberDisplayPhoneCallsCount += 1
-        formatCallablePhoneNumberDisplayPhoneReceivedArguments = (resultsCopyContent: resultsCopyContent, displayPhone: displayPhone)
-        formatCallablePhoneNumberDisplayPhoneReceivedInvocations.append((resultsCopyContent: resultsCopyContent, displayPhone: displayPhone))
+        formatCallablePhoneNumberDisplayPhoneReceivedDisplayPhone = displayPhone
+        formatCallablePhoneNumberDisplayPhoneReceivedInvocations.append(displayPhone)
         if let formatCallablePhoneNumberDisplayPhoneClosure = formatCallablePhoneNumberDisplayPhoneClosure {
-            return formatCallablePhoneNumberDisplayPhoneClosure(resultsCopyContent, displayPhone)
+            return formatCallablePhoneNumberDisplayPhoneClosure(displayPhone)
         } else {
             return formatCallablePhoneNumberDisplayPhoneReturnValue
         }
@@ -730,17 +730,17 @@ class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
     var formatRatingsNumRatingsCalled: Bool {
         return formatRatingsNumRatingsCallsCount > 0
     }
-    var formatRatingsNumRatingsReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, numRatings: Int)?
-    var formatRatingsNumRatingsReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, numRatings: Int)] = []
+    var formatRatingsNumRatingsReceivedNumRatings: Int?
+    var formatRatingsNumRatingsReceivedInvocations: [Int] = []
     var formatRatingsNumRatingsReturnValue: String!
-    var formatRatingsNumRatingsClosure: ((SearchResultsCopyContent, Int) -> String)?
+    var formatRatingsNumRatingsClosure: ((Int) -> String)?
 
-    func formatRatings(_ resultsCopyContent: SearchResultsCopyContent, numRatings: Int) -> String {
+    func formatRatings(numRatings: Int) -> String {
         formatRatingsNumRatingsCallsCount += 1
-        formatRatingsNumRatingsReceivedArguments = (resultsCopyContent: resultsCopyContent, numRatings: numRatings)
-        formatRatingsNumRatingsReceivedInvocations.append((resultsCopyContent: resultsCopyContent, numRatings: numRatings))
+        formatRatingsNumRatingsReceivedNumRatings = numRatings
+        formatRatingsNumRatingsReceivedInvocations.append(numRatings)
         if let formatRatingsNumRatingsClosure = formatRatingsNumRatingsClosure {
-            return formatRatingsNumRatingsClosure(resultsCopyContent, numRatings)
+            return formatRatingsNumRatingsClosure(numRatings)
         } else {
             return formatRatingsNumRatingsReturnValue
         }

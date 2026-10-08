@@ -36,7 +36,6 @@ struct AppCopyContent: Equatable, Sendable {
     let settingsHeaders: SettingsHeadersCopyContent
     let settingsSortPreference: SettingsSortPreferenceCopyContent
     let settingsMeasurementSystem: SettingsMeasurementSystemCopyContent
-    let aboutAppMenu: AboutAppMenuCopyContent
     let aboutAppView: AboutAppViewCopyContent
 }
 
@@ -76,9 +75,6 @@ struct SearchNoResultsCopyContent: Equatable, Sendable {
 
 struct SearchResultsCopyContent: Equatable, Sendable {
     let currencySymbol: String
-    let callNumberFormatString: String
-    let numRatingsSingularFormatString: String
-    let numRatingsPluralFormatString: String
 }
 
 struct SearchRetryCopyContent: Equatable, Sendable {
@@ -105,12 +101,6 @@ struct SettingsMeasurementSystemCopyContent: Equatable, Sendable {
     let metric: String
 }
 
-struct AboutAppMenuCopyContent: Equatable, Sendable {
-    let ctaTitleFormat: String
-}
-
 struct AboutAppViewCopyContent: Equatable, Sendable {
     let iconImageName: String
-    let titleFormat: String
-    let descriptionFormat: String
 }

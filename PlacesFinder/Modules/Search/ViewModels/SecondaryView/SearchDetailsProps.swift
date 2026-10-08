@@ -127,8 +127,7 @@ private extension SearchEntityModel {
                                   copyFormatter: copyFormatter,
                                   resultsCopyContent: resultsCopyContent),
             phoneNumberCellModel(urlOpenerService,
-                                 copyFormatter: copyFormatter,
-                                 resultsCopyContent: resultsCopyContent)
+                                 copyFormatter: copyFormatter)
         ].compactMap { $0 })
     }
 
@@ -143,7 +142,7 @@ private extension SearchEntityModel {
             address: addressLines.map { copyFormatter.formatAddress($0) },
             ratingsAverage: ratings?.average,
             numRatingsMessage: ratings.map {
-                copyFormatter.formatRatings(resultsCopyContent, numRatings: $0.numRatings)
+                copyFormatter.formatRatings(numRatings: $0.numRatings)
             },
             pricing: pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
             apiLinkCallback: urlOpenerService.buildOpenURLBlock(url).map { IgnoredEquatable($0) }
@@ -152,14 +151,13 @@ private extension SearchEntityModel {
 
     private func phoneNumberCellModel(
         _ urlOpenerService: URLOpenerServiceProtocol,
-        copyFormatter: SearchCopyFormatterProtocol,
-        resultsCopyContent: SearchResultsCopyContent
+        copyFormatter: SearchCopyFormatterProtocol
     ) -> SearchDetailsInfoSectionViewModel? {
         guard let displayPhone = displayPhone else { return nil }
 
         let makeCallBlock = dialablePhone.flatMap { urlOpenerService.buildPhoneCallBlock($0) }
         let phoneLabelText = makeCallBlock != nil ?
-            copyFormatter.formatCallablePhoneNumber(resultsCopyContent, displayPhone: displayPhone)
+            copyFormatter.formatCallablePhoneNumber(displayPhone: displayPhone)
             : copyFormatter.formatNonCallablePhoneNumber(displayPhone)
 
         return .phoneNumber(SearchDetailsPhoneNumberViewModel(

@@ -57,10 +57,7 @@ extension SearchResultsCopyContent {
 
     static func stubValue() -> SearchResultsCopyContent {
         return SearchResultsCopyContent(
-            currencySymbol: "+",
-            callNumberFormatString: "callNumberFormatString - %@",
-            numRatingsSingularFormatString: "numRatingsSingularFormatString - %d",
-            numRatingsPluralFormatString: "numRatingsPluralFormatString - %d"
+            currencySymbol: "+"
         )
     }
 

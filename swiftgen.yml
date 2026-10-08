@@ -1,0 +1,11 @@
+# Runs automatically via the PlacesFinder target's "SwiftGen" build phase, or manually via
+# `bundle exec fastlane run_swiftgen` (or `bundle exec fastlane generate_placesfinder`)
+
+input_dir: PlacesFinder
+output_dir: PlacesFinder/SwiftGen/Output
+
+strings:
+  inputs: en.lproj/Localizable.strings
+  outputs:
+    templatePath: PlacesFinder/SwiftGen/Templates/Strings.stencil
+    output: Strings.generated.swift
