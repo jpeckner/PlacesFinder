@@ -89,7 +89,24 @@ grep -E ": warning: " "$LOGS/periphery.log"
 
 Periphery reads `.periphery.yml`. That file scans the `PlacesFinder` and `PlacesFinderTests` schemes and leaves generated output out of the report. The scan builds the project first, which takes a few minutes. If the build fails, show the compile errors and stop. A clean scan ends with `* No unused code detected.` and has no `warning:` lines.
 
-Fix every finding, then commit the fixes yourself. Prefer the first of these that fits:
+**Look for a configuration problem first.** If Periphery reports test classes as unused (`Unused class '…Tests'`), the findings are a symptom, not dead code. Every stub and mock those tests use gets reported too, so one cause can produce over a hundred findings. Usually it means the tests' base class is missing from `external_test_case_classes` in `.periphery.yml`; tests moved from `QuickSpec` to `AsyncSpec` once, for example. Fix the config, then rescan before you deal with anything else. **Never delete a test class because Periphery calls it unused.**
+
+**Then look for an existing fix on another local branch.** The user often has unmerged branches waiting, and one of them may already fix the findings. List the commits on local branches that aren't on this one and touch the files in the findings:
+
+```bash
+git log --branches --not HEAD --format='%h %s' -- <files from the findings> .periphery.yml
+git branch --contains <sha>    # for each candidate, the branches that have it
+```
+
+Cherry-pick a candidate (`git cherry-pick <sha>`) only if `git show <sha>` shows that **every** change in it fixes one of the current findings, with nothing unrelated mixed in. Cherry-picking keeps the user's authorship and message. When the user later merges the other branch, git sees the same change on both sides and merges it without a conflict. This doesn't work for a hand-written fix that differs even slightly.
+
+- If the commit also contains unrelated changes, don't cherry-pick it. Write the fix yourself, copying its relevant changes exactly where they apply, so the two branches still merge cleanly.
+- If the cherry-pick conflicts, run `git cherry-pick --abort` and write the fix yourself.
+- After a cherry-pick, rescan. Fix whatever is left as described below, in a separate commit.
+
+For example, `develop` was once missing `AsyncSpec` in `.periphery.yml`, which produced 130 findings. Commit `6f6a0638` on an unmerged branch made exactly the two changes needed, so cherry-picking it fixed every finding.
+
+Fix every remaining finding, then commit the fixes yourself. Prefer the first of these that fits:
 
 1. **Delete the unused code.** This is the usual case: an unused property, method, type, parameter, import or protocol conformance. Follow the deletion through: initializer parameters that only fed a deleted property, stubs, and tests that only exercised the deleted code.
 2. **Ignore it with a comment**, but only when the code has to stay. Examples:
@@ -227,6 +244,7 @@ Then:
 - warnings in touched files that don't fail the check, and the count of existing warnings elsewhere;
 - `unused_import` hits in the branch's files, and the `explicit_self` counts;
 - any Periphery findings you left alone, with your reasoning;
+- for each commit you cherry-picked, the original commit and the branches that contain it. Say that merging those branches later won't conflict, and that the user can drop the cherry-pick if they'd rather merge one of those branches first;
 - a reminder: **"If you'd like a review before merging, run `/code-review`."** Don't run it yourself.
 
 Don't push, and don't merge into `develop`.
