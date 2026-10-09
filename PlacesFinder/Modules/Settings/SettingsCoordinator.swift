@@ -137,7 +137,7 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
         aboutAppDisposedSubject
             .sink { [weak self] in
                 guard let self = self else { return }
-                self.store.dispatch(self.setSelfAsCurrentCoordinator)
+                self.store.dispatch(self.setSelfAsCurrentCoordinatorAction)
             }
             .store(in: &aboutAppDismissalActions)
 
@@ -237,7 +237,7 @@ private extension SettingsCoordinator {
                 guard let self = self else { return }
 
                 self.child = nil
-                self.store.dispatch(self.setSelfAsCurrentCoordinator)
+                self.store.dispatch(self.setSelfAsCurrentCoordinatorAction)
             }
             .store(in: &aboutAppDismissalActions)
     }

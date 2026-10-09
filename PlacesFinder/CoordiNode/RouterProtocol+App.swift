@@ -60,7 +60,7 @@ protocol AppDestinationRouterProtocol: AppRouterProtocol, DestinationRouterProto
 
 extension AppDestinationRouterProtocol {
 
-    var setSelfAsCurrentCoordinator: AppAction {
+    var setSelfAsCurrentCoordinatorAction: AppAction {
         return .router(.setCurrentCoordinator(Self.nodeBox))
     }
 
