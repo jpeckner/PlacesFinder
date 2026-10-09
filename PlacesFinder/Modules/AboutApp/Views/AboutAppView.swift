@@ -36,12 +36,6 @@ struct AboutAppView: View {
     var body: some View {
         VStack {
             Spacer()
-                .frame(height: 8)
-
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .frame(width: 32, height: 4)
-
-            Spacer()
                 .frame(height: 120)
 
             StaticInfoView(props: props.props)

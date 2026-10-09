@@ -61,10 +61,21 @@ class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppActi
         self.dismissalSubject = dismissalSubject
 
         store.subscribe(self, keyPath: \.routerState)
+        setupViewPresentation()
+    }
+
+    private func setupViewPresentation() {
+        viewController.sheetPresentationController?.prefersGrabberVisible = true
+        viewController.sheetPresentationController?.detents = [
+            .custom(identifier: .maxDetentWithMargin) { context in
+                (1.0 - UISheetPresentationController.Detent.Identifier.marginPercentage) * context.maximumDetentValue
+            }
+        ]
         viewController.presentationController?.delegate = presentationControllerDelegate
+
         presentationControllerDelegate.dismissal
-            .sink { _ in
-                dismissalSubject.send()
+            .sink { [weak self] _ in
+                self?.dismissalSubject.send()
             }
             .store(in: &cancellables)
     }
@@ -106,4 +117,11 @@ extension AboutAppCoordinator: SubstatesSubscriber {
                                          store: store)
     }
 
+}
+
+// MARK: - Private extensions
+
+private extension UISheetPresentationController.Detent.Identifier {
+    static let maxDetentWithMargin = UISheetPresentationController.Detent.Identifier("maxDetentWithMargin")
+    static let marginPercentage = 0.1
 }
