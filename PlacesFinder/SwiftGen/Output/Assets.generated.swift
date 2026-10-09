@@ -35,7 +35,7 @@ internal enum Asset {
   internal static let extraLarge4 = ImageAsset(name: "extra_large_4")
   internal static let extraLarge4Half = ImageAsset(name: "extra_large_4_half")
   internal static let extraLarge5 = ImageAsset(name: "extra_large_5")
-  internal static let appIcon = ImageAsset(name: "app_icon")
+  internal static let appIconRounded = ImageAsset(name: "app_icon_rounded")
   internal static let checkmark = ImageAsset(name: "checkmark")
   internal static let error = ImageAsset(name: "error")
   internal static let gear = ImageAsset(name: "gear")

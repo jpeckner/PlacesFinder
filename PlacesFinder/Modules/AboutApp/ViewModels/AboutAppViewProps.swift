@@ -32,7 +32,7 @@ struct AboutAppViewProps {
          appDisplayName: NonEmptyString,
          appVersion: NonEmptyString) {
         self.props = StaticInfoViewProps(
-            image: Asset.appIcon,
+            image: Asset.appIconRounded,
             title: L10n.AboutAppDetails.title(appDisplayName.value),
             description: L10n.AboutAppDetails.description(
                 appVersion.value,
