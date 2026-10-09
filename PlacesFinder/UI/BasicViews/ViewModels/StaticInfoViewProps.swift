@@ -25,14 +25,14 @@
 import Foundation
 
 struct StaticInfoViewProps<TColorings: AppStandardColoringsProtocol>: Equatable {
-    let imageName: String
+    let image: ImageAsset
     let title: String
     let description: String
     let colorings: TColorings
 }
 
 protocol StaticInfoCopyProtocol {
-    var iconImageName: String { get }
+    var iconImage: ImageAsset { get }
     var title: String { get }
     var description: String { get }
 }
@@ -43,7 +43,7 @@ extension StaticInfoCopyProtocol {
         colorings: TColorings
     ) -> StaticInfoViewProps<TColorings> {
         StaticInfoViewProps(
-            imageName: iconImageName,
+            image: iconImage,
             title: title,
             description: description,
             colorings: colorings

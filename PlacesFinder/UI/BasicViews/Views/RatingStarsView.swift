@@ -27,7 +27,7 @@ import UIKit
 
 class RatingStarsView: UIImageView {
 
-    private static let placeholderImage = #imageLiteral(resourceName: "extra_large_0")
+    private static let placeholderImage = Asset.extraLarge0.image
 
     init() {
         super.init(image: RatingStarsView.placeholderImage)

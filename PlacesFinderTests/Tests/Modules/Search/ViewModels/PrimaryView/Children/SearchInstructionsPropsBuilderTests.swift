@@ -50,7 +50,7 @@ class SearchInstructionsPropsBuilderTests: AsyncSpec {
             it("returns its expected value") {
                 expect(result) == SearchInstructionsProps(
                     props: StaticInfoViewProps(
-                        imageName: "stubIconImageName",
+                        image: Asset.checkmark,
                         title: "stubTitle",
                         description: "stubDescription",
                         colorings: AppColorings.defaultColorings.standard

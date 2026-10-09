@@ -166,7 +166,7 @@ private struct SettingsMeasurementSystemHeaderView: View {
 private struct SettingsCell: View {
 
     private enum Constants {
-        static let image = #imageLiteral(resourceName: "checkmark").withRenderingMode(.alwaysTemplate)
+        static let image = Asset.checkmark.image.withRenderingMode(.alwaysTemplate)
         static let imageHeight: CGFloat = 24.0
     }
 

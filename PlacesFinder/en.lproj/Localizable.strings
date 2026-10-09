@@ -1,0 +1,74 @@
+//  Localizable.strings
+//  PlacesFinder
+//
+//  User-facing copy for the app. Building the PlacesFinder target regenerates
+//  PlacesFinder/SwiftGen/Output/Strings.generated.swift from this file.
+//
+//  Each dot-separated key becomes a nested `L10n` member, i.e. "search_input.placeholder" is accessed as
+//  `L10n.SearchInput.placeholder`. Strings with format placeholders become functions with typed parameters, i.e.
+//  "search_results.call_number" is accessed as `L10n.SearchResults.callNumber(_:)`.
+
+// MARK: - Search input
+
+"search_input.placeholder" = "Search nearby";
+
+// MARK: - Search instructions
+
+"search_instructions.title" = "Start Exploring!";
+"search_instructions.description" = "Enter search terms above to find nearby places.";
+"search_instructions.results_source" = "Powered by";
+
+// MARK: - Search location disabled
+
+"search_location_disabled.title" = "Where Am I?";
+"search_location_disabled.description" = "To show you the best nearby places, please enable location services in Settings.";
+"search_location_disabled.cta_title" = "Go to Settings";
+
+// MARK: - Search no internet
+
+"search_no_internet.title" = "No internet";
+"search_no_internet.description" = "Looks like you're not connected to the internet; please reconnect to search for great places!";
+
+// MARK: - Search no results
+
+"search_no_results.title" = "No Results Found";
+"search_no_results.description" = "Try entering different search terms above...there's somewhere great nearby!";
+
+// MARK: - Search results
+
+"search_results.currency_symbol" = "$";
+"search_results.call_number" = "Call: %@";
+"search_results.num_ratings_singular" = "%d review";
+"search_results.num_ratings_plural" = "%d reviews";
+
+// MARK: - Search retry
+
+"search_retry.title" = "Pardon the hiccup...";
+"search_retry.description" = "Sorry, there was an error on our end.";
+"search_retry.cta_title" = "Try again";
+
+// MARK: - Settings headers
+
+"settings_headers.distance_section_title" = "SEARCH DISTANCE";
+"settings_headers.sort_section_title" = "SORT RESULTS BY";
+
+// MARK: - Settings sort preference
+
+"settings_sort_preference.best_match_title" = "Best match";
+"settings_sort_preference.distance_title" = "Distance";
+"settings_sort_preference.rating_title" = "Rating";
+"settings_sort_preference.review_count_title" = "Number of reviews";
+
+// MARK: - Settings measurement system
+
+"settings_measurement_system.imperial" = "U.S";
+"settings_measurement_system.metric" = "Metric";
+
+// MARK: - About app menu
+
+"about_app_menu.cta_title" = "About %@";
+
+// MARK: - About app
+
+"about_app_details.title" = "%@";
+"about_app_details.description" = "Version %@\n\nCopyright (c) %@ Justin Peckner. Distributed under the MIT License.";

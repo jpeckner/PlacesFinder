@@ -34,9 +34,11 @@ class SearchDetailsPhoneNumberCell: UITableViewCell {
     private var tapCallback: OpenURLBlock?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.iconImageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "phone"))
+        self.iconImageView = UIImageView(widthConstrainedImage: Asset.phone.image)
         self.phoneNumberLabel = StyledLabel()
-        self.disclosureImageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "right_arrow").withRenderingMode(.alwaysTemplate))
+        self.disclosureImageView = UIImageView(
+            widthConstrainedImage: Asset.rightArrow.image.withRenderingMode(.alwaysTemplate)
+        )
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 

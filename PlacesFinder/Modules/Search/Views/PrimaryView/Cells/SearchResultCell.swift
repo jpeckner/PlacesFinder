@@ -78,7 +78,7 @@ struct SearchResultCell: View {
     }
 
     private enum Constants {
-        static let disclosureArrow = #imageLiteral(resourceName: "right_arrow").withRenderingMode(.alwaysTemplate)
+        static let disclosureArrow = Asset.rightArrow.image.withRenderingMode(.alwaysTemplate)
     }
 
 }

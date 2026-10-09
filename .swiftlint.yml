@@ -81,6 +81,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - PlacesFinder/CoordiNode/Output
   - PlacesFinder/OutdatedDependencies.swift
   - PlacesFinder/Sourcery/Output
+  - PlacesFinder/SwiftGen/Output
   - PlacesFinderTests/Components/Sourcery/Output
   - PlacesFinderUITests/Fakes
   - Shared/Shared/OutdatedDependencies.swift

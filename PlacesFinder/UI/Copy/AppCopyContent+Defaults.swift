@@ -26,72 +26,59 @@ import Shared
 
 extension AppCopyContent {
 
-    // swiftlint:disable:next function_body_length
     init(displayName: NonEmptyString) {
         self.displayName = DisplayNameCopyContent(name: displayName)
 
         self.searchInput = SearchInputCopyContent(
-            placeholder: "Search nearby"
+            placeholder: L10n.SearchInput.placeholder
         )
         self.searchInstructions = SearchInstructionsCopyContent(
-            iconImageName: "search_home",
-            title: "Start Exploring!",
-            description: "Enter search terms above to find nearby places.",
-            resultsSource: "Powered by"
+            iconImage: Asset.searchHome,
+            title: L10n.SearchInstructions.title,
+            description: L10n.SearchInstructions.description,
+            resultsSource: L10n.SearchInstructions.resultsSource
         )
         self.searchLocationDisabled = SearchLocationDisabledCopyContent(
-            iconImageName: "location_disabled",
-            title: "Where Am I?",
-            description: "To show you the best nearby places, please enable location services in Settings.",
-            ctaTitle: "Go to Settings"
+            iconImage: Asset.locationDisabled,
+            title: L10n.SearchLocationDisabled.title,
+            description: L10n.SearchLocationDisabled.description,
+            ctaTitle: L10n.SearchLocationDisabled.ctaTitle
         )
         self.searchNoInternet = SearchNoInternetCopyContent(
-            iconImageName: "no_internet",
-            title: "No internet",
-            description: "Looks like you're not connected to the internet; please reconnect to search for great places!"
+            iconImage: Asset.noInternet,
+            title: L10n.SearchNoInternet.title,
+            description: L10n.SearchNoInternet.description
         )
         self.searchNoResults = SearchNoResultsCopyContent(
-            iconImageName: "no_results",
-            title: "No Results Found",
-            description: "Try entering different search terms above...there's somewhere great nearby!"
+            iconImage: Asset.noResults,
+            title: L10n.SearchNoResults.title,
+            description: L10n.SearchNoResults.description
         )
         self.searchResults = SearchResultsCopyContent(
-            currencySymbol: "$",
-            callNumberFormatString: "Call: %@",
-            numRatingsSingularFormatString: "%d review",
-            numRatingsPluralFormatString: "%d reviews"
+            currencySymbol: L10n.SearchResults.currencySymbol
         )
         self.searchRetry = SearchRetryCopyContent(
-            iconImageName: "error",
-            title: "Pardon the hiccup...",
-            description: "Sorry, there was an error on our end.",
-            ctaTitle: "Try again"
+            iconImage: Asset.error,
+            title: L10n.SearchRetry.title,
+            description: L10n.SearchRetry.description,
+            ctaTitle: L10n.SearchRetry.ctaTitle
         )
         self.settingsHeaders = SettingsHeadersCopyContent(
-            distanceSectionTitle: "SEARCH DISTANCE",
-            sortSectionTitle: "SORT RESULTS BY"
+            distanceSectionTitle: L10n.SettingsHeaders.distanceSectionTitle,
+            sortSectionTitle: L10n.SettingsHeaders.sortSectionTitle
         )
         self.settingsSortPreference = SettingsSortPreferenceCopyContent(
-            bestMatchTitle: "Best match",
-            distanceTitle: "Distance",
-            ratingTitle: "Rating",
-            reviewCountTitle: "Number of reviews"
+            bestMatchTitle: L10n.SettingsSortPreference.bestMatchTitle,
+            distanceTitle: L10n.SettingsSortPreference.distanceTitle,
+            ratingTitle: L10n.SettingsSortPreference.ratingTitle,
+            reviewCountTitle: L10n.SettingsSortPreference.reviewCountTitle
         )
         self.settingsMeasurementSystem = SettingsMeasurementSystemCopyContent(
-            imperial: "U.S",
-            metric: "Metric"
-        )
-        self.aboutAppMenu = AboutAppMenuCopyContent(
-            ctaTitleFormat: "About %@"
+            imperial: L10n.SettingsMeasurementSystem.imperial,
+            metric: L10n.SettingsMeasurementSystem.metric
         )
         self.aboutAppView = AboutAppViewCopyContent(
-            iconImageName: "app_icon",
-            titleFormat: "%@",
-            descriptionFormat: """
-            Version %@
-
-            Copyright (c) %d Justin Peckner. Distributed under the MIT License.
-            """
+            iconImage: Asset.appIcon
         )
     }
 

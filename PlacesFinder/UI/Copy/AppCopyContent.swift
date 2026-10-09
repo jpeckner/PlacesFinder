@@ -36,7 +36,6 @@ struct AppCopyContent: Equatable, Sendable {
     let settingsHeaders: SettingsHeadersCopyContent
     let settingsSortPreference: SettingsSortPreferenceCopyContent
     let settingsMeasurementSystem: SettingsMeasurementSystemCopyContent
-    let aboutAppMenu: AboutAppMenuCopyContent
     let aboutAppView: AboutAppViewCopyContent
 }
 
@@ -49,40 +48,37 @@ struct SearchInputCopyContent: Equatable, Sendable {
 }
 
 struct SearchInstructionsCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let resultsSource: String
 }
 
 struct SearchLocationDisabledCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let ctaTitle: String
 }
 
 struct SearchNoInternetCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
 }
 
 struct SearchNoResultsCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
 }
 
 struct SearchResultsCopyContent: Equatable, Sendable {
     let currencySymbol: String
-    let callNumberFormatString: String
-    let numRatingsSingularFormatString: String
-    let numRatingsPluralFormatString: String
 }
 
 struct SearchRetryCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let ctaTitle: String
@@ -105,12 +101,6 @@ struct SettingsMeasurementSystemCopyContent: Equatable, Sendable {
     let metric: String
 }
 
-struct AboutAppMenuCopyContent: Equatable, Sendable {
-    let ctaTitleFormat: String
-}
-
 struct AboutAppViewCopyContent: Equatable, Sendable {
-    let iconImageName: String
-    let titleFormat: String
-    let descriptionFormat: String
+    let iconImage: ImageAsset
 }

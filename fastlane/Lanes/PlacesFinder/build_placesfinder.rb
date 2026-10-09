@@ -3,6 +3,7 @@ def generate_placesfinder(baseURL, apiKey, config = "Release")
   generate_config(baseURL, apiKey)
   generate_coordinode_files()
   generate_sourcery_files()
+  generate_swiftgen_files()
 end
 
 def generate_config(baseURL, apiKey)
@@ -36,6 +37,16 @@ def generate_sourcery_files()
       "cd Lanes/PlacesFinder",
       "chmod u+x generate_sourcery_files.sh",
       "./generate_sourcery_files.sh"
+    ].join("\n")
+  )
+end
+
+def generate_swiftgen_files()
+  run_script(
+    [
+      "cd Lanes/PlacesFinder",
+      "chmod u+x generate_swiftgen_files.sh",
+      "./generate_swiftgen_files.sh"
     ].join("\n")
   )
 end

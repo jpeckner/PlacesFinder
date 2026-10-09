@@ -33,7 +33,7 @@ struct DownloadedImageViewSUI: View {
     private let placeholderImage: Image
 
     init(imageURL: URL?,
-         placeholderImage: Image = Image(uiImage: #imageLiteral(resourceName: "magnifying_glass"))) {
+         placeholderImage: Image = Asset.magnifyingGlass.swiftUIImage) {
         self.imageURL = imageURL
         self.placeholderImage = placeholderImage
     }
@@ -53,7 +53,7 @@ class DownloadedImageView: UIImageView {
     private let placeholderImage: UIImage
 
     init(contentMode: ContentMode = .scaleAspectFit,
-         placeholderImage: UIImage = #imageLiteral(resourceName: "magnifying_glass")) {
+         placeholderImage: UIImage = Asset.magnifyingGlass.image) {
         self.placeholderImage = placeholderImage
 
         super.init(image: placeholderImage)

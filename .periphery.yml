@@ -4,6 +4,7 @@ external_test_case_classes:
 project: PlacesFinder.xcodeproj
 report_exclude:
 - PlacesFinderTests/Components/Sourcery/Output/**
+- PlacesFinder/SwiftGen/Output/**
 retain_public: true
 schemes:
 - PlacesFinder

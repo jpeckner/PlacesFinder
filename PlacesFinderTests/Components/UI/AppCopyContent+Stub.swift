@@ -45,7 +45,7 @@ extension SearchNoResultsCopyContent {
 
     static func stubValue() -> SearchNoResultsCopyContent {
         return SearchNoResultsCopyContent(
-            iconImageName: "stubIconImageName",
+            iconImage: Asset.checkmark,
             title: "stubTitle",
             description: "stubDescription"
         )
@@ -57,10 +57,7 @@ extension SearchResultsCopyContent {
 
     static func stubValue() -> SearchResultsCopyContent {
         return SearchResultsCopyContent(
-            currencySymbol: "+",
-            callNumberFormatString: "callNumberFormatString - %@",
-            numRatingsSingularFormatString: "numRatingsSingularFormatString - %d",
-            numRatingsPluralFormatString: "numRatingsPluralFormatString - %d"
+            currencySymbol: "+"
         )
     }
 
@@ -70,7 +67,7 @@ extension SearchRetryCopyContent {
 
     static func stubValue() -> SearchRetryCopyContent {
         return SearchRetryCopyContent(
-            iconImageName: "stubIconImageName",
+            iconImage: Asset.checkmark,
             title: "stubTitle",
             description: "stubDescription",
             ctaTitle: "stubCTATitle"

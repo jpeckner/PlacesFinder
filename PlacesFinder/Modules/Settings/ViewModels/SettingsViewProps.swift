@@ -99,10 +99,7 @@ class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
                     headerType: nil,
                     cells: [
                         SettingsCellProps(
-                            title: String(
-                                format: appCopyContent.aboutAppMenu.ctaTitleFormat,
-                                appDisplayName.value
-                            ),
+                            title: L10n.AboutAppMenu.ctaTitle(appDisplayName.value),
                             isSelected: false,
                             colorings: colorings.cellColorings,
                             action: .showAboutApp(AboutAppLinkPayload())

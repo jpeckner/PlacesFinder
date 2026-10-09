@@ -8,6 +8,7 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
 * Location services
 * Auto Layout/split view controllers
 * Using [Sourcery](https://github.com/krzysztofzablocki/Sourcery)
+* Using [SwiftGen](https://github.com/SwiftGen/SwiftGen)
 * Unit and UI tests
 * And more
 
@@ -29,7 +30,7 @@ PlacesFinder is a universal iOS app that searches for nearby places, using the [
    $ bundle exec fastlane generate_placesfinder
    ```
    
-   The `generate_placesfinder` lane auto-generates all of the Sourcery, CoordiNode, config, and other files for the app. After running it, you'll see your key inserted into AppConfig.plist (be careful not to commit it to Git).
+   The `generate_placesfinder` lane auto-generates all of the Sourcery, SwiftGen, CoordiNode, config, and other files for the app. After running it, you'll see your key inserted into AppConfig.plist (be careful not to commit it to Git).
 1. Open `PlacesFinder.xcworkspace` in Xcode.
 1. Build and run PlacesFinder; searching will correctly display results. (The app will also run without a valid API key, but searching won't work.)
 

@@ -11,3 +11,7 @@ end
 lane :run_sourcery do
   generate_sourcery_files()
 end
+
+lane :run_swiftgen do
+  generate_swiftgen_files()
+end

@@ -29,12 +29,10 @@ import Shared
 protocol SearchCopyFormatterProtocol {
     func formatAddress(_ address: PlaceLookupAddressLines) -> NonEmptyString
 
-    func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent,
-                                   displayPhone: NonEmptyString) -> String
+    func formatCallablePhoneNumber(displayPhone: NonEmptyString) -> String
     func formatNonCallablePhoneNumber(_ displayPhone: NonEmptyString) -> String
 
-    func formatRatings(_ resultsCopyContent: SearchResultsCopyContent,
-                       numRatings: Int) -> String
+    func formatRatings(numRatings: Int) -> String
     func formatPricing(_ resultsCopyContent: SearchResultsCopyContent,
                        pricing: PlaceLookupPricing) -> String
 }
@@ -51,9 +49,8 @@ extension SearchCopyFormatter {
 
 extension SearchCopyFormatter {
 
-    func formatCallablePhoneNumber(_ resultsCopyContent: SearchResultsCopyContent,
-                                   displayPhone: NonEmptyString) -> String {
-        return String(format: resultsCopyContent.callNumberFormatString, displayPhone.value)
+    func formatCallablePhoneNumber(displayPhone: NonEmptyString) -> String {
+        return L10n.SearchResults.callNumber(displayPhone.value)
     }
 
     func formatNonCallablePhoneNumber(_ displayPhone: NonEmptyString) -> String {
@@ -64,12 +61,10 @@ extension SearchCopyFormatter {
 
 extension SearchCopyFormatter {
 
-    func formatRatings(_ resultsCopyContent: SearchResultsCopyContent,
-                       numRatings: Int) -> String {
-        let formatString = numRatings == 1 ?
-            resultsCopyContent.numRatingsSingularFormatString
-            : resultsCopyContent.numRatingsPluralFormatString
-        return String(format: formatString, numRatings)
+    func formatRatings(numRatings: Int) -> String {
+        return numRatings == 1 ?
+            L10n.SearchResults.numRatingsSingular(numRatings)
+            : L10n.SearchResults.numRatingsPlural(numRatings)
     }
 
     func formatPricing(_ resultsCopyContent: SearchResultsCopyContent,
