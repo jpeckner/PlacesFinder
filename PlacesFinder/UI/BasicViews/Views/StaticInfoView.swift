@@ -35,7 +35,7 @@ struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 
     var body: some View {
         VStack {
-            Image(props.imageName)
+            props.image.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 160)

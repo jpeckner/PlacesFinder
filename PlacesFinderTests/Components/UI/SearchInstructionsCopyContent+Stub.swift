@@ -25,7 +25,7 @@
 extension SearchInstructionsCopyContent {
 
     static func stubValue() -> SearchInstructionsCopyContent {
-        return SearchInstructionsCopyContent(iconImageName: "stubIconImageName",
+        return SearchInstructionsCopyContent(iconImage: Asset.checkmark,
                                              title: "stubTitle",
                                              description: "stubDescription",
                                              resultsSource: "stubResultsSource")

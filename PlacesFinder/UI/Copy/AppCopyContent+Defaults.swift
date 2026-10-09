@@ -33,24 +33,24 @@ extension AppCopyContent {
             placeholder: L10n.SearchInput.placeholder
         )
         self.searchInstructions = SearchInstructionsCopyContent(
-            iconImageName: "search_home",
+            iconImage: Asset.searchHome,
             title: L10n.SearchInstructions.title,
             description: L10n.SearchInstructions.description,
             resultsSource: L10n.SearchInstructions.resultsSource
         )
         self.searchLocationDisabled = SearchLocationDisabledCopyContent(
-            iconImageName: "location_disabled",
+            iconImage: Asset.locationDisabled,
             title: L10n.SearchLocationDisabled.title,
             description: L10n.SearchLocationDisabled.description,
             ctaTitle: L10n.SearchLocationDisabled.ctaTitle
         )
         self.searchNoInternet = SearchNoInternetCopyContent(
-            iconImageName: "no_internet",
+            iconImage: Asset.noInternet,
             title: L10n.SearchNoInternet.title,
             description: L10n.SearchNoInternet.description
         )
         self.searchNoResults = SearchNoResultsCopyContent(
-            iconImageName: "no_results",
+            iconImage: Asset.noResults,
             title: L10n.SearchNoResults.title,
             description: L10n.SearchNoResults.description
         )
@@ -58,7 +58,7 @@ extension AppCopyContent {
             currencySymbol: L10n.SearchResults.currencySymbol
         )
         self.searchRetry = SearchRetryCopyContent(
-            iconImageName: "error",
+            iconImage: Asset.error,
             title: L10n.SearchRetry.title,
             description: L10n.SearchRetry.description,
             ctaTitle: L10n.SearchRetry.ctaTitle
@@ -78,7 +78,7 @@ extension AppCopyContent {
             metric: L10n.SettingsMeasurementSystem.metric
         )
         self.aboutAppView = AboutAppViewCopyContent(
-            iconImageName: "app_icon"
+            iconImage: Asset.appIcon
         )
     }
 

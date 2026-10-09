@@ -29,23 +29,23 @@ extension SearchRatingValue {
     var starsImage: UIImage {
         switch self {
         case .one:
-            return #imageLiteral(resourceName: "extra_large_1")
+            return Asset.extraLarge1.image
         case .oneAndAHalf:
-            return #imageLiteral(resourceName: "extra_large_1_half")
+            return Asset.extraLarge1Half.image
         case .two:
-            return #imageLiteral(resourceName: "extra_large_2")
+            return Asset.extraLarge2.image
         case .twoAndAHalf:
-            return #imageLiteral(resourceName: "extra_large_2_half")
+            return Asset.extraLarge2Half.image
         case .three:
-            return #imageLiteral(resourceName: "extra_large_3")
+            return Asset.extraLarge3.image
         case .threeAndAHalf:
-            return #imageLiteral(resourceName: "extra_large_3_half")
+            return Asset.extraLarge3Half.image
         case .four:
-            return #imageLiteral(resourceName: "extra_large_4")
+            return Asset.extraLarge4.image
         case .fourAndAHalf:
-            return #imageLiteral(resourceName: "extra_large_4_half")
+            return Asset.extraLarge4Half.image
         case .five:
-            return #imageLiteral(resourceName: "extra_large_5")
+            return Asset.extraLarge5.image
         }
     }
 

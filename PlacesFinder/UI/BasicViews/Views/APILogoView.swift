@@ -31,7 +31,7 @@ struct APILogoView: View {
     // Per https://www.yelp.com/brand#content - "We require that our logo be shown no smaller than...64dp in width
     // for screens."
     static let minWidth: CGFloat = 64.0
-    static let widthToHeightRatio: CGFloat = #imageLiteral(resourceName: "Yelp_trademark_RGB").widthToHeightRatio
+    static let widthToHeightRatio: CGFloat = Asset.yelpTrademarkRGB.image.widthToHeightRatio
 
     private let viewColoring: ViewColoring
     private let additionalWidth: CGFloat
@@ -53,6 +53,6 @@ struct APILogoView: View {
 
 extension ViewColoring {
 
-    var apiLogo: UIImage { #imageLiteral(resourceName: "Yelp_trademark_RGB_dynamic") }
+    var apiLogo: UIImage { Asset.yelpTrademarkRGBDynamic.image }
 
 }

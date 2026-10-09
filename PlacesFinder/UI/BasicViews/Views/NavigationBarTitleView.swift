@@ -32,7 +32,7 @@ class NavigationBarTitleView: UIView {
 
     init(props: NavigationBarTitleViewProps,
          colorings: NavBarColorings) {
-        self.iconImageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "magnifying_glass"))
+        self.iconImageView = UIImageView(widthConstrainedImage: Asset.magnifyingGlass.image)
         self.titleLabel = StyledLabel(textStyleClass: .navBarTitle,
                                       textColoring: colorings.titleTextColoring)
 

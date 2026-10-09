@@ -180,5 +180,5 @@ private extension GeometryProxy {
 }
 
 private enum Constants {
-    static let appIcon = #imageLiteral(resourceName: "app_icon")
+    static let appIcon = Asset.appIcon.image
 }

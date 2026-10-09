@@ -183,9 +183,9 @@ private extension HomeCoordinatorImmediateDescendent {
     var tabItemProperties: TabItemProperties {
         switch self {
         case .search:
-            return TabItemProperties(imageName: "magnifying_glass")
+            return TabItemProperties(imageName: Asset.magnifyingGlass.name)
         case .settings:
-            return TabItemProperties(imageName: "gear")
+            return TabItemProperties(imageName: Asset.gear.name)
         }
     }
 

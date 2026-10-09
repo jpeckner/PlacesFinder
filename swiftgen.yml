@@ -9,3 +9,9 @@ strings:
   outputs:
     templatePath: PlacesFinder/SwiftGen/Templates/Strings.stencil
     output: Strings.generated.swift
+
+xcassets:
+  inputs: Assets.xcassets
+  outputs:
+    templatePath: PlacesFinder/SwiftGen/Templates/Assets.stencil
+    output: Assets.generated.swift

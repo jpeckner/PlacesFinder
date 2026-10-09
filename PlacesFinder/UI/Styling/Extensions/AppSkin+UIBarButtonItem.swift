@@ -28,7 +28,7 @@ extension AppSkin {
 
     @MainActor
     var backButtonItem: UIBarButtonItem {
-        let imageView = UIImageView(widthConstrainedImage: #imageLiteral(resourceName: "left_arrow"))
+        let imageView = UIImageView(widthConstrainedImage: Asset.leftArrow.image)
         imageView.contentMode = .scaleAspectFit
 
         // Set width to a decent size so it's easily tappable

@@ -48,27 +48,27 @@ struct SearchInputCopyContent: Equatable, Sendable {
 }
 
 struct SearchInstructionsCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let resultsSource: String
 }
 
 struct SearchLocationDisabledCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let ctaTitle: String
 }
 
 struct SearchNoInternetCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
 }
 
 struct SearchNoResultsCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
 }
@@ -78,7 +78,7 @@ struct SearchResultsCopyContent: Equatable, Sendable {
 }
 
 struct SearchRetryCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
     let title: String
     let description: String
     let ctaTitle: String
@@ -102,5 +102,5 @@ struct SettingsMeasurementSystemCopyContent: Equatable, Sendable {
 }
 
 struct AboutAppViewCopyContent: Equatable, Sendable {
-    let iconImageName: String
+    let iconImage: ImageAsset
 }

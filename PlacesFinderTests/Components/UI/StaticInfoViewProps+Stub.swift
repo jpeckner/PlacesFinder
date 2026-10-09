@@ -28,12 +28,12 @@ extension StaticInfoViewProps {
 
     static func stubValue<TAppColorings: AppStandardColoringsProtocol>(
         colorings: TAppColorings,
-        imageName: String = "stubStaticInfoImageName",
+        image: ImageAsset = Asset.gear,
         title: String = "stubStaticInfoTitle",
         description: String = "stubStaticInfoDescription"
     ) -> StaticInfoViewProps<TAppColorings> {
         StaticInfoViewProps<TAppColorings>(
-            imageName: imageName,
+            image: image,
             title: title,
             description: description,
             colorings: colorings

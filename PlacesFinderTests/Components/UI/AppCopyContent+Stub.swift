@@ -45,7 +45,7 @@ extension SearchNoResultsCopyContent {
 
     static func stubValue() -> SearchNoResultsCopyContent {
         return SearchNoResultsCopyContent(
-            iconImageName: "stubIconImageName",
+            iconImage: Asset.checkmark,
             title: "stubTitle",
             description: "stubDescription"
         )
@@ -67,7 +67,7 @@ extension SearchRetryCopyContent {
 
     static func stubValue() -> SearchRetryCopyContent {
         return SearchRetryCopyContent(
-            iconImageName: "stubIconImageName",
+            iconImage: Asset.checkmark,
             title: "stubTitle",
             description: "stubDescription",
             ctaTitle: "stubCTATitle"
