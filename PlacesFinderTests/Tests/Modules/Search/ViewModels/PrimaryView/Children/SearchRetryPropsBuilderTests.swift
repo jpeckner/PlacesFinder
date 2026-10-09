@@ -33,8 +33,6 @@ class SearchRetryPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        let stubCopyContent = SearchRetryCopyContent.stubValue()
-
         var sut: SearchRetryPropsBuilder!
         var result: SearchRetryProps!
 
@@ -46,19 +44,21 @@ class SearchRetryPropsBuilderTests: AsyncSpec {
             let stubRetryAction = Search.Action.searchActivity(.initialPageRequested(.stubValue()))
 
             beforeEach {
-                result = sut.buildProps(copyContent: stubCopyContent,
-                                        colorings: AppColorings.defaultColorings.searchCTA,
+                result = sut.buildProps(colorings: AppColorings.defaultColorings.searchCTA,
                                         retryAction: stubRetryAction)
             }
 
             it("returns the expected props") {
-                expect(result.ctaViewProps.props) == stubCopyContent.staticInfoViewProps(
+                expect(result.ctaViewProps.props) == StaticInfoViewProps(
+                    image: Asset.error,
+                    title: L10n.SearchRetry.title,
+                    description: L10n.SearchRetry.description,
                     colorings: AppColorings.defaultColorings.searchCTA
                 )
             }
 
             it("returns the expected ctaTitle") {
-                expect(result.ctaViewProps.ctaTitle) == stubCopyContent.ctaTitle
+                expect(result.ctaViewProps.ctaTitle) == L10n.SearchRetry.ctaTitle
             }
 
             it("includes the retry action passed to it") {

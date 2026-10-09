@@ -30,24 +30,3 @@ struct StaticInfoViewProps<TColorings: AppStandardColoringsProtocol>: Equatable 
     let description: String
     let colorings: TColorings
 }
-
-protocol StaticInfoCopyProtocol {
-    var iconImage: ImageAsset { get }
-    var title: String { get }
-    var description: String { get }
-}
-
-extension StaticInfoCopyProtocol {
-
-    func staticInfoViewProps<TColorings: AppStandardColoringsProtocol>(
-        colorings: TColorings
-    ) -> StaticInfoViewProps<TColorings> {
-        StaticInfoViewProps(
-            image: iconImage,
-            title: title,
-            description: description,
-            colorings: colorings
-        )
-    }
-
-}

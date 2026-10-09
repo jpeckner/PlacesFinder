@@ -44,16 +44,14 @@ class SearchInputContentPropsBuilderTests: AsyncSpec {
 
         describe("buildProps()") {
             beforeEach {
-                let copyContent = SearchInputCopyContent.stubValue()
                 result = sut.buildProps(keywords: stubKeywords,
-                                        barState: .isShowing(isEditing: false),
-                                        copyContent: copyContent)
+                                        barState: .isShowing(isEditing: false))
             }
 
             it("returns its expected value") {
                 expect(result) == SearchInputContentProps(keywords: stubKeywords,
                                                           barState: .isShowing(isEditing: false),
-                                                          placeholder: "stubPlaceholder")
+                                                          placeholder: L10n.SearchInput.placeholder)
             }
         }
 

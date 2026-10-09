@@ -28,7 +28,6 @@ import Shared
 import SwiftDux
 
 struct AppState: StateProtocol, Equatable, Sendable {
-    let appCopyContentState: AppCopyContentState
     let appSkinState: AppSkinState
     let locationAuthState: LocationAuthState
     let reachabilityState: ReachabilityState
@@ -38,11 +37,9 @@ struct AppState: StateProtocol, Equatable, Sendable {
 
 extension AppState {
 
-    init(appCopyContent: AppCopyContent,
-         locationAuthStatus: LocationAuthStatus,
+    init(locationAuthStatus: LocationAuthStatus,
          currentRouterNode: NodeBox,
          searchPreferencesState: SearchPreferencesState) {
-        self.appCopyContentState = AppCopyContentState(copyContent: appCopyContent)
         self.appSkinState = AppSkinState()
         self.locationAuthState = LocationAuthState(authStatus: locationAuthStatus)
         self.reachabilityState = ReachabilityState()
@@ -56,8 +53,6 @@ enum AppStateReducer {
 
     static func reduce(action: AppAction,
                        appState: AppState) -> AppState {
-        let appCopyContentState = AppCopyContentReducer.reduce(action: action,
-                                                               currentState: appState.appCopyContentState)
         let appSkinState = AppSkinReducer.reduce(action: action,
                                                  currentState: appState.appSkinState)
         let locationAuthState = LocationAuthReducer.reduce(action: action,
@@ -69,8 +64,7 @@ enum AppStateReducer {
         let searchPreferencesState = SearchPreferencesReducer.reduce(action: action,
                                                                      currentState: appState.searchPreferencesState)
 
-        return AppState(appCopyContentState: appCopyContentState,
-                        appSkinState: appSkinState,
+        return AppState(appSkinState: appSkinState,
                         locationAuthState: locationAuthState,
                         reachabilityState: reachabilityState,
                         routerState: routerState,

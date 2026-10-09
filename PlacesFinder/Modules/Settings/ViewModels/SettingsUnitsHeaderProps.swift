@@ -43,7 +43,6 @@ struct SettingsUnitsHeaderProps: Equatable {
 protocol SettingsUnitsHeaderPropsBuilderProtocol {
     func buildProps(title: String,
                     currentlyActiveSystem: MeasurementSystem,
-                    copyContent: SettingsMeasurementSystemCopyContent,
                     colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps
 }
 
@@ -51,11 +50,10 @@ class SettingsUnitsHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol {
 
     func buildProps(title: String,
                     currentlyActiveSystem: MeasurementSystem,
-                    copyContent: SettingsMeasurementSystemCopyContent,
                     colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps {
         let systemOptions: [SettingsUnitsHeaderProps.SystemOption] =
             MeasurementSystem.allCases.map { system in
-                let systemTitle = copyContent.title(system)
+                let systemTitle = system.settingsTitle
                 return system == currentlyActiveSystem ?
                     .nonSelectable(title: systemTitle)
                     :
@@ -74,14 +72,14 @@ class SettingsUnitsHeaderPropsBuilder: SettingsUnitsHeaderPropsBuilderProtocol {
 
 }
 
-private extension SettingsMeasurementSystemCopyContent {
+private extension MeasurementSystem {
 
-    func title(_ measurementSystem: MeasurementSystem) -> String {
-        switch measurementSystem {
+    var settingsTitle: String {
+        switch self {
         case .imperial:
-            return imperial
+            return L10n.SettingsMeasurementSystem.imperial
         case .metric:
-            return metric
+            return L10n.SettingsMeasurementSystem.metric
         }
     }
 

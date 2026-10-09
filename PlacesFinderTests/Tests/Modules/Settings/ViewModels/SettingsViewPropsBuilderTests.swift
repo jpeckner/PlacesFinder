@@ -50,7 +50,7 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
         beforeEach {
             mockMeasurementSystemHeaderPropsBuilder = SettingsUnitsHeaderPropsBuilderProtocolMock()
             mockMeasurementSystemHeaderPropsBuilder
-                .buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReturnValue = stubUnitsHeaderProps
+                .buildPropsTitleCurrentlyActiveSystemColoringsReturnValue = stubUnitsHeaderProps
 
             mockPlainHeaderPropsBuilder = SettingsPlainHeaderPropsBuilderProtocolMock()
             mockPlainHeaderPropsBuilder.buildPropsTitleColoringsReturnValue = stubPlainHeaderProps
@@ -70,7 +70,7 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
             mockSettingsCellPropsBuilder = SettingsCellPropsBuilderProtocolMock()
             mockSettingsCellPropsBuilder.buildDistanceCellPropsCurrentDistanceTypeColoringsReturnValue =
                 stubDistanceCellProps
-            mockSettingsCellPropsBuilder.buildSortingCellPropsCurrentSortingCopyContentColoringsReturnValue =
+            mockSettingsCellPropsBuilder.buildSortingCellPropsCurrentSortingColoringsReturnValue =
                 stubSortingCellProps
 
             sut = SettingsViewPropsBuilder(
@@ -88,11 +88,9 @@ class SettingsViewPropsBuilderTests: AsyncSpec {
                     sorting: .reviewCount
                 )
             )
-            let stubAppCopyContent = AppCopyContent.stubValue()
 
             beforeEach {
                 result = sut.buildProps(searchPreferencesState: stubSearchPreferencesState,
-                                        appCopyContent: stubAppCopyContent,
                                         appDisplayName: AppBundleInfo.stubValue().displayName,
                                         colorings: AppColorings.defaultColorings.settings)
             }

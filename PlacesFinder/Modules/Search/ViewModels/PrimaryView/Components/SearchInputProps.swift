@@ -40,10 +40,7 @@ struct SearchInputProps: Equatable {
 
 // sourcery: AutoMockable
 protocol SearchInputPropsBuilderProtocol {
-    func buildProps(
-        inputParams: SearchInputParams,
-        copyContent: SearchInputCopyContent
-    ) -> SearchInputProps
+    func buildProps(inputParams: SearchInputParams) -> SearchInputProps
 }
 
 class SearchInputPropsBuilder: SearchInputPropsBuilderProtocol {
@@ -57,14 +54,10 @@ class SearchInputPropsBuilder: SearchInputPropsBuilderProtocol {
         self.contentPropsBuilder = contentPropsBuilder
     }
 
-    func buildProps(
-        inputParams: SearchInputParams,
-        copyContent: SearchInputCopyContent
-    ) -> SearchInputProps {
+    func buildProps(inputParams: SearchInputParams) -> SearchInputProps {
         let contentProps = contentPropsBuilder.buildProps(
             keywords: inputParams.params?.keywords,
-            barState: inputParams.barState,
-            copyContent: copyContent
+            barState: inputParams.barState
         )
 
         let coverTappedAction = actionPrism.updateEditingAction(.endedEditing)

@@ -64,12 +64,10 @@ struct SearchCTAView: View {
 #if DEBUG
 
 #Preview {
-    // swiftlint:disable:next force_try
-    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
 
     return SearchCTAView(
-        props: appCopyContent.searchRetry.ctaViewProps(colorings: appColorings.searchCTA)
+        props: SearchLocationDisabledViewProps(colorings: appColorings.searchCTA).ctaViewProps
     ) {}
 }
 

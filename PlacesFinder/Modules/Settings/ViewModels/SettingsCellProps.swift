@@ -57,7 +57,6 @@ protocol SettingsCellPropsBuilderProtocol {
                                 colorings: SettingsCellColorings) -> [SettingsCellProps]
 
     func buildSortingCellProps(currentSorting: PlaceLookupSorting,
-                               copyContent: SettingsSortPreferenceCopyContent,
                                colorings: SettingsCellColorings) -> [SettingsCellProps]
 }
 
@@ -108,10 +107,9 @@ extension SettingsCellPropsBuilder: SettingsCellPropsBuilderProtocol {
     }
 
     func buildSortingCellProps(currentSorting: PlaceLookupSorting,
-                               copyContent: SettingsSortPreferenceCopyContent,
                                colorings: SettingsCellColorings) -> [SettingsCellProps] {
         return PlaceLookupSorting.allCases.map { sorting in
-            SettingsCellProps(title: copyContent.title(sorting),
+            SettingsCellProps(title: sorting.settingsTitle,
                               isSelected: currentSorting == sorting,
                               colorings: colorings,
                               action: .setSorting(sorting))
@@ -120,18 +118,18 @@ extension SettingsCellPropsBuilder: SettingsCellPropsBuilderProtocol {
 
 }
 
-extension SettingsSortPreferenceCopyContent {
+private extension PlaceLookupSorting {
 
-    func title(_ sorting: PlaceLookupSorting) -> String {
-        switch sorting {
+    var settingsTitle: String {
+        switch self {
         case .bestMatch:
-            return bestMatchTitle
+            return L10n.SettingsSortPreference.bestMatchTitle
         case .distance:
-            return distanceTitle
+            return L10n.SettingsSortPreference.distanceTitle
         case .rating:
-            return ratingTitle
+            return L10n.SettingsSortPreference.ratingTitle
         case .reviewCount:
-            return reviewCountTitle
+            return L10n.SettingsSortPreference.reviewCountTitle
         }
     }
 

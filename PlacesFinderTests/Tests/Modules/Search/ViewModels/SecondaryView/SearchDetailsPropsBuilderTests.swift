@@ -37,7 +37,6 @@ class SearchDetailsPropsBuilderTests: AsyncSpec {
     override class func spec() {
 
         let stubModel = SearchEntityModel.stubValue()
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
         let stubColorings = AppColorings.defaultColorings.searchDetails
 
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
@@ -68,7 +67,6 @@ class SearchDetailsPropsBuilderTests: AsyncSpec {
 
         func constructResult(entity: SearchEntityModel) {
             result = sut.buildProps(entity,
-                                    resultsCopyContent: stubCopyContent,
                                     colorings: stubColorings)
         }
 

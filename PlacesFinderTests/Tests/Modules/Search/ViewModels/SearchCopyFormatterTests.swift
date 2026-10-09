@@ -28,13 +28,10 @@ import Shared
 import SharedTestComponents
 
 // swiftlint:disable blanket_disable_command
-// swiftlint:disable function_body_length
 // swiftlint:disable implicitly_unwrapped_optional
 class SearchCopyFormatterTests: AsyncSpec {
 
     override class func spec() {
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
-
         var formatter: SearchCopyFormatter!
 
         beforeEach {
@@ -107,12 +104,11 @@ class SearchCopyFormatterTests: AsyncSpec {
             var result: String!
 
             beforeEach {
-                result = formatter.formatPricing(stubCopyContent,
-                                                 pricing: PlaceLookupPricing(count: 5))
+                result = formatter.formatPricing(pricing: PlaceLookupPricing(count: 5))
             }
 
-            it("returns the currency symbol in copyContent, repeated count times") {
-                expect(result) == "+++++"
+            it("returns the currencySymbol string, repeated count times") {
+                expect(result) == String(repeating: L10n.SearchResults.currencySymbol, count: 5)
             }
         }
 

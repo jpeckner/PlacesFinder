@@ -79,7 +79,6 @@ extension SearchDetailsProps {
 // sourcery: AutoMockable
 protocol SearchDetailsPropsBuilderProtocol {
     func buildProps(_ entity: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchDetailsViewColorings) -> SearchDetailsProps
 }
 
@@ -98,12 +97,10 @@ class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
     }
 
     func buildProps(_ entity: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchDetailsViewColorings) -> SearchDetailsProps {
         let sections = [
             entity.buildInfoSection(urlOpenerService,
-                                    copyFormatter: copyFormatter,
-                                    resultsCopyContent: resultsCopyContent),
+                                    copyFormatter: copyFormatter),
             entity.buildLocationSection(copyFormatter),
         ].compactMap { $0 }
 
@@ -120,12 +117,10 @@ class SearchDetailsPropsBuilder: SearchDetailsPropsBuilderProtocol {
 private extension SearchEntityModel {
 
     func buildInfoSection(_ urlOpenerService: URLOpenerServiceProtocol,
-                          copyFormatter: SearchCopyFormatterProtocol,
-                          resultsCopyContent: SearchResultsCopyContent) -> SearchDetailsProps.Section {
+                          copyFormatter: SearchCopyFormatterProtocol) -> SearchDetailsProps.Section {
         return .info([
             placeDetailsCellModel(urlOpenerService,
-                                  copyFormatter: copyFormatter,
-                                  resultsCopyContent: resultsCopyContent),
+                                  copyFormatter: copyFormatter),
             phoneNumberCellModel(urlOpenerService,
                                  copyFormatter: copyFormatter)
         ].compactMap { $0 })
@@ -133,8 +128,7 @@ private extension SearchEntityModel {
 
     private func placeDetailsCellModel(
         _ urlOpenerService: URLOpenerServiceProtocol,
-        copyFormatter: SearchCopyFormatterProtocol,
-        resultsCopyContent: SearchResultsCopyContent
+        copyFormatter: SearchCopyFormatterProtocol
     ) -> SearchDetailsInfoSectionViewModel {
         return .basicInfo(SearchDetailsBasicInfoViewModel(
             image: DownloadedImageProps(url: image),
@@ -144,7 +138,7 @@ private extension SearchEntityModel {
             numRatingsMessage: ratings.map {
                 copyFormatter.formatRatings(numRatings: $0.numRatings)
             },
-            pricing: pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
+            pricing: pricing.map { copyFormatter.formatPricing(pricing: $0) },
             apiLinkCallback: urlOpenerService.buildOpenURLBlock(url).map { IgnoredEquatable($0) }
         ))
     }

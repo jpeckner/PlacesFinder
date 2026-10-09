@@ -148,25 +148,20 @@ private extension SearchCoordinator {
 
     func presentViews(appState: AppState,
                       searchState: Search.State) {
-        let appCopyContent = appState.appCopyContentState.copyContent
-        let titleProps = navigationBarPropsBuilder.buildTitleProps(copyContent: appCopyContent.displayName)
+        let titleProps = navigationBarPropsBuilder.buildTitleProps()
         let appSkin = appState.appSkinState.currentValue
         let presentationType = statePrism.presentationType(locationAuthState: appState.locationAuthState,
                                                            reachabilityState: appState.reachabilityState)
 
         switch presentationType {
         case .noInternet:
-            let props = SearchNoInternetViewProps(
-                copyContent: appCopyContent.searchNoInternet,
-                colorings: appSkin.colorings.standard
-            )
+            let props = SearchNoInternetViewProps(colorings: appSkin.colorings.standard)
             presenter.loadNoInternetViews(props,
                                           titleProps: titleProps,
                                           appSkin: appSkin)
 
         case .locationServicesDisabled:
-            let props = SearchLocationDisabledViewProps(copyContent: appCopyContent.searchLocationDisabled,
-                                                        colorings: appSkin.colorings.searchCTA)
+            let props = SearchLocationDisabledViewProps(colorings: appSkin.colorings.searchCTA)
             presenter.loadLocationServicesDisabledViews(props,
                                                         ctaBlock: urlOpenerService.openSettingsBlock,
                                                         titleProps: titleProps,
@@ -177,7 +172,6 @@ private extension SearchCoordinator {
             case .locationServicesNotDetermined:
                 let props = backgroundPropsBuilder.buildProps(
                     keywords: searchState.searchActivityState.inputParams.params?.keywords,
-                    appCopyContent: appCopyContent,
                     colorings: appSkin.colorings.standard
                 )
                 presenter.loadSearchBackgroundView(props,
@@ -187,13 +181,11 @@ private extension SearchCoordinator {
             case let .locationServicesEnabled(locationUpdateRequestBlock):
                 let props = lookupPropsBuilder.buildProps(
                     searchActivityState: searchState.searchActivityState,
-                    appCopyContent: appCopyContent,
                     appSkin: appSkin,
                     locationUpdateRequestBlock: locationUpdateRequestBlock
                 )
                 let detailsContext = detailsViewContextBuilder.buildViewContext(
                     searchState.searchActivityState,
-                    appCopyContent: appCopyContent,
                     colorings: appSkin.colorings.searchDetails
                 )
 

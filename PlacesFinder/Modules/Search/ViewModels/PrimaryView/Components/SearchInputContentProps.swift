@@ -36,18 +36,16 @@ struct SearchInputContentProps: Equatable {
 // sourcery: AutoMockable
 protocol SearchInputContentPropsBuilderProtocol {
     func buildProps(keywords: NonEmptyString?,
-                    barState: SearchInputParams.BarState,
-                    copyContent: SearchInputCopyContent) -> SearchInputContentProps
+                    barState: SearchInputParams.BarState) -> SearchInputContentProps
 }
 
 class SearchInputContentPropsBuilder: SearchInputContentPropsBuilderProtocol {
 
     func buildProps(keywords: NonEmptyString?,
-                    barState: SearchInputParams.BarState,
-                    copyContent: SearchInputCopyContent) -> SearchInputContentProps {
+                    barState: SearchInputParams.BarState) -> SearchInputContentProps {
         return SearchInputContentProps(keywords: keywords,
                                        barState: barState,
-                                       placeholder: copyContent.placeholder)
+                                       placeholder: L10n.SearchInput.placeholder)
     }
 
 }

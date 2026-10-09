@@ -123,7 +123,9 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             detailsPropsBuilder: detailsPropsBuilder
         )
 
-        let navigationBarPropsBuilder = NavigationBarPropsBuilder()
+        let navigationBarPropsBuilder = NavigationBarPropsBuilder(
+            appDisplayName: serviceContainer.appBundleInfo.displayName
+        )
 
         return SearchCoordinator(appStoreRelay: appStoreRelay,
                                  searchStoreRelay: searchStoreRelay,
@@ -166,7 +168,9 @@ extension HomeCoordinatorChildFactory: HomeCoordinatorChildFactoryProtocol {
             settingsCellPropsBuilder: settingsCellPropsBuilder
         )
 
-        let navigationBarPropsBuilder = NavigationBarPropsBuilder()
+        let navigationBarPropsBuilder = NavigationBarPropsBuilder(
+            appDisplayName: serviceContainer.appBundleInfo.displayName
+        )
 
         return SettingsCoordinator(store: store,
                                    viewModel: viewModel,

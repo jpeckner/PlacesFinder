@@ -38,7 +38,6 @@ enum SearchLookupChild: Equatable {
 // sourcery: AutoMockable
 protocol SearchLookupChildBuilderProtocol {
     func buildChild(loadState: Search.LoadState,
-                    appCopyContent: AppCopyContent,
                     appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild
 }
@@ -64,15 +63,11 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
     }
 
     func buildChild(loadState: Search.LoadState,
-                    appCopyContent: AppCopyContent,
                     appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
         switch loadState {
         case .idle:
-            let instructionsProps = instructionsPropsBuilder.buildProps(
-                copyContent: appCopyContent.searchInstructions,
-                colorings: appSkin.colorings.standard
-            )
+            let instructionsProps = instructionsPropsBuilder.buildProps(colorings: appSkin.colorings.standard)
             return .instructions(instructionsProps)
 
         case .locationRequested,
@@ -87,22 +82,17 @@ class SearchLookupChildBuilder: SearchLookupChildBuilderProtocol {
                 colorings: appSkin.colorings.searchResults,
                 numPagesReceived: numPagesReceived,
                 tokenContainer: tokenContainer,
-                resultsCopyContent: appCopyContent.searchResults,
                 locationUpdateRequestBlock: locationUpdateRequestBlock
             ))
 
         case .noResultsFound:
-            let noResultsProps = noResultsFoundPropsBuilder.buildProps(
-                copyContent: appCopyContent.searchNoResults,
-                colorings: appSkin.colorings.standard
-            )
+            let noResultsProps = noResultsFoundPropsBuilder.buildProps(colorings: appSkin.colorings.standard)
             return .noResults(noResultsProps)
 
         case let .failure(submittedParams, _):
             let retryAction = actionPrism.initialRequestAction(searchParams: submittedParams,
                                                                locationUpdateRequestBlock: locationUpdateRequestBlock)
-            return .failure(retryPropsBuilder.buildProps(copyContent: appCopyContent.searchRetry,
-                                                         colorings: appSkin.colorings.searchCTA,
+            return .failure(retryPropsBuilder.buildProps(colorings: appSkin.colorings.searchCTA,
                                                          retryAction: .searchActivity(retryAction)))
         }
     }

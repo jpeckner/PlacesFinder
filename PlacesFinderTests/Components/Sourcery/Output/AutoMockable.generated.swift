@@ -367,23 +367,19 @@ class NavigationBarPropsBuilderProtocolMock: NavigationBarPropsBuilderProtocol {
 
     //MARK: - buildTitleProps
 
-    var buildTitlePropsCopyContentCallsCount = 0
-    var buildTitlePropsCopyContentCalled: Bool {
-        return buildTitlePropsCopyContentCallsCount > 0
+    var buildTitlePropsCallsCount = 0
+    var buildTitlePropsCalled: Bool {
+        return buildTitlePropsCallsCount > 0
     }
-    var buildTitlePropsCopyContentReceivedCopyContent: DisplayNameCopyContent?
-    var buildTitlePropsCopyContentReceivedInvocations: [DisplayNameCopyContent] = []
-    var buildTitlePropsCopyContentReturnValue: NavigationBarTitleViewProps!
-    var buildTitlePropsCopyContentClosure: ((DisplayNameCopyContent) -> NavigationBarTitleViewProps)?
+    var buildTitlePropsReturnValue: NavigationBarTitleViewProps!
+    var buildTitlePropsClosure: (() -> NavigationBarTitleViewProps)?
 
-    func buildTitleProps(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewProps {
-        buildTitlePropsCopyContentCallsCount += 1
-        buildTitlePropsCopyContentReceivedCopyContent = copyContent
-        buildTitlePropsCopyContentReceivedInvocations.append(copyContent)
-        if let buildTitlePropsCopyContentClosure = buildTitlePropsCopyContentClosure {
-            return buildTitlePropsCopyContentClosure(copyContent)
+    func buildTitleProps() -> NavigationBarTitleViewProps {
+        buildTitlePropsCallsCount += 1
+        if let buildTitlePropsClosure = buildTitlePropsClosure {
+            return buildTitlePropsClosure()
         } else {
-            return buildTitlePropsCopyContentReturnValue
+            return buildTitlePropsReturnValue
         }
     }
 
@@ -633,23 +629,23 @@ class SearchBackgroundViewPropsBuilderProtocolMock: SearchBackgroundViewPropsBui
 
     //MARK: - buildProps
 
-    var buildPropsKeywordsAppCopyContentColoringsCallsCount = 0
-    var buildPropsKeywordsAppCopyContentColoringsCalled: Bool {
-        return buildPropsKeywordsAppCopyContentColoringsCallsCount > 0
+    var buildPropsKeywordsColoringsCallsCount = 0
+    var buildPropsKeywordsColoringsCalled: Bool {
+        return buildPropsKeywordsColoringsCallsCount > 0
     }
-    var buildPropsKeywordsAppCopyContentColoringsReceivedArguments: (keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)?
-    var buildPropsKeywordsAppCopyContentColoringsReceivedInvocations: [(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings)] = []
-    var buildPropsKeywordsAppCopyContentColoringsReturnValue: SearchBackgroundViewProps!
-    var buildPropsKeywordsAppCopyContentColoringsClosure: ((NonEmptyString?, AppCopyContent, AppStandardColorings) -> SearchBackgroundViewProps)?
+    var buildPropsKeywordsColoringsReceivedArguments: (keywords: NonEmptyString?, colorings: AppStandardColorings)?
+    var buildPropsKeywordsColoringsReceivedInvocations: [(keywords: NonEmptyString?, colorings: AppStandardColorings)] = []
+    var buildPropsKeywordsColoringsReturnValue: SearchBackgroundViewProps!
+    var buildPropsKeywordsColoringsClosure: ((NonEmptyString?, AppStandardColorings) -> SearchBackgroundViewProps)?
 
-    func buildProps(keywords: NonEmptyString?, appCopyContent: AppCopyContent, colorings: AppStandardColorings) -> SearchBackgroundViewProps {
-        buildPropsKeywordsAppCopyContentColoringsCallsCount += 1
-        buildPropsKeywordsAppCopyContentColoringsReceivedArguments = (keywords: keywords, appCopyContent: appCopyContent, colorings: colorings)
-        buildPropsKeywordsAppCopyContentColoringsReceivedInvocations.append((keywords: keywords, appCopyContent: appCopyContent, colorings: colorings))
-        if let buildPropsKeywordsAppCopyContentColoringsClosure = buildPropsKeywordsAppCopyContentColoringsClosure {
-            return buildPropsKeywordsAppCopyContentColoringsClosure(keywords, appCopyContent, colorings)
+    func buildProps(keywords: NonEmptyString?, colorings: AppStandardColorings) -> SearchBackgroundViewProps {
+        buildPropsKeywordsColoringsCallsCount += 1
+        buildPropsKeywordsColoringsReceivedArguments = (keywords: keywords, colorings: colorings)
+        buildPropsKeywordsColoringsReceivedInvocations.append((keywords: keywords, colorings: colorings))
+        if let buildPropsKeywordsColoringsClosure = buildPropsKeywordsColoringsClosure {
+            return buildPropsKeywordsColoringsClosure(keywords, colorings)
         } else {
-            return buildPropsKeywordsAppCopyContentColoringsReturnValue
+            return buildPropsKeywordsColoringsReturnValue
         }
     }
 
@@ -752,17 +748,17 @@ class SearchCopyFormatterProtocolMock: SearchCopyFormatterProtocol {
     var formatPricingPricingCalled: Bool {
         return formatPricingPricingCallsCount > 0
     }
-    var formatPricingPricingReceivedArguments: (resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing)?
-    var formatPricingPricingReceivedInvocations: [(resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing)] = []
+    var formatPricingPricingReceivedPricing: PlaceLookupPricing?
+    var formatPricingPricingReceivedInvocations: [PlaceLookupPricing] = []
     var formatPricingPricingReturnValue: String!
-    var formatPricingPricingClosure: ((SearchResultsCopyContent, PlaceLookupPricing) -> String)?
+    var formatPricingPricingClosure: ((PlaceLookupPricing) -> String)?
 
-    func formatPricing(_ resultsCopyContent: SearchResultsCopyContent, pricing: PlaceLookupPricing) -> String {
+    func formatPricing(pricing: PlaceLookupPricing) -> String {
         formatPricingPricingCallsCount += 1
-        formatPricingPricingReceivedArguments = (resultsCopyContent: resultsCopyContent, pricing: pricing)
-        formatPricingPricingReceivedInvocations.append((resultsCopyContent: resultsCopyContent, pricing: pricing))
+        formatPricingPricingReceivedPricing = pricing
+        formatPricingPricingReceivedInvocations.append(pricing)
         if let formatPricingPricingClosure = formatPricingPricingClosure {
-            return formatPricingPricingClosure(resultsCopyContent, pricing)
+            return formatPricingPricingClosure(pricing)
         } else {
             return formatPricingPricingReturnValue
         }
@@ -775,23 +771,23 @@ class SearchDetailsPropsBuilderProtocolMock: SearchDetailsPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsResultsCopyContentColoringsCallsCount = 0
-    var buildPropsResultsCopyContentColoringsCalled: Bool {
-        return buildPropsResultsCopyContentColoringsCallsCount > 0
+    var buildPropsColoringsCallsCount = 0
+    var buildPropsColoringsCalled: Bool {
+        return buildPropsColoringsCallsCount > 0
     }
-    var buildPropsResultsCopyContentColoringsReceivedArguments: (entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchDetailsViewColorings)?
-    var buildPropsResultsCopyContentColoringsReceivedInvocations: [(entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchDetailsViewColorings)] = []
-    var buildPropsResultsCopyContentColoringsReturnValue: SearchDetailsProps!
-    var buildPropsResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchDetailsViewColorings) -> SearchDetailsProps)?
+    var buildPropsColoringsReceivedArguments: (entity: SearchEntityModel, colorings: SearchDetailsViewColorings)?
+    var buildPropsColoringsReceivedInvocations: [(entity: SearchEntityModel, colorings: SearchDetailsViewColorings)] = []
+    var buildPropsColoringsReturnValue: SearchDetailsProps!
+    var buildPropsColoringsClosure: ((SearchEntityModel, SearchDetailsViewColorings) -> SearchDetailsProps)?
 
-    func buildProps(_ entity: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchDetailsViewColorings) -> SearchDetailsProps {
-        buildPropsResultsCopyContentColoringsCallsCount += 1
-        buildPropsResultsCopyContentColoringsReceivedArguments = (entity: entity, resultsCopyContent: resultsCopyContent, colorings: colorings)
-        buildPropsResultsCopyContentColoringsReceivedInvocations.append((entity: entity, resultsCopyContent: resultsCopyContent, colorings: colorings))
-        if let buildPropsResultsCopyContentColoringsClosure = buildPropsResultsCopyContentColoringsClosure {
-            return buildPropsResultsCopyContentColoringsClosure(entity, resultsCopyContent, colorings)
+    func buildProps(_ entity: SearchEntityModel, colorings: SearchDetailsViewColorings) -> SearchDetailsProps {
+        buildPropsColoringsCallsCount += 1
+        buildPropsColoringsReceivedArguments = (entity: entity, colorings: colorings)
+        buildPropsColoringsReceivedInvocations.append((entity: entity, colorings: colorings))
+        if let buildPropsColoringsClosure = buildPropsColoringsClosure {
+            return buildPropsColoringsClosure(entity, colorings)
         } else {
-            return buildPropsResultsCopyContentColoringsReturnValue
+            return buildPropsColoringsReturnValue
         }
     }
 
@@ -802,23 +798,23 @@ class SearchDetailsViewContextBuilderProtocolMock: SearchDetailsViewContextBuild
 
     //MARK: - buildViewContext
 
-    var buildViewContextAppCopyContentColoringsCallsCount = 0
-    var buildViewContextAppCopyContentColoringsCalled: Bool {
-        return buildViewContextAppCopyContentColoringsCallsCount > 0
+    var buildViewContextColoringsCallsCount = 0
+    var buildViewContextColoringsCalled: Bool {
+        return buildViewContextColoringsCallsCount > 0
     }
-    var buildViewContextAppCopyContentColoringsReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: SearchDetailsViewColorings)?
-    var buildViewContextAppCopyContentColoringsReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: SearchDetailsViewColorings)] = []
-    var buildViewContextAppCopyContentColoringsReturnValue: SearchDetailsViewContext?
-    var buildViewContextAppCopyContentColoringsClosure: ((Search.ActivityState, AppCopyContent, SearchDetailsViewColorings) -> SearchDetailsViewContext?)?
+    var buildViewContextColoringsReceivedArguments: (searchActivityState: Search.ActivityState, colorings: SearchDetailsViewColorings)?
+    var buildViewContextColoringsReceivedInvocations: [(searchActivityState: Search.ActivityState, colorings: SearchDetailsViewColorings)] = []
+    var buildViewContextColoringsReturnValue: SearchDetailsViewContext?
+    var buildViewContextColoringsClosure: ((Search.ActivityState, SearchDetailsViewColorings) -> SearchDetailsViewContext?)?
 
-    func buildViewContext(_ searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext? {
-        buildViewContextAppCopyContentColoringsCallsCount += 1
-        buildViewContextAppCopyContentColoringsReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, colorings: colorings)
-        buildViewContextAppCopyContentColoringsReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, colorings: colorings))
-        if let buildViewContextAppCopyContentColoringsClosure = buildViewContextAppCopyContentColoringsClosure {
-            return buildViewContextAppCopyContentColoringsClosure(searchActivityState, appCopyContent, colorings)
+    func buildViewContext(_ searchActivityState: Search.ActivityState, colorings: SearchDetailsViewColorings) -> SearchDetailsViewContext? {
+        buildViewContextColoringsCallsCount += 1
+        buildViewContextColoringsReceivedArguments = (searchActivityState: searchActivityState, colorings: colorings)
+        buildViewContextColoringsReceivedInvocations.append((searchActivityState: searchActivityState, colorings: colorings))
+        if let buildViewContextColoringsClosure = buildViewContextColoringsClosure {
+            return buildViewContextColoringsClosure(searchActivityState, colorings)
         } else {
-            return buildViewContextAppCopyContentColoringsReturnValue
+            return buildViewContextColoringsReturnValue
         }
     }
 
@@ -829,23 +825,23 @@ class SearchInputContentPropsBuilderProtocolMock: SearchInputContentPropsBuilder
 
     //MARK: - buildProps
 
-    var buildPropsKeywordsBarStateCopyContentCallsCount = 0
-    var buildPropsKeywordsBarStateCopyContentCalled: Bool {
-        return buildPropsKeywordsBarStateCopyContentCallsCount > 0
+    var buildPropsKeywordsBarStateCallsCount = 0
+    var buildPropsKeywordsBarStateCalled: Bool {
+        return buildPropsKeywordsBarStateCallsCount > 0
     }
-    var buildPropsKeywordsBarStateCopyContentReceivedArguments: (keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)?
-    var buildPropsKeywordsBarStateCopyContentReceivedInvocations: [(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent)] = []
-    var buildPropsKeywordsBarStateCopyContentReturnValue: SearchInputContentProps!
-    var buildPropsKeywordsBarStateCopyContentClosure: ((NonEmptyString?, SearchInputParams.BarState, SearchInputCopyContent) -> SearchInputContentProps)?
+    var buildPropsKeywordsBarStateReceivedArguments: (keywords: NonEmptyString?, barState: SearchInputParams.BarState)?
+    var buildPropsKeywordsBarStateReceivedInvocations: [(keywords: NonEmptyString?, barState: SearchInputParams.BarState)] = []
+    var buildPropsKeywordsBarStateReturnValue: SearchInputContentProps!
+    var buildPropsKeywordsBarStateClosure: ((NonEmptyString?, SearchInputParams.BarState) -> SearchInputContentProps)?
 
-    func buildProps(keywords: NonEmptyString?, barState: SearchInputParams.BarState, copyContent: SearchInputCopyContent) -> SearchInputContentProps {
-        buildPropsKeywordsBarStateCopyContentCallsCount += 1
-        buildPropsKeywordsBarStateCopyContentReceivedArguments = (keywords: keywords, barState: barState, copyContent: copyContent)
-        buildPropsKeywordsBarStateCopyContentReceivedInvocations.append((keywords: keywords, barState: barState, copyContent: copyContent))
-        if let buildPropsKeywordsBarStateCopyContentClosure = buildPropsKeywordsBarStateCopyContentClosure {
-            return buildPropsKeywordsBarStateCopyContentClosure(keywords, barState, copyContent)
+    func buildProps(keywords: NonEmptyString?, barState: SearchInputParams.BarState) -> SearchInputContentProps {
+        buildPropsKeywordsBarStateCallsCount += 1
+        buildPropsKeywordsBarStateReceivedArguments = (keywords: keywords, barState: barState)
+        buildPropsKeywordsBarStateReceivedInvocations.append((keywords: keywords, barState: barState))
+        if let buildPropsKeywordsBarStateClosure = buildPropsKeywordsBarStateClosure {
+            return buildPropsKeywordsBarStateClosure(keywords, barState)
         } else {
-            return buildPropsKeywordsBarStateCopyContentReturnValue
+            return buildPropsKeywordsBarStateReturnValue
         }
     }
 
@@ -856,23 +852,23 @@ class SearchInputPropsBuilderProtocolMock: SearchInputPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsInputParamsCopyContentCallsCount = 0
-    var buildPropsInputParamsCopyContentCalled: Bool {
-        return buildPropsInputParamsCopyContentCallsCount > 0
+    var buildPropsInputParamsCallsCount = 0
+    var buildPropsInputParamsCalled: Bool {
+        return buildPropsInputParamsCallsCount > 0
     }
-    var buildPropsInputParamsCopyContentReceivedArguments: (inputParams: SearchInputParams, copyContent: SearchInputCopyContent)?
-    var buildPropsInputParamsCopyContentReceivedInvocations: [(inputParams: SearchInputParams, copyContent: SearchInputCopyContent)] = []
-    var buildPropsInputParamsCopyContentReturnValue: SearchInputProps!
-    var buildPropsInputParamsCopyContentClosure: ((SearchInputParams, SearchInputCopyContent) -> SearchInputProps)?
+    var buildPropsInputParamsReceivedInputParams: SearchInputParams?
+    var buildPropsInputParamsReceivedInvocations: [SearchInputParams] = []
+    var buildPropsInputParamsReturnValue: SearchInputProps!
+    var buildPropsInputParamsClosure: ((SearchInputParams) -> SearchInputProps)?
 
-    func buildProps(inputParams: SearchInputParams, copyContent: SearchInputCopyContent) -> SearchInputProps {
-        buildPropsInputParamsCopyContentCallsCount += 1
-        buildPropsInputParamsCopyContentReceivedArguments = (inputParams: inputParams, copyContent: copyContent)
-        buildPropsInputParamsCopyContentReceivedInvocations.append((inputParams: inputParams, copyContent: copyContent))
-        if let buildPropsInputParamsCopyContentClosure = buildPropsInputParamsCopyContentClosure {
-            return buildPropsInputParamsCopyContentClosure(inputParams, copyContent)
+    func buildProps(inputParams: SearchInputParams) -> SearchInputProps {
+        buildPropsInputParamsCallsCount += 1
+        buildPropsInputParamsReceivedInputParams = inputParams
+        buildPropsInputParamsReceivedInvocations.append(inputParams)
+        if let buildPropsInputParamsClosure = buildPropsInputParamsClosure {
+            return buildPropsInputParamsClosure(inputParams)
         } else {
-            return buildPropsInputParamsCopyContentReturnValue
+            return buildPropsInputParamsReturnValue
         }
     }
 
@@ -883,23 +879,23 @@ class SearchInstructionsPropsBuilderProtocolMock: SearchInstructionsPropsBuilder
 
     //MARK: - buildProps
 
-    var buildPropsCopyContentColoringsCallsCount = 0
-    var buildPropsCopyContentColoringsCalled: Bool {
-        return buildPropsCopyContentColoringsCallsCount > 0
+    var buildPropsColoringsCallsCount = 0
+    var buildPropsColoringsCalled: Bool {
+        return buildPropsColoringsCallsCount > 0
     }
-    var buildPropsCopyContentColoringsReceivedArguments: (copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)?
-    var buildPropsCopyContentColoringsReceivedInvocations: [(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings)] = []
-    var buildPropsCopyContentColoringsReturnValue: SearchInstructionsProps!
-    var buildPropsCopyContentColoringsClosure: ((SearchInstructionsCopyContent, AppStandardColorings) -> SearchInstructionsProps)?
+    var buildPropsColoringsReceivedColorings: AppStandardColorings?
+    var buildPropsColoringsReceivedInvocations: [AppStandardColorings] = []
+    var buildPropsColoringsReturnValue: SearchInstructionsProps!
+    var buildPropsColoringsClosure: ((AppStandardColorings) -> SearchInstructionsProps)?
 
-    func buildProps(copyContent: SearchInstructionsCopyContent, colorings: AppStandardColorings) -> SearchInstructionsProps {
-        buildPropsCopyContentColoringsCallsCount += 1
-        buildPropsCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
-        buildPropsCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
-        if let buildPropsCopyContentColoringsClosure = buildPropsCopyContentColoringsClosure {
-            return buildPropsCopyContentColoringsClosure(copyContent, colorings)
+    func buildProps(colorings: AppStandardColorings) -> SearchInstructionsProps {
+        buildPropsColoringsCallsCount += 1
+        buildPropsColoringsReceivedColorings = colorings
+        buildPropsColoringsReceivedInvocations.append(colorings)
+        if let buildPropsColoringsClosure = buildPropsColoringsClosure {
+            return buildPropsColoringsClosure(colorings)
         } else {
-            return buildPropsCopyContentColoringsReturnValue
+            return buildPropsColoringsReturnValue
         }
     }
 
@@ -910,23 +906,23 @@ class SearchLookupChildBuilderProtocolMock: SearchLookupChildBuilderProtocol {
 
     //MARK: - buildChild
 
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount = 0
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockCalled: Bool {
-        return buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount > 0
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockCallsCount = 0
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockCalled: Bool {
+        return buildChildLoadStateAppSkinLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations: [(loadState: Search.LoadState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupChild!
-    var buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure: ((Search.LoadState, AppCopyContent, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockReceivedArguments: (loadState: Search.LoadState, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockReceivedInvocations: [(loadState: Search.LoadState, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupChild!
+    var buildChildLoadStateAppSkinLocationUpdateRequestBlockClosure: ((Search.LoadState, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupChild)?
 
-    func buildChild(loadState: Search.LoadState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
-        buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount += 1
-        buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments = (loadState: loadState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations.append((loadState: loadState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure = buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure {
-            return buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure(loadState, appCopyContent, appSkin, locationUpdateRequestBlock)
+    func buildChild(loadState: Search.LoadState, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupChild {
+        buildChildLoadStateAppSkinLocationUpdateRequestBlockCallsCount += 1
+        buildChildLoadStateAppSkinLocationUpdateRequestBlockReceivedArguments = (loadState: loadState, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildChildLoadStateAppSkinLocationUpdateRequestBlockReceivedInvocations.append((loadState: loadState, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildChildLoadStateAppSkinLocationUpdateRequestBlockClosure = buildChildLoadStateAppSkinLocationUpdateRequestBlockClosure {
+            return buildChildLoadStateAppSkinLocationUpdateRequestBlockClosure(loadState, appSkin, locationUpdateRequestBlock)
         } else {
-            return buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue
+            return buildChildLoadStateAppSkinLocationUpdateRequestBlockReturnValue
         }
     }
 
@@ -937,23 +933,23 @@ class SearchLookupPropsBuilderProtocolMock: SearchLookupPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount = 0
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCalled: Bool {
-        return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount > 0
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockCallsCount = 0
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockCalled: Bool {
+        return buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupProps!
-    var buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppCopyContent, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupProps)?
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReceivedArguments: (searchActivityState: Search.ActivityState, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReceivedInvocations: [(searchActivityState: Search.ActivityState, appSkin: AppSkin, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReturnValue: SearchLookupProps!
+    var buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockClosure: ((Search.ActivityState, AppSkin, @escaping LocationUpdateRequestBlock) -> SearchLookupProps)?
 
-    func buildProps(searchActivityState: Search.ActivityState, appCopyContent: AppCopyContent, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps {
-        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockCallsCount += 1
-        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appCopyContent: appCopyContent, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure = buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure {
-            return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockClosure(searchActivityState, appCopyContent, appSkin, locationUpdateRequestBlock)
+    func buildProps(searchActivityState: Search.ActivityState, appSkin: AppSkin, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps {
+        buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockCallsCount += 1
+        buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReceivedArguments = (searchActivityState: searchActivityState, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReceivedInvocations.append((searchActivityState: searchActivityState, appSkin: appSkin, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockClosure = buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockClosure {
+            return buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockClosure(searchActivityState, appSkin, locationUpdateRequestBlock)
         } else {
-            return buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue
+            return buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReturnValue
         }
     }
 
@@ -964,23 +960,23 @@ class SearchNoResultsFoundPropsBuilderProtocolMock: SearchNoResultsFoundPropsBui
 
     //MARK: - buildProps
 
-    var buildPropsCopyContentColoringsCallsCount = 0
-    var buildPropsCopyContentColoringsCalled: Bool {
-        return buildPropsCopyContentColoringsCallsCount > 0
+    var buildPropsColoringsCallsCount = 0
+    var buildPropsColoringsCalled: Bool {
+        return buildPropsColoringsCallsCount > 0
     }
-    var buildPropsCopyContentColoringsReceivedArguments: (copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)?
-    var buildPropsCopyContentColoringsReceivedInvocations: [(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings)] = []
-    var buildPropsCopyContentColoringsReturnValue: SearchNoResultsFoundProps!
-    var buildPropsCopyContentColoringsClosure: ((SearchNoResultsCopyContent, AppStandardColorings) -> SearchNoResultsFoundProps)?
+    var buildPropsColoringsReceivedColorings: AppStandardColorings?
+    var buildPropsColoringsReceivedInvocations: [AppStandardColorings] = []
+    var buildPropsColoringsReturnValue: SearchNoResultsFoundProps!
+    var buildPropsColoringsClosure: ((AppStandardColorings) -> SearchNoResultsFoundProps)?
 
-    func buildProps(copyContent: SearchNoResultsCopyContent, colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
-        buildPropsCopyContentColoringsCallsCount += 1
-        buildPropsCopyContentColoringsReceivedArguments = (copyContent: copyContent, colorings: colorings)
-        buildPropsCopyContentColoringsReceivedInvocations.append((copyContent: copyContent, colorings: colorings))
-        if let buildPropsCopyContentColoringsClosure = buildPropsCopyContentColoringsClosure {
-            return buildPropsCopyContentColoringsClosure(copyContent, colorings)
+    func buildProps(colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
+        buildPropsColoringsCallsCount += 1
+        buildPropsColoringsReceivedColorings = colorings
+        buildPropsColoringsReceivedInvocations.append(colorings)
+        if let buildPropsColoringsClosure = buildPropsColoringsClosure {
+            return buildPropsColoringsClosure(colorings)
         } else {
-            return buildPropsCopyContentColoringsReturnValue
+            return buildPropsColoringsReturnValue
         }
     }
 
@@ -1069,23 +1065,23 @@ class SearchResultCellPropsBuilderProtocolMock: SearchResultCellPropsBuilderProt
 
     //MARK: - buildProps
 
-    var buildPropsModelResultsCopyContentColoringsCallsCount = 0
-    var buildPropsModelResultsCopyContentColoringsCalled: Bool {
-        return buildPropsModelResultsCopyContentColoringsCallsCount > 0
+    var buildPropsModelColoringsCallsCount = 0
+    var buildPropsModelColoringsCalled: Bool {
+        return buildPropsModelColoringsCallsCount > 0
     }
-    var buildPropsModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
-    var buildPropsModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
-    var buildPropsModelResultsCopyContentColoringsReturnValue: SearchResultCellProps!
-    var buildPropsModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultCellProps)?
+    var buildPropsModelColoringsReceivedArguments: (model: SearchEntityModel, colorings: SearchResultsViewColorings)?
+    var buildPropsModelColoringsReceivedInvocations: [(model: SearchEntityModel, colorings: SearchResultsViewColorings)] = []
+    var buildPropsModelColoringsReturnValue: SearchResultCellProps!
+    var buildPropsModelColoringsClosure: ((SearchEntityModel, SearchResultsViewColorings) -> SearchResultCellProps)?
 
-    func buildProps(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultCellProps {
-        buildPropsModelResultsCopyContentColoringsCallsCount += 1
-        buildPropsModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
-        buildPropsModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
-        if let buildPropsModelResultsCopyContentColoringsClosure = buildPropsModelResultsCopyContentColoringsClosure {
-            return buildPropsModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
+    func buildProps(model: SearchEntityModel, colorings: SearchResultsViewColorings) -> SearchResultCellProps {
+        buildPropsModelColoringsCallsCount += 1
+        buildPropsModelColoringsReceivedArguments = (model: model, colorings: colorings)
+        buildPropsModelColoringsReceivedInvocations.append((model: model, colorings: colorings))
+        if let buildPropsModelColoringsClosure = buildPropsModelColoringsClosure {
+            return buildPropsModelColoringsClosure(model, colorings)
         } else {
-            return buildPropsModelResultsCopyContentColoringsReturnValue
+            return buildPropsModelColoringsReturnValue
         }
     }
 
@@ -1096,23 +1092,23 @@ class SearchResultPropsBuilderProtocolMock: SearchResultPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsModelResultsCopyContentColoringsCallsCount = 0
-    var buildPropsModelResultsCopyContentColoringsCalled: Bool {
-        return buildPropsModelResultsCopyContentColoringsCallsCount > 0
+    var buildPropsModelColoringsCallsCount = 0
+    var buildPropsModelColoringsCalled: Bool {
+        return buildPropsModelColoringsCallsCount > 0
     }
-    var buildPropsModelResultsCopyContentColoringsReceivedArguments: (model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)?
-    var buildPropsModelResultsCopyContentColoringsReceivedInvocations: [(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings)] = []
-    var buildPropsModelResultsCopyContentColoringsReturnValue: SearchResultProps!
-    var buildPropsModelResultsCopyContentColoringsClosure: ((SearchEntityModel, SearchResultsCopyContent, SearchResultsViewColorings) -> SearchResultProps)?
+    var buildPropsModelColoringsReceivedArguments: (model: SearchEntityModel, colorings: SearchResultsViewColorings)?
+    var buildPropsModelColoringsReceivedInvocations: [(model: SearchEntityModel, colorings: SearchResultsViewColorings)] = []
+    var buildPropsModelColoringsReturnValue: SearchResultProps!
+    var buildPropsModelColoringsClosure: ((SearchEntityModel, SearchResultsViewColorings) -> SearchResultProps)?
 
-    func buildProps(model: SearchEntityModel, resultsCopyContent: SearchResultsCopyContent, colorings: SearchResultsViewColorings) -> SearchResultProps {
-        buildPropsModelResultsCopyContentColoringsCallsCount += 1
-        buildPropsModelResultsCopyContentColoringsReceivedArguments = (model: model, resultsCopyContent: resultsCopyContent, colorings: colorings)
-        buildPropsModelResultsCopyContentColoringsReceivedInvocations.append((model: model, resultsCopyContent: resultsCopyContent, colorings: colorings))
-        if let buildPropsModelResultsCopyContentColoringsClosure = buildPropsModelResultsCopyContentColoringsClosure {
-            return buildPropsModelResultsCopyContentColoringsClosure(model, resultsCopyContent, colorings)
+    func buildProps(model: SearchEntityModel, colorings: SearchResultsViewColorings) -> SearchResultProps {
+        buildPropsModelColoringsCallsCount += 1
+        buildPropsModelColoringsReceivedArguments = (model: model, colorings: colorings)
+        buildPropsModelColoringsReceivedInvocations.append((model: model, colorings: colorings))
+        if let buildPropsModelColoringsClosure = buildPropsModelColoringsClosure {
+            return buildPropsModelColoringsClosure(model, colorings)
         } else {
-            return buildPropsModelResultsCopyContentColoringsReturnValue
+            return buildPropsModelColoringsReturnValue
         }
     }
 
@@ -1123,23 +1119,23 @@ class SearchResultsViewPropsBuilderProtocolMock: SearchResultsViewPropsBuilderPr
 
     //MARK: - buildProps
 
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount = 0
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCalled: Bool {
-        return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount > 0
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockCallsCount = 0
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockCalled: Bool {
+        return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockCallsCount > 0
     }
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedInvocations: [(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue: SearchResultsViewProps!
-    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, SearchResultsViewColorings, Int, PlaceLookupTokenAttemptsContainer?, SearchResultsCopyContent, @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps)?
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReceivedArguments: (submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, locationUpdateRequestBlock: LocationUpdateRequestBlock)?
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReceivedInvocations: [(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, locationUpdateRequestBlock: LocationUpdateRequestBlock)] = []
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReturnValue: SearchResultsViewProps!
+    var buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockClosure: ((SearchParams, NonEmptyArray<SearchEntityModel>, SearchResultsViewColorings, Int, PlaceLookupTokenAttemptsContainer?, @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps)?
 
-    func buildProps(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, resultsCopyContent: SearchResultsCopyContent, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps {
-        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockCallsCount += 1
-        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock)
-        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedInvocations.append((submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, resultsCopyContent: resultsCopyContent, locationUpdateRequestBlock: locationUpdateRequestBlock))
-        if let buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure = buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure {
-            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockClosure(submittedParams, allEntities, colorings, numPagesReceived, tokenContainer, resultsCopyContent, locationUpdateRequestBlock)
+    func buildProps(submittedParams: SearchParams, allEntities: NonEmptyArray<SearchEntityModel>, colorings: SearchResultsViewColorings, numPagesReceived: Int, tokenContainer: PlaceLookupTokenAttemptsContainer?, locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps {
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockCallsCount += 1
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReceivedArguments = (submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, locationUpdateRequestBlock: locationUpdateRequestBlock)
+        buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReceivedInvocations.append((submittedParams: submittedParams, allEntities: allEntities, colorings: colorings, numPagesReceived: numPagesReceived, tokenContainer: tokenContainer, locationUpdateRequestBlock: locationUpdateRequestBlock))
+        if let buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockClosure = buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockClosure {
+            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockClosure(submittedParams, allEntities, colorings, numPagesReceived, tokenContainer, locationUpdateRequestBlock)
         } else {
-            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
+            return buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReturnValue
         }
     }
 
@@ -1150,23 +1146,23 @@ class SearchRetryPropsBuilderProtocolMock: SearchRetryPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsCopyContentColoringsRetryActionCallsCount = 0
-    var buildPropsCopyContentColoringsRetryActionCalled: Bool {
-        return buildPropsCopyContentColoringsRetryActionCallsCount > 0
+    var buildPropsColoringsRetryActionCallsCount = 0
+    var buildPropsColoringsRetryActionCalled: Bool {
+        return buildPropsColoringsRetryActionCallsCount > 0
     }
-    var buildPropsCopyContentColoringsRetryActionReceivedArguments: (copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action)?
-    var buildPropsCopyContentColoringsRetryActionReceivedInvocations: [(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action)] = []
-    var buildPropsCopyContentColoringsRetryActionReturnValue: SearchRetryProps!
-    var buildPropsCopyContentColoringsRetryActionClosure: ((SearchRetryCopyContent, SearchCTAViewColorings, Search.Action) -> SearchRetryProps)?
+    var buildPropsColoringsRetryActionReceivedArguments: (colorings: SearchCTAViewColorings, retryAction: Search.Action)?
+    var buildPropsColoringsRetryActionReceivedInvocations: [(colorings: SearchCTAViewColorings, retryAction: Search.Action)] = []
+    var buildPropsColoringsRetryActionReturnValue: SearchRetryProps!
+    var buildPropsColoringsRetryActionClosure: ((SearchCTAViewColorings, Search.Action) -> SearchRetryProps)?
 
-    func buildProps(copyContent: SearchRetryCopyContent, colorings: SearchCTAViewColorings, retryAction: Search.Action) -> SearchRetryProps {
-        buildPropsCopyContentColoringsRetryActionCallsCount += 1
-        buildPropsCopyContentColoringsRetryActionReceivedArguments = (copyContent: copyContent, colorings: colorings, retryAction: retryAction)
-        buildPropsCopyContentColoringsRetryActionReceivedInvocations.append((copyContent: copyContent, colorings: colorings, retryAction: retryAction))
-        if let buildPropsCopyContentColoringsRetryActionClosure = buildPropsCopyContentColoringsRetryActionClosure {
-            return buildPropsCopyContentColoringsRetryActionClosure(copyContent, colorings, retryAction)
+    func buildProps(colorings: SearchCTAViewColorings, retryAction: Search.Action) -> SearchRetryProps {
+        buildPropsColoringsRetryActionCallsCount += 1
+        buildPropsColoringsRetryActionReceivedArguments = (colorings: colorings, retryAction: retryAction)
+        buildPropsColoringsRetryActionReceivedInvocations.append((colorings: colorings, retryAction: retryAction))
+        if let buildPropsColoringsRetryActionClosure = buildPropsColoringsRetryActionClosure {
+            return buildPropsColoringsRetryActionClosure(colorings, retryAction)
         } else {
-            return buildPropsCopyContentColoringsRetryActionReturnValue
+            return buildPropsColoringsRetryActionReturnValue
         }
     }
 
@@ -1199,23 +1195,23 @@ class SettingsCellPropsBuilderProtocolMock: SettingsCellPropsBuilderProtocol {
 
     //MARK: - buildSortingCellProps
 
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsCallsCount = 0
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsCalled: Bool {
-        return buildSortingCellPropsCurrentSortingCopyContentColoringsCallsCount > 0
+    var buildSortingCellPropsCurrentSortingColoringsCallsCount = 0
+    var buildSortingCellPropsCurrentSortingColoringsCalled: Bool {
+        return buildSortingCellPropsCurrentSortingColoringsCallsCount > 0
     }
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsReceivedArguments: (currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings)?
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsReceivedInvocations: [(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings)] = []
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsReturnValue: [SettingsCellProps]!
-    var buildSortingCellPropsCurrentSortingCopyContentColoringsClosure: ((PlaceLookupSorting, SettingsSortPreferenceCopyContent, SettingsCellColorings) -> [SettingsCellProps])?
+    var buildSortingCellPropsCurrentSortingColoringsReceivedArguments: (currentSorting: PlaceLookupSorting, colorings: SettingsCellColorings)?
+    var buildSortingCellPropsCurrentSortingColoringsReceivedInvocations: [(currentSorting: PlaceLookupSorting, colorings: SettingsCellColorings)] = []
+    var buildSortingCellPropsCurrentSortingColoringsReturnValue: [SettingsCellProps]!
+    var buildSortingCellPropsCurrentSortingColoringsClosure: ((PlaceLookupSorting, SettingsCellColorings) -> [SettingsCellProps])?
 
-    func buildSortingCellProps(currentSorting: PlaceLookupSorting, copyContent: SettingsSortPreferenceCopyContent, colorings: SettingsCellColorings) -> [SettingsCellProps] {
-        buildSortingCellPropsCurrentSortingCopyContentColoringsCallsCount += 1
-        buildSortingCellPropsCurrentSortingCopyContentColoringsReceivedArguments = (currentSorting: currentSorting, copyContent: copyContent, colorings: colorings)
-        buildSortingCellPropsCurrentSortingCopyContentColoringsReceivedInvocations.append((currentSorting: currentSorting, copyContent: copyContent, colorings: colorings))
-        if let buildSortingCellPropsCurrentSortingCopyContentColoringsClosure = buildSortingCellPropsCurrentSortingCopyContentColoringsClosure {
-            return buildSortingCellPropsCurrentSortingCopyContentColoringsClosure(currentSorting, copyContent, colorings)
+    func buildSortingCellProps(currentSorting: PlaceLookupSorting, colorings: SettingsCellColorings) -> [SettingsCellProps] {
+        buildSortingCellPropsCurrentSortingColoringsCallsCount += 1
+        buildSortingCellPropsCurrentSortingColoringsReceivedArguments = (currentSorting: currentSorting, colorings: colorings)
+        buildSortingCellPropsCurrentSortingColoringsReceivedInvocations.append((currentSorting: currentSorting, colorings: colorings))
+        if let buildSortingCellPropsCurrentSortingColoringsClosure = buildSortingCellPropsCurrentSortingColoringsClosure {
+            return buildSortingCellPropsCurrentSortingColoringsClosure(currentSorting, colorings)
         } else {
-            return buildSortingCellPropsCurrentSortingCopyContentColoringsReturnValue
+            return buildSortingCellPropsCurrentSortingColoringsReturnValue
         }
     }
 
@@ -1280,23 +1276,23 @@ class SettingsUnitsHeaderPropsBuilderProtocolMock: SettingsUnitsHeaderPropsBuild
 
     //MARK: - buildProps
 
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsCallsCount = 0
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsCalled: Bool {
-        return buildPropsTitleCurrentlyActiveSystemCopyContentColoringsCallsCount > 0
+    var buildPropsTitleCurrentlyActiveSystemColoringsCallsCount = 0
+    var buildPropsTitleCurrentlyActiveSystemColoringsCalled: Bool {
+        return buildPropsTitleCurrentlyActiveSystemColoringsCallsCount > 0
     }
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings)?
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReceivedInvocations: [(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings)] = []
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReturnValue: SettingsUnitsHeaderProps!
-    var buildPropsTitleCurrentlyActiveSystemCopyContentColoringsClosure: ((String, MeasurementSystem, SettingsMeasurementSystemCopyContent, SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps)?
+    var buildPropsTitleCurrentlyActiveSystemColoringsReceivedArguments: (title: String, currentlyActiveSystem: MeasurementSystem, colorings: SettingsHeaderViewColorings)?
+    var buildPropsTitleCurrentlyActiveSystemColoringsReceivedInvocations: [(title: String, currentlyActiveSystem: MeasurementSystem, colorings: SettingsHeaderViewColorings)] = []
+    var buildPropsTitleCurrentlyActiveSystemColoringsReturnValue: SettingsUnitsHeaderProps!
+    var buildPropsTitleCurrentlyActiveSystemColoringsClosure: ((String, MeasurementSystem, SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps)?
 
-    func buildProps(title: String, currentlyActiveSystem: MeasurementSystem, copyContent: SettingsMeasurementSystemCopyContent, colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps {
-        buildPropsTitleCurrentlyActiveSystemCopyContentColoringsCallsCount += 1
-        buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReceivedArguments = (title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent, colorings: colorings)
-        buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReceivedInvocations.append((title: title, currentlyActiveSystem: currentlyActiveSystem, copyContent: copyContent, colorings: colorings))
-        if let buildPropsTitleCurrentlyActiveSystemCopyContentColoringsClosure = buildPropsTitleCurrentlyActiveSystemCopyContentColoringsClosure {
-            return buildPropsTitleCurrentlyActiveSystemCopyContentColoringsClosure(title, currentlyActiveSystem, copyContent, colorings)
+    func buildProps(title: String, currentlyActiveSystem: MeasurementSystem, colorings: SettingsHeaderViewColorings) -> SettingsUnitsHeaderProps {
+        buildPropsTitleCurrentlyActiveSystemColoringsCallsCount += 1
+        buildPropsTitleCurrentlyActiveSystemColoringsReceivedArguments = (title: title, currentlyActiveSystem: currentlyActiveSystem, colorings: colorings)
+        buildPropsTitleCurrentlyActiveSystemColoringsReceivedInvocations.append((title: title, currentlyActiveSystem: currentlyActiveSystem, colorings: colorings))
+        if let buildPropsTitleCurrentlyActiveSystemColoringsClosure = buildPropsTitleCurrentlyActiveSystemColoringsClosure {
+            return buildPropsTitleCurrentlyActiveSystemColoringsClosure(title, currentlyActiveSystem, colorings)
         } else {
-            return buildPropsTitleCurrentlyActiveSystemCopyContentColoringsReturnValue
+            return buildPropsTitleCurrentlyActiveSystemColoringsReturnValue
         }
     }
 
@@ -1307,23 +1303,23 @@ class SettingsViewPropsBuilderProtocolMock: SettingsViewPropsBuilderProtocol {
 
     //MARK: - buildProps
 
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount = 0
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCalled: Bool {
-        return buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount > 0
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsCallsCount = 0
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsCalled: Bool {
+        return buildPropsSearchPreferencesStateAppDisplayNameColoringsCallsCount > 0
     }
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedArguments: (searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)?
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)] = []
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue: SettingsViewProps!
-    var buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure: ((SearchPreferencesState, AppCopyContent, NonEmptyString, SettingsViewColorings) -> SettingsViewProps)?
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsReceivedArguments: (searchPreferencesState: SearchPreferencesState, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)?
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsReceivedInvocations: [(searchPreferencesState: SearchPreferencesState, appDisplayName: NonEmptyString, colorings: SettingsViewColorings)] = []
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsReturnValue: SettingsViewProps!
+    var buildPropsSearchPreferencesStateAppDisplayNameColoringsClosure: ((SearchPreferencesState, NonEmptyString, SettingsViewColorings) -> SettingsViewProps)?
 
-    func buildProps(searchPreferencesState: SearchPreferencesState, appCopyContent: AppCopyContent, appDisplayName: NonEmptyString, colorings: SettingsViewColorings) -> SettingsViewProps {
-        buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsCallsCount += 1
-        buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedArguments = (searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, appDisplayName: appDisplayName, colorings: colorings)
-        buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appCopyContent: appCopyContent, appDisplayName: appDisplayName, colorings: colorings))
-        if let buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure = buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure {
-            return buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsClosure(searchPreferencesState, appCopyContent, appDisplayName, colorings)
+    func buildProps(searchPreferencesState: SearchPreferencesState, appDisplayName: NonEmptyString, colorings: SettingsViewColorings) -> SettingsViewProps {
+        buildPropsSearchPreferencesStateAppDisplayNameColoringsCallsCount += 1
+        buildPropsSearchPreferencesStateAppDisplayNameColoringsReceivedArguments = (searchPreferencesState: searchPreferencesState, appDisplayName: appDisplayName, colorings: colorings)
+        buildPropsSearchPreferencesStateAppDisplayNameColoringsReceivedInvocations.append((searchPreferencesState: searchPreferencesState, appDisplayName: appDisplayName, colorings: colorings))
+        if let buildPropsSearchPreferencesStateAppDisplayNameColoringsClosure = buildPropsSearchPreferencesStateAppDisplayNameColoringsClosure {
+            return buildPropsSearchPreferencesStateAppDisplayNameColoringsClosure(searchPreferencesState, appDisplayName, colorings)
         } else {
-            return buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue
+            return buildPropsSearchPreferencesStateAppDisplayNameColoringsReturnValue
         }
     }
 

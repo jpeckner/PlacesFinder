@@ -34,7 +34,6 @@ struct SearchLookupProps: Equatable {
 // sourcery: AutoMockable
 protocol SearchLookupPropsBuilderProtocol {
     func buildProps(searchActivityState: Search.ActivityState,
-                    appCopyContent: AppCopyContent,
                     appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps
 }
@@ -51,16 +50,11 @@ class SearchLookupPropsBuilder: SearchLookupPropsBuilderProtocol {
     }
 
     func buildProps(searchActivityState: Search.ActivityState,
-                    appCopyContent: AppCopyContent,
                     appSkin: AppSkin,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchLookupProps {
-        let inputProps = inputPropsBuilder.buildProps(
-            inputParams: searchActivityState.inputParams,
-            copyContent: appCopyContent.searchInput
-        )
+        let inputProps = inputPropsBuilder.buildProps(inputParams: searchActivityState.inputParams)
 
         let child = childBuilder.buildChild(loadState: searchActivityState.loadState,
-                                            appCopyContent: appCopyContent,
                                             appSkin: appSkin,
                                             locationUpdateRequestBlock: locationUpdateRequestBlock)
 

@@ -27,12 +27,3 @@ import Foundation
 struct SearchMessageViewProps: Equatable {
     let props: StaticInfoViewProps<AppStandardColorings>
 }
-
-extension SearchMessageViewProps {
-
-    init(copyContent: StaticInfoCopyProtocol,
-         colorings: AppStandardColorings) {
-        self.props = copyContent.staticInfoViewProps(colorings: colorings)
-    }
-
-}

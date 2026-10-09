@@ -28,15 +28,13 @@ import SharedTestComponents
 extension AppState {
 
     static func stubValue(
-        appCopyContentState: AppCopyContentState = .init(copyContent: .stubValue()),
         appSkinState: AppSkinState = .init(),
         locationAuthState: LocationAuthState = .init(authStatus: .locationServicesDisabled),
         reachabilityState: ReachabilityState = .init(),
         routerState: RouterState<AppLinkType> = .init(currentNode: StubNode.nodeBox),
         searchPreferencesState: SearchPreferencesState = SearchPreferencesState(usesMetricSystem: true)
     ) -> AppState {
-        return AppState(appCopyContentState: appCopyContentState,
-                        appSkinState: appSkinState,
+        return AppState(appSkinState: appSkinState,
                         locationAuthState: locationAuthState,
                         reachabilityState: reachabilityState,
                         routerState: routerState,

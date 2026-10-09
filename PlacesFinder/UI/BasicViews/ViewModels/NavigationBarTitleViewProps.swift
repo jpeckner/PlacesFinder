@@ -31,13 +31,19 @@ struct NavigationBarTitleViewProps: Equatable {
 
 // sourcery: AutoMockable
 protocol NavigationBarPropsBuilderProtocol {
-    func buildTitleProps(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewProps
+    func buildTitleProps() -> NavigationBarTitleViewProps
 }
 
 class NavigationBarPropsBuilder: NavigationBarPropsBuilderProtocol {
 
-    func buildTitleProps(copyContent: DisplayNameCopyContent) -> NavigationBarTitleViewProps {
-        return NavigationBarTitleViewProps(displayName: copyContent.name.value)
+    private let appDisplayName: NonEmptyString
+
+    init(appDisplayName: NonEmptyString) {
+        self.appDisplayName = appDisplayName
+    }
+
+    func buildTitleProps() -> NavigationBarTitleViewProps {
+        return NavigationBarTitleViewProps(displayName: appDisplayName.value)
     }
 
 }

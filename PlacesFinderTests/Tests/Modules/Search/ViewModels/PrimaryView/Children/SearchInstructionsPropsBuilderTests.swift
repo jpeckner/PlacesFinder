@@ -41,21 +41,18 @@ class SearchInstructionsPropsBuilderTests: AsyncSpec {
         describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildProps(
-                    copyContent: SearchInstructionsCopyContent.stubValue(),
-                    colorings: AppColorings.defaultColorings.standard
-                )
+                result = sut.buildProps(colorings: AppColorings.defaultColorings.standard)
             }
 
             it("returns its expected value") {
                 expect(result) == SearchInstructionsProps(
                     props: StaticInfoViewProps(
-                        image: Asset.checkmark,
-                        title: "stubTitle",
-                        description: "stubDescription",
+                        image: Asset.searchHome,
+                        title: L10n.SearchInstructions.title,
+                        description: L10n.SearchInstructions.description,
                         colorings: AppColorings.defaultColorings.standard
                     ),
-                    resultsSource: "stubResultsSource"
+                    resultsSource: L10n.SearchInstructions.resultsSource
                 )
             }
 

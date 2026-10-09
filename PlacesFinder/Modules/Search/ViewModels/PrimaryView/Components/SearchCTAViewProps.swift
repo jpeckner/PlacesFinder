@@ -29,18 +29,3 @@ struct SearchCTAViewProps: Equatable {
     let props: StaticInfoViewProps<SearchCTAViewColorings>
     let ctaTitle: String
 }
-
-protocol SearchCTACopyProtocol: StaticInfoCopyProtocol {
-    var ctaTitle: String { get }
-}
-
-extension SearchCTACopyProtocol {
-
-    func ctaViewProps(colorings: SearchCTAViewColorings) -> SearchCTAViewProps {
-        SearchCTAViewProps(
-            props: staticInfoViewProps(colorings: colorings),
-            ctaTitle: ctaTitle
-        )
-    }
-
-}
