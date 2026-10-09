@@ -28,16 +28,15 @@ struct SearchNoInternetViewProps {
     let messageViewProps: SearchMessageViewProps
 }
 
-extension SearchNoInternetCopyContent: StaticInfoCopyProtocol {}
-
 extension SearchNoInternetViewProps {
 
-    init(copyContent: SearchNoInternetCopyContent,
-         colorings: AppStandardColorings) {
-        self.messageViewProps = SearchMessageViewProps(
-            copyContent: copyContent,
+    init(colorings: AppStandardColorings) {
+        self.messageViewProps = SearchMessageViewProps(props: StaticInfoViewProps(
+            image: Asset.noInternet,
+            title: L10n.SearchNoInternet.title,
+            description: L10n.SearchNoInternet.description,
             colorings: colorings
-        )
+        ))
     }
 
 }

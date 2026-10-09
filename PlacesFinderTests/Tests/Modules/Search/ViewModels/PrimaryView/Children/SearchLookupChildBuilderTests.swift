@@ -36,7 +36,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        let stubAppCopyContent = AppCopyContent.stubValue()
         let stubSearchParams = SearchParams.stubValue()
         let stubInstructionsProps = SearchInstructionsProps.stubValue()
         let stubNoResultsProps = SearchNoResultsFoundProps(messageViewProps: .stubValue())
@@ -69,17 +68,17 @@ class SearchLookupChildBuilderTests: AsyncSpec {
             mockSearchActivityActionPrism.initialRequestActionSearchParamsLocationUpdateRequestBlockReturnValue = stubStartInitialRequestAction
 
             mockInstructionsPropsBuilder = SearchInstructionsPropsBuilderProtocolMock()
-            mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubInstructionsProps
+            mockInstructionsPropsBuilder.buildPropsColoringsReturnValue = stubInstructionsProps
 
             stubResultsProps = .stubValue(
                 resultProps: NonEmptyArray(with: SearchResultProps.stubValue())
             )
             mockResultsPropsBuilder = SearchResultsViewPropsBuilderProtocolMock()
-            mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReturnValue
+            mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReturnValue
                 = stubResultsProps
 
             mockNoResultsFoundPropsBuilder = SearchNoResultsFoundPropsBuilderProtocolMock()
-            mockNoResultsFoundPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubNoResultsProps
+            mockNoResultsFoundPropsBuilder.buildPropsColoringsReturnValue = stubNoResultsProps
 
             mockRetryPropsBuilder = SearchRetryPropsBuilderProtocolMock()
 
@@ -97,7 +96,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 beforeEach {
                     result = sut.buildChild(
                         loadState: .idle,
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -105,8 +103,8 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 }
 
                 it("calls mockInstructionsPropsBuilder with expected method and args") {
-                    expect(mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent)
-                        == stubAppCopyContent.searchInstructions
+                    expect(mockInstructionsPropsBuilder.buildPropsColoringsReceivedColorings)
+                        == AppSkin.stubValue().colorings.standard
                 }
 
                 it("returns a value of .instructions") {
@@ -120,7 +118,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 beforeEach {
                     result = sut.buildChild(
                         loadState: .locationRequested(stubSearchParams),
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -138,7 +135,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 beforeEach {
                     result = sut.buildChild(
                         loadState: .initialPageRequested(stubSearchParams),
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -165,7 +161,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                             allEntities: stubEntities,
                             nextRequestToken: tokenContainer
                         ),
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -174,11 +169,10 @@ class SearchLookupChildBuilderTests: AsyncSpec {
 
                 it("calls mockResultsPropsBuilder with expected method and args") {
                     let args =
-                    mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerResultsCopyContentLocationUpdateRequestBlockReceivedArguments
+                    mockResultsPropsBuilder.buildPropsSubmittedParamsAllEntitiesColoringsNumPagesReceivedTokenContainerLocationUpdateRequestBlockReceivedArguments
                     expect(args?.submittedParams) == stubSearchParams
                     expect(args?.allEntities) == stubEntities
                     expect(args?.tokenContainer) == tokenContainer
-                    expect(args?.resultsCopyContent) == stubAppCopyContent.searchResults
                 }
 
                 it("returns a value of .results") {
@@ -192,7 +186,6 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 beforeEach {
                     result = sut.buildChild(
                         loadState: .noResultsFound(stubSearchParams),
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -200,7 +193,7 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 }
 
                 it("calls mockNoResultsFoundPropsBuilder with expected method and args") {
-                    expect(mockNoResultsFoundPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchNoResults
+                    expect(mockNoResultsFoundPropsBuilder.buildPropsColoringsReceivedColorings) == AppSkin.stubValue().colorings.standard
                 }
 
                 it("returns a value of .noResults") {
@@ -212,14 +205,13 @@ class SearchLookupChildBuilderTests: AsyncSpec {
             context("when loadState is .failure") {
 
                 beforeEach {
-                    mockRetryPropsBuilder.buildPropsCopyContentColoringsRetryActionReturnValue = stubRetryProps
+                    mockRetryPropsBuilder.buildPropsColoringsRetryActionReturnValue = stubRetryProps
 
                     result = sut.buildChild(
                         loadState: .failure(
                             stubSearchParams,
                             underlyingError: IgnoredEquatable(StubError.plainError)
                         ),
-                        appCopyContent: stubAppCopyContent,
                         appSkin: .stubValue()
                     ) {
                         .success(.stubValue())
@@ -227,8 +219,8 @@ class SearchLookupChildBuilderTests: AsyncSpec {
                 }
 
                 it("calls mockRetryPropsBuilder with expected method and args") {
-                    let receivedArgs = mockRetryPropsBuilder.buildPropsCopyContentColoringsRetryActionReceivedArguments
-                    expect(receivedArgs?.copyContent) == stubAppCopyContent.searchRetry
+                    let receivedArgs = mockRetryPropsBuilder.buildPropsColoringsRetryActionReceivedArguments
+                    expect(receivedArgs?.colorings) == AppSkin.stubValue().colorings.searchCTA
                     expect(receivedArgs?.retryAction) == .searchActivity(stubStartInitialRequestAction)
                 }
 

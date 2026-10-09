@@ -33,8 +33,6 @@ class SearchNoResultsFoundPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        let stubCopyContent = SearchNoResultsCopyContent.stubValue()
-
         var sut: SearchNoResultsFoundPropsBuilder!
         var result: SearchNoResultsFoundProps!
 
@@ -45,15 +43,16 @@ class SearchNoResultsFoundPropsBuilderTests: AsyncSpec {
         describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildProps(copyContent: stubCopyContent,
-                                        colorings: AppColorings.defaultColorings.standard)
+                result = sut.buildProps(colorings: AppColorings.defaultColorings.standard)
             }
 
             it("returns the expected props") {
-                expect(result.messageViewProps) == SearchMessageViewProps(
-                    copyContent: stubCopyContent,
+                expect(result.messageViewProps) == SearchMessageViewProps(props: StaticInfoViewProps(
+                    image: Asset.noResults,
+                    title: L10n.SearchNoResults.title,
+                    description: L10n.SearchNoResults.description,
                     colorings: AppColorings.defaultColorings.standard
-                )
+                ))
             }
 
         }

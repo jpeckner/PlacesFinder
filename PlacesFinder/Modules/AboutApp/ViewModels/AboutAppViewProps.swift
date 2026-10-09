@@ -28,12 +28,11 @@ import Shared
 struct AboutAppViewProps {
     let props: StaticInfoViewProps<AboutAppViewColorings>
 
-    init(copyContent: AboutAppViewCopyContent,
-         colorings: AboutAppViewColorings,
+    init(colorings: AboutAppViewColorings,
          appDisplayName: NonEmptyString,
          appVersion: NonEmptyString) {
         self.props = StaticInfoViewProps(
-            image: copyContent.iconImage,
+            image: Asset.appIcon,
             title: L10n.AboutAppDetails.title(appDisplayName.value),
             description: L10n.AboutAppDetails.description(
                 appVersion.value,

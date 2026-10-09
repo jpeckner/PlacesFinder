@@ -33,7 +33,6 @@ class SearchInputPropsBuilderTests: AsyncSpec {
     override class func spec() {
 
         let stubInputParams = SearchInputParams.stubValue()
-        let stubInputCopyContent = SearchInputCopyContent.stubValue()
         let stubContentProps = SearchInputContentProps.stubValue()
 
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
@@ -47,7 +46,7 @@ class SearchInputPropsBuilderTests: AsyncSpec {
             mockSearchActivityActionPrism.updateEditingActionClosure = { editEvent in .updateInputEditing(editEvent) }
 
             mockContentPropsBuilder = SearchInputContentPropsBuilderProtocolMock()
-            mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReturnValue = stubContentProps
+            mockContentPropsBuilder.buildPropsKeywordsBarStateReturnValue = stubContentProps
 
             sut = SearchInputPropsBuilder(actionPrism: mockSearchActivityActionPrism,
                                           contentPropsBuilder: mockContentPropsBuilder)
@@ -56,17 +55,13 @@ class SearchInputPropsBuilderTests: AsyncSpec {
         describe("buildProps()") {
 
             beforeEach {
-                result = sut.buildProps(
-                    inputParams: stubInputParams,
-                    copyContent: stubInputCopyContent
-                )
+                result = sut.buildProps(inputParams: stubInputParams)
             }
 
             it("calls mockContentPropsBuilder with expected method and args") {
-                let receivedArgs = mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReceivedArguments
+                let receivedArgs = mockContentPropsBuilder.buildPropsKeywordsBarStateReceivedArguments
                 expect(receivedArgs?.keywords) == stubInputParams.params?.keywords
                 expect(receivedArgs?.barState) == stubInputParams.barState
-                expect(receivedArgs?.copyContent) == stubInputCopyContent
             }
 
             it("returns the content props built by mockContentPropsBuilder") {

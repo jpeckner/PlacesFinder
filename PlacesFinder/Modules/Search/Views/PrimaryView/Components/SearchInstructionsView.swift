@@ -58,14 +58,9 @@ struct SearchInstructionsView: View {
 #if DEBUG
 
 #Preview {
-    // swiftlint:disable:next force_try
-    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
     return SearchInstructionsView(
-        props: SearchInstructionsProps(
-            props: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard),
-            resultsSource: appCopyContent.searchInstructions.resultsSource
-        )
+        props: SearchInstructionsPropsBuilder().buildProps(colorings: appColorings.standard)
     )
 }
 

@@ -46,7 +46,6 @@ class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
             beforeEach {
                 result = sut.buildProps(title: "stubTitle",
                                         currentlyActiveSystem: .imperial,
-                                        copyContent: SettingsMeasurementSystemCopyContent.stubValue(),
                                         colorings: AppColorings.defaultColorings.settings.headerColorings)
             }
 
@@ -59,7 +58,7 @@ class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
                 for option in result.systemOptions {
                     if case let .nonSelectable(title) = option {
                         numNonSelectableOptions += 1
-                        expect(title) == "stubImperialTitle"
+                        expect(title) == L10n.SettingsMeasurementSystem.imperial
                     }
 
                 }
@@ -72,7 +71,7 @@ class SettingsUnitsHeaderPropsBuilderTests: AsyncSpec {
                 for option in result.systemOptions {
                     if case let .selectable(title, selectionAction) = option {
                         numSelectableOptions += 1
-                        expect(title) == "stubMetricTitle"
+                        expect(title) == L10n.SettingsMeasurementSystem.metric
                         expect(selectionAction.value) == .setDistance(.metric(.defaultDistance))
                     }
                 }

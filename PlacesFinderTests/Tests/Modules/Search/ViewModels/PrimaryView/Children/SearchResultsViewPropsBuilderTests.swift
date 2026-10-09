@@ -45,7 +45,6 @@ class SearchResultsViewPropsBuilderTests: AsyncSpec {
         ])
         let stubPreviousResults = NonEmptyArray(with: SearchEntityModel.stubValue(name: "previousResult"))
         let stubTokenContainer = PlaceLookupTokenAttemptsContainer.stubValue()
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockPlaceLookupService: PlaceLookupServiceProtocolMock!
         var mockDependencies: Search.ActivityActionCreatorDependencies!
@@ -59,7 +58,7 @@ class SearchResultsViewPropsBuilderTests: AsyncSpec {
 
         beforeEach {
             mockResultPropsBuilder = SearchResultPropsBuilderProtocolMock()
-            mockResultPropsBuilder.buildPropsModelResultsCopyContentColoringsClosure = { entityModel, _, _ in
+            mockResultPropsBuilder.buildPropsModelColoringsClosure = { entityModel, _ in
                 let cellProps = SearchResultCellProps.stubValue(name: entityModel.name)
                 return SearchResultProps.stubValue(cellProps: cellProps,
                                                    detailEntityAction: .searchActivity(.detailedEntity(entityModel)))
@@ -105,8 +104,7 @@ class SearchResultsViewPropsBuilderTests: AsyncSpec {
                                         allEntities: stubEntities,
                                         colorings: AppColorings.defaultColorings.searchResults,
                                         numPagesReceived: 1,
-                                        tokenContainer: stubTokenContainer,
-                                        resultsCopyContent: stubCopyContent) {
+                                        tokenContainer: stubTokenContainer) {
                     locationBlockCalled = true
                     return .success(.stubValue())
                 }
@@ -131,7 +129,6 @@ class SearchResultsViewPropsBuilderTests: AsyncSpec {
             it("inits props with the entities as transformed by mockResultPropsBuilder") {
                 let expectedProps = stubEntities.withTransformation { model in
                     mockResultPropsBuilder.buildProps(model: model,
-                                                      resultsCopyContent: stubCopyContent,
                                                       colorings: AppColorings.defaultColorings.searchResults)
                 }
 

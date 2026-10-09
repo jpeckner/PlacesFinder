@@ -36,7 +36,6 @@ struct SettingsViewProps {
 // sourcery: AutoMockable
 protocol SettingsViewPropsBuilderProtocol {
     func buildProps(searchPreferencesState: SearchPreferencesState,
-                    appCopyContent: AppCopyContent,
                     appDisplayName: NonEmptyString,
                     colorings: SettingsViewColorings) -> SettingsViewProps
 }
@@ -56,7 +55,6 @@ class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
     }
 
     func buildProps(searchPreferencesState: SearchPreferencesState,
-                    appCopyContent: AppCopyContent,
                     appDisplayName: NonEmptyString,
                     colorings: SettingsViewColorings) -> SettingsViewProps {
         let sections =
@@ -65,9 +63,8 @@ class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
                     id: .searchDistance,
                     headerType: .measurementSystem(
                         measurementSystemHeaderPropsBuilder.buildProps(
-                            title: appCopyContent.settingsHeaders.distanceSectionTitle,
+                            title: L10n.SettingsHeaders.distanceSectionTitle,
                             currentlyActiveSystem: searchPreferencesState.stored.distance.system,
-                            copyContent: appCopyContent.settingsMeasurementSystem,
                             colorings: colorings.headerColorings
                         )
                     ),
@@ -82,13 +79,12 @@ class SettingsViewPropsBuilder: SettingsViewPropsBuilderProtocol {
                     id: .sortBy,
                     headerType: .plain(
                         plainHeaderPropsBuilder.buildProps(
-                            title: appCopyContent.settingsHeaders.sortSectionTitle,
+                            title: L10n.SettingsHeaders.sortSectionTitle,
                             colorings: colorings.headerColorings
                         )
                     ),
                     cells: settingsCellPropsBuilder.buildSortingCellProps(
                         currentSorting: searchPreferencesState.stored.sorting,
-                        copyContent: appCopyContent.settingsSortPreference,
                         colorings: colorings.cellColorings
                     )
                 )

@@ -64,11 +64,9 @@ struct StaticInfoView<TColorings: AppStandardColoringsProtocol>: View {
 #if DEBUG
 
 #Preview {
-    // swiftlint:disable:next force_try
-    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
     return StaticInfoView(
-        props: appCopyContent.searchInstructions.staticInfoViewProps(colorings: appColorings.standard)
+        props: SearchInstructionsPropsBuilder().buildProps(colorings: appColorings.standard).props
     )
 }
 

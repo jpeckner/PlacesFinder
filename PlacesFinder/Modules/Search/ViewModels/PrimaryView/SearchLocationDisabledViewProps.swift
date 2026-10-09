@@ -29,13 +29,18 @@ struct SearchLocationDisabledViewProps {
     let ctaViewProps: SearchCTAViewProps
 }
 
-extension SearchLocationDisabledCopyContent: SearchCTACopyProtocol {}
-
 extension SearchLocationDisabledViewProps {
 
-    init(copyContent: SearchLocationDisabledCopyContent,
-         colorings: SearchCTAViewColorings) {
-        self.ctaViewProps = copyContent.ctaViewProps(colorings: colorings)
+    init(colorings: SearchCTAViewColorings) {
+        self.ctaViewProps = SearchCTAViewProps(
+            props: StaticInfoViewProps(
+                image: Asset.locationDisabled,
+                title: L10n.SearchLocationDisabled.title,
+                description: L10n.SearchLocationDisabled.description,
+                colorings: colorings
+            ),
+            ctaTitle: L10n.SearchLocationDisabled.ctaTitle
+        )
     }
 
 }

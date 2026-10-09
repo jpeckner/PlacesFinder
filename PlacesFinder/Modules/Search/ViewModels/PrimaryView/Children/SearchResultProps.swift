@@ -41,7 +41,6 @@ struct SearchResultProps: Equatable {
 // sourcery: AutoMockable
 protocol SearchResultPropsBuilderProtocol {
     func buildProps(model: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchResultsViewColorings) -> SearchResultProps
 }
 
@@ -57,10 +56,8 @@ class SearchResultPropsBuilder: SearchResultPropsBuilderProtocol {
     }
 
     func buildProps(model: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchResultsViewColorings) -> SearchResultProps {
         let cellProps = resultCellPropsBuilder.buildProps(model: model,
-                                                          resultsCopyContent: resultsCopyContent,
                                                           colorings: colorings)
         let detailEntityAction = actionPrism.detailEntityAction(model)
 

@@ -35,7 +35,6 @@ struct SearchBackgroundViewProps {
 // sourcery: AutoMockable
 protocol SearchBackgroundViewPropsBuilderProtocol {
     func buildProps(keywords: NonEmptyString?,
-                    appCopyContent: AppCopyContent,
                     colorings: AppStandardColorings) -> SearchBackgroundViewProps
 }
 
@@ -51,18 +50,13 @@ class SearchBackgroundViewPropsBuilder: SearchBackgroundViewPropsBuilderProtocol
     }
 
     func buildProps(keywords: NonEmptyString?,
-                    appCopyContent: AppCopyContent,
                     colorings: AppStandardColorings) -> SearchBackgroundViewProps {
         let contentProps = contentPropsBuilder.buildProps(
             keywords: keywords,
-            barState: .isShowing(isEditing: false),
-            copyContent: appCopyContent.searchInput
+            barState: .isShowing(isEditing: false)
         )
 
-        let instructionsProps = instructionsPropsBuilder.buildProps(
-            copyContent: appCopyContent.searchInstructions,
-            colorings: colorings
-        )
+        let instructionsProps = instructionsPropsBuilder.buildProps(colorings: colorings)
 
         return SearchBackgroundViewProps(contentProps: contentProps,
                                          instructionsProps: instructionsProps)

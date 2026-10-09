@@ -36,7 +36,6 @@ class SearchResultPropsBuilderTests: AsyncSpec {
 
         let stubEntityModel = SearchEntityModel.stubValue()
         let stubResultCellProps = SearchResultCellProps.stubValue()
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
 
         var mockResultCellPropsBuilder: SearchResultCellPropsBuilderProtocolMock!
         var mockSearchActivityActionPrism: SearchActivityActionPrismProtocolMock!
@@ -45,7 +44,7 @@ class SearchResultPropsBuilderTests: AsyncSpec {
 
         beforeEach {
             mockResultCellPropsBuilder = SearchResultCellPropsBuilderProtocolMock()
-            mockResultCellPropsBuilder.buildPropsModelResultsCopyContentColoringsReturnValue = stubResultCellProps
+            mockResultCellPropsBuilder.buildPropsModelColoringsReturnValue = stubResultCellProps
 
             mockSearchActivityActionPrism = SearchActivityActionPrismProtocolMock()
             mockSearchActivityActionPrism.detailEntityActionReturnValue = .detailedEntity(stubEntityModel)
@@ -60,14 +59,12 @@ class SearchResultPropsBuilderTests: AsyncSpec {
 
             beforeEach {
                 result = sut.buildProps(model: stubEntityModel,
-                                        resultsCopyContent: stubCopyContent,
                                         colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockResultCellPropsBuilder with expected method and args") {
-                let receivedArgs = mockResultCellPropsBuilder.buildPropsModelResultsCopyContentColoringsReceivedArguments
+                let receivedArgs = mockResultCellPropsBuilder.buildPropsModelColoringsReceivedArguments
                 expect(receivedArgs?.model) == stubEntityModel
-                expect(receivedArgs?.resultsCopyContent) == stubCopyContent
             }
 
             it("returns the SearchResultCellProps returned by mockResultCellPropsBuilder") {

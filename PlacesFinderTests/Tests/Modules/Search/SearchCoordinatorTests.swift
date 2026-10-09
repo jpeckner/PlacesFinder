@@ -93,7 +93,7 @@ class SearchCoordinatorTests: AsyncSpec {
                 }
 
                 self.mockSearchBackgroundPropsBuilder = SearchBackgroundViewPropsBuilderProtocolMock()
-                mockSearchBackgroundPropsBuilder.buildPropsKeywordsAppCopyContentColoringsReturnValue = SearchBackgroundViewProps.stubValue()
+                mockSearchBackgroundPropsBuilder.buildPropsKeywordsColoringsReturnValue = SearchBackgroundViewProps.stubValue()
 
                 let lookupProps = SearchLookupProps(
                     inputProps: SearchInputProps(
@@ -103,12 +103,12 @@ class SearchCoordinatorTests: AsyncSpec {
                     child: .progress(.stubValue())
                 )
                 self.mockSearchLookupPropsBuilder = SearchLookupPropsBuilderProtocolMock()
-                mockSearchLookupPropsBuilder.buildPropsSearchActivityStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = lookupProps
+                mockSearchLookupPropsBuilder.buildPropsSearchActivityStateAppSkinLocationUpdateRequestBlockReturnValue = lookupProps
 
                 self.mockSearchDetailsViewContextBuilder = SearchDetailsViewContextBuilderProtocolMock()
 
                 self.mockNavigationBarPropsBuilder = NavigationBarPropsBuilderProtocolMock()
-                mockNavigationBarPropsBuilder.buildTitlePropsCopyContentReturnValue = .stubValue()
+                mockNavigationBarPropsBuilder.buildTitlePropsReturnValue = .stubValue()
             }
         }
 

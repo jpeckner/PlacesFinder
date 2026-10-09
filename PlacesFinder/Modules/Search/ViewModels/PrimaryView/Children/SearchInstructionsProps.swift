@@ -30,23 +30,24 @@ struct SearchInstructionsProps: Equatable {
     let resultsSource: String
 }
 
-extension SearchInstructionsCopyContent: StaticInfoCopyProtocol {}
-
 // MARK: SearchInstructionsPropsBuilder
 
 // sourcery: AutoMockable
 protocol SearchInstructionsPropsBuilderProtocol {
-    func buildProps(copyContent: SearchInstructionsCopyContent,
-                    colorings: AppStandardColorings) -> SearchInstructionsProps
+    func buildProps(colorings: AppStandardColorings) -> SearchInstructionsProps
 }
 
 class SearchInstructionsPropsBuilder: SearchInstructionsPropsBuilderProtocol {
 
-    func buildProps(copyContent: SearchInstructionsCopyContent,
-                    colorings: AppStandardColorings) -> SearchInstructionsProps {
+    func buildProps(colorings: AppStandardColorings) -> SearchInstructionsProps {
         return SearchInstructionsProps(
-            props: copyContent.staticInfoViewProps(colorings: colorings),
-            resultsSource: copyContent.resultsSource
+            props: StaticInfoViewProps(
+                image: Asset.searchHome,
+                title: L10n.SearchInstructions.title,
+                description: L10n.SearchInstructions.description,
+                colorings: colorings
+            ),
+            resultsSource: L10n.SearchInstructions.resultsSource
         )
     }
 

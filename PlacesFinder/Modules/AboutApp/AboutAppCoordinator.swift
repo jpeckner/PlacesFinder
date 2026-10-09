@@ -43,7 +43,6 @@ class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppActi
 
     @MainActor
     init(store: TStore,
-         state: AppState,
          skin: AppSkin,
          appDisplayName: NonEmptyString,
          appVersion: NonEmptyString) {
@@ -52,7 +51,6 @@ class AboutAppCoordinator<TStore: StoreProtocol> where TStore.TAction == AppActi
         self.store = store
 
         let props = AboutAppViewProps(
-            copyContent: state.appCopyContentState.copyContent.aboutAppView,
             colorings: skin.colorings.aboutApp,
             appDisplayName: appDisplayName,
             appVersion: appVersion

@@ -29,25 +29,23 @@ struct SearchNoResultsFoundProps: Equatable {
     let messageViewProps: SearchMessageViewProps
 }
 
-extension SearchNoResultsCopyContent: StaticInfoCopyProtocol {}
-
 // MARK: SearchNoResultsFoundPropsBuilder
 
 // sourcery: AutoMockable
 protocol SearchNoResultsFoundPropsBuilderProtocol {
-    func buildProps(copyContent: SearchNoResultsCopyContent,
-                    colorings: AppStandardColorings) -> SearchNoResultsFoundProps
+    func buildProps(colorings: AppStandardColorings) -> SearchNoResultsFoundProps
 }
 
 class SearchNoResultsFoundPropsBuilder: SearchNoResultsFoundPropsBuilderProtocol {
 
-    func buildProps(copyContent: SearchNoResultsCopyContent,
-                    colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
+    func buildProps(colorings: AppStandardColorings) -> SearchNoResultsFoundProps {
         SearchNoResultsFoundProps(messageViewProps:
-            SearchMessageViewProps(
-                copyContent: copyContent,
+            SearchMessageViewProps(props: StaticInfoViewProps(
+                image: Asset.noResults,
+                title: L10n.SearchNoResults.title,
+                description: L10n.SearchNoResults.description,
                 colorings: colorings
-            )
+            ))
         )
     }
 

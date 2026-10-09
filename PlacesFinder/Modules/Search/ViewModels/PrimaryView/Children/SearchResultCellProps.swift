@@ -39,7 +39,6 @@ struct SearchResultCellProps: Identifiable, Equatable {
 // sourcery: AutoMockable
 protocol SearchResultCellPropsBuilderProtocol {
     func buildProps(model: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchResultsViewColorings) -> SearchResultCellProps
 }
 
@@ -52,13 +51,12 @@ class SearchResultCellPropsBuilder: SearchResultCellPropsBuilderProtocol {
     }
 
     func buildProps(model: SearchEntityModel,
-                    resultsCopyContent: SearchResultsCopyContent,
                     colorings: SearchResultsViewColorings) -> SearchResultCellProps {
         SearchResultCellProps(
             id: model.id,
             name: model.name,
             ratingsAverage: model.ratings?.average,
-            pricing: model.pricing.map { copyFormatter.formatPricing(resultsCopyContent, pricing: $0) },
+            pricing: model.pricing.map { copyFormatter.formatPricing(pricing: $0) },
             image: DownloadedImageProps(url: model.image),
             colorings: colorings
         )

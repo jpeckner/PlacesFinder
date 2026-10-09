@@ -36,7 +36,6 @@ class SearchBackgroundViewPropsBuilderTests: AsyncSpec {
     override class func spec() {
 
         let stubKeywords = NonEmptyString.stubValue("stubInputKeywords")
-        let stubAppCopyContent = AppCopyContent.stubValue()
         let stubContentProps = SearchInputContentProps.stubValue()
         let stubInstructionsProps = SearchInstructionsProps.stubValue()
 
@@ -48,10 +47,10 @@ class SearchBackgroundViewPropsBuilderTests: AsyncSpec {
 
         beforeEach {
             mockContentPropsBuilder = SearchInputContentPropsBuilderProtocolMock()
-            mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReturnValue = stubContentProps
+            mockContentPropsBuilder.buildPropsKeywordsBarStateReturnValue = stubContentProps
 
             mockInstructionsPropsBuilder = SearchInstructionsPropsBuilderProtocolMock()
-            mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReturnValue = stubInstructionsProps
+            mockInstructionsPropsBuilder.buildPropsColoringsReturnValue = stubInstructionsProps
 
             sut = SearchBackgroundViewPropsBuilder(contentPropsBuilder: mockContentPropsBuilder,
                                                    instructionsPropsBuilder: mockInstructionsPropsBuilder)
@@ -61,19 +60,17 @@ class SearchBackgroundViewPropsBuilderTests: AsyncSpec {
 
             beforeEach {
                 result = sut.buildProps(keywords: stubKeywords,
-                                        appCopyContent: stubAppCopyContent,
                                         colorings: AppColorings.defaultColorings.standard)
             }
 
             it("calls mockContentPropsBuilder with expected method and args") {
-                let receivedArgs = mockContentPropsBuilder.buildPropsKeywordsBarStateCopyContentReceivedArguments
+                let receivedArgs = mockContentPropsBuilder.buildPropsKeywordsBarStateReceivedArguments
                 expect(receivedArgs?.keywords) == stubKeywords
                 expect(receivedArgs?.barState) == .isShowing(isEditing: false)
-                expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
             }
 
             it("calls mockInstructionsPropsBuilder with expected method and args") {
-                expect(mockInstructionsPropsBuilder.buildPropsCopyContentColoringsReceivedArguments?.copyContent) == stubAppCopyContent.searchInstructions
+                expect(mockInstructionsPropsBuilder.buildPropsColoringsReceivedColorings) == AppColorings.defaultColorings.standard
             }
 
             it("returns the expected value") {

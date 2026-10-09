@@ -35,13 +35,13 @@ class NavigationBarPropsBuilderTests: AsyncSpec {
         var result: NavigationBarTitleViewProps!
 
         beforeEach {
-            sut = NavigationBarPropsBuilder()
+            sut = NavigationBarPropsBuilder(appDisplayName: .stubValue("stubDisplayName"))
         }
 
         describe("buildTitleProps()") {
 
             beforeEach {
-                result = sut.buildTitleProps(copyContent: DisplayNameCopyContent.stubValue())
+                result = sut.buildTitleProps()
             }
 
             it("returns the expected props") {

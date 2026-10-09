@@ -67,10 +67,10 @@ class SettingsCoordinatorTests: AsyncSpec {
                 mockServiceContainer = ServiceContainer.mockValue()
 
                 mockSettingsPropsBuilder = SettingsViewPropsBuilderProtocolMock()
-                mockSettingsPropsBuilder.buildPropsSearchPreferencesStateAppCopyContentAppDisplayNameColoringsReturnValue = stubSettingsProps
+                mockSettingsPropsBuilder.buildPropsSearchPreferencesStateAppDisplayNameColoringsReturnValue = stubSettingsProps
 
                 mockNavigationBarPropsBuilder = NavigationBarPropsBuilderProtocolMock()
-                mockNavigationBarPropsBuilder.buildTitlePropsCopyContentReturnValue = .stubValue()
+                mockNavigationBarPropsBuilder.buildTitlePropsReturnValue = .stubValue()
             }
         }
 

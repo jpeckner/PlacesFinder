@@ -120,7 +120,18 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
 
         describe("buildSortingCellProps()") {
 
-            let stubCopyContent = SettingsSortPreferenceCopyContent.stubValue()
+            func expectedTitle(_ sorting: PlaceLookupSorting) -> String {
+                switch sorting {
+                case .bestMatch:
+                    return L10n.SettingsSortPreference.bestMatchTitle
+                case .distance:
+                    return L10n.SettingsSortPreference.distanceTitle
+                case .rating:
+                    return L10n.SettingsSortPreference.ratingTitle
+                case .reviewCount:
+                    return L10n.SettingsSortPreference.reviewCountTitle
+                }
+            }
 
             var results: [SettingsCellProps]!
 
@@ -131,7 +142,6 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
                     beforeEach {
                         results = sut.buildSortingCellProps(
                             currentSorting: currentSorting,
-                            copyContent: stubCopyContent,
                             colorings: AppColorings.defaultColorings.settings.cellColorings
                         )
                     }
@@ -140,9 +150,9 @@ class SettingsCellPropsBuilderTests: AsyncSpec {
                         expect(results.count) == PlaceLookupSorting.allCases.count
                     }
 
-                    it("has the correct title in each cell props as found in stubCopyContent") {
+                    it("has the correct title in each cell props") {
                         for (idx, resultCellProps) in results.enumerated() {
-                            expect(resultCellProps.title) == stubCopyContent.title(PlaceLookupSorting.allCases[idx])
+                            expect(resultCellProps.title) == expectedTitle(PlaceLookupSorting.allCases[idx])
                         }
                     }
 

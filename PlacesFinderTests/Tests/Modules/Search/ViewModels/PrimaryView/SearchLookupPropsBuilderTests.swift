@@ -34,7 +34,6 @@ class SearchLookupPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
 
-        let stubAppCopyContent = AppCopyContent.stubValue()
         let stubInputParams = SearchInputParams.stubValue()
         let stubSearchActivityState = Search.ActivityState(loadState: .idle,
                                                            inputParams: stubInputParams,
@@ -56,10 +55,10 @@ class SearchLookupPropsBuilderTests: AsyncSpec {
                 coverTappedAction: .searchActivity(.updateInputEditing(.endedEditing))
             )
             mockInputPropsBuilder = SearchInputPropsBuilderProtocolMock()
-            mockInputPropsBuilder.buildPropsInputParamsCopyContentReturnValue = stubInputProps
+            mockInputPropsBuilder.buildPropsInputParamsReturnValue = stubInputProps
 
             mockChildBuilder = SearchLookupChildBuilderProtocolMock()
-            mockChildBuilder.buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReturnValue = .progress(.stubValue())
+            mockChildBuilder.buildChildLoadStateAppSkinLocationUpdateRequestBlockReturnValue = .progress(.stubValue())
 
             sut = SearchLookupPropsBuilder(inputPropsBuilder: mockInputPropsBuilder,
                                            childBuilder: mockChildBuilder)
@@ -70,7 +69,6 @@ class SearchLookupPropsBuilderTests: AsyncSpec {
             beforeEach {
                 result = sut.buildProps(
                     searchActivityState: stubSearchActivityState,
-                    appCopyContent: stubAppCopyContent,
                     appSkin: .stubValue()
                 ) {
                     locationBlockCalled = true
@@ -79,15 +77,12 @@ class SearchLookupPropsBuilderTests: AsyncSpec {
             }
 
             it("calls mockInputPropsBuilder with expected method and args") {
-                let receivedArgs = mockInputPropsBuilder.buildPropsInputParamsCopyContentReceivedArguments
-                expect(receivedArgs?.inputParams) == stubInputParams
-                expect(receivedArgs?.copyContent) == stubAppCopyContent.searchInput
+                expect(mockInputPropsBuilder.buildPropsInputParamsReceivedInputParams) == stubInputParams
             }
 
             it("calls mockChildBuilder with expected method and args") {
-                let receivedArgs = mockChildBuilder.buildChildLoadStateAppCopyContentAppSkinLocationUpdateRequestBlockReceivedArguments
+                let receivedArgs = mockChildBuilder.buildChildLoadStateAppSkinLocationUpdateRequestBlockReceivedArguments
                 expect(receivedArgs?.loadState) == stubSearchActivityState.loadState
-                expect(receivedArgs?.appCopyContent) == stubAppCopyContent
 
                 expect(locationBlockCalled) == false
                 _ = await receivedArgs?.locationUpdateRequestBlock()

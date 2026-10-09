@@ -33,8 +33,6 @@ import SharedTestComponents
 class SearchCopyFormatterTests: AsyncSpec {
 
     override class func spec() {
-        let stubCopyContent = SearchResultsCopyContent.stubValue()
-
         var formatter: SearchCopyFormatter!
 
         beforeEach {
@@ -107,12 +105,11 @@ class SearchCopyFormatterTests: AsyncSpec {
             var result: String!
 
             beforeEach {
-                result = formatter.formatPricing(stubCopyContent,
-                                                 pricing: PlaceLookupPricing(count: 5))
+                result = formatter.formatPricing(pricing: PlaceLookupPricing(count: 5))
             }
 
-            it("returns the currency symbol in copyContent, repeated count times") {
-                expect(result) == "+++++"
+            it("returns the currencySymbol string, repeated count times") {
+                expect(result) == String(repeating: L10n.SearchResults.currencySymbol, count: 5)
             }
         }
 

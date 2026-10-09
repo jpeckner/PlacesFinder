@@ -115,7 +115,6 @@ extension SettingsCoordinator: AppDestinationRouterProtocol {
             child = .aboutApp(IgnoredEquatable(
                 AboutAppCoordinator(
                     store: store,
-                    state: state,
                     skin: state.appSkinState.currentValue,
                     appDisplayName: serviceContainer.appBundleInfo.displayName,
                     appVersion: serviceContainer.appBundleInfo.version
@@ -179,16 +178,14 @@ extension SettingsCoordinator: SubstatesSubscriber {
     }
 
     private func presentViews(state: AppState) {
-        let appCopyContent = state.appCopyContentState.copyContent
         let appSkin = state.appSkinState.currentValue
 
         let props = settingsPropsBuilder.buildProps(
             searchPreferencesState: state.searchPreferencesState,
-            appCopyContent: appCopyContent,
             appDisplayName: serviceContainer.appBundleInfo.displayName,
             colorings: appSkin.colorings.settings
         )
-        let titleProps = navigationBarPropsBuilder.buildTitleProps(copyContent: appCopyContent.displayName)
+        let titleProps = navigationBarPropsBuilder.buildTitleProps()
         presenter.loadSettingsView(props,
                                    viewModel: viewModel,
                                    titleProps: titleProps,

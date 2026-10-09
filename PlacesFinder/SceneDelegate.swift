@@ -98,13 +98,11 @@ private extension SceneDelegate.TChildFactory {
     convenience init(appConfig: AppConfig) {
         let serviceContainer = ServiceContainer(appConfig: appConfig)
         let userDefaultsService = UserDefaultsService(userDefaults: .standard)
-        let appCopyContent = AppCopyContent(displayName: appConfig.bundleInfo.displayName)
         let locationAuthManager = CLLocationManager()
 
         let store = Store<AppAction, AppState>(locationAuthManager: locationAuthManager,
                                                skinService: serviceContainer.appSkinService,
-                                               userDefaultsService: userDefaultsService,
-                                               appCopyContent: appCopyContent)
+                                               userDefaultsService: userDefaultsService)
 
         let listenerContainer = ListenerContainer(store: store,
                                                   locationAuthManager: locationAuthManager,
@@ -127,15 +125,13 @@ private extension Store where TAction == AppAction, TState == AppState {
 
     convenience init(locationAuthManager: CLLocationManager,
                      skinService: AppSkinServiceProtocol,
-                     userDefaultsService: UserDefaultsServiceProtocol,
-                     appCopyContent: AppCopyContent) {
+                     userDefaultsService: UserDefaultsServiceProtocol) {
         let searchPreferencesState =
             (try? userDefaultsService.getSearchPreferences()).map { stored in
                 SearchPreferencesState(stored: stored)
             }
             ?? SearchPreferencesState(usesMetricSystem: Locale.current.measurementSystem == .metric)
         let initialState = AppState(
-            appCopyContent: appCopyContent,
             locationAuthStatus: locationAuthManager.authorizationStatus.authStatus(),
             currentRouterNode: AppCoordinatorNode.nodeBox,
             searchPreferencesState: searchPreferencesState

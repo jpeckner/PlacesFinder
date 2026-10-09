@@ -33,8 +33,7 @@ protocol SearchCopyFormatterProtocol {
     func formatNonCallablePhoneNumber(_ displayPhone: NonEmptyString) -> String
 
     func formatRatings(numRatings: Int) -> String
-    func formatPricing(_ resultsCopyContent: SearchResultsCopyContent,
-                       pricing: PlaceLookupPricing) -> String
+    func formatPricing(pricing: PlaceLookupPricing) -> String
 }
 
 class SearchCopyFormatter: SearchCopyFormatterProtocol {}
@@ -67,9 +66,8 @@ extension SearchCopyFormatter {
             : L10n.SearchResults.numRatingsPlural(numRatings)
     }
 
-    func formatPricing(_ resultsCopyContent: SearchResultsCopyContent,
-                       pricing: PlaceLookupPricing) -> String {
-        return String(repeating: resultsCopyContent.currencySymbol,
+    func formatPricing(pricing: PlaceLookupPricing) -> String {
+        return String(repeating: L10n.SearchResults.currencySymbol,
                       count: pricing.count)
     }
 

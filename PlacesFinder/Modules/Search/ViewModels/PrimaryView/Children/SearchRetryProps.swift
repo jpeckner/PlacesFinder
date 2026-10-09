@@ -36,23 +36,27 @@ struct SearchRetryProps: Equatable {
     }
 }
 
-extension SearchRetryCopyContent: SearchCTACopyProtocol {}
-
 // MARK: SearchRetryPropsBuilder
 
 // sourcery: AutoMockable
 protocol SearchRetryPropsBuilderProtocol {
-    func buildProps(copyContent: SearchRetryCopyContent,
-                    colorings: SearchCTAViewColorings,
+    func buildProps(colorings: SearchCTAViewColorings,
                     retryAction: Search.Action) -> SearchRetryProps
 }
 
 class SearchRetryPropsBuilder: SearchRetryPropsBuilderProtocol {
 
-    func buildProps(copyContent: SearchRetryCopyContent,
-                    colorings: SearchCTAViewColorings,
+    func buildProps(colorings: SearchCTAViewColorings,
                     retryAction: Search.Action) -> SearchRetryProps {
-        let ctaViewProps = copyContent.ctaViewProps(colorings: colorings)
+        let ctaViewProps = SearchCTAViewProps(
+            props: StaticInfoViewProps(
+                image: Asset.error,
+                title: L10n.SearchRetry.title,
+                description: L10n.SearchRetry.description,
+                colorings: colorings
+            ),
+            ctaTitle: L10n.SearchRetry.ctaTitle
+        )
 
         return SearchRetryProps(ctaViewProps: ctaViewProps,
                                 retryAction: retryAction)

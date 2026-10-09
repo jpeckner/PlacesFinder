@@ -56,12 +56,10 @@ struct AboutAppView: View {
 
 // swiftlint:disable force_try
 #Preview {
-    let appCopyContent = AppCopyContent(displayName: try! NonEmptyString("stub"))
     let appColorings = AppColorings.defaultColorings
 
     return AboutAppView(
         props: AboutAppViewProps(
-            copyContent: appCopyContent.aboutAppView,
             colorings: appColorings.aboutApp,
             appDisplayName: try! NonEmptyString("PlacesFinder"),
             appVersion: try! NonEmptyString("1.2.3")

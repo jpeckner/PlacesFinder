@@ -44,20 +44,16 @@ class SearchResultCellPropsBuilderTests: AsyncSpec {
 
         describe("buildProps()") {
             let stubEntityModel = SearchEntityModel.stubValue()
-            let stubCopyContent = SearchResultsCopyContent.stubValue()
 
             var result: SearchResultCellProps!
 
             beforeEach {
                 result = sut.buildProps(model: stubEntityModel,
-                                        resultsCopyContent: stubCopyContent,
                                         colorings: AppColorings.defaultColorings.searchResults)
             }
 
             it("calls mockFormatter with expected method and args") {
-                let receivedArgs = mockFormatter.formatPricingPricingReceivedArguments
-                expect(receivedArgs?.resultsCopyContent) == stubCopyContent
-                expect(receivedArgs?.pricing) == stubEntityModel.pricing
+                expect(mockFormatter.formatPricingPricingReceivedPricing) == stubEntityModel.pricing
             }
 
             it("inits a viewmodel with the model's name...") {
@@ -80,7 +76,6 @@ class SearchResultCellPropsBuilderTests: AsyncSpec {
             context("when the model has no image") {
                 beforeEach {
                     result = sut.buildProps(model: .stubValue(image: nil),
-                                            resultsCopyContent: stubCopyContent,
                                             colorings: AppColorings.defaultColorings.searchResults)
                 }
 
@@ -92,7 +87,6 @@ class SearchResultCellPropsBuilderTests: AsyncSpec {
             context("when the model has no ratings") {
                 beforeEach {
                     result = sut.buildProps(model: .stubValue(ratings: nil),
-                                            resultsCopyContent: stubCopyContent,
                                             colorings: AppColorings.defaultColorings.searchResults)
                 }
 

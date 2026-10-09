@@ -49,7 +49,6 @@ protocol SearchResultsViewPropsBuilderProtocol {
                     colorings: SearchResultsViewColorings,
                     numPagesReceived: Int,
                     tokenContainer: PlaceLookupTokenAttemptsContainer?,
-                    resultsCopyContent: SearchResultsCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps
 }
 
@@ -70,11 +69,9 @@ class SearchResultsViewPropsBuilder: SearchResultsViewPropsBuilderProtocol {
                     colorings: SearchResultsViewColorings,
                     numPagesReceived: Int,
                     tokenContainer: PlaceLookupTokenAttemptsContainer?,
-                    resultsCopyContent: SearchResultsCopyContent,
                     locationUpdateRequestBlock: @escaping LocationUpdateRequestBlock) -> SearchResultsViewProps {
         let resultProps: NonEmptyArray<SearchResultProps> = allEntities.withTransformation {
             resultPropsBuilder.buildProps(model: $0,
-                                          resultsCopyContent: resultsCopyContent,
                                           colorings: colorings)
         }
 
