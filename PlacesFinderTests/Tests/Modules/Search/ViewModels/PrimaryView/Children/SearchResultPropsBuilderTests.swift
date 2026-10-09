@@ -29,7 +29,6 @@ import SwiftDux
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable line_length
 class SearchResultPropsBuilderTests: AsyncSpec {
 
     override class func spec() {
