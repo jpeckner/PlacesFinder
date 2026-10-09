@@ -27,7 +27,6 @@ import SwiftUI
 class SettingsViewController: UIHostingController<SettingsView> {
 
     private let propsViewModel: SettingsView.ViewModel
-    private let viewModel: SettingsViewModel
 
     init(
         props: SettingsViewProps,
@@ -35,7 +34,6 @@ class SettingsViewController: UIHostingController<SettingsView> {
     ) {
         let propsViewModel = SettingsView.ViewModel(props: props)
         self.propsViewModel = propsViewModel
-        self.viewModel = viewModel
 
         let settingsView = SettingsView(
             viewModel: propsViewModel

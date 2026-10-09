@@ -5,7 +5,7 @@ lane :generate_placesfinder do |options|
   
   generate_placesfinder(PLACE_LOOKUP_BASE_URL, apiKey, config)
   
-  run_script("open ../PlacesFinder.xcodeproj")
+  run_script("open ../PlacesFinder.xcodeproj") unless options[:open].to_s == "false"
 end
 
 lane :run_sourcery do
