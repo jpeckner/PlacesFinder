@@ -1,4 +1,5 @@
 external_test_case_classes:
+- AsyncSpec
 - QuickSpec
 project: PlacesFinder.xcodeproj
 report_exclude:
