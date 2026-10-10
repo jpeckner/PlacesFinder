@@ -72,7 +72,7 @@ private struct LoadingLaunchView: View {
     let colorings: LaunchViewColorings
 
     var body: some View {
-        Image(uiImage: Constants.appIcon)
+        Asset.appIconRounded.swiftUIImage
             .resizable()
             .frame(
                 width: geometry.appIconDimension,
@@ -112,7 +112,7 @@ private struct CompletingLaunchView: View {
     }
 
     var body: some View {
-        Image(uiImage: Constants.appIcon)
+        Asset.appIconRounded.swiftUIImage
             .resizable()
             .frame(
                 width: completingImageWidth,
@@ -177,8 +177,4 @@ private extension GeometryProxy {
         )
     }
 
-}
-
-private enum Constants {
-    static let appIcon = Asset.appIcon.image
 }
