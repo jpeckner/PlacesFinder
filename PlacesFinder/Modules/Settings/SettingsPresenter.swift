@@ -44,7 +44,7 @@ class SettingsPresenter: SettingsPresenterProtocol {
 
     init(tabItemProperties: TabItemProperties) {
         self.rootNavController = UINavigationController()
-        rootNavController.configure(tabItemProperties)
+        rootNavController.configure(properties: tabItemProperties)
     }
 
     func loadSettingsView(_ props: SettingsViewProps,
