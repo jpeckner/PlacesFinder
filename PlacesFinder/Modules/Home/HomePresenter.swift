@@ -62,6 +62,7 @@ class HomePresenter: HomePresenterProtocol {
             controller.adjustSafeAreaForTopTabBar()
         }
         tabSelectionViewController.adjustSafeAreaForTopTabBar()
+        tabSelectionViewController.applyTopTabBarTint()
     }
 
     func setSelectedViewController(_ controller: UIViewController) {
@@ -95,6 +96,14 @@ private extension TabSelectionViewController {
         viewControllers?
             .filter { !($0 is UINavigationController) }
             .forEach { $0.additionalSafeAreaInsets.top = isTopTabBar ? 48.0 : 0.0 }
+    }
+
+    // On iPad (regular width) iOS 18+ replaces the UITabBar with a floating tab bar, which ignores UITabBar's
+    // appearance colors and instead inherits its tint from the tab controller's view. Apply the selected item tint
+    // there, then restore UIKit's default tint on the children so their content is unaffected.
+    func applyTopTabBarTint() {
+        view.tintColor = UITabBar.appearance().tintColor
+        viewControllers?.forEach { $0.view.tintColor = .systemBlue }
     }
 
 }

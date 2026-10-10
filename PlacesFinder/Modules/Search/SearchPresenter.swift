@@ -38,7 +38,7 @@ class SearchPresenter: SearchPresenterProtocol {
     init(tabItemProperties: TabItemProperties) {
         self.searchContainerViewController = SearchContainerViewController()
 
-        searchContainerViewController.configure(tabItemProperties)
+        searchContainerViewController.configure(properties: tabItemProperties)
     }
 
     func loadNoInternetViews(_ props: SearchNoInternetViewProps,

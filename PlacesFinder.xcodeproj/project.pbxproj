@@ -712,6 +712,7 @@
 		126C820BA38615A0B77FAAE5 /* SettingsPlainHeaderPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPlainHeaderPropsBuilderTests.swift; sourceTree = "<group>"; };
 		12EB574438D6C3E6D8E17D35 /* SearchCoordinator+CoordiNode.autogen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchCoordinator+CoordiNode.autogen.swift"; sourceTree = "<group>"; };
 		14C3FC8625A09FE8D5DD01A5 /* SearchInputProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInputProps.swift; sourceTree = "<group>"; };
+		16BD01C79CF90612707A880D /* Assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Assets.stencil; sourceTree = "<group>"; };
 		17EA1C1D8E321C304B0F720D /* SearchDetailsPropsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsPropsBuilderTests.swift; sourceTree = "<group>"; };
 		185E68BB6A46C89258E3B76F /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		18DEC8E07C78D2D040396C16 /* SearchPreferencesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferencesAction.swift; sourceTree = "<group>"; };
@@ -991,7 +992,6 @@
 		FD40BB03C665E74B17642051 /* AutoSearchDetailsSections.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSearchDetailsSections.generated.swift; sourceTree = "<group>"; };
 		FDBD39453C056D8B03B9E899 /* AutoCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCodable.swift; sourceTree = "<group>"; };
 		FF156ED5C47C77132C6E0C76 /* add_firewall_exceptions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = add_firewall_exceptions.sh; sourceTree = "<group>"; };
-		16BD01C79CF90612707A880D /* Assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Assets.stencil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
