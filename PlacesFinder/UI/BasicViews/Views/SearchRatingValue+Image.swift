@@ -22,30 +22,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import UIKit
+import Foundation
 
 extension SearchRatingValue {
 
-    var starsImage: UIImage {
+    var starsAsset: ImageAsset {
         switch self {
         case .one:
-            return Asset.extraLarge1.image
+            return Asset.extraLarge1
         case .oneAndAHalf:
-            return Asset.extraLarge1Half.image
+            return Asset.extraLarge1Half
         case .two:
-            return Asset.extraLarge2.image
+            return Asset.extraLarge2
         case .twoAndAHalf:
-            return Asset.extraLarge2Half.image
+            return Asset.extraLarge2Half
         case .three:
-            return Asset.extraLarge3.image
+            return Asset.extraLarge3
         case .threeAndAHalf:
-            return Asset.extraLarge3Half.image
+            return Asset.extraLarge3Half
         case .four:
-            return Asset.extraLarge4.image
+            return Asset.extraLarge4
         case .fourAndAHalf:
-            return Asset.extraLarge4Half.image
+            return Asset.extraLarge4Half
         case .five:
-            return Asset.extraLarge5.image
+            return Asset.extraLarge5
         }
     }
 

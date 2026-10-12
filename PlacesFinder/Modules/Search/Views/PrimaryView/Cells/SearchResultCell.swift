@@ -48,7 +48,7 @@ struct SearchResultCell: View {
 
                 if let ratingsAverage = props.ratingsAverage {
                     HStack {
-                        Image(uiImage: ratingsAverage.starsImage)
+                        ratingsAverage.starsAsset.swiftUIImage
                             .resizable()
                             .frame(width: 120, height: 22)
 
@@ -69,16 +69,14 @@ struct SearchResultCell: View {
 
             Spacer(minLength: 16)
 
-            Image(uiImage: Constants.disclosureArrow)
+            Asset.rightArrow.swiftUIImage
+                .renderingMode(.template)
                 .resizable()
-                .frame(width: 12, widthToHeightRatio: Constants.disclosureArrow.widthToHeightRatio)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 12)
                 .foregroundColor(Color(uiColor: props.colorings.disclosureArrowTint.color))
         }
         .frame(height: 68)
-    }
-
-    private enum Constants {
-        static let disclosureArrow = Asset.rightArrow.image.withRenderingMode(.alwaysTemplate)
     }
 
 }
