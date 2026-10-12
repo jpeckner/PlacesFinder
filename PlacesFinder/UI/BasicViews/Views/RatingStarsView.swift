@@ -41,7 +41,7 @@ class RatingStarsView: UIImageView {
     }
 
     func configure(_ rating: SearchRatingValue) {
-        image = rating.starsImage
+        image = rating.starsAsset.image
     }
 
 }

@@ -262,7 +262,7 @@ extension RatingsPricingView {
                                textColoring: colorings.bodyTextColoring)
         pricingLabel.textAlignment = .right
 
-        apiLinkButton.setImage(colorings.viewColoring.apiLogo, for: .normal)
+        apiLinkButton.setImage(colorings.viewColoring.apiLogo.image, for: .normal)
         apiLinkCallback = viewModel.apiLinkCallback?.value
 
         arrangeSubviews(viewModel)

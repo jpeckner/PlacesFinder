@@ -43,7 +43,7 @@ struct APILogoView: View {
     }
 
     var body: some View {
-        Image(uiImage: viewColoring.apiLogo)
+        viewColoring.apiLogo.swiftUIImage
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: APILogoView.minWidth + additionalWidth)
@@ -53,6 +53,6 @@ struct APILogoView: View {
 
 extension ViewColoring {
 
-    var apiLogo: UIImage { Asset.yelpTrademarkRGBDynamic.image }
+    var apiLogo: ImageAsset { Asset.yelpTrademarkRGBDynamic }
 
 }

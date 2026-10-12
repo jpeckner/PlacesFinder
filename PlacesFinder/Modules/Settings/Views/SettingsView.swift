@@ -166,7 +166,6 @@ private struct SettingsMeasurementSystemHeaderView: View {
 private struct SettingsCell: View {
 
     private enum Constants {
-        static let image = Asset.checkmark.image.withRenderingMode(.alwaysTemplate)
         static let imageHeight: CGFloat = 24.0
     }
 
@@ -183,11 +182,11 @@ private struct SettingsCell: View {
             Spacer()
 
             if props.isSelected {
-                Image(uiImage: Constants.image)
+                Asset.checkmark.swiftUIImage
+                    .renderingMode(.template)
                     .resizable()
-                    .frame(width: Constants.imageHeight * Constants.image.widthToHeightRatio,
-                           height: Constants.imageHeight)
                     .aspectRatio(contentMode: .fit)
+                    .frame(height: Constants.imageHeight)
                     .colorMultiply(Color(props.colorings.checkmarkTint.color))
             }
         }
